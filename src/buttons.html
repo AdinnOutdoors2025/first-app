@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        
+        background-color: #0b0d10;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .btns{
+        /* height: 100px;
+        width: 500px; */
+        padding: 1em 2em;
+        background-color: rgb(241, 233, 233);
+        border: none;
+        color: white;
+        border-radius: 1000px;
+        font-family: sans-serif;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+    .btns::after{
+        content: " ";
+        position: absolute;
+        height: 107%;
+        width: 104%;
+
+        border-radius: 1000px;
+        background-image: linear-gradient(to bottom right, #ff0000, #00ff00);
+        z-index: -1;
+    }
+
+</style>
+<body>
+   <div style=" border: 1px solid black;  height: 500px; width: 500px;align-items: center;align-content: center;text-align: center;">
+    <button class="btns">
+        hii
+    </button>
+   </div>
+
+    
+</body>
+</html>

@@ -1,0 +1,374 @@
+/* src/components/ProductTable.css */
+/* 
+.product-table {
+    width: 90%;
+    margin: 20px auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.productNameData{
+    width: 175px;
+}
+th,
+td {
+    padding: 5px;
+    text-align: left;
+    color: rgba(51, 51, 51, 1);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    align-content: center;
+    align-items: center;
+    border-bottom: 1px solid;
+    border-image-source: linear-gradient(90deg, rgba(51, 51, 51, 0) 0%, #333333 45%, rgba(51, 51, 51, 0) 100%)1;
+    border-image-slice: 1;
+} */
+
+
+/* src/components/ProductTable.css */
+
+.product-table {
+    width: 90%;
+    margin: 20px auto;
+    /* border: 1px solid #ccc; */
+}
+
+.product-table th td {
+    /* width: 15%; */
+}
+
+.TableProductPrice {
+    width: 100px;
+    padding: -10px;
+    /* border: 1px solid red; */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 5px;
+    text-align: left;
+    color: rgba(51, 51, 51, 1);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    align-content: center;
+    align-items: center;
+    border-bottom: 1px solid;
+    border-image-source: linear-gradient(90deg, rgba(51, 51, 51, 0) 0%, #333333 45%, rgba(51, 51, 51, 0) 100%)1;
+    border-image-slice: 1;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+
+}
+
+.adminProdRowContent td {
+    align-items: center;
+    align-content: center;
+    text-align: center;
+
+}
+
+.adminProdHeadContent th {
+    width: 16%;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+
+/* Product Checkbox with Tick mark  */
+input:checked+.Productcheckmark1 {
+    color: red;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.Productcheckbox-container1 input {
+    display: none;
+}
+
+/* Default checkmark styling */
+.Productcheckmark1 {
+    border: 1px solid rgba(51, 51, 51, 1);
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    display: inline-block;
+    background: rgba(255, 255, 255, 1);
+    text-align: center;
+    line-height: 18px;
+    font-size: 16px;
+    color: transparent;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.productRate {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(237, 237, 237, 1);
+    width: 60px;
+    height: 35px;
+    border-radius: 10px;
+    margin: 0px auto;
+    align-items: center;
+    text-align: center;
+}
+
+.stars-book-admin {
+    font-size: 15px;
+    background: linear-gradient(124.03deg, #FFC700 7.19%, #FFA945 132%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+
+th {
+    color: rgba(227, 31, 37, 1);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+
+    /* background-color: #f4f4f4; */
+}
+
+.productImg {
+    width: 65px;
+    height: 65px;
+    border-radius: 4px;
+
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+}
+
+.rating img {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+
+/* PAGINATION CSS  */
+.Productpagination {
+
+    margin: 5% auto;
+    /* width: 50%; */
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    background-color: white;
+}
+
+.Productpage-number {
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(51, 51, 51, 1);
+
+    border-radius: 7px;
+    height: 40px;
+    width: 41px;
+    background: rgba(239, 239, 239, 1);
+    border: 1px solid #ddd;
+    align-content: center;
+    text-align: center;
+    text-decoration-skip-ink: none;
+
+    /* padding: 8px 16px; */
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.Productpage-number.active {
+    border: 1.5px solid rgba(227, 31, 37, 1);
+    color: rgba(51, 51, 51, 1);
+    background: rgba(255, 255, 255, 1);
+
+}
+
+
+.Productprev-button,
+.Productnext-button {
+
+    color: rgba(255, 255, 255, 1);
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    background: rgba(228, 30, 37, 1);
+    border: none;
+    cursor: pointer;
+    width: 75px;
+    height: 60px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+}
+
+.Productnext-button {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+
+}
+
+.Productprev-button:disabled,
+.Productnext-button:disabled {
+    /* background-color: lightcoral; */
+    background: rgba(228, 30, 37, 1);
+    opacity: 50%;
+    cursor: not-allowed;
+}
+
+.paginationDots {
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.TableProductName {
+    width: 22%;
+    /* border: 1px solid red; */
+}
+
+
+
+.actionMenuRow {
+    /* position: relative; */
+    display: flex;
+    align-items: center;
+}
+
+.threeDotsTd {
+    cursor: pointer;
+    padding: 10px;
+    /* padding: 20px 30px; */
+}
+
+.ThreeDotsIcon {
+    height: 25px;
+    cursor: pointer;
+    position: relative;
+}
+
+.actionMenu {
+    position: absolute;
+    right: 89px;
+    /* appears left of the dot */
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 6px;
+    background: #e1dfdf;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    z-index: 99;
+}
+
+.actionMenu.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+.actionMenu i {
+    cursor: pointer;
+    font-size: 15px;
+    color: #333;
+    transition: color 0.2s;
+}
+
+.actionMenu i:hover {
+    color: #007bff;
+}
+
+/* .product-row.disabled {
+    opacity: 0.4 !important;
+    pointer-events: none;
+  } */
+
+.product-row.disabled {
+    opacity: 0.4;
+}
+
+/* Inside each row, prevent pointer-events: none for the last <td> (actions) */
+.product-row.disabled .threeDotsTd {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+.product-row.disabled td:not(.threeDotsTd) {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.product-row.disabled .threeDotsTd {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.admin-products-loading,
+.admin-products-error,
+.admin-no-products {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+.admin-products-loading .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+}
+
+.alert {
+    margin-bottom: 1rem;
+    max-width: 600px;
+}

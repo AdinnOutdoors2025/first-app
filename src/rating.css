@@ -1,0 +1,32 @@
+.rate{
+    display: flex;
+}
+/* Full stars */
+.stars {
+    font-size: 17px;
+    background: linear-gradient(124.03deg, #FFC700 7.19%, #FFA945 132%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.rate{
+    position: absolute;
+    top: 5px;
+    left: auto;
+}
+/* Half-star */
+.fa-star-half-alt {
+    background: linear-gradient(124.03deg, #FFC700 7.19%, #FFA945 132%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+/* Empty stars */
+.empty-star {
+    background: linear-gradient(124.03deg, rgba(255, 199, 0, 0.5) 7.19%, rgba(255, 169, 69, 0.5) 132%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.rate-board{
+    height: 40px;
+    width: 100px;
+    position: relative;
+}

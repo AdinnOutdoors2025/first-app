@@ -1,0 +1,1173 @@
+.thankyou_pgMain1 {
+    width: 72%;
+    height: 495px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 5%;
+}
+
+.thankyou_contentMain1 {
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    width: 86%;
+    margin: 0 8%;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.thank_left1 {
+    text-align: left;
+    width: 50%;
+}
+
+.thank-content11 {
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 23px;
+    line-height: 29.26px;
+    letter-spacing: 0%;
+    color: rgba(51, 51, 51, 1);
+}
+
+.thank-content21 {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 23px;
+    line-height: 29.26px;
+    letter-spacing: 0%;
+    color: rgba(51, 51, 51, 1);
+}
+
+.thank_right1 {
+    background: url('/public/images/Thankyou_banner.png');
+    background-position: center;
+    background-size: 103% 335px;
+    background-repeat: no-repeat;
+    height: 320px;
+    width: 414px;
+}
+
+.thank_right-content1 {
+    margin: 0 auto;
+    width: 330px;
+    margin-top: 10%;
+    height: 500px;
+}
+
+.thank_order-content1 {
+    display: flex;
+    text-align: left;
+    justify-content: space-between;
+    padding-top: 0;
+    margin: 0 auto;
+    padding-bottom: 12px;
+    border-bottom: 2px dashed gray;
+}
+
+.thank_orderDetails1 {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14.63px;
+    letter-spacing: 0%;
+    color: rgba(51, 51, 51, 1);
+}
+
+.orderDetails11 {
+    width: 100px;
+    border-right: 2px dashed gray;
+}
+
+.orderDetails21 {
+    width: 112px;
+    border-right: 2px dashed gray;
+}
+
+.orderDetails31 {
+    width: 107px;
+}
+
+.thank_orderDetailsCode1 {
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14.63px;
+    letter-spacing: 0%;
+    color: rgba(51, 51, 51, 1);
+}
+
+.thank_item-content1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.thank_item-contentDetails11 {
+    width: 50px;
+}
+
+.thank_item-img1 {
+    height: 56px;
+    width: 54px;
+    border-radius: 10px;
+}
+
+.thank-item-heading1 {
+    color: rgba(51, 51, 51, 1);
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 17.07px;
+    letter-spacing: 0%;
+}
+
+.thank_item-contentDetails21 {
+    width: 350px;
+    text-align: left;
+    color: rgba(51, 51, 51, 1);
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 17.07px;
+    letter-spacing: 0%;
+}
+
+.ThankScrollContent1 {
+    height: 200px;
+    border-radius: 10px;
+    /* border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px; */
+    box-shadow: 0px 0px 10px 0px rgba(6, 42, 191, 0.25);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    align-items: center;
+    align-content: center;
+    padding-bottom: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 10px;
+}
+
+/* Responsive Media Queries */
+/* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
+@media (min-width: 2560px) {
+
+    /*2560px*/
+    .thankyou_pgMain1 {
+        width: 60%;
+        height: 800px;
+    }
+
+    .thank_left1 {
+        text-align: left;
+        width: 73%;
+        /* border: 1px solid red; */
+    }
+
+    .thank-content11 {
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 55.26px;
+    }
+
+    .thank-content21 {
+        font-weight: 500;
+        font-size: 35px;
+        line-height: 50.26px;
+    }
+
+    .thank_left1 {
+        width: 80%;
+    }
+
+    .thank_right1 {
+        background-size: 108% 650px;
+        width: 100%;
+        height: 650px;
+    }
+
+    .thank_right-content1 {
+        margin-top: 10%;
+        width: 560px;
+        height: 600px;
+        /* border: 1px solid black; */
+    }
+
+    .thank_order-content1 {
+        display: flex;
+        text-align: left;
+        justify-content: space-between;
+        padding: 30px 0;
+        margin: 0 auto;
+        /* padding-bottom: 12px; */
+        border-bottom: 4px dashed gray;
+    }
+
+    .thank_orderDetails1 {
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 25.63px;
+    }
+
+    .thank_orderDetailsCode1 {
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 25.63px;
+    }
+
+    .orderDetails11 {
+        width: 167px;
+        border-right: 4px dashed gray;
+    }
+
+    .orderDetails21 {
+        width: 183px;
+        border-right: 4px dashed gray;
+    }
+
+    .orderDetails31 {
+        width: 180px;
+    }
+
+    .thank_item-content1 {
+        margin-top: 5%;
+        display: flex;
+        justify-content: space-around;
+        gap: 20px;
+        /* border: 1px solid red; */
+    }
+
+    .thank_item-contentDetails11 {
+        width: 70px;
+        /* border: 1px solid red; */
+    }
+
+    .thank_item-img1 {
+        height: 110px;
+        width: 110px;
+        border-radius: 15px;
+    }
+
+    .thank-item-heading1 {
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 28.07px;
+    }
+
+    .thank_item-contentDetails21 {
+        width: 350px;
+        text-align: left;
+        font-weight: 500;
+        font-size: 22px;
+        line-height: 28.07px;
+    }
+
+    .ThankScrollContent1 {
+        height: 370px;
+        padding-bottom: 0px;
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-top: 30px;
+    }
+
+}
+
+/* Large Screens (1400px - 2559px) ✅ Large Desktop Screens */
+@media (min-width: 1440px) and (max-width: 2559px) {
+    .thankyou_pgMain1 {
+        width: 80%;
+    }
+
+    .thank-content11,
+    .thank-content21 {
+        font-size: 25px;
+    }
+}
+
+/* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
+@media (min-width: 992px) and (max-width: 1024px) {
+    .thankyou_pgMain1 {
+        width: 75%;
+        height: 450px;
+        /* border: 1px solid red; */
+    }
+
+    .thank_left1 {
+        width: 30%;
+        /* border: 1px solid red; */
+    }
+
+    .thank-content11 {
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 30.26px;
+    }
+
+    .thank-content21 {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 25.26px;
+    }
+
+    .thank_left1 {
+        width: 65%;
+    }
+
+    .thank_right1 {
+        background-size: 103% 400px;
+        width: 100%;
+        height: 400px;
+    }
+
+    .thank_right-content1 {
+        margin-top: 10%;
+        width: 312px;
+        height: 330px;
+        /* border: 1px solid black; */
+    }
+
+    .thank_order-content1 {
+        display: flex;
+        text-align: left;
+        justify-content: space-between;
+        padding: 20px 0;
+        margin: 0 auto;
+        /* padding-bottom: 12px; */
+        border-bottom: 2px dashed gray;
+    }
+
+    .thank_orderDetails1 {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16.63px;
+    }
+
+    .thank_orderDetailsCode1 {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16.63px;
+    }
+
+    .orderDetails11 {
+        width: 148px;
+        padding-right: 2px;
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails21 {
+        width: 166px;
+        padding-right: 2px;
+        padding-left: 2px;
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails31 {
+        width: 172px;
+        padding-left: 3px;
+
+    }
+
+    .thank_item-content1 {
+        margin-top: 5%;
+        display: flex;
+        justify-content: space-around;
+        gap: 10px;
+        /* border: 1px solid red; */
+    }
+
+    .thank_item-contentDetails11 {
+        width: 70px;
+        /* border: 1px solid red; */
+    }
+
+    .thank_item-img1 {
+        height: 60px;
+        width: 60px;
+        border-radius: 10px;
+    }
+
+    .thank-item-heading1 {
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 18.07px;
+    }
+
+    .thank_item-contentDetails21 {
+        width: 350px;
+        text-align: left;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18.07px;
+    }
+
+    .ThankScrollContent1 {
+        height: 230px;
+        padding-left: 12px;
+        padding-right: 0px;
+        margin-top: 10px;
+        margin: 10px auto;
+    }
+}
+
+/* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .thankyou_pgMain1 {
+        width: 80%;
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+        margin-bottom: 13%;
+    }
+
+    .thankyou_contentMain1 {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .thank-content11 {
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 30.26px;
+    }
+
+    .thank-content21 {
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 25.26px;
+    }
+
+    .thank_left1 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .thank_right1 {
+        width: 100%;
+        height: 400px;
+        background-size: 100% 400px;
+    }
+
+    .thank_right-content1 {
+        /* border:1px solid black; */
+        width: 400px;
+        margin: 0 auto;
+        margin-top: 10%;
+        height: 300px;
+    }
+
+    .thank_order-content1 {
+        display: flex;
+        text-align: left;
+        justify-content: space-between;
+        padding-top: 6px;
+        margin: 0 auto;
+        /* padding-bottom: 12px; */
+        border-bottom: 2px dashed gray;
+    }
+
+    .thank_orderDetails1 {
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 20.63px;
+    }
+
+    .thank_orderDetailsCode1 {
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 20.63px;
+    }
+
+    .orderDetails11 {
+        width: 120px;
+        /* padding-right: 2px; */
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails21 {
+        width: 135px;
+        /* padding-right: 2px;
+        padding-left: 2px; */
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails31 {
+        width: 135px;
+        /* padding-left: 3px; */
+    }
+
+    .thank_item-content1 {
+        margin-top: 5%;
+        display: flex;
+        gap: 35px;
+        /* border: 1px solid red; */
+    }
+
+
+    .thank_item-img1 {
+        height: 75px;
+        width: 75px;
+        border-radius: 12px;
+    }
+
+    .thank-item-heading1 {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 22.07px;
+    }
+
+    .thank_item-contentDetails21 {
+        width: 312px;
+        text-align: left;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 22.07px;
+    }
+
+    .ThankScrollContent1 {
+        height: 235px;
+        margin-top: 10px;
+        margin: 10px auto;
+    }
+
+}
+
+/* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
+@media (min-width: 480px) and (max-width: 767px) {
+    .thankyou_pgMain1 {
+        width: 80%;
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+        margin-bottom: 16%;
+    }
+
+    .thankyou_contentMain1 {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .thank-content11 {
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 30.26px;
+    }
+
+    .thank-content21 {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 25.26px;
+    }
+
+    .thank_left1 {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* .site-address{
+        margin: 12px auto;
+    } */
+    .thank_right1 {
+        width: 126%;
+        height: 350px;
+        background-size: 107% 350px;
+    }
+
+    .thank_right-content1 {
+        /* border: 1px solid black; */
+        width: 319px;
+        margin: 0 auto;
+        margin-top: 9%;
+        height: 280px;
+    }
+
+    .thank_order-content1 {
+        display: flex;
+        text-align: left;
+        justify-content: space-between;
+        padding-top: 20px;
+        margin: 0 auto;
+        /* padding-bottom: 12px; */
+        border-bottom: 2px dashed gray;
+    }
+
+
+    .thank_orderDetails1 {
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 15.63px;
+    }
+
+    .thank_orderDetailsCode1 {
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 15.63px;
+    }
+
+    .orderDetails11 {
+        width: 133px;
+        padding-right: 2px;
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails21 {
+        width: 150px;
+        padding-right: 1px;
+        padding-left: 15px;
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails31 {
+        width: 143px;
+        padding-left: 7px;
+    }
+
+    .thank_item-content1 {
+        margin-top: 7%;
+        display: flex;
+        gap: 22px;
+        /* border: 1px solid red; */
+    }
+
+    .thank_item-img1 {
+        height: 60px;
+        width: 60px;
+        border-radius: 12px;
+    }
+
+    .thank-item-heading1 {
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 16.07px;
+    }
+
+    .thank_item-contentDetails21 {
+        width: 312px;
+        text-align: left;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 16.07px;
+    }
+
+    .ThankScrollContent1 {
+        height: 200px;
+        margin-top: 10px;
+        margin: 10px auto;
+    }
+
+}
+
+/* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
+@media (min-width: 425px) and (max-width: 479px) {
+    .thankyou_pgMain1 {
+        width: 80%;
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+        margin-bottom: 20%;
+    }
+
+    .thankyou_contentMain1 {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .thank-content11 {
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 30.26px;
+    }
+
+    .thank-content21 {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 25.26px;
+    }
+
+    .thank_left1 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .thank_right1 {
+        width: 136%;
+        height: 330px;
+        background-size: 100% 350px;
+    }
+
+    .thank_right-content1 {
+        /* border:1px solid black; */
+        width: 284px;
+        margin: 0 auto;
+        margin-top: 4%;
+        /* height: 280px; */
+    }
+
+    .thank_order-content1 {
+        display: flex;
+        text-align: left;
+        justify-content: space-between;
+        padding-top: 32px;
+        margin: 0 auto;
+        padding-bottom: 7px;
+        border-bottom: 2px dashed gray;
+    }
+
+    .thank_orderDetails1 {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15.63px;
+    }
+
+    .thank_orderDetailsCode1 {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15.63px;
+    }
+
+    .orderDetails11 {
+        width: 135px;
+        /* padding-right: 1px; */
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails21 {
+        width: 120px;
+        padding-right: 1px;
+        padding-left: 2px;
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails31 {
+        width: 161px;
+        padding-left: 2px;
+    }
+
+    .thank_item-content1 {
+        margin-top: 8%;
+        display: flex;
+        gap: 22px;
+        /* border: 1px solid red; */
+    }
+
+    .thank_item-img1 {
+        height: 60px;
+        width: 60px;
+        border-radius: 12px;
+    }
+
+    .thank-item-heading1 {
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 18.07px;
+    }
+
+    .thank_item-contentDetails21 {
+        width: 312px;
+        text-align: left;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 18.07px;
+    }
+
+    .ThankScrollContent1 {
+        height: 200px;
+        margin-top: 10px;
+        margin: 12px auto;
+    }
+}
+
+/* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
+@media (min-width: 375px) and (max-width: 424px) {
+    .thankyou_pgMain1 {
+        width: 80%;
+        flex-direction: column;
+        height: auto;
+        padding-top: 10px;
+        margin-bottom: 20%;
+
+    }
+
+    .thankyou_contentMain1 {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .thank-content11 {
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 30.26px;
+    }
+
+    .thank-content21 {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 25.26px;
+    }
+
+    .thank_left1 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .thank_right1 {
+        width: 113%;
+        height: 310px;
+        background-size: 108% 310px;
+    }
+
+    .thank_right-content1 {
+        /* border:1px solid black; */
+        width: 250px;
+        margin: 0 auto;
+        margin-top: 6%;
+        /* height: 280px; */
+    }
+
+    .thank_order-content1 {
+        display: flex;
+        text-align: left;
+        justify-content: space-between;
+        padding-top: 20px;
+        /* align-items: center; */
+        margin: 0 auto;
+        padding-bottom: 4px;
+        border-bottom: 2px dashed gray;
+    }
+
+    .thank_orderDetails1 {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15.63px;
+    }
+
+    .thank_orderDetailsCode1 {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15.63px;
+    }
+
+    .orderDetails11 {
+        width: 95px;
+        padding-left: 0px;
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails21 {
+        width: 85px;
+        padding-right: 1px;
+        padding-left: 3px;
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails31 {
+        width: 65px;
+        padding-left: 3px;
+    }
+
+    .thank_item-content1 {
+        margin-top: 7%;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        /* border: 1px solid red; */
+    }
+
+    .thank_item-img1 {
+        height: 55px;
+        width: 55px;
+        border-radius: 10px;
+    }
+
+    .thank-item-heading1 {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 16.07px;
+    }
+
+    .thank_item-contentDetails21 {
+        /* width: 312px; */
+        text-align: left;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16.07px;
+    }
+
+    .ThankScrollContent1 {
+        height: 175px;
+        margin-top: 10px;
+        margin: 10px auto;
+        padding-left: 12px;
+        padding-right: 0px;
+    }
+}
+
+
+
+/* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
+@media (min-width: 360px) and (max-width: 369px) {
+    .thankyou_pgMain1 {
+        width: 90%;
+        flex-direction: column;
+        height: auto;
+        padding-top: 10px;
+        margin-bottom: 20%;
+
+    }
+
+    .thankyou_contentMain1 {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .thank-content11 {
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 30.26px;
+    }
+
+    .thank-content21 {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 25.26px;
+    }
+
+    .thank_left1 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .thank_right1 {
+        width: 112%;
+        height: 310px;
+        background-size: 108% 310px;
+    }
+
+    .thank_right-content1 {
+        /* border:1px solid black; */
+        width: 270px;
+        margin: 0 auto;
+        margin-top: 6%;
+        /* height: 280px; */
+    }
+
+    .thank_order-content1 {
+        display: flex;
+        text-align: left;
+        justify-content: space-between;
+        padding-top: 20px;
+        /* align-items: center; */
+        margin: 0 auto;
+        padding-bottom: 4px;
+        border-bottom: 2px dashed gray;
+    }
+
+    .thank_orderDetails1 {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15.63px;
+    }
+
+    .thank_orderDetailsCode1 {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15.63px;
+    }
+
+    .orderDetails11 {
+        width: 95px;
+        padding-left: 0px;
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails21 {
+        width: 85px;
+        padding-right: 1px;
+        padding-left: 3px;
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails31 {
+        width: 65px;
+        padding-left: 3px;
+    }
+
+    .thank_item-content1 {
+        margin-top: 7%;
+        display: flex;
+        gap: 11px;
+        align-items: center;
+        /* border: 1px solid red; */
+    }
+
+    .thank_item-img1 {
+        height: 55px;
+        width: 55px;
+        border-radius: 10px;
+    }
+
+    .thank-item-heading1 {
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 16.07px;
+    }
+
+    .thank_item-contentDetails21 {
+        /* width: 313px; */
+        text-align: left;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 16.07px;
+    }
+
+    .ThankScrollContent1 {
+        height: 175px;
+        margin-top: 10px;
+        margin: 10px auto;
+        padding-left: 12px;
+        padding-right: 0px;
+    }
+}
+
+
+/* Extra Small Screens (320px - 374px) ✅ Extra Small Phones */
+@media (min-width: 320px) and (max-width: 359px) {
+    .thankyou_pgMain1 {
+        width: 90%;
+        flex-direction: column;
+        height: auto;
+        padding-top: 10px;
+        margin-bottom: 20%;
+    }
+
+    .thankyou_contentMain1 {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .thank-content11 {
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 25.26px;
+    }
+
+    .thank-content21 {
+        font-weight: 500;
+        font-size: 16.5px;
+        line-height: 20.26px;
+    }
+
+    .thank_left1 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .thank_right1 {
+        width: 110%;
+        height: 310px;
+        background-size: 108% 310px;
+    }
+
+    .thank_right-content1 {
+        /* border:1px solid black; */
+        width: 235px;
+        margin: 0 auto;
+        margin-top: 5%;
+        /* height: 280px; */
+    }
+
+    .thank_order-content1 {
+        display: flex;
+        text-align: left;
+        justify-content: space-between;
+        padding-top: 23px;
+        /* align-items: center; */
+        margin: 0 auto;
+        padding-bottom: 3px;
+        border-bottom: 2px dashed gray;
+    }
+
+    .thank_orderDetails1 {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15.63px;
+    }
+
+    .thank_orderDetailsCode1 {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15.63px;
+    }
+
+    .orderDetails11 {
+        width: 65px;
+        padding-right: 7px;
+        padding-left: 4px;
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails21 {
+        width: 75px;
+        /* padding-right: 1px; */
+        padding-left: 7px;
+        border-right: 2px dashed gray;
+    }
+
+    .orderDetails31 {
+        width: 72px;
+        padding-left: 7px;
+    }
+
+    .thank_item-content1 {
+        margin-top: 10%;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        /* border: 1px solid red; */
+    }
+
+    .thank_item-img1 {
+        height: 50px;
+        width: 50px;
+        border-radius: 10px;
+    }
+
+    .thank-item-heading1 {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 16.07px;
+    }
+
+    .thank_item-contentDetails21 {
+        /* width: 312px; */
+        text-align: left;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16.07px;
+    }
+
+    .ThankScrollContent1 {
+        height: 175px;
+        margin-top: 10px;
+        margin: 10px auto;
+        padding-left: 12px;
+        padding-right: 0px;
+    }
+}

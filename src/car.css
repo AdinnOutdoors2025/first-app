@@ -1,0 +1,85 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a; /* Night background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .scene {
+    position: relative;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Car Container */
+  .car-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .car-image {
+    height: 400px;
+    width: 400px; /* Adjust based on your design */
+  }
+  
+  /* Headlights */
+  .headlight {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: yellow;
+    box-shadow: 0 0 30px 15px yellow; /* Glow effect */
+    animation: blink-headlight 1.5s infinite;
+  }
+  
+  .left-headlight {
+    top: 60px; /* Position relative to car */
+    left: 30px; /* Adjust for alignment with car image */
+  }
+  
+  .right-headlight {
+    top: 60px; /* Position relative to car */
+    right: 30px; /* Adjust for alignment with car image */
+  }
+  
+  /* Streetlight */
+  .streetlight-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .streetlight {
+    width: 30px;
+    height: 80px;
+    background: orange;
+    border-radius: 10px;
+    box-shadow: 0 0 40px 15px orange;
+    animation: blink-streetlight 2s infinite;
+  }
+  
+  /* Animations */
+  @keyframes blink-headlight {
+    0%, 50%, 100% {
+      opacity: 1; /* Fully visible */
+    }
+    25%, 75% {
+      opacity: 0.3; /* Dimmed */
+    }
+  }
+  
+  @keyframes blink-streetlight {
+    0%, 60%, 100% {
+      opacity: 1; /* Fully visible */
+    }
+    30%, 90% {
+      opacity: 0.1; /* Almost off */
+    }
+  }
+  

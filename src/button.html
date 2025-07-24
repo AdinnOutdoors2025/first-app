@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Hover Effect</title>
+  <style>
+    .button-container {
+      position: relative;
+      display: inline-block;
+    }
+    .btn {
+      padding: 10px 20px;
+      background-color: red;
+      color: white;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    
+    .btn-text {
+      transition: all 0.3s ease;
+    }
+    
+    .btn-image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      /* transform: translate(-50%, -50%); */
+      transform: translate(-50%, -50%) scale(0.5);
+
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .button-container:hover .btn-text {
+      opacity: 0;
+    }
+    
+    .button-container:hover .btn-image {
+      opacity: 1;
+    }
+     .button-container:hover .btn-image {
+       opacity: 1;
+       transform: translate(-50%, -50%) scale(1.5);
+     }
+  </style>
+</head>
+<body>
+  <div class="button-container">
+    <button class="btn">
+      <span class="btn-text">Book a site</span>
+      <img src="C:\Adinn_digital\first-app\public\images\adinn_logo.png" alt="Image" class="btn-image" width="25" height="25">
+    </button>
+  </div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a; /* Night effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .lights-container {
+    display: flex;
+    gap: 100px; /* Space between headlights and streetlight */
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Car Headlights */
+  .car-headlights {
+    display: flex;
+    gap: 20px; /* Space between headlights */
+  }
+  
+  .headlight {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Circular shape */
+    background: yellow;
+    box-shadow: 0 0 30px 10px yellow; /* Glow effect */
+    animation: blink-headlight 1.5s infinite; /* Blinking animation */
+  }
+  
+  /* Streetlight */
+  .streetlights {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .streetlight {
+    width: 30px;
+    height: 80px;
+    background: orange;
+    border-radius: 10px; /* Slightly rounded edges */
+    box-shadow: 0 0 40px 15px orange; /* Glow effect */
+    animation: blink-streetlight 2s infinite; /* Blinking animation */
+  }
+  
+  /* Animations */
+  @keyframes blink-headlight {
+    0%, 50%, 100% {
+      opacity: 1; /* Fully visible */
+    }
+    25%, 75% {
+      opacity: 0.3; /* Dimmed */
+    }
+  }
+  
+  @keyframes blink-streetlight {
+    0%, 60%, 100% {
+      opacity: 1; /* Fully visible */
+    }
+    30%, 90% {
+      opacity: 0.1; /* Almost off */
+    }
+  }
+  

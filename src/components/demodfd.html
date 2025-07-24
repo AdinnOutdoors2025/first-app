@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Animation Preview</title>
+<style>
+    @keyframes animateinimaProperty1Default-sprite {
+      0.06% { transform: translateY(0px); animation-timing-function: steps(23,end); }
+      50.00% { transform: translateY(-4600px);}
+    
+      50.06% { transform: translateY(-4600px); animation-timing-function: steps(23,end); }
+      100.00% { transform: translateY(-9200px);}
+    }
+    .preview-box {
+    width: 186px;
+    height: 200px;
+    overflow: hidden;
+    }
+    .img-wrapper {
+        width: 186px;
+        height: 9400px;
+        /* background-image: url('images/inimaProperty1Default.png'); */
+        background-image: url('C:\\Adinn_digital\\first-app\\public\\images\\inimaProperty1Default.png');
+
+        background-position: 0 0;
+        animation: animateinimaProperty1Default-sprite 1.6020000239368528s infinite linear;
+    }
+</style>
+</head>
+<body>
+<div class="preview-box">
+    <div class="img-wrapper"></div>
+</div>
+</body>
+</html>

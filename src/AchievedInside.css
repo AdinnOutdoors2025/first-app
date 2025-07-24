@@ -1,0 +1,31 @@
+/* .achieved-inside {
+    display: flex;
+    justify-content: space-around;
+ 
+  }
+  .inside-content {
+    background: linear-gradient(118.34deg, #ad0001 8.28%, #e41e25 73%);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 26px;
+    width: 260px;
+    height: 140px;
+  }
+  .inside-num {
+    font-size: 50px;
+    font-weight: 700;
+    animation: fadeIn 1s ease-in-out;
+  }
+  .inside-para {
+    font-size: 20px;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+   */

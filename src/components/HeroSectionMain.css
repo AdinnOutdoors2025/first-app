@@ -1,0 +1,109 @@
+* {
+    font-family: Montserrat;
+}
+
+
+.hero-container {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+}
+
+
+/* Add these to your existing CSS */
+#smooth-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    will-change: transform;
+}
+
+#smooth-content {
+    will-change: transform;
+}
+
+
+/* Navbar should be positioned absolutely over the hero */
+.hero-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    /* overflow: hidden; */
+}
+
+.BannerMainSection {
+    /* background: url('/public/images/HeroBannerMobileTest.png'); */
+    background: url('/public/images/HeroBannerMainImg.png');
+
+    background-position: contain;
+    background-size: 100% 100%;/* w h*/
+    background-repeat: no-repeat;
+    height: 100lvh;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    padding: 0 5%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.HeroBannerLeft {
+    height: 300px;
+    width: 50%;
+}
+
+.HeroBannerRight {
+    width: 40%;
+}
+
+.HeroBannerContent {
+    color: #FFFFFF;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 48px;
+    line-height: 50px;
+    letter-spacing: 0%;
+}
+
+.HeroBannerMainButton {
+    width: auto;
+    height: auto;
+    opacity: 1;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 15px 30px;
+    background: #FFFFFF;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #000000;
+    border: none;
+    margin-top: 5%;
+}
+@media (min-width: 480px) and (max-width: 767px) {
+     .BannerMainSection {
+    /* background: url('/public/images/HeroBannerMobileTest.png'); */
+    background-position: contain;
+    background-size: 100% 100%;/* w h*/
+    background-repeat: no-repeat;
+    height: 100lvh;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    padding: 0 5%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+}

@@ -1,0 +1,1955 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.highlight {
+    color: rgba(228, 30, 37, 1);
+
+}
+
+.heading {
+    font-size: 42px;
+    font-weight: bold;
+    line-height: 51.2px;
+    text-align: center;
+}
+
+#root {
+    width: 100%;
+}
+
+
+.high {
+    margin: 5% auto;
+}
+
+.high-img {
+    height: 100px;
+    width: 100px;
+    margin-bottom: 4%;
+}
+
+.high-content {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.high-inside {
+    height: 200px;
+    width: 380px;
+    padding: 25px;
+    align-content: center;
+    text-align: center;
+    border-width: 0;
+    border-right-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient(0deg, rgba(255, 255, 255, 0), #F92D2D, rgba(255, 255, 255, 0)) 1;
+
+
+}
+
+.high-inside-last {
+    border-width: 0;
+    border-right-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient(0deg, rgba(255, 255, 255, 0), #fffefe, rgba(255, 255, 255, 0)) 1;
+    border: none;
+}
+
+.high-para {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+/* OOH Insights content  */
+.ooh {
+    margin-top: 5%;
+}
+
+.ooh-content {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+
+
+
+.ooh-inside {
+    height: 320px;
+    width: 380px;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    align-content: center;
+    text-align: center;
+    /* background-color: violet; */
+}
+
+.ooh-inside1 {
+    height: 320px;
+    width: 380px;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    align-content: center;
+    text-align: center;
+    /* background-color: #F92D2D; */
+}
+
+
+.ooh-inside2 {
+    height: 320px;
+    width: 380px;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    align-content: center;
+    text-align: center;
+    /* background-color: #F92D2D; */
+}
+
+.ooh-img {
+    height: 300px;
+    width: 360px;
+    /* object-fit: cover;  */
+    border-radius: 10px;
+
+}
+
+.ooh-inside-content {
+    height: 300px;
+    width: 360px;
+    border-radius: 10px;
+    /* border: 2px solid black; */
+    margin: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ooh-para {
+    line-height: 21px;
+    font-size: 18px;
+    font-weight: 500;
+    width: 290px;
+    text-align: start;
+}
+
+.ooh-num {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 36px;
+    text-align: right;
+}
+
+.intro-main {
+    /* height: 140px; */
+    height: 100px;
+    width: 360px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: -1px;
+    background: #cdcdcd33;
+    background: transparent;
+    backdrop-filter: blur(25px);
+    color: white;
+    padding: 10px 10px;
+
+    transition: height 0.5s ease-out;
+    /* Smooth transition for height */
+}
+
+.ooh-intro {
+    display: flex;
+    justify-content: space-between;
+}
+
+.intro-content {
+    text-align: center;
+    align-content: center;
+}
+
+
+/* next section  */
+
+.intro-main1 {
+    height: 60px;
+    /* height: 120px; */
+    width: 360px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: -1px;
+    background: #cdcdcd33;
+    background: transparent;
+    backdrop-filter: blur(25px);
+    color: black;
+    padding: 10px 10px;
+
+    transition: height 0.5s ease-out;
+    /* Smooth transition for height */
+
+
+}
+
+.ooh-intro1 {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* .ooh-intro1 {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    width: 360px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: -1px;
+    background: #cdcdcd33;
+    background: transparent;
+    backdrop-filter: blur(20px);
+    color: black;
+    padding: 10px 10px;
+} */
+
+.ooh-para1 {
+    align-items: center;
+    align-content: center;
+    line-height: 21px;
+    font-size: 18px;
+    font-weight: 500;
+    width: 200px;
+    text-align: start;
+}
+
+.ooh-num1 {
+    align-items: center;
+    align-content: center;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 36px;
+    text-align: right;
+}
+
+
+
+/* next section  */
+.intro-main2 {
+    height: 60px;
+    /* height: 125px; */
+    width: 360px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: -1px;
+    background: #cdcdcd33;
+    background: transparent;
+    backdrop-filter: blur(25px);
+    color: white;
+    padding: 10px 10px;
+
+    transition: height 0.5s ease-out;
+    /* Smooth transition for height */
+}
+
+.ooh-intro2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ooh-para2 {
+    align-items: center;
+    align-content: center;
+    line-height: 21px;
+    font-size: 18px;
+    font-weight: 500;
+    width: 290px;
+    text-align: start;
+}
+
+.ooh-num2 {
+    align-items: center;
+    align-content: center;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 36px;
+    text-align: right;
+}
+
+/* Button with arrow  */
+.ooh-btn {
+    background: linear-gradient(118.34deg, #AD0001 8.28%, #E41E25 73%);
+    box-shadow: 6.32px 12.65px 11.07px 0px #B60A0D inset;
+    box-shadow: -6.32px -12.65px 11.07px 0px #F71B1D inset;
+    box-shadow: 0px 3.16px 3.16px 0px #00000040;
+    align-items: flex-start;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    float: left;
+    font-weight: 500;
+    line-height: 22px;
+    width: 145px;
+    height: 35px;
+    /* gap: 10px; */
+    border: none;
+    border-radius: 20px;
+    padding-right: 4px;
+    padding: 0 13px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.arrow {
+    align-items: right;
+    /* Corrected to align-items: flex-end; for alignment */
+    height: 8px;
+    width: 30px;
+}
+
+
+/* HOVER EFFECT CONTENTS FOR OOH INSIGHTS */
+.eye {
+    display: flex;
+    justify-content: space-around;
+    width: 220px;
+    height: 45px;
+    /* gap: 2px; */
+    border-radius: 25px 0px 0px 25px;
+    opacity: 0px;
+    padding: 5px;
+    background: #FFFFFF33;
+    /* background-color: #F92D2D; */
+    position: absolute;
+    top: 20px;
+    /* right: -350px; */
+    align-items: center;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    animation: none;
+    font-size: 17px;
+    font-weight: 500;
+    /* No animation initially */
+}
+
+
+/* EYE HOVER EFFECT  */
+/* 1 */
+/* Hover state with slide-in effect */
+.ooh-inside:hover .eye {
+    animation: slideIn 1s ease-out forwards;
+    /* Trigger slide-in */
+}
+
+/* Non-hover state with slide-out effect */
+.ooh-inside:not(:hover) .eye {
+    animation: slideOut 0.5s ease-out forwards;
+    /* Trigger slide-out */
+}
+
+/* 2 */
+
+/* Hover state with slide-in effect */
+.ooh-inside1:hover .eye {
+    animation: slideIn 1s ease-out forwards;
+    /* Trigger slide-in */
+}
+
+/* Non-hover state with slide-out effect */
+.ooh-inside1:not(:hover) .eye {
+    animation: slideOut 0.5s ease-out forwards;
+    /* Trigger slide-out */
+}
+
+
+/* 3 */
+
+/* Hover state with slide-in effect */
+.ooh-inside2:hover .eye {
+    animation: slideIn 1s ease-out forwards;
+    /* Trigger slide-in */
+}
+
+/* Non-hover state with slide-out effect */
+.ooh-inside2:not(:hover) .eye {
+    animation: slideOut 0.5s ease-out forwards;
+    /* Trigger slide-out */
+}
+
+
+
+/* Keyframes for sliding in (right to left) */
+@keyframes slideIn {
+    0% {
+        right: -350px;
+    }
+
+    50% {
+        right: -100px;
+    }
+
+    100% {
+        left: 145px;
+    }
+}
+
+/* 
+
+/* Keyframes for sliding out (left to right) */
+@keyframes slideOut {
+    0% {
+        left: 145px;
+    }
+
+    50% {
+        right: -100px;
+    }
+
+    100% {
+        right: -350px;
+    }
+}
+
+
+
+
+.eye-content {
+    display: flex;
+    /* gap: 10px; */
+}
+
+.eyeImg {
+    height: 20px;
+    width: 30px;
+    margin: auto 8px;
+}
+
+.boxImg {
+    height: 20px;
+    width: 20px;
+    margin: auto 8px;
+}
+
+/* Hover background color change  */
+.ooh-inside:hover {
+    cursor: pointer;
+    border-color: linear-gradient(274.32deg, #87CEC7 68.93%, #FFFFFF 99.85%);
+
+    background: linear-gradient(274.32deg, #87CEC7 68.93%, #FFFFFF 99.85%);
+    border: 2px solid;
+    /* border-radius: 20px; */
+    border-image: linear-gradient(96deg, #87CEC7 1.65%, #FFFFFF 98.01%);
+    box-shadow: 0.79px 0.79px 7.9px 0px #87CEC74D;
+    box-shadow: -0.79px -0.79px 7.9px 0px #87CEC74D;
+}
+
+
+.ooh-inside1:hover {
+    cursor: pointer;
+    border-color: linear-gradient(274.32deg, #C9FEC2 68.66%, #FFFFFF 99.85%);
+    background: linear-gradient(274.32deg, #C9FEC2 68.66%, #FFFFFF 99.85%);
+    border: 1.5px solid;
+    border-image: linear-gradient(94.13deg, #C9FEC2 0.17%, #FFFFFF 99.85%);
+    box-shadow: 0.79px 0.79px 7.9px 0px #87CEC74D;
+    box-shadow: -0.79px -0.79px 7.9px 0px #87CEC74D;
+}
+
+.ooh-inside2:hover {
+    cursor: pointer;
+    background: linear-gradient(274.32deg, #FFE2E3 68.93%, #FFFFFF 99.85%);
+    border: 1.5px solid;
+    border-image-source: linear-gradient(95.36deg, #FFE2E3 0.3%, #FFFFFF 99.34%);
+    box-shadow: 0.79px 0.79px 7.9px 0px #E41E254D;
+    box-shadow: -0.79px -0.79px 7.9px 0px #E41E254D;
+}
+
+/* Height increase animations */
+
+.ooh-inside:hover .intro-main {
+    height: 160px;
+    width: 360px;
+}
+
+.ooh-inside1:hover .intro-main1 {
+    height: 120px;
+}
+
+.ooh-inside2:hover .intro-main2 {
+    height: 120px;
+}
+
+.ooh-img {
+    transform: scale(1);
+    /* Default size */
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    /* Adds a more natural ease */
+}
+
+/* Image scalling effect  */
+
+.ooh-inside:hover .ooh-img {
+    transform: scale(1.1);
+    /* Zoom effect */
+}
+
+
+.ooh-inside1:hover .ooh-img {
+    transform: scale(1.1);
+}
+
+
+.ooh-inside2:hover .ooh-img {
+    transform: scale(1.1);
+}
+
+/* Carousel styles */
+.slick-slider {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.slick-slide1 {
+  padding: 0 10px;
+}
+
+.slick-prev:before, 
+.slick-next:before {
+  color: #000;
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .slick-slide1 {
+    padding: 0 10px;
+  }
+  
+  .ooh-inside-content {
+    margin: 0 5px;
+  }
+}
+
+
+.custom-arrow1 {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+  color: red;
+  /* width: 40px;
+  height: 40px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* color: white; */
+  font-size: 40px;
+  transition: transform 0.3s;
+}
+
+.next-arrow1 {
+  right: 10px;
+  /* Adjust position for "next" */
+}
+
+.prev-arrow1 {
+  left: 10px;
+  /* Adjust position for "prev" */
+}
+
+/* Responsive Media Queries */
+/* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
+@media (min-width: 2560px) {
+    .heading {
+        font-size: 65px;
+        margin-bottom: 2%;
+    }
+
+    .high-img {
+        height: 150px;
+        width: 150px;
+        margin-bottom: 4%;
+    }
+
+    .high-para {
+        font-size: 30px;
+        font-weight: 400;
+    }
+
+    .high-inside {
+        height: 290px;
+        width: 463px;
+        padding: 25px;
+        align-content: center;
+        text-align: center;
+        border-width: 0;
+        border-right-width: 3px;
+        border-style: solid;
+        border-image: linear-gradient(0deg, rgba(255, 255, 255, 0), #F92D2D, rgba(255, 255, 255, 0)) 1;
+    }
+
+    .high-inside-last {
+        border-right: none;
+    }
+
+    .ooh-inside,
+    .ooh-inside1,
+    .ooh-inside2 {
+        height: 500px;
+        width: 600px;
+    }
+
+    .ooh-inside-content {
+        height: 480px;
+        width: 580px;
+    }
+
+    .ooh-img {
+        height: 480px;
+        width: 580px;
+        border-radius: 10px;
+    }
+
+    .intro-main {
+        height: 110px;
+        /* height: 160px; */
+        width: 581px;
+    }
+
+    .ooh-inside:hover .intro-main {
+        height: 180px;
+        width: 581px;
+    }
+
+    .intro-main1 {
+        height: 62px;
+        /* height: 120px; */
+        width: 581px;
+    }
+
+    .ooh-inside1:hover .intro-main1 {
+        height: 132px;
+    }
+
+    .intro-main2 {
+        height: 80px;
+        /* height: 140px; */
+        width: 581px;
+    }
+
+    .ooh-inside2:hover .intro-main2 {
+        height: 150px;
+    }
+
+    .ooh-para,
+    .ooh-para1,
+    .ooh-para2 {
+        line-height: 30px;
+        font-size: 27px;
+        width: 480px;
+    }
+
+    .ooh-num,
+    .ooh-num1,
+    .ooh-num2 {
+        font-size: 38px;
+    }
+
+
+
+    .ooh-img {
+        transform: scale(1);
+        transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* Image scalling effect  */
+    /* 
+.ooh-inside:hover .ooh-img {
+    transform: scale(1.1);
+}
+
+.ooh-inside1:hover .ooh-img {
+    transform: scale(1.1);
+}
+
+.ooh-inside2:hover .ooh-img {
+    transform: scale(1.1);
+}
+.ooh-inside:hover .eye {
+    animation: slideIn 1s ease-out forwards;
+}
+
+.ooh-inside:not(:hover) .eye {
+    animation: slideOut 0.5s ease-out forwards;
+}
+
+.ooh-inside1:hover .eye {
+    animation: slideIn 1s ease-out forwards;
+}
+
+.ooh-inside1:not(:hover) .eye {
+    animation: slideOut 0.5s ease-out forwards;
+}
+
+.ooh-inside2:hover .eye {
+    animation: slideIn 1s ease-out forwards;
+}
+
+.ooh-inside2:not(:hover) .eye {
+    animation: slideOut 0.5s ease-out forwards;
+} */
+
+
+
+    .ooh-btn {
+        height: auto;
+        width: auto;
+        font-size: 23px;
+        padding: 15px;
+    }
+
+    .arrow {
+        align-items: right;
+        height: 13px;
+        width: 42px;
+    }
+
+    .eye {
+        width: max-content;
+        display: flex;
+        gap: 10px;
+        height: 60px;
+        font-size: 26px;
+        font-weight: 500;
+        /* No animation initially */
+    }
+
+    .eyeImg {
+        height: 35px;
+        width: 45px;
+        margin: auto 15px;
+    }
+
+    .boxImg {
+        height: 35px;
+        width: 35px;
+        margin: auto 15px;
+    }
+
+
+
+
+
+    /* Keyframes for sliding in (right to left) */
+    @keyframes slideIn {
+        0% {
+            right: -350px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            left: 240px;
+        }
+    }
+
+
+
+    /* Keyframes for sliding out (left to right) */
+    @keyframes slideOut {
+        0% {
+            left: 240px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            right: -350px;
+        }
+    }
+
+
+}
+
+/* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
+@media (min-width: 1440px) and (max-width: 2559px) {}
+
+/* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
+@media (min-width: 992px) and (max-width: 1023px) {
+    .high-inside {
+        height: 200px;
+        width: 240px;
+    }
+
+    .high-para {
+        font-size: 17px;
+        font-weight: 400;
+    }
+
+    .high-img {
+        height: 90px;
+        width: 90px;
+        margin-bottom: 4%;
+    }
+
+
+    .ooh-inside,
+    .ooh-inside1,
+    .ooh-inside2 {
+        height: 320px;
+        width: 300px;
+    }
+
+    .ooh-inside-content {
+        height: 300px;
+        width: 280px;
+    }
+
+    .ooh-img {
+        height: 300px;
+        width: 280px;
+        object-fit: cover;
+    }
+
+    .intro-main,
+    .intro-main1,
+    .intro-main2 {
+        width: 280px;
+    }
+
+    .intro-main {
+        height: 90px;
+    }
+
+    .ooh-inside:hover .intro-main {
+        height: 145px;
+        width: 280px;
+
+    }
+
+    .intro-main1 {
+        height: 60px;
+    }
+
+    .ooh-inside1:hover .intro-main1 {
+        height: 110px;
+        width: 280px;
+
+    }
+
+    .intro-main2 {
+        height: 58px;
+    }
+
+    .ooh-inside2:hover .intro-main2 {
+        height: 110px;
+        width: 280px;
+
+    }
+
+    .ooh-para,
+    .ooh-para1,
+    .ooh-para2 {
+        line-height: 17px;
+        font-size: 15px;
+        width: 230px;
+        /* border: 1px solid white; */
+    }
+
+    .ooh-num,
+    .ooh-num1,
+    .ooh-num2 {
+        font-size: 20px;
+    }
+
+    .ooh-btn {
+        height: auto;
+        width: auto;
+        font-size: 14px;
+        padding: 7px 14px;
+    }
+
+    .arrow {
+        align-items: right;
+        height: 10px;
+        width: 23px;
+    }
+
+    .eye {
+        padding: 5px 10px;
+        width: max-content;
+        display: flex;
+        gap: 10px;
+        height: 38px;
+        font-size: 16px;
+        font-weight: 500;
+        top: 10px;
+        /* No animation initially */
+    }
+
+    .eyeImg {
+        height: 20px;
+        width: 30px;
+        margin: auto 10px;
+    }
+
+    .boxImg {
+        height: 20px;
+        width: 20px;
+        margin: auto 10px;
+    }
+
+
+
+
+
+    /* Keyframes for sliding in (right to left) */
+    @keyframes slideIn {
+        0% {
+            right: -350px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            left: 49px;
+        }
+    }
+
+
+
+    /* Keyframes for sliding out (left to right) */
+    @keyframes slideOut {
+        0% {
+            left: 49px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            right: -350px;
+        }
+    }
+
+
+}
+
+/* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .high-inside {
+        height: 150px;
+        width: 250px;
+    }
+
+    .high-para {
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .high-img {
+        height: 70px;
+        width: 70px;
+        margin-bottom: 4%;
+    }
+
+
+    .ooh-content {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .ooh-inside,
+    .ooh-inside1,
+    .ooh-inside2 {
+        height: 300px;
+        width: 300px;
+    }
+
+    .ooh-inside-content {
+        height: 280px;
+        width: 280px;
+    }
+
+    .ooh-img {
+        height: 280px;
+        width: 280px;
+        object-fit: cover;
+    }
+
+    .intro-main,
+    .intro-main1,
+    .intro-main2 {
+        width: 280px;
+    }
+
+    .intro-main {
+        height: 90px;
+    }
+
+    .ooh-inside:hover .intro-main {
+        height: 145px;
+        width: 280px;
+
+    }
+
+    .intro-main1 {
+        height: 60px;
+    }
+
+    .ooh-inside1:hover .intro-main1 {
+        height: 110px;
+        width: 280px;
+
+    }
+
+    .intro-main2 {
+        height: 58px;
+    }
+
+    .ooh-inside2:hover .intro-main2 {
+        height: 110px;
+        width: 280px;
+
+    }
+
+    .ooh-para,
+    .ooh-para1,
+    .ooh-para2 {
+        line-height: 17px;
+        font-size: 15px;
+        width: 230px;
+        /* border: 1px solid white; */
+    }
+
+    .ooh-num,
+    .ooh-num1,
+    .ooh-num2 {
+        font-size: 20px;
+    }
+
+    .ooh-btn {
+        height: auto;
+        width: auto;
+        font-size: 14px;
+        padding: 7px 14px;
+    }
+
+    .arrow {
+        align-items: right;
+        height: 10px;
+        width: 23px;
+    }
+
+    .eye {
+        padding: 5px 10px;
+        width: max-content;
+        display: flex;
+        gap: 10px;
+        height: 38px;
+        font-size: 15px;
+        font-weight: 500;
+        top: 10px;
+        /* No animation initially */
+    }
+
+    .eyeImg {
+        height: 15px;
+        width: 25px;
+        margin: auto 10px;
+    }
+
+    .boxImg {
+        height: 18px;
+        width: 18px;
+        margin: auto 10px;
+    }
+
+
+
+
+
+    /* Keyframes for sliding in (right to left) */
+    @keyframes slideIn {
+        0% {
+            right: -350px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            left: 62px;
+        }
+    }
+
+
+
+    /* Keyframes for sliding out (left to right) */
+    @keyframes slideOut {
+        0% {
+            left: 62px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            right: -350px;
+        }
+    }
+
+
+}
+
+/* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
+@media (min-width: 480px) and (max-width: 767px) {
+     .high-inside {
+        padding: 0 2px;
+        height: 120px;
+        width: 150px;
+        /* border: 1px solid red; */
+    }
+
+    .high-para {
+        font-size: 13.5px;
+        font-weight: 400;
+    }
+
+    .high-img {
+        height: 60px;
+        width: 60px;
+        margin-bottom: 4%;
+    }
+
+
+    .ooh-content {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .ooh-inside,
+    .ooh-inside1,
+    .ooh-inside2 {
+        height: 300px;
+        width: 300px;
+    }
+
+    .ooh-inside-content {
+        height: 280px;
+        width: 280px;
+    }
+
+    .ooh-img {
+        height: 280px;
+        width: 280px;
+        object-fit: cover;
+    }
+
+    .intro-main,
+    .intro-main1,
+    .intro-main2 {
+        width: 280px;
+    }
+
+    .intro-main {
+        height: 90px;
+    }
+
+    .ooh-inside:hover .intro-main {
+        height: 145px;
+        width: 280px;
+
+    }
+
+    .intro-main1 {
+        height: 60px;
+    }
+
+    .ooh-inside1:hover .intro-main1 {
+        height: 110px;
+        width: 280px;
+
+    }
+
+    .intro-main2 {
+        height: 58px;
+    }
+
+    .ooh-inside2:hover .intro-main2 {
+        height: 110px;
+        width: 280px;
+
+    }
+
+    .ooh-para,
+    .ooh-para1,
+    .ooh-para2 {
+        line-height: 17px;
+        font-size: 15px;
+        width: 230px;
+        /* border: 1px solid white; */
+    }
+
+    .ooh-num,
+    .ooh-num1,
+    .ooh-num2 {
+        font-size: 20px;
+    }
+
+    .ooh-btn {
+        height: auto;
+        width: auto;
+        font-size: 14px;
+        padding: 7px 14px;
+    }
+
+    .arrow {
+        align-items: right;
+        height: 10px;
+        width: 23px;
+    }
+
+    .eye {
+        padding: 5px 10px;
+        width: max-content;
+        display: flex;
+        gap: 10px;
+        height: 38px;
+        font-size: 15px;
+        font-weight: 500;
+        top: 10px;
+        /* No animation initially */
+    }
+
+    .eyeImg {
+        height: 15px;
+        width: 25px;
+        margin: auto 10px;
+    }
+
+    .boxImg {
+        height: 18px;
+        width: 18px;
+        margin: auto 10px;
+    }
+
+
+
+
+
+    /* Keyframes for sliding in (right to left) */
+    @keyframes slideIn {
+        0% {
+            right: -350px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            left: 64px;
+        }
+    }
+
+
+
+    /* Keyframes for sliding out (left to right) */
+    @keyframes slideOut {
+        0% {
+            left: 64px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            right: -350px;
+        }
+    }
+
+}
+
+/* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
+@media (min-width: 425px) and (max-width: 479px) {
+  .high-inside {
+        padding: 0 2px;
+        height: 120px;
+        width: 150px;
+        /* border: 1px solid red; */
+    }
+
+    .high-para {
+        font-size: 13.5px;
+        font-weight: 400;
+    }
+
+    .high-img {
+        height: 60px;
+        width: 60px;
+        margin-bottom: 4%;
+    }
+
+
+    .ooh-content {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .ooh-inside,
+    .ooh-inside1,
+    .ooh-inside2 {
+        height: 300px;
+        width: 300px;
+    }
+
+    .ooh-inside-content {
+        height: 280px;
+        width: 280px;
+    }
+
+    .ooh-img {
+        height: 280px;
+        width: 280px;
+        object-fit: cover;
+    }
+
+    .intro-main,
+    .intro-main1,
+    .intro-main2 {
+        width: 280px;
+    }
+
+    .intro-main {
+        height: 90px;
+    }
+
+    .ooh-inside:hover .intro-main {
+        height: 145px;
+        width: 280px;
+
+    }
+
+    .intro-main1 {
+        height: 60px;
+    }
+
+    .ooh-inside1:hover .intro-main1 {
+        height: 110px;
+        width: 280px;
+
+    }
+
+    .intro-main2 {
+        height: 58px;
+    }
+
+    .ooh-inside2:hover .intro-main2 {
+        height: 110px;
+        width: 280px;
+
+    }
+
+    .ooh-para,
+    .ooh-para1,
+    .ooh-para2 {
+        line-height: 17px;
+        font-size: 15px;
+        width: 230px;
+        /* border: 1px solid white; */
+    }
+
+    .ooh-num,
+    .ooh-num1,
+    .ooh-num2 {
+        font-size: 20px;
+    }
+
+    .ooh-btn {
+        height: auto;
+        width: auto;
+        font-size: 14px;
+        padding: 7px 14px;
+    }
+
+    .arrow {
+        align-items: right;
+        height: 10px;
+        width: 23px;
+    }
+
+    .eye {
+        padding: 5px 10px;
+        width: max-content;
+        display: flex;
+        gap: 10px;
+        height: 38px;
+        font-size: 15px;
+        font-weight: 500;
+        top: 10px;
+        /* No animation initially */
+    }
+
+    .eyeImg {
+        height: 15px;
+        width: 25px;
+        margin: auto 10px;
+    }
+
+    .boxImg {
+        height: 18px;
+        width: 18px;
+        margin: auto 10px;
+    }
+
+
+
+
+
+    /* Keyframes for sliding in (right to left) */
+    @keyframes slideIn {
+        0% {
+            right: -350px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            left: 64px;
+        }
+    }
+
+
+
+    /* Keyframes for sliding out (left to right) */
+    @keyframes slideOut {
+        0% {
+            left: 64px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            right: -350px;
+        }
+    }
+
+}
+
+/* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
+@media (min-width: 375px) and (max-width: 424px) {
+     .high-inside {
+        padding: 0 2px;
+        height: 120px;
+        width: 150px;
+        /* border: 1px solid red; */
+    }
+
+    .high-para {
+        font-size: 13.5px;
+        font-weight: 400;
+    }
+
+    .high-img {
+        height: 60px;
+        width: 60px;
+        margin-bottom: 4%;
+    }
+
+
+    .ooh-content {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .ooh-inside,
+    .ooh-inside1,
+    .ooh-inside2 {
+        height: 300px;
+        width: 300px;
+        /* border: 2px solid red; */
+    }
+
+    .ooh-inside-content {
+        height: 280px;
+        width: 280px;
+    }
+
+    .ooh-img {
+        height: 280px;
+        width: 280px;
+        object-fit: cover;
+    }
+
+    .intro-main,
+    .intro-main1,
+    .intro-main2 {
+        width: 280px;
+    } 
+    
+    .intro-main {
+        height: 73px;
+    }
+
+    .ooh-inside:hover .intro-main {
+        height: 130px;
+        width: 280px;
+    }
+
+    .intro-main1 {
+    
+        height: 60px;
+    }
+
+    .ooh-inside1:hover .intro-main1 {
+        height: 115px;
+        width: 280px;
+
+    }
+
+    .intro-main2 {
+        height: 58px;
+    }
+
+    .ooh-inside2:hover .intro-main2 {
+        height: 115px;
+        width: 280px;
+    }
+
+    .ooh-para,
+    .ooh-para1,
+    .ooh-para2 {
+        line-height: 17px;
+        font-size: 14px;
+        width: 230px;
+        /* border: 1px solid white; */
+    }
+
+    .ooh-num,
+    .ooh-num1,
+    .ooh-num2 {
+        font-size: 19px;
+    }
+
+    .ooh-btn {
+        height: auto;
+        width: auto; 
+        font-size: 13px;
+        padding: 7px 14px;
+    }
+
+    .arrow {
+        align-items: right;
+        height: 10px;
+        width: 23px;
+    }
+
+    .eye {
+        padding: 5px 10px;
+        width: max-content;
+        display: flex;
+        gap: 10px;
+        height: 38px;
+        font-size: 14px;
+        font-weight: 500;
+        top: 10px;
+        /* No animation initially */
+    }
+
+    .eyeImg {
+        height: 14px;
+        width: 24px;
+        margin: auto 10px;
+    }
+
+    .boxImg {
+        height: 17px;
+        width: 17px;
+        margin: auto 10px;
+    }
+ 
+    
+    /* Keyframes for sliding in (right to left) */
+    @keyframes slideIn {
+        0% {
+            right: -350px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            left: 75px;
+        }
+    }
+
+
+
+    /* Keyframes for sliding out (left to right) */
+    @keyframes slideOut {
+        0% {
+            left: 75px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            right: -350px;
+        }
+    }
+}
+
+/* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
+@media (min-width: 360px) and (max-width: 374px) {
+     .high-inside {
+        padding: 0 2px;
+        height: 120px;
+        width: 150px;
+        /* border: 1px solid red; */
+    }
+
+    .high-para {
+        font-size: 13.5px;
+        font-weight: 400;
+    }
+
+    .high-img {
+        height: 60px;
+        width: 60px;
+        margin-bottom: 4%;
+    }
+
+
+    .ooh-content {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .ooh-inside,
+    .ooh-inside1,
+    .ooh-inside2 {
+        height: 300px;
+        width: 300px;
+        /* border: 2px solid red; */
+    }
+
+    .ooh-inside-content {
+        height: 280px;
+        width: 280px;
+    }
+
+    .ooh-img {
+        height: 280px;
+        width: 280px;
+        object-fit: cover;
+    }
+
+    .intro-main,
+    .intro-main1,
+    .intro-main2 {
+        width: 280px;
+    } 
+    
+    .intro-main {
+        height: 75px;
+    }
+
+    .ooh-inside:hover .intro-main {
+        height: 130px;
+        width: 280px;
+    }
+
+    .intro-main1 {
+    
+        height: 60px;
+    }
+
+    .ooh-inside1:hover .intro-main1 {
+        height: 115px;
+        width: 280px;
+
+    }
+
+    .intro-main2 {
+        height: 58px;
+    }
+
+    .ooh-inside2:hover .intro-main2 {
+        height: 115px;
+        width: 280px;
+    }
+
+    .ooh-para,
+    .ooh-para1,
+    .ooh-para2 {
+        line-height: 17px;
+        font-size: 14px;
+        width: 230px;
+        /* border: 1px solid white; */
+    }
+
+    .ooh-num,
+    .ooh-num1,
+    .ooh-num2 {
+        font-size: 19px;
+    }
+
+    .ooh-btn {
+        height: auto;
+        width: auto; 
+        font-size: 13px;
+        padding: 7px 14px;
+    }
+
+    .arrow {
+        align-items: right;
+        height: 10px;
+        width: 23px;
+    }
+
+    .eye {
+        padding: 5px 10px;
+        width: max-content;
+        display: flex;
+        gap: 10px;
+        height: 38px;
+        font-size: 14px;
+        font-weight: 500;
+        top: 10px;
+        /* No animation initially */
+    }
+
+    .eyeImg {
+        height: 14px;
+        width: 24px;
+        margin: auto 10px;
+    }
+
+    .boxImg {
+        height: 17px;
+        width: 17px;
+        margin: auto 10px;
+    }
+ 
+    
+    /* Keyframes for sliding in (right to left) */
+    @keyframes slideIn {
+        0% {
+            right: -350px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            left: 75px;
+        }
+    }
+
+
+
+    /* Keyframes for sliding out (left to right) */
+    @keyframes slideOut {
+        0% {
+            left: 75px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            right: -350px;
+        }
+    }
+}
+
+@media (min-width: 320px) and (max-width: 359px) {
+    
+    .high{
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    .high-inside {
+        padding: 0 2px;
+        height: 120px;
+        max-width: 200px;
+        /* border: 1px solid red; */
+    }
+
+    .high-para {
+        font-size: 13px;
+        font-weight: 400;
+    }
+
+    .high-img {
+        height: 55px;
+        width: 55px;
+        margin-bottom: 4%;
+    }
+
+
+    .ooh-content {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .ooh-inside,
+    .ooh-inside1,
+    .ooh-inside2 {
+        height: 270px;
+        width: 270px;
+        /* border: 2px solid red; */
+    }
+
+    .ooh-inside-content {
+        height: 250px;
+        width: 250px;
+    }
+
+    .ooh-img {
+        height: 250px;
+        width: 250px;
+        object-fit: cover;
+    }
+
+    .intro-main,
+    .intro-main1,
+    .intro-main2 {
+        width: 250px;
+    } 
+    
+    .intro-main {
+        height: 95px;
+    }
+ 
+    .ooh-inside:hover .intro-main {
+        height: 145px;
+        width: 250px;
+    }
+
+    .intro-main1 {
+        height: 60px;
+    }
+
+    .ooh-inside1:hover .intro-main1 {
+        height: 115px;
+        width: 250px;
+    }
+
+    .intro-main2 {
+        height: 58px;
+    }
+
+    .ooh-inside2:hover .intro-main2 {
+        height: 115px;
+        width: 250px;
+    }
+
+    .ooh-para,
+    .ooh-para1,
+    .ooh-para2 {
+        line-height: 17px;
+        font-size: 13px;
+        width: 210px;
+        /* border: 1px solid white; */
+    }
+
+    .ooh-num,
+    .ooh-num1,
+    .ooh-num2 {
+        font-size: 19px;
+    }
+
+    .ooh-btn {
+        height: auto;
+        width: auto; 
+        font-size: 13px;
+        padding: 7px 14px;
+    }
+
+    .arrow {
+        align-items: right;
+        height: 10px;
+        width: 23px;
+    }
+
+    .eye {
+        padding: 5px 10px;
+        width: max-content;
+        display: flex;
+        gap: 10px;
+        height: 38px;
+        font-size: 14px;
+        font-weight: 500;
+        top: 10px;
+        /* No animation initially */
+    }
+
+    .eyeImg {
+        height: 14px;
+        width: 24px;
+        margin: auto 10px;
+    }
+
+    .boxImg {
+        height: 17px;
+        width: 17px;
+        margin: auto 10px;
+    }
+ 
+    
+    /* Keyframes for sliding in (right to left) */
+    @keyframes slideIn {
+        0% {
+            right: -350px;
+        }
+        50% {
+            right: -100px;
+        }
+        100% {
+            left: 45px;
+        }
+    }      
+    /* Keyframes for sliding out (left to right) */
+    @keyframes slideOut {
+        0% {
+            left: 45px;
+        }
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            right: -350px;
+        }
+    }
+}

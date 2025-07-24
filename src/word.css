@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    text-align: center;
+  }
+  
+  .word-container {
+    display: inline-block;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #00ff88;
+    height: 3.5rem;
+  }
+  
+  .scrambled-word {
+    display: block;
+    animation: scramble 2s ease-in-out infinite; /* Scrambling animation */
+  }
+  
+  /* For scramble effect (up and down movement) */
+  @keyframes scramble {
+    0% {
+      transform: translateY(10px); /* Start by moving up */
+    }
+    50% {
+      transform: translateY(-10px); /* Move down at the middle */
+    }
+    100% {
+      transform: translateY(10px); /* End by moving up again */
+    }
+  }
+  
+  /* When word stops and shows correctly */
+  .scrambled-word.stopped {
+    animation: none; /* No animation, display the word correctly */
+    transform: none;
+  }
+  

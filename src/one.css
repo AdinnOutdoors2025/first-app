@@ -1,0 +1,60 @@
+.App {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.App-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: linear-gradient(to right, #ff0000, #00ffff);
+}
+
+.logo img {
+    height: 50px;
+}
+
+.App-nav {
+    display: flex;
+    gap: 10px;
+}
+
+.contact-button,
+.book-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.contact-button {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.book-button {
+    background-color: #ff0000;
+    color: #ffffff;
+}
+
+.App-main {
+    padding: 50px;
+}
+
+.billboards {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.billboards img {
+    height: 100px;
+}
+
+.main-text {
+    font-size: 24px;
+}
+
+.highlight {
+    color: #ff0000;
+}

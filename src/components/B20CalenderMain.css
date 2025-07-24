@@ -1,0 +1,1482 @@
+/* Calendar.css */
+.calendar-container {
+    background-color: white;
+    width: 100%;
+    max-width: 900px;
+    /* height: 400px; */
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+
+.large-calendar-layout {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 5px;
+
+}
+
+.calendar-body {
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* padding: 10px 0; */
+    /* padding-right: 5px; */
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-evenly;
+    /* Ensures even spacing */
+    align-items: center;
+    text-align: center;
+    background: rgba(227, 33, 38, 1);
+    color: white;
+    padding: 10px;
+}
+
+.left-calender {
+    margin-left: 23%;
+}
+
+.right-calender {
+    margin-left: 18%;
+}
+
+/* Ensures left and right sections are equal */
+.left-calender,
+.right-calender {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    /* Space between arrow and text */
+}
+
+/* Set a fixed width to prevent shifting */
+.month-year {
+    width: 185px;
+    /* Adjust as needed */
+    text-align: center;
+    /* border: 1px solid white; */
+    /* font-weight: bold; */
+    color: rgba(255, 255, 255, 1);
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24.38px;
+    letter-spacing: 0.05em;
+}
+
+/* Keep buttons aligned properly */
+.nav-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.calendar-legend {
+    align-content: center;
+    color: rgba(51, 51, 51, 1);
+    align-items: center;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 18.63px;
+    letter-spacing: 0.05em;
+    height: 340px;
+    margin: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-right: 0px;
+    /* margin-left: 0; */
+    padding-left: 20px;
+    box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+    /* height: 390px; */
+}
+
+.dot-booked {
+    font-size: 10px;
+    color: rgba(228, 30, 37, 1);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.dot-available {
+    font-size: 10px;
+    color: rgba(76, 187, 23, 1);
+
+}
+
+.date {
+    color: rgba(76, 187, 23, 1);
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24.38px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    align-content: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.reset-button, .confirm-button {
+    background-color: white;
+    border: 2px solid rgba(227, 31, 37, 1);
+    color: rgba(51, 51, 51, 1);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14.63px;
+    letter-spacing: 0.05em;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 22px;
+    margin: 0 12px;
+
+}
+.confirm-button{
+    border: 1px solid rgba(227, 31, 37, 1);
+    background: rgba(228, 30, 37, 1);
+   padding: 8px 22px;
+   margin-bottom: 10px;
+    border-radius: 22px;
+    color: rgba(255, 255, 255, 1);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 5%;  
+}
+
+.close-xmark {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+
+}
+
+
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    /* grid-template-rows: repeat(6, 1fr); */
+    gap: 5px;
+    padding: 10px 0;
+    padding-right: 10px;
+
+}
+
+.day {
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24.38px;
+    letter-spacing: 0.05em;
+}
+
+/* .booked {
+    color: rgba(228, 30, 37, 1);
+
+} */
+
+.available {
+    /* cursor: pointer; */
+    color: rgba(76, 187, 23, 1);
+    cursor: pointer;
+}
+
+.booked {
+    color: rgba(228, 30, 37, 1);
+    pointer-events: none;
+    cursor: not-allowed;
+
+    /* opacity: 0.6; */
+}
+
+
+/* Wrapper to blur background when calendar is open */
+.calendar-wrapper.calendar-open {
+    position: relative;
+}
+
+/* Blur background when calendar is open */
+.calendar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    /* Dark overlay */
+    backdrop-filter: blur(5px);
+    /* Blur effect */
+
+    padding-top: 10%;
+    z-index: 201;
+}
+
+/* Wrapper to blur background when login is open */
+/* .login-wrapper.login-open {
+    position: relative;
+}
+
+.login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    padding-top: 8%;
+    z-index: 201;
+} */
+
+/* Wrapper to blur background when otp is open */
+.otp-wrapper.otp-main-open {
+    position: relative;
+}
+
+/* Blur background when login is open */
+.otp-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    /* Dark overlay */
+    backdrop-filter: blur(5px);
+    /* Blur effect */
+    padding-top: 8%;
+    z-index: 201;
+}
+
+
+
+
+.selected-start,
+.selected-end {
+    background: rgba(76, 187, 23, 1);
+    color: white;
+    border-radius: 5px;
+}
+
+.selected-range {
+    background: rgba(148, 214, 116, 1);
+    color: white;
+    border-radius: 5px;
+}
+
+
+
+
+/* Responsive Media Queries */
+/* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
+@media (min-width: 2560px) {
+    .calendar-container {
+        background-color: white;
+        width: 100%;
+        max-width: 65%;
+        /* height: 400px; */
+        margin: 0 auto;
+        border-radius: 48px;
+    }
+
+    .dot-booked {
+        font-size: 20px;
+        color: rgba(228, 30, 37, 1);
+    }
+
+    .dot-available {
+        font-size: 20px;
+        color: rgba(76, 187, 23, 1);
+    }
+
+    .reset-button, .confirm-button {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 14.63px;
+        letter-spacing: 0.05em;
+        padding: 13px 18px;
+        border-radius: 32px;
+        border: 3px solid rgba(227, 31, 37, 1);
+        /* margin: auto 10px; */
+        margin: auto 30px;
+        margin-bottom: 15px;
+    }
+    .confirm-button{
+        padding: 14px 38px;
+
+    }
+
+    .calendar-header {
+        padding: 15px;
+    }
+
+    .nav-button {
+        font-size: 37px;
+        padding: 0px;
+    }
+
+    .month-year {
+        width: 350px;
+        font-size: 33px;
+        font-weight: 500;
+        line-height: 33.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .close-xmark {
+        font-size: 37px;
+    }
+
+    .calendar-legend {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 36.63px;
+        letter-spacing: 0.05em;
+        height: 560px;
+        margin: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        padding-left: 32px;
+        /* padding-right: 20px; */
+        margin-right: 25px;
+    }
+
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        /* grid-template-rows: repeat(6, 1fr); */
+        gap: 10px 10px;
+        padding: 15px 0;
+        padding-right: 15px;
+    }
+
+    .date {
+        color: rgba(76, 187, 23, 1);
+        font-family: Montserrat;
+        font-size: 32px;
+        font-weight: 500;
+        line-height: 24.38px;
+        letter-spacing: 0.05em;
+        text-align: center;
+        padding: 25px 20px;
+        border-radius: 5px;
+    }
+
+    .day {
+        text-align: center;
+        font-family: Montserrat;
+        font-size: 30px;
+        font-weight: 500;
+        line-height: 24.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .selected-start,
+    .selected-end {
+        background: rgba(76, 187, 23, 1);
+        color: white;
+        border-radius: 5px;
+    }
+
+    .selected-range {
+        background: rgba(148, 214, 116, 1);
+        color: white;
+        border-radius: 5px;
+    }
+
+    .calendar-overlay {
+        padding-top: 8%;
+    }
+}
+
+/* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
+@media (min-width: 1440px) and (max-width: 2559px) {
+    .calendar-overlay {
+        padding-top: 8%;
+    }
+
+    .calendar-container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        border-radius: 30px;
+    }
+
+    .nav-button {
+        font-size: 20px;
+        padding: 5px;
+    }
+
+    .month-year {
+        width: 185px;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 24.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .close-xmark {
+        font-size: 25px;
+    }
+
+    .calendar-legend {
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 19.63px;
+        height: 340px;
+        margin: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin-right: 0px;
+        padding-left: 16px;
+        margin-right: 10px;
+    }
+
+    .dot-booked,
+    .dot-available {
+        font-size: 11px;
+    }
+
+    .reset-button, .confirm-button {
+        border: 1.5px solid rgba(227, 31, 37, 1);
+        border-radius: 32px;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 14.63px;
+        letter-spacing: 0.05em;
+        padding: 5px 10px;
+        margin: auto 15px;
+        margin-bottom: 10px;
+    }
+    .confirm-button{
+        padding: 5px 20px;
+    }
+
+    .large-calendar-layout {
+        justify-content: space-between;
+        padding-right: 0px;
+
+    }
+
+
+    .calendar-grid {
+        gap: 5px;
+        padding: 10px 0;
+        padding-right: 8px;
+    }
+
+    .date {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 24.38px;
+        letter-spacing: 0.05em;
+        text-align: center;
+        align-content: center;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .day {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 24.38px;
+        letter-spacing: 0.05em;
+    }
+
+}
+
+/* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
+@media (min-width: 992px) and (max-width: 1023px) {
+
+    .calendar-overlay {
+        padding-top: 8.6%;
+    }
+
+    .calendar-header {
+        padding: 0px;
+    }
+
+    .month-year {
+        width: 165px;
+        /* border: 1px solid white; */
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 23.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .nav-button {
+        font-size: 20px;
+        padding: 5px;
+    }
+
+    .calendar-container {
+        width: 100%;
+        /* max-height: auto; */
+        height: 365px;
+        max-width: 82%;
+        margin: 0 auto;
+        border-radius: 40px;
+    }
+
+    .dot-booked,
+    .dot-available {
+        font-size: 10px;
+    }
+
+    .calendar-legend {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 18.63px;
+        letter-spacing: 0.05em;
+        height: 325px;
+        margin: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        padding-left:8px;
+        margin-right: 10px;
+    }
+
+    .reset-button {
+        border-radius: 32px;
+        border: 1.5px solid rgba(227, 31, 37, 1);
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 15.63px;
+        letter-spacing: 0.05em;
+        padding: 5px 10px;
+    }
+
+    .day {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 24.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-grid {
+        gap: 5px;
+        padding: 25px 0;
+        padding-right: 1px;
+    }
+
+    .date {
+        font-size: 17.5px;
+        font-weight: 500;
+        line-height: 18.38px;
+        letter-spacing: 0;
+        text-align: center;
+        align-content: center;
+        padding: -1px;
+    }
+
+    .close-xmark {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+}
+
+
+/* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .calendar-scroll {
+        border-radius: 35px;
+        width: 100%;
+        /* border: 2px solid black; */
+        height: 370px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    }
+
+    .calendar-overlay {
+        padding-top: 10%;
+    }
+
+    .calendar-header {
+        position: relative;
+        padding: 0px;
+        justify-content: center;
+    }
+
+    .close-xmark {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 23px;
+        cursor: pointer;
+        position: absolute;
+        top: 9%;
+        left: 90%;
+    }
+
+    .month-year {
+        width: 175px;
+        /* border: 1px solid white; */
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 23.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-container {
+        width: 100%;
+        max-height: auto;
+        max-width: 65%;
+        margin: 0 auto;
+        border-radius: 35px;
+    }
+
+    .nav-button {
+        font-size: 20px;
+        padding: 5px;
+    }
+
+    .dot-booked,
+    .dot-available {
+        font-size: 10px;
+    }
+
+    .calendar-legend {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 21.63px;
+        letter-spacing: 0.05em;
+        height: auto;
+        padding: 6px 0px;
+    }
+
+    .calendar-legend-responsive {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .calendar-legend-responsive-content1,
+    .calendar-legend-responsive-content2 {
+        width: 130px;
+        /* border: 1px solid black; */
+    }
+.calenderLegendButtons{
+    display: flex;  
+    gap: 0px;
+    margin: auto 22%;
+}
+
+    .reset-button, .confirm-button {
+        
+        border-radius: 17px;
+        border: 1.5px solid rgba(227, 31, 37, 1);
+        color: rgba(51, 51, 51, 1);
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 15.63px;
+        letter-spacing: 0.05em;
+        padding: 7px 12px;
+    }
+    .confirm-button{
+        color: white;
+        padding: 7px 22px;
+    }
+
+    .day {
+        font-size: 17px;
+        font-weight: 500;
+        padding-bottom: 5px;
+        /* line-height: 28.38px; */
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-grid {
+        height: 42%;
+        gap: 5px;
+        height: 300px;
+        padding: 5px 25px;
+        /* padding-right: 1px; */
+    }
+
+    .date {
+        font-size: 19px;
+        font-weight: 500;
+        line-height: 18.38px;
+        letter-spacing: 0;
+        text-align: center;
+        align-content: center;
+        padding: -1px;
+    }
+
+
+
+    .calendar-body.small-screen-calendar {
+        display: block;
+    }
+
+}
+
+/* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
+@media (min-width: 480px) and (max-width: 767px) {
+    /* .calendar-scroll {
+        border-radius: 35px;
+        width: 100%;
+        height: 370px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    } */
+
+    .calendar-overlay {
+        padding-top: 11.8%;
+    }
+
+    .calendar-header {
+        position: relative;
+        padding: 0px;
+        justify-content: center;
+    }
+
+    .close-xmark {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 23px;
+        cursor: pointer;
+        position: absolute;
+        top: 9%;
+        left: 90%;
+    }
+
+    .month-year {
+        width: 170px;
+        /* border: 1px solid white; */
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 23.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-container {
+        width: 100%;
+        max-height: auto;
+        max-width: 95%;
+        margin: 0 auto;
+        border-radius: 35px;
+    }
+
+    .nav-button {
+        font-size: 20px;
+        /* padding: 5px; */
+    }
+
+    .dot-booked,
+    .dot-available {
+        font-size: 10px;
+    }
+
+    .calendar-legend {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 16.63px;
+        letter-spacing: 0.05em;
+        height: auto;
+        padding: 4px 0px;
+    }
+
+    .calendar-legend-responsive {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .calendar-legend-responsive-content1,
+    .calendar-legend-responsive-content2 {
+        width: 130px;
+        /* border: 1px solid black; */
+    }
+    .calenderLegendButtons{
+        display: flex;  
+        gap: 0px;
+        margin: 3px 21%;
+    }
+
+    .reset-button, .confirm-button {
+        /* margin: 1px 38%; */
+        border-radius: 17px;
+        border: 1.5px solid rgba(227, 31, 37, 1);
+        color: rgba(51, 51, 51, 1);
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 12.63px;
+        letter-spacing: 0.05em;
+        padding: 7px 12px;
+    }
+    .confirm-button{
+    color: white;
+    padding: 7px 20px;
+
+    }
+
+    .day {
+        font-size: 16px;
+        font-weight: 500;
+        padding-bottom: 5px;
+        line-height: 15.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-grid {
+        height: 42%;
+        gap: 4px;
+        height: 282px;
+        padding: 3px 25px;
+        /* padding-right: 1px; */
+    }
+
+    .date {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 18.38px;
+        letter-spacing: 0;
+        text-align: center;
+        align-content: center;
+        padding: -1px;
+    }
+
+
+
+    .calendar-body.small-screen-calendar {
+        display: block;
+    }
+
+}
+
+/* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
+@media (min-width: 425px) and (max-width: 479px) {
+    /* .calendar-scroll {
+        border-radius: 35px;
+        width: 100%;
+        height: 370px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    } */
+
+    .calendar-overlay {
+        padding-top: 13%;
+    }
+
+    .calendar-header {
+        position: relative;
+        padding: 0px;
+        justify-content: center;
+    }
+
+    .close-xmark {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 21px;
+        cursor: pointer;
+        position: absolute;
+        top: 10%;
+        left: 90%;
+    }
+
+    .month-year {
+        width: 170px;
+        /* border: 1px solid white; */
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 23.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-container {
+        width: 100%;
+        max-height: auto;
+        max-width: 95%;
+        margin: 0 auto;
+        border-radius: 30px;
+    }
+
+    .nav-button {
+        font-size: 20px;
+        /* padding: 5px; */
+    }
+
+    .dot-booked,
+    .dot-available {
+        font-size: 10px;
+    }
+
+    .calendar-legend {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 16.63px;
+        letter-spacing: 0.05em;
+        height: auto;
+        padding: 3px 0px;
+    }
+
+    .calendar-legend-responsive {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .calendar-legend-responsive-content1,
+    .calendar-legend-responsive-content2 {
+        width: 130px;
+        /* border: 1px solid black; */
+    }
+    .calenderLegendButtons{
+        display: flex;  
+        gap: 0px;
+        margin: 3px 14%;
+    }
+
+
+
+    .reset-button {
+        /* margin: 2px 36%; */
+        border-radius: 16px;
+        border: 1.5px solid rgba(227, 31, 37, 1);
+        color: rgba(51, 51, 51, 1);
+        font-size: 12.5px;
+        font-weight: 600;
+        line-height: 12.63px;
+        letter-spacing: 0.05em;
+        padding: 8px 13px;
+    }
+    .confirm-button{
+        color: white;
+        padding:10px 30px;
+    }
+
+    .day {
+        font-size: 16px;
+        font-weight: 500;
+        padding-bottom: 5px;
+        line-height: 14.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-grid {
+        height: 42%;
+        gap: 5px;
+        height: 282px;
+        padding: 3px 20px;
+        /* padding-right: 1px; */
+    }
+
+    .date {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 17.38px;
+        letter-spacing: 0;
+        text-align: center;
+        align-content: center;
+        padding: -1px;
+    }
+
+
+
+    .calendar-body.small-screen-calendar {
+        display: block;
+    }
+}
+
+/* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
+@media (min-width: 375px) and (max-width: 424px) {
+    /* .calendar-scroll {
+        border-radius: 35px;
+        width: 100%;
+        height: 370px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    } */
+
+    .calendar-overlay {
+        padding-top: 15.2%;
+    }
+
+    .calendar-header {
+        position: relative;
+        padding: 0px;
+        justify-content: center;
+    }
+
+    .close-xmark {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 21px;
+        cursor: pointer;
+        position: absolute;
+        top: 10%;
+        left: 88%;
+    }
+
+    .month-year {
+        width: 170px;
+        /* border: 1px solid white; */
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 23.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-container {
+        width: 100%;
+        max-height: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        border-radius: 30px;
+    }
+
+    .nav-button {
+        font-size: 20px;
+        /* padding: 5px; */
+    }
+
+    .dot-booked,
+    .dot-available {
+        font-size: 10px;
+    }
+
+    .calendar-legend {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 16.63px;
+        letter-spacing: 0.05em;
+        height: auto;
+        padding: 2px 0px;
+    }
+
+    .calendar-legend-responsive {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .calendar-legend-responsive-content1,
+    .calendar-legend-responsive-content2 {
+        width: 135px;
+        /* border: 1px solid black; */
+    }
+    .calenderLegendButtons{
+        display: flex;  
+        gap: 0px;
+        margin: 3px 10%;
+    }
+
+
+    .reset-button {
+        /* margin: 2px 34%; */
+        border-radius: 16px;
+        border: 1.5px solid rgba(227, 31, 37, 1);
+        color: rgba(51, 51, 51, 1);
+        font-size: 12.5px;
+        font-weight: 600;
+        line-height: 12.63px;
+        letter-spacing: 0.05em;
+        padding: 8px 13px;
+    }
+    .confirm-button{
+        color: white;
+        padding:10px 30px;
+    }
+
+
+    .day {
+        font-size: 15px;
+        font-weight: 500;
+        padding-bottom: 5px;
+        line-height: 14.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-grid {
+        height: 42%;
+        gap: 5px;
+        height: 282px;
+        padding: 4px 15px;
+        /* padding-right: 1px; */
+    }
+
+    .date {
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 17.38px;
+        letter-spacing: 0;
+        text-align: center;
+        align-content: center;
+        padding: -1px;
+    }
+
+    .calendar-body.small-screen-calendar {
+        display: block;
+    }
+}
+
+/* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
+@media (min-width: 360px) and (max-width: 374px) {
+    /* .calendar-scroll {
+        border-radius: 35px;
+        width: 100%;
+        height: 370px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    } */
+
+    .calendar-overlay {
+        padding-top: 16%;
+    }
+
+    .calendar-header {
+        position: relative;
+        padding: 0px;
+        justify-content: center;
+    }
+
+    .close-xmark {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 21px;
+        cursor: pointer;
+        position: absolute;
+        top: 10%;
+        left: 88%;
+    }
+
+    .month-year {
+        width: 170px;
+        /* border: 1px solid white; */
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 23.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-container {
+        width: 100%;
+        max-height: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        border-radius: 30px;
+    }
+
+    .nav-button {
+        font-size: 20px;
+        /* padding: 5px; */
+    }
+
+    .dot-booked,
+    .dot-available {
+        font-size: 10px;
+    }
+
+    .calendar-legend {
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 16.63px;
+        letter-spacing: 0.05em;
+        height: auto;
+        padding: 2px 0px;
+    }
+
+    .calendar-legend-responsive {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .calendar-legend-responsive-content1,
+    .calendar-legend-responsive-content2 {
+        width: 135px;
+        /* border: 1px solid black; */
+    }
+    .calenderLegendButtons{
+        display: flex;  
+        gap: 0px;
+        margin: 3px 9%;
+    }
+
+
+    .reset-button {
+        /* margin: 2px 34%; */
+        border-radius: 16px;
+        border: 1.5px solid rgba(227, 31, 37, 1);
+        color: rgba(51, 51, 51, 1);
+        font-size: 12.5px;
+        font-weight: 600;
+        line-height: 12.63px;
+        letter-spacing: 0.05em;
+        padding: 8px 13px;
+    }
+    .confirm-button{
+        color: white;
+        padding:10px 30px;
+    }
+
+
+    .day {
+        font-size: 15px;
+        font-weight: 500;
+        padding-bottom: 5px;
+        line-height: 14.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-grid {
+        height: 42%;
+        gap: 5px;
+        height: 282px;
+        padding: 4px 15px;
+        /* padding-right: 1px; */
+    }
+
+    .date {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 17.38px;
+        letter-spacing: 0;
+        text-align: center;
+        align-content: center;
+        padding: -1px;
+    }
+
+    .calendar-body.small-screen-calendar {
+        display: block;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 359px) {
+    /* .calendar-scroll {
+        border-radius: 35px;
+        width: 100%;
+        height: 370px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    } */
+
+    .calendar-overlay {
+        padding-top: 17.3%;
+    }
+
+    .calendar-header {
+        position: relative;
+        padding: 0px;
+        justify-content: center;
+    }
+
+    .close-xmark {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 19px;
+        cursor: pointer;
+        position: absolute;
+        top: 11%;
+        left: 87%;
+    }
+
+    .month-year {
+        width: 155px;
+        /* border: 1px solid white; */
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 23.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-container {
+        width: 100%;
+        max-height: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        border-radius: 28px;
+    }
+
+    .nav-button {
+        font-size: 18px;
+        /* padding: 5px; */
+    }
+
+    .dot-booked,
+    .dot-available {
+        font-size: 10px;
+    }
+
+    .calendar-legend {
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 16.63px;
+        letter-spacing: 0.05em;
+        height: auto;
+        padding: 4px 0px;
+    }
+
+    .calendar-legend-responsive {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .calendar-legend-responsive-content1,
+    .calendar-legend-responsive-content2 {
+        width: 135px;
+        /* border: 1px solid black; */
+    }
+
+    .calenderLegendButtons{
+        display: flex;  
+        gap: 0px;
+        margin: 3px 5%;
+    }
+
+
+    .reset-button {
+        /* margin: 3px 30%; */
+        border-radius: 16px;
+        border: 1.5px solid rgba(227, 31, 37, 1);
+        color: rgba(51, 51, 51, 1);
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 12.63px;
+        letter-spacing: 0.05em;
+        padding: 8px 13px;
+    }
+    .confirm-button{
+        color: white;
+        padding:10px 27px;
+    }
+    .day {
+        font-size: 13px;
+        font-weight: 500;
+        padding-bottom: 5px;
+        line-height: 14.38px;
+        letter-spacing: 0.05em;
+    }
+
+    .calendar-grid {
+        gap: 5px;
+        height: 282px;
+        padding: 10px 5px;
+        /* padding-right: 1px; */
+    }
+
+    .date {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 17.38px;
+        letter-spacing: 0;
+        text-align: center;
+        align-content: center;
+        padding: 8px;
+    }
+
+    .calendar-body.small-screen-calendar {
+        display: block;
+    }
+
+    
+}
+
+/* Past month styling */
+.past-month {
+    opacity: 1;
+    pointer-events: none;
+  }
+  
+  /* Past date styling */
+  .date.past {
+    opacity: 1;
+    background-color: #f0f0f0;
+    color: #666;
+    pointer-events: none;
+    cursor: not-allowed;
+    position: relative;
+  }
+  
+.date.disabled {
+    visibility: hidden;
+}
+
+/* Past booked dates - more prominent style */
+.date.past.booked {
+    background-color: #8B0000; /* Dark red background */
+    color: white !important;
+    border: 2px solid #5a0000 !important;
+    position: relative;
+    opacity: 0.9;
+  }
+  
+  /* Diagonal strike-through effect */
+  .date.past.booked::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -10%;
+    width: 120%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.8);
+    transform: rotate(-45deg);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Optional: Add a small icon */
+  .date.past.booked::before {
+    content: "⏳";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2px;
+    border-radius: 50%;
+  }
+  
+  /* Hover effect */
+  .date.past.booked:hover {
+    transform: scale(1.1);
+    z-index: 2;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  }
+/* 
+
+.booked.past {
+    background-color: #fff3e0;
+    color: #ffb347;
+  }
+  
+  .booked::after {
+    content: "Booked";
+    position: absolute;
+ 
+    position: absolute;
+  
+    font-size: 8px;
+    background: #ff8787;
+    color: white;
+    padding: 2px 4px;
+    border-radius: 3px;
+  }
+  
+  .booked.past::after {
+    background: #ffb347;
+  } */

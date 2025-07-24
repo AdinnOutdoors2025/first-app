@@ -1,0 +1,121 @@
+/* .button-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .board-btn {
+    position: relative;
+    width: 200px;
+    height: 50px;
+    border: 2px solid #E31F25;
+    border-radius: 30px;
+    background: linear-gradient(70.32deg, #FFE2E3 66.94%, #FFFFFF 99.85%);
+    font-size: 18px;
+    color: #E31F25;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+  }
+  
+  .text {
+    position: absolute;
+    transition: transform 0.4s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  .left-text {
+    left: 25%;
+  }
+  
+  .right-text {
+    right: 25%;
+  }
+  
+  .board-btn.hover .left-text {
+    transform: translateX(-40px);
+  }
+  
+  .board-btn.hover .right-text {
+    transform: translateX(40px);
+  }
+  
+  .hover-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 50px;
+    height: 50px;
+    transition: transform 0.4s ease-in-out;
+  }
+  
+  .show {
+    transform: translate(-50%, -120%) scale(1);
+  }
+   */
+
+
+
+   .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Center the button vertically */
+  }
+  
+  .hover-button {
+    position: relative;
+    width: 200px;
+    height: 60px;
+    border: 2px solid #e31f25;
+    border-radius: 30px;
+    background: linear-gradient(70.32deg, #ffe2e3 66.94%, #ffffff 99.85%);
+    font-size: 22px;
+    font-weight: bold;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .text {
+    position: absolute;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .text.top {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .text.bottom {
+    bottom: 50%;
+    transform: translateY(50%);
+  }
+  
+  .move-up {
+    transform: translateY(-150%);
+  }
+  
+  .move-down {
+    transform: translateY(150%);
+  }
+  
+  /* Image animation */
+  .hover-image {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+    transform: scale(0.5) translateY(0);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  
+  .show-image {
+    opacity: 1;
+    transform: scale(1.2) translateY(-80px);
+  }
+  

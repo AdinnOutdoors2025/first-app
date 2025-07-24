@@ -1,0 +1,322 @@
+.upload-section {
+    text-align: center; align-items: center; align-content: center;
+}
+.FileHeading{
+    margin-top: 10px;
+    color: rgba(51, 51, 51, 1);
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 100%;
+    letter-spacing: 0%;   
+}
+.file-upload-box{
+    cursor: pointer;
+}
+.file-info{
+    font-family: Montserrat;
+font-weight: 600;
+font-size: 13px;
+line-height: 100%;
+letter-spacing: 0%;
+color: rgba(51, 51, 51, 1);
+}
+
+
+/* OFFER DETAILS  */
+.AdminOfferDetails{
+font-weight: 600;
+font-size: 14px;
+line-height: 100%;
+letter-spacing: 0%;
+color: rgba(51, 51, 51, 1);
+}
+.adminOfferRefundDetails{
+color: rgba(227, 31, 37, 1);
+}
+.adminOfferAmountInput{
+    width: 30px;
+}
+.adminOfferAmountPercentage{
+    width: 15px;
+}
+/* 
+.input-error::placeholder {
+    color: black;
+  }
+  .input-error{
+    border-bottom: 1.5px solid red !important;
+    background-color: rgb(250, 164, 164)(240, 176, 176);
+
+  }
+  
+  .AdminProderror-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+  } */
+
+
+  @keyframes blinkError {
+    0%, 100% {
+      border-bottom: 1.5px solid red;
+      background-color: #f8d7da; /* light red */
+    }
+    50% {
+      border-bottom: 1.5px solid #ff0000;
+      background-color: #fff;
+    }
+  }
+  
+  .AdminProdinput-error {
+    animation: blinkError 0.6s ease-in-out infinite;
+    border-bottom: 1.5px solid red !important;
+    background-color: #f8d7da; 
+  }
+  
+  .AdminProdinput-error::placeholder {
+    color: black;
+  }
+  .AdminProderror-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+  } 
+
+
+.suggestions-dropdown {
+  position: absolute;
+  z-index: 1000;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-top: 5px;
+}
+
+.suggestion-item {
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: background 0.2s;
+  border-bottom: 1px solid #eee;
+}
+
+.suggestion-item:hover {
+  background-color: #f8f9fa;
+}
+
+.suggestion-image img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.suggestion-code {
+  font-weight: 600;
+  color: #2c3e50;
+  min-width: 80px;
+}
+
+.suggestion-name {
+  flex-grow: 1;
+  color: #34495e;
+  font-size: 0.9em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+.dropdown-loading,
+.dropdown-error,
+.dropdown-empty {
+    padding: 10px;
+    text-align: center;
+    color: #666;
+}
+
+.dropdown-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.dropdown-error {
+    color: #dc3545;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropdown-error i {
+    font-size: 24px;
+}
+
+.btn-retry {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.btn-retry:hover {
+    background: #e9ecef;
+}
+
+.dropdown-empty {
+    color: #6c757d;
+    font-style: italic;
+}
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.dropdown-loading,
+.dropdown-error,
+.dropdown-empty,
+.category-loading,
+.category-error,
+.category-empty,
+.media-loading,
+.media-error,
+.media-empty {
+  padding: 10px;
+  text-align: center;
+  color: #666;
+}
+
+.dropdown-error,
+.category-error,
+.media-error {
+  color: #dc3545;
+}
+
+.btn-retry {
+  background: none;
+  border: none;
+  color: #0d6efd;
+  cursor: pointer;
+  margin-left: 5px;
+  text-decoration: underline;
+}
+
+.spinner-border {
+  margin-right: 5px;
+} */
+
+
+
+
+
+/* Add to ad1Category.css and ad1MediaType.css */
+/* .loading-message, 
+.error-message,
+.no-data-message {
+  padding: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+}
+
+.error-message {
+  color: #d32f2f;
+}
+
+.retry-button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.retry-button:hover {
+  background-color: #1565c0;
+} */
+
+
+
+
+
+/* Add to ad1File.css */
+/* .connection-error {
+    background-color: #ffebee;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    text-align: center;
+    border: 1px solid #ffcdd2;
+    color: #c62828;
+}
+
+.retry-button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.retry-button:hover {
+    background-color: #1565c0;
+}
+
+.no-data-message {
+    padding: 20px;
+    text-align: center;
+    background-color: #e3f2fd;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    flex-direction: column;
+} */

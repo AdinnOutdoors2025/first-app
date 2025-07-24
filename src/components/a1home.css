@@ -1,0 +1,1952 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+.highlight {
+  /* color: red; */
+  color: rgba(228, 30, 37, 1);
+}
+
+.heading {
+  font-size: 42px;
+  font-weight: bold;
+  line-height: 51.2px;
+  text-align: center;
+}
+
+
+#root {
+  width: 100%;
+}
+
+/* ABOUT US  */
+
+
+.about-heading {
+  margin: 3% auto;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+
+.about-content1-heading {
+  font-size: 35px;
+  font-weight: 500;
+  /* line-height: 62px; */
+  margin-bottom: 20px;
+}
+
+.about-content-para {
+  font-size: 22px;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+.about-content-para-last {
+  margin-bottom: 0px;
+}
+
+.about-content {
+  margin-left: 3%;
+  margin-right: 3%;
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-content2 {
+  align-content: center;
+  text-align: center;
+  margin-top: 20px;
+  flex: 1 1 100%;
+  /* Ensures full width on smaller screens */
+}
+
+.about-content2 img {
+  height: 440px;
+  width: 604px;
+  /* max-width: 100%;
+    height: auto; */
+}
+
+.contactUs {
+  font-weight: bold;
+}
+
+/* CLIENT  */
+.client-main {
+  overflow: hidden;
+  /* width: 100%; */
+  align-content: center;
+  height: 300px;
+  background: conic-gradient(from 6.65deg at 50% 51.21%, #D2FFFB -66.48deg, #FFFFE8 108deg, #D2FFFB 293.52deg, #FFFFE8 468deg);
+}
+
+.client-heading {
+  margin: 3% auto;
+}
+
+.client-content {
+  /* border: 2px solid black; */
+  display: flex;
+  width: calc(200px * 8 * 2);
+  /* Ensure width can accommodate the duplicated set */
+  overflow: hidden;
+  position: relative;
+  animation: scroll-left 10s linear infinite;
+  /* Apply animation to the entire content */
+}
+
+.client-content {
+  flex-shrink: 0;
+  /* Prevents shrinking of individual items */
+}
+
+.client-content img {
+  padding: 0 20px;
+  height: 100px;
+  width: 200px;
+}
+
+/* Keyframes for continuous scrolling */
+@keyframes scroll-left {
+  from {
+    transform: translateX(0);
+    /* Start with original set fully visible */
+  }
+
+  to {
+    transform: translateX(-1600px);
+    /* Moves the width of 8 images */
+  }
+}
+
+/* client 2 row  */
+.client-content1 {
+  margin-top: 30px;
+  /* border: 2px solid black; */
+  display: flex;
+  width: calc(200px * 8 * 2);
+  /* Ensure width can accommodate the duplicated set */
+  overflow: hidden;
+  position: relative;
+  animation: scroll-right 10s linear infinite;
+  /* Apply animation to the entire content */
+}
+
+.client-content1 {
+  flex-shrink: 0;
+  /* Prevents shrinking of individual items */
+}
+
+.client-content1 img {
+  padding: 0 20px;
+  height: 100px;
+  width: 200px;
+}
+
+/* Keyframes for continuous scrolling */
+@keyframes scroll-right {
+  from {
+    transform: translateX(-1600px);
+    /* Start with original set fully visible */
+  }
+
+  to {
+    transform: translateX(0px);
+    /* Moves the width of 8 images */
+  }
+}
+
+
+
+
+
+/* What we do section  */
+
+.what-main {
+  border-radius: 20px;
+  border: 1px solid gray;
+  box-shadow: 2px 2px 2px gray, -2px -2px 2px gray;
+  /* box-shadow: 2px 2px 2px gray; */
+  position: relative;
+  padding-bottom: 50px;
+}
+
+.what-head {
+  margin: 3% auto;
+
+}
+
+.what-heading {
+  width: 400px;
+  font-size: 50px;
+  font-weight: 500px;
+  line-height: 60px;
+}
+
+.whatWeDo-main {
+  margin-top: 5%;
+  display: flex;
+  justify-content: space-around;
+  /* padding:30px; */
+  /* box-shadow: 5px 5px 5px gray; */
+}
+
+.what-para {
+  text-align: justify;
+  font-size: 22px;
+  line-height: 34px;
+}
+
+.what-main-content1 {
+  /* border:2px solid black; */
+  width: 500px;
+}
+
+.what-main-content2 {
+  width: 500px;
+  /* border:2px solid black; */
+}
+
+.what-img1 {
+  width: 490px;
+  height: 430px;
+  border-radius: 40px;
+  animation: slide-in 1.5s forwards;
+  animation-delay: 0.5s;
+  /* position: relative; */
+}
+
+/* DRAG CONTENT  */
+.what-drag {
+  margin-top: 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.drag-line {
+  margin-top: 10px;
+  border-radius: 2px;
+  height: 5px;
+  width: 89%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: gray;
+  position: relative;
+}
+
+.drag-img {
+  top: 86.3%;
+  height: 40px;
+  width: 40px;
+  cursor: grab;
+}
+
+
+
+.drag-content {
+  margin: 5px;
+  font-weight: 500;
+  font-size: 15px;
+  position: relative;
+  transition: all 2s ease;
+  /* flex: 0 0 auto;
+  margin: 0 15px;
+  font-weight: 500;
+  font-size: 15px;
+  position: relative;
+  scroll-snap-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap; */
+}
+
+.drag-content.active {
+  transform: translateY(-50px) scale(1.5);
+  color: #E41E25;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.6);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+
+@keyframes moveUp {
+  0% {
+    transform: translateY(0);
+    color: black;
+    transform: scale(1);
+    /* Normal size */
+  }
+
+  50% {
+    transform: translateY(-30px);
+    /* Move up smoothly */
+    color: #E41E25;
+    /* Highlight in red */
+    transform: scale(1.5);
+    /* Enlarges */
+  }
+
+  100% {
+    transform: translateY(0);
+    /* Move back down */
+    color: black;
+    /* Revert color */
+    transform: scale(1);
+    /* Normal size */
+  }
+}
+
+
+
+@keyframes colorChange {
+  0% {
+    color: black;
+  }
+
+  50% {
+    color: red;
+  }
+
+  100% {
+    color: black;
+  }
+}
+
+@keyframes moveLogo {
+  0% {
+    left: 9%;
+    /* animation-delay: s; */
+
+  }
+
+  14% {
+    left: 20%;
+    /* animation-delay: 2s; */
+  }
+
+  28% {
+    left: 36%;
+    /* animation-delay: 2s; */
+
+  }
+
+  42% {
+    left: 50%;
+    /* animation-delay: 2s; */
+
+  }
+
+  57% {
+    left: 61%;
+    /* animation-delay: 2s; */
+
+  }
+
+  71% {
+    left: 75%;
+    /* animation-delay: 2s; */
+
+  }
+
+  /* 85% {
+    left: 92%;
+
+  } */
+  100% {
+    left: 92%;
+    /* animation-delay: 2s; */
+
+  }
+}
+
+
+
+/* Animation for fade-in effect */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+
+/* What we achieved section  */
+.achieved {
+  margin-top: 10%;
+  border: 1px solid rgba(242, 242, 242, 1);
+  margin-bottom: 6%;
+
+  background: rgba(242, 242, 242, 1);
+
+}
+
+.achieved-heading {
+  margin-top: 30px;
+}
+
+
+.achieved-content {
+  margin: 5% auto;
+  background: rgba(242, 242, 242, 1);
+  border-radius: 26px;
+  box-shadow: 18px 18px 10px 0px rgba(234, 234, 234, 1) inset, -18px -18px 10px 0px rgba(242, 242, 242, 1) inset;
+  padding: 20px;
+}
+
+.achieved-para {
+  font-size: 20px;
+  text-align: center;
+  padding: 10px;
+  /* margin-top: 10px; */
+}
+
+.achieved-inside {
+  /* background: linear-gradient(118.34deg, #AD0001 8.28%, #E41E25 73%); */
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  text-align: center;
+  align-items: center;
+  /* margin-bottom: 10%; */
+
+}
+
+.inside-content {
+  background: linear-gradient(118.34deg, #AD0001 8.28%, #E41E25 73%);
+  color: white;
+  padding: 10px;
+  align-content: center;
+  text-align: center;
+  align-items: center;
+  /* justify-content: center; */
+  border-radius: 26px;
+  width: 260px;
+  height: 140px;
+
+}
+
+.inside-num {
+  margin-left: auto;
+  margin-right: auto;
+  width: 68%;
+  font-size: 50px;
+  font-weight: 700;
+  animation: fadeIn 1s ease-in-out;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  /* padding: 0 24px; */
+  /* position: relative; */
+}
+
+#completedProjects,
+#ongoingProjects,
+#expertWorkers,
+#satisfiedCustomers {
+  justify-content: center;
+  /* width:130px; */
+}
+
+.plus-symbol {
+  font-size: 50px;
+  font-weight: 700;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+}
+
+.inside-para {
+  /* font-weight: 500; */
+  font-size: 20px;
+}
+
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive Media Queries */
+/* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
+@media (min-width: 2560px) {
+
+  .about-heading {
+    margin: 3% auto;
+    font-size: 55px;
+    text-align: center;
+  }
+
+  .about-content {
+    gap: 40px;
+  }
+
+  .about-content1-heading {
+    font-size: 60px;
+    font-weight: 500;
+    /* line-height: 62px; */
+  }
+
+  .about-content-para {
+    font-size: 39px;
+    margin-bottom: 20px;
+  }
+
+  .about-content-para-last {
+    margin-bottom: 0px;
+  }
+
+  .about-content2 img {
+    height: 660px;
+    width: 1100px;
+  }
+
+  .heading {
+    font-size: 55px;
+    font-weight: bold;
+    line-height: 51.2px;
+    text-align: center;
+  }
+
+  /* CLIENT  */
+  .client-main {
+    height: auto;
+  }
+
+  .client-content {
+    width: calc(200px * 8 * 3);
+    margin: 25px auto;
+  }
+
+  .client-content1 {
+
+    margin: 25px auto;
+    margin-top: 50px;
+
+    width: calc(200px * 8 * 3);
+  }
+
+  .client-content img,
+  .client-content1 img {
+    padding: 0 20px;
+    height: 140px;
+    width: 350px;
+  }
+
+  .what-main {
+    max-width: 80%;
+  }
+
+
+  .what-heading {
+    width: 506px;
+    font-size: 54px;
+    font-weight: 500;
+    line-height: 60px;
+  }
+
+  .whatWeDo-main {
+    max-width: 87%;
+    /* border: 1px solid red; */
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-around;
+    /* padding: 30px; */
+    /* box-shadow: 5px 5px 5px gray; */
+  }
+
+  .what-main-content1 {
+    /* border: 2px solid black; */
+    width: 630px;
+  }
+
+  .what-main-content2 {
+    width: 500px;
+    margin: auto;
+    align-content: center;
+    /* border: 2px solid black; */
+  }
+
+  .what-img1 {
+    width: 700px;
+    height: 600px;
+    border-radius: 52px;
+    animation: slide-in 1.5s forwards;
+    animation-delay: 0.5s;
+  }
+
+  .what-para {
+    font-size: 35px;
+    line-height: 40px;
+  }
+
+  /* DRAG CONTENT  */
+  .what-drag {
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .whatWeDoDragContainer {
+    max-width: 90%;
+  }
+
+  .drag-content {
+    margin: 5px;
+    font-weight: 500;
+    font-size: 29px;
+    position: relative;
+    transition: all 2s ease;
+  }
+
+  .drag-img {
+    top: 89%;
+    height: 80px;
+    width: 90px;
+    margin-right: 5px;
+    /* border: 1px solid red; */
+  }
+
+  .drag-line {
+    margin-top: 47px;
+    border-radius: 2px;
+    height: 5px;
+    width: 96.8%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: gray;
+    position: relative;
+  }
+
+  .achieved-para {
+    font-size: 35px;
+    text-align: center;
+    padding: 10px;
+    /* margin-top: 10px; */
+  }
+
+
+
+  .achieved-content {
+    max-width: 85%;
+    margin: 5% auto;
+    border-radius: 26px;
+  }
+
+  .inside-content {
+    background: linear-gradient(118.34deg, #AD0001 8.28%, #E41E25 73%);
+    color: white;
+    padding: 10px;
+    align-content: center;
+    text-align: center;
+    align-items: center;
+    /* justify-content: center; */
+    border-radius: 26px;
+    width: 446px;
+    height: 210px;
+  }
+
+  .inside-para {
+    font-size: 35px;
+  }
+
+  .inside-num {
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    font-size: 50px;
+    font-weight: 700;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    /* padding: 0 24px; */
+    /* position: relative; */
+  }
+
+
+
+}
+
+/* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
+@media (min-width: 1440px) and (max-width: 2559px) {}
+
+/* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
+@media (min-width: 992px) and (max-width: 1023px) {
+  .heading {
+    margin: 3% auto;
+    font-size: 35px;
+    text-align: center;
+  }
+
+  .about-content1 {
+    width: 100%;
+  }
+
+  .about-content2 img {
+    height: 500px;
+    width: 100%;
+  }
+
+  .what-drag {
+    text-align: center;
+  }
+
+  .drag-line {
+    width: 90.3%;
+  }
+
+  .drag-img {
+    top: 86.6%;
+    height: 45px;
+    width: 45px;
+    cursor: grab;
+  }
+
+  .drag-content {
+    width: 190px;
+    align-content: center;
+    /* border: 1px solid red; */
+    margin: 15px;
+    font-weight: 500;
+    font-size: 15px;
+    position: relative;
+    transition: all 2s ease;
+  }
+
+  .inside-num,
+  .plus-symbol {
+    font-size: 30px;
+  }
+
+  .inside-content {
+    width: 220px;
+    height: 100px;
+  }
+
+}
+
+/* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
+@media (min-width: 768px) and (max-width: 991px) {
+
+  .heading {
+    margin: 3% auto;
+    font-size: 30px;
+  }
+
+  .about-content {
+    gap: 20px;
+  }
+
+  .about-content1 {
+    width: 100%;
+  }
+
+  .about-content-para {
+    font-size: 18px;
+  }
+
+  .about-content2 img {
+    height: 500px;
+    width: 100%;
+  }
+
+  .whatWeDo-main {
+    margin-top: 5%;
+    gap: 10px;
+  }
+
+  .what-heading {
+    width: 300px;
+    font-size: 38px;
+    font-weight: 500px;
+    line-height: 40px;
+  }
+
+  .whatWeDo-highlight {
+    font-weight: 500;
+  }
+
+  .what-img1 {
+    width: 350px;
+    height: 300px;
+  }
+
+  .drag-line {
+    margin-top: 15px;
+    height: 4px;
+    width: 92%;
+  }
+
+  .drag-content {
+    width: 400px;
+    margin: 5px;
+    text-align: center;
+  }
+
+  .what-drag {
+    padding: 0px;
+    margin-top: 9%;
+    justify-content: space-evenly;
+    gap: 10px;
+  }
+
+  .what-para {
+    font-size: 17px;
+    line-height: 24px;
+  }
+
+  .drag-img {
+    top: 83.8%;
+    height: 40px;
+    width: 40px;
+  }
+
+  .achieved-inside {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+  }
+
+  .inside-content {
+    padding: 0px;
+    width: 175px;
+    height: 90px;
+    /* border: 1px solid blue; */
+  }
+
+
+  .achieved-para {
+    font-size: 16px;
+    padding: 5px;
+  }
+
+  .inside-para {
+    font-size: 15px;
+  }
+
+  .inside-num,
+  .plus-symbol {
+    font-size: 20px;
+  }
+
+
+
+}
+
+/* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
+@media (min-width: 480px) and (max-width: 767px) {
+
+  .heading {
+    margin: 4% auto;
+    font-size: 30px;
+  }
+
+  .about-content-para {
+    font-size: 18px;
+    text-align: justify;
+    margin-bottom: 0px;
+  }
+
+
+  .about-content {
+    flex-wrap: wrap;
+  }
+
+
+  .about-content1 {
+    width: 100%;
+  }
+
+  .client-main {
+    height: 250px;
+  }
+
+  .about-content2 img {
+    height: 500px;
+    width: 100%;
+    margin-bottom: 25px;
+  }
+
+  .client-content {
+    margin-top: 5px;
+  }
+
+  .client-content img,
+  .client-content1 img {
+    padding: 0 20px;
+    height: 80px;
+    width: 195px;
+  }
+
+  .what-main {
+    width: 98%;
+  }
+
+  .whatWeDo-main {
+    margin-top: 5%;
+    gap: 10px;
+  }
+
+  .what-heading {
+    text-align: center;
+    width: auto;
+    font-size: 38px;
+    font-weight: 500px;
+    line-height: 40px;
+  }
+
+  .whatWeDo-main {
+    flex-wrap: wrap;
+  }
+
+  .whatWeDo-highlight {
+    font-weight: 500;
+  }
+
+  .what-main-content2 {
+    width: auto;
+
+  }
+
+  .what-img1 {
+    width: 350px;
+    height: 300px;
+  }
+
+  .drag-line {
+    margin-top: 20px;
+    height: 3px;
+    width: 96.7%;
+  }
+
+
+  .drag-content {
+    font-size: 11px;
+    /* border: 1px solid blue; */
+    width: 100px;
+    margin: 0px;
+    text-align: center;
+  }
+
+  .what-drag {
+    padding: 0px;
+    margin-top: 11%;
+    justify-content: space-around;
+    /* flex-wrap: wrap; */
+    gap: 11px;
+  }
+
+  .what-para {
+    text-align: justify;
+    width: auto;
+    height: 120px;
+    /* border: 1px solid red; */
+    font-size: 17px;
+    line-height: 22px;
+  }
+
+  .drag-img {
+    top: 88.5%;
+    height: 35px;
+    width: 40px;
+  }
+
+  .mobile-drag-container {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 5%;
+  }
+
+  .mobile-drag-scroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 15px;
+    scrollbar-width: none;
+  }
+
+  .mobile-drag-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-drag-content {
+    flex: 0 0 auto;
+    margin: 0 15px;
+    font-weight: 500;
+    font-size: 14px;
+    position: relative;
+    scroll-snap-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+  }
+
+  .mobile-drag-content.active {
+    background: rgba(228, 30, 37, 0.1);
+    color: #E41E25;
+    font-weight: bold;
+    transform: scale(1.1);
+  }
+
+  /* Adjust the visible items - show 3 by default */
+  .mobile-drag-content {
+    min-width: calc(33.33% - 30px);
+    text-align: center;
+  }
+
+  /* Hide the original drag elements on mobile */
+  .what-drag,
+  .whatWeDoDragContainer {
+    display: none;
+  }
+
+
+
+
+  .achieved-inside {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .inside-content {
+
+    padding: 0px;
+    width: 195px;
+    height: 90px;
+    /* border: 1px solid blue; */
+  }
+
+  .achieved-para {
+    font-size: 15px;
+    padding: 5px;
+  }
+
+  .inside-para {
+    font-size: 16px;
+  }
+
+  .inside-num,
+  .plus-symbol {
+    font-size: 22px;
+  }
+
+}
+
+/* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
+@media (min-width: 425px) and (max-width: 479px) {
+
+  .heading {
+    margin: 4% auto;
+    font-size: 30px;
+  }
+
+  .about-content1-heading {
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 15px;
+  }
+
+  .about-content-para {
+    font-size: 18px;
+    text-align: justify;
+    margin-bottom: 0px;
+
+  }
+
+
+  .about-content {
+    flex-wrap: wrap;
+  }
+
+
+  .about-content1 {
+    width: 100%;
+  }
+
+  .client-main {
+    height: 250px;
+  }
+
+  .about-content2 img {
+    height: 500px;
+    width: 100%;
+    margin-bottom: 25px;
+  }
+
+  .client-content {
+    margin-top: 5px;
+  }
+
+  .client-content img,
+  .client-content1 img {
+    padding: 0 20px;
+    height: 80px;
+    width: 195px;
+  }
+
+
+  .what-main {
+    width: 98%;
+  }
+
+  .whatWeDo-main {
+    margin-top: 5%;
+    gap: 10px;
+  }
+
+  .what-heading {
+    width: auto;
+    text-align: center;
+    /* width: 300px; */
+    font-size: 38px;
+    font-weight: 500px;
+    line-height: 40px;
+  }
+
+  .whatWeDo-main {
+    flex-wrap: wrap;
+  }
+
+  .whatWeDo-highlight {
+    font-weight: 500;
+  }
+
+  .what-main-content2 {
+    width: auto;
+
+  }
+
+  .what-img1 {
+    width: 350px;
+    height: 300px;
+  }
+
+  .drag-line {
+    margin-top: 20px;
+    height: 3px;
+    width: 98.7%;
+  }
+
+
+  .drag-content {
+    font-size: 11px;
+    /* border: 1px solid blue; */
+    width: 100px;
+    margin: 0px;
+    text-align: center;
+  }
+
+  .what-drag {
+    padding: 0px;
+    margin-top: 11%;
+    justify-content: space-around;
+    /* flex-wrap: wrap; */
+    gap: 11px;
+  }
+
+  .what-para {
+    width: auto;
+    height: 110px;
+    /* border: 1px solid red; */
+    font-size: 17px;
+    line-height: 22px;
+  }
+
+  .drag-img {
+    top: 88.5%;
+    height: 35px;
+    width: 40px;
+  }
+
+
+  .mobile-drag-container {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 5%;
+  }
+
+  .mobile-drag-scroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 15px;
+    scrollbar-width: none;
+  }
+
+  .mobile-drag-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-drag-content {
+    flex: 0 0 auto;
+    margin: 0 15px;
+    font-weight: 500;
+    font-size: 14px;
+    position: relative;
+    scroll-snap-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+  }
+
+  .mobile-drag-content.active {
+    background: rgba(228, 30, 37, 0.1);
+    color: #E41E25;
+    font-weight: bold;
+    transform: scale(1.1);
+  }
+
+  /* Adjust the visible items - show 3 by default */
+  .mobile-drag-content {
+    min-width: calc(33.33% - 30px);
+    text-align: center;
+  }
+
+  /* Hide the original drag elements on mobile */
+  .what-drag,
+  .whatWeDoDragContainer {
+    display: none;
+  }
+
+
+  .achieved-content {
+    margin: 4% auto;
+    padding: 15px;
+  }
+
+  .achieved-inside {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .inside-content {
+
+    padding: 0px;
+    width: 172px;
+    height: 80px;
+    border-radius: 15px;
+    /* border: 1px solid blue; */
+  }
+
+
+  .achieved-para {
+    font-size: 15px;
+    text-align: justify;
+    padding: 5px;
+  }
+
+  .inside-para {
+    font-size: 15px;
+  }
+
+  .inside-num,
+  .plus-symbol {
+    font-size: 22px;
+  }
+}
+
+/* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
+@media (min-width: 375px) and (max-width: 424px) {
+
+  .heading {
+    margin: 12% auto;
+    font-size: 30px;
+    line-height: 35.2px;
+  }
+
+  .about-content1-heading {
+    font-size: 30px;
+    font-weight: 500;
+    /* line-height: 62px; */
+    margin-bottom: 10px;
+  }
+
+  .about-content-para {
+    font-size: 17px;
+    text-align: justify;
+    margin-bottom: 0px;
+  }
+
+
+  .about-content {
+    flex-wrap: wrap;
+  }
+
+
+  .about-content1 {
+    width: 100%;
+  }
+
+  .client-main {
+    height: 220px;
+  }
+
+
+  .about-content2 img {
+    height: 500px;
+    width: 100%;
+    margin-bottom: 25px;
+  }
+
+  .client-content {
+    margin-top: 5px;
+  }
+
+  .client-content img,
+  .client-content1 img {
+    padding: 0 20px;
+    height: 70px;
+    width: 195px;
+  }
+
+
+  .what-main {
+    width: 95%;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+  }
+
+  .whatWeDo-main {
+    margin-top: 5%;
+    gap: 10px;
+  }
+
+  .what-heading {
+    width: auto;
+    text-align: center;
+    /* width: 300px; */
+    font-size: 35px;
+    font-weight: 500px;
+    line-height: 40px;
+  }
+
+  .whatWeDo-main {
+    flex-wrap: wrap;
+  }
+
+  .whatWeDo-highlight {
+    font-weight: 500;
+  }
+
+  .what-main-content2 {
+    width: auto;
+  }
+
+  .what-img1 {
+    width: 320px;
+    height: 300px;
+    border-radius: 25x;
+  }
+
+
+  .what-para {
+    width: auto;
+    height: 110px;
+    /* border: 1px solid red; */
+    font-size: 17px;
+    line-height: 22px;
+  }
+
+  .drag-img {
+    top: 88.5%;
+    height: 35px;
+    width: 40px;
+  }
+
+  .mobile-drag-container {
+    width: 91%;
+    overflow: hidden;
+    margin: 12% auto;
+  }
+
+  .mobile-drag-scroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    /* padding-bottom: 15px; */
+    scrollbar-width: none;
+  }
+
+
+  .mobile-drag-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-drag-content {
+    flex: 0 0 auto;
+    margin: 0 15px;
+    font-weight: 500;
+    font-size: 13px;
+    position: relative;
+    scroll-snap-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+  }
+
+  .mobile-drag-content.active {
+    background: rgba(228, 30, 37, 0.1);
+    color: #E41E25;
+    font-weight: bold;
+    transform: scale(1.1);
+  }
+
+  /* Adjust the visible items - show 3 by default */
+  .mobile-drag-content {
+    min-width: calc(33.33% - 30px);
+    text-align: center;
+  }
+
+  /* Hide the original drag elements on mobile */
+  .what-drag,
+  .whatWeDoDragContainer {
+    display: none;
+  }
+
+
+  .achieved {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .achieved-content {
+    margin: 4% auto;
+    padding: 13px;
+  }
+
+  .achieved-inside {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .inside-content {
+    padding: 0px;
+    width: 155px;
+    height: 80px;
+    border-radius: 14px;
+    /* border: 1px solid blue; */
+  }
+
+
+  .achieved-para {
+    font-size: 15px;
+    text-align: justify;
+    padding: 5px;
+  }
+
+  .inside-para {
+    font-size: 14px;
+  }
+
+  .inside-num,
+  .plus-symbol {
+    font-size: 20px;
+  }
+
+}
+
+/* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
+@media (min-width: 360px) and (max-width: 374px) {
+  .heading {
+    margin: 11% auto;
+    font-size: 30px;
+    line-height: 35.2px;
+  }
+
+  .about-content1-heading {
+    font-size: 28px;
+    font-weight: 500;
+    /* line-height: 62px; */
+    margin-bottom: 12px;
+  }
+
+  .about-content-para {
+    font-size: 16px;
+    text-align: justify;
+    margin-bottom: 0px;
+  }
+
+
+  .about-content {
+    flex-wrap: wrap;
+  }
+
+
+  .about-content1 {
+    width: 100%;
+  }
+
+  .client-main {
+    height: 210px;
+  }
+
+
+  .about-content2 img {
+    height: 500px;
+    width: 100%;
+    margin-bottom: 25px;
+  }
+
+  .client-content {
+    margin-top: 5px;
+  }
+
+  .client-content img,
+  .client-content1 img {
+    padding: 0 20px;
+    height: 65px;
+    width: 195px;
+  }
+
+
+  .what-main {
+    width: 95%;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+  }
+
+  .whatWeDo-main {
+    margin-top: 5%;
+    gap: 10px;
+  }
+
+  .what-heading {
+    width: auto;
+    text-align: center;
+    /* width: 300px; */
+    font-size: 33px;
+    font-weight: 500px;
+    line-height: 35px;
+  }
+
+  .whatWeDo-main {
+    flex-wrap: wrap;
+  }
+
+  .whatWeDo-highlight {
+    font-weight: 500;
+  }
+
+  .what-main-content2 {
+    width: auto;
+  }
+
+  .what-img1 {
+    width: 300px;
+    height: 280px;
+    border-radius: 15x;
+  }
+
+
+
+  .what-para {
+    width: auto;
+    height: 110px;
+    /* border: 1px solid red; */
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .drag-img {
+    top: 88.5%;
+    height: 35px;
+    width: 40px;
+  }
+
+  .mobile-drag-container {
+    width: 91%;
+    overflow: hidden;
+    margin: 10% auto;
+  }
+
+  .mobile-drag-scroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    /* padding-bottom: 15px; */
+    scrollbar-width: none;
+  }
+
+
+  .mobile-drag-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-drag-content {
+    flex: 0 0 auto;
+    margin: 0 15px;
+    font-weight: 500;
+    font-size: 13px;
+    position: relative;
+    scroll-snap-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+  }
+
+  .mobile-drag-content.active {
+    background: rgba(228, 30, 37, 0.1);
+    color: #E41E25;
+    font-weight: bold;
+    transform: scale(1.1);
+  }
+
+  /* Adjust the visible items - show 3 by default */
+  .mobile-drag-content {
+    min-width: calc(33.33% - 30px);
+    text-align: center;
+  }
+
+  /* Hide the original drag elements on mobile */
+  .what-drag,
+  .whatWeDoDragContainer {
+    display: none;
+  }
+
+
+  .achieved {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .achieved-content {
+    margin: 4% auto;
+    padding: 13px;
+  } 
+
+  .achieved-inside {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .inside-content {
+    padding: 0px;
+    width: 146px;
+    height: 80px;
+    border-radius: 14px;
+    /* border: 1px solid blue; */
+  }
+
+
+  .achieved-para {
+    font-size: 14px;
+    text-align: justify;
+    padding: 5px;
+  }
+
+  .inside-para {
+    font-size: 14px;
+  }
+
+  .inside-num,
+  .plus-symbol {
+    font-size: 19px;
+  }
+
+}
+
+@media (min-width: 320px) and (max-width: 359px) {
+  .heading {
+    margin: 10% auto;
+    font-size: 27px;
+    line-height: 32.2px;
+  }
+
+  .about-content1-heading {
+    font-size: 28px;
+    font-weight: 500;
+    /* line-height: 62px; */
+    margin-bottom: 12px;
+  }
+
+  .about-content-para {
+    font-size: 15px;
+    text-align: justify;
+    margin-bottom: 0px;
+  }
+
+
+  .about-content {
+    flex-wrap: wrap;
+  }
+
+
+  .about-content1 {
+    width: 100%;
+  }
+
+  .client-main {
+    height: 200px;
+  }
+
+
+  .about-content2 img {
+    height: 350px;
+    width: 100%;
+    margin-bottom: 25px;
+  }
+
+  .client-content {
+    margin-top: 5px;
+  }
+
+  .client-content img,
+  .client-content1 img {
+    padding: 0 20px;
+    height: 65px;
+    width: 195px;
+  }
+
+
+  .what-main {
+    width: 95%;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+  }
+
+  .whatWeDo-main {
+    margin-top: 5%;
+    gap: 0px;
+  }
+
+  .what-heading {
+    width: auto;
+    text-align: center;
+    /* width: 300px; */
+    font-size: 30px;
+    font-weight: 500px;
+    line-height: 30px;
+  }
+
+  .whatWeDo-main {
+    flex-wrap: wrap;
+  }
+
+  .whatWeDo-highlight {
+    font-weight: 500;
+  }
+
+  .what-main-content2 {
+    width: auto;
+  }
+
+  .what-img1 {
+    width: 270px;
+    height: 260px;
+    border-radius: 15x;
+  }
+
+  .what-para {
+    width: auto;
+    height: 115px;
+    /* border: 1px solid red; */
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .drag-img {
+    top: 88.5%;
+    height: 35px;
+    width: 40px;
+  }
+
+  .mobile-drag-container {
+    width: 91%;
+    overflow: hidden;
+    margin: 13% auto;
+  }
+
+  .mobile-drag-scroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    /* padding-bottom: 15px; */
+    scrollbar-width: none;
+  }
+
+
+  .mobile-drag-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-drag-content {
+    flex: 0 0 auto;
+    margin: 0 15px;
+    font-weight: 500;
+    font-size: 13px;
+    position: relative;
+    scroll-snap-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+  }
+
+  .mobile-drag-content.active {
+    background: rgba(228, 30, 37, 0.1);
+    color: #E41E25;
+    font-weight: bold;
+    transform: scale(1.1);
+  }
+
+  /* Adjust the visible items - show 3 by default */
+  .mobile-drag-content {
+    min-width: calc(33.33% - 30px);
+    text-align: center;
+  }
+
+  /* Hide the original drag elements on mobile */
+  .what-drag,
+  .whatWeDoDragContainer {
+    display: none;
+  }
+
+
+  .achieved {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .achieved-content {
+    margin: 4% auto;
+    padding: 10px;
+  }
+
+  .achieved-inside {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .inside-content {
+    padding: 0px;
+    width: 138px;
+    height: 80px;
+    border-radius: 13px;
+    /* border: 1px solid blue; */
+  }
+
+
+  .achieved-para {
+    font-size: 14px;
+    text-align: justify;
+    padding: 5px;
+  }
+
+  .inside-para {
+    font-size: 13px;
+  }
+
+  .inside-num,
+  .plus-symbol {
+    font-size: 18px;
+  }
+
+}
+
+
+@keyframes slideFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+
+@keyframes slideFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+

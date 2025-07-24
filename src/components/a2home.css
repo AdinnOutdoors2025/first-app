@@ -1,0 +1,828 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+  /* overflow: hidden; */
+}
+
+.highlight {
+  /* color: red; */
+  color: rgba(228, 30, 37, 1);
+
+}
+
+.heading {
+  font-size: 42px;
+  font-weight: bold;
+  line-height: 51.2px;
+  text-align: center;
+}
+
+
+
+#root {
+  width: 100%;
+}
+
+/* .billboard-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  } */
+
+.slick-slide>div {
+  margin: 0 20px;
+  cursor: grab;
+}
+
+.prime {
+  margin-top: 60px;
+  margin-bottom: 80px;
+  /* overflow: visible; */
+}
+
+.billboard-card {
+  background: linear-gradient(94.12deg, #FFE2E3 66.96%, #FFFFFF 99.86%);
+  height: 380px;
+  border: 1px solid #d51212;
+  border-radius: 26px;
+  width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card-img-top1-home {
+  height: 200px;
+  border-radius: 16px;
+  width: 100%;
+  object-fit: cover;
+  border-top-left-radius: 26px;
+  border-top-right-radius: 26px;
+  position: relative;
+}
+
+.board-category1-home {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  font-size: 20px;
+  background-color: white;
+  display: none;
+  color: red;
+}
+
+.board-loc-home {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21.94px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: rgba(51, 51, 51, 1);
+}
+
+.board-content-home {
+  padding: 20px 15px 30px 15px;
+}
+
+.board-content-home-top {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 50px;
+
+}
+
+.board-content-home-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* height: 70px; */
+
+}
+
+.board-dim-home {
+  font-size: 15px;
+  font-weight: 500;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  float: right;
+  height: 28px;
+  width: 80px;
+  padding: 2px;
+  border-radius: 6px;
+  background: rgba(228, 30, 37, 1);
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.board-price-home {
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(228, 30, 37, 1);
+}
+
+.board-btn1-home {
+  margin: 10px 42px;
+  background: linear-gradient(118.34deg, #AD0001 8.28%, #E41E25 73%);
+  border-image: conic-gradient(from 37.84deg at 49.09% 34.62%, #FFFFFF -0.85deg, #E31F25 11.37deg, #FFFFFF 125.18deg, #E31F25 234.36deg, #FFFFFF 359.15deg, #E31F25 371.37deg);
+  border-radius: 30px;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  border: none;
+  padding: 10px 80px;
+  cursor: pointer;
+}
+
+.stars-home {
+  font-size: 15px;
+  background: linear-gradient(124.03deg, #FFC700 7.19%, #FFA945 132%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fa-star-half-alt {
+  background: linear-gradient(124.03deg, #FFC700 7.19%, #FFA945 132%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.empty-star-home {
+  font-size: 15px;
+  background: linear-gradient(124.03deg, rgba(255, 199, 0, 0.5) 7.19%, rgba(255, 169, 69, 0.5) 132%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rate-board-home {
+  float: right;
+  height: 30px;
+  width: 90px;
+  position: relative;
+}
+
+.rates-home {
+  position: absolute;
+  bottom: 88px;
+  left: 300px;
+}
+
+.custom-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+  color: red;
+  /* width: 40px;
+  height: 40px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* color: white; */
+  font-size: 40px;
+  transition: transform 0.3s;
+}
+
+.custom-arrow:hover {
+  transform: translateY(-50%) scale(1);
+  /* Add a hover effect */
+}
+
+.next-arrow {
+  right: 10px;
+  /* Adjust position for "next" */
+}
+
+.prev-arrow {
+  left: 10px;
+  /* Adjust position for "prev" */
+}
+
+.info-btn {
+  z-index: 30;
+  /* Default stacking value */
+}
+
+.billboard-info {
+  z-index: 1;
+  /* Default stacking value */
+}
+
+.slick-slide {
+  transform: scale(0.8);
+  transition: all 1s ease;
+}
+
+.slick-center {
+  opacity: 1;
+  transform: scale(1.0);
+  z-index: 2;
+}
+
+.billboard-card {
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+
+
+/* Responsive Media Queries */
+/* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
+@media (min-width: 2560px) {
+
+  .billboard-card {
+    height: 535px;
+    max-width: 100%;
+  }
+
+  .board-content-home {
+    padding: 20px;
+  }
+
+  .card-img-top1-home {
+    height: 280px;
+    width: 100%;
+    object-fit: cover;
+    border-top-left-radius: 26px;
+    border-top-right-radius: 26px;
+    position: relative;
+  }
+
+  .board-content-home-top {
+    height: 85px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .board-loc-home {
+    font-size: 30px;
+    width: 650px;
+    /* border: 1px solid red; */
+    font-weight: 500;
+    line-height: 21.94px;
+  }
+
+  .board-dim-home {
+    font-size: 28px;
+    font-weight: 500;
+    height: 55px;
+    width: 120px;
+    padding: 2px;
+  }
+
+  .board-price-home {
+    font-size: 32px;
+    font-weight: 600;
+    color: rgba(228, 30, 37, 1);
+  }
+
+  .rate-board-home {
+    float: right;
+    height: 55px;
+    width: 175px;
+    position: relative;
+  }
+
+  .rates-home {
+    position: absolute;
+    bottom: 116px;
+    left: 650px;
+  }
+
+  .stars-home,
+  .empty-star-home {
+    font-size: 27px;
+  }
+
+  .board-btn1-home {
+    margin: -83px 28%;
+    font-size: 26px;
+    font-weight: 500;
+    padding: 13px 96px;
+    margin-top: 10px;
+  }
+
+  .custom-arrow {
+    width: 70px;
+    font-size: 60px;
+  }
+}
+
+/* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
+@media (min-width: 1440px) and (max-width: 2559px) {
+
+  .board-content-home {
+    padding: 15px;
+  }
+
+  .board-content-home-top {
+    height: 70px;
+    gap: 10px;
+  }
+
+  .board-loc-home {
+    font-size: 17px;
+    width: 350px;
+    /* border: 1px solid red; */
+    font-weight: 500;
+    line-height: 19.94px;
+  }
+
+  .rates-home {
+    position: absolute;
+    bottom: 73px;
+    left: 358px;
+  }
+
+  .board-btn1-home {
+    margin: 4px 17%;
+    /* margin-top: 10px; */
+  }
+
+
+
+
+}
+
+/* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
+@media (min-width: 992px) and (max-width: 1023px) {
+  .billboard-card {
+    height: 380px;
+    max-width: 100%;
+  }
+
+  .board-content-home {
+    padding: 13px;
+  }
+
+  .board-content-home-top {
+    height: 70px;
+    gap: 5px;
+    /* border: 1px solid red; */
+  }
+
+  .board-loc-home {
+    font-size: 14px;
+    font-weight: 500;
+    width: 250px;
+    line-height: 15.94px;
+  }
+
+  .board-dim-home {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .board-price-home {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .rates-home {
+    display: flex;
+    position: absolute;
+    bottom: 80.3px;
+    left: 213px;
+  }
+
+  .stars-home,
+  .empty-star-home {
+    font-size: 14px;
+  }
+
+  .board-btn1-home {
+    font-size: 15px;
+    margin: 4px 4%;
+    margin-top: 10px;
+  }
+
+}
+
+/* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
+@media (min-width: 768px) and (max-width: 991px) {
+
+
+  .billboard-card {
+    height: 350px;
+    width: 800px;
+  }
+
+  .card-img-top1-home {
+    height: 180px;
+  }
+
+  .board-content-home {
+    padding: 8px;
+  }
+
+  .board-content-home-top {
+    height: 80px;
+    gap: 2px;
+    /* border: 1px solid red; */
+  }
+
+  .board-loc-home {
+    font-size: 13px;
+    font-weight: 500;
+    width: 200px;
+    line-height: 13.94px;
+    /* border: 1px solid red; */
+  }
+
+  .board-dim-home {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .board-price-home {
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .rate-board-home {
+    height: 28px;
+    width: 85px;
+  }
+
+  .rates-home {
+    display: flex;
+    position: absolute;
+    bottom: 65.3px;
+    left: 146px;
+  }
+
+  .stars-home,
+  .empty-star-home {
+    font-size: 14px;
+  }
+
+  .board-btn1-home {
+    font-size: 14px;
+    margin: 4px 11%;
+    margin-top: 10px;
+    padding: 4% 20%;
+  }
+
+  .custom-arrow {
+    font-size: 40px;
+  }
+}
+
+/* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
+@media (min-width: 480px) and (max-width: 767px) {
+  .board-content-home {
+    padding: 10px;
+  }
+
+  .board-content-home-top {
+    height: 90px;
+    /* border: 1px solid red; */
+    gap: 5px;
+  }
+
+  .card-img-top1-home {
+    height: 180px;
+  }
+
+  .board-loc-home {
+    font-size: 15px;
+    /* font-weight: 500; */
+    width: 260px;
+    line-height: 17.94px;
+    /* border: 1px solid red; */
+  }
+
+  .board-dim-home {
+    width: auto;
+    padding: 3px 7px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .board-price-home {
+    font-size: 18px;
+  }
+
+  .rate-board-home {
+    height: 30px;
+    width: 85px;
+  }
+
+  .rates-home {
+    display: flex;
+    position: absolute;
+    bottom: 83px;
+    left: 288px;
+  }
+
+  .stars-home,
+  .empty-star-home {
+    font-size: 14px;
+  }
+
+  .board-btn1-home {
+    font-size: 16px;
+    margin: 4px 16%;
+    margin-top: 10px;
+    padding: 3% 21%;
+  }
+
+  .custom-arrow {
+    font-size: 40px;
+  }
+
+}
+
+/* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
+@media (min-width: 425px) and (max-width: 479px) {
+  .billboard-card {
+    height: 365px;
+  }
+
+
+  .board-content-home {
+    padding: 8px;
+  }
+
+  .board-content-home-top {
+    height: 80px;
+    /* border: 1px solid red; */
+    gap: 5px;
+  }
+
+  .card-img-top1-home {
+    height: 180px;
+  }
+
+  .board-loc-home {
+    font-size: 15px;
+    /* font-weight: 500; */
+    width: 210px;
+    line-height: 17.94px;
+    /* border: 1px solid red; */
+  }
+
+  .board-dim-home {
+    width: auto;
+    padding: 3px 7px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .board-price-home {
+    font-size: 19px;
+  }
+
+  .rate-board-home {
+    height: 30px;
+    width: 85px;
+  }
+
+  .rates-home {
+    display: flex;
+    position: absolute;
+    bottom: 80px;
+    left: 235px;
+  }
+
+  .stars-home,
+  .empty-star-home {
+    font-size: 14px;
+  }
+
+  .board-btn1-home {
+    font-size: 16px;
+    margin: 4px 13%;
+    margin-top: 10px;
+    padding: 3.5% 21%;
+  }
+
+  .custom-arrow {
+    font-size: 40px;
+  }
+
+}
+
+/* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
+@media (min-width: 375px) and (max-width: 424px) {
+  .prime {
+    margin-top: 40px;
+    margin-bottom: 45px;
+    /* overflow: visible; */
+  }
+
+  .billboard-card {
+    height: 358px;
+  }
+
+  .board-content-home {
+    padding: 8px;
+  }
+
+  .board-content-home-top {
+    height: 75px;
+    /* border: 1px solid red; */
+    gap: 5px;
+  }
+
+  .card-img-top1-home {
+    height: 180px;
+  }
+
+  .board-loc-home {
+    font-size: 14px;
+    /* font-weight: 500; */
+    width: 210px;
+    line-height: 16.94px;
+    /* border: 1px solid red; */
+  }
+
+  .board-dim-home {
+    width: auto;
+    padding: 3px 5px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .board-price-home {
+    font-size: 18px;
+  }
+
+  .rate-board-home {
+    height: 30px;
+    width: 85px;
+  }
+
+  .rates-home {
+    display: flex;
+    position: absolute;
+    bottom: 77.8px;
+    left: 225px;
+  }
+
+  .stars-home,
+  .empty-star-home {
+    font-size: 14px;
+  }
+
+  .board-btn1-home {
+    font-size: 15px;
+    margin: 4px 10%;
+    margin-top: 10px;
+    padding: 3.5% 21%;
+  }
+
+  .custom-arrow {
+    font-size: 35px;
+  }
+}
+
+/* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
+@media (min-width: 360px) and (max-width: 374px) {
+  .prime {
+    margin-top: 40px;
+    margin-bottom: 45px;
+    /* overflow: visible; */
+  }
+
+  .billboard-card {
+    height: 335px;
+  }
+
+  .board-content-home {
+    padding: 8px;
+  }
+
+  .board-content-home-top {
+    height: 65px;
+    /* border: 1px solid red; */
+    gap: 5px;
+  }
+
+  .card-img-top1-home {
+    height: 170px;
+  }
+
+  .board-loc-home {
+    font-size: 13px;
+    /* font-weight: 500; */
+    width: 165px;
+    line-height: 16.94px;
+    /* border: 1px solid red; */
+  }
+
+  .board-dim-home {
+    width: auto;
+    padding: 1px 5px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .board-price-home {
+    font-size: 18px;
+  }
+
+  .rate-board-home {
+    height: 30px;
+    width: 85px;
+  }
+
+  .rates-home {
+    display: flex;
+    position: absolute;
+    bottom: 75.5px;
+    left: 210px;
+  }
+
+  .stars-home,
+  .empty-star-home {
+    font-size: 14px;
+  }
+
+  .board-btn1-home {
+    font-size: 15px;
+    margin: 4px 10%;
+    margin-top: 10px;
+    padding: 3.5% 21%;
+  }
+
+  .custom-arrow {
+    font-size: 35px;
+  }  
+}
+
+@media (min-width: 320px) and (max-width: 359px) {
+ .prime {
+    margin-top: 40px;
+    margin-bottom: 45px;
+    /* overflow: visible; */
+  }
+
+  .billboard-card {
+    height: 335px;
+  }
+
+  .board-content-home {
+    padding: 8px;
+  }
+
+  .board-content-home-top {
+    height: 65px;
+    /* border: 1px solid red; */
+    gap: 5px;
+  }
+
+  .card-img-top1-home {
+    height: 170px;
+  }
+
+  .board-loc-home {
+    font-size: 13px;
+    /* font-weight: 500; */
+    width: 165px;
+    line-height: 16.94px;
+    /* border: 1px solid red; */
+  }
+
+  .board-dim-home {
+    width: auto;
+    padding: 1px 5px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .board-price-home {
+    font-size: 18px;
+  }
+
+  .rate-board-home {
+    height: 30px;
+    width: 85px;
+  }
+
+  .rates-home {
+    display: flex;
+    position: absolute;
+    bottom: 75.5px;
+    left: 170px;
+  }
+
+  .stars-home,
+  .empty-star-home {
+    font-size: 14px;
+  }
+
+  .board-btn1-home {
+    font-size: 15px;
+    margin: 4px 8%;
+    margin-top: 10px;
+    padding: 3.5% 21%;
+  }
+
+  .custom-arrow {
+    font-size: 35px;
+  }     
+
+}

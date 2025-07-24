@@ -1,0 +1,1937 @@
+* {
+    font-family: Montserrat;
+}
+
+.login-mainn1 {
+    padding: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 350px;
+    text-align: center;
+    /* overflow-y: auto; */
+}
+
+.login-lower1 {
+    padding: 8px;
+}
+
+.verification {
+    color: rgba(51, 51, 51, 1);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 21.94px;
+    letter-spacing: 0%;
+}
+
+.verification_msg {
+    height: 90px;
+    width: 110px;
+    margin: 8x auto;
+}
+
+.input-phone {
+    margin-right: 21px;
+    width: 256px;
+    border: none;
+    border-bottom: 2px solid #8F8F8F;
+    backdrop-filter: blur(20px);
+    box-shadow: 0px 0px 14px 0px #89EDE91F;
+    outline: none;
+    margin-top: 20px;
+    color: rgba(51, 51, 51, 1);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 14.63px;
+    letter-spacing: 0%;
+    text-align: left;
+}
+
+.input-phone::placeholder {
+    color: rgba(167, 174, 187, 1);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 14.63px;
+    letter-spacing: 0%;
+    text-align: left;
+}
+
+.input-phone.focused {
+    border-bottom: 2px solid #8F8F8F;
+    box-shadow: 0px 0px 14px 0px #89EDE91F;
+    text-align: left;
+}
+
+
+.input-phone::-webkit-outer-spin-button,
+.input-phone::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-phone {
+    -moz-appearance: textfield;
+}
+
+.reach-msg {
+    color: #333333;
+    font-weight: 500;
+    font-size: 12px;
+    margin-top: 9px;
+    /* line-height: 14.63px; */
+    letter-spacing: 0%;
+}
+
+.continue-btn1 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 283px;
+    height: 51px;
+    color: rgba(255, 255, 255, 1);
+    font-weight: 600;
+    font-size: 27px;
+    line-height: 32.91px;
+    letter-spacing: 0%;
+    text-align: center;
+    border: none;
+    border-radius: 32px;
+    background: linear-gradient(0deg, rgba(237, 237, 237, 0.1), rgba(237, 237, 237, 0.1)),
+        linear-gradient(0deg, #E31F25, #E31F25);
+    backdrop-filter: blur(20px);
+    box-shadow: 0px 0px 14px 0px rgba(137, 237, 233, 0.12);
+}
+
+/* OTP SECOND PAGE  */
+.OTP_check-img {
+    height: 105px;
+    width: 110px;
+    margin: 5px auto;
+}
+
+.OTP_msg {
+    color: rgba(51, 51, 51, 1);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 21.94px;
+    letter-spacing: 0%;
+}
+
+.OTP_msg1 {
+    color: rgba(228, 30, 37, 1);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 21.94px;
+    letter-spacing: 0%;
+    cursor: pointer;
+}
+
+.OTP_line {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.Otp_entered {
+    height: 25px;
+    width: 25px;
+    border: none;
+    border-bottom: 1px solid rgba(143, 143, 143, 1);
+    backdrop-filter: blur(20px);
+    box-shadow: 0px 0px 14px 0px rgba(137, 237, 233, 0.12);
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 26.82px;
+    letter-spacing: 0%;
+    text-align: center;
+    color: rgba(51, 51, 51, 1);
+}
+
+/* When input is focused */
+.Otp_entered:focus {
+    border-bottom: 1px solid rgba(143, 143, 143, 1);
+    outline: none;
+    /* Removes default focus outline */
+}
+
+.Otp_resends {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 14.63px;
+    letter-spacing: 0%;
+    color: rgba(51, 51, 51, 1);
+    margin: 7px 65px;
+    float: left;
+}
+
+/* OTP THIRD PAGE  */
+
+.OTP_msg2 {
+    color: rgb(51, 51, 51);
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 21.94px;
+    letter-spacing: 0%;
+    text-align: center;
+}
+
+.Otp_resends1 {
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 14.63px;
+    letter-spacing: 0%;
+    color: rgba(227, 31, 37, 1);
+    margin: 7px 65px;
+    float: left;
+}
+
+.Otp_resends2 {
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 14.63px;
+    letter-spacing: 0%;
+    color: rgba(227, 31, 37, 1);
+    margin: 7px 65px;
+    float: left;
+
+}
+
+.Otp_enter1 {
+    height: 25px;
+    width: 25px;
+    border-bottom: 1px solid rgba(227, 31, 37, 1);
+    backdrop-filter: blur(20px);
+    box-shadow: 0px 0px 14px 0px rgba(137, 237, 233, 0.12);
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 26.82px;
+    letter-spacing: 0%;
+    text-align: center;
+    color: rgba(227, 31, 37, 1);
+}
+
+.login-upper1 {
+    /* background: linear-gradient(180deg, #A6DEF9 0%, #F9A8BD 100%); */
+    backdrop-filter: blur(20px);
+    /* box-shadow: 0px 0px 14px 0px rgba(111, 111, 111, 0.15); */
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+    height: 95px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+    align-content: center;
+}
+
+.login-message1 {
+    color: rgba(51, 51, 51, 1);
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 43.88px;
+    letter-spacing: 0%;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+    padding: 5px auto;
+}
+
+
+.close-button1 {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 24px;
+    /* color: white; */
+    color: rgba(227, 31, 37, 1);
+    cursor: pointer;
+}
+
+.Submit-btn1 {
+    margin: 20px auto;
+    width: 283px;
+    height: 51px;
+    color: rgba(255, 255, 255, 1);
+    font-weight: 600;
+    font-size: 27px;
+    line-height: 32.91px;
+    letter-spacing: 0%;
+    text-align: center;
+    border: none;
+    border-radius: 32px;
+    background: linear-gradient(0deg, rgba(237, 237, 237, 0.1), rgba(237, 237, 237, 0.1)),
+        linear-gradient(0deg, #E31F25, #E31F25);
+    backdrop-filter: blur(20px);
+    box-shadow: 0px 0px 14px 0px rgba(137, 237, 233, 0.12);
+}
+
+.otpTimes {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0%;
+    color: rgba(227, 31, 37, 1);
+}
+
+.error-messageOTP {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 12px;
+    color: red;
+}
+
+.otpResends {
+    margin: 10px;
+    font-size: 15px;
+}
+
+/* THANKYOU PAGE CSS  */
+.thankyou-img {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    height: 120px;
+    width: 120px;
+}
+
+.thankyou-text {
+    font-weight: 600;
+    font-size: 38px;
+    line-height: 46.32px;
+    letter-spacing: 0%;
+    color: rgba(64, 157, 37, 1);
+
+}
+
+.getback-msg {
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 26.82px;
+    letter-spacing: 0%;
+    color: rgba(227, 31, 37, 1);
+    margin-bottom: 30px;
+}
+
+
+.otp-overlay {
+    /* padding-top: 8%; */
+    overflow-y: auto;
+}
+
+
+.OTPMain_sentStatus {
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    line-height: 16px;
+}
+
+
+/* Responsive Media Queries */
+/* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
+@media (min-width: 2560px) {
+
+
+    .login-mainn1 {
+        margin-top: 10px;
+        padding: 0;
+        max-width: 25%;
+    }
+
+    .login-upper1 {
+        height: 140px;
+    }
+
+    .login-message1 {
+        color: rgba(51, 51, 51, 1);
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: 46px;
+        line-height: 43.88px;
+    }
+
+    .verification_msg {
+        height: 145px;
+        width: 160px;
+        margin: 30px auto;
+    }
+
+    .close-button1 {
+        top: 10px;
+        right: 15px;
+        font-size: 39px;
+    }
+
+    .input-phone {
+        margin-right: 0px;
+        width: 90%;
+        margin-top: 20px;
+        font-weight: 500;
+        font-size: 31px;
+        line-height: 100%;
+        margin-bottom: 7px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 27px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 24px;
+        /* line-height: 50px; */
+    }
+
+    .continue-btn1 {
+        margin: 50px auto;
+        padding: 26px 28%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 33px;
+        line-height: 32.91px;
+        letter-spacing: 0%;
+        border-radius: 45px;
+    }
+
+    .otp-overlay {
+        padding-top: 8%;
+        overflow-y: auto;
+    }
+
+    .OTPMain_sentStatus {
+        font-weight: 500;
+        font-size: 30px;
+    }
+
+    /* PHONE OTP SENT 2ND page    */
+    .OTP_msg {
+        font-size: 35px;
+        line-height: 100%;
+    }
+
+    .OTP_msg1 {
+        font-size: 26px;
+        line-height: 40px;
+    }
+
+    .OTP_line {
+        gap: 10px;
+        margin: 17px auto;
+    }
+
+    .OTP_check-img {
+        width: 30%;
+        margin: 5px auto;
+    }
+
+    .otpResends {
+        margin: 10px;
+        font-size: 25px;
+    }
+
+    .Submit-btn1 {
+        height: auto;
+        width: auto;
+        margin: 25px auto;
+        padding: 17px 16%;
+        font-size: 33px;
+    }
+
+    .Otp_entered {
+        height: auto;
+        width: 60px;
+        font-size: 35px;
+        line-height: 26.82px;
+    }
+
+    .otpTimes {
+        font-size: 23px;
+        line-height: 70px;
+    }
+
+
+    .thankyou-img {
+        margin-top: 30px;
+        margin-bottom: 50px;
+        height: 150px;
+        width: 150px;
+    }
+
+    .thankyou-text {
+        font-weight: 600;
+        font-size: 45px;
+        line-height: 60.32px;
+    }
+
+    .getback-msg {
+        font-weight: 600;
+        font-size: 30px;
+        line-height: 75.82px;
+    }
+
+    .error-messageOTP {
+        font-weight: 500;
+        font-size: 26px;
+        line-height: 30px;
+    }
+}
+
+/* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
+@media (min-width: 1440px) and (max-width: 2559px) {
+    .otp-overlay {
+        padding-top: 4%;
+    }
+
+    .login-lower1 {
+        padding: 1px 10px;
+        /* padding-bottom: 20px; */
+    }
+
+    .login-mainn1 {
+        margin-top: 47px;
+        padding: 0;
+        border-radius: 10px;
+        max-width: 340px;
+    }
+
+    .login-upper1 {
+        height: 90px;
+    }
+
+    .login-message1 {
+        font-weight: 600;
+        font-size: 28px;
+        line-height: 100%;
+    }
+
+    .close-button1 {
+        top: 5px;
+        right: 10px;
+        font-size: 22px;
+    }
+
+    .verification_msg {
+        height: 90px;
+        width: 100px;
+        margin: 5px auto;
+    }
+
+    .input-phone {
+        margin-right: 0px;
+        width: 95%;
+        margin-top: 20px;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 24.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 15px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 13px;
+        /* line-height: 39.63px; */
+    }
+
+    .continue-btn1 {
+        margin: 18px auto;
+        padding: 8px 23%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 23px;
+        line-height: 32.91px;
+        border-radius: 32px;
+    }
+
+    .OTPMain_sentStatus {
+        font-weight: 500;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .OTP_msg {
+        font-size: 19px;
+        /* line-height: 21.94px; */
+    }
+
+    .OTP_msg1 {
+        font-size: 14px;
+    }
+
+    .OTP_check-img {
+        height: 90px;
+        width: 110px;
+        /* margin: 5px auto; */
+    }
+
+    .OTP_line {
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+
+    .otpTimes {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .Otp_entered {
+        height: 26px;
+        width: 34px;
+        font-size: 20px;
+        line-height: 26.82px;
+    }
+
+    .error-messageOTP {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+
+
+
+    .thankyou-img {
+        /* margin-top: 30px; */
+        margin-bottom: 10px;
+        height: 100px;
+        width: 100px;
+    }
+
+    .thankyou-text {
+        font-weight: 600;
+        font-size: 25px;
+    }
+
+    .getback-msg {
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 26.82px;
+        margin-bottom: 25px;
+    }
+
+
+}
+
+/* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
+@media (min-width: 992px) and (max-width: 1023px) {
+    .otp-overlay {
+        padding-top: 10%;
+    }
+
+    .login-mainn1 {
+        /* margin-top: 12%; */
+        padding: 0;
+        border-radius: 10px;
+        max-width: 360px;
+    }
+
+    .login-message1 {
+        font-weight: 600;
+        font-size: 30px;
+        line-height: 43.88px;
+        letter-spacing: 0%;
+    }
+
+    .login-upper1 {
+        height: 85px;
+    }
+
+    /* 
+    .verification_msg {
+        height: 80px;
+        width: 80px;
+        margin: 10px auto;
+    }
+
+    .input-phone {
+        margin-right: 25px;
+        width: 230px;
+        margin-top: 10px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 14.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 13px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 14.63px;
+    }
+
+    .continue-btn1 {
+        margin: 13px auto;
+        width: 250px;
+        height: 50px;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 32.91px;
+        border-radius: 32px;
+    } */
+
+
+
+
+    .verification_msg {
+        height: 80px;
+        width: 100px;
+        margin: 5px auto;
+    }
+
+    .input-phone {
+        margin-right: 0px;
+        width: 93%;
+        margin-top: 20px;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 24.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 15px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 14px;
+        /* line-height: 39.63px; */
+    }
+
+    .continue-btn1 {
+        margin: 18px auto;
+        padding: 12px 23%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 100%;
+        border-radius: 32px;
+    }
+
+    .OTPMain_sentStatus {
+        font-weight: 500;
+        font-size: 17px;
+        margin-bottom: 10px;
+    }
+
+    .login-lower1 {
+        padding: 1px;
+        padding-bottom: 1px;
+    }
+
+    .close-button1 {
+        top: 5px;
+        right: 10px;
+        font-size: 20px;
+    }
+
+    .OTP_msg {
+        font-size: 18px;
+        line-height: 21.94px;
+
+    }
+
+    .OTP_msg1 {
+        font-size: 17px;
+        line-height: 21.94px;
+    }
+
+    .OTP_check-img {
+        height: 100px;
+        width: 110px;
+        margin: 0px auto;
+    }
+
+    .OTP_line {
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .Otp_entered {
+        height: 25px;
+        width: 33px;
+        font-size: 21px;
+        line-height: 30.82px;
+    }
+
+    .error-messageOTP {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        color: red;
+    }
+
+    .otpTimes {
+        font-size: 13px;
+        line-height: 18px;
+    }
+
+    .otpResends {
+        margin: 10px;
+        font-size: 15px;
+    }
+
+    .Submit-btn1 {
+        margin: 14px auto;
+        padding: 13px 16%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 12.91px;
+    }
+
+
+
+
+    .thankyou-img {
+        margin-bottom: 10px;
+        height: 100px;
+        width: 100px;
+    }
+
+    .thankyou-text {
+        font-size: 25px;
+    }
+
+    .getback-msg {
+        font-size: 18px;
+        line-height: 26.82px;
+        margin-bottom: 20px;
+    }
+
+
+
+
+}
+
+/* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .otp-overlay {
+        padding-top: 13%;
+    }
+
+    .login-mainn1 {
+        /* margin-top: 12%; */
+        padding: 0;
+        border-radius: 10px;
+        max-width: 320px;
+    }
+
+    .login-message1 {
+        font-size: 27px;
+    }
+
+    .login-upper1 {
+        height: 80px;
+    }
+
+    .verification_msg {
+        height: 90px;
+        width: 100px;
+        margin: 5px auto;
+    }
+
+    .input-phone {
+        margin-right: 0px;
+        width: 94%;
+        margin-top: 20px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 13px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 15.63px;
+    }
+
+    .continue-btn1 {
+        margin: 18px auto;
+        padding: 12px 23%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 100%;
+        border-radius: 32px;
+    }
+
+    .OTPMain_sentStatus {
+        font-weight: 500;
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+
+    .login-lower1 {
+        padding: 1px;
+        padding-bottom: 1px;
+    }
+
+    .close-button1 {
+        top: 5px;
+        right: 10px;
+        font-size: 20px;
+    }
+
+
+    .OTP_msg {
+        font-size: 17px;
+        line-height: 21.94px;
+    }
+
+    .OTP_msg1 {
+        font-size: 15px;
+        line-height: 19.94px;
+    }
+
+    .OTP_check-img {
+        height: 90px;
+        width: 110px;
+        /* margin: 5px auto; */
+    }
+
+    .OTP_line {
+        gap: 9px;
+        margin-top: 12px;
+    }
+
+    .Otp_entered {
+        height: 25px;
+        width: 25px;
+        font-size: 20px;
+    }
+
+    .error-messageOTP {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    .otpTimes {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .otpResends {
+        margin: auto;
+        font-size: 14px;
+    }
+
+    .Submit-btn1 {
+        margin: 10px auto;
+        padding: 3px 20%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 17px;
+    }
+
+    .thankyou-img {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height: 95px;
+        width: 95px;
+    }
+
+    .thankyou-text {
+        font-size: 23px;
+    }
+
+    .getback-msg {
+        font-size: 16px;
+        line-height: 26.82px;
+        margin-bottom: 25px;
+    }
+
+
+}
+
+/* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
+@media (min-width: 480px) and (max-width: 767px) {
+    .otp-overlay {
+        padding-top: 15%;
+    }
+
+    .login-mainn1 {
+        /* margin-top: 12%; */
+        padding: 0;
+        border-radius: 10px;
+        max-width: 310px;
+    }
+
+    .login-message1 {
+        font-weight: 600;
+        font-size: 27px;
+        line-height: 43.88px;
+        letter-spacing: 0%;
+    }
+
+    .login-upper1 {
+        height: 85px;
+    }
+
+    .verification_msg {
+        height: 80px;
+        width: 80px;
+        margin: 10px auto;
+    }
+
+    .input-phone {
+        margin-right: 25px;
+        width: 83%;
+        margin-top: 10px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 14.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 13px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 12px;
+        /* line-height: 14.63px; */
+    }
+
+    .continue-btn1 {
+        margin: 21px auto;
+        padding: 10px 20%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 100%;
+        border-radius: 32px;
+    }
+
+    .OTPMain_sentStatus {
+        font-weight: 500;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .error-messageOTP {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 13px;
+    }
+
+
+
+    /* .verification_msg {
+        height: 90px;
+        width: 100px;
+        margin: 5px auto;
+    }
+
+    .input-phone {
+        margin-right: 0px;
+        width: 94%;
+        margin-top: 20px;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 24.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 13px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 15.63px;
+    }
+
+    .continue-btn1 {
+        margin: 18px auto;
+        padding: 12px 23%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 100%;
+        border-radius: 32px;
+    }
+
+    .OTPMain_sentStatus {
+        font-weight: 500;
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+     */
+
+    .login-lower1 {
+        padding: 1px;
+        padding-bottom: 1px;
+    }
+
+    .close-button1 {
+        top: 5px;
+        right: 10px;
+        font-size: 19px;
+    }
+
+
+    .OTP_msg {
+        font-size: 16px;
+        line-height: 21.94px;
+    }
+
+    .OTP_msg1 {
+        font-size: 14px;
+        line-height: 19.94px;
+    }
+
+    .OTP_check-img {
+        height: 80px;
+        width: 100px;
+        /* margin: 5px auto; */
+    }
+
+    .OTP_line {
+        gap: 9px;
+        margin-top: 10px;
+    }
+
+    .Otp_entered {
+        height: 23px;
+        width: 25px;
+        font-size: 18px;
+    }
+
+
+    .otpTimes {
+        font-size: 11px;
+        line-height: 18px;
+    }
+
+    .otpResends {
+        margin: auto;
+        font-size: 13px;
+    }
+
+    .Submit-btn1 {
+        margin: 10px auto;
+        padding: 3px 20%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .thankyou-img {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height: 95px;
+        width: 95px;
+    }
+
+    .thankyou-text {
+        font-size: 23px;
+    }
+
+    .getback-msg {
+        font-size: 16px;
+        line-height: 26.82px;
+        margin-bottom: 25px;
+    }
+
+}
+
+/* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
+@media (min-width: 425px) and (max-width: 479px) {
+    .otp-overlay {
+        padding-top: 20%;
+    }
+
+    .login-mainn1 {
+        /* margin-top: 12%; */
+        padding: 0;
+        border-radius: 10px;
+        max-width: 310px;
+    }
+
+    .login-message1 {
+        font-weight: 600;
+        font-size: 26px;
+        line-height: 43.88px;
+        letter-spacing: 0%;
+    }
+
+    .login-upper1 {
+        height: 85px;
+    }
+
+    /* .verification_msg {
+        height: 80px;
+        width: 80px;
+        margin: 9px auto;
+    }
+
+    .input-phone {
+        margin-right: 25px;
+        width: 230px;
+        margin-top: 10px;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 14.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 12px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 14.63px;
+    }
+
+    .continue-btn1 {
+        margin: 15px auto;
+        width: 250px;
+        height: 45px;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 32.91px;
+        border-radius: 32px;
+    } */
+
+
+    .verification_msg {
+        height: 75px;
+        width: 75px;
+        margin: 8px auto;
+    }
+
+    .input-phone {
+        margin-right: 25px;
+        width: 83%;
+        margin-top: 10px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 14.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 13px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 12px;
+        /* line-height: 14.63px; */
+    }
+
+    .continue-btn1 {
+        margin: 21px auto;
+        padding: 10px 20%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 100%;
+        border-radius: 32px;
+    }
+
+    .OTPMain_sentStatus {
+        font-weight: 500;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .error-messageOTP {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 13px;
+    }
+
+
+
+
+
+
+
+    .login-lower1 {
+        padding: 1px;
+        padding-bottom: 1px;
+    }
+
+    .close-button1 {
+        top: 5px;
+        right: 10px;
+        font-size: 19px;
+    }
+
+
+
+
+
+
+    .OTP_msg {
+        font-size: 15px;
+        line-height: 21.94px;
+    }
+
+    .OTP_msg1 {
+        font-size: 13px;
+        line-height: 19.94px;
+    }
+
+    .OTP_check-img {
+        height: 75px;
+        width: 110px;
+        /* margin: 5px auto; */
+    }
+
+    .OTP_line {
+        gap: 9px;
+        margin-top: 10px;
+    }
+
+    .Otp_entered {
+        height: 23px;
+        width: 25px;
+        font-size: 18px;
+    }
+
+    .error-messageOTP {
+        font-weight: 500;
+        font-size: 12px;
+    }
+
+    .otpTimes {
+        font-size: 11px;
+        line-height: 18px;
+    }
+
+    .otpResends {
+        margin: auto;
+        font-size: 13px;
+    }
+
+    .Submit-btn1 {
+        margin: 10px auto;
+        padding: 2px 21%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .thankyou-img {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height: 95px;
+        width: 95px;
+    }
+
+    .thankyou-text {
+        font-size: 23px;
+    }
+
+    .getback-msg {
+        font-size: 16px;
+        line-height: 26.82px;
+        margin-bottom: 25px;
+    }
+
+}
+
+/* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
+@media (min-width: 375px) and (max-width: 424px) {
+    .otp-overlay {
+        padding-top: 20%;
+    }
+
+    .login-mainn1 {
+        /* margin-top: 12%; */
+        padding: 0;
+        border-radius: 10px;
+        max-width: 310px;
+    }
+
+    .login-message1 {
+        font-weight: 600;
+        font-size: 26px;
+        line-height: 43.88px;
+        letter-spacing: 0%;
+    }
+
+    .login-upper1 {
+        height: 80px;
+    }
+
+    /* .verification_msg {
+        height: 80px;
+        width: 80px;
+        margin: 9px auto;
+    }
+
+    .input-phone {
+        margin-right: 25px;
+        width: 230px;
+        margin-top: 10px;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 14.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 12px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 14.63px;
+    }
+
+    .continue-btn1 {
+        margin: 15px auto;
+        width: 250px;
+        height: 45px;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 32.91px;
+        border-radius: 32px;
+    } */
+
+
+
+    .verification_msg {
+        height: 75px;
+        width: 75px;
+        margin: 8px auto;
+    }
+
+    .input-phone {
+        margin-right: 25px;
+        width: 83%;
+        margin-top: 10px;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 14.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 13px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 12px;
+        /* line-height: 14.63px; */
+    }
+
+    .continue-btn1 {
+        margin: 21px auto;
+        padding: 10px 20%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 100%;
+        border-radius: 32px;
+    }
+
+    .OTPMain_sentStatus {
+        font-weight: 500;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .error-messageOTP {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 13px;
+    }
+
+
+
+
+    .login-lower1 {
+        padding: 1px;
+        padding-bottom: 1px;
+    }
+
+    .close-button1 {
+        top: 5px;
+        right: 10px;
+        font-size: 18px;
+    }
+
+
+
+    .OTP_msg {
+        font-size: 15px;
+        line-height: 21.94px;
+    }
+
+    .OTP_msg1 {
+        font-size: 13px;
+        line-height: 19.94px;
+    }
+
+    .OTP_check-img {
+        height: 75px;
+        width: 110px;
+        /* margin: 5px auto; */
+    }
+
+    .OTP_line {
+        gap: 9px;
+        margin-top: 10px;
+    }
+
+    .Otp_entered {
+        height: 23px;
+        width: 25px;
+        font-size: 17px;
+    }
+
+    .error-messageOTP {
+        font-weight: 500;
+        font-size: 11px;
+    }
+
+    .otpTimes {
+        font-size: 10px;
+        line-height: 18px;
+    }
+
+    .otpResends {
+        margin: auto;
+        font-size: 12px;
+    }
+
+    .Submit-btn1 {
+        margin: 9px auto;
+        padding: 2px 20%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+
+    .thankyou-img {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height: 95px;
+        width: 95px;
+    }
+
+    .thankyou-text {
+        font-size: 23px;
+    }
+
+    .getback-msg {
+        font-size: 16px;
+        line-height: 26.82px;
+        margin-bottom: 25px;
+    }
+
+
+}
+
+/* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
+@media (min-width: 360px) and (max-width: 374px) {
+    .otp-overlay {
+        padding-top: 20%;
+    }
+
+    .login-mainn1 {
+        /* margin-top: 12%; */
+        padding: 0;
+        border-radius: 10px;
+        max-width: 300px;
+    }
+
+    .login-message1 {
+        font-weight: 600;
+        font-size: 26px;
+        line-height: 43.88px;
+        letter-spacing: 0%;
+    }
+
+    .login-upper1 {
+        height: 80px;
+    }
+
+    /* 
+    .verification_msg {
+        height: 80px;
+        width: 80px;
+        margin: 9px auto;
+    }
+
+    .input-phone {
+        margin-right: 25px;
+        width: 230px;
+        margin-top: 10px;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 14.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 12px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 14.63px;
+    }
+
+    .continue-btn1 {
+        margin: 15px auto;
+        width: 250px;
+        height: 45px;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 32.91px;
+        border-radius: 32px;
+    } */
+
+    .verification_msg {
+        height: 75px;
+        width: 75px;
+        margin: 8px auto;
+    }
+
+    .input-phone {
+        margin-right: 25px;
+        width: 83%;
+        margin-top: 10px;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 14.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 13px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 12px;
+        /* line-height: 14.63px; */
+    }
+
+    .continue-btn1 {
+        margin: 21px auto;
+        padding: 10px 20%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 100%;
+        border-radius: 32px;
+    }
+
+    .OTPMain_sentStatus {
+        font-weight: 500;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .error-messageOTP {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 13px;
+    }
+
+
+
+    .login-lower1 {
+        padding: 1px;
+        padding-bottom: 1px;
+    }
+
+    .close-button1 {
+        top: 5px;
+        right: 10px;
+        font-size: 19px;
+    }
+
+
+    .OTP_msg {
+        font-size: 15px;
+        line-height: 21.94px;
+    }
+
+    .OTP_msg1 {
+        font-size: 13px;
+        line-height: 19.94px;
+    }
+
+    .OTP_check-img {
+        height: 75px;
+        width: 110px;
+        /* margin: 5px auto; */
+    }
+
+    .OTP_line {
+        gap: 9px;
+        margin-top: 10px;
+    }
+
+    .Otp_entered {
+        height: 23px;
+        width: 25px;
+        font-size: 17px;
+    }
+
+    .otpTimes {
+        font-size: 10px;
+        line-height: 18px;
+    }
+
+    .otpResends {
+        margin: auto;
+        font-size: 12px;
+    }
+
+    .Submit-btn1 {
+        margin: 9px auto;
+        padding: 2px 20%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .thankyou-img {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height: 95px;
+        width: 95px;
+    }
+
+    .thankyou-text {
+        font-size: 23px;
+    }
+
+    .getback-msg {
+        font-size: 16px;
+        line-height: 26.82px;
+        margin-bottom: 25px;
+    }
+
+}
+
+@media (min-width: 320px) and (max-width: 359px) {
+    .otp-overlay {
+        padding-top: 20%;
+    }
+
+    .login-mainn1 {
+        /* margin-top: 12%; */
+        padding: 0;
+        border-radius: 10px;
+        max-width: 300px;
+    }
+
+    .login-message1 {
+        font-weight: 600;
+        font-size: 26px;
+        line-height: 43.88px;
+        letter-spacing: 0%;
+    }
+
+    .login-upper1 {
+        height: 80px;
+    }
+
+    /* 
+    .verification_msg {
+        height: 80px;
+        width: 80px;
+        margin: 9px auto;
+    }
+
+    .input-phone {
+        margin-right: 25px;
+        width: 230px;
+        margin-top: 10px;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 14.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 12px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 14.63px;
+    }
+
+    .continue-btn1 {
+        margin: 15px auto;
+        width: 250px;
+        height: 45px;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 32.91px;
+        border-radius: 32px;
+    } */
+
+
+    .verification_msg {
+        height: 75px;
+        width: 75px;
+        margin: 8px auto;
+    }
+
+    .input-phone {
+        margin-right: 25px;
+        width: 83%;
+        margin-top: 10px;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 14.63px;
+    }
+
+    .input-phone::placeholder {
+        font-size: 13px;
+    }
+
+    .reach-msg {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 11.63px;
+    }
+
+    .continue-btn1 {
+        margin: 21px auto;
+        padding: 10px 20%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 100%;
+        border-radius: 32px;
+    }
+
+    .OTPMain_sentStatus {
+        font-weight: 500;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .error-messageOTP {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 13px;
+    }
+
+
+
+
+
+    .login-lower1 {
+        padding: 10px;
+        padding-bottom: 1px;
+    }
+
+    .close-button1 {
+        top: 5px;
+        right: 10px;
+        font-size: 19px;
+    }
+
+
+
+    .OTP_msg {
+        font-size: 15px;
+        line-height: 21.94px;
+    }
+
+    .OTP_msg1 {
+        font-size: 13px;
+        line-height: 19.94px;
+    }
+
+    .OTP_check-img {
+        height: 75px;
+        width: 110px;
+        /* margin: 5px auto; */
+    }
+
+    .OTP_line {
+        gap: 9px;
+        margin-top: 10px;
+    }
+
+    .Otp_entered {
+        height: 23px;
+        width: 25px;
+        font-size: 17px;
+    }
+
+    .otpTimes {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .otpResends {
+        margin: auto;
+        font-size: 12px;
+    }
+
+    .Submit-btn1 {
+        margin: 9px auto;
+        padding: 2px 20%;
+        width: auto;
+        height: auto;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .thankyou-img {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height: 95px;
+        width: 95px;
+    }
+
+    .thankyou-text {
+        font-size: 23px;
+    }
+
+    .getback-msg {
+        font-size: 16px;
+        line-height: 26.82px;
+        margin-bottom: 25px;
+    }
+
+}

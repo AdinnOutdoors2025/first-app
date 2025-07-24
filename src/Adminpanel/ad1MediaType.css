@@ -1,0 +1,112 @@
+/* Media Types   */
+.mediaTypeMain {
+    display: flex;
+    gap: 10px;
+    margin: 10px;
+}
+
+.mediaTypeLeft,
+.mediaTypeRight {
+    width: 485px;}
+
+.mediaContent {
+    margin-top: 20px;
+    /* display: flex;
+    gap: 10px; */
+    justify-content: space-around;
+    /* width: 130%; */
+    height: auto;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 1);
+}
+
+.adminMediaHeadings {
+    color: rgba(227, 31, 37, 1);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.mediaMainHeading {
+    margin-left: 2.5%;
+}
+
+
+.mediaContent1 {
+    width: 100%;
+    /* border: 1px solid red; */
+}
+
+
+.AdminMediaInput{
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(51, 51, 51, 1);
+    width: 60%;
+    color: rgba(51, 51, 51, 1);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin: 8px auto;
+}
+
+.AdminMediaInput::placeholder {
+    font-size: 16px;
+}
+
+
+
+.AdminMediaPlus {
+    height: 20px;
+    width: 20px;
+}
+
+.AdminMediaPlusSection {
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    background: rgba(227, 31, 37, 1);
+    /* padding: 6px; */
+    border-radius: 32px;
+    color: white;
+    width: 100px;
+    height: 35px;
+    justify-content: center;
+    margin: auto 0px;
+    align-items: center;
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 1);
+
+}
+
+.mediaSaveBtn {
+    font-weight: 600;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 1);
+    background: rgba(227, 31, 37, 1);
+    border: none;
+    border-radius: 32px;
+    padding: 6px 35px;
+    margin: 20px 36%;
+    margin-bottom: 0px;
+ align-items: center; align-content: center;
+}
+
+.MediaeditIcon{
+    margin: auto 10px;
+    color: green;
+
+}
+.MediaPlusXmark {
+    color: rgba(229, 31, 31, 1);
+    font-size: 15px;
+    cursor: pointer;
+    margin: auto 1px;
+
+}

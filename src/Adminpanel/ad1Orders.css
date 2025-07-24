@@ -1,0 +1,312 @@
+  
+  /* ORDERS TABLE  */
+  .order-TableOrderName{
+    width: 200px;
+  }
+  .order-TableProdCode{
+    margin-bottom: 10px;
+  }
+  .OrderTableRowData{
+    padding: 23px 0px;
+    /* border: 1px solid red; */
+  }
+
+.prodOrderDate{
+  /* text-align: left; */
+  
+  align-items: center;
+  align-content: center;
+  margin: 10px auto;
+}
+
+  /* src/components/ProductTable.css */
+
+.order-product-table {
+    width: 90%;
+    margin: 20px auto;
+    /* border: 1px solid #ccc; */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 5px;
+    text-align: left;
+    color: rgba(51, 51, 51, 1);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    align-content: center;
+    /* align-content: center;
+    align-items: center; */
+    border-bottom: 1px solid;
+    border-image-source: linear-gradient(90deg, rgba(51, 51, 51, 0) 0%, #333333 45%, rgba(51, 51, 51, 0) 100%)1;
+    border-image-slice: 1;
+    /* align-items: center; align-content: center;  */
+
+}
+
+/* Product Checkbox with Tick mark  */
+input:checked+.order-Productcheckmark1 {
+    color: rgb(20, 249, 20);
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.order-Productcheckbox-container1 input {
+    display: none;
+}
+
+/* Default checkmark styling */
+.order-Productcheckmark1 {
+    border: 1px solid rgba(51, 51, 51, 1);
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    display: inline-block;
+    background: rgba(255, 255, 255, 1);
+    text-align: center;
+    line-height: 18px;
+    font-size: 16px;
+    color: transparent;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.order-productRate {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(237, 237, 237, 1);
+    width: 60px;
+    height: 35px;
+    border-radius: 10px;
+    margin: 0px auto;
+    align-items: center;
+    text-align: center;
+}
+
+
+
+th {
+  width: 20%;
+    color: rgba(227, 31, 37, 1);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    align-items: center; align-content: center; text-align: left;
+
+    /* background-color: #f4f4f4; */
+}
+/* 
+.productImg {
+    width: 65px;
+    height: 65px;
+    border-radius: 4px;
+
+} */
+/* 
+.rating {
+    display: flex;
+    align-items: center;
+}
+
+.rating img {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+} */
+
+/* PAGINATION CSS  */
+.order-Productpagination {
+    
+    margin: 5% auto;
+    /* width: 50%; */
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    background-color: white;
+}
+
+.order-Productpage-number {
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(51, 51, 51, 1);
+
+    border-radius: 7px;
+    height: 40px;
+    width: 41px;
+    background: rgba(239, 239, 239, 1);
+    border: 1px solid #ddd;
+    align-content: center;
+    text-align: center;
+    text-decoration-skip-ink: none;
+
+    /* padding: 8px 16px; */
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.order-Productpage-number.active {
+    border: 1.5px solid rgba(227, 31, 37, 1);
+    color: rgba(51, 51, 51, 1);
+    background: rgba(255, 255, 255, 1);
+
+}
+
+
+.order-Productprev-button,
+.order-Productnext-button {
+
+    color: rgba(255, 255, 255, 1);
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    background: rgba(228, 30, 37, 1);
+    border: none;
+    cursor: pointer;
+    width: 75px;
+    height: 60px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+}
+
+.order-Productnext-button {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+
+}
+
+.order-Productprev-button:disabled,
+.order-Productnext-button:disabled {
+    /* background-color: lightcoral; */
+    background: rgba(228, 30, 37, 1);
+    opacity: 50%;
+    cursor: not-allowed;
+}
+.order-paginationDots{
+    align-items: center; align-content: center;text-align: center;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+
+
+
+.order-actionMenuRow {
+    /* position: relative; */
+    display: flex;
+    align-items: center;
+  }
+  
+  .order-threeDotsTd {
+    cursor: pointer;
+    padding: 10px;
+    /* padding: 20px 30px; */
+  }
+  .order-ThreeDotsIcon {
+    height: 25px;
+    cursor: pointer;
+    position: relative;
+}
+
+  .order-actionMenu {
+    position: absolute;
+    right: 91px; /* appears left of the dot */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 6px;
+    background: #e1dfdf;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    z-index: 99;
+        align-items: center;
+  }
+  
+  .order-actionMenu.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+  
+  .order-actionMenu i {
+    cursor: pointer;
+    font-size: 15px;
+    color: #333;
+    transition: color 0.2s;
+  }
+  
+  .order-actionMenu i:hover {
+    color: #007bff;
+  }
+/* .product-row.disabled {
+    opacity: 0.4 !important;
+    pointer-events: none;
+  } */
+
+  .order-product-row.disabled {
+    opacity: 0.4;
+  }
+  
+  /* Inside each row, prevent pointer-events: none for the last <td> (actions) */
+  .order-product-row.disabled .threeDotsTd {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .order-product-row.disabled td:not(.threeDotsTd) {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  
+  .order-product-row.disabled .threeDotsTd {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .OrderProdIdJoin{
+    margin: 10px 0px;
+  }
+
+  .no-orders-found {
+    text-align: center;
+    padding: 40px 0;
+    background: #f9f9f9;
+  }
+  
+  .no-orders-message {
+    color: #666;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .no-orders-message i {
+    color: #ff9800;
+    font-size: 20px;
+  }

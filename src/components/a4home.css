@@ -1,0 +1,2045 @@
+* {
+    font-family: 'Montserrat';
+
+}
+
+.highlight {
+    color: rgba(228, 30, 37, 1);
+}
+
+.heading {
+    font-size: 42px;
+    font-weight: bold;
+    line-height: 51.2px;
+    text-align: center;
+}
+
+#root {
+    width: 100%;
+}
+
+.frequent {
+    width: 65%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.qn {
+    display: flex;
+    justify-content: space-between;
+    gap: 0px;
+    padding: 20px 40px;
+    border-radius: 13px;
+    border: 0.25px solid #E41E25;
+    background: #FFFFFF;
+    box-shadow: 0px 3px 10px 0px #E41E2540;
+    cursor: pointer;
+    z-index: 2;
+    transition: all 0.3s ease-in-out;
+    /* Smoothly hide border and move back */
+
+}
+
+.frequent.active .qn {
+    border: none;
+    z-index: 0;
+}
+
+.ans {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out, padding 0.3s ease-in-out, z-index 0.4s;
+    padding: 0 40px;
+    background: #EE464C;
+    color: white;
+    border-radius: 13px;
+    z-index: 1;
+    /* Ensures stacking follows z-index */
+}
+
+.ans.visible {
+    max-height: 200px;
+    /* Adjust as needed for content size */
+    padding: 20px 40px;
+    z-index: 2;
+    /* Answer becomes visible below the question */
+}
+
+.ans.hidden {
+    max-height: 0;
+    padding: 0 40px;
+    z-index: 0;
+    /* Ensure it’s "behind" when hidden */
+}
+
+.arrow-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* FOOTER SECTION  */
+.footer {
+    margin-top: 10%;
+    background: conic-gradient(from 90deg at 50% 50%, #F93333 0deg, #D8FFF9 201.96deg, #F93333 360deg);
+    height: auto;
+    position: relative;
+}
+
+/* Footer contact portion */
+.footer-contact {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    width: 529px;
+    height: 76px;
+    top: -37px;
+    left: 356px;
+    border-radius: 53px;
+    background: #FFFFFF;
+    box-shadow: 0px -4px 25px 0px #E41E2540;
+    align-content: center;
+    text-align: center;
+    padding: 0 14px;
+}
+
+.f-input {
+    float: left;
+    width: 315px;
+    height: 46px;
+    padding: 20px;
+    /* Add padding for better readability */
+    border-radius: 6px;
+    border: 1px solid gray;
+    /* Define a clear border */
+    background: #FFFFFF;
+    /* Set a solid white background */
+    box-shadow:
+        0.5px 0.5px 4px 0px #00000040 inset,
+        /* Inner shadow */
+        -0.5px -0.5px 4px 0px #00000040 inset;
+    /* Second inner shadow */
+}
+
+/* Add focus effect */
+.f-input:focus {
+    border-color: gray;
+    /* Change to blue on focus */
+    outline: none;
+    /* Remove default browser outline */
+}
+
+.f-btn {
+    float: right;
+    width: 152px;
+    height: 46px;
+    border-radius: 26px;
+    border: none;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24.38px;
+    background: linear-gradient(118.34deg, #AD0001 8.28%, #E41E25 73%);
+    box-shadow: 8px 16px 14px 0px #B60A0D inset;
+    box-shadow: -8px -16px 14px 0px #F71B1D inset;
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+
+/* footer building */
+.f-buildMain {
+    width: 103px;
+    height: 87px;
+    position: absolute;
+    top: -85px;
+    left: 85%;
+    transform: rotate(0.1deg);
+    /* Rotates the element by 0.1 degrees */
+}
+
+
+/* Footer Info content  */
+.f-info {
+    display: flex;
+    justify-content: space-between;
+    /* border: 1px solid white; */
+}
+
+.f-adinnLogo {
+    margin-top: 20px;
+    height: 100px;
+    width: 150px;
+}
+
+.f-infoContent {
+    /* height: 100px; */
+    width: 500px;
+    /* border: 2px solid black; */
+}
+
+.f-content {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    align-content: center;
+    margin-top: 40px;
+}
+
+.f-content1 {
+    margin-top: 20px;
+}
+
+.f1 {
+    height: 30px;
+    width: 30px;
+}
+
+.f-c1 {
+    height: 30px;
+    width: 30px;
+    /* border: 2px solid black; */
+}
+
+.f-c2 {
+    width: 150px;
+    color: #E41E25;
+    /* border: 2px solid black; */
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.f2 {
+    height: 30px;
+    width: 30px;
+}
+
+.mail {
+    color: #E41E25;
+    /* border: 2px solid black; */
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+    margin: 0 10px;
+}
+
+.f-content2 {
+    display: flex;
+    justify-content: space-between;
+    /* border: 1px solid black; */
+    width: 220px;
+    margin-top: 20px;
+
+
+}
+
+.f-c3 {
+    height: 30px;
+    width: 350px;
+    cursor: pointer;
+}
+
+.f3,
+.f4,
+.f5,
+.f6,
+.f7,
+.f8 {
+    height: 30px;
+    width: 30px;
+}
+
+.f-infoContent1 {
+    /* height: 100px; */
+    width: 350px;
+    /* border: 2px solid black; */
+    color: white;
+
+}
+
+.f-content3 {
+    /* border: 1px solid white; */
+    width: 330px;
+    margin-top: 130px;
+    display: flex;
+}
+
+.f-content4 {
+    margin-top: 15px;
+    width: 400px;
+    display: flex;
+}
+
+.footer-heading {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21.94px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+
+}
+
+.footer-para {
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17.07px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+
+}
+
+.f-c4 {
+    margin: 0 20px;
+}
+
+/* Copyrights */
+.copy {
+    margin-top: 50px;
+    padding-bottom: 50px;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    width: 100%;
+    /* Take full width of the parent container */
+}
+
+.copy1,
+.copy2,
+.copy3,
+.copy4 {
+    height: 1.5px;
+    flex-shrink: 0;
+    /* Prevent these from shrinking */
+}
+
+.copy1 {
+    width: 5%;
+    /* Use relative width for better scalability */
+    background-color: #E41E25;
+}
+
+.copy11,
+.copy22,
+.copy33 {
+    flex-grow: 1;
+    /* Allow these text items to grow in available space */
+    color: #E41E25;
+    font-weight: 500;
+    text-align: center;
+    /* Center-align text inside */
+}
+
+.copy22,
+.copy33 {
+    color: #FFFFFF;
+}
+
+.copy2 {
+    width: 50%;
+    /* Adjust this value for desired line width */
+    background: linear-gradient(90deg, #E41E25 48.52%, #FFFFFF 100%);
+}
+
+.copy3 {
+    width: 2%;
+    background-color: white;
+}
+
+.copy4 {
+    width: 10%;
+    /* Adjust spacing */
+    background-color: white;
+}
+
+
+
+
+
+
+/* Contact form messages */
+/* .contact-success-message {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    border-radius: 4px;
+    animation: fadeIn 0.5s;
+}
+
+.contact-error-message {
+    background-color: #f44336;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    animation: ContactfadeIn 0.5s;
+}
+
+@keyframes ContactfadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}  */
+
+
+
+
+
+
+
+.contact-message {
+    position: absolute;
+    top: -90px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: max-content;
+    /* max-width: 600px; */
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-out;
+    z-index: 1000;
+    margin-bottom: 1%;
+}
+
+.contact-message.success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.contact-message.error {
+    background-color: #f44336;
+    color: white;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+/* Responsive Media Queries */
+/* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
+@media (min-width: 2560px) {
+
+    .qn {
+        font-size: 28px;
+    }
+
+    .frequent {
+        max-width: 65%;
+        margin-bottom: 40px;
+    }
+
+    .ans.visible {
+        font-size: 28px;
+        max-height: 200px;
+    }
+
+    .frequently-up,
+    .frequently-down {
+        font-weight: 900;
+        font-size: 35px;
+    }
+
+
+
+    .footer-contact {
+        padding: 0 22px;
+    }
+
+    .f-infoContent {
+        /* height: 100px; */
+        width: 668px;
+        margin: 47px -30%;
+    }
+
+    .f-infoContent1 {
+        /* height: 100px; */
+        width: 350px;
+        margin: 50px -30%;
+    }
+
+    .f-buildMain {
+        width: 130px;
+        height: 130px;
+        position: absolute;
+        top: -128px;
+        left: 84%;
+    }
+
+    .footer-contact {
+        position: absolute;
+        width: 650px;
+        height: 110px;
+        top: -60px;
+        left: 37%;
+    }
+
+    .f-input {
+        float: left;
+        font-size: 30px;
+        width: 367px;
+        height: 60px;
+        padding: auto 18px;
+    }
+
+    input::placeholder {
+        font-size: 21px;
+        text-align: center;
+    }
+
+    .f-btn {
+        float: right;
+        width: 215px;
+        height: 60px;
+        border-radius: 26px;
+        border: none;
+        color: white;
+        font-size: 28px;
+    }
+
+    .f-adinnLogo {
+        margin-top: 20px;
+        height: 140px;
+        width: 180px;
+    }
+
+    .f1,
+    .f2,
+    .f3,
+    .f4,
+    .f5,
+    .f6,
+    .f7,
+    .f8 {
+        height: 45px;
+        width: 45px;
+    }
+
+    .f-c1 {
+        height: 45px;
+        width: 45px;
+        /* border: 2px solid black; */
+    }
+
+    .f-c2 {
+        width: 212px;
+        /* border: 2px solid black; */
+        font-size: 24px;
+    }
+
+    .mail {
+        /* border: 2px solid black; */
+        font-size: 25px;
+        font-weight: 500;
+        line-height: 38px;
+        margin: 0 16px;
+    }
+
+    .footer-heading {
+        font-size: 30px;
+        font-weight: 500;
+        line-height: 25.94px;
+    }
+
+    .footer-para {
+        font-size: 25px;
+        font-weight: 400;
+        line-height: 27.07px;
+    }
+
+    .f-content {
+        display: flex;
+        /* justify-content: space-around; */
+        /* border: 1px solid black; */
+        align-items: center;
+        text-align: center;
+        align-content: center;
+        margin-top: 30px;
+    }
+
+    .f-content2 {
+        width: 360px;
+        /* border: 1px solid black; */
+    }
+
+    .f-content3 {
+        /* border: 1px solid white; */
+        width: 510px;
+        margin-top: 125px;
+    }
+
+    .f-content4 {
+        margin-top: 22px;
+        width: 470px;
+    }
+
+    .copy {
+        margin-top: 50px;
+        font-size: 25px;
+    }
+
+    .contact-message {
+        top: -155px;
+        padding: 15px 44px;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 28px;
+    }
+}
+
+/* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
+@media (min-width: 1440px) and (max-width: 2559px) {
+    .footer-contact {
+        width: 529px;
+        height: 80px;
+        top: -40px;
+        left: 450px;
+        padding: 0 18px;
+    }
+
+    .f-buildMain {
+        width: 110px;
+        height: 95px;
+        top: -94px;
+        left: 84%;
+    }
+
+    .f-input {
+        font-size: 21px;
+        width: 315px;
+        height: 46px;
+        padding: 20px;
+        border-radius: 6px;
+    }
+
+    .f-input::placeholder {
+        font-size: 17px;
+    }
+
+    .f-btn {
+        width: 155px;
+        height: 48px;
+        font-size: 19px;
+    }
+
+    .f1,
+    .f2,
+    .f3,
+    .f4,
+    .f5,
+    .f6,
+    .f7,
+    .f8 {
+        height: 35px;
+        width: 35px;
+    }
+
+    .f-c2 {
+        width: 165px;
+        font-size: 16px;
+    }
+
+    .mail {
+        font-size: 16px;
+    }
+
+    .footer-heading {
+        font-size: 19px;
+        font-weight: 500;
+        line-height: 21.94px;
+    }
+
+    .f-content3 {
+        /* border: 1px solid white; */
+        width: 395px;
+        margin-top: 129px;
+    }
+
+    .footer-para {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 21.07px;
+    }
+
+    .copy {
+        margin-top: 50px;
+        padding-bottom: 25px;
+        font-size: 14px;
+    }
+
+    .contact-message {
+        top: -105px;
+        padding: 11px 14px;
+        border-radius: 8px;
+        font-size: 17px;
+    }
+
+
+}
+
+/* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
+@media (min-width: 992px) and (max-width: 1023px) {
+
+
+    .frequent {
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .qn {
+        font-size: 16px;
+        padding: 17px 30px;
+    }
+
+    .ans.visible {
+        max-height: auto;
+        font-size: 16px;
+    }
+
+    .frequently-up,
+    .frequently-down {
+        font-weight: 900;
+        font-size: 20px;
+    }
+
+    .footer {
+        margin-top: 12%;
+    }
+
+    .footer-contact {
+        width: 529px;
+        height: 80px;
+        top: -40px;
+        left: 250px;
+        padding: 0 18px;
+    }
+
+
+    .f-buildMain {
+        width: 100px;
+        height: 90px;
+        top: -87px;
+        left: 85%;
+    }
+
+    .f-input {
+        font-size: 20px;
+        width: 297px;
+        height: 42px;
+        padding: 10px 13px;
+        border-radius: 6px;
+    }
+
+    .f-input::placeholder {
+        font-size: 17px;
+        /* text-align: center; */
+    }
+
+    .footer-contact {
+        width: 529px;
+        height: 75px;
+        top: -40px;
+        left: 250px;
+        padding: 16px 22px;
+    }
+
+    .f-btn {
+        width: 150px;
+        height: 42px;
+        font-size: 18px;
+    }
+
+    .f-adinnLogo {
+        margin-top: 40px;
+        height: 80px;
+        width: 130px;
+    }
+
+    .f-infoContent {
+        /* height: 100px; */
+        width: 320px;
+        margin-left: 30px;
+    }
+
+    .f-infoContent1 {
+        /* height: 100px; */
+        width: 380px;
+        margin-right: 2px;
+    }
+
+    .f-content {
+        margin-top: 34px;
+    }
+
+    .f-content1 {
+        margin-top: 15px;
+    }
+
+    .f-content2 {
+        display: flex;
+        justify-content: space-between;
+        /* border: 1px solid black; */
+        width: 170px;
+        margin-top: 15px;
+    }
+
+    .f-content3 {
+        /* border: 1px solid white; */
+        width: 395px;
+        margin-top: 90px;
+    }
+
+
+    .f1,
+    .f2,
+    .f3,
+    .f4,
+    .f5,
+    .f6,
+    .f7,
+    .f8 {
+        height: 30px;
+        width: 30px;
+    }
+
+    .f-c2 {
+        width: 130px;
+        line-height: 15px;
+        font-size: 14px;
+    }
+
+    .mail {
+        font-size: 14px;
+    }
+
+    .f-c3 {
+        height: 30px;
+        width: 30px;
+
+    }
+
+    .footer-heading {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 16.94px;
+    }
+
+    .footer-para {
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 19.07px;
+    }
+
+    .copy {
+        margin-top: 35px;
+        padding-bottom: 20px;
+        font-size: 11px;
+    }
+
+    .copy1 {
+        width: 4%;
+    }
+
+    .copy2 {
+        width: 45%;
+    }
+
+    .copy3 {
+        width: 2%;
+    }
+
+    .copy4 {
+        width: 10%;
+    }
+
+
+    .contact-message {
+        top: -95px;
+        padding: 11px 14px;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+}
+
+/* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
+@media (min-width: 768px) and (max-width: 991px) {
+
+    .frequent {
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .qn {
+        font-size: 15px;
+        padding: 17px 30px;
+    }
+
+    .ans.visible {
+        max-height: auto;
+        font-size: 15px;
+        padding: 10px 25px;
+
+    }
+
+    .ans-hidden {
+        max-height: 0;
+        font-size: 15px;
+        padding: 0px 0px;
+    }
+
+
+    .frequently-up,
+    .frequently-down {
+        font-weight: 900;
+        font-size: 20px;
+    }
+
+    .footer {
+        margin-top: 12%;
+    }
+
+    .f-input {
+        font-size: 15px;
+        width: 210px;
+        height: 35px;
+        padding: 0px 10px;
+    }
+
+    .f-input::placeholder {
+        font-size: 12px;
+        text-align: center;
+        padding: auto;
+    }
+
+    .f-btn {
+        width: 120px;
+        height: 35px;
+        font-size: 15px;
+    }
+
+    .footer-contact {
+        width: 385px;
+        height: 60px;
+        top: -33px;
+        left: 200px;
+        padding: 12px 20px;
+    }
+
+    .f-buildMain {
+        width: 80px;
+        height: 70px;
+        top: -69px;
+        left: 85%;
+    }
+
+    .f-adinnLogo {
+        margin-top: 30px;
+        height: 65px;
+        width: 110px;
+    }
+
+    .f1,
+    .f2,
+    .f3,
+    .f4,
+    .f5,
+    .f6,
+    .f7,
+    .f8 {
+        height: 25px;
+        width: 25px;
+    }
+
+    .f-c2 {
+        width: 115px;
+        line-height: 15px;
+        font-size: 13px;
+    }
+
+    .mail {
+        font-size: 13px;
+    }
+
+    .f-content2 {
+        display: flex;
+        justify-content: space-between;
+        /* border: 1px solid black; */
+        width: 150px;
+        margin-top: 15px;
+    }
+
+    .f-infoContent {
+        /* height: 100px; */
+        /* border: 1px solid black; */
+        width: 248px;
+        margin-left: 15px;
+    }
+
+    .f-infoContent1 {
+        /* border: 1px solid black; */
+        /* height: 100px; */
+        width: 320px;
+        margin-right: -8px;
+    }
+
+    .f-content3 {
+        /* border: 1px solid white; */
+        width: 100%;
+        margin-top: 80px;
+    }
+
+    .f-content4 {
+        width: 100%;
+    }
+
+    .footer-para {
+        width: 275px;
+        /* border: 1px solid white; */
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18.07px;
+    }
+
+    .copy {
+        margin-top: 35px;
+        padding-bottom: 20px;
+        font-size: 11px;
+    }
+
+    .copy1 {
+        width: 4%;
+    }
+
+    .copy2 {
+        width: 35%;
+    }
+
+    .copy3 {
+        width: 2%;
+    }
+
+    .copy4 {
+        width: 8%;
+    }
+
+    .contact-message {
+        top: -85px;
+        padding: 9px 10px;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+}
+
+/* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
+@media (min-width: 480px) and (max-width: 767px) {
+    .frequent {
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .qn {
+        font-size: 14px;
+        padding: 15px;
+    }
+
+    .ans.visible {
+        max-height: auto;
+        font-size: 14px;
+        padding: 10px 18px;
+
+    }
+
+    .ans-hidden {
+        max-height: 0;
+        font-size: 14px;
+        padding: 10px 18px;
+    }
+
+
+    .frequently-up,
+    .frequently-down {
+        font-weight: 900;
+        font-size: 18px;
+    }
+
+    .footer {
+        margin-top: 20%;
+    }
+
+    .f-info {
+        flex-direction: column;
+
+    }
+
+    .f-buildMain {
+        width: 70px;
+        height: 60px;
+        top: -59px;
+        left: 84%;
+    }
+
+    .footer-contact {
+        width: 345px;
+        height: 50px;
+        top: -27px;
+        left: 35px;
+        padding: 8px 13px;
+    }
+
+    .f-input {
+        font-size: 14px;
+        width: 200px;
+        height: 35px;
+        padding: 0px 8px;
+    }
+
+    .f-input::placeholder {
+        font-size: 11.5px;
+        text-align: center;
+    }
+
+    .f-btn {
+        width: 110px;
+        height: 35px;
+        font-size: 14px;
+    }
+
+    .f-infoContent {
+        /* height: 100px; */
+        /* border: 1px solid black; */
+        width: 248px;
+        margin-left: 20px;
+    }
+
+    .f-infoContent1 {
+        /* border: 1px solid black; */
+        /* height: 100px; */
+        margin-top: -40px;
+        width: 320px;
+        margin-left: 20px;
+        margin-right: 44px;
+    }
+
+    .f-adinnLogo {
+        margin-top: 40px;
+        height: 70px;
+        width: 115px;
+    }
+
+    .f1,
+    .f2,
+    .f3,
+    .f4,
+    .f5,
+    .f6,
+    .f7,
+    .f8 {
+        height: 27px;
+        width: 27px;
+    }
+
+    .f-c2 {
+        width: 117px;
+        line-height: 15px;
+        font-size: 13px;
+    }
+
+    .mail {
+        font-size: 13px;
+    }
+
+    .f-content2 {
+        display: flex;
+        justify-content: space-between;
+        /* border: 1px solid black; */
+        width: 155px;
+        margin-top: 15px;
+    }
+
+    .footer-heading {
+        font-size: 19px;
+        font-weight: 500;
+        line-height: 15.94px;
+    }
+
+    .footer-para {
+        width: 307px;
+        /* border: 1px solid white; */
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18.07px;
+    }
+
+    .copy {
+        margin-top: 30px;
+        padding-bottom: 25px;
+        font-size: 11px;
+    }
+
+    .copy1 {
+        width: 4%;
+    }
+
+    .copy2 {
+        width: 33%;
+        /* background: linear-gradient(90deg, #E41E25 48.52%, #FFFFFF 100%); */
+    }
+
+    .copy3 {
+        width: 5%;
+    }
+
+    .copy4 {
+        width: 5%;
+    }
+
+    .copy22 {
+        flex-grow: 1;
+        margin: auto 5px;
+    }
+
+    .contact-message {
+        top: -75px;
+        padding: 9px;
+        border-radius: 8px;
+        font-size: 11px;
+        /* width:250px; */
+        z-index: 2;
+    }
+
+}
+
+/* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
+@media (min-width: 425px) and (max-width: 479px) {
+    .frequent {
+        padding: 0px 10px;
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .qn {
+        font-size: 13px;
+        padding: 15px 11px;
+        /* width: 90%; */
+    }
+
+    .ans.visible {
+        max-height: auto;
+        font-size: 13px;
+        padding: 10px 11px;
+
+    }
+
+    .ans-hidden {
+        max-height: 0;
+        font-size: 13px;
+        padding: 10px 11px;
+    }
+
+    .frequently-up,
+    .frequently-down {
+        font-weight: 900;
+        font-size: 15px;
+    }
+
+    .footer {
+        margin-top: 25%;
+    }
+
+
+
+    .f-info {
+        flex-direction: column;
+
+    }
+
+    .f-buildMain {
+        width: 70px;
+        height: 60px;
+        top: -59px;
+        left: 83%;
+    }
+
+    .footer-contact {
+        width: 300px;
+        height: 45px;
+        top: -24px;
+        left: 37px;
+        padding: 7px 10px;
+    }
+
+    .f-input {
+        font-size: 13px;
+        width: 173px;
+        height: 31px;
+        padding: 0px 5px;
+    }
+
+    .f-input::placeholder {
+        font-size: 10.5px;
+        text-align: center;
+    }
+
+    .f-btn {
+        width: 100px;
+        height: 30px;
+        font-size: 13px;
+    }
+
+    .f-infoContent {
+        /* height: 100px; */
+        /* border: 1px solid black; */
+        width: 248px;
+        margin-left: 20px;
+    }
+
+    .f-infoContent1 {
+        /* border: 1px solid black; */
+        /* height: 100px; */
+        margin-top: -40px;
+        width: 320px;
+        margin-left: 20px;
+        margin-right: 44px;
+    }
+
+    .f-adinnLogo {
+        margin-top: 40px;
+        height: 70px;
+        width: 115px;
+    }
+
+    .f1,
+    .f2,
+    .f3,
+    .f4,
+    .f5,
+    .f6,
+    .f7,
+    .f8 {
+        height: 27px;
+        width: 27px;
+    }
+
+    .f-c2 {
+        /* color: black; */
+        width: 117px;
+        line-height: 15px;
+        font-size: 13px;
+    }
+
+    .mail {
+        /* color: black; */
+        font-size: 13px;
+    }
+
+    .f-content2 {
+        display: flex;
+        justify-content: space-between;
+        /* border: 1px solid black; */
+        width: 155px;
+        margin-top: 15px;
+    }
+
+    .f-content3,
+    .f-content4 {
+        width: 100%;
+    }
+
+    .footer-heading {
+        font-size: 19px;
+        font-weight: 500;
+        line-height: 15.94px;
+    }
+
+    .footer-para {
+        width: 307px;
+        /* border: 1px solid white; */
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18.07px;
+    }
+
+    .copy {
+        margin-top: 30px;
+        padding-bottom: 25px;
+        font-size: 11px;
+    }
+
+    .copy1 {
+        width: 4%;
+    }
+
+    .copy2 {
+        width: 33%;
+        background: linear-gradient(90deg, #E41E25 20.52%, #FFFFFF 100%);
+    }
+
+    .copy3 {
+        width: 5%;
+    }
+
+    .copy4 {
+        width: 5%;
+    }
+
+    .copy22 {
+        flex-grow: 1;
+        margin: auto 5px;
+    }
+
+    .contact-message {
+        top: -98px;
+        padding: 9px 7px;
+        border-radius: 8px;
+        font-size: 11px;
+        /* width:250px; */
+        z-index: 2;
+    }
+}
+
+/* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
+@media (min-width: 375px) and (max-width: 424px) {
+    .frequent {
+        padding: 0px 8px;
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .qn {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        padding: 15px 10px;
+        /* width: 90%; */
+    }
+
+    .ans.visible {
+        max-height: auto;
+        font-size: 13px;
+        padding: 10px 10px;
+
+    }
+
+    .ans-hidden {
+        max-height: 0;
+        font-size: 13px;
+        padding: 10px 10px;
+    }
+
+    .frequently-up,
+    .frequently-down {
+        font-weight: 900;
+        font-size: 15px;
+    }
+
+    .footer {
+        margin-top: 30%;
+    }
+
+
+
+
+    .f-info {
+        flex-direction: column;
+    }
+
+    .f-infoContent {
+        /* height: 100px; */
+        /* border: 1px solid black; */
+        width: 248px;
+        margin-left: 10px;
+    }
+
+    .f-infoContent1 {
+        /* border: 1px solid black; */
+        /* height: 100px; */
+        margin-top: -40px;
+        width: 320px;
+        margin-left: 7px;
+    }
+
+    .f-input {
+        font-size: 13px;
+        width: 160px;
+        height: 29px;
+        padding: 0px 5px;
+    }
+
+    .f-input::placeholder {
+        font-size: 9.5px;
+        text-align: center;
+
+    }
+
+    .f-btn {
+        width: 92px;
+        height: 28px;
+        font-size: 13px;
+    }
+
+    .footer-contact {
+        width: 275px;
+        height: 42px;
+        top: -22px;
+        left: 25px;
+        padding: 6px 7px;
+    }
+
+    .f-buildMain {
+        width: 60px;
+        height: 55px;
+        top: -54px;
+        left: 82%;
+    }
+
+    .f-adinnLogo {
+        margin-top: 35px;
+        height: 65px;
+        width: 110px;
+    }
+
+    .f1,
+    .f2,
+    .f3,
+    .f4,
+    .f5,
+    .f6,
+    .f7,
+    .f8 {
+        height: 26px;
+        width: 26px;
+    }
+
+    .f-c2 {
+        /* color: black; */
+        width: 125px;
+        line-height: 15px;
+        font-size: 14px;
+    }
+
+    .mail {
+        /* color: black; */
+        font-size: 14px;
+    }
+
+    .f-content1 {
+        margin-top: 20px;
+    }
+
+    .f-content2 {
+        display: flex;
+        justify-content: space-between;
+        /* border: 1px solid black; */
+        width: 160px;
+        margin-top: 20px;
+    }
+
+    .f-content3,
+    .f-content4 {
+        width: 100%;
+    }
+
+
+    .f-content3 {
+        /* border: 1px solid white; */
+        /* width: 301px; */
+        margin-top: 125px;
+        display: flex;
+    }
+
+    .footer-heading {
+        font-size: 19px;
+        font-weight: 500;
+        line-height: 16.94px;
+    }
+
+    .footer-para {
+        width: 263px;
+        /* border: 1px solid white; */
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20.07px;
+    }
+
+    .copy {
+        margin-top: 30px;
+        padding-bottom: 25px;
+        font-size: 10px;
+    }
+
+    .copy1 {
+        width: 5%;
+    }
+
+    .copy2 {
+        width: 27%;
+        background: linear-gradient(90deg, #E41E25 20.52%, #FFFFFF 100%);
+    }
+
+    .copy3 {
+        width: 5%;
+    }
+
+    .copy4 {
+        width: 5%;
+    }
+
+
+    .copy22 {
+        flex-grow: 1;
+        margin: auto 5px;
+    }
+
+    .contact-message {
+        top: -98px;
+        padding: 9px 7px;
+        border-radius: 8px;
+        font-size: 12px;
+        /* width:250px; */
+        z-index: 2;
+    }
+}
+
+/* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
+@media (min-width: 360px) and (max-width: 374px) {
+    .frequent {
+        padding: 0px 11px;
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .qn {
+        font-size: 13px;
+        padding: 12px 12px;
+        border-radius: 10px;
+        /* width: 90%; */
+    }
+
+    .ans.visible {
+        max-height: auto;
+        font-size: 13px;
+        padding: 10px 10px;
+
+    }
+
+    .ans-hidden {
+        max-height: 0;
+        font-size: 13px;
+        padding: 10px 10px;
+    }
+
+    .frequently-up,
+    .frequently-down {
+        font-weight: 900;
+        font-size: 15px;
+    }
+
+    .footer {
+        margin-top: 30%;
+    }
+
+
+    .f-info {
+        flex-direction: column;
+    }
+
+    .f-infoContent {
+        /* height: 100px; */
+        /* border: 1px solid black; */
+        width: 248px;
+        margin-left: 0px;
+    }
+
+    .f-infoContent1 {
+        /* border: 1px solid black; */
+        /* height: 100px; */
+        margin-top: -40px;
+        width: 320px;
+        margin-left: -3px;
+    }
+
+    .f-input {
+        font-size: 13px;
+        width: 160px;
+        height: 29px;
+        padding: 0px 5px;
+    }
+
+    .f-input::placeholder {
+        font-size: 9.5px;
+        text-align: center;
+
+    }
+
+    .f-btn {
+        width: 92px;
+        height: 28px;
+        font-size: 13px;
+    }
+
+    .footer-contact {
+        width: 275px;
+        height: 42px;
+        top: -22px;
+        left: 15px;
+        padding: 6px 7px;
+    }
+
+    .f-buildMain {
+        width: 55px;
+        height: 55px;
+        top: -54px;
+        left: 83%;
+    }
+
+    .f-adinnLogo {
+        margin-top: 35px;
+        height: 65px;
+        width: 110px;
+    }
+
+    .f1,
+    .f2,
+    .f3,
+    .f4,
+    .f5,
+    .f6,
+    .f7,
+    .f8 {
+        height: 26px;
+        width: 26px;
+    }
+
+    .f-c2 {
+        /* color: black; */
+        width: 125px;
+        line-height: 15px;
+        font-size: 14px;
+    }
+
+    .mail {
+        /* color: black; */
+        font-size: 14px;
+    }
+
+    .f-content1 {
+        margin-top: 20px;
+    }
+
+    .f-content2 {
+        display: flex;
+        justify-content: space-between;
+        /* border: 1px solid black; */
+        width: 160px;
+        margin-top: 20px;
+    }
+
+    .f-content3,
+    .f-content4 {
+        width: 100%;
+    }
+
+    .f-content3 {
+        /* border: 1px solid white; */
+        /* width: 301px; */
+        margin-top: 125px;
+        display: flex;
+    }
+
+    .footer-heading {
+        font-size: 19px;
+        font-weight: 500;
+        line-height: 16.94px;
+    }
+
+    .footer-para {
+        width: 263px;
+        /* border: 1px solid white; */
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20.07px;
+    }
+
+    .copy {
+        margin-top: 30px;
+        padding-bottom: 25px;
+        font-size: 10px;
+    }
+
+    .copy1 {
+        width: 5%;
+    }
+
+    .copy2 {
+        width: 27%;
+        background: linear-gradient(90deg, #E41E25 20.52%, #FFFFFF 100%);
+    }
+
+    .copy3 {
+        width: 5%;
+    }
+
+    .copy4 {
+        width: 5%;
+    }
+
+
+    .copy22 {
+        flex-grow: 1;
+        margin: auto 5px;
+    }
+
+    .contact-message {
+        top: -98px;
+        padding: 9px 7px;
+        border-radius: 8px;
+        font-size: 12px;
+        /* width:250px; */
+        z-index: 2;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 359px) {
+    .qn-content1 {
+        width: 95%;
+        /* border: 1px solid red; */
+    }
+
+    .frequent {
+        padding: 0px 10px;
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .qn {
+        font-size: 13px;
+        padding: 12px 12px;
+        border-radius: 10px;
+        /* width: 90%; */
+    }
+
+    .ans.visible {
+        max-height: auto;
+        font-size: 13px;
+        padding: 10px 10px;
+
+    }
+
+    .ans-hidden {
+        max-height: 0;
+        font-size: 13px;
+        padding: 10px 10px;
+    }
+
+    .frequently-up,
+    .frequently-down {
+        font-weight: 900;
+        font-size: 15px;
+    }
+
+    .footer {
+        margin-top: 35%;
+    }
+
+
+    .f-info {
+        flex-direction: column;
+    }
+
+    .footer-contact {
+        width: 257px;
+        height: 42px;
+        top: -23px;
+        left: 5px;
+        padding: 7px 8px;
+        border-radius: 25px;
+    }
+
+    .f-input {
+        font-size: 12px;
+        width: 153px;
+        height: 27px;
+        padding: 0px 5px;
+    }
+
+    .f-input::placeholder {
+        font-size: 9px;
+        text-align: center;
+    }
+
+    .f-btn {
+        width: 85px;
+        height: 27px;
+        font-size: 12px;
+    }
+
+    .f-buildMain {
+        width: 50px;
+        height: 50px;
+        top: -49px;
+        left: 83%;
+    }
+
+    .f-infoContent {
+        /* height: 100px; */
+        /* border: 1px solid black; */
+        width: 248px;
+        margin-left: -8px;
+    }
+
+    .f-infoContent1 {
+        /* border: 1px solid black; */
+        /* height: 100px; */
+        margin-top: -40px;
+        width: 290px;
+        margin-left: -10px;
+    }
+
+    .f-c4 {
+        margin: 0 8px;
+    }
+
+    .f-adinnLogo {
+        margin-top: 30px;
+        height: 60px;
+        width: 100px;
+    }
+
+    .f-content {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        align-content: center;
+        margin-top: 30px;
+    }
+
+    .f-content1 {
+        margin-top: 15px;
+    }
+
+    .f-content2 {
+        display: flex;
+        justify-content: space-between;
+        /* border: 1px solid black; */
+        width: 160px;
+        margin-top: 15px;
+    }
+
+    .f-content3,
+    .f-content4 {
+        width: 100%;
+    }
+
+    .f1,
+    .f2,
+    .f3,
+    .f4,
+    .f5,
+    .f6,
+    .f7,
+    .f8 {
+        height: 25px;
+        width: 25px;
+    }
+
+    .f-c2 {
+        /* color: black; */
+        width: 115px;
+        line-height: 15px;
+        font-size: 13px;
+    }
+
+    .mail {
+        /* color: black; */
+        font-size: 13px;
+    }
+
+    .footer-heading {
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 20.94px;
+    }
+
+    .footer-para {
+        width: 255px;
+        /* border: 1px solid white; */
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 20.07px;
+    }
+
+    .copy {
+        margin-top: 30px;
+        padding-bottom: 30px;
+        font-size: 9px;
+    }
+
+    .copy1 {
+        width: 4%;
+    }
+
+    .copy2 {
+        width: 24%;
+        background: linear-gradient(90deg, #E41E25 20.52%, #FFFFFF 100%);
+    }
+
+    .copy3 {
+        width: 4%;
+    }
+
+    .copy4 {
+        width: 4%;
+    }
+
+    .copy22 {
+        flex-grow: 1;
+        margin: auto 5px;
+    }
+
+    .contact-message {
+        top: -95px;
+        padding: 7px 5px;
+        border-radius: 8px;
+        font-size: 11.5px;
+        /* width:250px; */
+        z-index: 2;
+    }
+}

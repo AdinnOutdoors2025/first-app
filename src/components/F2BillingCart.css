@@ -1,0 +1,3407 @@
+* {
+    font-family: Montserrat;
+}
+
+/* Global Styles */
+.billing-container1 {
+    width: 75%;
+    max-width: 1200px;
+    margin: auto;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 30px 0px rgba(6, 42, 191, 0.25);
+    border-radius: 20px;
+    margin-top: 2%;
+}
+
+.billing-header1 {
+    background: rgba(227, 34, 40, 1);
+    color: white;
+    padding: 10px;
+    font-size: 22px;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    font-weight: 600;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.billing-content1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.billing-flow1 {
+    display: flex;
+    gap: 20px;
+}
+
+.billing-Flowcontent1 {
+    color: rgba(227, 34, 40, 1);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0%;
+}
+
+.billingFlowLeftArr1 {
+    font-size: 16px;
+}
+
+.FlowContent1 {
+    color: rgba(113, 117, 126, 1);
+}
+
+.FlowContent11 {
+    color: rgba(27, 28, 32, 1);
+}
+
+.billing-left1 {
+    border-right: 2px solid gray;
+}
+
+.billing-left1,
+.billing-right1 {
+    flex: 1;
+    min-width: 320px;
+    padding: 10px;
+}
+
+.locationIconOutline1 {
+    background-color: rgba(245, 242, 242, 1);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.locationIcon1 {
+    height: 20px;
+    width: 20px;
+}
+
+.section-title1 {
+    display: flex;
+    gap: 10px;
+    font-weight: 500;
+    font-size: 17px;
+    letter-spacing: 0%;
+    color: rgba(27, 28, 32, 1);
+    margin-bottom: 20px;
+    margin-top: 6%;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+/* Form Fields */
+
+.input-field1 {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: rgba(113, 117, 126, 1);
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: 0%;
+    /* margin-bottom: 20px; */
+}
+
+.billingSpan1 {
+    position: relative;
+    margin-bottom: 20px;
+
+}
+
+.billingInputSpan1 {
+    position: absolute;
+    left: 8px;
+    top: 10px;
+    width: max-content;
+    background-color: white;
+    text-align: center;
+    pointer-events: none;
+    transition: .3s ease all;
+    color: rgba(113, 117, 126, 1);
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0%;
+}
+
+.input-field1:focus+.billingInputSpan1 {
+    position: absolute;
+    left: 10px;
+    top: -12px;
+    width: max-content;
+    background-color: white;
+    transition: .3s ease all;
+}
+
+.input-field1:focus {
+    outline: none;
+}
+
+.inputSpanFill1 {
+    position: absolute;
+    left: 10px;
+    top: -12px;
+    width: max-content;
+    background-color: white;
+    text-align: center;
+}
+
+.phone-input1 {
+    display: flex;
+    /* width: 100%; */
+    margin-bottom: 5px;
+    position: relative;
+
+
+}
+
+.phoneInputField1 {
+    width: 195%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 5px;
+    color: rgba(113, 117, 126, 1);
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: 0%;
+    /* margin-bottom: 8px; */
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.country-code1 {
+    position: relative;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    width: 70px;
+    height: 43.8px;
+    color: rgba(27, 28, 32, 1);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    border-right: 1.5px solid #ccc;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    appearance: none;
+    /* Hide default dropdown arrow */
+}
+
+.country-code1:focus {
+    outline: none;
+}
+
+
+
+.billingPhoneSpan1 {
+    position: relative;
+}
+
+.billingPhoneInputSpan1 {
+    position: absolute;
+    left: 10px;
+    top: 11px;
+    width: max-content;
+    background-color: white;
+    text-align: center;
+}
+
+.phoneInputField1:focus+.billingPhoneInputSpan1 {
+    position: absolute;
+    left: -58px;
+    top: -12px;
+    width: max-content;
+    background-color: white;
+    transition: .3s ease all;
+}
+
+.inputPhoneSpanFill1 {
+    position: absolute;
+    left: -58px;
+    top: -12px;
+    width: max-content;
+    background-color: white;
+
+}
+
+
+
+
+/* STATE  */
+.billingStateCity1 {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.phoneInputUpDown1 {
+    position: absolute;
+    top: 18%;
+    left: 89.8%;
+    color: rgba(113, 117, 126, 1);
+    /* font-size: 26px; */
+}
+
+.stateInputField1,
+.cityInputField1 {
+    width: 100%;
+}
+
+
+.billing-dropdown-container1 {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 222%;
+    border-radius: 5px;
+    z-index: 10;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.billing-search-box1 {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+.billing-search-box1 i {
+    margin-right: 8px;
+    color: rgba(113, 117, 126, 1);
+}
+
+.billing-search-input1 {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.billing-state-list1 {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.billing-state-item1 {
+    padding: 10px;
+    padding-top: 6.5px;
+    padding-bottom: 6.5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-bottom: 1px solid gray;
+}
+
+.billing-no-results1 {
+    padding: 10px;
+    text-align: center;
+    color: rgba(113, 117, 126, 1);
+}
+
+
+/* Order Summary */
+.billing-right1 {
+    padding: 0;
+}
+
+.billing_contents_right1 {
+    width: 80%;
+    margin: 0px auto;
+}
+
+.billing-order-item1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px dashed rgba(113, 117, 126, 1);
+    /* padding-top: 10px; */
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.billing-order-img1 {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+.billing-section-title1 {
+
+    color: rgba(27, 28, 32, 1);
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 16px;
+    letter-spacing: 0%;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.billing-order-title1 {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0%;
+    color: rgba(51, 51, 51, 1);
+}
+
+.billing-order-pricing1 {
+    width: 100%;
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(27, 28, 32, 1);
+
+}
+
+
+
+.billing-orderContent11 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.billing-orderContentPriceMain1 {
+    font-size: 14px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
+.billing-orderContentRight1 {
+    width: 40px;
+    text-align: center;
+    /* border: 1px solid blue; */
+}
+
+.billingMountingcharge1 {
+    margin-top: 6px;
+}
+
+.BillingTotalAmt1 {
+    font-size: 19px;
+}
+
+.billingNote1 {
+    color: rgba(227, 34, 40, 1);
+}
+
+.billingNoteContent1 {
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 14px;
+    /* line-height: 100%; */
+    letter-spacing: 0%;
+    color: rgba(27, 28, 32, 1);
+    margin: 20px auto;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+/* BILLING BUTTON  */
+.billingButton1 {
+    color: rgba(27, 28, 32, 1);
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    display: flex;
+    gap: 30px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    align-items: center;
+    padding: 10px 26%;
+    margin-top: 32%;
+    padding-bottom: 8px;
+    border-bottom-right-radius: 20px;
+}
+
+.billingContinueBtn1 {
+    background-color: rgba(227, 31, 37, 1);
+    color: white;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 21.94px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+}
+
+@keyframes animate {
+    0% {
+        Left: -100%;
+    }
+
+    100% {
+        Left: calc(100% + 10px);
+    }
+}
+
+@keyframes animate1 {
+    0% {
+        Left: calc(100% + 10px);
+    }
+
+    100% {
+        left: -100%;
+    }
+}
+
+
+.billingContinueBtn1:hover:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    Left: -30px;
+    height: 100%;
+    width: 16px;
+    background: rgba(255, 255, 255, 1);
+    /* backdrop-filter: blur(25px); */
+    transform: translate(-50%, -50%) rotate(45deg);
+    filter: blur(15px);
+    transition: .5s;
+    transform: skewX(-14deg);
+    animation: animate .3s linear;
+}
+
+
+.billingContinueBtn1:not(:hover)::before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    Left: -30px;
+    height: 100%;
+    width: 16px;
+    background: rgba(255, 255, 255, 1);
+    /* backdrop-filter: blur(25px); */
+    filter: blur(15px);
+    transition: .5s;
+    transform: skewX(-14deg);
+    animation: animate1 .3s linear;
+}
+
+.ReserveError1 {
+    color: red;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    font-size: large;
+}
+
+
+/* BILLING SCROLL  */
+.BillingCart-scroll1 {
+    /* width: 386px; */
+    padding: 20px;
+    height: 260px;
+    border-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 10px 0px rgba(6, 42, 191, 0.25);
+    /* box-shadow: -5px -5px -5px gray;
+    box-shadow: 5px 5px 5px #e7e7e7; */
+    /* border: 1px solid red; */
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* margin: 0 -8px; */
+    align-items: center;
+    align-content: center;
+    padding-top: 15px;
+    padding-bottom: 0px;
+    /* margin-bottom: 20px; */
+}
+
+.BillingScrollTotalContent {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 10px 0px rgba(6, 42, 191, 0.25);
+    padding: 15px;
+    /* align-items: center; align-content: center; text-align: center; */
+    /* border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px; */
+    width: 100%;
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(27, 28, 32, 1);
+}
+
+.BillingScrollDiscount {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 3px 10px rgba(6, 42, 191, 0.25);
+    padding: 15px;
+    /* align-items: center; align-content: center; text-align: center; */
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: 100%;
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(27, 28, 32, 1);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    color: rgba(227, 31, 37, 1);
+}
+
+.billingTotalRight {
+    width: 73px;
+    text-align: center;
+    /* border: 1px solid red; */
+}
+
+.billing-orderTotalAmtContent1 {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.billingTotalContentTop {
+    padding-bottom: 10px;
+}
+
+
+
+.billing-orderContentRight1 {
+    width: 40px;
+    text-align: center;
+}
+
+
+/* ERROR CSS  */
+.AdminProdinput-errorBilling1 {
+    /* animation: blinkError 0.6s ease-in-out infinite; */
+    border: 1px solid red !important;
+}
+
+.AdminProdinput-errorBilling1::placeholder {
+    color: black;
+}
+
+.AdminProderror-messageBilling1 {
+    color: red;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.AdminProderror-messageBillingPhone1 {
+    color: red;
+    font-size: 12px;
+    /* margin-bottom: 10px; */
+}
+
+.AdminProderror-messageBillingState1 {
+    color: red;
+    font-size: 12px;
+    /* margin-bottom: 10px; */
+}
+
+.phoneInputField::-webkit-outer-spin-button,
+.phoneInputField::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.phoneInputField {
+    -moz-appearance: textfield;
+}
+
+
+/* Responsive Media Queries */
+/* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
+@media (min-width: 2560px) {
+    .billing-container1 {
+        width: 100%;
+        max-width: 1380px;
+        margin: auto;
+        margin-top: 2%;
+    }
+
+    .billing-header1 {
+        height: 100px;
+        font-size: 40px;
+        font-weight: 600;
+        padding: 0;
+    }
+
+    .billing-left1 {
+        padding: 20px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .billing-Flowcontent1 {
+        color: rgba(227, 34, 40, 1);
+        font-weight: 600;
+        font-size: 25px;
+        letter-spacing: 0%;
+    }
+
+    .FlowContent1 {
+        color: rgba(113, 117, 126, 1);
+    }
+
+    .FlowContent11 {
+        color: rgba(27, 28, 32, 1);
+    }
+
+    .billingFlowLeftArr1 {
+        font-size: 26px;
+    }
+
+    .locationIconOutline1 {
+        width: 45px;
+        height: 45px;
+    }
+
+    .locationIcon1 {
+        height: 32px;
+        width: 32px;
+    }
+
+    .section-title1 {
+        font-weight: 500;
+        font-size: 23px;
+    }
+    .billingSpan1{
+        margin-bottom: 30px;
+
+
+    }
+
+
+    .input-field1 {
+        padding: 20px;
+        font-weight: 400;
+        font-size: 22px;
+        /* margin-bottom: 30px; */
+    }
+
+    .billingInputSpan1 {
+        position: absolute;
+        left: 14px;
+        top: 18px;
+        font-size: 22px;
+    }
+
+    .input-field1:focus+.billingInputSpan1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+
+    .inputSpanFill1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .phone-input1 {
+        margin-bottom:6px;
+    }
+
+    .phoneInputField1 {
+        width: 181%;
+        padding: 19px;
+        font-size: 22px;
+        /* margin-bottom: 15px; */
+        border: 1px solid #ccc;
+
+    }
+
+    .country-code1 {
+        position: relative;
+        text-align: center;
+        align-items: center;
+        align-content: center;
+        width: 100px;
+        height: 72px;
+        font-size: 25px;
+    }
+
+    .billingPhoneInputSpan1 {
+        position: absolute;
+        left: 15px;
+        top: 20px;
+    }
+
+    .phoneInputField1:focus+.billingPhoneInputSpan1 {
+        position: absolute;
+        left: -83px;
+        top: -14px;
+
+    }
+
+    .inputPhoneSpanFill1 {
+        position: absolute;
+        left: -83px;
+        top: -14px;
+    }
+
+    .billing-dropdown-container1 {
+        top: 66px;
+        left: 0;
+
+    }
+
+    .stateSearchIcon1 {
+        font-size: 20px;
+    }
+
+    .billing-search-input1 {
+        font-size: 20px;
+    }
+
+    .billing-state-item1 {
+        padding: 10px;
+        font-size: 22px;
+        padding-top: 10.5px;
+        padding-bottom: 10.5px;
+    }
+
+    .billing-state-list1 {
+        max-height: 218px;
+    }
+
+    .phoneInputUpDown1 {
+        position: absolute;
+        top: 18%;
+        left: 87.8%;
+        font-size: 26px;
+    }
+
+    .billing_contents_right1 {
+        width: 95%;
+        margin: 0px auto;
+    }
+
+
+    .billing-section-title1 {
+        color: rgba(27, 28, 32, 1);
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: 32px;
+        margin: 25px auto;
+    }
+
+    .billing-order-img1 {
+        width: 95px;
+        height: 95px;
+        border-radius: 12px;
+    }
+
+    .billing-order-title1 {
+        font-size: 24px;
+        line-height: 29px;
+
+    }
+
+    .billing-order-item1 {
+        gap: 30px;
+        border-bottom: 2px dashed rgba(113, 117, 126, 1);
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .billing-order-pricing1 {
+        font-size: 25px;
+    }
+
+    .billing-orderContent1 {
+        border-bottom: 2px dashed rgba(113, 117, 126, 1);
+        padding-top: 10px;
+        padding-bottom: 30px;
+    }
+
+    .BillingTotalAmt1 {
+        font-size: 37px;
+    }
+
+
+    .billingButton1 {
+        font-weight: 500;
+        font-size: 35px;
+        gap: 30px;
+        padding: 24px 29%;
+        margin-top: 38%;
+        /* padding-bottom: 8px; */
+    }
+
+    .billingContinueBtn1 {
+        font-size: 25px;
+        font-weight: 600;
+        line-height: 24.94px;
+        padding: 17px 37px;
+        border-radius: 40px;
+    }
+
+
+
+    /* BILLING SCROLL  */
+    .BillingCart-scroll1 {
+        padding: 20px;
+        height: 290px;
+        padding-top: 15px;
+        padding-bottom: 0px;
+    }
+
+    .BillingScrollTotalContent {
+        font-size: 25px;
+    }
+
+    .BillingScrollDiscount {
+        margin-bottom: 15px;
+    }
+
+    .BillingScrollDiscount,
+    .BillingScrollTotalContent {
+        font-size: 25px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .billingTotalRight {
+        width: 73px;
+        text-align: center;
+    }
+
+    .billing-orderTotalAmtContent1 {
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+    .billingTotalContentTop {
+        padding-bottom: 10px;
+    }
+
+    .billing-orderContentPriceMain1 {
+        font-size: 28px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .billing-orderContentRight1 {
+        width: 100px;
+        text-align: center;
+    }
+
+.AdminProderror-messageBilling1 {
+    color: red;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.AdminProderror-messageBillingPhone1 {
+    color: red;
+    font-size: 20px;
+    /* margin-bottom: 10px; */
+}
+
+.AdminProderror-messageBillingState1 {
+    color: red;
+    font-size: 20px;
+    /* margin-bottom: 10px; */
+}
+
+}
+
+/* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
+@media (min-width: 1440px) and (max-width: 2559px) {
+
+
+    .billing-container1 {
+        width: 75%;
+        max-width: 1200px;
+        margin: auto;
+        border-radius: 20px;
+        margin-top: 2%;
+    }
+
+    .billing-header1 {
+        padding: 10px;
+        font-size: 22px;
+    }
+
+    .billing-flow1 {
+        display: flex;
+        gap: 20px;
+    }
+
+    .billing-Flowcontent1 {
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .billing-left1 {
+        border-right: 2px solid gray;
+    }
+
+    .billing-left1,
+    .billing-right1 {
+        flex: 1;
+        min-width: 320px;
+        padding: 10px;
+    }
+
+    .billing-right1 {
+        padding: 0;
+    }
+
+    .locationIconOutline1 {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+
+    .locationIcon1 {
+        height: 20px;
+        width: 20px;
+    }
+
+    .section-title1 {
+        gap: 10px;
+        font-weight: 500;
+        font-size: 17px;
+        margin-bottom: 20px;
+        margin-top: 6%;
+    }
+
+    /* Form Fields */
+    .input-field1 {
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 20px; */
+    }
+
+    .billingSpan1 {
+        position: relative;
+        margin-bottom: 20px;
+
+    }
+
+    .billingInputSpan1 {
+        position: absolute;
+        left: 8px;
+        top: 10px;
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .input-field1:focus+.billingInputSpan1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .inputSpanFill1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .phone-input1 {
+        margin-bottom: 5px;
+    }
+
+    .phoneInputField1 {
+        width: 227%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 8px; */
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+
+    }
+
+    .country-code1 {
+        position: relative;
+        width: 70px;
+        height: 43.8px;
+        font-weight: 400;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    /* 
+    .phoneInputUpDown1 {
+        top: 23.5%;
+        left: 13.8%;
+    } */
+
+    .billingPhoneInputSpan1 {
+        left: 10px;
+        top: 11px;
+    }
+
+    .phoneInputField1:focus+.billingPhoneInputSpan1 {
+        left: -58px;
+        top: -12px;
+    }
+
+    .inputPhoneSpanFill1 {
+        position: absolute;
+        left: -58px;
+        top: -12px;
+    }
+
+
+    .phoneInputUpDown1 {
+        top: 18%;
+        left: 89.8%;
+        font-size: 16px;
+
+    }
+
+    .billing-dropdown-container1 {
+        position: absolute;
+        top: 45px;
+        left: 0;
+        width: 257%;
+    }
+
+    .stateSearchIcon1 {
+        font-size: 15px;
+    }
+
+    .billing-search-box1 {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .billing-search-box1 i {
+        margin-right: 8px;
+    }
+
+    .billing-search-input1 {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .billing-state-list1 {
+        max-height: 148px;
+    }
+
+    .billing-state-item1 {
+        padding: 10px;
+        padding-top: 6.5px;
+        padding-bottom: 6.5px;
+        border-bottom: 1px solid gray;
+    }
+
+    .billing-no-results1 {
+        padding: 10px;
+
+    }
+
+    /* Order Summary */
+    .billing_contents_right1 {
+        width: 95%;
+        margin: 0px auto;
+    }
+
+    .billing-order-item1 {
+        gap: 10px;
+        border-bottom: 1px dashed rgba(113, 117, 126, 1);
+        padding-top: 10px;
+        padding-bottom: 20px;
+    }
+
+    .billing-order-img1 {
+        width: 55px;
+        height: 55px;
+        border-radius: 5px;
+    }
+
+    .billing-section-title1 {
+        font-weight: 600;
+        font-size: 22px;
+        margin: 15px auto;
+    }
+
+    .billing-order-title1 {
+
+        font-size: 16px;
+        line-height: 18px;
+    }
+
+    .billing-order-pricing1 {
+        width: 100%;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .billing-orderContent1 {
+        border-bottom: 1px dashed rgba(113, 117, 126, 1);
+        padding-top: 10px;
+        padding-bottom: 20px;
+    }
+
+    .billing-orderContentPriceMain1 {
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+
+    .billing-orderContentRight1 {
+        width: 50px;
+    }
+
+    .billingMountingcharge1 {
+        margin-top: 5px;
+    }
+
+    .BillingTotalAmt1 {
+        font-size: 18px;
+    }
+
+    .billingNoteContent1 {
+        font-weight: 600;
+        font-size: 14px;
+        margin: 20px auto;
+    }
+
+    /* BILLING BUTTON  */
+    .billingButton1 {
+        font-size: 30px;
+        gap: 30px;
+        padding: 10px 26%;
+        margin-top: 32%;
+        padding-bottom: 8px;
+    }
+
+    .billingContinueBtn1 {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 21.94px;
+        padding: 10px 20px;
+        border-radius: 22px;
+    }
+
+    .BillingScrollTotalContent {
+        font-size: 17px;
+    }
+
+    .BillingScrollTotalContent,
+    .BillingScrollDiscount {
+        font-size: 17px;
+    }
+
+    .BillingScrollDiscount {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+/* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
+@media (min-width: 992px) and (max-width: 1023px) {
+
+    .billing-container1 {
+        width: 88%;
+        max-width: 1200px;
+        margin: auto;
+        border-radius: 20px;
+        margin-top: 2%;
+        margin-bottom: 13%;
+    }
+
+    .billing-header1 {
+        /* padding: 10px; */
+        font-size: 22px;
+    }
+
+    .billing-flow1 {
+        display: flex;
+        gap: 20px;
+    }
+
+    .billing-Flowcontent1 {
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .billing-left1 {
+        border-right: 2px solid gray;
+    }
+
+    .billing-left1,
+    .billing-right1 {
+        flex: 1;
+        min-width: 320px;
+        padding: 10px;
+    }
+
+    .billing-right1 {
+        padding: 0;
+    }
+
+    .locationIconOutline1 {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+
+    .locationIcon1 {
+        height: 20px;
+        width: 20px;
+    }
+
+    .section-title1 {
+        gap: 10px;
+        font-weight: 500;
+        font-size: 17px;
+        margin-bottom: 20px;
+        margin-top: 6%;
+    }
+
+    /* Form Fields */
+    .input-field1 {
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 20px; */
+    }
+
+    .billingSpan1 {
+        position: relative;
+        margin-bottom: 20px;
+
+    }
+
+    .billingInputSpan1 {
+        position: absolute;
+        left: 8px;
+        top: 10px;
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .input-field1:focus+.billingInputSpan1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .inputSpanFill1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .phone-input1 {
+        margin-bottom: 5px;
+    }
+
+    .phoneInputField1 {
+        width: 176%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 8px; */
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+
+    }
+
+    .country-code1 {
+        position: relative;
+        width: 70px;
+        height: 43.8px;
+        font-weight: 400;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    /* 
+    .phoneInputUpDown1 {
+        top: 23.5%;
+        left: 13.8%;
+    } */
+
+    .billingPhoneInputSpan1 {
+        left: 10px;
+        top: 11px;
+    }
+
+    .phoneInputField1:focus+.billingPhoneInputSpan1 {
+        left: -58px;
+        top: -12px;
+    }
+
+    .inputPhoneSpanFill1 {
+        position: absolute;
+        left: -58px;
+        top: -12px;
+    }
+
+
+    .phoneInputUpDown1 {
+        top: 18%;
+        left: 89.8%;
+        font-size: 16px;
+
+    }
+
+    .billing-dropdown-container1 {
+        position: absolute;
+        top: 45px;
+        left: 0;
+        width: 210%;
+    }
+
+    .stateSearchIcon1 {
+        font-size: 15px;
+    }
+
+    .billing-search-box1 {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .billing-search-box1 i {
+        margin-right: 8px;
+    }
+
+    .billing-search-input1 {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .billing-state-list1 {
+        max-height: 148px;
+    }
+
+    .billing-state-item1 {
+        font-size: 14px;
+        padding: 10px;
+        padding-top: 6.5px;
+        padding-bottom: 6.5px;
+        border-bottom: 1px solid gray;
+    }
+
+    .billing-no-results1 {
+        padding: 10px;
+
+    }
+
+    /* Order Summary */
+    .billing_contents_right1 {
+        width: 93%;
+    }
+
+    .billing-order-item1 {
+        gap: 13px;
+        border-bottom: 1px dashed rgba(113, 117, 126, 1);
+        padding-top: 5px;
+        padding-bottom: 20px;
+    }
+
+    .billing-order-img1 {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+    }
+
+    .billing-section-title1 {
+        font-weight: 600;
+        font-size: 18px;
+        margin: 10px auto;
+    }
+
+    .billing-order-title1 {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .billing-order-pricing1 {
+        width: 100%;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .billing-orderContent1 {
+        border-bottom: 1px dashed rgba(113, 117, 126, 1);
+        padding-top: 5px;
+        padding-bottom: 20px;
+    }
+
+    .billing-orderContentPriceMain1 {
+        /* border-bottom: 1px dashed rgba(113, 117, 126, 1); */
+        padding-top: 20px;
+        padding-bottom: 12px;
+    }
+
+    .billing-orderContentRight1 {
+        width: 50px;
+    }
+
+    .billingMountingcharge1 {
+        margin-top: 0px;
+    }
+
+    .BillingTotalAmt1 {
+        font-size: 18px;
+    }
+
+    .billingNoteContent1 {
+        line-height: 17px;
+        font-weight: 600;
+        font-size: 14px;
+        margin: 20px auto;
+    }
+
+    /* BILLING BUTTON  */
+    .billingButton1 {
+        font-size: 30px;
+        gap: 20px;
+        padding: 11px 25%;
+        margin-top: 36%;
+        padding-bottom: 8px;
+    }
+
+    .billingContinueBtn1 {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 21.94px;
+        padding: 10px 20px;
+        border-radius: 22px;
+    }
+
+    .BillingScrollTotalContent,
+    .BillingScrollDiscount {
+        font-size: 14px;
+    }
+
+    .BillingScrollDiscount {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+}
+
+/* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
+@media (min-width: 768px) and (max-width: 991px) {
+
+    .billing-container1 {
+        width: 97%;
+        max-width: 1200px;
+        margin: auto;
+        border-radius: 20px;
+        margin-top: 2%;
+        margin-bottom: 13%;
+    }
+
+    .billing-header1 {
+        /* padding: 10px; */
+        font-size: 22px;
+    }
+
+    .billing-flow1 {
+        display: flex;
+        gap: 20px;
+    }
+
+    .billing-Flowcontent1 {
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .billing-left1 {
+        border-right: 2px solid gray;
+    }
+
+    .billing-left1,
+    .billing-right1 {
+        flex: 1;
+        min-width: 320px;
+        padding: 11px;
+    }
+
+    .billing-right1 {
+        padding: 0;
+    }
+
+    .locationIconOutline1 {
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+    }
+
+    .locationIcon1 {
+        height: 21px;
+        width: 21px;
+    }
+
+    .section-title1 {
+        gap: 10px;
+        font-weight: 500;
+        font-size: 17px;
+        margin-bottom: 25px;
+        margin-top: 5%;
+    }
+
+    /* Form Fields */
+    .input-field1 {
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 20px; */
+    }
+
+    .billingSpan1 {
+        position: relative;
+        margin-bottom: 20px;
+
+    }
+
+    .billingInputSpan1 {
+        position: absolute;
+        left: 8px;
+        top: 10px;
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .input-field:focus+.billingInputSpan1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .inputSpanFill1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .phone-input1 {
+        margin-bottom: 5px;
+    }
+
+    .phoneInputField1 {
+        width: 144%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 8px; */
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+
+    }
+
+    .country-code1 {
+        position: relative;
+        width: 70px;
+        height: 43.8px;
+        font-weight: 400;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+
+    .billingPhoneInputSpan1 {
+        left: 10px;
+        top: 11px;
+    }
+
+    .phoneInputField1:focus+.billingPhoneInputSpan1 {
+        left: -58px;
+        top: -12px;
+    }
+
+    .inputPhoneSpanFill1 {
+        position: absolute;
+        left: -58px;
+        top: -12px;
+    }
+
+
+    .phoneInputUpDown1 {
+        top: 18%;
+        left: 88.8%;
+        font-size: 16px;
+
+    }
+
+    .billingStateCity1 {
+        width: 100%;
+        display: flex;
+        gap: 6px;
+        justify-content: space-between;
+    }
+
+    .billing-dropdown-container1 {
+        position: absolute;
+        top: 45px;
+        left: 0;
+        width: 200%;
+    }
+
+    .stateSearchIcon1 {
+        font-size: 15px;
+    }
+
+    .billing-search-box1 {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .billing-search-box1 i {
+        margin-right: 8px;
+    }
+
+    .billing-search-input1 {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .billing-state-list1 {
+        max-height: 138px;
+    }
+
+    .billing-state-item1 {
+        font-size: 14px;
+        padding: 10px;
+        padding-top: 6.5px;
+        padding-bottom: 6.5px;
+        border-bottom: 1px solid gray;
+    }
+
+    .billing-no-results1 {
+        padding: 10px;
+
+    }
+
+    /* Order Summary */
+    .billing_contents_right1 {
+        width: 95%;
+    }
+
+    .billing-order-item1 {
+        gap: 13px;
+        border-bottom: 1px dashed rgba(113, 117, 126, 1);
+        /* padding-top: 5px; */
+        padding-bottom: 15px;
+    }
+
+    .billing-order-img1 {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+    }
+
+    .billing-section-title1 {
+        font-weight: 600;
+        font-size: 20px;
+        margin: 12px auto;
+    }
+
+    .billing-order-title1 {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 18px;
+    }
+
+    .billing-order-pricing1 {
+        width: 100%;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .billing-orderContent1 {
+        border-bottom: 1px dashed rgba(113, 117, 126, 1);
+        /* padding-top: 20px; */
+        padding-bottom: 20px;
+    }
+
+    .billing-orderContentPriceMain1 {
+        padding-top: 20px;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+    }
+
+    .billing-orderContentRight1 {
+        width: 50px;
+    }
+
+    .billingMountingcharge1 {
+        margin-top: 6px;
+    }
+
+    .BillingTotalAmt1 {
+        font-size: 18px;
+    }
+
+    .billingNoteContent1 {
+        line-height: 17px;
+        font-weight: 600;
+        font-size: 14px;
+        margin: 20px auto;
+    }
+
+    /* BILLING BUTTON  */
+    .billingButton1 {
+        font-size: 30px;
+        gap: 16px;
+        padding: 11px 21%;
+        margin-top: 38%;
+        padding-bottom: 8px;
+    }
+
+    .billingContinueBtn1 {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 21.94px;
+        padding: 10px 20px;
+        border-radius: 22px;
+    }
+
+    /* Billing scroll */
+    .BillingCart-scroll1 {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .BillingScrollTotalContent {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .BillingScrollTotalContent,
+    .BillingScrollDiscount {
+        font-size: 14px;
+    }
+
+    .BillingScrollDiscount {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+/* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
+@media (min-width: 480px) and (max-width: 767px) {
+
+    .billing-container1 {
+        width: 93%;
+        max-width: 1200px;
+        margin: auto;
+        border-radius: 20px;
+        margin-top: 5%;
+        margin-bottom: 18%;
+    }
+
+    .billing-header1 {
+        /* padding: 10px; */
+        font-size: 22px;
+    }
+
+    .billing-flow1 {
+        display: flex;
+        gap: 20px;
+    }
+
+    .billing-Flowcontent1 {
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .billingFlowLeftArr1 {
+        font-size: 17px;
+    }
+
+    .billing-left1 {
+        border-right: none;
+    }
+
+    .billing-left1,
+    .billing-right1 {
+        flex: 1;
+        min-width: 320px;
+        padding: 11px;
+    }
+
+    .billing-right1 {
+        padding: 0;
+    }
+
+    .locationIconOutline1 {
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+    }
+
+    .locationIcon1 {
+        height: 21px;
+        width: 21px;
+    }
+
+    .section-title1 {
+        gap: 10px;
+        font-weight: 500;
+        font-size: 17px;
+        margin-bottom: 25px;
+        margin-top: 5%;
+    }
+
+    /* Form Fields */
+    .input-field1 {
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 20px; */
+    }
+
+    .billingSpan1 {
+        position: relative;
+        margin-bottom: 20px;
+
+    }
+
+    .billingInputSpan1 {
+        position: absolute;
+        left: 8px;
+        top: 10px;
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .input-field1:focus+.billingInputSpan1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .inputSpanFill1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .phone-input1 {
+        margin-bottom: 5px;
+    }
+
+    .phoneInputField1 {
+        width: 174.5%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 8px; */
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+
+    }
+
+    .country-code1 {
+        position: relative;
+        width: 70px;
+        height: 43.8px;
+        font-weight: 400;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+
+    .billingPhoneInputSpan1 {
+        left: 10px;
+        top: 11px;
+        font-size: 14px;
+    }
+
+    .phoneInputField1:focus+.billingPhoneInputSpan1 {
+        left: -58px;
+        top: -12px;
+    }
+
+    .inputPhoneSpanFill1 {
+        position: absolute;
+        left: -58px;
+        top: -12px;
+    }
+
+
+    .phoneInputUpDown1 {
+        top: 18%;
+        left: 88.8%;
+        font-size: 16px;
+
+    }
+
+    .billingStateCity1 {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .billing-dropdown-container1 {
+        position: absolute;
+        top: 45px;
+        left: 0;
+        width: 209%;
+    }
+
+    .stateSearchIcon1 {
+        font-size: 15px;
+    }
+
+    .billing-search-box1 {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .billing-search-box1 i {
+        margin-right: 8px;
+    }
+
+    .billing-search-input1 {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .billing-state-list1 {
+        max-height: 138px;
+    }
+
+    .billing-state-item1 {
+        font-size: 14px;
+        padding: 10px;
+        padding-top: 6.5px;
+        padding-bottom: 6.5px;
+        border-bottom: 1px solid gray;
+    }
+
+    .billing-no-results1 {
+        padding: 10px;
+
+    }
+
+    /* Order Summary */
+    .billing_contents_right1 {
+        width: 90%;
+    }
+
+    .billing-order-item1 {
+        gap: 15px;
+        border-bottom: 1.5px dashed rgba(113, 117, 126, 1);
+        /* padding-top: 20px; */
+        padding-bottom: 20px;
+    }
+
+    .billing-order-img1 {
+        width: 60px;
+        height: 60px;
+        border-radius: 5px;
+    }
+
+    .billing-section-title1 {
+        font-weight: 600;
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .billing-order-title1 {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 19px;
+    }
+
+    .billing-order-pricing1 {
+        width: 100%;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .billing-orderContent1 {
+        border-bottom: 1.5px dashed rgba(113, 117, 126, 1);
+        /* padding-top: 20px; */
+        padding-bottom: 20px;
+    }
+
+    .billing-orderContentRight1 {
+        width: 55px;
+        /* border: 1px solid red; */
+    }
+
+
+    .BillingTotalAmt1 {
+        font-size: 20px;
+    }
+
+    .billingNoteContent1 {
+        line-height: 18px;
+        font-weight: 600;
+        font-size: 15px;
+        margin: 25px auto;
+    }
+
+    /* BILLING BUTTON  */
+    .billingButton1 {
+        font-size: 30px;
+        gap: 16px;
+        padding: 14px 25%;
+        margin-top: 24%;
+        padding-bottom: 13px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .billingContinueBtn1 {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 21.94px;
+        padding: 10px 20px;
+        border-radius: 22px;
+    }
+
+    /* Billing scroll */
+    .BillingCart-scroll1 {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .BillingScrollTotalContent {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .BillingScrollTotalContent,
+    .BillingScrollDiscount {
+        font-size: 14px;
+    }
+
+    .BillingScrollDiscount {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+
+}
+
+/* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
+@media (min-width: 425px) and (max-width: 479px) {
+
+
+    .billing-container1 {
+        width: 93%;
+        max-width: 1200px;
+        margin: auto;
+        border-radius: 20px;
+        margin-top: 4%;
+        margin-bottom: 20%;
+    }
+
+    .billing-header1 {
+        /* padding: 10px; */
+        font-size: 22px;
+    }
+
+    .billing-flow1 {
+        display: flex;
+        gap: 15px;
+    }
+
+    .billing-Flowcontent1 {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .billingFlowLeftArr1 {
+        font-size: 16px;
+    }
+
+    .billing-left1 {
+        border-right: none;
+    }
+
+    .billing-left1,
+    .billing-right1 {
+        flex: 1;
+        min-width: 320px;
+        padding: 11px;
+    }
+
+    .billing-right1 {
+        padding: 0;
+    }
+
+    .locationIconOutline1 {
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+    }
+
+    .locationIcon1 {
+        height: 21px;
+        width: 21px;
+    }
+
+    .section-title1 {
+        gap: 10px;
+        font-weight: 500;
+        font-size: 17px;
+        margin-bottom: 25px;
+        margin-top: 5%;
+    }
+
+    /* Form Fields */
+    .input-field1 {
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 25px; */
+    }
+
+    .billingSpan1 {
+        position: relative;
+        margin-bottom: 25px;
+
+    }
+
+    .billingInputSpan1 {
+        position: absolute;
+        left: 8px;
+        top: 10px;
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .input-field1:focus+.billingInputSpan1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .inputSpanFill1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .phone-input1 {
+        margin-bottom: 5px;
+    }
+
+    .phoneInputField1 {
+        width: 149.5%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 8px; */
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .country-code1 {
+        position: relative;
+        width: 70px;
+        height: 43.8px;
+        font-weight: 400;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    /* 
+    .phoneInputUpDown1 {
+        top: 23.5%;
+        left: 13.8%;
+    } */
+
+    .billingPhoneInputSpan1 {
+        left: 10px;
+        top: 11px;
+        font-size: 14px;
+    }
+
+    .phoneInputField1:focus+.billingPhoneInputSpan1 {
+        left: -58px;
+        top: -12px;
+    }
+
+    .inputPhoneSpanFill1 {
+        position: absolute;
+        left: -58px;
+        top: -12px;
+    }
+
+
+    .phoneInputUpDown1 {
+        top: 18%;
+        left: 88.8%;
+        font-size: 16px;
+
+    }
+
+    .billingStateCity1 {
+        width: 100%;
+        display: flex;
+        gap: 5px;
+        justify-content: space-between;
+    }
+
+    .billing-dropdown-container1 {
+        position: absolute;
+        top: 45px;
+        left: 0;
+        width: 203%;
+    }
+
+    .stateSearchIcon1 {
+        font-size: 15px;
+    }
+
+    .billing-search-box1 {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .billing-search-box1 i {
+        margin-right: 8px;
+    }
+
+    .billing-search-input1 {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .billing-state-list1 {
+        max-height: 150px;
+    }
+
+    .billing-state-item1 {
+        font-size: 14px;
+        padding: 10px;
+        padding-top: 6.5px;
+        padding-bottom: 6.5px;
+        border-bottom: 1px solid gray;
+    }
+
+    .billing-no-results1 {
+        padding: 10px;
+
+    }
+
+    /* Order Summary */
+    .billing_contents_right1 {
+        width: 95%;
+    }
+
+    .billing-order-item1 {
+        gap: 15px;
+        border-bottom: 1.5px dashed rgba(113, 117, 126, 1);
+        /* padding-top: 20px; */
+        padding-bottom: 20px;
+    }
+
+    .billing-order-img1 {
+        width: 60px;
+        height: 60px;
+        border-radius: 5px;
+    }
+
+    .billing-section-title1 {
+        font-weight: 600;
+        font-size: 22px;
+        /* margin: 1px auto; */
+        margin-bottom: 15px;
+    }
+
+    .billing-order-title1 {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .billing-orderContentPriceMain1 {
+        padding-top: 20px;
+        padding-bottom: 5px;
+        /* margin-bottom: 5px; */
+    }
+
+    .billing-order-pricing1 {
+        width: 100%;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .billing-orderContent1 {
+        border-bottom: 1.5px dashed rgba(113, 117, 126, 1);
+        /* padding-top: 10px; */
+        padding-bottom: 20px;
+        margin-bottom: 13px;
+    }
+
+    .billing-orderContentRight1 {
+        width: 55px;
+        /* border: 1px solid red; */
+    }
+
+
+    .BillingTotalAmt1 {
+        font-size: 20px;
+    }
+
+    .billingNoteContent1 {
+        line-height: 17px;
+        font-weight: 600;
+        font-size: 14px;
+        margin: 25px auto;
+    }
+
+    /* BILLING BUTTON  */
+    .billingButton1 {
+        font-size: 30px;
+        gap: 16px;
+        padding: 14px 22%;
+        margin-top: 24%;
+        padding-bottom: 13px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .billingContinueBtn1 {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 21.94px;
+        padding: 10px 20px;
+        border-radius: 22px;
+    }
+
+    /* Billing scroll */
+    .BillingCart-scroll1 {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .BillingScrollTotalContent {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .BillingScrollTotalContent,
+    .BillingScrollDiscount {
+        font-size: 14px;
+    }
+
+    .BillingScrollDiscount {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+
+}
+
+/* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
+@media (min-width: 375px) and (max-width: 424px) {
+
+    .billing-container1 {
+        width: 93%;
+        max-width: 1200px;
+        margin: auto;
+        border-radius: 20px;
+        margin-top: 4%;
+        margin-bottom: 22%;
+    }
+
+    .billing-header1 {
+        /* padding: 10px; */
+        font-size: 20px;
+    }
+
+    .billing-flow1 {
+        display: flex;
+        gap: 15px;
+    }
+
+    .billing-Flowcontent1 {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .billingFlowLeftArr1 {
+        font-size: 16px;
+    }
+
+    .billing-left1 {
+        border-right: none;
+    }
+
+    .billing-left1,
+    .billing-right1 {
+        flex: 1;
+        min-width: 320px;
+        padding: 11px;
+    }
+
+    .billing-right1 {
+        padding: 0;
+    }
+
+    .locationIconOutline1 {
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+    }
+
+    .locationIcon1 {
+        height: 21px;
+        width: 21px;
+    }
+
+    .section-title1 {
+        gap: 10px;
+        font-weight: 500;
+        font-size: 17px;
+        margin-bottom: 25px;
+        margin-top: 5%;
+    }
+
+    /* Form Fields */
+    .input-field1 {
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 20px; */
+    }
+
+    .billingSpan1 {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .billingInputSpan1 {
+        position: absolute;
+        left: 8px;
+        top: 10px;
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .input-field1:focus+.billingInputSpan1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .inputSpanFill1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .phone-input1 {
+        margin-bottom: 5px;
+    }
+
+    .phoneInputField1 {
+        width: 126.5%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 8px; */
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .country-code1 {
+        position: relative;
+        width: 70px;
+        height: 43.9px;
+        font-weight: 400;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    /* .phoneInputUpDown1 {
+        top: 23.5%;
+        left: 13.8%;
+    } */
+
+    .billingPhoneInputSpan1 {
+        left: 10px;
+        top: 11px;
+        font-size: 14px;
+    }
+
+    .phoneInputField1:focus+.billingPhoneInputSpan1 {
+        left: -58px;
+        top: -12px;
+    }
+
+    .inputPhoneSpanFill1 {
+        position: absolute;
+        left: -58px;
+        top: -12px;
+    }
+
+
+    .phoneInputUpDown1 {
+        top: 18%;
+        left: 88.8%;
+        font-size: 16px;
+
+    }
+
+    .billingStateCity1 {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+
+    .billing-dropdown-container1 {
+        position: absolute;
+        top: 45px;
+        left: 0;
+        width: 100%;
+    }
+
+    .stateSearchIcon1 {
+        font-size: 15px;
+    }
+
+    .billing-search-box1 {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .billing-search-box1 i {
+        margin-right: 8px;
+    }
+
+    .billing-search-input1 {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .billing-state-list1 {
+        max-height: 138px;
+    }
+
+    .billing-state-item1 {
+        font-size: 14px;
+        padding: 10px;
+        padding-top: 6.5px;
+        padding-bottom: 6.5px;
+        border-bottom: 1px solid gray;
+    }
+
+    .billing-no-results1 {
+        padding: 10px;
+    }
+
+    /* Order Summary */
+    .billing_contents_right1 {
+        width: 90%;
+    }
+
+    .billing-order-item1 {
+        gap: 15px;
+        border-bottom: 1.5px dashed rgba(113, 117, 126, 1);
+        /* padding-top: 20px; */
+        padding-bottom: 20px;
+    }
+
+    .billing-order-img1 {
+        width: 60px;
+        height: 60px;
+        border-radius: 5px;
+    }
+
+    .billing-section-title1 {
+        font-weight: 600;
+        font-size: 21px;
+        margin-bottom: 15px;
+    }
+
+    .billing-order-title1 {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+    }
+
+    .billing-order-pricing1 {
+        width: 100%;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .billing-orderContentPriceMain1 {
+        font-size: 14px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .billing-orderContent1 {
+        border-bottom: 1.5px dashed rgba(113, 117, 126, 1);
+        /* padding-top: 20px; */
+        padding-bottom: 20px;
+    }
+
+    .billing-orderContentRight1 {
+        width: 53px;
+        /* border: 1px solid red; */
+    }
+
+
+    .BillingTotalAmt1 {
+        font-size: 20px;
+    }
+
+    .billingNoteContent1 {
+        line-height: 16px;
+        font-weight: 600;
+        font-size: 12px;
+        margin: 25px auto;
+    }
+
+    /* BILLING BUTTON  */
+    .billingButton1 {
+        font-size: 25px;
+        gap: 16px;
+        padding: 14px 20%;
+        margin-top: 24%;
+        padding-bottom: 13px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .billingContinueBtn1 {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 21.94px;
+        padding: 10px 20px;
+        border-radius: 22px;
+    }
+
+    /* Billing scroll */
+    .BillingCart-scroll1 {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .BillingScrollTotalContent {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .BillingScrollTotalContent,
+    .BillingScrollDiscount {
+        font-size: 14px;
+    }
+
+    .BillingScrollDiscount {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+
+}
+
+/* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
+@media (min-width: 360px) and (max-width: 374px) {
+
+    .billing-container1 {
+        width: 93%;
+        max-width: 1200px;
+        margin: auto;
+        border-radius: 20px;
+        margin-top: 5%;
+        margin-bottom: 22%;
+    }
+
+    .billing-header1 {
+        /* padding: 10px; */
+        font-size: 20px;
+    }
+
+    .billing-flow1 {
+        display: flex;
+        justify-content: space-evenly;
+        /* gap: 20px; */
+    }
+
+    .billing-Flowcontent1 {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .billingFlowLeftArr1 {
+        font-size: 16px;
+    }
+
+    .billing-left1 {
+        border-right: none;
+    }
+
+    .billing-left1,
+    .billing-right1 {
+        flex: 1;
+        min-width: 320px;
+        padding: 11px;
+    }
+
+    .billing-right1 {
+        padding: 0;
+    }
+
+    .locationIconOutline1 {
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+    }
+
+    .locationIcon1 {
+        height: 21px;
+        width: 21px;
+    }
+
+    .section-title1 {
+        gap: 10px;
+        font-weight: 500;
+        font-size: 17px;
+        margin-bottom: 25px;
+        margin-top: 5%;
+    }
+
+    /* Form Fields */
+    .input-field1 {
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 20px; */
+    }
+
+    .billingSpan1 {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .billingInputSpan1 {
+        position: absolute;
+        left: 8px;
+        top: 10px;
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .input-field1:focus+.billingInputSpan1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .inputSpanFill1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .phone-input1 {
+        margin-bottom: 5px;
+    }
+
+    .phoneInputField1 {
+        width: 119.8%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 6px; */
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .country-code1 {
+        position: relative;
+        width: 70px;
+        height: 43.9px;
+        font-weight: 400;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    /* .phoneInputUpDown1 {
+        top: 23.5%;
+        left: 13.8%;
+    } */
+
+    .billingPhoneInputSpan1 {
+        left: 10px;
+        top: 11px;
+        font-size: 14px;
+    }
+
+    .phoneInputField1:focus+.billingPhoneInputSpan1 {
+        left: -58px;
+        top: -12px;
+    }
+
+    .inputPhoneSpanFill1 {
+        position: absolute;
+        left: -58px;
+        top: -12px;
+    }
+
+
+    .phoneInputUpDown1 {
+        top: 18%;
+        left: 88.8%;
+        font-size: 16px;
+
+    }
+
+    .billingStateCity1 {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+
+    .billing-dropdown-container1 {
+        position: absolute;
+        top: 45px;
+        left: 0;
+        width: 100%;
+    }
+
+    .stateSearchIcon1 {
+        font-size: 15px;
+    }
+
+    .billing-search-box1 {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .billing-search-box1 i {
+        margin-right: 8px;
+    }
+
+    .billing-search-input1 {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .billing-state-list1 {
+        max-height: 138px;
+    }
+
+    .billing-state-item1 {
+        font-size: 14px;
+        padding: 10px;
+        padding-top: 6.5px;
+        padding-bottom: 6.5px;
+        border-bottom: 1px solid gray;
+    }
+
+    .billing-no-results1 {
+        padding: 10px;
+
+    }
+
+    /* Order Summary */
+    .billing_contents_right1 {
+        width: 92%;
+    }
+
+    .billing-order-item1 {
+        gap: 15px;
+        border-bottom: 1.5px dashed rgba(113, 117, 126, 1);
+        /* padding-top: 20px; */
+        padding-bottom: 20px;
+    }
+
+    .billing-order-img1 {
+        width: 60px;
+        height: 60px;
+        border-radius: 5px;
+    }
+
+    .billing-section-title1 {
+        font-weight: 600;
+        font-size: 21px;
+        margin-bottom: 15px;
+    }
+
+    .billing-order-title1 {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+    }
+
+    .billing-order-pricing1 {
+        width: 100%;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .billing-orderContentPriceMain1 {
+        font-size: 14px;
+        padding-top: 20px;
+        padding-bottom: 15px;
+    }
+
+    .billing-orderContent1 {
+        border-bottom: 1.5px dashed rgba(113, 117, 126, 1);
+        /* padding-top: 20px; */
+        padding-bottom: 20px;
+    }
+
+    .billing-orderContentRight1 {
+        width: 53px;
+        /* border: 1px solid red; */
+    }
+
+
+    .BillingTotalAmt1 {
+        font-size: 20px;
+    }
+
+    /* BILLING BUTTON  */
+    .billingButton1 {
+        font-size: 25px;
+        gap: 16px;
+        padding: 14px 20%;
+        margin-top: 24%;
+        padding-bottom: 13px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .billingContinueBtn1 {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 21.94px;
+        padding: 10px 20px;
+        border-radius: 22px;
+    }
+
+    /* Billing scroll */
+    .BillingCart-scroll1 {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .BillingScrollTotalContent {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .BillingScrollTotalContent,
+    .BillingScrollDiscount {
+        font-size: 14px;
+    }
+
+    .BillingScrollDiscount {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+}
+
+@media (min-width: 320px) and (max-width: 359px) {
+    .billing-container1 {
+        width: 95%;
+        /* max-width: 1200px; */
+        margin: auto;
+        border-radius: 20px;
+        margin-top: 5%;
+        margin-bottom: 25%;
+    }
+
+    .billing-header1 {
+        /* padding: 10px; */
+        font-size: 20px;
+    }
+
+    .billing-flow1 {
+        display: flex;
+        /* justify-content: space-evenly; */
+        gap: 18px;
+    }
+
+    .billing-Flowcontent1 {
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .billingFlowLeftArr1 {
+        font-size: 15px;
+    }
+
+    .billing-left1 {
+        border-right: none;
+    }
+
+    .billing-left1,
+    .billing-right1 {
+        flex: 1;
+        min-width: 300px;
+        padding: 11px;
+    }
+
+    .billing-right1 {
+        padding: 0;
+    }
+
+    .locationIconOutline1 {
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+    }
+
+    .locationIcon1 {
+        height: 21px;
+        width: 21px;
+    }
+
+    .section-title1 {
+        gap: 10px;
+        font-weight: 500;
+        font-size: 16px;
+        margin-bottom: 17px;
+        margin-top: 5%;
+    }
+
+    /* Form Fields */
+    .input-field1 {
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 20px; */
+    }
+
+    .billingSpan1 {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .billingInputSpan1 {
+        position: absolute;
+        left: 8px;
+        top: 10px;
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .input-field1:focus+.billingInputSpan1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .inputSpanFill1 {
+        position: absolute;
+        left: 10px;
+        top: -12px;
+    }
+
+    .phone-input1 {
+        margin-bottom: 5px;
+    }
+
+    .phoneInputField1 {
+        width: 104.8%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 15px;
+        /* margin-bottom: 6px; */
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .country-code1 {
+        position: relative;
+        width: 70px;
+        height: 43.9px;
+        font-weight: 400;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+
+    .billingPhoneInputSpan1 {
+        left: 10px;
+        top: 11px;
+        font-size: 14px;
+    }
+
+    .phoneInputField1:focus+.billingPhoneInputSpan1 {
+        left: -58px;
+        top: -12px;
+    }
+
+    .inputPhoneSpanFill1 {
+        position: absolute;
+        left: -58px;
+        top: -12px;
+    }
+
+
+    .phoneInputUpDown1 {
+        top: 18%;
+        left: 92.8%;
+        font-size: 16px;
+
+    }
+
+    .billingStateCity1 {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+
+    .billing-dropdown-container1 {
+        position: absolute;
+        top: 45px;
+        left: 0;
+        width: 100%;
+    }
+
+    .stateSearchIcon1 {
+        font-size: 15px;
+    }
+
+    .billing-search-box1 {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .billing-search-box1 i {
+        margin-right: 8px;
+    }
+
+    .billing-search-input1 {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .billing-state-list1 {
+        max-height: 138px;
+    }
+
+    .billing-state-item1 {
+        font-size: 14px;
+        padding: 10px;
+        padding-top: 6.5px;
+        padding-bottom: 6.5px;
+        border-bottom: 1px solid gray;
+    }
+
+    .billing-no-results1 {
+        padding: 10px;
+
+    }
+
+    /* Order Summary */
+    .billing_contents_right1 {
+        width: 94%;
+    }
+
+    .billing-order-item1 {
+        gap: 10px;
+        border-bottom: 1.5px dashed rgba(113, 117, 126, 1);
+        /* padding-top: 20px; */
+        padding-bottom: 20px;
+    }
+
+    .billing-order-img1 {
+        width: 60px;
+        height: 60px;
+        border-radius: 5px;
+    }
+
+    .billing-section-title1 {
+        font-weight: 600;
+        font-size: 21px;
+        margin-bottom: 15px;
+    }
+
+    .billing-order-title1 {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 17px;
+    }
+
+    .billing-order-pricing1 {
+        width: 100%;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .billing-orderContent1 {
+        border-bottom: 1.5px dashed rgba(113, 117, 126, 1);
+        /* padding-top: 15px; */
+        padding-bottom: 15px;
+    }
+
+    .billing-orderContentRight1 {
+        width: 53px;
+        /* border: 1px solid red; */
+    }
+
+
+    .BillingTotalAmt1 {
+        font-size: 18px;
+    }
+
+    .billingNoteContent1 {
+        line-height: 16px;
+        font-weight: 600;
+        font-size: 11.5px;
+        margin: 25px auto;
+    }
+
+    /* BILLING BUTTON  */
+    .billingButton1 {
+        font-size: 25px;
+        gap: 16px;
+        padding: 14px 15%;
+        margin-top: 24%;
+        padding-bottom: 13px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .billingContinueBtn1 {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 21.94px;
+        padding: 10px 20px;
+        border-radius: 22px;
+    }
+
+    /* Billing scroll */
+    .BillingCart-scroll1 {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .BillingScrollTotalContent {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .BillingScrollTotalContent,
+    .BillingScrollDiscount {
+        font-size: 14px;
+    }
+
+    .BillingScrollDiscount {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+}

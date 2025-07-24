@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Theme Toggle</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: black;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-theme {
+            background-color: #121212;
+            color: white;
+        }
+
+        #themeButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #alertBox {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #ffcc00;
+            color: black;
+            border: 1px solid #999;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 id="headingText">Light Theme</h2>
+    <button id="themeButton">Switch to Dark Theme</button>
+
+    <div id="alertBox">
+        You are now in Dark Theme!
+    </div>
+
+    <script>
+        const button = document.getElementById("themeButton");
+        const body = document.body;
+        const heading = document.getElementById("headingText");
+        const alertBox = document.getElementById("alertBox");
+
+        let isDark = false;
+
+        button.addEventListener("click", function () {
+            isDark = !isDark;
+
+            if (isDark) {
+                body.classList.add("dark-theme");
+                heading.textContent = "Dark Theme";
+                button.textContent = "Switch to Light Theme";
+                alertBox.style.display = "block"; // show alert box
+            } else {
+                body.classList.remove("dark-theme");
+                heading.textContent = "Light Theme";
+                button.textContent = "Switch to Dark Theme";
+                alertBox.style.display = "none"; // hide alert box
+            }
+        });
+    </script>
+
+</body>
+</html>

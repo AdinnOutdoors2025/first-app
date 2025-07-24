@@ -1,0 +1,2159 @@
+.order-items-main {
+    background: url('/public/images/MyCartBanner11.png');
+    background-position: contain;
+    background-size: 100% 600px;
+    /* w h*/
+    background-repeat: no-repeat;
+    height: 500px;
+    width: 65%;
+    /* border: 1px solid red; */
+    justify-content: center;
+}
+
+.order-heading {
+    color: rgba(51, 51, 51, 1);
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 34.13px;
+    margin-top: 13px;
+    padding-top: 13px;
+    padding-left: 93px;
+}
+
+.filter-btn {
+    margin-top: 18px;
+    margin-bottom: 12px;
+    float: right;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    border: none;
+    width: 104px;
+    height: 25px;
+    border-radius: 3px;
+    border: 1.5px solid rgba(113, 117, 126, 1);
+    color: rgba(51, 51, 51, 1);
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19.5px;
+
+}
+
+.filter-icon {
+    height: 22px;
+    width: 15px;
+    margin-right: 8px;
+}
+
+.order-option {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding: 5px 0;
+    border-bottom: 1px dashed rgba(51, 51, 51, 1);
+}
+
+.order-scroll {
+    width: 100%;
+    height: 290px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    /* For Firefox */
+    -ms-overflow-style: none;
+    /* For Internet Explorer and Edge */
+    /* margin: 0 -8px; */
+}
+
+.order-items {
+    width: 650px;
+    height: 380px;
+    align-items: center;
+    /* align-content: center; */
+    margin: 15px auto;
+    padding: 0 8px;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+.order-item-content {
+    display: flex;
+    align-items: center;
+    /* margin-bottom: 10px; */
+    border-radius: 8px;
+    border-bottom: 1px dashed white;
+    height: auto;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+
+.order-details {
+    display: flex;
+    gap: 20px;
+    margin: 0 auto;
+}
+
+.order-delete-button {
+    color: rgba(227, 31, 37, 1);
+    font-size: 18px;
+    border: none;
+    align-items: center;
+    text-align: center;
+    align-content: center;
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(113, 117, 126, 1);
+    margin-bottom: 100px;
+}
+
+
+
+.order-item-info {
+    flex-grow: 1;
+}
+
+.order-group {
+    border-radius: 10px;
+    background: #E32228;
+    width: 100%;
+    margin: auto;
+}
+
+.order-headerMain {
+    border-radius: 10px;
+    background: #E32228;
+    box-shadow: 0px 0px 10px 0px #00000012;
+    box-shadow: 0px 0px 8px 0px #00000026 inset;
+    backdrop-filter: blur(4px);
+}
+
+.order-header-top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 13px 20px;
+}
+
+.order-id {
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    font-family: Montserrat;
+}
+
+.order-idSpan {
+    font-weight: 400;
+}
+
+
+.order-item-img {
+    width: 54px;
+    height: 56px;
+    border-radius: 10px;
+}
+
+.order-item-title {
+    color: rgba(255, 255, 255, 1);
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 5px;
+    /* line-height: 18.07px; */
+}
+
+.order-itemSizeDimensions,
+.order-itemAdType,
+.order-itemBookingDates,
+.order-itemActualAmount {
+    display: flex;
+    color: rgba(255, 255, 255, 1);
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 5px;
+
+}
+
+.order-item-LeftContent {
+    width: 160px;
+    height: 20px;
+}
+
+.order-ItemColon {
+    margin-right: 10px;
+}
+
+.order-item-detailSection {
+    font-weight: 500;
+}
+
+.order-item-slash {
+    margin: 0 8px;
+    font-weight: 600;
+}
+
+.order-item-details {
+    gap: 20px;
+    flex-grow: 1;
+}
+
+
+
+/* FILTER SECTION  */
+.filter-section {
+    margin-top: 7%;
+    box-shadow: 0px 0px 30px 0px rgba(228, 30, 37, 0.25);
+    background-color: white;
+    /* border-radius: 10px; */
+    width: 349px;
+    height: 292px;
+    align-content: center;
+}
+
+.filter-heading {
+    height: 50px;
+}
+
+.filter-side {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0%;
+    color: rgba(51, 51, 51, 1);
+
+}
+
+.filter-del-icon {
+    background: rgba(227, 31, 37, 1);
+    float: right;
+    border: none;
+    width: 22px;
+    height: 23px;
+    border-radius: 2px;
+    color: white;
+    font-size: 14px;
+    margin-bottom: 16px;
+
+}
+
+.order-radio-btn {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 17px;
+    height: 17px;
+    border: 1px solid red;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    margin-right: 13px;
+}
+
+.order-radio-btn:checked::before {
+    content: '';
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.filter-option-name {
+    color: rgba(51, 51, 51, 1);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: 0%;
+    padding-bottom: 3px;
+}
+
+.filter-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.reset-filter-btn {
+    width: 161px;
+    height: 50px;
+    border: none;
+    border-radius: 32px;
+    border-width: 1px;
+    border: 1px solid rgba(113, 117, 126, 1);
+    color: rgba(113, 117, 126, 1);
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21.94px;
+    letter-spacing: 5%;
+}
+
+.apply-filter-btn {
+    background: rgba(227, 31, 37, 1);
+    border: none;
+    width: 161px;
+    height: 50px;
+    top: 205px;
+    left: 178px;
+    border-radius: 32px;
+    color: rgba(255, 255, 255, 1);
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21.94px;
+    letter-spacing: 5%;
+}
+
+/* Wrapper to blur background when calendar is open */
+.filter-wrapper.filter-main-open {
+    position: relative;
+}
+
+/* Blur background when login is open */
+.filter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    /* Dark overlay */
+    backdrop-filter: blur(5px);
+    /* Blur effect */
+    padding-top: 8%;
+    z-index: 201;
+} 
+
+
+/* Responsive Media Queries */
+/* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens) 2560  */
+@media (min-width: 2560px) {
+    .order-items-main {
+        background-size: 100% 850px;
+        /* border: 1px solid red; */
+        height: 830px;
+    }
+
+    .order-heading {
+        font-size: 42px;
+        padding-top: 26px;
+        padding-left: 130px;
+    }
+
+    .filter-btn {
+        margin-top: 35px;
+        height: 40px;
+        width: 125px;
+        font-size: 25px;
+    }
+
+    .filter-icon {
+        height: 32px;
+        width: 25px;
+        margin-right: 8px;
+    }
+
+
+
+
+
+    .order-scroll {
+        width: 100%;
+        height: 410px;
+    }
+
+    .order-items {
+        width: 900px;
+    }
+
+    .order-item-content {
+        height: auto;
+        width: 100%;
+        margin-bottom: 20px;
+        border-bottom: 2px dashed white;
+    }
+
+    .order-id {
+        font-size: 25px;
+    }
+
+    .order-details {
+        gap: 50px;
+        margin: 0 auto;
+    }
+
+
+    .order-item-img {
+        width: 100px;
+        height: 95px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 25px;
+        line-height: 100%;
+        margin-bottom: 10px;
+    }
+
+
+    .order-itemSizeDimensions,
+    .order-itemAdType,
+    .order-itemBookingDates,
+    .order-itemActualAmount {
+        font-size: 25px;
+        margin-bottom: 5px;
+
+    }
+
+    .order-item-LeftContent {
+        width: 250px;
+        height: 20px;
+    }
+
+    .order-ItemColon {
+        margin-right: 10px;
+    }
+
+    .order-item-detailSection {
+        font-weight: 500;
+    }
+
+    .order-item-slash {
+        margin: 0 8px;
+        font-weight: 600;
+    }
+
+    .order-item-details {
+        gap: 20px;
+        flex-grow: 1;
+    }
+
+
+    /* FILTER SECTION  */
+    .filter-section {
+        margin-top: 3.4%;
+        width: 450px;
+        height: 400px;
+        align-content: center;
+    }
+
+    .filter-heading {
+        height: 100px;
+    }
+
+    .filter-side {
+        font-size: 30px;
+    }
+
+    .filter-del-icon {
+        width: 35px;
+        height: 35px;
+        border-radius: 4px;
+        font-size: 20px;
+    }
+
+    .order-radio-btn {
+        width: 24px;
+        height: 24px;
+    }
+
+    .order-radio-btn:checked::before {
+        width: 12px;
+        height: 12px;
+    }
+
+    .filter-option-name {
+        font-size: 28px;
+        line-height: 23px;
+        padding-bottom: 7px;
+    }
+
+    .filter-btns {
+        display: flex;
+        gap: 20px;
+        margin: 20px 40px;
+
+        align-items: center;
+    }
+
+    .reset-filter-btn,
+    .apply-filter-btn {
+        font-size: 24px;
+    }
+
+    .reset-filter-btn {
+        width: 161px;
+        height: 55px;
+        border-radius: 31px;
+        border: 1.5px solid rgba(113, 117, 126, 1);
+        color: rgba(113, 117, 126, 1);
+    }
+
+}
+
+/* Large Screens (1400px - 2559px) ✅ Large Desktop Screens  1440px */
+@media (min-width: 1400px) and (max-width: 2559px) {
+    .order-items-main {
+        background-size: 100% 550px;
+        width: 58%;
+        height: 550px;
+    }
+
+    .order-heading {
+        font-size: 28px;
+        padding-top: 11px;
+        padding-left: 94px;
+    }
+
+    .filter-btn {
+        margin-top: 8px;
+        height: 35px;
+        width: 120px;
+        font-size: 20px;
+        margin-bottom: 6px;
+    }
+
+    .filter-icon {
+        height: 25px;
+        width: 20px;
+        margin-right: 12px;
+    }
+
+    /* 
+    .order-scroll {
+        width: 610px;
+        height: 250px;
+    }
+
+    .order-items {
+        width: 610px;
+        height: auto;
+    } 
+
+    .order-item-content {
+        height: 190px;
+        width: 610px;
+        margin-bottom: 10px;
+    } */
+    /* 
+    .order-details {
+        gap: 30px;
+        margin: 0 auto;
+    }
+
+
+    .order-item-img {
+        width: 90px;
+        height: 85px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 17px;
+        line-height: 20.07px;
+    } */
+    /* 
+    .order-item-price {
+        font-size: 17px;
+        line-height: 22.07px;
+    } */
+    /* 
+    .order-itemDateRange,
+    .order-itemSizeDimensions,
+    .order-itemAdType {
+        margin: 7px auto;
+    } */
+
+    /* .order-itemAdType {
+        margin-bottom: 0px;
+    } */
+
+    /* .order-item-dateRange,
+    .order-item-size,
+    .order-item-type {
+
+        font-size: 17px;
+        line-height: 20.07px;
+        width: 200px;
+    }
+
+    .order-item-detailSection {
+        font-size: 17px;
+        line-height: 20.07px;
+    } */
+
+    .order-scroll {
+        width: 100%;
+        height: 260px;
+    }
+
+    .order-items {
+        width: 680px;
+    }
+
+    .order-item-content {
+        height: auto;
+        width: 100%;
+        margin-bottom: 20px;
+        border-bottom: 1px dashed white;
+
+    }
+
+    .order-id {
+        font-size: 17px;
+    }
+
+    .order-details {
+        gap: 25px;
+        margin: 0 auto;
+    }
+
+
+    .order-item-img {
+        width: 100px;
+        height: 95px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 17px;
+        line-height: 100%;
+        margin-bottom: 10px;
+    }
+
+
+    .order-itemSizeDimensions,
+    .order-itemAdType,
+    .order-itemBookingDates,
+    .order-itemActualAmount {
+        font-size: 16px;
+        margin-bottom: 5px;
+
+    }
+
+    .order-item-LeftContent {
+        width: 180px;
+        height: 20px;
+    }
+
+    .order-ItemColon {
+        margin-right: 10px;
+    }
+
+    .order-item-detailSection {
+        font-weight: 500;
+    }
+
+    .order-item-slash {
+        margin: 0 8px;
+        font-weight: 600;
+    }
+
+    /* .order-item-details {
+    gap: 15px;
+    flex-grow: 1;
+} */
+
+    .order-item-slash {
+        margin: 0 5px;
+        font-weight: 600;
+    }
+
+    /* FILTER SECTION  */
+    .filter-section {
+        margin-top: 20px;
+        width: 400px;
+        height: 370px;
+        align-content: center;
+    }
+
+    .filter-heading {
+        height: 60px;
+    }
+
+    .filter-side {
+        font-size: 28px;
+    }
+
+    .filter-del-icon {
+        width: 33px;
+        height: 33px;
+        border-radius: 4px;
+        font-size: 20px;
+    }
+
+
+    .order-radio-btn {
+        width: 22px;
+        height: 22px;
+    }
+
+    .order-radio-btn:checked::before {
+        width: 11px;
+        height: 11px;
+    }
+
+    .filter-option-name {
+        font-size: 22px;
+        line-height: 23px;
+        padding-bottom: 7px;
+    }
+
+    .filter-btns {
+        display: flex;
+        gap: 10px;
+        margin: 20px 15px;
+        align-items: center;
+    }
+
+    .reset-filter-btn,
+    .apply-filter-btn {
+        font-size: 22px;
+    }
+
+    .reset-filter-btn {
+        width: 240px;
+        height: 48px;
+        border-radius: 31px;
+        border: 1.5px solid rgba(113, 117, 126, 1);
+        color: rgba(113, 117, 126, 1);
+    }
+
+    .apply-filter-btn {
+        width: 240px;
+        height: 48px;
+    }
+
+}
+
+/* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
+@media (min-width: 992px) and (max-width: 1023px) {
+    .order-items-main {
+        background-size: 100% 440px;
+        /* border: 1px solid red; */
+        width: 70%;
+        height: auto;
+        margin-top: 10px;
+    }
+
+    .order-heading {
+        font-size: 23px;
+        padding-left: 83px;
+        padding-top: 5px;
+        margin-top: 4px;
+    }
+
+    .filter-btn {
+        margin-top: 1px;
+        height: 30px;
+        width: 95px;
+        font-size: 17px;
+        margin-bottom: 6px;
+    }
+
+    .filter-icon {
+        height: 22px;
+        width: 16px;
+        margin-right: 10px;
+    }
+
+    /* 
+    .order-scroll {
+        width: 610px;
+        height: 200px;
+    }
+
+    .order-items {
+        width: 610px;
+        height: auto;
+    }
+
+    .order-item-content {
+        height: 178px;
+        width: 610px;
+        margin-bottom: 10px;
+    }
+
+    .order-details {
+        gap: 30px;
+        margin: 0 auto;
+    }
+
+
+    .order-item-img {
+        width: 90px;
+        height: 85px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 17px;
+        line-height: 20.07px;
+    }
+  .order-itemAdType {
+        margin-bottom: 0px;
+    }
+
+    .order-item-dateRange,
+    .order-item-size,
+    .order-item-type {
+
+        font-size: 17px;
+        line-height: 20.07px;
+        width: 200px;
+    }
+
+    .order-item-detailSection {
+        font-size: 17px;
+        line-height: 20.07px;
+    }
+
+    .order-item-slash {
+        margin: 0 5px;
+        font-weight: 600;
+    } */
+
+
+
+    .order-scroll {
+        width: 100%;
+        height: 205px;
+    }
+
+    .order-items {
+        width: 630px;
+    }
+
+    .order-item-content {
+        height: auto;
+        width: 100%;
+        margin-bottom: 20px;
+        border-bottom: 1px dashed white;
+
+    }
+
+    .order-id {
+        font-size: 15px;
+    }
+
+    .order-details {
+        gap: 25px;
+        margin: 0 auto;
+    }
+
+    .order-item-img {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 15px;
+       line-height: 100%;
+        margin-bottom: 10px;
+    }
+
+
+    .order-itemSizeDimensions,
+    .order-itemAdType,
+    .order-itemBookingDates,
+    .order-itemActualAmount {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .order-item-LeftContent {
+        width: 180px;
+        height: 20px;
+    }
+
+    .order-ItemColon {
+        margin-right: 10px;
+    }
+
+    .order-item-detailSection {
+        font-weight: 500;
+    }
+
+    .order-item-slash {
+        margin: 0 8px;
+        font-weight: 600;
+    }
+
+    .order-item-slash {
+        margin: 0 5px;
+        font-weight: 600;
+    }
+
+
+
+
+
+
+    /* FILTER SECTION  */
+    .filter-section {
+        margin-top: 25px;
+        width: 370px;
+        height: 300px;
+        align-content: center;
+
+    }
+
+    .filter-heading {
+        height: 50px;
+    }
+
+    .filter-side {
+        font-size: 25px;
+    }
+
+    .filter-del-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+
+    .order-radio-btn {
+        width: 22px;
+        height: 22px;
+    }
+
+    .order-radio-btn:checked::before {
+        width: 11px;
+        height: 11px;
+    }
+
+    .filter-option-name {
+        font-size: 18px;
+        line-height: 23px;
+        padding-bottom: 5px;
+    }
+
+    .filter-btns {
+        display: flex;
+        gap: 10px;
+        margin: 8px 20px;
+        align-items: center;
+    }
+
+    .reset-filter-btn,
+    .apply-filter-btn {
+        font-size: 18px;
+        width: 140px;
+        height: 43px;
+    }
+
+    .reset-filter-btn {
+
+        border-radius: 31px;
+        border: 1.5px solid rgba(113, 117, 126, 1);
+        color: rgba(113, 117, 126, 1);
+    }
+
+}
+
+/* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .order-items-main {
+        background-size: 100% 440px;
+        /* border: 1px solid red; */
+        width: 85%;
+        height: 440px;
+        margin-top: 10px;
+    }
+
+    .order-heading {
+        font-size: 23px;
+        padding-left: 71px;
+        padding-top: 6px;
+        margin-top: 4px;
+    }
+
+    .filter-btn {
+        margin-top: 1px;
+        height: 30px;
+        width: 95px;
+        font-size: 17px;
+        margin-bottom: 6px;
+    }
+
+    .filter-icon {
+        height: 22px;
+        width: 16px;
+        margin-right: 10px;
+    }
+
+
+
+    .order-scroll {
+        width: 100%;
+        height: 205px;
+    }
+
+    .order-items {
+        width: 600px;
+    }
+
+    .order-item-content {
+        height: auto;
+        width: 100%;
+        margin-bottom: 20px;
+        border-bottom: 1px dashed white;
+
+    }
+
+    .order-id {
+        font-size: 15px;
+    }
+
+    .order-details {
+        gap: 25px;
+        margin: 0 auto;
+    }
+
+    .order-item-img {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 15px;
+       line-height: 100%;
+        margin-bottom: 10px;
+    }
+
+
+    .order-itemSizeDimensions,
+    .order-itemAdType,
+    .order-itemBookingDates,
+    .order-itemActualAmount {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .order-item-LeftContent {
+        width: 180px;
+        height: 20px;
+    }
+
+    .order-ItemColon {
+        margin-right: 10px;
+    }
+
+    .order-item-detailSection {
+        font-weight: 500;
+    }
+
+    .order-item-slash {
+        margin: 0 8px;
+        font-weight: 600;
+    }
+
+    .order-item-slash {
+        margin: 0 5px;
+        font-weight: 600;
+    }
+
+
+
+    /* .order-scroll {
+        width: 550px;
+        height: 200px;
+    }
+
+    .order-items {
+        width: 550px;
+        height: auto;
+    }
+
+    .order-item-content {
+        height: 178px;
+        width: 550px;
+        margin-bottom: 10px;
+    }
+
+    .order-details {
+        gap: 15px;
+        margin: 0 auto;
+    }
+
+
+    .order-item-img {
+        width: 80px;
+        height: 75px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 17px;
+        line-height: 20.07px;
+    }
+
+    .order-item-dateRange,
+    .order-item-size,
+    .order-item-type {
+
+        font-size: 17px;
+        line-height: 16.07px;
+        width: 200px;
+    }
+
+    .order-item-detailSection {
+        font-size: 17px;
+        line-height: 16.07px;
+    }
+
+    .order-item-slash {
+        margin: 0 5px;
+        font-weight: 600;
+    } */
+
+    /* FILTER SECTION  */
+    .filter-section {
+        margin-top: 60px;
+        width: 350px;
+        height: 280px;
+        align-content: center;
+
+    }
+
+    .filter-heading {
+        height: 50px;
+    }
+
+    .filter-side {
+        font-size: 25px;
+    }
+
+    .filter-del-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+
+    .order-radio-btn {
+        width: 22px;
+        height: 22px;
+    }
+
+    .order-radio-btn:checked::before {
+        width: 11px;
+        height: 11px;
+    }
+
+    .filter-option-name {
+        font-size: 18px;
+        line-height: 23px;
+        padding-bottom: 5px;
+    }
+
+    .filter-btns {
+        display: flex;
+        gap: 10px;
+        margin: 8px 20px;
+        align-items: center;
+    }
+
+    .reset-filter-btn,
+    .apply-filter-btn {
+        font-size: 18px;
+        width: 140px;
+        height: 43px;
+    }
+
+    .reset-filter-btn {
+
+        border-radius: 31px;
+        border: 1.5px solid rgba(113, 117, 126, 1);
+        color: rgba(113, 117, 126, 1);
+    }
+
+}
+
+/* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
+@media (min-width: 480px) and (max-width: 767px) {
+    .order-items-main {
+        background-size: 100% 440px;
+        /* border: 1px solid red; */
+        width: 95%;
+        height: 400px;
+        margin-top: 10px;
+    }
+
+    .order-heading {
+        font-size: 20px;
+        padding-left: 35px;
+        padding-top: 4px;
+        margin-top: 4px;
+    }
+
+    .filter-btn {
+        margin-top: 1px;
+        height: 28px;
+        width: 95px;
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+
+    .filter-icon {
+        height: 20px;
+        width: 14px;
+        margin-right: 10px;
+    }
+
+    .order-header-top {
+        padding: 10px 8px;
+    }
+
+    .order-item-info {
+        flex-grow: 1;
+    }
+
+    .order-scroll {
+        width: 100%;
+        height: 208px;
+    }
+
+    .order-items {
+        width: 430px;
+    }
+
+    .order-item-content {
+        height: auto;
+        width: 100%;
+        margin-bottom: 20px;
+        border-bottom: 1px dashed white;
+
+    }
+
+    .order-id {
+        font-size: 13px;
+    }
+
+    .order-details {
+        gap: 10px;
+        margin: 0 auto;
+    }
+
+    .order-item-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 15px;
+       line-height: 100%;
+        margin-bottom: 10px;
+    }
+
+
+    .order-itemSizeDimensions,
+    .order-itemAdType,
+    .order-itemBookingDates,
+    .order-itemActualAmount {
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    .order-item-LeftContent {
+        width: 135px;
+        height: 20px;
+    }
+
+    .order-ItemColon {
+        margin-right: 10px;
+    }
+
+    .order-item-detailSection {
+        font-weight: 500;
+    }
+
+    .order-item-slash {
+        margin: 0 8px;
+        font-weight: 600;
+    }
+
+    .order-item-slash {
+        margin: 0 5px;
+        font-weight: 600;
+    }
+
+    
+    /* FILTER SECTION  */
+    .filter-section {
+        margin-top: 72px;
+        width: 275px;
+        height: 255px;
+        align-content: center;
+    }
+
+    .filter-heading {
+        height: 40px;
+    }
+
+    .filter-side {
+        font-size: 23px;
+    }
+
+    .filter-del-icon {
+        width: 23px;
+        height: 23px;
+        border-radius: 4px;
+        font-size: 13px;
+    }
+
+
+    .order-radio-btn {
+        width: 18px;
+        height: 18px;
+    }
+
+    .order-radio-btn:checked::before {
+        width: 9px;
+        height: 9px;
+    }
+
+    .filter-option-name {
+        font-size: 17px;
+        line-height: 23px;
+        padding-bottom: 5px;
+    }
+
+    .filter-btns {
+        display: flex;
+        gap: 10px;
+        margin: 4px 3px;
+        align-items: center;
+    }
+
+    .reset-filter-btn,
+    .apply-filter-btn {
+        font-size: 17px;
+        width: 180px;
+        height: 43px;
+    }
+
+
+
+}
+
+/* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
+@media (min-width: 425px) and (max-width: 479px) {
+    .order-items-main {
+        background-size: 100% 440px;
+        /* border: 1px solid red; */
+        width: 95%;
+        height: 365px;
+        margin-top: 10px;
+    }
+
+    .order-heading {
+        font-size: 18px;
+        padding-left: 30px;
+        padding-top: 4px;
+        margin-top: 4px;
+    }
+
+    .filter-btn {
+        margin-top: 1px;
+        height: 28px;
+        width: 95px;
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    .filter-icon {
+        height: 18px;
+        width: 12px;
+        margin-right: 10px;
+    }
+/* 
+    .order-scroll {
+        width: 340px;
+        height: 200px;
+    }
+
+    .order-items {
+
+        width: 340px;
+        height: auto;
+    }
+
+    .order-item-content {
+        width: 340px;
+        margin-bottom: 10px;
+    }
+
+    .order-details {
+        gap: 8px;
+        margin: 0 -6px;
+    }
+
+
+    .order-item-img {
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 12px;
+        line-height: 18.07px;
+    }
+
+    .order-item-dateRange,
+    .order-item-size,
+    .order-item-type {
+
+        font-size: 12px;
+        width: 125px;
+        height: 15px;
+        line-height: 12.07px;
+    }
+
+    .order-item-detailSection {
+        font-size: 12px;
+        height: 15px;
+
+        line-height: 12.07px;
+
+    }
+
+    .order-item-slash {
+        margin: 0 0px;
+        font-weight: 600;
+    } */
+
+    
+    
+    .order-header-top {
+        padding: 10px 5px;
+    }
+
+    .order-item-info {
+        flex-grow: 1;
+    }
+
+    .order-scroll {
+        width: 100%;
+        height: 208px;
+    }
+
+    .order-items {
+        width: 375px;
+        padding: 0px;
+    }
+
+    .order-item-content {
+        height: auto;
+        width: 100%;
+        margin-bottom: 20px;
+        border-bottom: 1px dashed white;
+        padding: 10px 0px;
+    } 
+
+    .order-id {
+        font-size: 12px;
+    }
+
+    .order-details {
+        gap: 5px;
+        margin: 0 auto;
+    }
+
+    .order-item-img {
+        width: 55px;
+        height: 55px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 15px;
+line-height: 100%;
+        margin-bottom: 10px;
+    }
+
+
+    .order-itemSizeDimensions,
+    .order-itemAdType,
+    .order-itemBookingDates,
+    .order-itemActualAmount {
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    .order-item-LeftContent {
+        width: 128px;
+        height: 20px;
+        /* border: 1px solid white; */
+    }
+
+    .order-ItemColon {
+        margin-right: 5px;
+    }
+
+    .order-item-detailSection {
+        font-weight: 500;
+    }
+
+    .order-item-slash {
+        margin: 0 0px;
+        font-weight: 600;
+    }
+
+  
+    
+    /* FILTER SECTION  */
+    .filter-section {
+        margin: 0 65px;
+        margin-top: 45px;
+        width: 290px;
+        height: 260px;
+        align-content: center;
+
+    }
+
+    .filter-heading {
+        height: 40px;
+    }
+
+    .filter-side {
+        font-size: 23px;
+    }
+
+    .filter-del-icon {
+        width: 23px;
+        height: 23px;
+        border-radius: 4px;
+        font-size: 13px;
+    }
+
+
+    .order-radio-btn {
+        width: 18px;
+        height: 18px;
+    }
+
+    .order-radio-btn:checked::before {
+        width: 9px;
+        height: 9px;
+    }
+
+    .filter-option-name {
+        font-size: 17px;
+        line-height: 23px;
+        padding-bottom: 5px;
+    }
+
+    .filter-btns {
+        display: flex;
+        gap: 10px;
+        margin: 4px 3px;
+        align-items: center;
+    }
+
+    .reset-filter-btn,
+    .apply-filter-btn {
+        font-size: 17px;
+        width: 180px;
+        height: 43px;
+    }
+
+    .reset-filter-btn {
+
+        border-radius: 31px;
+        border: 1.5px solid rgba(113, 117, 126, 1);
+        color: rgba(113, 117, 126, 1);
+    }
+}
+
+/* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
+@media (min-width: 375px) and (max-width: 424px) {
+    .order-items-main {
+        background-size: 100% 440px;
+        /* border: 1px solid red; */
+        width: 96%;
+        height: 393px;
+        margin-top: 10px;
+    }
+
+    .order-heading {
+        font-size: 17px;
+        padding-left: 22px;
+        padding-top: 4px;
+        margin-top: 4px;
+    }
+
+    .filter-btn {
+        margin-top: 1px;
+        height: 24px;
+        width: 95px;
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .filter-icon {
+        height: 17px;
+        width: 11px;
+        margin-right: 10px;
+    }
+
+    .order-header-top {
+        padding: 10px 18px;
+        gap: 20px;
+    }
+
+    .order-item-info {
+        flex-grow: 1;
+    }
+
+    .order-scroll {
+        width: 100%;
+        height: 210px;
+    }
+
+    .order-items {
+        width: 330px;
+        padding: 0px;
+    }
+
+    .order-item-content {
+        height: auto;
+        width: 100%;
+        margin-bottom: 20px;
+        border-bottom: 1px dashed white;
+        padding: 10px 5px;
+    } 
+
+    .order-id {
+        font-size: 13px;
+    }
+
+    .order-details {
+        gap: 5px;
+        margin: 0 auto;
+    }
+
+    .order-item-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 14px;
+       line-height: 100%;
+        margin-bottom: 10px;
+    }
+
+
+    .order-itemSizeDimensions,
+    .order-itemAdType,
+    .order-itemBookingDates,
+    .order-itemActualAmount {
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    .order-item-LeftContent {
+        max-width: 126px;
+        height: 20px;
+        /* border: 1px solid white; */
+    }
+
+    .order-ItemColon {
+        margin-right: 5px;
+    }
+
+    .order-item-detailSection {
+        font-weight: 500;
+    }
+
+    .order-item-slash {
+        margin: 0 0px;
+        font-weight: 600;
+    }
+
+
+    /* FILTER SECTION  */
+    .filter-section {
+        margin: 0 50px;
+        margin-top: 58px;
+        width: 280px;
+        height: 250px;
+        align-content: center;
+
+    }
+
+    .filter-heading {
+        height: 35px;
+    }
+
+    .filter-side {
+        font-size: 21px;
+    }
+
+    .filter-del-icon {
+        width: 21px;
+        height: 21px;
+        border-radius: 4px;
+        font-size: 11px;
+    }
+
+
+    .order-radio-btn {
+        width: 18px;
+        height: 18px;
+    }
+
+    .order-radio-btn:checked::before {
+        width: 9px;
+        height: 9px;
+    }
+
+    .filter-option-name {
+        font-size: 16px;
+        line-height: 23px;
+        padding-bottom: 5px;
+    }
+
+    .filter-btns {
+        display: flex;
+        gap: 10px;
+        margin: 4px 3px;
+        align-items: center;
+    }
+
+    .reset-filter-btn,
+    .apply-filter-btn {
+        font-size: 17px;
+        width: 180px;
+        height: 43px;
+    }
+
+    .reset-filter-btn {
+
+        border-radius: 31px;
+        border: 1.5px solid rgba(113, 117, 126, 1);
+        color: rgba(113, 117, 126, 1);
+    }
+}
+
+/* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
+@media (min-width: 360px) and (max-width: 374px) {
+    .order-items-main {
+        background-size: 100% 440px;
+        /* border: 1px solid red; */
+        width: 95%;
+        height: 393px;
+        margin-top: 10px;
+    }
+
+    .order-heading {
+        font-size: 17px;
+        padding-left: 19px;
+        padding-top: 4px;
+        margin-top: 4px;
+    }
+
+    .filter-btn {
+        margin-top: 1px;
+        height: 24px;
+        width: 95px;
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .filter-icon {
+        height: 17px;
+        width: 11px;
+        margin-right: 10px;
+    }
+/* 
+    .order-scroll {
+        width: 305px;
+        height: 205px;
+
+    }
+
+    .order-items {
+        margin: 15px auto;
+        width: 305px;
+        height: auto;
+    }
+
+    .order-item-content {
+        height: 130px;
+        width: 305px;
+        margin-bottom: 10px;
+    }
+
+    .order-details {
+        gap: 6px;
+        margin: 0 -6px;
+    }
+
+    .order-item-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 11px;
+        line-height: 16.07px;
+    }
+
+    
+    .order-item-dateRange,
+    .order-item-size,
+    .order-item-type {
+
+        font-size: 11px;
+        width: 115px;
+        height: 15px;
+        line-height: 10.07px;
+    }
+
+    .order-item-detailSection {
+        font-size: 11px;
+        height: 15px;
+        line-height: 10.07px;
+
+    }
+
+    .order-item-slash {
+        margin: 0 0px;
+        font-weight: 600;
+    } */
+
+    
+    .order-header-top {
+        padding: 10px 22px;
+        gap: 10px;
+    }
+
+    .order-item-info {
+        flex-grow: 1;
+    }
+
+    .order-scroll {
+        width: 100%;
+        height: 210px;
+    }
+
+    .order-items {
+        width: 315px;
+        padding: 0px;
+    }
+
+    .order-item-content {
+        height: auto;
+        width: 100%;
+        margin-bottom: 20px;
+        border-bottom: 1px dashed white;
+        padding: 10px 5px;
+    } 
+
+    .order-id {
+        font-size: 13px;
+    }
+
+    .order-details {
+        gap: 5px;
+        margin: 0 auto;
+    }
+
+    .order-item-img {
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 14px;
+       line-height: 100%;
+        margin-bottom: 10px;
+    }
+
+
+    .order-itemSizeDimensions,
+    .order-itemAdType,
+    .order-itemBookingDates,
+    .order-itemActualAmount {
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    .order-item-LeftContent {
+        max-width: 130px;
+        height: 20px;
+        /* border: 1px solid white; */
+    }
+
+    .order-ItemColon {
+        margin-right: 5px;
+    }
+
+    .order-item-detailSection {
+        font-weight: 500;
+    }
+
+    .order-item-slash {
+        margin: 0 0px;
+        font-weight: 600;
+    }
+    
+    /* FILTER SECTION  */
+    .filter-section {
+        margin: 0 40px;
+        margin-top: 58px;
+        width: 280px;
+        height: 250px;
+        align-content: center;
+
+    }
+
+    .filter-heading {
+        height: 35px;
+    }
+
+    .filter-side {
+        font-size: 21px;
+    }
+
+    .filter-del-icon {
+        width: 21px;
+        height: 21px;
+        border-radius: 4px;
+        font-size: 11px;
+    }
+
+
+    .order-radio-btn {
+        width: 18px;
+        height: 18px;
+    }
+
+    .order-radio-btn:checked::before {
+        width: 9px;
+        height: 9px;
+    }
+
+    .filter-option-name {
+        font-size: 16px;
+        line-height: 23px;
+        padding-bottom: 5px;
+    }
+
+    .filter-btns {
+        display: flex;
+        gap: 10px;
+        margin: 4px 3px;
+        align-items: center;
+    }
+
+    .reset-filter-btn,
+    .apply-filter-btn {
+        font-size: 17px;
+        width: 180px;
+        height: 43px;
+    }
+
+    .reset-filter-btn {
+
+        border-radius: 31px;
+        border: 1.5px solid rgba(113, 117, 126, 1);
+        color: rgba(113, 117, 126, 1);
+    }
+}
+
+/* Extra Small Screens (320px - 374px) ✅ Extra Small Phones */
+@media (min-width: 320px) and (max-width: 359px) {
+    .order-items-main {
+        background-size: 100% 440px;
+        /* border: 1px solid red; */
+        width: 96%;
+        height: 393px;
+        margin-top: 10px;
+    }
+
+    .order-heading {
+        font-size: 15px;
+        padding-left: 16px;
+        padding-top: 4px;
+        margin-top: 4px;
+    }
+
+    .filter-btn {
+        margin-top: 0px;
+        height: 24px;
+        width: 75px;
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    .filter-icon {
+        height: 17px;
+        width: 11px;
+        margin-right: 10px;
+    }
+
+    .order-header-top {
+        padding: 10px 10px;
+        gap: 5px;
+    }
+
+    .order-item-info {
+        flex-grow: 1;
+    }
+
+    .order-scroll {
+        width: 100%;
+        height: 210px;
+    }
+
+    .order-items {
+        width: 280px;
+        padding: 0px;
+    }
+
+    .order-item-content {
+        height: auto;
+        width: 100%;
+        margin-bottom: 20px;
+        border-bottom: 1px dashed white;
+        padding: 10px 5px;
+    } 
+
+    .order-id {
+        font-size: 12px;
+    }
+
+    .order-details {
+        gap: 2px;
+        margin: 0 auto;
+    }
+
+    .order-item-img {
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+    }
+
+    .order-item-title {
+        font-size: 13px;
+       line-height: 100%;
+        margin-bottom: 10px;
+    }
+
+
+    .order-itemSizeDimensions,
+    .order-itemAdType,
+    .order-itemBookingDates,
+    .order-itemActualAmount {
+        font-size: 11px;
+        margin-bottom: 5px;
+    }
+
+    .order-item-LeftContent {
+        max-width: 108px;
+        height: 20px;
+        /* border: 1px solid white; */
+    }
+
+    .order-ItemColon {
+        margin-right: 5px;
+    }
+
+    .order-item-detailSection {
+        font-weight: 500;
+    }
+
+    .order-item-slash {
+        margin: 0 0px;
+        font-weight: 600;
+    }
+
+
+    /* FILTER SECTION  */
+    .filter-section {
+        margin: 0 30px;
+        margin-top: 67px;
+        width: 260px;
+        height: 240px;
+        align-content: center;
+
+    }
+
+    .filter-heading {
+        height: 35px;
+    }
+
+    .filter-side {
+        font-size: 21px;
+    }
+
+    .filter-del-icon {
+        width: 21px;
+        height: 21px;
+        border-radius: 4px;
+        font-size: 11px;
+    }
+
+
+    .order-radio-btn {
+        width: 18px;
+        height: 18px;
+    }
+
+    .order-radio-btn:checked::before {
+        width: 9px;
+        height: 9px;
+    }
+
+    .filter-option-name {
+        font-size: 16px;
+        line-height: 23px;
+        padding-bottom: 5px;
+    }
+
+    .filter-btns {
+        display: flex;
+        gap: 5px;
+        margin: 2px 1px;
+        align-items: center;
+    }
+
+    .reset-filter-btn,
+    .apply-filter-btn {
+        font-size: 16px;
+        width: 180px;
+        height: 43px;
+    }
+
+    .reset-filter-btn {
+
+        border-radius: 31px;
+        border: 1.5px solid rgba(113, 117, 126, 1);
+        color: rgba(113, 117, 126, 1);
+    }
+}

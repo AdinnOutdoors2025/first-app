@@ -1,0 +1,72 @@
+/* .pay-btn {
+    position: absolute;
+    top: 50%;
+    Left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    padding: 10px 15px;
+    border: none;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 2px;
+    width: 161px;
+    height: 50px;
+    background: rgba(227, 31, 37, 1);
+    color: white;
+    border-radius: 32px;
+    overflow: hidden;
+    z-index: -1;
+} */
+
+
+@keyframes animate {
+    0% {
+        Left: 1px;
+    }
+    100% {
+        Left: calc(100% + 10px);
+    }
+}
+@keyframes animate1 {
+    0% {
+        Left: calc(100% + 10px);
+    }
+    100% {
+        left: -100%;
+    }
+}
+
+
+.pay-btn:hover:before {
+        content: " ";
+            position: absolute;
+    top: 0;
+        Left: -100px;
+        height: 100%;
+        width: 16px;
+        background: rgba(255, 255, 255, 1);
+        backdrop-filter: blur(25px);
+        z-index: 0;
+        transform: translate(-50%, -50%) rotate(45deg);
+        filter: blur(10px);
+        transition: .5s;
+        transform: skewX(-14deg);
+        animation: animate .3s linear;
+}
+
+.pay-btn:not(:hover)::before{
+            content: " ";
+        z-index: 0;
+                position: absolute;
+                top: 0;
+                Left: -100px;
+                height: 100%;
+                width: 20px;
+                width: 16px;
+        background: rgba(255, 255, 255, 1);
+        backdrop-filter: blur(25px);
+        filter: blur(10px);
+                transition: .5s;
+                transform: skewX(-14deg);
+                animation: animate1 .3s linear;
+}
