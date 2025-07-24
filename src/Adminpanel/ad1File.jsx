@@ -209,25 +209,49 @@ function ClientSection() {
 
 
     const [image, setImage] = useState(" "); // Store uploaded image
-    const handleImageUpload = async (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const formData = new FormData();
-            formData.append("image", file);
+    // const handleImageUpload = async (event) => {
+    //     const file = event.target.files[0];
+    //     if (file) {
+    //         const formData = new FormData();
+    //         formData.append("file", file);
 
-            try {
-                const res = await fetch(`${baseUrl}/upload`, {
-                    method: "POST",
-                    body: formData,
-                });
+    //         try {
+    //             const res = await fetch(`${baseUrl}/upload`, {
+    //                 method: "POST",
+    //                 body: formData,
+    //             });
 
-                const data = await res.json();
-                setImage(`${baseUrl}${data.imageUrl}`); // Use full URL to backend
-            } catch (error) {
-                console.error("Upload failed:", error);
-            }
+    //             const data = await res.json();
+    //             setImage(`${baseUrl}${data.imageUrl}`); // Use full URL to backend
+    //         } catch (error) {
+    //             console.error("Upload failed:", error);
+    //         }
+    //     }
+    // };
+
+const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const formData = new FormData();
+        formData.append("file", file); // ✅ Use "file" as field name
+
+        try {
+            const res = await fetch(`${baseUrl}/upload`, {
+                method: "POST",
+                body: formData,
+            });
+
+            const data = await res.json();
+
+            // ✅ update this based on what your backend returns
+            setImage(`${baseUrl}/uploads/${data.filename}`); 
+        } catch (error) {
+            console.error("Upload failed:", error);
         }
-    };
+    }
+};
+
+
 console.log(setImage);
     // This will log the image URL whenever it changes
 useEffect(() => {
