@@ -12,14 +12,21 @@
 
 /* Add these to your existing CSS */
 #smooth-wrapper {
-    position: fixed;
+    /*position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    overflow: hidden;*/
     will-change: transform;
 }
+.menuhide{display:none}
+.main-layout .hero-wrapper .container.navbar1 {
+    max-width: 100%;
+    width: 100%;
+}
+
+.main-layout .hero-wrapper .container.navbar1::before{border-radius: 0;}
 
 #smooth-content {
     will-change: transform;
@@ -106,4 +113,10 @@
     top: 0;
     left: 0;
 }
+}
+.main-layout .main-layout .container.navbar1 {
+    visibility: hidden;
+}
+.main-layout .main-layout .container.navbar1.scrolled-top{
+    visibility: visible;
 }

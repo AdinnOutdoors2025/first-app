@@ -130,6 +130,8 @@ import AdinnHome from '../components/a1home';
 import { gsap } from 'gsap';
 import { ScrollTrigger, ScrollSmoother } from 'gsap/all';
 
+ 
+
 
 function HeroSectionMain() {
     const navigate = useNavigate();
@@ -184,7 +186,27 @@ function HeroSectionMain() {
     //         }
     //         ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     //     };
-    // }, []);    
+    // }, []);
+ useEffect(() => {
+    const mainLayout = document.querySelector('.main-layout .main-layout');
+    const targetDiv = document.querySelector('.main-layout .main-layout .container.navbar1'); // Replace with your actual class
+
+    const handleScroll = () => {
+      if (!mainLayout || !targetDiv) return;
+
+      const rect = mainLayout.getBoundingClientRect();
+
+      if (rect.top <= 0) {
+        targetDiv.classList.add('scrolled-top');
+      } else {
+        targetDiv.classList.remove('scrolled-top');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
     return (
         <MainLayout>
             {/* <div >
@@ -206,10 +228,11 @@ function HeroSectionMain() {
                     </div>
 
 
-                    {/* <AdinnHome/> */}
-                    <div className="AdinnHome-section">
+                    {<AdinnHome/>}
+                    {/* <div className="AdinnHome-section">
                         <AdinnHome />
-                    </div>
+
+                    </div> */}
                 </div>
             </div>
         </MainLayout>
