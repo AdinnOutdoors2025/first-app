@@ -252,8 +252,9 @@ function ClientSection() {
 // };
 
 
-const handleImageUpload = async () => {
+const handleImageUpload = async (event) => {
   const formData = new FormData();
+  const file = event.target.files[0];
   formData.append('file', file);
 
   const res = await fetch(`${baseUrl}/upload`, {
