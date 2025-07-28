@@ -264,11 +264,13 @@ const handleImageUpload = async (event) => {
 
   const data = await res.json();
   console.log('Image uploaded:', data.imageUrl);
+  setImage(data.imageUrl);
 };
 
 
 
 console.log(setImage);
+
     // This will log the image URL whenever it changes
 useEffect(() => {
     if (image) {
