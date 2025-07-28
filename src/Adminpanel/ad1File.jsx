@@ -229,27 +229,42 @@ function ClientSection() {
     //     }
     // };
 
-const handleImageUpload = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        const formData = new FormData();
-        formData.append("file", file); // ✅ Use "file" as field name
+// const handleImageUpload = async (event) => {
+//     const file = event.target.files[0];
+//     if (file) {
+//         const formData = new FormData();
+//        // formData.append("file", file); // ✅ Use "file" as field name
+//  formData.append('file', selectedFile);
+//         try {
+//             const res = await fetch(`${baseUrl}/upload`, {
+//                 method: "POST",
+//                 body: formData,
+//             });
 
-        try {
-            const res = await fetch(`${baseUrl}/upload`, {
-                method: "POST",
-                body: formData,
-            });
+//             const data = await res.json();
 
-            const data = await res.json();
+//             // ✅ update this based on what your backend returns
+//             setImage(`${baseUrl}/uploads/${data.filename}`); 
+//         } catch (error) {
+//             console.error("Upload failed:", error);
+//         }
+//     }
+// };
 
-            // ✅ update this based on what your backend returns
-            setImage(`${baseUrl}/uploads/${data.filename}`); 
-        } catch (error) {
-            console.error("Upload failed:", error);
-        }
-    }
+
+const handleImageUpload = async () => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const res = await fetch(`${baseUrl}/upload`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  const data = await res.json();
+  console.log('Image uploaded:', data.imageUrl);
 };
+
 
 
 console.log(setImage);
