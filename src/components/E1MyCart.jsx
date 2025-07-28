@@ -19,7 +19,7 @@ const Cart = () => {
 
     const handleLoginClose = () => {
         // When user closes login without logging in, redirect to home
-        navigate("/home");
+        navigate("/");
     };
 
 

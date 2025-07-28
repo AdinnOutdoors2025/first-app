@@ -93,7 +93,7 @@ function NavbarMain() {
     return (
         <div className="container navbar1">
             <div className="nav-content11">
-                <img src="/images/adinn_logo.png" alt="Adinn Logo" onClick={() => navigate('/home')} />
+                <img src="/images/adinn_logo.png" alt="Adinn Logo" onClick={() => navigate('/')} />
             </div>
             <div className={`nav-content21 ${isMenuOpen ? "open" : "notOpen"}`}>
                 <img src="/images/home_icon.png" alt="Home Icon" className='home-icon' onClick={() => navigate("/")} />
