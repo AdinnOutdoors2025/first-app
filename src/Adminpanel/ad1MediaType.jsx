@@ -1,30 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import './ad1MediaType.css';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
-import {baseUrl} from './BASE_URL';
+import { baseUrl } from './BASE_URL';
 
 function MediaTypeSection() {
 
-  const [ adminMediaType, setAdminMediaType] = useState('Gantry');
+  const [adminMediaType, setAdminMediaType] = useState('Gantry');
   //Fetch
   const [mediaTypesData, setMediaTypesData] = useState([]);
   const [editingId, setEditingId] = useState(null);
 
-   const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-
-  // const fetchMediaTypes = async () => {
-  //   try {
-  //     const res = await fetch('http://localhost:3001/mediatype');
-  //     const data = await res.json();
-  //     setMediaTypesData(data);
-  //   } catch (err) {
-  //     alert('Failed to fetch media types: ' + err.message);
-  //   }
-  // };
-
- const fetchMediaTypes = async () => {
+  const fetchMediaTypes = async () => {
     try {
       setLoading(true);
       setError(null);
@@ -50,7 +38,7 @@ function MediaTypeSection() {
 
   const handleMediaTypeSave = async (e) => {
     e.preventDefault();
-     if (error) {
+    if (error) {
       alert("Cannot save while connection error exists. Please check your server connection.");
       return;
     }
@@ -98,12 +86,12 @@ function MediaTypeSection() {
   };
 
 
-    return (
+  return (
 
-        <div>
+    <div>
 
 
-        {loading ? (
+      {loading ? (
         <div className="loading-message">Loading media types...</div>
       ) : error ? (
         <div className="error-message">
@@ -111,60 +99,54 @@ function MediaTypeSection() {
           <button onClick={fetchMediaTypes} className="retry-button">Retry</button>
         </div>
       ) : (
-      <form onSubmit={handleMediaTypeSave} >
-        <div className='mediaTypeMain'>
-          <div className='mediaTypeLeft'>
-            <div className='adminMediaHeadings'>Media Category</div>
-            <div className='mediaContent'>
-              <div className='mediaAdd'>
-                <div className='mediaContent1 adminMediaHeadings'>
-                  Media Type
-                 <div> <input
-                    type='text'
-                    placeholder='Enter Media Type'
-                    className='AdminMediaInput'  value={adminMediaType} onChange={(e) => setAdminMediaType(e.target.value)} /></div>
+        <form onSubmit={handleMediaTypeSave} >
+          <div className='mediaTypeMain'>
+            <div className='mediaTypeLeft'>
+              <div className='adminMediaHeadings'>Media Category</div>
+              <div className='mediaContent'>
+                <div className='mediaAdd'>
+                  <div className='mediaContent1 adminMediaHeadings'>
+                    Media Type
+                    <div> <input
+                      type='text'
+                      placeholder='Enter Media Type'
+                      className='AdminMediaInput' value={adminMediaType} onChange={(e) => setAdminMediaType(e.target.value)} /></div>
+                  </div>
                 </div>
-                {/* <div className='AdminMediaPlusSection' >
-                  <img src='./images/plusIcon.svg' className='AdminMediaPlus' alt="Add Icon" />
-                  Add
-                </div> */}
+                <button className='mediaSaveBtn' type='submit'>
+                  {editingId ? 'Update' : 'Save'}
+                </button>
               </div>
-              <button className='mediaSaveBtn' type='submit'>
-                {editingId ? 'Update' : 'Save'}
-              </button>
-                          </div>
-          </div>
+            </div>
 
-          <div className='mediaTypeRight'>
-            <div className='adminCategoryHeadings'>Added Types</div>
-            <div className='categoryContent'>
-    {mediaTypesData.length > 0 ? (
+            <div className='mediaTypeRight'>
+              <div className='adminCategoryHeadings'>Added Types</div>
+              <div className='categoryContent'>
+                {mediaTypesData.length > 0 ? (
                   mediaTypesData.map((media) => (
-                <div key={media._id} className="categoryStateList">
-                  {media.type}
-                  <i
-                    className="fa-solid fa-pen-to-square MediaeditIcon"
-                    onClick={() => handleEdit(media)}
-                  ></i>
-                  <i
-                    className="fa-regular fa-circle-xmark MediaPlusXmark"
-                    onClick={() => handleDelete(media._id)}
-                  ></i>
-                </div>
-              ))
-              ) : (
+                    <div key={media._id} className="categoryStateList">
+                      {media.type}
+                      <i
+                        className="fa-solid fa-pen-to-square MediaeditIcon"
+                        onClick={() => handleEdit(media)}
+                      ></i>
+                      <i
+                        className="fa-regular fa-circle-xmark MediaPlusXmark"
+                        onClick={() => handleDelete(media._id)}
+                      ></i>
+                    </div>
+                  ))
+                ) : (
                   <div className="no-data-message">No media types available. Add a new media type.</div>
                 )}
-                    
-                </div>
-
+              </div>
             </div>
           </div>
-      </form>
-       )}
+        </form>
+      )}
     </div>
-        
-    )
+
+  )
 }
 
 export default MediaTypeSection;

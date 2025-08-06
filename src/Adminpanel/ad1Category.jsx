@@ -3,10 +3,6 @@ import React, { useState, useEffect } from 'react';
 import './ad1Category.css';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
 import {baseUrl} from './BASE_URL';
-
-
-
-
 function CategorySection() {
   const [selectedState, setSelectedState] = useState("Tamil Nadu");
   const [districtInput, setDistrictInput] = useState("");
@@ -19,20 +15,6 @@ function CategorySection() {
   const [isDirty, setIsDirty] = useState(false);
    const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // const fetchCategory = async () => {
-  //   const response = await fetch("http://localhost:3001/category");
-  //   const data = await response.json();
-  //   setCategoryData(data);
-
-  //   // Populate the local state with data from backend
-  //   const mapped = {};
-  //   data.forEach(({ state, districts }) => {
-  //     mapped[state] = districts;
-  //   });
-  //   setStatesData(mapped);
-  // };
-
 
  const fetchCategory = async () => {
     try {
@@ -64,12 +46,7 @@ function CategorySection() {
   useEffect(() => {
     fetchCategory();
   }, []);
-  // const handleSelectState = (stateName) => {
-  //   setSelectedState(stateName);
-  //   setNewStateInput(stateName);
-  // };
-
-
+ 
   const handleSelectState = (stateName) => {
     if (isDirty) {
       const confirmLeave = window.confirm("You have unsaved changes. Do you want to save them?");
@@ -135,25 +112,7 @@ function CategorySection() {
       handleSaveCategory(new Event("submit"));
     }, 0);
   };
-  //ADD DISTRICT FUNCTION
-  // const handleAddDistrict = () => {
-  //   // const trimmedDistrict = districtInput.trim();
-  //   const trimmedDistrict = toTitleCase(districtInput.trim());
-  //   if (!trimmedDistrict) return;
-  //   const existingDistricts = (statesData[selectedState] || []).map(d => d.toLowerCase());
-  //   if (existingDistricts.includes(trimmedDistrict.toLowerCase())) {
-  //     alert("District already added!");
-  //     return;
-  //   }
-
-  //   setStatesData((prev) => ({
-  //     ...prev,
-  //     [selectedState]: [...(prev[selectedState] || []), trimmedDistrict]
-  //   }));
-  //   setDistrictInput("");
-  // };
-
-
+ 
   const handleAddDistrict = () => {
     const trimmedDistrict = toTitleCase(districtInput.trim());
     if (!trimmedDistrict) return;
@@ -498,4 +457,3 @@ function CategorySection() {
 }
 
 export default CategorySection;
-

@@ -34,13 +34,6 @@ const Calendar = ({ isSmallScreen, closeCalendar, selectedDates, generateMonth, 
                 </span>
               </div>
               <div className="right-calender">
-                {/* <span className="month-year">
-                {new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1).toLocaleString("default", {
-                  month: "long",
-                })}{" "}
-                {currentMonth.getFullYear()}
-              </span> */}
-
                 {(() => {
                   const nextMonthDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1);
                   return (
@@ -55,14 +48,8 @@ const Calendar = ({ isSmallScreen, closeCalendar, selectedDates, generateMonth, 
               </div>
             </>
           )}
-          {/* <button className="close-xmark" onClick={closeCalendar}>
-          <i className="fa-regular fa-circle-xmark"></i>
-        </button> */}
         </div>
-
         {/* CALENDER BODY  */}
-
-        {/* Calendar Body */}
         <div className={`calendar-body ${isSmallScreen ? "small-screen-calendar" : "large-screen-calendar"}`}>
           {isSmallScreen ? (
             <>
@@ -141,10 +128,7 @@ const Calendar = ({ isSmallScreen, closeCalendar, selectedDates, generateMonth, 
           ) : (
             // Large Screen Layout: Legend + 2 Months side by side
             <div className="large-calendar-layout">
-
               {/* Legend Section */}
-
-
               <div className="calendar-legend">
                 <i className="fa-solid fa-circle dot-booked"></i>
                 <span> Booked Dates</span> <br />
@@ -172,9 +156,6 @@ const Calendar = ({ isSmallScreen, closeCalendar, selectedDates, generateMonth, 
                   Amount: <span style={{ color: 'red' }}>₹{totalPrice.toLocaleString()}</span>
                 </span>
                 <br />
-
-
-                {/* <span> End Date: {selectedDates.end ? selectedDates.end.toDateString() : "--"}</span> <br /> */}
                 <br />
                 <div className="confirm-button" onClick={confirmDates}>Confirm</div>
                 <div className="reset-button" onClick={resetDates}>
@@ -202,8 +183,6 @@ const Calendar = ({ isSmallScreen, closeCalendar, selectedDates, generateMonth, 
                           ? bookedDates.some((d) => d.getTime() === date.getTime())
                             ? "booked"
                             : getDateSelectionClass(date)
-                          // ? "selected-date"
-                          // : "available-date"
                           : ""
                           }`}
                         onClick={() => handleDateClick(date)}
@@ -220,7 +199,6 @@ const Calendar = ({ isSmallScreen, closeCalendar, selectedDates, generateMonth, 
           )}
         </div>
       </div>
-      {/* <button className="calendarSaveBtn">Save</button> */}
     </div>
   );
 };

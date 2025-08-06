@@ -6,8 +6,7 @@ import React, { useState, useEffect } from 'react';
 import './ad1Orders.css';
 import { useNavigate } from 'react-router-dom';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
-import {baseUrl} from './BASE_URL';
-
+import { baseUrl } from './BASE_URL';
 
 const OrdersTable = () => {
 
@@ -21,9 +20,9 @@ const OrdersTable = () => {
             // Add safe product fallback
             const normalizedData = data.map(order => ({
                 ...order,
-                 createdAt: order.createdAt || new Date().toISOString(),
+                createdAt: order.createdAt || new Date().toISOString(),
                 products: order.products || [], // Ensure product exists
-                booking:order.products?.[0]?.booking || {}  // Ensure booking exists
+                booking: order.products?.[0]?.booking || {}  // Ensure booking exists
             }));
 
             setProductsOrderData(normalizedData);
@@ -40,28 +39,28 @@ const OrdersTable = () => {
     // Add state for search date(FILTERED DATE TO SHOW THE PRODUCT)
     const [searchDate, setSearchDate] = useState('');
     // Update your fetchOrders and other existing code...
-const filteredOrders = productsOrderData.filter(order => {
-    if (!searchDate) return true;
-    
-    if (order.createdAt) {
-        const date = new Date(order.createdAt);
-        const day = date.getDate().toString();
-        const month = (date.getMonth() + 1).toString(); // Months are 0-indexed
-        const year = date.getFullYear().toString();
-        
-        // Check if search term matches any part
-        return day.includes(searchDate) || 
-               month.includes(searchDate) || 
-               year.includes(searchDate) ||
-               `${day}/${month}/${year}`.includes(searchDate);
-    }
-    return false;
-});
+    const filteredOrders = productsOrderData.filter(order => {
+        if (!searchDate) return true;
+
+        if (order.createdAt) {
+            const date = new Date(order.createdAt);
+            const day = date.getDate().toString();
+            const month = (date.getMonth() + 1).toString(); // Months are 0-indexed
+            const year = date.getFullYear().toString();
+
+            // Check if search term matches any part
+            return day.includes(searchDate) ||
+                month.includes(searchDate) ||
+                year.includes(searchDate) ||
+                `${day}/${month}/${year}`.includes(searchDate);
+        }
+        return false;
+    });
 
 
 
 
-// Calculate Total Pages
+    // Calculate Total Pages
     const totalPages = Math.ceil(filteredOrders.length / productsPerPage);
 
     // Get Current Products for Display
@@ -113,13 +112,12 @@ const filteredOrders = productsOrderData.filter(order => {
                 order,
                 activeMenu: 'orders',
                 activeSubOrder: 'Order Info'
-            } })}
+            }
+        })
+    }
     // EDIT PRODUCT 
     const handleAction = (action, order) => {
         if (action === 'Edit') {
-
-            //   navigate(`/manageProducts/${product._id}`, { state: product });
-            // navigate('/manageProducts', { state: { editProduct: product } });
             navigate('/admin#manageOrderEdit', {
                 state: {
                     editOrder: order,
@@ -159,14 +157,7 @@ const filteredOrders = productsOrderData.filter(order => {
                 <table>
                     <thead>
                         <tr>
-                            {/* <th> <div><label class="order-Productcheckbox-container1">
-                                <input type="checkbox" />
-                                <span className="order-Productcheckmark1">&#x2714;</span>
-                            </label></div>
-                            </th> */}
-                            {/* <th><div>Products</div></th> */}
                             <th><div className='TableOrderName'>Order ID</div></th>
-                            {/* <th><div>User Name</div></th> */}
                             <th><div>Product ID</div></th>
                             <th><div>Order Date</div></th>
                             <th><div>Booking Date</div></th>
@@ -177,87 +168,51 @@ const filteredOrders = productsOrderData.filter(order => {
                     <tbody>
                         {currentProducts.map((order, index) => (
                             <tr key={index} >
-                                {/* <td className='OrderTableRowData'><label class="order-Productcheckbox-container1">
-                                    <input type="checkbox" />
-                                    <span className="order-Productcheckmark1">&#x2714;</span>
-                                </label>
-                                </td> */}
-                                {/* <td>
-                                <img src={product.image} alt="Product" className='productImg' />
-                            </td> */}
                                 <td className='order-TableOrderName'>{order.orderId}</td>
-                                {/* <td>{product.userName}</td> */}
-                                {/* <td className='order-TableProdCode'> {(() => {
-                                    if (!order.products) return '--';
-
-                                    const validProducts = order.products.filter(p => p?.prodCode);
-                                    if (validProducts.length === 0) return '--';
-
-                                    return validProducts.map(p => p.prodCode).join(', ');
-                                })()}</td> */}
                                 <td className='order-TableProdCode'>
-  {(() => {
-    if (!order.products) return '--';
-    
-    const validProducts = order.products.filter(p => p?.prodCode);
-    if (validProducts.length === 0) return '--';
-    
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {validProducts.map((p, index) => (
-          <div key={index} className='OrderProdIdJoin'>
-            {p.prodCode}
-          </div>
-        ))}
-      </div>
-    );
-  })()}
-</td>
-                                {/* <td>{order.product.date}</td> */}
-                                {/* <td>{order.booking.currentDate}</td> */}
-                                <td>{new Date(order.createdAt).toLocaleDateString('en-GB')}</td>
+                                    {(() => {
+                                        if (!order.products) return '--';
 
+                                        const validProducts = order.products.filter(p => p?.prodCode);
+                                        if (validProducts.length === 0) return '--';
+
+                                        return (
+                                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                {validProducts.map((p, index) => (
+                                                    <div key={index} className='OrderProdIdJoin'>
+                                                        {p.prodCode}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        );
+                                    })()}
+                                </td>
+                                <td>{new Date(order.createdAt).toLocaleDateString('en-GB')}</td>
                                 <td>
-                                    {/* {order.products.booking.startDate
-                                        ? new Date(order.proucts.booking.startDate).toLocaleDateString("en-US", {
-                                            month: "short",
-                                            day: "numeric"
-                                        })
-                                        : "--"
-                                    } - {order.products.booking.endDate
-                                        ? new Date(order.products.booking.endDate).toLocaleDateString("en-US", {
-                                            month: "short",
-                                            day: "numeric"
-                                        })
-                                        : "--"
-                                        
-                                    } <br></br>
-                                    ({order.booking?.totalDays || 0} Days) */}
-                                  {order.products
-    ?.filter(product => product != null) // Remove null/undefined products
-    .map(product => (
-      <div key={product._id} className='prodOrderDate'> {/* Now safe to access _id */}
-        {product?.booking?.startDate
-          ? new Date(product.booking.startDate).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric"
-            })
-          : "--"
-        } - {product?.booking?.endDate
-          ? new Date(product.booking.endDate).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric"
-            })
-          : "--"
-        } <br />
-        ({product?.booking?.totalDays || 0} Days) 
-      </div>
-    ))
-  }
+                                    {order.products
+                                        ?.filter(product => product != null) // Remove null/undefined products
+                                        .map(product => (
+                                            <div key={product._id} className='prodOrderDate'> {/* Now safe to access _id */}
+                                                {product?.booking?.startDate
+                                                    ? new Date(product.booking.startDate).toLocaleDateString("en-US", {
+                                                        month: "short",
+                                                        day: "numeric"
+                                                    })
+                                                    : "--"
+                                                } - {product?.booking?.endDate
+                                                    ? new Date(product.booking.endDate).toLocaleDateString("en-US", {
+                                                        month: "short",
+                                                        day: "numeric"
+                                                    })
+                                                    : "--"
+                                                } <br />
+                                                ({product?.booking?.totalDays || 0} Days)
+                                            </div>
+                                        ))
+                                    }
 
                                 </td>
                                 <td>{order.status}</td>
-                                {/* <td>{order.product.size.width} X {order.product.size.height} {order.product.size.squareFeet} Sq.ft</td> */}
                                 <td className="order-threeDotsTd" onClick={() => toggleMenu(order._id)}>
                                     <div className="order-actionMenuRow">
                                         {/* 3 Dots */}
@@ -271,31 +226,19 @@ const filteredOrders = productsOrderData.filter(order => {
 
                                         {/* Action Menu */}
                                         <div className={`order-actionMenu ${menuOpenId === order._id ? 'open' : ''}`}>
-                                            {/* <i
-                                                className={`fa-solid ${order.product.visible ? 'fa-eye' : 'fa-eye-slash'}`}
-                                                title={order.product.visible ? "Hide" : "Unhide"}
-                                                // onClick={() => toggleVisibility(product._id, product.visible)}
-                                            ></i> */}
                                             <i
                                                 className="fa-solid fa-eye" title="Edit"
-                                                // onClick={(e) => {
-                                                //     e.stopPropagation();
-                                                //     navigate('/admin#orderDetailsPg', { state: { order, subOrder:'Order Info'} });
-                                                // }}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     handleViewOrderDetails(order)
                                                 }}
                                             ></i>
-                                            {/* <i className="fa-solid fa-pen" title="Edit" onClick={() => handleAction('Edit', order)}></i> */}
                                             <i className="fa-solid fa-trash" title="Delete" onClick={() => handleAction('Delete', order)}></i>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                         ))}
-
-
                         {currentProducts.length === 0 && (
                             <tr>
                                 <td colSpan="7" className="no-orders-found">
@@ -316,15 +259,6 @@ const filteredOrders = productsOrderData.filter(order => {
                 >
                     Prev
                 </button>
-                {/* {[...Array(totalPages)].map((_, index) => (
-                    <button
-                        key={index}
-                        className={`page-number ${currentPage === index + 1 ? "active" : ""}`}
-                        onClick={() => handlePageChange(index + 1)}
-                    >
-                        {index + 1}
-                    </button>
-                ))} */}
                 {getPaginationGroup().map((page, index) =>
                     page === "..." ? (
                         <span key={index} className="order-paginationDots">...</span>

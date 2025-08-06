@@ -5,22 +5,25 @@ import { useLogin } from './LoginContext';
 import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
 import { MainLayout } from './MainLayout';
-//BASE URL OF http://localhost:3001 FILE IMPORT 
+//BASE URL OF http://localhost:3001 FILE IMPORT
 import { baseUrl } from '../Adminpanel/BASE_URL';
 
-
 const Cart = () => {
-    const { user, openLogin, closeLogin, isLoggedIn } = useLogin();
+    const { user, openLogin, closeLogin, isLoggedIn, isLoginOpen } = useLogin();
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedItems, setSelectedItems] = useState([]);
     const navigate = useNavigate();
 
 
+
+
     const handleLoginClose = () => {
         // When user closes login without logging in, redirect to home
-        navigate("/");
+        navigate("/home");
     };
+
+
 
 
     // Fetch cart items from database
@@ -29,13 +32,14 @@ const Cart = () => {
             if (!user) return;
             setIsLoading(true);
 
+
             const response = await fetch(`${baseUrl}/cart/user/${user._id}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch cart items');
             }
             const data = await response.json();
             setItems(data);
-            // setIsLoading(false); 
+            // setIsLoading(false);
         } catch (error) {
             console.error('Error fetching cart items:', error);
             setIsLoading(false);
@@ -45,23 +49,44 @@ const Cart = () => {
         }
     };
 
-    useEffect(() => {
-        //     fetchCartItems();
-        // }, [user]);
-        if (user) {
-            fetchCartItems();
-        } else {
-            setIsLoading(false);
-            // openLogin();
-            openLogin(handleLoginSuccess, "/cart"); // Pass success callback
 
-        }
-    }, [user]);
+    // useEffect(() => {
+    //     //     fetchCartItems();
+    //     // }, [user]);
+    //     if (user) {
+    //         fetchCartItems();
+    //     } else {
+    //         setIsLoading(false);
+    //         // openLogin();
+    //         openLogin(handleLoginSuccess, "/cart"); // Pass success callback
+
+
+    //     }
+    // }, [user]);
+
+
+
+
+    // useEffect(() => {
+    //     if (!user && !isLoginOpen) {
+    //         // Open login popup when user is not logged in
+    //         openLogin('login', '/cart');
+    //     } else if (user) {
+    //         fetchCartItems();
+    //     }
+    // }, [user, isLoginOpen]);
+      useEffect(() => {
+    if (!user && !isLoginOpen) {
+      openLogin('login'); // Show login but don't set redirect
+    }
+  }, [user, isLoginOpen]);
+
 
     const handleLoginSuccess = () => {
         // This will be called after successful login
         fetchCartItems();
     };
+
 
     // Add item to cart in database
     const addToCart = async (item) => {
@@ -74,15 +99,18 @@ const Cart = () => {
                 body: JSON.stringify(item)
             });
 
+
             if (!response.ok) {
                 throw new Error('Failed to add item to cart');
             }
+
 
             fetchCartItems(); // Refresh cart items
         } catch (error) {
             console.error('Error adding to cart:', error);
         }
     };
+
 
     // Delete item from cart in database
     const deleteCartItem = async (id) => {
@@ -91,15 +119,18 @@ const Cart = () => {
                 method: 'DELETE'
             });
 
+
             if (!response.ok) {
                 throw new Error('Failed to delete item from cart');
             }
+
 
             fetchCartItems(); // Refresh cart items
         } catch (error) {
             console.error('Error deleting from cart:', error);
         }
     };
+
 
     // Delete multiple items from cart in database
     const deleteMultipleCartItems = async (itemIds) => {
@@ -112,15 +143,18 @@ const Cart = () => {
                 body: JSON.stringify({ itemIds })
             });
 
+
             if (!response.ok) {
                 throw new Error('Failed to delete items from cart');
             }
+
 
             fetchCartItems(); // Refresh cart items
         } catch (error) {
             console.error('Error deleting multiple items from cart:', error);
         }
     };
+
 
     // Clear user's cart in database
     const clearCart = async () => {
@@ -129,15 +163,18 @@ const Cart = () => {
                 method: 'DELETE'
             });
 
+
             if (!response.ok) {
                 throw new Error('Failed to clear cart');
             }
+
 
             fetchCartItems(); // Refresh cart items
         } catch (error) {
             console.error('Error clearing cart:', error);
         }
     };
+
 
     // Select/deselect an item
     const handleSelectItem = (id) => {
@@ -148,6 +185,7 @@ const Cart = () => {
         );
     };
 
+
     // Select all items
     const handleSelectAll = () => {
         if (selectedItems.length === items.length) {
@@ -157,15 +195,18 @@ const Cart = () => {
         }
     };
 
+
     // Delete selected items
     const handleDeleteSelected = () => {
         if (selectedItems.length === 0) return;
+
 
         if (window.confirm(`Are you sure you want to remove ${selectedItems.length} item(s) from cart?`)) {
             deleteMultipleCartItems(selectedItems);
             setSelectedItems([]);
         }
     };
+
 
     // Delete a single item
     const handleDeleteItem = (id) => {
@@ -175,6 +216,7 @@ const Cart = () => {
         }
     };
 
+
     // Calculate totals
     const subTotal = items.reduce((acc, item) => {
         const amount = typeof item.totalAmount === 'string'
@@ -183,9 +225,11 @@ const Cart = () => {
         return acc + amount;
     }, 0);
 
+
     const totalItems = items.length;
     const cartAmount = items.length > 0 ? items[0]?.SpotPay : 0;
     const cartOffer = items.length > 0 ? items[0]?.Offer : 0;
+
 
     // Handle checkout
     const handleCheckout = () => {
@@ -204,6 +248,7 @@ const Cart = () => {
         });
     };
 
+
     // if (!user) {
     //     // return (
     //     //     <MainLayout>
@@ -215,6 +260,7 @@ const Cart = () => {
     //     // );
     //      openLogin();
     // }
+
 
     // if (isLoading) {
     //     return (
@@ -229,18 +275,20 @@ const Cart = () => {
     // }
 
 
+
+
     // if (!user) {
     //     return (
     //         <MainLayout>
     //             <div className="container noSelected">
     //                 {/* <h5 className='noSelectedSpot'>Please login to view your cart</h5>
-    //                 <button 
-    //                     className='noSelectedGoBackBtn' 
+    //                 <button
+    //                     className='noSelectedGoBackBtn'
     //                     onClick={() => {
     //                         openLogin();
     //                     }} > Login </button> <br></br>
-    //                 <button 
-    //                     className='noSelectedGoBackBtn  mt-3' 
+    //                 <button
+    //                     className='noSelectedGoBackBtn  mt-3'
     //                     onClick={() => navigate("/")} > Go to Home </button> */}
     //             </div>
     //         </MainLayout>
@@ -248,41 +296,66 @@ const Cart = () => {
     // }
 
 
-    if (!user) {
-        return (
-            <MainLayout onClose={handleLoginClose}>
-                <div className="container noSelected">
-                    <div className='noSelectedSpot'>Please login to view your cart</div>
-                    <button
-                        className='noSelectedGoBackBtn'
-                        onClick={() => openLogin(handleLoginSuccess, "/cart")}>
-                        Login</button> <br></br>
-                    <button
-                        className='noSelectedGoBackBtn mt-3'
-                        onClick={() => navigate("/")}>Go to Home</button>
-                </div>
-            </MainLayout>
-        );
-    }
 
-    if (isLoading) {
-        return (
-            <MainLayout>
-                <div className="container loading">
-                    <div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </MainLayout>
-        );
-    }
+
+    // if (!user) {
+    //     return (
+    //         <MainLayout onClose={handleLoginClose}>
+    //             <div className="container noSelected">
+    //                 <div className='noSelectedSpot'>Please login to view your cart</div>
+    //                 <button
+    //                     className='noSelectedGoBackBtn'
+    //                     onClick={() => openLogin(handleLoginSuccess, "/cart")}>
+    //                     Login</button> <br></br>
+    //                 <button
+    //                     className='noSelectedGoBackBtn mt-3'
+    //                     onClick={() => navigate("/")}>Go to Home</button>
+    //             </div>
+    //         </MainLayout>
+    //     );
+    // }
+
+
+    // if (isLoading) {
+    //     return (
+    //         <MainLayout>
+    //             <div className="container loading">
+    //                 <div className="spinner-border text-primary" role="status">
+    //                     <span className="visually-hidden">Loading...</span>
+    //                 </div>
+    //             </div>
+    //         </MainLayout>
+    //     );
+    // }  
+
 
     return (
         <MainLayout>
             <div>
                 <MainNavbar />
                 <div className="container-fluid cart-container">
-                    <div className='cart-items-main'>
+{/*                    
+
+
+
+
+
+
+
+
+                    {isLoading ? (
+                        <div className="container loading">
+                            <div className="spinner-border text-primary" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    ) : (
+
+
+
+
+<> */}
+                         <div className='cart-items-main'>
                         <h1 className='cart-heading'>My Cart</h1>
                         <div className="cart-items">
                             <div className="form-group cart-option">
@@ -404,7 +477,17 @@ const Cart = () => {
                             </div>
                         </div>
                     </div>
+
+
+{/*
+</>
+
+
+
+
+                    )} */}
                 </div>
+
 
                 <br></br> <br></br>
                 <MainFooter />

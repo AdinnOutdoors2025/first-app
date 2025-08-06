@@ -3,8 +3,9 @@ import './a1Hero.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLogin } from './LoginContext';
 import LoginPageMain from './C1LoginMain';
-//BASE URL OF http://localhost:3001 FILE IMPORT 
+//BASE URL OF http://localhost:3001 FILE IMPORT
 import { baseUrl } from '../Adminpanel/BASE_URL';
+
 
 function NavbarMain() {
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -15,6 +16,7 @@ function NavbarMain() {
     const [cartCount, setCartCount] = useState(0);
     // Add a state to track screen size
     const [isMobile, setIsMobile] = useState(window.innerWidth < 480);
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -27,12 +29,16 @@ function NavbarMain() {
             }
         };
 
+
         window.addEventListener('resize', handleResize);
         // Set initial state
         handleResize();
 
+
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+
 
 
     const toggleNavOpen = () => {
@@ -49,6 +55,7 @@ function NavbarMain() {
             }
         };
 
+
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
@@ -57,11 +64,14 @@ function NavbarMain() {
 
 
 
+
+
+
     //If i click the orders, signup or login then go the login page
     const navigate = useNavigate();
     const location = useLocation();
     const { totalItems } = location.state || {};
-    // ITEMS ARRAY 
+    // ITEMS ARRAY
     const [items, setItems] = useState([]);
     // Fetch cart count from database
     const fetchCartCount = async () => {
@@ -82,18 +92,23 @@ function NavbarMain() {
         }
     };
 
+
     useEffect(() => {
         fetchCartCount();
         // Set up interval to periodically check for cart updates
         const interval = setInterval(fetchCartCount, 30000); // Check every 5 seconds
 
+
         return () => clearInterval(interval);
     }, [user]);
+
+
+
 
     return (
         <div className="container navbar1">
             <div className="nav-content11">
-                <img src="/images/adinn_logo.png" alt="Adinn Logo" onClick={() => navigate('/')} />
+                <img src="/images/adinn_logo.png" alt="Adinn Logo" onClick={() => navigate('/home')} />
             </div>
             <div className={`nav-content21 ${isMenuOpen ? "open" : "notOpen"}`}>
                 <img src="/images/home_icon.png" alt="Home Icon" className='home-icon' onClick={() => navigate("/")} />
@@ -107,7 +122,20 @@ function NavbarMain() {
                     <span className='book-btn-text' >Book a site</span>
                     <img src="/images/BookBtn_logo.png" alt="Image" className="book-btn-image" width="45" height="25" />
                 </button>
-                <i className="fa-solid fa-cart-shopping cart" onClick={() => navigate("/cart")} ></i>
+                <i className="fa-solid fa-cart-shopping cart"
+                // onClick={() => navigate("/cart")}
+                onClick={() => {
+    if (user) {
+      navigate("/cart");
+    } else {
+      openLogin('login', '/cart'); // Show login popup, redirect to cart after
+    }
+  }}
+
+
+
+
+                ></i>
                 {/* <p className='cart-number'>{items.length}</p> */}
                 {cartCount > 0 && <p className='cart-number'>{cartCount}</p>}
                 <div className="nav_container">
@@ -147,4 +175,3 @@ function NavbarMain() {
     )
 }
 export default NavbarMain;
-

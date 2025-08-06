@@ -31,8 +31,12 @@ import ProtectedRoute from './components/PROTECTED_ROUTE.jsx';
 import { AdminAuthWrapper } from './Adminpanel/AdminAuthWrapper.jsx';
 import EnquireUserTable from './Adminpanel/ad1EnquireUsers.jsx';
 import PreLoader from './components/PreLoad.jsx';
+
+import RichText from './Adminpanel/RichText.jsx';
+
 //BLOG PAGE
 import BlogPage from './components/G1BlogPage.jsx';
+import BlogPageAdmin from './Adminpanel/ad2BlogAddPg.jsx';
 function App() {
   const [load, upadateLoad] = useState(true);
 
@@ -62,6 +66,8 @@ function App() {
               <Route path="/hero" element={<HeroSection1 />} />
               {/* AboutUs Home section  */}
               <Route path="/home" element={<AdinnHome />} />
+              <Route path="/rich" element={<RichText />} />
+
               {/* Book a site section  */}
               <Route path="/book" element={<BookASite />} />
               <Route path="/Product/:productId" element={<BookASite1 />} />
@@ -74,19 +80,10 @@ function App() {
               <Route path="/billing1" element={<Billing1 />} />
               <Route path="/nav" element={<Nav />} />
               <Route path="/foot" element={<Foot />} />
-
-              <Route path="/HeroBanner" element={<HeroBanner />} /> 
-              <Route path="/Blog" element={<BlogPage />} /> 
-
-
-
-              {/* ADMIN ROUTING SECTION  */}
-
-              {/* 
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/manageProducts" element={<ProductManage />} />
-              */}
-
+              <Route path="/HeroBanner" element={<HeroBanner />} />
+              <Route path="/Blog/:id" element={<BlogPage />} />
+              <Route path="/Blogadmin" element={<BlogPageAdmin />} />
+              <Route path="/Rich" element={<RichText />} />
 
               {/* Protected Admin Routes */}
               <Route path="/admin" element={

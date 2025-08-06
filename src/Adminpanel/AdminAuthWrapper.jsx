@@ -9,9 +9,9 @@ export const AdminAuthWrapper = ({ children }) => {
 
     useEffect(() => {
         if (!user || !isAdmin) {
-            navigate('/adminLogin', { 
+            navigate('/adminLogin', {
                 state: { from: location.pathname },
-                replace: true 
+                replace: true
             });
         }
     }, [user, isAdmin, navigate, location]);

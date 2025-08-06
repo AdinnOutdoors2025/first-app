@@ -81,20 +81,6 @@ const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, gen
                     <div
                       key={index}
                       className={
-
-                        //       `date ${date
-                        //       ? bookedDates.some((d) => d.getTime() === date.getTime())
-                        //         ? "booked"
-                        //         : getDateSelectionClass(date)
-                        //       : ""
-                        //       } 
-                        //       ${isDisabled ? 'disabled' : ''}
-                        //     ${getDateSelectionClass(date)}
-                        //       `
-
-                        // }
-                        //     onClick={() => handleDateClick(date)
-
                         `date 
        
         ${date ? (bookedDates.some(d =>
@@ -125,22 +111,7 @@ const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, gen
 
                   </div>
                   <div className="calendar-legend-responsive-content2">
-                    {/* <span>
-                      Start Date: <span style={{ color: 'red' }}>
-                        {selectedDates.start
-                          ? `${selectedDates.start.toLocaleString("en-US", { month: "short" })} ${selectedDates.start.getDate()}`
-                          : "--"}
-                      </span>
-                    </span><br />
-                    <span>
-                      End Date: <span style={{ color: 'red' }}>
-                        {selectedDates.end
-                          ? `${selectedDates.end.toLocaleString("en-US", { month: "short" })} ${selectedDates.end.getDate()}`
-                          : "--"}
-                      </span>
-                    </span> <br></br> */}
-
-
+                
                     // In the legend section, update date display:
 <span>
     Start Date: <span style={{ color: 'red' }}>

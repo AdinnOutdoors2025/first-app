@@ -1,13 +1,12 @@
 * {
   font-family: 'Montserrat', sans-serif;
-  /* overflow: hidden; */
 }
+
 
 .highlight {
-  /* color: red; */
   color: rgba(228, 30, 37, 1);
-
 }
+
 
 .heading {
   font-size: 42px;
@@ -17,37 +16,33 @@
 }
 
 
-
 #root {
   width: 100%;
 }
 
-/* .billboard-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  } */
 
 .slick-slide>div {
   margin: 0 20px;
   cursor: grab;
 }
 
+
 .prime {
   margin-top: 60px;
   margin-bottom: 80px;
-  /* overflow: visible; */
 }
+
 
 .billboard-card {
   background: linear-gradient(94.12deg, #FFE2E3 66.96%, #FFFFFF 99.86%);
-  height: 380px;
+  height: 400px;
   border: 1px solid #d51212;
   border-radius: 26px;
   width: 800px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
 }
+
 
 .card-img-top1-home {
   height: 200px;
@@ -59,6 +54,7 @@
   position: relative;
 }
 
+
 .board-category1-home {
   position: absolute;
   top: 100px;
@@ -69,6 +65,7 @@
   color: red;
 }
 
+
 .board-loc-home {
   font-size: 18px;
   font-weight: 400;
@@ -77,28 +74,40 @@
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
   color: rgba(51, 51, 51, 1);
+  width: 260px;
+  line-height: 17.94px;
+    height: 55px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
+
 .board-content-home {
-  padding: 20px 15px 30px 15px;
+  padding: 15px 15px 30px 15px;
 }
+
 
 .board-content-home-top {
 
+
   display: flex;
+  gap: 5px;
   flex-direction: row;
   justify-content: space-between;
-  height: 50px;
-
+  height: 70px;
 }
+
 
 .board-content-home-bottom {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* height: 70px; */
-
+  margin-top: 5px;
 }
+
 
 .board-dim-home {
   font-size: 15px;
@@ -116,11 +125,13 @@
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
+
 .board-price-home {
   font-size: 20px;
   font-weight: 600;
   color: rgba(228, 30, 37, 1);
 }
+
 
 .board-btn1-home {
   margin: 10px 42px;
@@ -133,7 +144,9 @@
   border: none;
   padding: 10px 80px;
   cursor: pointer;
+  margin-top: 15px;
 }
+
 
 .stars-home {
   font-size: 15px;
@@ -142,11 +155,13 @@
   -webkit-text-fill-color: transparent;
 }
 
+
 .fa-star-half-alt {
   background: linear-gradient(124.03deg, #FFC700 7.19%, #FFA945 132%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 
 .empty-star-home {
   font-size: 15px;
@@ -155,6 +170,7 @@
   -webkit-text-fill-color: transparent;
 }
 
+
 .rate-board-home {
   float: right;
   height: 30px;
@@ -162,11 +178,13 @@
   position: relative;
 }
 
+
 .rates-home {
   position: absolute;
   bottom: 88px;
   left: 300px;
 }
+
 
 .custom-arrow {
   position: absolute;
@@ -174,46 +192,45 @@
   transform: translateY(-50%);
   z-index: 10;
   cursor: pointer;
-  color: red;
-  /* width: 40px;
-  height: 40px; */
+  color: rgba(228, 30, 37, 1);
   display: flex;
   align-items: center;
   justify-content: center;
-  /* color: white; */
   font-size: 40px;
   transition: transform 0.3s;
 }
 
+
 .custom-arrow:hover {
   transform: translateY(-50%) scale(1);
-  /* Add a hover effect */
 }
+
 
 .next-arrow {
   right: 10px;
-  /* Adjust position for "next" */
 }
+
 
 .prev-arrow {
   left: 10px;
-  /* Adjust position for "prev" */
 }
+
 
 .info-btn {
   z-index: 30;
-  /* Default stacking value */
 }
+
 
 .billboard-info {
   z-index: 1;
-  /* Default stacking value */
 }
+
 
 .slick-slide {
   transform: scale(0.8);
   transition: all 1s ease;
 }
+
 
 .slick-center {
   opacity: 1;
@@ -221,9 +238,13 @@
   z-index: 2;
 }
 
+
 .billboard-card {
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
+
+
+
 
 
 
@@ -231,17 +252,20 @@
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
 @media (min-width: 2560px) {
 
+
   .billboard-card {
-    height: 535px;
+    height: 650px;
     max-width: 100%;
   }
+
 
   .board-content-home {
     padding: 20px;
   }
 
+
   .card-img-top1-home {
-    height: 280px;
+    height: 330px;
     width: 100%;
     object-fit: cover;
     border-top-left-radius: 26px;
@@ -249,20 +273,23 @@
     position: relative;
   }
 
+
   .board-content-home-top {
-    height: 85px;
+    height: 115px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
 
+
   .board-loc-home {
-    font-size: 30px;
-    width: 650px;
-    /* border: 1px solid red; */
+    font-size: 35px;
+    width: 630px;
     font-weight: 500;
-    line-height: 21.94px;
+    line-height: 33.94px;
+    height: 120px;
   }
+
 
   .board-dim-home {
     font-size: 28px;
@@ -272,11 +299,13 @@
     padding: 2px;
   }
 
+
   .board-price-home {
-    font-size: 32px;
+    font-size: 35px;
     font-weight: 600;
     color: rgba(228, 30, 37, 1);
   }
+
 
   .rate-board-home {
     float: right;
@@ -285,66 +314,85 @@
     position: relative;
   }
 
+
   .rates-home {
     position: absolute;
-    bottom: 116px;
+    bottom: 150px;
     left: 650px;
   }
+
 
   .stars-home,
   .empty-star-home {
     font-size: 27px;
   }
 
+
   .board-btn1-home {
     margin: -83px 28%;
     font-size: 26px;
     font-weight: 500;
-    padding: 13px 96px;
-    margin-top: 10px;
+    padding: 14px 100px;
+    margin-top: 25px;
   }
+
 
   .custom-arrow {
     width: 70px;
-    font-size: 60px;
+    font-size: 90px;
   }
 }
 
+
 /* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
 @media (min-width: 1440px) and (max-width: 2559px) {
+ .billboard-card {
+    height: 400px;
+    max-width: 100%;
+  }
+
 
   .board-content-home {
     padding: 15px;
   }
+
 
   .board-content-home-top {
     height: 70px;
     gap: 10px;
   }
 
+
   .board-loc-home {
-    font-size: 17px;
+    font-size: 20px;
     width: 350px;
-    /* border: 1px solid red; */
     font-weight: 500;
-    line-height: 19.94px;
+    line-height: 20.94px;
+    height: 65px;
   }
+
 
   .rates-home {
     position: absolute;
-    bottom: 73px;
+    bottom: 93px;
     left: 358px;
   }
 
+
   .board-btn1-home {
     margin: 4px 17%;
-    /* margin-top: 10px; */
+    margin-top: 20px;
   }
+
+
+
+
 
 
 
 
 }
+
 
 /* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
 @media (min-width: 992px) and (max-width: 1023px) {
@@ -353,15 +401,17 @@
     max-width: 100%;
   }
 
+
   .board-content-home {
     padding: 13px;
   }
 
+
   .board-content-home-top {
     height: 70px;
     gap: 5px;
-    /* border: 1px solid red; */
   }
+
 
   .board-loc-home {
     font-size: 14px;
@@ -370,15 +420,18 @@
     line-height: 15.94px;
   }
 
+
   .board-dim-home {
     font-size: 14px;
     font-weight: 500;
   }
 
+
   .board-price-home {
     font-size: 20px;
     font-weight: 600;
   }
+
 
   .rates-home {
     display: flex;
@@ -387,10 +440,12 @@
     left: 213px;
   }
 
+
   .stars-home,
   .empty-star-home {
     font-size: 14px;
   }
+
 
   .board-btn1-home {
     font-size: 15px;
@@ -398,65 +453,75 @@
     margin-top: 10px;
   }
 
+
 }
+
 
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
 @media (min-width: 768px) and (max-width: 991px) {
-
-
   .billboard-card {
     height: 350px;
     width: 800px;
   }
 
+
   .card-img-top1-home {
     height: 180px;
   }
+
 
   .board-content-home {
     padding: 8px;
   }
 
+
   .board-content-home-top {
-    height: 80px;
-    gap: 2px;
-    /* border: 1px solid red; */
+    height: 70px;
+    gap: 5px;
   }
+
 
   .board-loc-home {
     font-size: 13px;
     font-weight: 500;
     width: 200px;
     line-height: 13.94px;
-    /* border: 1px solid red; */
+    width: 190px;
+    height: 43px;
   }
+
 
   .board-dim-home {
     font-size: 13px;
     font-weight: 500;
   }
 
+
   .board-price-home {
     font-size: 17px;
     font-weight: 600;
   }
+
 
   .rate-board-home {
     height: 28px;
     width: 85px;
   }
 
+
   .rates-home {
     display: flex;
     position: absolute;
-    bottom: 65.3px;
+    bottom: 75.5px;
     left: 146px;
   }
+
 
   .stars-home,
   .empty-star-home {
     font-size: 14px;
   }
+
 
   .board-btn1-home {
     font-size: 14px;
@@ -465,10 +530,12 @@
     padding: 4% 20%;
   }
 
+
   .custom-arrow {
     font-size: 40px;
   }
 }
+
 
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
 @media (min-width: 480px) and (max-width: 767px) {
@@ -476,23 +543,24 @@
     padding: 10px;
   }
 
+
   .board-content-home-top {
     height: 90px;
-    /* border: 1px solid red; */
     gap: 5px;
   }
+
 
   .card-img-top1-home {
     height: 180px;
   }
 
+
   .board-loc-home {
     font-size: 15px;
-    /* font-weight: 500; */
     width: 260px;
     line-height: 17.94px;
-    /* border: 1px solid red; */
   }
+
 
   .board-dim-home {
     width: auto;
@@ -501,14 +569,17 @@
     font-weight: 500;
   }
 
+
   .board-price-home {
     font-size: 18px;
   }
+
 
   .rate-board-home {
     height: 30px;
     width: 85px;
   }
+
 
   .rates-home {
     display: flex;
@@ -517,10 +588,12 @@
     left: 288px;
   }
 
+
   .stars-home,
   .empty-star-home {
     font-size: 14px;
   }
+
 
   .board-btn1-home {
     font-size: 16px;
@@ -529,11 +602,14 @@
     padding: 3% 21%;
   }
 
+
   .custom-arrow {
     font-size: 40px;
   }
 
+
 }
+
 
 /* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
 @media (min-width: 425px) and (max-width: 479px) {
@@ -541,28 +617,28 @@
     height: 365px;
   }
 
-
   .board-content-home {
     padding: 8px;
   }
 
+
   .board-content-home-top {
     height: 80px;
-    /* border: 1px solid red; */
     gap: 5px;
   }
+
 
   .card-img-top1-home {
     height: 180px;
   }
 
+
   .board-loc-home {
     font-size: 15px;
-    /* font-weight: 500; */
     width: 210px;
     line-height: 17.94px;
-    /* border: 1px solid red; */
   }
+
 
   .board-dim-home {
     width: auto;
@@ -571,14 +647,17 @@
     font-weight: 500;
   }
 
+
   .board-price-home {
     font-size: 19px;
   }
+
 
   .rate-board-home {
     height: 30px;
     width: 85px;
   }
+
 
   .rates-home {
     display: flex;
@@ -587,10 +666,12 @@
     left: 235px;
   }
 
+
   .stars-home,
   .empty-star-home {
     font-size: 14px;
   }
+
 
   .board-btn1-home {
     font-size: 16px;
@@ -599,45 +680,50 @@
     padding: 3.5% 21%;
   }
 
+
   .custom-arrow {
     font-size: 40px;
   }
 
+
 }
+
 
 /* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
 @media (min-width: 375px) and (max-width: 424px) {
   .prime {
     margin-top: 40px;
     margin-bottom: 45px;
-    /* overflow: visible; */
   }
+
 
   .billboard-card {
     height: 358px;
   }
 
+
   .board-content-home {
     padding: 8px;
   }
 
+
   .board-content-home-top {
     height: 75px;
-    /* border: 1px solid red; */
     gap: 5px;
   }
+
 
   .card-img-top1-home {
     height: 180px;
   }
 
+
   .board-loc-home {
     font-size: 14px;
-    /* font-weight: 500; */
     width: 210px;
     line-height: 16.94px;
-    /* border: 1px solid red; */
   }
+
 
   .board-dim-home {
     width: auto;
@@ -646,14 +732,17 @@
     font-weight: 500;
   }
 
+
   .board-price-home {
     font-size: 18px;
   }
+
 
   .rate-board-home {
     height: 30px;
     width: 85px;
   }
+
 
   .rates-home {
     display: flex;
@@ -662,10 +751,12 @@
     left: 225px;
   }
 
+
   .stars-home,
   .empty-star-home {
     font-size: 14px;
   }
+
 
   .board-btn1-home {
     font-size: 15px;
@@ -674,44 +765,48 @@
     padding: 3.5% 21%;
   }
 
+
   .custom-arrow {
     font-size: 35px;
   }
 }
+
 
 /* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
 @media (min-width: 360px) and (max-width: 374px) {
   .prime {
     margin-top: 40px;
     margin-bottom: 45px;
-    /* overflow: visible; */
   }
+
 
   .billboard-card {
     height: 335px;
   }
 
+
   .board-content-home {
     padding: 8px;
   }
 
+
   .board-content-home-top {
     height: 65px;
-    /* border: 1px solid red; */
     gap: 5px;
   }
+
 
   .card-img-top1-home {
     height: 170px;
   }
 
+
   .board-loc-home {
     font-size: 13px;
-    /* font-weight: 500; */
-    width: 165px;
+    width: 190px;
     line-height: 16.94px;
-    /* border: 1px solid red; */
   }
+
 
   .board-dim-home {
     width: auto;
@@ -720,14 +815,17 @@
     font-weight: 500;
   }
 
+
   .board-price-home {
     font-size: 18px;
   }
+
 
   .rate-board-home {
     height: 30px;
     width: 85px;
   }
+
 
   .rates-home {
     display: flex;
@@ -736,10 +834,12 @@
     left: 210px;
   }
 
+
   .stars-home,
   .empty-star-home {
     font-size: 14px;
   }
+
 
   .board-btn1-home {
     font-size: 15px;
@@ -748,43 +848,47 @@
     padding: 3.5% 21%;
   }
 
+
   .custom-arrow {
     font-size: 35px;
   }  
 }
 
+
 @media (min-width: 320px) and (max-width: 359px) {
  .prime {
     margin-top: 40px;
     margin-bottom: 45px;
-    /* overflow: visible; */
   }
+
 
   .billboard-card {
     height: 335px;
   }
 
+
   .board-content-home {
     padding: 8px;
   }
 
+
   .board-content-home-top {
     height: 65px;
-    /* border: 1px solid red; */
     gap: 5px;
   }
+
 
   .card-img-top1-home {
     height: 170px;
   }
 
+
   .board-loc-home {
     font-size: 13px;
-    /* font-weight: 500; */
-    width: 165px;
+    width: 155px;
     line-height: 16.94px;
-    /* border: 1px solid red; */
   }
+
 
   .board-dim-home {
     width: auto;
@@ -793,14 +897,17 @@
     font-weight: 500;
   }
 
+
   .board-price-home {
     font-size: 18px;
   }
+
 
   .rate-board-home {
     height: 30px;
     width: 85px;
   }
+
 
   .rates-home {
     display: flex;
@@ -809,10 +916,12 @@
     left: 170px;
   }
 
+
   .stars-home,
   .empty-star-home {
     font-size: 14px;
   }
+
 
   .board-btn1-home {
     font-size: 15px;
@@ -821,8 +930,10 @@
     padding: 3.5% 21%;
   }
 
+
   .custom-arrow {
     font-size: 35px;
-  }     
+  }    
+
 
 }

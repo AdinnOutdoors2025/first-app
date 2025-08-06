@@ -3,7 +3,7 @@ import './ad1OrderDetails.css';
 import { useLocation } from 'react-router-dom';
 import CalendarOrderDetails from './ad1CalenderOrderDetails';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
-import {baseUrl} from './BASE_URL';
+import { baseUrl } from './BASE_URL';
 
 function OrderDetails({ order }) {
     // Handle null/undefined order state
@@ -38,39 +38,21 @@ function OrderDetails({ order }) {
         end: safeOrder.products?.[activeProductIndex]?.booking ? new Date(safeOrder.products?.[activeProductIndex].booking.endDate) : null
     });
     // In your OrderDetails component, update the fetchBookedDates useEffect:
-useEffect(() => {
-    const fetchBookedDates = async () => {
-        if (!safeOrder?._id || !safeOrder.products?.[activeProductIndex]?._id) return;
-        try {
-            const response = await fetch(
-                `${baseUrl}/booked-dates?excludeOrderId=${safeOrder._id}&excludeProductId=${safeOrder.products[activeProductIndex]._id}`
-            );
-            const dates = await response.json();
-            setBookedDates(dates.map(d => new Date(d)));
-        } catch (error) {
-            console.error('Error fetching booked dates:', error);
-        }
-    };
-    fetchBookedDates();
-}, [safeOrder, activeProductIndex]);
-
-
-
-
-    //   // Update selected dates when active product changes
-    //     useEffect(() => {
-    //         if (safeOrder.products[activeProductIndex]?.booking) {
-    //             setSelectedDates({
-    //                 start: safeOrder.products[activeProductIndex].booking.startDate 
-    //                     ? new Date(safeOrder.products[activeProductIndex].booking.startDate)
-    //                     : null,
-    //                 end: safeOrder.products[activeProductIndex].booking.endDate
-    //                     ? new Date(safeOrder.products[activeProductIndex].booking.endDate)
-    //                     : null
-    //             });
-    //         }
-    //     }, [activeProductIndex, safeOrder.products]);
-
+    useEffect(() => {
+        const fetchBookedDates = async () => {
+            if (!safeOrder?._id || !safeOrder.products?.[activeProductIndex]?._id) return;
+            try {
+                const response = await fetch(
+                    `${baseUrl}/booked-dates?excludeOrderId=${safeOrder._id}&excludeProductId=${safeOrder.products[activeProductIndex]._id}`
+                );
+                const dates = await response.json();
+                setBookedDates(dates.map(d => new Date(d)));
+            } catch (error) {
+                console.error('Error fetching booked dates:', error);
+            }
+        };
+        fetchBookedDates();
+    }, [safeOrder, activeProductIndex]);
     // Initialize selectedDates based on active product
     useEffect(() => {
         if (safeOrder.products[activeProductIndex]?.booking) {
@@ -137,12 +119,6 @@ useEffect(() => {
 
         // Create date without time component
         const normalizedDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-        // Check if date is booked or in the past
-        //  const isBooked = bookedDates.some(d =>
-        //      d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
-        //      d.getUTCMonth() === normalizedDate.getUTCMonth() &&
-        //      d.getUTCDate() === normalizedDate.getUTCDate()
-        //  );
         // Check if date is booked or in the past
         const isBooked = bookedDates.some(d => {
             const bookedDate = new Date(d);
@@ -241,42 +217,42 @@ useEffect(() => {
 
     // Calculate total price dynamically when start and end dates are selected
     const pricePerDay = safeOrder.products[activeProductIndex]?.price || 0; // Ensure pricePerDay is defined
-   
-   const getAvailableDaysInRange = (start, end) => {
-    if (!start || !end || isNaN(start.getTime()) || isNaN(end.getTime())) {
-        return [];
-    }
-    
-    const days = [];
-    const current = new Date(start);
-    const lastDay = new Date(end);
-    
-    // Normalize to UTC midnight for comparison
-    current.setUTCHours(0, 0, 0, 0);
-    lastDay.setUTCHours(0, 0, 0, 0);
 
-    // Create Set of booked dates in UTC for faster lookup
-    const bookedUTCDates = new Set(
-        bookedDates.map(d => 
-            Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())
-        )
-    );
-
-    while (current <= lastDay) {
-        const currentUTC = Date.UTC(
-            current.getFullYear(), 
-            current.getMonth(), 
-            current.getDate()
-        );
-        
-        if (!bookedUTCDates.has(currentUTC) && !isPastDate(current)) {
-            days.push(new Date(current));
+    const getAvailableDaysInRange = (start, end) => {
+        if (!start || !end || isNaN(start.getTime()) || isNaN(end.getTime())) {
+            return [];
         }
-        current.setDate(current.getDate() + 1);
-    }
 
-    return days;
-};
+        const days = [];
+        const current = new Date(start);
+        const lastDay = new Date(end);
+
+        // Normalize to UTC midnight for comparison
+        current.setUTCHours(0, 0, 0, 0);
+        lastDay.setUTCHours(0, 0, 0, 0);
+
+        // Create Set of booked dates in UTC for faster lookup
+        const bookedUTCDates = new Set(
+            bookedDates.map(d =>
+                Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())
+            )
+        );
+
+        while (current <= lastDay) {
+            const currentUTC = Date.UTC(
+                current.getFullYear(),
+                current.getMonth(),
+                current.getDate()
+            );
+
+            if (!bookedUTCDates.has(currentUTC) && !isPastDate(current)) {
+                days.push(new Date(current));
+            }
+            current.setDate(current.getDate() + 1);
+        }
+
+        return days;
+    };
 
 
     const availableDays =
@@ -299,14 +275,14 @@ useEffect(() => {
 
 
             // Validate dates
-        if (isNaN(selectedDates.start.getTime()) || isNaN(selectedDates.end.getTime())) {
-            throw new Error('Invalid date selection');
-        }
+            if (isNaN(selectedDates.start.getTime()) || isNaN(selectedDates.end.getTime())) {
+                throw new Error('Invalid date selection');
+            }
 
-        // Ensure start date is before end date
-        if (selectedDates.start > selectedDates.end) {
-            throw new Error('Start date must be before end date');
-        }
+            // Ensure start date is before end date
+            if (selectedDates.start > selectedDates.end) {
+                throw new Error('Start date must be before end date');
+            }
 
 
             // Generate all dates in the range
@@ -332,19 +308,19 @@ useEffect(() => {
             const productPrice = safeOrder.products[activeProductIndex]?.price || 0;
             const totalPrice = totalDays * productPrice;
 
-        // Prepare the update data - modified this part
-        const updatedProducts = safeOrder.products.map((product, index) => 
-            index === activeProductIndex ? {
-                ...product,
-                booking: {
-                    startDate: selectedDates.start.toISOString(),
-                    endDate: selectedDates.end.toISOString(),
-                    totalDays: totalDays,
-                    totalPrice: totalPrice
-                },
-                bookedDates: bookedDates.map(d => d.toISOString())
-            } : product
-        );
+            // Prepare the update data - modified this part
+            const updatedProducts = safeOrder.products.map((product, index) =>
+                index === activeProductIndex ? {
+                    ...product,
+                    booking: {
+                        startDate: selectedDates.start.toISOString(),
+                        endDate: selectedDates.end.toISOString(),
+                        totalDays: totalDays,
+                        totalPrice: totalPrice
+                    },
+                    bookedDates: bookedDates.map(d => d.toISOString())
+                } : product
+            );
 
 
             const response = await fetch(`${baseUrl}/prodOrders/${safeOrder._id}`, {
@@ -357,9 +333,9 @@ useEffect(() => {
 
             // First check if the response is OK
             if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
-        }
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+            }
             const updatedOrder = await response.json();
             // Update local state and close calendar
             setConfirmedDates(selectedDates);
@@ -371,7 +347,7 @@ useEffect(() => {
 
         } catch (error) {
             console.error('Update error:', error);
-                    setError(error.message || 'Failed to update dates');
+            setError(error.message || 'Failed to update dates');
             alert(`Update failed: ${error.message}`);
         }
         finally {
@@ -578,5 +554,4 @@ useEffect(() => {
         </div>
     )
 }
-
 export default OrderDetails;

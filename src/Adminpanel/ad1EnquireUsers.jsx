@@ -204,20 +204,9 @@ return false;
                 <table>
                     <thead style={{textAlign:'center'}}>
                         <tr className='enquireUserHead'>
-                            {/* <th> <div><label class="order-Productcheckbox-container1">
-                                <input type="checkbox" />
-                                <span className="order-Productcheckmark1">&#x2714;</span>
-                            </label></div>
-                            </th> */}
-                            {/* <th><div>Products</div></th> */}
-                            <th><div className='TableOrderName'>User Phone</div></th>
-                            {/* <th><div>User Name</div></th> */}
+                              <th><div className='TableOrderName'>User Phone</div></th>
                             <th><div>Product Code</div></th>
-
-                            {/* <th><div>Product ID</div></th> */}
-                            {/* <th><div>Product Name</div></th> */}
                             <th><div>Location</div></th>
-
                             <th><div>Enquire Date</div></th>
                             <th><div>Status</div></th>
                             <th ><div>Actions</div></th>
@@ -226,21 +215,9 @@ return false;
                     <tbody style={{textAlign:'center'}}>
                         {currentEnquiries.map((enquiry, index) => (
                             <tr key={enquiry._id || index}  className='enquireUsersData'>
-                                {/* <td className='OrderTableRowData'><label class="order-Productcheckbox-container1">
-                                    <input type="checkbox" />
-                                    <span className="order-Productcheckmark1">&#x2714;</span>
-                                </label>
-                                </td> */}
-                                {/* <td>
-                                <img src={product.image} alt="Product" className='productImg' />
-                            </td> */}
                                 <td className='order-TableOrderName'>{enquiry.phone}</td>
                                 <td className='order-TableProdCode'>{enquiry.prodCode}</td>
-                                {/* <td>{enquiry.prodName}</td> */}
                                 <td className='enquireUser_location'>{enquiry.location}</td>
-
-                                {/* <td>{order.product.date}</td> */}
-                                {/* <td>{order.booking.currentDate}</td> */}
                                 <td>{enquiry.enquiryDate
                                     ? new Date(enquiry.enquiryDate).toLocaleDateString('en-GB')
                                     : '--'}</td>
@@ -277,15 +254,6 @@ return false;
                         disabled={currentPage === 1} >
                         Prev
                     </button>
-                    {/* {[...Array(totalPages)].map((_, index) => (
-                    <button
-                        key={index}
-                        className={`page-number ${currentPage === index + 1 ? "active" : ""}`}
-                        onClick={() => handlePageChange(index + 1)}
-                    >
-                        {index + 1}
-                    </button>
-                ))} */}
                     {getPaginationGroup().map((page, index) =>
                         page === "..." ? (
                             <span key={index} className="order-paginationDots">...</span>

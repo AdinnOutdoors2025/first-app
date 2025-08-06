@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './ad1products.css';
 import { useNavigate } from 'react-router-dom';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
-import {baseUrl} from './BASE_URL';
-
-const ProductTable = () => { 
+import { baseUrl } from './BASE_URL';
+const ProductTable = () => {
     // NAVIGATE 
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
@@ -12,40 +11,22 @@ const ProductTable = () => {
     // Add filtered products state
     const [filteredProducts, setFilteredProducts] = useState([]);
 
-// const baseUrl = "http://192.168.2.159:3001";
+    // const baseUrl = "http://192.168.2.159:3001";
 
- const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-
-    // useEffect(() => {
-    //     fetch(`${baseUrl}/products`)
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             const productsWithVisibility = data.map((product) => ({
-    //                 ...product,
-    //                 visible: product.visible !== false, // fallback to true
-    //             }));
-    //             //   setProducts(productsWithVisibility.sort((a, b) => b.visible - a.visible));
-    //             const sortedProducts = productsWithVisibility.sort((a, b) => b.visible - a.visible);
-    //             setProducts(sortedProducts);
-    //             setFilteredProducts(sortedProducts);
-
-    //         });
-    // }, []);
-
-
-useEffect(() => {
+    useEffect(() => {
         const fetchProducts = async () => {
             try {
                 setLoading(true);
                 setError(null);
                 const response = await fetch(`${baseUrl}/products`);
-                
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch products');
                 }
-                
+
                 const data = await response.json();
                 const productsWithVisibility = data.map((product) => ({
                     ...product,
@@ -178,7 +159,6 @@ useEffect(() => {
         return pages;
     };
 
-
     // 3 DOTS SECTION 
     const [menuOpenId, setMenuOpenId] = useState(null); // Use ID if multiple rows
 
@@ -186,7 +166,7 @@ useEffect(() => {
         setMenuOpenId(prevId => (prevId === id ? null : id));
     };
 
- // Render different states
+    // Render different states
     if (loading) {
         return (
             <div className="admin-products-loading">
@@ -204,7 +184,7 @@ useEffect(() => {
                 <div className="alert alert-danger" role="alert">
                     Error loading products: {error}
                 </div>
-                <button 
+                <button
                     className="btn btn-primary"
                     onClick={() => window.location.reload()}
                 >
@@ -254,95 +234,94 @@ useEffect(() => {
                     <tbody>
                         {
                             filteredProducts.length > 0 ? (
-                            
-                            
-                            filteredProducts
-                            .slice(indexOfFirstProduct, indexOfLastProduct)
-                            .map((product, index) => (
-                                <tr key={product._id} className={`product-row adminProdRowContent ${!product.visible ? 'disabled' : ''}`}>
-                                    <td>
-                                        <img src={product.image} alt="Product" className='productImg' />
-                                    </td>
-                                    <td className='TableProductName'>{product.name}</td>
-                                    <td>{product.prodCode}</td>
-                                    <td className='TableProductPrice'>{product.price}</td>
-                                    <td>{product.width} X {product.height} | {product.productsquareFeet} Sq.ft </td>
-                                    <td>
-                                        <div className='d-flex productRate'>
-                                            <div>
-                                                <span className="fa-solid fa-star stars-book-admin"></span>
-                                            </div>
-                                            <div>
-                                                {product.rating}
-                                            </div>
-                                        </div>
 
-                                    </td>
-                                    <td className="threeDotsTd" onClick={() => toggleMenu(product._id)}>
-                                        <div className="actionMenuRow">
-                                            <div>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="34" viewBox="0 0 10 34" fill="none" className='ThreeDotsIcon'>
-                                                    <path fillRule="evenodd" clipRule="evenodd"
-                                                        d="M5.02241 0.373047C7.2536 0.373047 9.06365 2.18282 9.06365 4.41428C9.06365 6.64547 7.2536 8.45471 5.02241 8.45471C2.79122 8.45444 0.981445 6.64547 0.981445 4.41428C0.981445 2.18282 2.79122 0.373047 5.02241 0.373047ZM5.02241 25.4439C7.2536 25.4439 9.06365 27.2536 9.06365 29.4851C9.06365 31.7166 7.2536 33.5255 5.02241 33.5255C2.79122 33.5253 0.981445 31.7163 0.981445 29.4848C0.981445 27.2534 2.79122 25.4439 5.02241 25.4439ZM5.02241 12.9085C7.2536 12.9085 9.06365 14.7182 9.06365 16.9497C9.06365 19.1812 7.2536 20.9907 5.02241 20.9907C2.79122 20.9904 0.981445 19.1809 0.981445 16.9494C0.981445 14.718 2.79122 12.9085 5.02241 12.9085Z"
-                                                        fill="#333333" />
-                                                </svg>
-                                            </div>
 
-                                            {/* Action Menu */}
-                                            <div className={`actionMenu ${menuOpenId === product._id ? 'open' : ''}`}>
+                                filteredProducts
+                                    .slice(indexOfFirstProduct, indexOfLastProduct)
+                                    .map((product, index) => (
+                                        <tr key={product._id} className={`product-row adminProdRowContent ${!product.visible ? 'disabled' : ''}`}>
+                                            <td>
+                                                <img src={product.image} alt="Product" className='productImg' />
+                                            </td>
+                                            <td className='TableProductName'>{product.name}</td>
+                                            <td>{product.prodCode}</td>
+                                            <td className='TableProductPrice'>{product.price}</td>
+                                            <td>{product.width} X {product.height} | {product.productsquareFeet} Sq.ft </td>
+                                            <td>
+                                                <div className='d-flex productRate'>
+                                                    <div>
+                                                        <span className="fa-solid fa-star stars-book-admin"></span>
+                                                    </div>
+                                                    <div>
+                                                        {product.rating}
+                                                    </div>
+                                                </div>
 
-                                                <i
-                                                    className={`fa-solid ${product.visible ? 'fa-eye' : 'fa-eye-slash'}`}
-                                                    title={product.visible ? "Hide" : "Unhide"}
-                                                    onClick={() => toggleVisibility(product._id, product.visible)}
-                                                ></i>
-                                                <i className="fa-solid fa-pen" title="Edit" onClick={() => handleAction('Edit', product)}></i>
-                                                <i className="fa-solid fa-trash" title="Delete" onClick={() => handleAction('Delete', product)}></i>
-                                            </div>
-                                        </div>
+                                            </td>
+                                            <td className="threeDotsTd" onClick={() => toggleMenu(product._id)}>
+                                                <div className="actionMenuRow">
+                                                    <div>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="34" viewBox="0 0 10 34" fill="none" className='ThreeDotsIcon'>
+                                                            <path fillRule="evenodd" clipRule="evenodd"
+                                                                d="M5.02241 0.373047C7.2536 0.373047 9.06365 2.18282 9.06365 4.41428C9.06365 6.64547 7.2536 8.45471 5.02241 8.45471C2.79122 8.45444 0.981445 6.64547 0.981445 4.41428C0.981445 2.18282 2.79122 0.373047 5.02241 0.373047ZM5.02241 25.4439C7.2536 25.4439 9.06365 27.2536 9.06365 29.4851C9.06365 31.7166 7.2536 33.5255 5.02241 33.5255C2.79122 33.5253 0.981445 31.7163 0.981445 29.4848C0.981445 27.2534 2.79122 25.4439 5.02241 25.4439ZM5.02241 12.9085C7.2536 12.9085 9.06365 14.7182 9.06365 16.9497C9.06365 19.1812 7.2536 20.9907 5.02241 20.9907C2.79122 20.9904 0.981445 19.1809 0.981445 16.9494C0.981445 14.718 2.79122 12.9085 5.02241 12.9085Z"
+                                                                fill="#333333" />
+                                                        </svg>
+                                                    </div>
+
+                                                    {/* Action Menu */}
+                                                    <div className={`actionMenu ${menuOpenId === product._id ? 'open' : ''}`}>
+
+                                                        <i
+                                                            className={`fa-solid ${product.visible ? 'fa-eye' : 'fa-eye-slash'}`}
+                                                            title={product.visible ? "Hide" : "Unhide"}
+                                                            onClick={() => toggleVisibility(product._id, product.visible)}
+                                                        ></i>
+                                                        <i className="fa-solid fa-pen" title="Edit" onClick={() => handleAction('Edit', product)}></i>
+                                                        <i className="fa-solid fa-trash" title="Delete" onClick={() => handleAction('Delete', product)}></i>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="7" className="text-center py-4">
+                                        No products match the selected filter.
                                     </td>
                                 </tr>
-                            ))
-                       ):(
-                        <tr>
-                                <td colSpan="7" className="text-center py-4">
-                                    No products match the selected filter.
-                                </td>
-                            </tr>
 
-                       ) }
+                            )}
                     </tbody>
                 </table>
             </div>
             {/* Pagination Controls */}
-
             {/* Only show pagination if there are products */}
             {filteredProducts.length > 0 && (
 
 
-            <div className="Productpagination d-flex justify-content-center">
-                <button className="Productprev-button" onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                    disabled={currentPage === 1} >
-                    Prev
-                </button>
+                <div className="Productpagination d-flex justify-content-center">
+                    <button className="Productprev-button" onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1} >
+                        Prev
+                    </button>
 
-                {getPaginationGroup().map((page, index) =>
-                    page === "..." ? (
-                        <span key={index} className="paginationDots">...</span>
-                    ) : (
-                        <button
-                            key={index}
-                            className={`Productpage-number ${currentPage === page ? "active" : ""}`}
-                            onClick={() => setCurrentPage(page)} >
-                            {page}
-                        </button>
-                    )
-                )}
-                <button className="Productnext-button" onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                    disabled={currentPage === totalPages}>
-                    Next
-                </button>
-            </div>
+                    {getPaginationGroup().map((page, index) =>
+                        page === "..." ? (
+                            <span key={index} className="paginationDots">...</span>
+                        ) : (
+                            <button
+                                key={index}
+                                className={`Productpage-number ${currentPage === page ? "active" : ""}`}
+                                onClick={() => setCurrentPage(page)} >
+                                {page}
+                            </button>
+                        )
+                    )}
+                    <button className="Productnext-button" onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}>
+                        Next
+                    </button>
+                </div>
             )}
         </div>
     );

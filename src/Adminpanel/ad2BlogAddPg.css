@@ -1,0 +1,353 @@
+* {
+    font-family: Monsterrat;
+}
+
+.adminBlogMain {
+    display: flex;
+    gap: 10px;
+    margin: 10px;
+}
+
+/* Admin Blog left content  */
+.adminBlogLeft {
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    width: 315px;
+}
+
+
+.adminBlogImgMain {
+    height: 200px;
+    width: 100%;
+    border-radius: 10px;
+    align-content: center;
+    text-align: center;
+    border: 1px solid gray;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+
+
+}
+
+
+.adminBlogImg {
+    align-content: center;
+    border: 1px solid red;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.adminBlogAuthorImgMain {
+    border-radius: 50%;
+    border: 1px solid gray;
+    height: 100px;
+    width: 100px;
+    align-items: center;
+    margin: 15px auto;
+}
+
+
+.adminBlogAuthorImg {
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    /* margin: 15px auto; */
+}
+
+.BlogNameMain {
+    margin: 15px auto;
+}
+
+.BlogNameHeading {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(228, 30, 37, 1);
+    margin-bottom: 10px;
+}
+
+.BlogName {
+    color: rgba(51, 51, 51, 1);
+    font-weight: 500;
+    line-height: 100%;
+    text-align: justify;
+}
+
+.BlogName1 {
+    height: 100px;
+    overflow: auto;
+}
+
+.adminBlogAuthorContent {
+    display: flex;
+    margin: auto;
+}
+
+
+.adminBlogAuthorContentLeft,
+.adminBlogAuthorContentRight {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(228, 30, 37, 1);
+    width: 210px;
+    /* border: 1px solid red; */
+    margin: 8px auto;
+    padding-left: 0px;
+}
+
+
+.adminBlogAuthorContentRight {
+    color: rgba(51, 51, 51, 1);
+    font-weight: 500;
+    width: 200px;
+}
+
+.adminBlogRightContent {
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+    width: 650px;
+    height: auto;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 1);
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+
+.adminBlogAuthorUpload-section {
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+
+
+}
+
+.adminBlog-upload-section {
+    text-align: center;
+    align-items: center;
+    align-content: center;
+}
+
+.adminBlog-FileHeading {
+    margin-top: 10px;
+    color: rgba(51, 51, 51, 1);
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.adminBlog-file-upload-box {
+    cursor: pointer;
+}
+
+.adminBlog-file-info {
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(51, 51, 51, 1);
+}
+
+.BlogRightSideHeading {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(227, 31, 37, 1);
+}
+
+
+.BlogDetailsInput {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(168, 168, 168, 1);
+    width: 288px;
+    color: rgba(51, 51, 51, 1);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-top: 10px;
+}
+
+.BlogTitleInput {
+    width: 100%;
+}
+
+
+.BlogDetailsInput::-webkit-outer-spin-button,
+.BlogDetailsInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.BlogDetailsInput {
+    -moz-appearance: textfield;
+}
+
+
+.BlogDetailsInput::placeholder {
+    font-size: 14px;
+    font-weight: 0;
+}
+
+.BlogSampleContentInput {
+    outline: none;
+    /* border: none; */
+    border: 1px solid rgba(168, 168, 168, 1);
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    height: 100px;
+    color: rgba(51, 51, 51, 1);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-top: 10px;
+}
+
+.BlogSampleContentInput::-webkit-outer-spin-button,
+.BlogSampleContentInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.BlogSampleContentInput {
+    -moz-appearance: textfield;
+}
+
+
+.BlogSampleContentInput::placeholder {
+    font-size: 14px;
+    font-weight: 0;
+}
+
+.adminBlogAuthorRightContent {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.BlogAuthorDetailsContent {
+    margin: 15px auto;
+}
+
+
+.adminBlogSaveBtn {
+    border: none;
+    color: rgba(255, 255, 255, 1);
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 5%;
+    background: rgba(227, 31, 37, 1);
+    padding: 10px 30px;
+    border-radius: 32px;
+    margin: 5px 40%;
+    margin-bottom: 15px;
+}
+
+/* ERROR  */
+.AdminProdinput-error {
+    animation: blinkError 0.6s ease-in-out infinite;
+    border-bottom: 1.5px solid red !important;
+    background-color: #f8d7da;
+}
+
+.AdminProdinput-error::placeholder {
+    color: black;
+}
+
+.AdminProderror-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+@keyframes blinkError {
+
+    0%,
+    100% {
+        border-bottom: 1.5px solid red;
+        background-color: #f8d7da;
+        /* light red */
+    }
+
+    50% {
+        border-bottom: 1.5px solid #ff0000;
+        background-color: #fff;
+    }
+}
+
+/* Add to your ad2BlogAddPg.css file */
+.blogListContainer {
+    margin: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.blogTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+
+.blogTable th,
+.blogTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.blogTable th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+
+.editBtn,
+.deleteBtn {
+    padding: 6px 12px;
+    margin-right: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+
+.editBtn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+.deleteBtn {
+    background-color: #f44336;
+    color: white;
+}
+
+
+.editBtn:hover {
+    background-color: #45a049;
+}
+
+
+.deleteBtn:hover {
+    background-color: #d32f2f;
+}

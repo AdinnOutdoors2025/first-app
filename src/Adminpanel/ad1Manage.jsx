@@ -1,5 +1,3 @@
-
-
 import React, { useState, useContext, useEffect } from 'react';
 import './ad1Manage.css';
 import Calendar from './adNewCalender';
@@ -9,10 +7,6 @@ import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
 import {baseUrl} from './BASE_URL';
-
-
-
-
 function AdManageSection() {
     //Start rating board
     // Function to render star ratings
@@ -363,15 +357,6 @@ function AdManageSection() {
     const goToPreviousMonth = () => {
         setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
     };
-
-    // // Toggle calender 
-    // const toggleCalendar = () => {
-    //     setIsCalendarOpen(!isCalendarOpen);
-    // };
-
-    // const closeCalendar = () => {
-    //     setIsCalendarOpen(false);
-    // };
     // Calculate total price dynamically when start and end dates are selected
     const pricePerDay = productAmount || 0; // Ensure pricePerDay is defined
     const getAvailableDaysInRange = (start, end) => {
@@ -441,19 +426,6 @@ function AdManageSection() {
     const [productsOrderData, setProductsOrderData] = useState([]);
 
     const [editOrder, setEditOrder] = useState(null);
-    // useEffect(() => {
-    //     const fetchBookedDates = async () => {
-    //         const res = await fetch('http://localhost:3001/booked-dates');
-    //         const dates = await res.json();
-    //         setBookedDates(dates.map(d => new Date(d)));
-    //     };
-
-    //     fetchBookedDates();
-    // }, [productsOrderData]); // Refresh when orders change
-
-
-    // const [bookedDates, setBookedDates] = useState([]);
-
     useEffect(() => {
         const fetchBookedDates = async () => {
             try {
@@ -464,8 +436,6 @@ function AdManageSection() {
                     : `${baseUrl}/booked-dates`;
 
                 const res = await fetch(url);
-
-
                 //   const res = await fetch('http://localhost:3001/booked-dates');
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
@@ -640,60 +610,60 @@ function AdManageSection() {
         setEditOrder(null);
     };
 
-    const createOrder = async (orderData) => {
-        try {
-            const response = await fetch(`${baseUrl}/prodOrders`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(orderData)
-            });
+    // const createOrder = async (orderData) => {
+    //     try {
+    //         const response = await fetch(`${baseUrl}/prodOrders`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(orderData)
+    //         });
 
-            if (!response.ok) {
-                throw new Error('Failed to create order');
-            }
+    //         if (!response.ok) {
+    //             throw new Error('Failed to create order');
+    //         }
 
-            const result = await response.json();
-            alert("Order created successfully!");
-            fetchOrders(); // Refresh the orders list
-            return result;
-        } catch (error) {
-            console.error("Error creating order:", error);
-            alert("Error creating order. Please try again.");
-        }
-    };
+    //         const result = await response.json();
+    //         alert("Order created successfully!");
+    //         fetchOrders(); // Refresh the orders list
+    //         return result;
+    //     } catch (error) {
+    //         console.error("Error creating order:", error);
+    //         alert("Error creating order. Please try again.");
+    //     }
+    // };
 
 
-    const generateNextOrderId = async () => {
-        try {
-            // Fetch all existing orders to determine the highest ID
-            const response = await fetch(`${baseUrl}/prodOrders`);
-            const orders = await response.json();
+    // const generateNextOrderId = async () => {
+    //     try {
+    //         // Fetch all existing orders to determine the highest ID
+    //         const response = await fetch(`${baseUrl}/prodOrders`);
+    //         const orders = await response.json();
 
-            if (orders.length === 0) {
-                return 'AD0001'; // First order
-            }
+    //         if (orders.length === 0) {
+    //             return 'AD0001'; // First order
+    //         }
 
-            // Find the highest existing ID
-            const highestId = orders.reduce((max, order) => {
-                const orderId = order._id || order.id || '';
-                if (orderId.startsWith('AD')) {
-                    const num = parseInt(orderId.substring(2));
-                    return num > max ? num : max;
-                }
-                return max;
-            }, 0);
+    //         // Find the highest existing ID
+    //         const highestId = orders.reduce((max, order) => {
+    //             const orderId = order._id || order.id || '';
+    //             if (orderId.startsWith('AD')) {
+    //                 const num = parseInt(orderId.substring(2));
+    //                 return num > max ? num : max;
+    //             }
+    //             return max;
+    //         }, 0);
 
-            // Generate next ID
-            const nextId = highestId + 1;
-            return `AD${nextId.toString().padStart(4, '0')}`;
-        } catch (error) {
-            console.error("Error generating order ID:", error);
-            // Fallback - generate based on timestamp
-            return `AD${Date.now().toString().slice(-4)}`;
-        }
-    };
+    //         // Generate next ID
+    //         const nextId = highestId + 1;
+    //         return `AD${nextId.toString().padStart(4, '0')}`;
+    //     } catch (error) {
+    //         console.error("Error generating order ID:", error);
+    //         // Fallback - generate based on timestamp
+    //         return `AD${Date.now().toString().slice(-4)}`;
+    //     }
+    // };
 
     //Helper function to generate the next order ID
 
@@ -866,42 +836,42 @@ function AdManageSection() {
         }
     };
 
-    const updateOrder = async (id, updatedData) => {
-        try {
-            if (!id) throw new Error("No order ID provided");
-            if (!updatedData) throw new Error("No update data provided");
+    // const updateOrder = async (id, updatedData) => {
+    //     try {
+    //         if (!id) throw new Error("No order ID provided");
+    //         if (!updatedData) throw new Error("No update data provided");
 
-            // Log the data being sent for debugging
-            console.log("Sending update data:", updatedData);
+    //         // Log the data being sent for debugging
+    //         console.log("Sending update data:", updatedData);
 
-            const response = await fetch(`${baseUrl}/prodOrders/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedData)
-            });
+    //         const response = await fetch(`${baseUrl}/prodOrders/${id}`, {
+    //             method: 'PUT',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(updatedData)
+    //         });
 
-            if (!response.ok) {
-                // Try to get more detailed error information
-                const errorData = await response.json().catch(() => ({}));
-                console.error("Server response error:", errorData);
-                throw new Error(errorData.message || `Server responded with status ${response.status}`);
-            }
+    //         if (!response.ok) {
+    //             // Try to get more detailed error information
+    //             const errorData = await response.json().catch(() => ({}));
+    //             console.error("Server response error:", errorData);
+    //             throw new Error(errorData.message || `Server responded with status ${response.status}`);
+    //         }
 
-            const result = await response.json();
-            console.log("Update successful:", result);
-            await fetchOrders(); // Refresh the orders list
-            return result;
-        } catch (error) {
-            console.error("Update error details:", {
-                message: error.message,
-                stack: error.stack,
-                data: error.response?.data
-            });
-            throw error;
-        }
-    };
+    //         const result = await response.json();
+    //         console.log("Update successful:", result);
+    //         await fetchOrders(); // Refresh the orders list
+    //         return result;
+    //     } catch (error) {
+    //         console.error("Update error details:", {
+    //             message: error.message,
+    //             stack: error.stack,
+    //             data: error.response?.data
+    //         });
+    //         throw error;
+    //     }
+    // };
     return (
         <div>
             <form onSubmit={handleSaveProductOrder}>
@@ -999,31 +969,6 @@ function AdManageSection() {
                                 <div className='ManageProdRightContent'>{clientPaidAmount}</div>
                             </div>
                         </div>
-                        {/* Similar Product Section  */}
-                        {/* <div className='manageprodMain'>
-                        <div className='manageprodSideHeading'>Selected Similar products</div>
-                        { selectedSimilarProducts.length > 0 ? (
-                            selectedSimilarProducts.map((product, index) => (
-                                <div className='manageSimilarprod' key={index}>
-                                    <div className='manageSimilarImg'>
-                                        <img src={product.image} className='manageSimilarImg'></img>
-                                    </div>
-                                    <div>
-                                        <div className='ManageProdRightContent1'>{product.Prodname} </div>
-                                        <div className='manageSimilarProdCode'>{product.ProdCode}</div>
-
-
-                                    </div>
-                                    <div className='similarProdClose' onClick={() => handleRemoveProduct(product.ProdCode)}>
-                                    <i className="fa-solid fa-xmark"></i>
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <p className='smilarProdError'>No Similar Products Selected</p>
-                        )
-                        }
-                    </div> */}
                     </div>
 
                     {/* Right section  */}
@@ -1223,14 +1168,7 @@ function AdManageSection() {
                             <div className='d-flex manageClientInformation'>
                                 <div className='manageClientInfoLeft'>
                                     <div className='clientDetailHeading'>Location</div>
-                                    {/* <select className='clientDetailsInput'>
-                                    <option value="State">State</option>
-                                    <option value="Tamil Nadu">Tamil Nadu</option>
-                                    <option value="Kerala">Kerala</option>
-                                    <option value="Karnataka">Karnataka</option>
-                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
-                                    <option value="Telangana">Telangana</option>
-                                </select> */}
+
                                     <div className="location-container11">
                                         {/* Input field to display selected state & district */}
 
@@ -1244,48 +1182,13 @@ function AdManageSection() {
                                                 placeholder="Select Location"
                                                 readOnly
                                             />
-                                            {/* Chevron Icon for dropdown */}
-                                            {/* <i className={`fa-solid ${showStates ? "fa-chevron-up" : "fa-chevron-down"} dropdown-arrow11`} style={{fontSize:'10px'}}></i> */}
-                                        </div>
-                                        {/* <div className="dropdown-container11">
-                {showStates && (
-                <div className="dropdown11">
-                    <ul className="dropdown-list11">
-                        {Object.keys(stateDistricts).map((state) => (
-                            <li
-                                key={state}
-                                onClick={() => handleStateClick(state)}
-                                className={selectedState === state ? "selected" : ""}
-                            >
-                                {state}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-                {showDistricts && selectedState && (
-                    <div className="dropdown11">
-                        <ul className="dropdown-list11">
-                            {stateDistricts[selectedState].map((district) => (
-                                <li
-                                    key={district}
-                                    onClick={() => handleDistrictClick(district)}
-                                    className={selectedDistrict === district ? "selected" : ""} >
-                                    {district}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
-            </div> */}
+                                           
+                                        </div>      
                                     </div>
                                 </div>
                                 <div className='manageClientInfoRight'>
                                     <div className='clientDetailHeading'>Media Type</div>
                                     <input type='text' className='clientDetailsInput' value={prodType} readOnly onChange={(e) => setProdType(e.target.value)} >
-                                        {/* {mediaTypes.map((type, index) => (
-                                <option key={index} value={type}>{type}</option>
-                            ))} */}
                                     </input>
 
                                 </div>

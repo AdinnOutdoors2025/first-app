@@ -9,7 +9,7 @@ export const MainLayout = ({ children, onClose }) => {
     
      const handleClose = () => {
         closeLogin();
-        if (onClose) onClose(); // Call the additional close handler if provided
+      //  if (onClose) onClose(); // Call the additional close handler if provided
     };
 
     

@@ -11,10 +11,7 @@
 
 .mediaContent {
     margin-top: 20px;
-    /* display: flex;
-    gap: 10px; */
     justify-content: space-around;
-    /* width: 130%; */
     height: auto;
     padding: 30px;
     border-radius: 5px;
@@ -37,7 +34,6 @@
 
 .mediaContent1 {
     width: 100%;
-    /* border: 1px solid red; */
 }
 
 
@@ -70,7 +66,6 @@
     display: flex;
     gap: 10px;
     background: rgba(227, 31, 37, 1);
-    /* padding: 6px; */
     border-radius: 32px;
     color: white;
     width: 100px;

@@ -1,0 +1,62 @@
+/* Add to your ad2BlogAddPg.css file */
+.blogListContainer {
+    margin: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.blogTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+
+.blogTable th,
+.blogTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.blogTable th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+
+.editBtn,
+.deleteBtn {
+    padding: 6px 12px;
+    margin-right: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+
+.editBtn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+.deleteBtn {
+    background-color: #f44336;
+    color: white;
+}
+
+
+.editBtn:hover {
+    background-color: #45a049;
+}
+
+
+.deleteBtn:hover {
+    background-color: #d32f2f;
+}

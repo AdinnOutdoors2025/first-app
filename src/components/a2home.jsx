@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import "./a2home.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { baseUrl } from '../Adminpanel/BASE_URL';
+import slugify from 'slugify';
+
 
 function AdinnHome2() {
-
-
-    // NAVIGATE 
+    // NAVIGATE
     const navigate = useNavigate();
+
 
     //Start rating board
     // Function to render star ratings
@@ -30,59 +31,84 @@ function AdinnHome2() {
             </div>
         );
     };
+    const [primeSpotsData, setPrimeSpotsData] = useState([]);
+    const [isLoading, setIsLoading] = useState(null);
 
-    const spots = [
-        {
-            id: 1,
-            location: "Adayar L B Road towards Thiruvanmiyur",
-            price: 120000,
-            dimensions: "24 x 30",
-            rating: 4.5,
-            imageUrl: "./images/spot1.png",
-        },
-        {
-            id: 2,
-            location: "Adayar L B Road towards Thiruvanmiyur",
-            price: 500000,
-            dimensions: "24 x 30",
-            rating: 4.5,
-            imageUrl: "./images/spot2.png",
-        },
-        {
-            id: 3,
-            location: "Adayar L B Road towards Thiruvanmiyur",
-            price: 120000,
-            dimensions: "24 x 30",
-            rating: 4.5,
-            imageUrl: "./images/spot3.png",
-        },
-        {
-            id: 4,
-            location: "Adayar L B Road towards Thiruvanmiyur",
-            price: 120000,
-            dimensions: "24 x 30",
-            rating: 4.5,
-            imageUrl: "./images/spot1.png",
-        },
-        {
-            id: 5,
-            location: "Adayar L B Road towards Thiruvanmiyur",
-            price: 120000,
-            dimensions: "24 x 30",
-            rating: 4.5,
-            imageUrl: "./images/spot2.png",
-        },
-        {
-            id: 6,
-            location: "Adayar L B Road towards Thiruvanmiyur",
-            price: 120000,
-            dimensions: "24 x 30",
-            rating: 4.5,
-            imageUrl: "./images/spot3.png",
-        },
-    ];
 
+    useEffect(
+        () => {
+            const fetchPrimeSpots = async () => {
+                try {
+                    const response = await fetch(`${baseUrl}/products`);
+                    const data = await response.json();
+                    const visibleProducts = data.filter(
+                        visibleProd => visibleProd.visible !== false
+                    ).slice(0, 10);
+
+
+                    const mappedPrimeSpots = visibleProducts.map(prod => ({
+                        id: prod._id,
+                        location: `${prod.location.district}, ${prod.location.state}`,
+                        price: prod.price,
+                        dimensions: `${prod.height} x ${prod.width}`,
+                        height: prod.height, // Add this
+                        width: prod.width, // Add this
+                        rating: prod.rating,
+                        imageUrl: prod.image,
+                        category: prod.mediaType,
+                        prodName: prod.name,
+                        prodCode: prod.prodCode,
+                        lighting: prod.lighting,
+                        from: prod.from,
+                        to: prod.to,
+                        printingCost: prod.printingCost,
+                        mountingCost: prod.mountingCost
+                    }));
+                    setPrimeSpotsData(mappedPrimeSpots);
+                    setIsLoading(false);
+                }
+                catch (err) {
+                    console.log("Failed to fetch prime spots", err);
+                    setIsLoading(false);
+                }
+            };
+            fetchPrimeSpots();
+        }, []
+    );
+    //SLICK ANIMATIONS EFFECT
     // Custom Next Arrow
+    const handleBookNow = (spot) => {
+        // Prepare all required data for the booking page
+        const spotData = {
+            id: spot._id || spot.id, // Handle both cases
+            prodName: spot.name || spot.prodName,
+            printingCost: spot.printingCost,
+            mountingCost: spot.mountingCost,
+            prodCode: spot.prodCode,
+            prodLighting: spot.lighting,
+            productFrom: spot.from,
+            productTo: spot.to,
+            location: `${spot.location?.district || spot.district}, ${spot.location?.state || spot.state}`,
+            category: spot.mediaType || spot.category,
+            price: spot.price,
+            sizeHeight: spot.height,
+            sizeWidth: spot.width,
+            rating: spot.rating,
+            imageUrl: spot.image || spot.imageUrl,
+            district: spot.location?.district || spot.district,
+            state: spot.location?.state || spot.state
+        };
+
+
+        // Navigate to booking page with state
+        navigate(`/Product/${spotData.id}-${slugify(spotData.prodName)}`, {
+            state: { selectedSpot: spotData }
+        });
+    };
+
+
+
+
     const NextArrow = (props) => {
         const { onClick } = props;
         return (
@@ -91,6 +117,7 @@ function AdinnHome2() {
             </div>
         );
     };
+
 
     // Custom Previous Arrow
     const PrevArrow = (props) => {
@@ -101,6 +128,7 @@ function AdinnHome2() {
             </div>
         );
     };
+
 
     const settings = {
         dots: false,
@@ -113,7 +141,7 @@ function AdinnHome2() {
         centerMode: true, // Centered view
         centerPadding: "0px", // Minimal gap between slides
         autoplay: true, // Enables automatic sliding //remove this line if you  want autoplay
-        autoplaySpeed: 1000,
+        autoplaySpeed: 2000,
         beforeChange: (current, next) => {
             const elements = document.querySelectorAll(".slick-slide");
             elements.forEach((el, index) => {
@@ -125,14 +153,6 @@ function AdinnHome2() {
             });
         },
         responsive: [
-            //  {
-            //     breakpoint: 2000,
-            //     settings: {
-            //         slidesToShow: 3,
-            //         centerPadding: "30px", // Minimal gap between slides
-
-            //     },
-            // },
             {
                 breakpoint: 1024,
                 settings: {
@@ -143,63 +163,68 @@ function AdinnHome2() {
                 breakpoint: 600,
                 settings: {
                     slidesToShow: 1,
-        centerPadding: "40px", // Minimal gap between slides
+                    centerPadding: "40px", // Minimal gap between slides
+
 
                 },
             },
-             {
+            {
                 breakpoint: 400,
                 settings: {
                     slidesToShow: 1,
-        centerPadding: "20px", // Minimal gap between slides
+                    centerPadding: "20px", // Minimal gap between slides
+
 
                 },
             },
         ],
-
-        // Slide transition interval in milliseconds
     };
 
+
+    if (isLoading) {
+        return (
+            <div className="text-center py-5">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        );
+    }
 
 
     return (
         <div>
-            <h1 className="heading"><span className="highlight">Prime Advertising</span> Spots</h1>
+            <h1 className="heading"><span className="highlight">Prime Advertising </span> Spots</h1>
             <div className="w-3/4 prime ">
                 <Slider {...settings}>
-                    {spots.map((spot, index) => (
-                        <div className={`billboard-card ${index === 1 ? 'scaleZoomInLeft' : ''}`} key={spot.id} onClick={() => navigate("/book")}>
-                            {/* <div className="card  boards" > */}
-                                <img src={spot.imageUrl} alt={spot.location} className="card-img-top1-home" />
-                                <span className='board-category1-home'>{spot.category}</span>
-                                <div className="board-content-home ">
-                                    <div className="board-content-home-top" style={{  }}>
-                                        <span className=" board-loc-home">{spot.location}</span>
-                                        <span className="board-dim-home">{spot.dimensions}</span>
-                                    </div>
-                                    <div className="board-content-home-bottom" style={{  }}>
-                                        <span className="board-price-home">₹{spot.price.toLocaleString()}</span>
-                                        <img src='./images/rating_board.png' className='rate-board-home'></img>
-                                    </div>
-                                    <div >
-                                    <RatingStars rating={spot.rating} />
-                                    <button className="board-btn1-home" onClick={() => navigate("/book")}>Book Now</button>
-                                    </div>
+                    {primeSpotsData.map((spot, index) => (
+                        <div className={`billboard-card ${index === 1 ? 'scaleZoomInLeft' : ''}`} key={spot.id} >
+                            <img src={spot.imageUrl} alt={spot.location} className="card-img-top1-home" />
+                            <span className='board-category1-home'>{spot.category}</span>
+                            <div className="board-content-home ">
+                                <div className="board-content-home-top" style={{}}>
+                                    <span className=" board-loc-home">{spot.prodName}</span>
+                                    <span className="board-dim-home">{spot.dimensions}</span>
                                 </div>
-                            {/* </div> */}
+                                <div className="board-content-home-bottom" style={{}}>
+                                    <span className="board-price-home">₹{spot.price.toLocaleString()}</span>
+                                    <img src='./images/rating_board.png' className='rate-board-home'></img>
+                                </div>
+                                <div >
+                                    <RatingStars rating={spot.rating} />
+                                    <button className="board-btn1-home"
+                                        onClick={() => handleBookNow(spot)} >Book Now</button>
+                                </div>
+                            </div>
                         </div>
                     ))}
+
+
                 </Slider>
+
 
             </div>
         </div>
     );
 }
 export default AdinnHome2;
-
-
-
-
-
-
-

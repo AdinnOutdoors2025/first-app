@@ -1,99 +1,234 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
 import { MainLayout } from './MainLayout';
 import '../components/G1BlogPage.css';
-function BlogNew() {
-    return (
+import { baseUrl } from '../Adminpanel/BASE_URL.js';
+import { useParams, useNavigate } from 'react-router-dom';
+//slick animations
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Slider from 'react-slick';
 
+
+function BlogNew() {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [blogData, setBlogData] = useState(null);
+    const [otherBlogs, setOtherBlogs] = useState([]);
+
+
+    //Fetch Blogs from Backend
+    const fetchBlogs = async () => {
+        try {
+
+
+            ///products/${productId}
+            const response = await fetch(`${baseUrl}/BlogAdd/getBlog/${id}`);
+            const data = await response.json();
+            setBlogData(data);
+
+
+        }
+        catch (err) {
+            console.log("Failed to fetch Blogs", err);
+
+
+        }
+
+
+    }
+
+
+
+
+    // Fetch other blogs (excluding the current one)
+    const fetchOtherBlogs = async () => {
+        try {
+            const response = await fetch(`${baseUrl}/BlogAdd/getBlog`);
+            const data = await response.json();
+            setOtherBlogs(data.filter(blog => blog._id !== id));
+        } catch (err) {
+            console.log("Failed to fetch other Blogs", err);
+        }
+    };
+
+
+    // Fetch blogs on component mount
+    useEffect(() => {
+        fetchBlogs();
+        fetchOtherBlogs();
+    }, [id]);
+    if (!blogData) return <div>Loading...</div>;
+
+
+
+
+    //OTHER BLOG ANIMATIONS
+    // Custom Next Arrow
+    const NextArrow = (props) => {
+        const { onClick } = props;
+        return (
+            <div className="custom-arrow1 next-arrow1" onClick={onClick}>
+                ❯
+            </div>
+        );
+    };
+
+
+    // Custom Previous Arrow
+    const PrevArrow = (props) => {
+        const { onClick } = props;
+        return (
+            <div className="custom-arrow1 prev-arrow1" onClick={onClick}>
+                ❮
+            </div>
+        );
+    };
+
+
+    // Carousel settings
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        centerPadding: "0px",
+        // autoplay: true,
+        autoplaySpeed: 2000,
+        beforeChange: (current, next) => {
+            const elements = document.querySelectorAll(".slick-slide1");
+            elements.forEach((el, index) => {
+                if (index === next) {
+                    el.classList.add("slick-center1");
+                } else {
+                    el.classList.remove("slick-center1");
+                }
+            });
+        },
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    centerPadding: "40px",
+                }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    centerPadding: "0px", // Set to 0 to remove any center padding
+                    centerMode: false // Disable center mode if not needed
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 600,
+                // centerPadding:"10px",
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                // centerPadding:"50px",
+
+
+                }
+            },
+        ]
+    };
+//NAVIGATE TO TOP SHOW THE OTHER BLOG DETAILS
+  // Handle navigation to other blog
+    const handleBlogNavigation = (blogId) => {
+        navigate(`/blog/${blogId}`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+
+
+
+    return (
         <MainLayout>
             <div>
                 {/* Navbar section  */}
                 <MainNavbar />
-                <div>
-                    {/* Blog Above section  */}
-                    <div className='blogPageContentMain container'>
-                        <div className='blogPageLeftContent'>
-                            <img src='/images/BlogPageContentImg.png' className='BlogPageContentImg'></img>
-                        </div>
-                        <div className='blogPageRightContent'>
-                            <div className='blogPageHeading'>
-                                Top Outdoor Advertisement Formats that are Suitable for Chennai Audience
-                            </div>
 
-                            <div className='BlogAuthorMain'>
-                                <div className='BlogAuthorLeft'>
-                                    <img src='/images/BlogAuthorImg.png' className='BlogAuthorImg'></img>
-                                </div>
-                                <div className='BlogAuthorRight'>
-                                    <div className='BlogAuthorName'>Sudhakar</div>
-                                    <div className='BlogAuthorTitle'>OOH Plan Strategist @ Adinn Outdoors</div>
-                                    <div className='BlogAuthorPublishedDate'>Published on 20.06.2024</div>
-                                </div>
-                            </div>
-                            <div className='Blog2ndContentPara'>
-                                Outdoor advertising in Chennai is more effective in reaching brand awareness strategies. Many brands target Chennai City to cover a wide exposure for their brand to reach successful OOH campaigns. Adinn Outdoor Advertising has a great media planning execution to deliver your brand fame on hoarding advertising.
-                            </div>
 
-                        </div>
+                {/* {
+                    blogData.map(
+                        (blog, index) => {
+                            return (
+                                <div key={index}> */}
+                {/* Blog Above section  */}
+
+
+
+
+                <div className='blogPageContentMain container' id='otherblogshow'>
+                    <div className='blogPageLeftContent'>
+                        <img src={blogData.blogImage} className='BlogPageContentImg'></img>
                     </div>
-                    {/* Blog  Below section  */}
-                    <div className='Blog2ndSectionMain container'>
-
+                    <div className='blogPageRightContent'>
+                        <div className='blogPageHeading'>
+                            {blogData.blogTitle}
+                            {/* Top Outdoor Advertisement Formats that are Suitable for Chennai Audience */}
+                        </div>
+                        <div className='BlogAuthorMain'>
+                            <div className='BlogAuthorLeft'>
+                                <img src={blogData.authorImage} className='BlogAuthorImg'></img>
+                            </div>
+                            <div className='BlogAuthorRight'>
+                                <div className='BlogAuthorName'>{blogData.authorName}</div>
+                                <div className='BlogAuthorTitle'>{blogData.authorBlogTitle}</div>
+                                <div className='BlogAuthorPublishedDate'>Published on {blogData.authorPublishDate}</div>
+                            </div>
+                        </div>
                         <div className='Blog2ndContentPara'>
-                            Accordingly Chennai is a buzzing location city Your brand is unmissable for attracting more customers. Outdoor advertising in Chennai is more effective in reaching brand awareness strategies. Many brands target Chennai City to cover a wide exposure for their brand to reach successful OOH campaigns. Adinn Outdoor Advertising has a great media planning execution to deliver your brand fame on hoarding advertising.
-                        </div>
-
-                        <div>
-                            <div className='Blog2ndSideHeading'>Effective outdoor advertising campaign in Chennai</div>
-                            <div className='Blog2ndContentPara'>
-                                Chennai is the most urban core city in Tamilnadu and more People are more likely to travel outside their day-to-day life. Adinn will help you guide the proper outdoor advertising marketing strategies to reach a diverse audience. We owned the largest portfolio of OOH media assets in Tamil Nadu, Kerala & Puducherry. Altogether our team of experts is passionate about outdoor advertising and knows how to deliver results that exceed expectations in Chennai. The main benefit of targeting the Chennai location it’s evolving fast and it delivers your targeted audience. Another reason for it can create greater impact and visibility for the brands and make audience potential to actual customers.
-                            </div>
-                        </div>
 
 
-                        <div>
-                            <div className='BlogSideHeadingMain'>TOP OUTDOOR ADVERTISEMENT FORMAT IN CHENNAI</div>
-                            <div >
-                                <div className='Blog2ndSideHeading'>Chennai Hoarding advertisement :</div>
-                                <div className='Blog2ndContentPara'>Hoarding advertisements in Chennai very effectively makes your brand’s OOH campaign successful to have chances to engage the general audience. Adinn outdoor advertisement reviles prominent locations in Chennai, for example, OMR road connects many highway areas as your brand hoarding advertisement gets more visibility.</div>
-                            </div>
-
-                            <div>
-                                <div className='Blog2ndSideHeading'>Chennai bus shelter advertisement :</div>
-                                <div className='Blog2ndContentPara'>Bus shelter advertisements in Chennai are most strategically placed in high-traffic locations. Accordingly, Chennai has like many other urban areas to reach an enormous audience. Adinn Outdoor makes your brand aesthetically pleasing bus shelter advertisements visually stimulating to the audience.</div>
-                            </div>
-
-                            <div>
-                                <div className='Blog2ndSideHeading'>Chennai Bus back advertisement:</div>
-                                <div className='Blog2ndContentPara'>Bus Back advertisement in Chennai, While compared to other OOH advertisement Bus Back is very cheap and the best advertisement. It can create an immediate impact grabbing attention on road travelers. Chennai has various bus routes to cover the entire city.</div>
-                            </div>
-
-                            <div>
-                                <div className='Blog2ndSideHeading'>Chennai Police booth advertisement:</div>
-                                <div className='Blog2ndContentPara'>Police advertisements in Chennai highly visible in traffic locations. Use high-quality graphics and concise text to make your message stand out to passersby. Adinn has various locations to dissemination your brand and captivate the visual stimulating the audience.</div>
-                            </div>
-
-                            <div>
-                                <div className='Blog2ndSideHeading'>Chennai Pole kiosk advertisement:</div>
-                                <div className='Blog2ndContentPara'>Pole kiosk advertisements in Chennai are also affordable cost they can bigger impact on small sized advertisements. Basically, pole kiosk advertisements are mounted on utility poles, streetlights, or other roadside structures. so this service we are providing outdoor advertisement in Chennai.</div>
-                            </div>
-
-
+                            {blogData.blogSampleContent}
                         </div>
                     </div>
-
-
-                    <div className='Blog3rdSection container'>
-                        <div className='Blog3rdHeading' >Other Blog</div>
-                    </div>
-
                 </div>
+                <div className='Blog2ndSectionMain container'
+                    dangerouslySetInnerHTML={{ __html: blogData.richTextContent }}
+                />
+                <div className='Blog3rdSection'>
+                    <div className='Blog3rdHeading container' >Other Blog</div>
+                    <div className='other-blogs-container container-fluid'>
+                        <Slider {...settings}>
+                            {otherBlogs.map((otherBlog, index) => (
+                                <div
+                                    key={otherBlog._id}
+                                    className='other-blog-item'
+                                    onClick={() => handleBlogNavigation(otherBlog._id)}>
+                                    <img src={otherBlog.blogImage} alt={otherBlog.blogTitle} />
+                                    <div className='otherBlogTitle'>{otherBlog.blogTitle}</div>
+                                    <div className='otherBlogContent'>{otherBlog.blogSampleContent}</div>
+                                    <button className='read-more-btn'
+                                    onClick={() => handleBlogNavigation(otherBlog._id)}
+                                    >Read More</button>
+                                </div>
+                            ))}
+                        </Slider>
 
+
+                    </div>
+                </div>
                 <MainFooter />
-
             </div>
         </MainLayout>
     )
 }
 export default BlogNew;
+

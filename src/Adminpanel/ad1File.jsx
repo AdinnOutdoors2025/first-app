@@ -209,48 +209,6 @@ function ClientSection() {
 
 
     const [image, setImage] = useState(" "); // Store uploaded image
-    // const handleImageUpload = async (event) => {
-    //     const file = event.target.files[0];
-    //     if (file) {
-    //         const formData = new FormData();
-    //         formData.append("file", file);
-
-    //         try {
-    //             const res = await fetch(`${baseUrl}/upload`, {
-    //                 method: "POST",
-    //                 body: formData,
-    //             });
-
-    //             const data = await res.json();
-    //             setImage(`${baseUrl}${data.imageUrl}`); // Use full URL to backend
-    //         } catch (error) {
-    //             console.error("Upload failed:", error);
-    //         }
-    //     }
-    // };
-
-// const handleImageUpload = async (event) => {
-//     const file = event.target.files[0];
-//     if (file) {
-//         const formData = new FormData();
-//        // formData.append("file", file); // ✅ Use "file" as field name
-//  formData.append('file', selectedFile);
-//         try {
-//             const res = await fetch(`${baseUrl}/upload`, {
-//                 method: "POST",
-//                 body: formData,
-//             });
-
-//             const data = await res.json();
-
-//             // ✅ update this based on what your backend returns
-//             setImage(`${baseUrl}/uploads/${data.filename}`); 
-//         } catch (error) {
-//             console.error("Upload failed:", error);
-//         }
-//     }
-// };
-
 
 const handleImageUpload = async (event) => {
   const formData = new FormData();
@@ -270,14 +228,12 @@ const handleImageUpload = async (event) => {
 
 
 console.log(setImage);
-
     // This will log the image URL whenever it changes
 useEffect(() => {
     if (image) {
         console.log("Current image URL:", image);
     }
 }, [image]);
-
 
     const [productsData, setProductsData] = useState([]);
     const [editProduct, setEditProduct] = useState(null);
@@ -333,11 +289,7 @@ useEffect(() => {
             toast.error("Please fill all required fields correctly");
             return;
         }
-        // // First check similar products count
-        // if (selectedSimilarProducts.length < 4) {
-        //     alert("Please add at least 4 similar products");
-        //     return;
-        // }
+    
         console.log("Save product");
         // Optional warning (but still allows submission)
         if (selectedSimilarProducts.length === 0) {
@@ -345,32 +297,6 @@ useEffect(() => {
                 return;
             }
         }
-        // // Basic validation
-        // if (
-        //     !productName ||
-        //     !image ||
-        //     !productAmount ||
-        //     !productFixedAmount ||
-        //     !productFixedAmountOffer ||
-        //     !productPrintingCost ||
-        //     !productMountingCost ||
-        //     !productID ||
-        //     !prodLighting ||
-        //     !productFrom ||
-        //     !productTo ||
-        //     !prodRating ||
-        //     !prodwidth ||
-        //     !prodheight ||
-        //     !prodType ||
-        //     !selectedState ||
-        //     !selectedDistrict ||
-        //     !image
-        // ) {
-        //     alert("Please fill in all required fields.");
-        //     return;
-        // }
-
-        // Save product to database
         const method = editProduct ? 'PUT' : 'POST';
         const url = editProduct ? `${baseUrl}/products/${editProduct._id}` :
             `${baseUrl}/products`;
@@ -381,10 +307,6 @@ useEffect(() => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    // name: editProduct.name,
-                    // description: editProduct.description,
-                    // price: editProduct.price,
-                    // image: editProduct.image
                     name: productName,
                     description: "Sample", // Update if you use
                     price: productAmount,
@@ -762,8 +684,6 @@ useEffect(() => {
                                         </div>
                                     </div>
                                     <div>
-                                        {/* <input type='number' step='0.1' min='0' max='5' placeholder='Rating' value={prodRating}
-                                    onChange={(e) => handleRatingChange(e.target.value)} className='clientDetailsInput ratingInput'></input> */}
                                         <select className='clientDetailsInput ratingInput' value={prodRating}
                                             onChange={(e) => handleRatingChange(e.target.value)}>
                                             <option value="1">1</option>
@@ -926,9 +846,6 @@ useEffect(() => {
                 {/* <Calendar/>  */}
                 <button className="calendarSaveBtn" type='submit'>  {editProduct ? 'Update' : 'Save'}</button>
             </form>
-
-            {/* <ToastContainer position="top-right" autoClose={2000} /> */}
-
         </div>
 
     )

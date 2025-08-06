@@ -1,36 +1,4 @@
 /* src/components/ProductTable.css */
-/* 
-.product-table {
-    width: 90%;
-    margin: 20px auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-.productNameData{
-    width: 175px;
-}
-th,
-td {
-    padding: 5px;
-    text-align: left;
-    color: rgba(51, 51, 51, 1);
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    align-content: center;
-    align-items: center;
-    border-bottom: 1px solid;
-    border-image-source: linear-gradient(90deg, rgba(51, 51, 51, 0) 0%, #333333 45%, rgba(51, 51, 51, 0) 100%)1;
-    border-image-slice: 1;
-} */
-
-
-/* src/components/ProductTable.css */
-
 .product-table {
     width: 90%;
     margin: 20px auto;
@@ -44,7 +12,6 @@ td {
 .TableProductPrice {
     width: 100px;
     padding: -10px;
-    /* border: 1px solid red; */
 }
 
 table {
@@ -196,8 +163,6 @@ th {
     align-content: center;
     text-align: center;
     text-decoration-skip-ink: none;
-
-    /* padding: 8px 16px; */
     margin: 0 5px;
     cursor: pointer;
 }
@@ -206,13 +171,11 @@ th {
     border: 1.5px solid rgba(227, 31, 37, 1);
     color: rgba(51, 51, 51, 1);
     background: rgba(255, 255, 255, 1);
-
 }
 
 
 .Productprev-button,
 .Productnext-button {
-
     color: rgba(255, 255, 255, 1);
     font-weight: 600;
     font-size: 17px;
@@ -228,7 +191,6 @@ th {
     height: 60px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-
 }
 
 .Productnext-button {
@@ -241,7 +203,6 @@ th {
 
 .Productprev-button:disabled,
 .Productnext-button:disabled {
-    /* background-color: lightcoral; */
     background: rgba(228, 30, 37, 1);
     opacity: 50%;
     cursor: not-allowed;
@@ -257,13 +218,11 @@ th {
 
 .TableProductName {
     width: 22%;
-    /* border: 1px solid red; */
 }
 
 
 
 .actionMenuRow {
-    /* position: relative; */
     display: flex;
     align-items: center;
 }
@@ -271,7 +230,6 @@ th {
 .threeDotsTd {
     cursor: pointer;
     padding: 10px;
-    /* padding: 20px 30px; */
 }
 
 .ThreeDotsIcon {
@@ -283,7 +241,6 @@ th {
 .actionMenu {
     position: absolute;
     right: 89px;
-    /* appears left of the dot */
     display: flex;
     flex-direction: column;
     gap: 7px;
@@ -315,11 +272,6 @@ th {
     color: #007bff;
 }
 
-/* .product-row.disabled {
-    opacity: 0.4 !important;
-    pointer-events: none;
-  } */
-
 .product-row.disabled {
     opacity: 0.4;
 }
@@ -339,17 +291,6 @@ th {
     opacity: 1;
     pointer-events: auto;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 .admin-products-loading,
 .admin-products-error,

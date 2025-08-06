@@ -5,8 +5,9 @@ import './c2login.css';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from './LoginContext';
 import axios from 'axios';
-//BASE URL OF http://localhost:3001 FILE IMPORT 
+//BASE URL OF http://localhost:3001 FILE IMPORT
 import { baseUrl } from '../Adminpanel/BASE_URL';
+
 
 function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
     //keep me signed checkbox section
@@ -20,11 +21,12 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
     // Replace the useState for isSignUp with:
     const [isSignUp, setIsSignUp] = useState(loginMode === 'signup');
 
+
     const [userName, setUserName] = useState('');
     const [userPhone, setUserPhone] = useState('');
     // const [contact, setContact] = useState('');
     const [email, setEmail] = useState('');
-    // Enter OTP to target next value 
+    // Enter OTP to target next value
     const [enterOtp, setEnterOtp] = useState(new Array(4).fill(""));
     //UI states
     const [otp, setOtp] = useState('');
@@ -40,6 +42,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
     const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const validatePhone = (phone) => /^\d{10}$/.test(phone);
 
+
     // Add useEffect to update when loginMode changes
     useEffect(() => {
         setIsSignUp(loginMode === 'signup');
@@ -48,6 +51,8 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
         setErrorMessage('');
         setEnterOtp(new Array(4).fill(""));
     }, [loginMode]);
+
+
 
 
     const sendOtp = async () => {
@@ -65,11 +70,13 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 return;
             }
 
+
             if (!usePhoneOTP && !validateEmail(identifier)) {
                 setErrorMessage('Please enter a valid email address');
                 return;
             }
         }
+
 
         // For signup
         if (isSignUp) {
@@ -78,16 +85,19 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 return;
             }
 
+
             if (!userPhone || !validatePhone(userPhone)) {
                 setErrorMessage('Please enter a valid 10-digit phone number');
                 return;
             }
+
 
             if (!email || !validateEmail(email)) {
                 setErrorMessage('Please enter a valid email address');
                 return;
             }
         }
+
 
         try {
             setStatus('Checking user...');
@@ -119,12 +129,15 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
             setStatus('Sending OTP...');
 
 
+
+
             console.log('Sending OTP with:', {
                 email,
                 phone: userPhone,
                 userName,
                 isSignUp
             });
+
 
             const otpResponse = await fetch(`${baseUrl}/login/send-otp`, {
                 method: 'POST',
@@ -141,9 +154,10 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 ...(usePhoneOTP ? { phone: userPhone } : { email }),
                 userName: userName // Always include userName
             })
-            }); 
-                        
+            });
+                       
             const otpData = await otpResponse.json();
+
 
             if (otpData.success) {
                 setOtpSent(true);
@@ -175,20 +189,24 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                     [usePhoneOTP ? 'phone' : 'email']: usePhoneOTP ? userPhone : email,
                     otp: finalOtp,
 
+
                 })
             });
+
 
             if (!verifyResponse.ok) {
                 const errorData = await verifyResponse.json();
                 throw new Error(errorData.message || "Verification failed");
             }
 
+
             const verifyData = await verifyResponse.json();
+
 
             if (!verifyData.verified) {
                 throw new Error("Invalid OTP");
             }
-
+ if (verifyData.verified) {
             // For signup, create user account
             if (isSignUp) {
                 const userResponse = await fetch(`${baseUrl}/login/create-user`, {
@@ -196,6 +214,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ userName, userEmail: email, userPhone })
                 });
+
 
                 if (!userResponse.ok) {
                     const errorData = await userResponse.json();
@@ -208,7 +227,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 // For login, use verified user data
                 loginUser(verifyData.user, keepSignedIn);
                 alert("Logged in successfully!");
-            }
+            }}
             onClose();
             // navigate("/book1");
         } catch (error) {
@@ -217,6 +236,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
             setErrorMessage(error.message || "Verification failed. Try again.");
         }
     };
+
 
     // Toggle between login and signup
     const toggleAuthMode = () => {
@@ -251,7 +271,8 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
         }
     };
 
-    // Enter OTP to target next value 
+
+    // Enter OTP to target next value
     function handleOtpChange(e, index) {
         if (!/^\d*$/.test(e.target.value)) return; // Only allow numbers
         let otpArray = [...enterOtp];
@@ -278,6 +299,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 </div>
             </div>
 
+
             <div className='login-lower'>
                 {!otpSent ? (
                     <>
@@ -290,6 +312,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                                     value={userName}
                                     onChange={e => setUserName(e.target.value)}
                                 /><br />
+
 
                                 <input
                                     type="tel"
@@ -322,6 +345,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                         )}
                         {errorMessage && <div className="error-message-login">{errorMessage}</div>}
 
+
                         {!isSignUp && (
                             <div>
                                 <label className="checkbox-container">
@@ -333,6 +357,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                                 </label>
                             </div>
                         )}
+
 
                         <button type='submit' className="continue-btn" onClick={sendOtp}>
                             {isSignUp ? "Get OTP" : "Send OTP"}
@@ -395,39 +420,3 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
     );
 }
 export default LoginPageMain;
-
-// RUN
-// cd backend -> node LoginMain
-// then run C1LoginMain.jsx 
-{/* 
-
-                        <div className="otp-method-toggle">
-                            <button
-                                className={!usePhoneOTP ? "active" : ""}
-                                onClick={() => setUsePhoneOTP(false)}
-                            >
-                                Email OTP
-                            </button>
-                            <button
-                                className={usePhoneOTP ? "active" : ""}
-                                onClick={() => setUsePhoneOTP(true)}
-                            >
-                                Phone OTP
-                            </button>
-                        </div>
-
-                        {usePhoneOTP ? (
-                            <input
-                                type="tel"
-                                placeholder="Enter Phone Number"
-                                value={userPhone}
-                                onChange={e => setUserPhone(e.target.value)}
-                            />
-                        ) : (
-                            <input
-                                type="email"
-                                placeholder="Enter Your Email"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                            />
-                        )} */}
