@@ -70,7 +70,6 @@ function ClientSection() {
         prodLocationLink: false,
     });
 
-
     const validateForm = () => {
         const newErrors = {
             productName: !productName,

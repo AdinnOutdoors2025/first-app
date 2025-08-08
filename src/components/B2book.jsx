@@ -660,7 +660,6 @@ function BookASite1() {
                             )}
                             {/* ))} */}
 
-
                             {/* Calender section Selected dates  */}
                             {isCalendarOpen && (
                                 <div className="calendar-overlay">

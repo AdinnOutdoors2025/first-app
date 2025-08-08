@@ -169,13 +169,10 @@ function AdinnHome3() {
         ]
     };
 
-
     //TEXT COLOR AUTOMATICALLY CHANGED BASED ON THE BACKGROUND IMAGE
     // const img = document.getElementById("bgImage");
     //   const textContainer = document.getElementById("textContainer");
     //   const colorThief = new ColorThief();
-
-
     //   function updateTextColor() {
     //     try {
     //       const color = colorThief.getColor(img);
@@ -185,14 +182,11 @@ function AdinnHome3() {
     //       console.warn("Color extraction failed:", e);
     //     }
     //   }
-
-
     //   if (img.complete) {
     //     updateTextColor();
     //   } else {
     //     img.addEventListener('load', updateTextColor);
     //   }
-
 
     const [blogData, setBlogData] = useState([]);
     const fetchBlogs = async () => {
@@ -200,8 +194,6 @@ function AdinnHome3() {
             const response = await fetch(`${baseUrl}/BlogAdd/getBlog`);
             const data = await response.json();
             setBlogData(data);
-
-
         }
         catch (err) {
             console.log("Failed to fetch Blogs", err);
@@ -210,8 +202,6 @@ function AdinnHome3() {
     useEffect(() => {
         fetchBlogs();
     }, []);
-
-
  const handleBlogClick = (blogId) => {
         // navigate(`/Blog/${blog}`); // Navigate to blog details page with ID
         navigate(`/Blog/${blogId}`); // Navigate to blog details page with ID
@@ -220,8 +210,6 @@ function AdinnHome3() {
     };
     return (
         <div>
-
-
             {/* Our highlights section  */}
             <div className='high container'>
                 <h1 className='heading'>Our <span className='highlight'>Highlights</span></h1>

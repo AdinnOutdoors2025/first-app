@@ -1,3 +1,4 @@
+
 * {
     font-family: 'Montserrat', sans-serif;
 }
@@ -11,9 +12,7 @@
 
 }
 
-.side-bar-content { 
-    
-}
+.side-bar-content {}
 
 .outdoor,
 .sorting,
@@ -260,20 +259,20 @@
     background-color: white;
     display: none;
     color: red;
-
 }
 
 .board-loc-book {
-    font-family: Montserrat;
     font-size: 17px;
     font-weight: 400;
     line-height: 17.94px;
-    text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
+    height: 55px;
     color: rgba(51, 51, 51, 1);
     width: 250px;
-    /* border:1px solid red; */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .board-content-book {
@@ -298,6 +297,8 @@
 }
 
 .board-dim-book {
+    /* white-space: nowrap;  */
+
     font-size: 15px;
     font-weight: 500;
     align-content: center;
@@ -432,7 +433,7 @@
     background: rgba(228, 30, 37, 1);
     opacity: 50%;
     cursor: not-allowed;
-}
+} 
 
 /* Responsive Media Queries */
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
@@ -463,12 +464,18 @@
     }
 
     .board-loc-book {
-        font-family: Montserrat;
         font-size: 25px;
         font-weight: 500;
-        line-height: 23.94px;
+        line-height: 25.94px;
         width: 300px;
         /* border: 1px solid red; */
+        height: 80px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        /* Limit to 3 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .board-dim-book {
@@ -666,7 +673,9 @@
         font-weight: 400;
         line-height: 21px;
         width: 265px;
-        /* border: 1px solid red; */
+        border: 1px solid red;
+        height: 65px;
+        -webkit-line-clamp: 3;
     }
 
     .board-dim-book {
@@ -939,6 +948,7 @@
         font-weight: 400;
         line-height: 18.94px;
         width: 175px;
+        
 
     }
 
@@ -1564,6 +1574,7 @@
         font-size: 18px;
         font-weight: 400;
         line-height: 19.94px;
+        height: 65px;
     }
 
     .board-dim-book {
@@ -1998,6 +2009,8 @@
         font-weight: 400;
         line-height: 18.94px;
         width: 230px;
+        height: 60px;
+
         /* border: 1px solid red; */
     }
 
@@ -2447,11 +2460,11 @@
     }
 
     .board-loc-book {
-        font-family: Montserrat;
         font-size: 17px;
-        font-weight: 400;
         line-height: 18.94px;
         width: 250px;
+        height: 60px;
+
         /* border:1px solid red; */
     }
 
@@ -3071,9 +3084,9 @@
 
     .filter-SortingDropdownContent {
         height: 74%;
-    } 
-    
-/* 
+    }
+
+    /* 
     .filter-Sortingdropdown {
         height: 379px;
     } */
@@ -3264,3 +3277,4 @@
         margin-bottom: 10%;
     }
 }
+

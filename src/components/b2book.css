@@ -235,8 +235,6 @@
 
 
 .cost-gap {
-
-
     margin-left: 10px;
     color: rgba(228, 30, 37, 1);
     font-family: Montserrat;
@@ -253,13 +251,12 @@
 
 .book-spot {
     /* width: 411px; */
-    width: max-content;
-    padding: 12px 10px;
+    width: fit-content;
+    padding: 5px 8px;
     border-radius: 7px;
     align-content: center;
     text-align: center;
     align-items: center;
-    padding: 5px 8px;
 }
 
 
@@ -547,8 +544,6 @@
 }
 
 
-
-
 /* On mouse out, move the blur effect back from right to left */
 .btn-enquire:not(:hover)::before {
     left: -100%;
@@ -690,7 +685,7 @@
 
 
     .book-spot {
-        width: max-content;
+        width: fit-content;
         padding: 20px 15px;
         padding: 13px 20px;
         border-radius: 5px;
@@ -932,7 +927,7 @@
 
 
     .book-spot {
-        width: max-content;
+        width: fit-content;
         padding: 13px 10px;
         padding: 5px 10px;
         border-radius: 5px;
@@ -1155,7 +1150,7 @@
 
 
     .book-spot {
-        width: max-content;
+        width: fit-content;
         padding: 10px 10px;
         border-radius: 8px;
     }
@@ -1369,7 +1364,7 @@
 
     .btn-type,
     .book-spot {
-        width: max-content;
+        width: fit-content;
         padding: 5px 10px;
         font-size: 19px;
         font-weight: 500;
@@ -1556,7 +1551,7 @@
 
     .btn-type,
     .book-spot {
-        width: auto;
+        width: fit-content;
         padding: 5px 10px;
         font-size: 17px;
         font-weight: 500;
@@ -1854,8 +1849,8 @@
     }
 
 
-    .book-price{
-        width:max-content;
+    .book-price {
+        width: max-content;
         font-size: 15px;
         font-weight: 500;
         line-height: 18.38px;
@@ -2105,8 +2100,8 @@
     }
 
 
-    .book-price{
-        height:auto;
+    .book-price {
+        height: auto;
         width: 100%;
         font-size: 15px;
         font-weight: 500;
@@ -2121,11 +2116,12 @@
     }
 
 
-    .slash-bar{
+    .slash-bar {
         margin: 0px 10px;
 
 
     }
+
     .slash-bar1 {
         margin: 0px 3px;
     }
@@ -2362,7 +2358,7 @@
     }
 
 
-    .book-price{
+    .book-price {
         height: auto;
         width: 90%;
         font-size: 15px;
@@ -2517,18 +2513,21 @@
         margin: 0 auto;
         padding-left: 0px;
     }
+
     .book-images-section {
         display: flex;
         gap: 10px;
         margin: auto 9%;
         margin-right: 15px;
     }
+
     .book-mainImage,
     .book-mainImg1 {
         width: 100%;
         height: 320px;
         margin: auto 3px;
     }
+
     .bookContentRow1 {
         display: flex;
         flex-wrap: wrap;
@@ -2544,23 +2543,27 @@
         cursor: pointer;
         border-radius: 8px;
     }
-   .Book-content2 {
+
+    .Book-content2 {
         max-width: 100%;
         padding-left: 0%;
         padding-right: 0%;
         padding-top: 5%;
         margin: auto;
     }
+
     .book-sideHeading {
         font-size: 21px;
         font-weight: 600;
         line-height: 20.13px;
     }
+
     .book-size {
         font-size: 18px;
         font-weight: 400;
         line-height: 9.26px;
     }
+
     .btn-type,
     .book-spot {
         width: auto;
@@ -2571,6 +2574,7 @@
         border-radius: 7px;
         padding: 5px 6px;
     }
+
     .book-type {
         font-size: 11px;
         font-weight: 500;
@@ -2578,20 +2582,24 @@
         text-align: center;
         position: relative;
     }
+
     .rate-board1 {
         height: 30px;
         width: 85px;
     }
+
     .stars1,
     .empty-star1 {
         font-size: 14px;
     }
+
     .rating-star {
         bottom: 7px;
         left: 4px;
     }
-    .book-price{
-        height:auto;
+
+    .book-price {
+        height: auto;
         width: 90%;
         font-size: 15px;
         font-weight: 500;
@@ -2602,7 +2610,7 @@
 
 
     .cost-gap {
-        font-size:15px;
+        font-size: 15px;
         font-weight: 600;
     }
 

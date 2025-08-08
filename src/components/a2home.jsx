@@ -62,7 +62,11 @@ function AdinnHome2() {
                         from: prod.from,
                         to: prod.to,
                         printingCost: prod.printingCost,
-                        mountingCost: prod.mountingCost
+                        mountingCost: prod.mountingCost,
+                        latitude : prod.Latitude,
+                        longitude : prod.Longitude,
+                        LocationLink : prod.LocationLink
+                        
                     }));
                     setPrimeSpotsData(mappedPrimeSpots);
                     setIsLoading(false);
@@ -96,7 +100,10 @@ function AdinnHome2() {
             rating: spot.rating,
             imageUrl: spot.image || spot.imageUrl,
             district: spot.location?.district || spot.district,
-            state: spot.location?.state || spot.state
+            state: spot.location?.state || spot.state,
+            latitude : spot.latitude,
+            longitude:spot.longitude,
+            LocationLink:spot.LocationLink
         };
 
 
@@ -218,7 +225,6 @@ function AdinnHome2() {
                             </div>
                         </div>
                     ))}
-
 
                 </Slider>
 
