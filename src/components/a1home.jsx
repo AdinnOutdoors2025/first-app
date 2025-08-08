@@ -14,105 +14,7 @@ import { MainLayout } from './MainLayout';
 import Splash from './splashCursor.jsx';
 
 function AdinnHome() {
-  // // WHAT WE DO SECTION
-  // const [logoPosition, setLogoPosition] = useState(8.5); // Start at 9%
-  // const [activeIndex, setActiveIndex] = useState(0);
-  // const [isPaused, setIsPaused] = useState(false); // State to pause animation
-  // const [isDragging, setIsDragging] = useState(false); // State to track dragging
-  // const [dragStartX, setDragStartX] = useState(0); // X-coordinate during drag
-
-  // const dragItems = [
-  //   { id: 1, name: "3D and Cut-out", image: "./images/what1.png", content: ' Adinn eye-catching hoardings make you stand out from a wider audience. Our strategical placements make your brand dominate in high-traffic urban areas.' },
-  //   { id: 2, name: "Dynamic Advertising", image: "./images/what2.png", content: "Content 2..." },
-  //   { id: 3, name: "Geo Targeting", image: "./images/what3.png", content: "Content 3..." },
-  //   { id: 4, name: "Traditional", image: "./images/what4.png", content: "Content 4..." },
-  //   { id: 5, name: "Mobile Billboard", image: "./images/what5.png", content: "Content 5..." },
-  //   { id: 6, name: "Wall Painting", image: "./images/what6.png", content: "Content 6..." },
-  //   { id: 7, name: "Dynamic Lighting", image: "./images/what7.png", content: "Content 7..." },
-  // ];
-
-  // const [currentImage, setCurrentImage] = useState(dragItems[0].image);
-  // const [currentContent, setCurrentContent] = useState(dragItems[0].content);
-
-  // // Automatic movement
-  // useEffect(() => {
-  //   if (isPaused || isDragging) return;
-
-  //   const interval = setInterval(() => {
-  //     setLogoPosition((prev) => {
-  //       if (prev >= 92) return 8.5; // Reset to start
-  //       return prev + 14; // Move forward
-  //     });
-  //   }, 1000); // Adjust speed as needed
-
-  //   return () => clearInterval(interval);
-  // }, [isPaused, isDragging]);
-
-  // // Update content and active index based on position
-  // useEffect(() => {
-  //   const index = Math.floor((logoPosition - 8.5) / 14);
-  //   setActiveIndex(index < dragItems.length ? index : 0);
-  //   setCurrentImage(dragItems[index < dragItems.length ? index : 0].image);
-  //   setCurrentContent(dragItems[index < dragItems.length ? index : 0].content);
-  // }, [logoPosition]);
-
-  // // Handle drag start
-  // const handleMouseDown = (e) => {
-  //   setIsDragging(true);
-  //   setIsPaused(true); // Pause auto movement
-  //   setDragStartX(e.clientX);
-  // };
-
-  // // Handle drag movement
-  // const handleMouseMove = (e) => {
-  //   if (!isDragging) return;
-
-  //   const deltaX = e.clientX - dragStartX;
-  //   const deltaPercentage = (deltaX / window.innerWidth) * 100;
-
-  //   setLogoPosition((prev) => {
-  //     const newPos = prev + deltaPercentage;
-  //     // Ensure the position stays within bounds (9% to 92%)
-  //     return Math.max(8.5, Math.min(92, newPos));
-  //   });
-
-  //   setDragStartX(e.clientX); // Update start position
-  // };
-
-  // // Handle drag end
-  // const handleMouseUp = () => {
-  //   setIsDragging(false);
-  //   setIsPaused(false); // Resume auto movement
-  // };
-
-
-  // const [isLoginOpen, setIsLoginOpen] = useState(false); // State to toggle Login 
-  // //Toggle LoginPage
-  // const toggleLoginPage = () => {
-  //   setIsLoginOpen(!isLoginOpen);
-  // };
-  // const closeLoginPage = () => {
-  //   setIsLoginOpen(false);
-  // };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   // WHAT WE DO SECTION
+ // WHAT WE DO SECTION
   const [logoPosition, setLogoPosition] = useState(8.5); // Start at 9%
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false); // State to pause animation
@@ -187,22 +89,11 @@ const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
         if (prev >= 92) return 8.5; // Reset to start
         return prev + 14; // Move forward
       });
-    }, 1000); // Adjust speed as needed
+    }, 2000); // Adjust speed as needed
 
     return () => clearInterval(interval);
   }, [isMobile, isPaused, isDragging, dragItems.length]);
 
-  // Update content and active index based on position
-  // useEffect(() => {
-  //   const index = Math.floor((logoPosition - 8.5) / 14);
-  //   setActiveIndex(index < dragItems.length ? index : 0);
-  //   setCurrentImage(dragItems[index < dragItems.length ? index : 0].image);
-  //   setCurrentContent(dragItems[index < dragItems.length ? index : 0].content);
-  // }, [logoPosition]);
-
-
-
-  
   // Update content based on active index or logo position
   useEffect(() => {
     if (isMobile) {
@@ -339,68 +230,6 @@ const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
           </div>
         </div>
       </div>
-
-
-
-      {/* What we do section  */}
-    
-      {/* <div
-        onMouseMove={handleMouseMove} // Capture mouse move events
-        onMouseUp={handleMouseUp} // End drag on mouse up
-        onMouseLeave={() => setIsDragging(false)} >
-        <div className="what">
-          <h1 className="heading what-head">
-            What <span className="highlight">We</span> do?
-          </h1>
-          <div className="what-main container">
-            <div className="whatWeDo-main container">
-              <div className="what-main-content1">
-                <p className="what-heading">
-                  We Ensure the best <span className="highlight whatWeDo-highlight">Support</span>
-                </p>
-                <p className="what-para">{currentContent}</p>
-              </div>
-              <div className="what-main-content2">
-                <img src={currentImage} className="what-img1" alt="Dynamic Visual" />
-              </div>
-            </div>
-
-            <div className="what-drag container-fluid">
-              {dragItems.map((item, index) => (
-                <div
-                  key={item.id}
-                  className={`drag-content ${index === activeIndex ? "active" : ""}`}
-                >
-                  {item.name}
-                </div>
-              ))}
-            </div>
-            <div className="container whatWeDoDragContainer">
-              <p className="drag-line"></p>
-              <img
-                src="./images/A_logo.png"
-                className="drag-img"
-                alt="Logo"
-                onMouseDown={handleMouseDown} // Start drag on mouse down
-                onMouseUp={handleMouseUp} // End drag on mouse up
-                onMouseEnter={() => setIsPaused(true)} // Pause on hover
-                onMouseLeave={() => setIsPaused(false)} // Resume on hover out
-                style={{
-                  position: "absolute",
-                  left: `calc(${logoPosition}% - 30px)`,
-                
-                  transition: isDragging ? "none" : "all 0.5s ease-in-out",
-                  
-                  cursor: isDragging ? "grabbing" : "grab",
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>  */}
-
-
-
       <div onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={() => setIsDragging(false)}  >

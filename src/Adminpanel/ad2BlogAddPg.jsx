@@ -104,25 +104,24 @@ function AdminBlogAdd() {
         const formData = new FormData();
         const file = event.target.files[0];
         formData.append("file", file);
-
         // if (file) {
         //     // const formData = new FormData();
         //     // formData.append("file", file);
         //     try { 
-                const res = await fetch(`${baseUrl}/BlogAdd/uploadBlog`, {
-                    method: "POST",
-                    body: formData,
-                });
-                const data = await res.json();
-                
-  console.log('Blog Image uploaded:', data.imageUrl);
-                // setImage(`${baseUrl}${data.imageUrl}`);
-                setImage(data.imageUrl);
+        const res = await fetch(`${baseUrl}/BlogAdd/uploadBlog`, {
+            method: "POST",
+            body: formData,
+        });
+        const data = await res.json();
 
-            // } catch (error) {
-            //     console.error("Upload failed:", error);
-            // }
-      //  }
+        console.log('Blog Image uploaded:', data.imageUrl);
+        // setImage(`${baseUrl}${data.imageUrl}`);
+        setImage(data.imageUrl);
+
+        // } catch (error) {
+        //     console.error("Upload failed:", error);
+        // }
+        //  }
     };
     console.log(setImage);
     // This will log the image URL whenever it changes
@@ -131,27 +130,33 @@ function AdminBlogAdd() {
             console.log("Current Blog image URL:", image);
         }
     }, [image]);
-    
+
     // Author image upload section
     const handleAuthorImageUpload = async (event) => {
+        const formData = new FormData();
+
         const file = event.target.files[0];
-        if (file) {
-            const formData = new FormData();
-            formData.append("file", file);
+        formData.append("file", file);
 
+        // if (file) {
+        //     // const formData = new FormData();
+        //     // formData.append("file", file);
+        //     try {
+        const res = await fetch(`${baseUrl}/BlogAdd/uploadBlog`, {
+            method: "POST",
+            body: formData,
+        });
+        const data = await res.json();
+        console.log('Blog Author Image uploaded:', data.imageUrl);
+        // setAuthorImage(`${baseUrl}${data.imageUrl}`); // Use full URL to backend
+        setAuthorImage(data.imageUrl); // Use full URL to backend
 
-            try {
-                const res = await fetch(`${baseUrl}/BlogAdd/uploadBlog`, {
-                    method: "POST",
-                    body: formData,
-                });
-                const data = await res.json();
-                setAuthorImage(`${baseUrl}${data.imageUrl}`); // Use full URL to backend
-                // setAuthorImage(data.imageUrl); // Use full URL to backend
-            } catch (error) {
-                console.error("Upload failed:", error);
-            }
-        }
+        // setAuthorImage(data.imageUrl); // Use full URL to backend
+        // } 
+        // catch (error) {
+        //     console.error("Upload failed:", error);
+        // }
+        //  }
     };
     console.log(setAuthorImage);
     // This will log the image URL whenever it changes

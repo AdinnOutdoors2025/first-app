@@ -7,30 +7,22 @@ import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
 import { MainLayout } from './MainLayout';
 import slugify from 'slugify';
-//BASE URL OF http://localhost:3001 FILE IMPORT 
+//BASE URL OF http://localhost:3001 FILE IMPORT
 import { baseUrl } from '../Adminpanel/BASE_URL';
 
+
 export default function BookASite() {
-  // Navbar js 
+  // Navbar js
   const [isMenuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
-
   //Nav_user toggle section
   const [isOpen, setIsOpen] = useState(false);
-
-  const toggleNavOpen = () => {
-    setIsOpen(!isOpen);
-  };
-
-  // Replace static spots with fetched products
   //FETCHED CONTENT AND DETAILS FROM THE DATABASE
-
   const [spots, setSpots] = useState([]);
   const [mediaTypes, setMediaTypes] = useState([]);
   const [stateDistricts, setStateDistricts] = useState({});
-
   // Fetch data from backend
   useEffect(() => {
     const fetchData = async () => {
@@ -38,11 +30,8 @@ export default function BookASite() {
         // Fetch products
         const productsRes = await fetch(`${baseUrl}/products`);
         const productsData = await productsRes.json();
-
-
-         // Filter out products where visible is false
-      const visibleProducts = productsData.filter(product => product.visible !== false);
-
+        // Filter out products where visible is false
+        const visibleProducts = productsData.filter(product => product.visible !== false);
         // Map only visible  products to spots structure
         const mappedSpots = visibleProducts.map(product => ({
           id: product._id,
@@ -64,37 +53,34 @@ export default function BookASite() {
           imageUrl: product.image,
           district: product.location.district,
           state: product.location.state,
-          similarProduct: product.similarProducts[{}]
+          similarProduct: product.similarProducts[{}],
+          latitude: product.Latitude,
+          longitude: product.Longitude,
+          prodLocationLink: product.LocationLink
         }));
         setSpots(mappedSpots);
         // Fetch media types
         const mediaRes = await fetch(`${baseUrl}/mediatype`);
         const mediaData = await mediaRes.json();
         setMediaTypes(mediaData.map(m => m.type));
-
         // Fetch locations
         const locationsRes = await fetch(`${baseUrl}/category`);
         const locationsData = await locationsRes.json();
-
         // Convert to stateDistricts format
         const stateMap = locationsData.reduce((acc, curr) => {
           acc[curr.state] = curr.districts;
           return acc;
         }, {});
-
         setStateDistricts(stateMap);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
 
-
   // Update outdoor mediums to use fetched media types
   const outdoorMediums = mediaTypes;
-
   //By for the first dropdown
   const [isOpen1, setIsOpen1] = useState(false);
   const [selected1, setSelected1] = useState("By");
@@ -133,11 +119,9 @@ export default function BookASite() {
       stateDistricts[state]?.includes(district)
     );
     setTempDistricts(filteredDistricts);
-
     if (!selectedStates.includes(state)) {
       setSelectedStates((prev) => [...prev, state]);
     }
-
     if (selectedStates.includes(state)) {
       setSelectedStates([]);
       setSelectedDistricts([]);
@@ -150,7 +134,6 @@ export default function BookASite() {
     }
   };
   //Start rating board
-  // Function to render star ratings
   const RatingStars = ({ rating }) => {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 !== 0;
@@ -199,21 +182,18 @@ export default function BookASite() {
     const spotState = spot.state.toLowerCase();
     const spotDistrict = spot.district.toLowerCase();
     const spotCategory = spot.category?.toLowerCase() || "";
-
     const isStateMatch =
       selectedStates.length === 0 ||
       selectedStates.some((state) => spotState.includes(state.toLowerCase()));
-
     const isDistrictMatch =
       selectedDistricts.length === 0 ||
       selectedDistricts.some((district) => spotDistrict.includes(district.toLowerCase()));
-
     const isCategoryMatch =
       selectedOutdoorMedium.length === 0 ||
       selectedOutdoorMedium.some((medium) => spotCategory === medium.toLowerCase());
-
     return isStateMatch && isDistrictMatch && isCategoryMatch;
   });
+
 
   //  Sorting function
   // Ensure sorting happens after filtering
@@ -226,7 +206,7 @@ export default function BookASite() {
   } else if (sortOption === "Popularity: Low to High") {
     filteredSpots.sort((a, b) => a.rating - b.rating);
   }
-  // PAGINATION 
+  // PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
   const spotsPerPage = 9;
   const totalSpots = filteredSpots.length;
@@ -238,7 +218,6 @@ export default function BookASite() {
   const getPaginationGroup = () => {
     let pages = [];
     const maxPagesToShow = 3; // Number of middle pages to show
-
     if (totalPages <= 6) {
       // If few pages, show all
       pages = Array.from({ length: totalPages }, (_, i) => i + 1);
@@ -260,33 +239,17 @@ export default function BookASite() {
     }
     return pages;
   };
-
   // NAVIGATE    //If i click the orders, signup or login then go the login page
-
   const navigate = useNavigate();
-
-
-  const [isLoginOpen, setIsLoginOpen] = useState(false); // State to toggle Login 
-  //Toggle LoginPage
-  const toggleLoginPage = () => {
-    setIsLoginOpen(!isLoginOpen);
-  };
-  const closeLoginPage = () => {
-    setIsLoginOpen(false);
-  };
-
+  const [isLoginOpen, setIsLoginOpen] = useState(false); // State to toggle Login
   const { setSelectedSpot } = useSpot();
-
   const handleBookNow = (spot) => {
     setSelectedSpot(spot); // Store selected spot in context
     // navigate(`/Product/${spot.prodName}`); // Navigate to booking page
     navigate(`/Product/${spot.id}-${slugify(spot.prodName)}`); // Navigate to booking page
-
-    
   };
   //FILTER SMALL SCREENS
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
-
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 768);
@@ -318,7 +281,6 @@ export default function BookASite() {
     setIsFilterOpenMedium(false); // Close dropdown
   };
 
-
   //SORTING FILTER SECTION
   const [tempSorting, setTempSorting] = useState(sortOption);
   const [activeSortTab, setActiveSortTab] = useState("Popularity");
@@ -342,14 +304,12 @@ export default function BookASite() {
     setTempSorting(sortOption); // Revert changes
     setIsFilterSorting(false); // Close dropdown
   };
-
   //LOCATION FILTER SECTION
   const [tempLocation, setTempLocation] = useState(sortOption);
   const [activeLocationTab, setActiveLocationTab] = useState("Tamil Nadu");
   const [isFilterLocation, setIsFilterLocation] = useState(false); // State to toggle MediumFilter
   const [tempStates, setTempStates] = useState(["Tamil Nadu"]);
   const [tempDistricts, setTempDistricts] = useState([]);
-
   //Toggle LoginPage
   const toggleFilterSectionLocation = () => {
     setTempStates(selectedStates.length > 0 ? selectedStates : ["Tamil Nadu"]);
@@ -362,8 +322,6 @@ export default function BookASite() {
   };
   // const [tempOutdoorMedium, setTempOutdoorMedium] = useState([...sortOption);
   const handleLocationFilterDone = () => {
-    // setSortOption([...tempLocation]); // Apply filters
-    // setIsFilterLocation(false); // Close dropdown
     setSelectedStates([...tempStates]);
     setSelectedDistricts([...tempDistricts]);
     setSortOption([...tempLocation]);
@@ -371,20 +329,15 @@ export default function BookASite() {
   };
 
   const handleLocationFilterCancel = () => {
-    // setTempLocation([...sortOption]); // Revert changes
-    // setIsFilterLocation(false); // Close dropdown
     setTempStates([...selectedStates]);
     setTempDistricts([...selectedDistricts]);
     setIsFilterLocation(false);
   };
   return (
-
     <MainLayout>
-
       <div>
         {/* Navbar section  */}
         <MainNavbar />
-
         {/* Side Bar section  */}
         <div className="container side-bar-main">
           <div className="row side-bar-content">
@@ -414,15 +367,8 @@ export default function BookASite() {
                                     className="form-check-input"
                                     id={medium}
                                     value={medium}
-                                    // onChange={handleOutdoorMediumChange}
-                                    // checked={selectedOutdoorMedium.includes(medium)}
                                     onChange={(e) => {
                                       const value = e.target.value;
-                                      // if (tempOutdoorMedium.includes(value)) {
-                                      //   setTempOutdoorMedium(tempOutdoorMedium.filter((m) => m !== value));
-                                      // } else {
-                                      //   setTempOutdoorMedium([...tempOutdoorMedium, value]);
-                                      // }
                                       setTempOutdoorMedium((prev) =>
                                         prev.includes(value) ? prev.filter((m) => m !== value) : [...prev, value]
                                       );
@@ -444,8 +390,6 @@ export default function BookASite() {
                       </div>
                     </div>
                   )}
-
-
                   {/* Sorting Dropdown */}
                   <div className='sorting1 position-relative' onClick={toggleFilterSectionSorting}>
                     <div> <img src='./images/Filter_responsive_img2.svg' className='Filter_responsive_img2'></img>Sort</div>
@@ -464,30 +408,22 @@ export default function BookASite() {
                         <div className='filter-SortingDropdownContentLeft sortSideFilter'>
                           <div
                             className={`${activeSortTab === "Popularity" ? "active" : ""} filterSortingLeftTabs`}
-                            onClick={() => setActiveSortTab("Popularity")}
-                          >
+                            onClick={() => setActiveSortTab("Popularity")}>
                             Popularity
                           </div>
                           <div
                             className={`${activeSortTab === "Price" ? "active" : ""} filterSortingLeftTabs`}
-                            onClick={() => setActiveSortTab("Price")}
-                          >
+                            onClick={() => setActiveSortTab("Price")}>
                             Price
                           </div>
                         </div>
-
                         {/* RIGHT OPTIONS BASED ON SELECTED TAB */}
                         <div className='filter-SortingDropdownContentRight'>
-
-
                           <div className='sortLocationRightHeading'>{activeSortTab}</div>
-
-
                           {(activeSortTab === "Popularity"
                             ? ["Popularity: High to Low", "Popularity: Low to High"]
                             : ["Price: High to Low", "Price: Low to High"]
                           ).map((filter) => (
-
                             <div key={filter} className="filter-Sortoption-section d-flex">
                               <form className='d-flex'>
                                 <input
@@ -505,13 +441,11 @@ export default function BookASite() {
                               </form>
                             </div>
                           ))}
-
                         </div>
                       </div>
                       <div className="filterMediumButtons">
                         <button className='filterCancelButton' onClick={handleSortingFilterCancel}>Cancel</button>
                         <button className='filterDoneButton' onClick={handleSortingFilterDone}>Done</button>
-
                       </div>
                     </div>
                   )}
@@ -519,7 +453,6 @@ export default function BookASite() {
                   <div className='location1' onClick={toggleFilterSectionLocation}>
                     <div> <img src='./images/Filter_responsive_img3.svg' className='Filter_responsive_img3'></img>Location</div>
                   </div>
-
                   {isFilterLocation && (
                     <div className="filter-Locationdropdown">
                       <div className="filter-ResponsiveHeading">
@@ -529,8 +462,6 @@ export default function BookASite() {
                       </div>
                       <div className='filter-LocationDropdownContent'>
                         <div className='filter-LocationDropdownContentLeft'>
-
-
                           {Object.keys(stateDistricts).map((state) => (
                             <div className='stateSideFilter'>
                               <div
@@ -543,7 +474,6 @@ export default function BookASite() {
                           ))}
                         </div>
                         <div className='filter-LocationDropdownContentRight' >
-
                           {tempStates.map((state) => (
                             <div key={state} className="mb-2">
                               <div className='sortLocationRightHeading LocationRightHeading'>{state}</div>
@@ -551,15 +481,13 @@ export default function BookASite() {
                                 <div
                                   key={district}
                                   className={`form-check d-flex ${tempDistricts.includes(district) ? "checked" : ""
-                                    }`}
-                                >
+                                    }`}>
                                   <input
                                     type="checkbox"
                                     className="form-check-input"
                                     id={district}
                                     onChange={() => handleDistrictChange(district)}
-                                    checked={tempDistricts.includes(district)}
-                                  />
+                                    checked={tempDistricts.includes(district)}/>
                                   <label className="form-check-label" htmlFor={district}>
                                     {district}
                                   </label>
@@ -567,17 +495,12 @@ export default function BookASite() {
                               ))}
                             </div>
                           ))}
-
                         </div>
                       </div>
-
-
                       <div className="filterMediumButtons">
                         <button className='filterCancelButton' onClick={handleLocationFilterCancel}>Cancel</button>
                         <button className='filterDoneButton' onClick={handleLocationFilterDone}>Done</button>
-
                       </div>
-
                     </div>
                   )}
                 </div>
@@ -603,11 +526,9 @@ export default function BookASite() {
                             </label>
                           </div>
                         ))}
-
                       </div>
                     </form>
                   </div>
-
                   {/* Sorting Dropdown */}
                   <div className='sorting mb-4'>
                     <h5 className='sidebar-heading'>Sort</h5>
@@ -639,7 +560,6 @@ export default function BookASite() {
                       </ul>
                     </div>
                   </div>
-
                   {/* Location Filters */}
                   <div className='location'>
                     <h5 className='sidebar-heading'>Location</h5>
@@ -659,7 +579,6 @@ export default function BookASite() {
                               <i className="fa-solid fa-circle-xmark" onClick={resetDropdown2} style={{ color: "white" }}></i>
                             )}
                           </div>
-
                           {isOpen2 && (
                             <ul className={`menu ${isOpen2 ? "menu-open" : ""}`}>
                               {Object.keys(stateDistricts).map((state) => (
@@ -674,7 +593,6 @@ export default function BookASite() {
                           )}
                         </div>
                         {/* District selection */}
-
                         {/* SINGLE SELECTION DISTRICTS  */}
                         {selectedStates.map((state) => (
                           <div key={state} className="mb-2">
@@ -697,21 +615,17 @@ export default function BookASite() {
                             ))}
                           </div>
                         ))}
-
                       </div>
                     </form>
                   </div>
                 </>
               )}
 
-
             </div>
 
             {/* Right Content Area */}
             <div className=" col-12 col-md-9 py-3 px-0 side-right-main">
               <div className="row side-right-content">
-                {/* {filteredSpots.length > 0 ? (
-                filteredSpots.map((spot) => ( */}
                 {currentSpots.length > 0 ? (
                   currentSpots.map((spot) => (
                     <div className="col-lg-4 col-md-6 col-sm-12 mb-4 card-board-contents" key={spot.id} >
@@ -739,8 +653,6 @@ export default function BookASite() {
                     <h5 className='NoItems'>No results found</h5>
                   </div>
                 )}
-
-
                 {/* Pagination Component */}
                 {filteredSpots.length > spotsPerPage && (
                   <div className="col-12 text-center">
@@ -772,22 +684,7 @@ export default function BookASite() {
           </div>
         </div>
         <MainFooter />
-
       </div>
     </MainLayout>
-
   )
 };
-
-
-
-
-
-
-
-
-
-
-
-
-

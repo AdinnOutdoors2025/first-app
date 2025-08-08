@@ -2,23 +2,14 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './ad1Manage.css';
 import './ad1File.css';
-// import { CategoryContext } from './ad1';
 import { useSpot } from '../components/B0SpotContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
-//BASE URL OF http://localhost:3001 FILE IMPORT 
-import {baseUrl} from './BASE_URL';
-
-
-
-
-// import Calendar from './adNewCalender';
+import { baseUrl } from './BASE_URL';
 function ClientSection() {
-
     const { state } = useLocation();
     const { id } = useParams();
-
     //Start rating board
     // Function to render star ratings
     const RatingStars = ({ rating }) => {
@@ -37,7 +28,7 @@ function ClientSection() {
             </div>
         );
     };
-    // PRODUCT RATING SECTION 
+    // PRODUCT RATING SECTION
     const RatingStars1 = ({ rating }) => {
         const fullStars = Math.floor(rating);
         const halfStar = rating % 1 !== 0;
@@ -57,7 +48,6 @@ function ClientSection() {
 
                 </div>
             </div>
-
         );
     };
     //HANDLING ERRORS
@@ -74,8 +64,12 @@ function ClientSection() {
         image: false,
         selectedState: false,
         selectedDistrict: false,
-        similarProducts: false
+        similarProducts: false,
+        prodLatitude: false,
+        prodLongitude: false,
+        prodLocationLink: false,
     });
+
 
     const validateForm = () => {
         const newErrors = {
@@ -91,17 +85,18 @@ function ClientSection() {
             image: !image || image === " ",
             selectedState: !selectedState,
             selectedDistrict: !selectedDistrict,
-            // similarProducts: selectedSimilarProducts.length < 4
-            similarProducts: false
+            similarProducts: false,
+            prodLatitude: !prodLatitude,
+            prodLongitude: !prodLongitude,
+            prodLocationLink: !prodLocationLink,
         };
         setErrors(newErrors);
         return !Object.values(newErrors).some(error => error);
     };
 
-    
-    // SIMILAR PRODUCTS 
-
+    // SIMILAR PRODUCTS
     const [products, setProducts] = useState([]);
+    //Fetch/get  products from data
     useEffect(() => {
         fetch(`${baseUrl}/products`)
             .then((response) => response.json())
@@ -117,43 +112,35 @@ function ClientSection() {
     const normalizeSimilarProducts = (products) =>
         products.map(p => ({
             ...p,
-            prodCode: p.ProdCode, // for UI consistency
+            prodCode: p.ProdCode,
             name: p.Prodname
         }));
 
-
     const [similarProdId, setSimilarProdId] = useState('#1');
     const [selectedSimilarProducts, setSelectedSimilarProducts] = useState([]); // Store selected products
-
     const normalizeCode = (code) => (code || '').replace(/^#/, '').trim().toLowerCase();
     const handleSelectProduct = () => {
         const enteredId = similarProdId.trim();
         if (!enteredId) return;
-
         // Find matches using fuzzy search
         const matches = products.filter(product => {
             const matchCode = normalizeCode(product.prodCode) === normalizeCode(enteredId);
             const matchName = product.name.toLowerCase().includes(enteredId.toLowerCase());
             return matchCode || matchName;
         });
-
         if (matches.length === 0) {
             toast.error("No matching products found");
             return;
         }
-
         if (matches.length > 1) {
             toast.info("Multiple matches found - please select from suggestions");
             return;
         }
-
         const productToAdd = matches[0];
-
         if (selectedSimilarProducts.some(p => normalizeCode(p.prodCode) === normalizeCode(productToAdd.prodCode))) {
             toast.warning("Product already added");
             return;
         }
-
         setSelectedSimilarProducts(prev => [...prev, productToAdd]);
         setSimilarProdId('');
         setSearchSuggestions([]);
@@ -161,17 +148,16 @@ function ClientSection() {
 
     const handleRemoveProduct = (prodCode) => {
         if (!window.confirm("Are you sure you want to delete this product?")) return;
-
         // Normalize code for comparison
         const normalize = code => code.replace(/^#/, '').trim().toLowerCase();
         const targetCode = normalize(prodCode);
-
         setSelectedSimilarProducts(prev =>
             prev.filter(product =>
                 normalize(product.prodCode) !== targetCode
             )
         );
     };
+
 
     const [productName, setProductName] = useState("CMBT Bus stand Towards Anna nagar");
     const [productAmount, setProductAmount] = useState("10500");
@@ -183,12 +169,33 @@ function ClientSection() {
     const [productMountingCost, setProductMountingCost] = useState("2000");
     const [productFixedAmount, setProductFixedAmount] = useState('999');
     const [productFixedAmountOffer, setProductFixedAmountOffer] = useState('5');
-
     // Optional: Add typeahead search
     const [searchSuggestions, setSearchSuggestions] = useState([]);
-    // const [similarProdId, setSimilarProdId] = useState('#1');
-    // Rating section 
+    // Rating section
     const [prodRating, setProdRating] = useState(4.5);
+    // LATITUDE AND LOGITUDE
+    const [prodLatitude, setProdLatitude] = useState('13.0702112');
+    const [prodLongitude, setProdLongitude] = useState('80.204642');
+    const [prodLocationLink, setProdLocationLink] = useState('');
+    const generateGoogleMapsLink = () => {
+        // Convert decimal degrees to degrees, minutes, seconds format
+        const latDegrees = Math.floor(Math.abs(prodLatitude));
+        const latMinutes = Math.floor((Math.abs(prodLatitude) - latDegrees) * 60);
+        const latSeconds = ((Math.abs(prodLatitude) - latDegrees - latMinutes / 60) * 3600).toFixed(1);
+        const latDirection = prodLatitude >= 0 ? 'N' : 'S';
+
+        const lonDegrees = Math.floor(Math.abs(prodLongitude));
+        const lonMinutes = Math.floor((Math.abs(prodLongitude) - lonDegrees) * 60);
+        const lonSeconds = ((Math.abs(prodLongitude) - lonDegrees - lonMinutes / 60) * 3600).toFixed(1);
+        const lonDirection = prodLongitude >= 0 ? 'E' : 'W';
+
+        // Construct the DMS (Degrees, Minutes, Seconds) string
+        const dmsString = `${latDegrees}°${latMinutes.toString().padStart(2, '0')}'${latSeconds}"${latDirection}+${lonDegrees}°${lonMinutes.toString().padStart(2, '0')}'${lonSeconds}"${lonDirection}`;
+
+        // Create the Google Maps link
+        const link = `https://www.google.com/maps/place/${dmsString}/@${prodLatitude},${prodLongitude},17z/data=!3m1!4b1!4m4!3m3!8m2!3d${prodLatitude}!4d${prodLongitude}?entry=ttu&g_ep=EgoyMDI1MDgwNC4wIKXMDSoASAFQAw%3D%3D`;
+        setProdLocationLink(link);
+    };
     const handleRatingChange = (value) => {
         // Convert the value to a valid number, ensuring it remains within 0-5 range
         let newRating = parseFloat(value);
@@ -196,7 +203,7 @@ function ClientSection() {
             setProdRating(newRating);
         }
     };
-    // Product Size calculation 
+    // Product Size calculation
     const [prodwidth, setProdWidth] = useState('30');
     const [prodheight, setProdHeight] = useState('40');
     const ProdSquareFeet = () => {
@@ -204,40 +211,54 @@ function ClientSection() {
         return squareFeet;
     };
     const [prodType, setProdType] = useState("Gantry");
-    // // State District selection 
+    // // State District selection
     const { initialStateDistricts, initialMediaTypes, toggleStateDropdown, handleStateClick, handleDistrictClick, mediaTypes, setMediaTypes, selectedState, setSelectedState, selectedDistrict, setSelectedDistrict, showDistricts, setShowDistricts, showStates, setShowStates } = useSpot();
 
-
     const [image, setImage] = useState(" "); // Store uploaded image
+    // const handleImageUpload = async (event) => {
+    //     const file = event.target.files[0];
+    //     if (file) {
+    //         const formData = new FormData();
+    //         formData.append("image", file);
+    //         try {
+    //             const res = await fetch(`${baseUrl}/upload`, {
+    //                 method: "POST",
+    //                 body: formData,
+    //             });
+    //             const data = await res.json();
+    //             setImage(`${baseUrl}${data.imageUrl}`); // Use full URL to backend
+    //         } catch (error) {
+    //             console.error("Upload failed:", error);
+    //         }
+    //     }
+    // };
 
-const handleImageUpload = async (event) => {
-  const formData = new FormData();
-  const file = event.target.files[0];
-  formData.append('file', file);
-
-  const res = await fetch(`${baseUrl}/upload`, {
-    method: 'POST',
-    body: formData,
-  });
-
-  const data = await res.json();
-  console.log('Image uploaded:', data.imageUrl);
-  setImage(data.imageUrl);
-};
+    const handleImageUpload = async (event) => {
+        const formData = new FormData();
+        const file = event.target.files[0];
+        formData.append("file", file);
+        const res = await fetch(`${baseUrl}/upload`, {
+            method: "POST",
+            body: formData
+        });
+        const data = await res.json();
+        console.log("Image Uploaded:", data.imageUrl);
+        setImage(data.imageUrl);
 
 
-
-console.log(setImage);
-    // This will log the image URL whenever it changes
-useEffect(() => {
-    if (image) {
-        console.log("Current image URL:", image);
     }
-}, [image]);
+
+
+    console.log(setImage);
+    // This will log the image URL whenever it changes
+    useEffect(() => {
+        if (image) {
+            console.log("Current image URL:", image);
+        }
+    }, [image]);
 
     const [productsData, setProductsData] = useState([]);
     const [editProduct, setEditProduct] = useState(null);
-
     // 👇 Prefill form if state has editProduct
     useEffect(() => {
         if (state?.editProduct) {
@@ -262,18 +283,19 @@ useEffect(() => {
             setSelectedState(prod.location?.state || '');
             setSelectedDistrict(prod.location?.district || '');
             setImage(prod.image || '');
-            // setSelectedSimilarProducts(prod.similarProducts || []);
             setSelectedSimilarProducts(normalizeSimilarProducts(prod.similarProducts || []));
-
+            setProdLatitude(prod.prodLatitude || '');
+            setProdLongitude(prod.prodLatitude || '');
+            setProdLocationLink(prod.prodLocationLink || '');
         }
     }, [state]);
+
 
     const fetchProduct = async () => {
         const response = await fetch(`${baseUrl}/products`);
         const data = await response.json();
         setProductsData(data);
         console.log(data);
-        // setEditProduct(data[0]);   
     }
     useEffect(
         () => {
@@ -282,6 +304,7 @@ useEffect(() => {
         []
     );
 
+
     const handleSaveProduct = async (e) => {
         e.preventDefault();
         // Validate form first
@@ -289,7 +312,6 @@ useEffect(() => {
             toast.error("Please fill all required fields correctly");
             return;
         }
-    
         console.log("Save product");
         // Optional warning (but still allows submission)
         if (selectedSimilarProducts.length === 0) {
@@ -297,6 +319,7 @@ useEffect(() => {
                 return;
             }
         }
+        // Save product to database
         const method = editProduct ? 'PUT' : 'POST';
         const url = editProduct ? `${baseUrl}/products/${editProduct._id}` :
             `${baseUrl}/products`;
@@ -329,43 +352,36 @@ useEffect(() => {
                         state: selectedState,
                         district: selectedDistrict
                     },
-                    // similarProducts: selectedSimilarProducts.map(prod => prod._id)  // Use actual IDs  
                     similarProducts: selectedSimilarProducts.map(prod => ({
                         Prodname: prod.name,
                         ProdCode: prod.prodCode,
                         image: prod.image,
-                        ProdPrice:prod.price,
-                        ProdPrintingCost:prod.printingCost,
-                        ProdMountingCost:prod.mountingCost
-
-                    }))
+                        ProdPrice: prod.price,
+                        ProdPrintingCost: prod.printingCost,
+                        ProdMountingCost: prod.mountingCost
+                    })),
+                    Latitude: prodLatitude,
+                    Longitude: prodLongitude,
+                    LocationLink: prodLocationLink,
                 }),
             });
             const result = await response.json();
             console.log(result);
             if (!editProduct) {
-                // setProductsData([...productsData, result]);
                 setProductsData(prev => [...prev, result]);
                 alert("Product added successfully!");
-
-
             }
             else {
-
-                // setProductsData(productsData.map((product) => (product._id === result._id ? result : product)));  // Update task
                 setProductsData(prev =>
                     prev.map((product) =>
                         product._id === result._id ? result : product
                     )
                 );
                 alert("Product updated successfully!");
-                   // Force reload or update parent state if needed
-            window.location.reload();
+                // Force reload or update parent state if needed
+                window.location.reload();
             }
-            // setProductsData('')
-
             setProductName('');
-            //image
             setImage('');
             setProductAmount('');
             setProductFixedAmount('');
@@ -381,6 +397,9 @@ useEffect(() => {
             setProdHeight('');
             setProdType('');
             setSelectedSimilarProducts([]);
+            setProdLatitude('');
+            setProdLongitude('');
+            setProdLocationLink('');
             setEditProduct(null);
         }
         catch (error) {
@@ -389,30 +408,26 @@ useEffect(() => {
         }
     };
 
+
     //FETCH STATE AND DISTRICTS IN CATEGORY SECTION
     const [stateDistricts, setStateDistricts] = useState({});
-
     useEffect(() => {
         const fetchCategoryData = async () => {
             try {
                 const res = await fetch(`${baseUrl}/category`);
                 const data = await res.json();
-
                 // Convert to { "Tamil Nadu": ["Chennai", "Coimbatore"], ... }
                 const mappedData = {};
                 data.forEach(({ state, districts }) => {
                     mappedData[state] = districts;
                 });
-
                 setStateDistricts(mappedData);
             } catch (err) {
                 console.error("Failed to fetch category data:", err);
             }
         };
-
         fetchCategoryData();
     }, []);
-
 
     //FETCH MEDIA TYPES FROM THE DATABASE
     const [mediaTypesData, setMediaTypesData] = useState([]);
@@ -429,6 +444,7 @@ useEffect(() => {
     useEffect(() => {
         fetchMediaTypes();
     }, []);
+
 
     return (
         <div>
@@ -488,6 +504,18 @@ useEffect(() => {
                                     </span>
                                 </div>
                             </div>
+                            {/* PRODUCT LOCATION LINK  */}
+                            <div className='manageprodSideHeading'>Product Location Link</div>
+                            <div className='ManageProductLocationLink'>
+                                {prodLocationLink && (
+                                    <div style={{ marginTop: '20px' }}>
+                                        <a href={prodLocationLink}
+                                            target="_blank" rel="noopener noreferrer" style={{ wordBreak: 'break-all' }} >
+                                            {prodLocationLink}
+                                        </a>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                         {/* Select Category  section  */}
                         <div className='manageprodMain manageProdSideContents'>
@@ -503,6 +531,7 @@ useEffect(() => {
                                 <div className='ManageProdRightContent'>{prodType}</div>
                             </div>
                         </div>
+
 
                         {/* Similar Product Section  */}
                         <div className='manageprodMain'>
@@ -527,10 +556,7 @@ useEffect(() => {
                             )
                             }
                         </div>
-
-
                     </div>
-
                     {/* Right section  */}
                     <div>
                         {/* Client Section  */}
@@ -550,11 +576,11 @@ useEffect(() => {
                             </div>
                         </div>
 
+
                         {/* Product Section  */}
                         <div className='manageClientSection'>
                             <div className='manageRightSideHeading'>Product Management</div>
                             <div className='d-flex manageClientInformation'>
-
                                 <div className='manageClientInfoLeft'>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Product Name</div>
@@ -562,9 +588,8 @@ useEffect(() => {
                                             onChange={(e) => {
                                                 setProductName(e.target.value);
                                                 setErrors(prev => ({ ...prev, productName: false }));
-
-                                            }} className={`clientDetailsInput ${errors.productName ? 'AdminProdinput-error' : ''}`}>
-
+                                            }}
+                                            className={`clientDetailsInput ${errors.productName ? 'AdminProdinput-error' : ''}`}>
                                         </input>
                                         {errors.productName && <div className="AdminProderror-message ">Product name is required</div>}
                                     </div>
@@ -577,8 +602,6 @@ useEffect(() => {
                                             }}
                                             className={`clientDetailsInput ${errors.productAmount ? 'AdminProdinput-error' : ''}`}></input>
                                         {errors.productAmount && <div className="AdminProderror-message ">Product Amount is required</div>}
-
-
                                     </div>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Lighting Type</div>
@@ -589,9 +612,10 @@ useEffect(() => {
                                             }}>
                                             <option value="Not-Lit">Not-Lit</option>
                                             <option value="Front-Lit">Front-Lit</option>
-                                            {/* <option value="Back-Lit">Back-Lit</option> */}
+                                            <option value="Back-Lit">Back-Lit</option>
                                         </select>
                                         {errors.prodLighting && <div className="AdminProderror-message ">Product Lighting is required</div>}
+
 
                                     </div>
                                     <div className='clientDetailSection'>
@@ -604,10 +628,7 @@ useEffect(() => {
                                             className={`clientDetailsInput ${errors.productPrintingCost ? 'AdminProdinput-error' : ''}`}></input>
                                         {errors.productPrintingCost && <div className="AdminProderror-message ">Printing Cost is required</div>}
                                     </div>
-
-
                                 </div>
-
                                 <div className='manageClientInfoRight'>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Product ID</div>
@@ -617,6 +638,7 @@ useEffect(() => {
                                                 setErrors(prev => ({ ...prev, productID: false }));
                                             }} className={`clientDetailsInput ${errors.productID ? 'AdminProdinput-error' : ''}`}></input>
                                         {errors.productID && <div className="AdminProderror-message ">Product ID is required</div>}
+
 
                                     </div>
                                     <div className='clientDetailSection'>
@@ -644,6 +666,7 @@ useEffect(() => {
                                             }} className={`clientDetailsInput locationInput ${errors.productFrom ? 'AdminProdinput-error' : ''}`}></input>
                                         {errors.productFrom && <div className="AdminProderror-message ">Product From is required</div>}
 
+
                                         <br></br>
                                         <label className='locationFromLabel'>To<label style={{ float: 'right' }}>-</label></label>
                                         <input type='text' placeholder='Enter To' value={productTo}
@@ -663,10 +686,13 @@ useEffect(() => {
                                             className={`clientDetailsInput ${errors.productMountingCost ? 'AdminProdinput-error' : ''}`}></input>
                                         {errors.productMountingCost && <div className="AdminProderror-message ">Mouting Cost is required</div>}
 
+
                                     </div>
                                 </div>
 
+
                             </div>
+
 
                         </div>
 
@@ -677,7 +703,6 @@ useEffect(() => {
                                 <div className='ProductRatingMain'>
                                     <div >
                                         <div>
-                                            {/* <span><img src='./images/rating_board.png' className='Product-rate-board1'></img></span> */}
                                             <span className='Product-star-main' >
                                                 <RatingStars1 rating={parseFloat(prodRating) || 0} />
                                             </span>
@@ -705,11 +730,10 @@ useEffect(() => {
                                     <div className='AdminOfferDetails' >Pay ₹<input type='number' value={productFixedAmount} onChange={(e) => setProductFixedAmount(e.target.value)} className='sizeWidthInput adminOfferAmountInput' readOnly></input> and Get <input type='number' value={productFixedAmountOffer} onChange={(e) => setProductFixedAmountOffer(e.target.value)} className='sizeWidthInput adminOfferAmountPercentage' readOnly></input>% Off <span className='adminOfferRefundDetails'> 100% Refundable </span>
                                     </div>
 
+
                                 </div>
                             </div>
                         </div>
-
-
                         {/* Select Category section   */}
                         <div className='manageClientSection'>
                             <div className='clientDetailHeading'>Select Category</div>
@@ -718,7 +742,6 @@ useEffect(() => {
                                     <div className='clientDetailHeading'>Location</div>
                                     <div className="location-container11">
                                         {/* Input field to display selected state & district */}
-
                                         <div className="input-wrapper" onClick={toggleStateDropdown}>
                                             <input
                                                 type="text"
@@ -738,15 +761,13 @@ useEffect(() => {
                                                             <li
                                                                 key={state}
                                                                 onClick={() => handleStateClick(state)}
-                                                                className={selectedState === state ? "selected" : ""}
-                                                            >
+                                                                className={selectedState === state ? "selected" : ""}>
                                                                 {state}
                                                             </li>
                                                         ))}
                                                     </ul>
                                                 </div>
                                             )}
-
                                             {/* District Dropdown (Only visible if a state is selected) */}
                                             {showDistricts && selectedState && (
                                                 <div className="dropdown11">
@@ -775,11 +796,41 @@ useEffect(() => {
                                         ))}
                                     </select>
 
+
                                 </div>
                             </div>
 
-                        </div>
 
+                        </div>
+                        {/* SELECT LOGITUDE AND LATITUDE FROM MAP */}
+                        <div className='manageClientSection'>
+                            <div className='clientDetailHeading'>Generate Location</div>
+                            <div className='ProdLocationLinkMain'>
+                                <div className='clientDetailSection'>
+                                    <div className='clientDetailHeading'>Product Latitude</div>
+                                    <input type='text' placeholder='Enter Product Name' value={prodLatitude}
+                                        onChange={(e) => {
+                                            setProdLatitude(e.target.value);
+                                            setErrors(prev => ({ ...prev, prodLatitude: false }));
+                                        }}
+                                        className={`clientDetailsInput ${errors.prodLatitude ? 'AdminProdinput-error' : ''}`}>
+                                    </input>
+                                    {errors.prodLatitude && <div className="AdminProderror-message ">Product Latitude is required</div>}
+                                </div>
+                                <div className='clientDetailSection'>
+                                    <div className='clientDetailHeading'>Product Longitude</div>
+                                    <input type='text' placeholder='Enter Product Name' value={prodLongitude}
+                                        onChange={(e) => {
+                                            setProdLongitude(e.target.value);
+                                            setErrors(prev => ({ ...prev, prodLongitude: false }));
+                                        }}
+                                        className={`clientDetailsInput ${errors.prodLongitude ? 'AdminProdinput-error' : ''}`}>
+                                    </input>
+                                    {errors.prodLongitude && <div className="AdminProderror-message ">Product Longitude is required</div>}
+                                </div>
+                            </div>
+                            <div onClick={generateGoogleMapsLink} style={{ padding: '10px 15px', backgroundColor: '#4285F4', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }} > Generate Link </div>
+                        </div>
                         {/* Similar Products section  */}
                         <div className='manageClientSection'>
                             <div className='clientDetailHeading'>Similar Products</div>
@@ -788,11 +839,9 @@ useEffect(() => {
                                     <input type='text' placeholder='Product Code' value={similarProdId}
                                         onChange={(e) => {
                                             setSimilarProdId(e.target.value);
-                                            // Show suggestions only when there's input
                                             if (e.target.value.trim()) {
                                                 const normalizedInput = normalizeCode(e.target.value);
                                                 const selectedCodes = selectedSimilarProducts.map(p => normalizeCode(p.prodCode));
-
                                                 const matches = products.filter(product => {
                                                     const isMatch =
                                                         (normalizeCode(product.prodCode).includes(normalizedInput) ||
@@ -805,13 +854,7 @@ useEffect(() => {
                                             } else {
                                                 setSearchSuggestions([]);
                                             }
-
-                                        }}
-
-
-
-                                        className='clientDetailsInput'></input>
-
+                                        }} className='clientDetailsInput'></input>
 
                                     {/* Typeahead Suggestions */}
                                     {searchSuggestions.length > 0 && (
@@ -824,8 +867,7 @@ useEffect(() => {
                                                         setSelectedSimilarProducts(prev => [...prev, product]);
                                                         setSimilarProdId('');
                                                         setSearchSuggestions([]);
-                                                    }}
-                                                >
+                                                    }} >
                                                     <div className="suggestion-code">{product.prodCode}</div>
                                                     <div className="suggestion-name">{product.name}</div>
                                                     <div className="suggestion-image">
@@ -847,8 +889,6 @@ useEffect(() => {
                 <button className="calendarSaveBtn" type='submit'>  {editProduct ? 'Update' : 'Save'}</button>
             </form>
         </div>
-
     )
 }
-
 export default ClientSection;

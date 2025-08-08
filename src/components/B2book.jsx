@@ -18,11 +18,6 @@ import { useParams, useLocation } from "react-router-dom";
 import { baseUrl } from '../Adminpanel/BASE_URL';
 import slugify from 'slugify';
 
-
-
-
-
-
 function BookASite1() {
     const { productId } = useParams(); // Get productId from URL
     const location = useLocation();
@@ -36,7 +31,6 @@ function BookASite1() {
     const [currentProduct, setCurrentProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
-
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -47,8 +41,6 @@ function BookASite1() {
                     setIsLoading(false);
                     return;
                 }
-
-
                 // If accessed via direct URL, fetch the product
                 if (productId) {
 
@@ -79,14 +71,13 @@ function BookASite1() {
                             rating: data.rating,
                             imageUrl: data.image,
                             district: data.location.district,
-                            state: data.location.state
+                            state: data.location.state,
+                            latitude: data.Latitude,
+                            longitude: data.Longitude,
+                            LocationLink: data.LocationLink,
                         };
-
-
                         setCurrentProduct(mappedSpot);
                         setSelectedSpot(mappedSpot); // Update context as well
-
-
                         fetchSimilarProducts(data.prodCode);
                     }
                     else {
@@ -99,20 +90,9 @@ function BookASite1() {
                 setIsLoading(false);
             }
         };
-
-
         fetchProduct();
     }, [productId, selectedSpot, location.state]);
 
-
-
-
-    // useEffect(() => {
-    //     if (selectedSpot) {
-    //         setCurrentProduct(selectedSpot);
-    //         fetchSimilarProducts(selectedSpot.prodCode);
-    //     }
-    // }, [selectedSpot]);
     // Navbar js
     const fetchSimilarProducts = async (prodCode) => {
         try {
@@ -135,7 +115,6 @@ function BookASite1() {
         }
     };
 
-
     const handleSimilarProductClick = (spot) => {
         const mappedSpot = {
             id: spot._id,
@@ -156,48 +135,31 @@ function BookASite1() {
             rating: spot.rating,
             imageUrl: spot.image,
             district: spot.location.district,
-            state: spot.location.state
+            state: spot.location.state,
+            latitude: spot.latitude,
+            longitude: spot.longitude,
+            LocationLink: spot.LocationLink,
         };
-
-
-
-
-
-
         // Generate URL-friendly slug
         const productSlug = `${spot._id}-${slugify(spot.name, { lower: true, strict: true })}`;
-
-
         // Update URL without page reload
         navigate(`/Product/${productSlug}`, { replace: true });
-
-
         setCurrentProduct(mappedSpot);
         setSelectedSpot(mappedSpot);
-
-
         // Don't fetch similar products again here - keep the original list
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
-
-
     const [isMenuOpen, setMenuOpen] = useState(false);
     const toggleMenu = () => {
         setMenuOpen(!isMenuOpen);
     };
-
-
     //Nav_user toggle section
     const [isOpen, setIsOpen] = useState(false);
-
-
     const toggleNavOpen = () => {
         setIsOpen(!isOpen);
     };
     //If i click the orders, signup or login then go the login page
     const navigate = useNavigate();
-
-
     //Image change
     const imgRef = useRef(null); // Reference to the image element
     const handleImageChange = (image) => {
@@ -217,9 +179,6 @@ function BookASite1() {
         }
     };
     //Start rating board
-    // Function to render star ratings
-
-
     const RatingStars = ({ rating }) => {
         const fullStars = Math.floor(rating);
         const halfStar = rating % 1 !== 0;
@@ -237,10 +196,7 @@ function BookASite1() {
         );
     };
 
-
     //CALENDER SECTION  
-
-
     // Replace hardcoded bookedDates with fetched data
     const [bookedDates, setBookedDates] = useState([]);
     const [isCalendarOpen, setIsCalendarOpen] = useState(false); // State to toggle calendar
@@ -261,8 +217,6 @@ function BookASite1() {
         const normalizedDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         return normalizedDate < today;
     };
-
-
     // Campaign Date Selection
     const [selectedDates, setSelectedDates] = useState({ start: null, end: null });
     const [confirmedDates, setConfirmedDates] = useState({}); // To store confirmed dates
@@ -298,9 +252,7 @@ function BookASite1() {
     };
     const handleDateClick = (date) => {
         if (!date || isNaN(date.getTime())) return;
-
-
-        // Create date without time component
+        //Create date without time component
         const normalizedDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         // Check if date is booked or in the past
         const isBooked = bookedDates.some(d =>
@@ -308,11 +260,7 @@ function BookASite1() {
             d.getUTCMonth() === normalizedDate.getUTCMonth() &&
             d.getUTCDate() === normalizedDate.getUTCDate()
         );
-
-
         const isPast = isPastDate(normalizedDate);
-
-
         if (isBooked || isPast) return;
         if (bookedDates.some(d =>
             d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
@@ -335,24 +283,14 @@ function BookASite1() {
         setSelectedDates({ start: null, end: null });
         setConfirmedDates({ start: null, end: null }); // Reset confirmed dates
     };
-
-
-
-
     // UPDATED DATE CLASS CALCULATION
     const getDateSelectionClass = (date) => {
         if (!date || isNaN(date.getTime())) return "disabled";
-
-
-
-
         const normalizedDate = new Date(Date.UTC(
             date.getFullYear(),
             date.getMonth(),
             date.getDate()
         ));
-
-
         // Check if date is booked
         const isBooked = bookedDates.some(d =>
             d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
@@ -360,11 +298,8 @@ function BookASite1() {
             d.getUTCDate() === normalizedDate.getUTCDate()
         );
 
-
         if (isBooked) return "booked";
         if (isPastDate(normalizedDate)) return "past";
-
-
         const dateString = date.toISOString().split('T')[0];
         const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         const startUTC = selectedDates.start ? new Date(Date.UTC(
@@ -372,32 +307,24 @@ function BookASite1() {
             selectedDates.start.getMonth(),
             selectedDates.start.getDate()
         )) : null;
-
-
         const endUTC = selectedDates.end ? new Date(Date.UTC(
             selectedDates.end.getFullYear(),
             selectedDates.end.getMonth(),
             selectedDates.end.getDate()
         )) : null;
 
-
         if (bookedDates.some(d =>
             d.getUTCFullYear() === utcDate.getUTCFullYear() &&
             d.getUTCMonth() === utcDate.getUTCMonth() &&
             d.getUTCDate() === utcDate.getUTCDate()
         )) return "booked";
-
-
         if (startUTC && utcDate.getTime() === startUTC.getTime()) return "selected-start";
         if (endUTC && utcDate.getTime() === endUTC.getTime()) return "selected-end";
         if (startUTC && endUTC && utcDate > startUTC && utcDate < endUTC) {
             return "selected-range";
         }
-
-
         return "";
     };
-
 
     const goToNextMonth = () => {
         setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
@@ -406,30 +333,21 @@ function BookASite1() {
         setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
     };
     const [productsOrderData, setProductsOrderData] = useState([]);
-
-
     useEffect(() => {
         const fetchBookedDates = async () => {
             const res = await fetch(`${baseUrl}/booked-dates`);
             const dates = await res.json();
             setBookedDates(dates.map(d => new Date(d)));
         };
-
-
         fetchBookedDates();
     }, [productsOrderData]); // Refresh when orders change
-
 
     const toggleCalendar = () => {
         setIsCalendarOpen(!isCalendarOpen);
     };
-
-
     const closeCalendar = () => {
         setIsCalendarOpen(false);
     };
-
-
     //Toggle LoginPage
     const toggleLoginPage = () => {
         setIsLoginOpen(!isLoginOpen);
@@ -437,12 +355,6 @@ function BookASite1() {
     const closeLoginPage = () => {
         setIsLoginOpen(false);
     };
-
-
-
-
-
-
     //Toggle OtpMainPage
     const toggleOtpMainPage = () => {
         setIsOtpMainOpen(!isOtpMainOpen);
@@ -452,8 +364,6 @@ function BookASite1() {
     };
     // //USE CONTEXT SECTION
     // const { selectedSpot } = useSpot();
-
-
     if (isLoading) {
         return (
             <MainLayout>
@@ -465,18 +375,6 @@ function BookASite1() {
             </MainLayout>
         );
     }
-
-
-    // if (!currentProduct) {
-    //     return (
-    //         <div className="container noSelected">
-    //             <h5 className='noSelectedSpot'>No spot selected. Please go back and select a spot.</h5>
-    //             <button className='noSelectedGoBackBtn' onClick={() => navigate("/book")}>⬅ Go Back</button>
-    //         </div>
-    //     );
-    // }
-
-
     // ADD TO CART BUTTON
     const handleAddToCart = async () => {
         if (!user) {
@@ -522,17 +420,13 @@ function BookASite1() {
             ToSpot: currentProduct.productTo,
             SpotPay: currentProduct.productFixedAmount,
             Offer: currentProduct.productFixedOffer,
-            // ... existing reserveItem properties
-            // userId: user._id, // Add user ID to the reservation
+            latitude: currentProduct.latitude,
+            longitude: currentProduct.longitude,
+            LocationLink: currentProduct.LocationLink,
             userEmail: user.email,
             userPhone: user.phone,
             userName: user.userName,
-            //      totalDays,
-            // totalAmount: totalPrice.toLocaleString()
         };
-
-
-
 
         try {
             const response = await fetch(`${baseUrl}/cart`, {
@@ -542,23 +436,15 @@ function BookASite1() {
                 },
                 body: JSON.stringify(cartItem)
             });
-
-
             if (!response.ok) {
                 throw new Error('Failed to add to cart');
             }
-
-
             alert("Item added to cart successfully!");
             navigate("/cart");
         } catch (error) {
             console.error('Error adding to cart:', error);
             alert("Failed to add item to cart. Please try again.");
         }
-
-
-
-
     };
 
 
@@ -575,16 +461,12 @@ function BookASite1() {
         }
         // Proceed with adding to cart
         console.log("Dates confirmed! Adding to Reserve...");
-
-
         // Create dates in UTC to avoid timezone issues
         const startDate = new Date(Date.UTC(
             confirmedDates.start.getFullYear(),
             confirmedDates.start.getMonth(),
             confirmedDates.start.getDate()
         ));
-
-
         const endDate = new Date(Date.UTC(
             confirmedDates.end.getFullYear(),
             confirmedDates.end.getMonth(),
@@ -599,7 +481,6 @@ function BookASite1() {
             prodCode: currentProduct.prodCode,
             image: currentProduct.imageUrl,
             prodName: currentProduct.prodName,
-            // image: currentProduct.imageUrl,
             title: currentProduct.location,
             price: currentProduct.price,
             rating: currentProduct.rating,
@@ -619,8 +500,6 @@ function BookASite1() {
             adType: currentProduct.category,
             totalAmount: totalPrice.toLocaleString(),
             totalDays: totalDays,
-
-
             SpotOutdoorType: currentProduct.prodLighting,
             PrintingCost: currentProduct.printingCost,
             MountingCost: currentProduct.mountingCost,
@@ -628,6 +507,9 @@ function BookASite1() {
             ToSpot: currentProduct.productTo,
             SpotPay: currentProduct.productFixedAmount,
             Offer: currentProduct.productFixedOffer,
+            latitude: currentProduct.latitude,
+            longitude: currentProduct.longitude,
+            LocationLink: currentProduct.LocationLink,
 
 
             // ... existing reserveItem properties
@@ -637,13 +519,9 @@ function BookASite1() {
             userName: user.userName
         };
         console.log("START DATE", reserveItem.startDate);
-
-
         // Redirect to Cart Page
         navigate("/billing", { state: { reserveItem } });
     };
-
-
     // Calculate total price dynamically when start and end dates are selected
     const pricePerDay = currentProduct?.price || 0; // Ensure pricePerDay is defined
     const getAvailableDaysInRange = (start, end) => {
@@ -740,8 +618,6 @@ function BookASite1() {
                                     </div>
                                 </div>
                             </div>
-
-
                             {currentProduct ? (
                                 <div className="col-md-6 col-lg-6 Book-content2"  >
                                     <p className='book-sideHeading'>{currentProduct.prodName}</p>
@@ -752,10 +628,11 @@ function BookASite1() {
                                         <span><img src='/images/rating_board.png' className='rate-board1'></img></span>
                                         <span><RatingStars rating={currentProduct.rating} /> </span>
                                     </span>
-
-
-                                    <p className="book-price mt-3">Printing Cost<span className='cost-gap'>: ₹ {currentProduct.printingCost.toLocaleString()}</span> <span className='slash-bar1'>|</span> Mounting Cost<span className='cost-gap'>: ₹ {currentProduct.mountingCost.toLocaleString()}</span></p>
-                                    <span className='book-spot'>{currentProduct.productFrom} <span><img src='/images/Location_arrow.png' className='location-arrow'></img>  </span> {currentProduct.productTo}</span>
+                                    <span className='productLocationImg'>
+                                        <a href={currentProduct.LocationLink} target='_blank'> <i class="fa-solid fa-location-dot" /></a>
+                                    </span>
+                                    <div className="book-price my-3">Printing Cost<span className='cost-gap'>: ₹ {currentProduct.printingCost.toLocaleString()}</span> <span className='slash-bar1'>|</span> Mounting Cost<span className='cost-gap'>: ₹ {currentProduct.mountingCost.toLocaleString()}</span></div>
+                                    <div className='book-spot mt-3'>{currentProduct.productFrom} <span><img src='/images/Location_arrow.png' className='location-arrow'></img>  </span> {currentProduct.productTo}</div>
                                     <div className='book-rate'>
                                         <div className='book-rateContent1'>
                                             <span className='rate-perDay'>₹ {currentProduct.price.toLocaleString()} <span className='rate-perDay1'>Per Day</span></span><br></br>
@@ -800,23 +677,15 @@ function BookASite1() {
                                     </div>
                                 )
                             }
-
-
                             {/* Login Page open  */}
                             {
                                 isOtpMainOpen && (
                                     <div className="otp-overlay">
-
-
                                         <OtpMain
                                             toggleOtpMainPage={toggleOtpMainPage}
                                             closeOtpMainPage={closeOtpMainPage}
                                             productData={currentProduct} // Pass the current product details
-
-
-
-
-                                        />
+/>
                                     </div>)}
                         </div>
                     </div>
@@ -837,14 +706,11 @@ function BookASite1() {
                                 </ul>
                             </div>
 
-
                             {/* Nearby Similar  Products  */}
                             <div>
                                 <div class="container similar mt-5">
                                     <h2 class="NearbyHeading mb-4">Nearby Similar Products</h2>
                                     <div class="row similar-products">
-
-
                                         {displayedSimilarSpots.length > 0 ? (
                                             displayedSimilarSpots.map(
                                                 (spot) => (
@@ -864,10 +730,7 @@ function BookASite1() {
                                                                 <RatingStarsSimilar rating={spot.rating} />
                                                                 <button className="board-btn-book1"
                                                                     onClick={() => handleSimilarProductClick(spot)} >
-                                                                    {/* <a href="#similarProdDetailsShows" className='book-condition anchor'>Book Now</a> */}
                                                                     Book Now
-
-
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -881,43 +744,11 @@ function BookASite1() {
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
                     </div>
-
-
-
-
-                    {/* Footer section */}
-
-
                 </div>
                 <MainFooter />
             </div>
         </MainLayout>
-
-
     )
 }
-
-
 export default BookASite1;
-
-
-
-
-
-
-
-
-

@@ -114,3 +114,9 @@ color: rgba(227, 31, 37, 1);
   color: #34495e;
   font-size: 0.9em;
 }
+
+.ProdLocationLinkMain{
+  display: flex;
+  justify-content: space-between;
+  margin-top:20px;
+}
