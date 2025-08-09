@@ -115,7 +115,7 @@ function ClientSection() {
             name: p.Prodname
         }));
 
-    const [similarProdId, setSimilarProdId] = useState('#1');
+    const [similarProdId, setSimilarProdId] = useState('');
     const [selectedSimilarProducts, setSelectedSimilarProducts] = useState([]); // Store selected products
     const normalizeCode = (code) => (code || '').replace(/^#/, '').trim().toLowerCase();
     const handleSelectProduct = () => {
@@ -158,14 +158,14 @@ function ClientSection() {
     };
 
 
-    const [productName, setProductName] = useState("CMBT Bus stand Towards Anna nagar");
-    const [productAmount, setProductAmount] = useState("10500");
-    const [productID, setProductId] = useState("ADINCHN001");
-    const [prodLighting, setProdLighting] = useState("Not-Lit");
-    const [productFrom, setProductFrom] = useState("CMBT Bus stand");
-    const [productTo, setProductTo] = useState("Anna nagar");
-    const [productPrintingCost, setProductPrintingCost] = useState("1000");
-    const [productMountingCost, setProductMountingCost] = useState("2000");
+    const [productName, setProductName] = useState("");
+    const [productAmount, setProductAmount] = useState("");
+    const [productID, setProductId] = useState("");
+    const [prodLighting, setProdLighting] = useState("");
+    const [productFrom, setProductFrom] = useState("");
+    const [productTo, setProductTo] = useState("");
+    const [productPrintingCost, setProductPrintingCost] = useState("");
+    const [productMountingCost, setProductMountingCost] = useState("");
     const [productFixedAmount, setProductFixedAmount] = useState('999');
     const [productFixedAmountOffer, setProductFixedAmountOffer] = useState('5');
     // Optional: Add typeahead search
@@ -173,8 +173,8 @@ function ClientSection() {
     // Rating section
     const [prodRating, setProdRating] = useState(4.5);
     // LATITUDE AND LOGITUDE
-    const [prodLatitude, setProdLatitude] = useState('13.0702112');
-    const [prodLongitude, setProdLongitude] = useState('80.204642');
+    const [prodLatitude, setProdLatitude] = useState('');
+    const [prodLongitude, setProdLongitude] = useState('');
     const [prodLocationLink, setProdLocationLink] = useState('');
     const generateGoogleMapsLink = () => {
         // Convert decimal degrees to degrees, minutes, seconds format
@@ -203,13 +203,13 @@ function ClientSection() {
         }
     };
     // Product Size calculation
-    const [prodwidth, setProdWidth] = useState('30');
-    const [prodheight, setProdHeight] = useState('40');
+    const [prodwidth, setProdWidth] = useState('');
+    const [prodheight, setProdHeight] = useState('');
     const ProdSquareFeet = () => {
         const squareFeet = prodwidth * prodheight;
         return squareFeet;
     };
-    const [prodType, setProdType] = useState("Gantry");
+    const [prodType, setProdType] = useState("");
     // // State District selection
     const { initialStateDistricts, initialMediaTypes, toggleStateDropdown, handleStateClick, handleDistrictClick, mediaTypes, setMediaTypes, selectedState, setSelectedState, selectedDistrict, setSelectedDistrict, showDistricts, setShowDistricts, showStates, setShowStates } = useSpot();
 
@@ -272,7 +272,7 @@ function ClientSection() {
             setProductPrintingCost(prod.printingCost || '');
             setProductMountingCost(prod.mountingCost || '');
             setProductId(prod.prodCode || '');
-            setProdLighting(prod.lighting || 'Lightning');
+            setProdLighting(prod.lighting || '');
             setProductFrom(prod.from || '');
             setProductTo(prod.to || '');
             setProdRating(prod.rating || 0);
