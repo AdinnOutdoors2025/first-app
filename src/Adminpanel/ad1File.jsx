@@ -243,11 +243,7 @@ function ClientSection() {
         const data = await res.json();
         console.log("Image Uploaded:", data.imageUrl);
         setImage(data.imageUrl);
-
-
-    }
-
-
+    } 
     console.log(setImage);
     // This will log the image URL whenever it changes
     useEffect(() => {
@@ -283,9 +279,9 @@ function ClientSection() {
             setSelectedDistrict(prod.location?.district || '');
             setImage(prod.image || '');
             setSelectedSimilarProducts(normalizeSimilarProducts(prod.similarProducts || []));
-            setProdLatitude(prod.prodLatitude || '');
-            setProdLongitude(prod.prodLatitude || '');
-            setProdLocationLink(prod.prodLocationLink || '');
+            setProdLatitude(prod.Latitude || '');
+            setProdLongitude(prod.Longitude || '');
+            setProdLocationLink(prod.LocationLink || '');
         }
     }, [state]);
 
