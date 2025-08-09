@@ -267,8 +267,8 @@ function ClientSection() {
             setImage(prod.image || " ");
             setProductName(prod.name || '');
             setProductAmount(prod.price || '');
-            setProductFixedAmount(prod.fixedAmount || '');
-            setProductFixedAmountOffer(prod.fixedOffer || '');
+            setProductFixedAmount(prod.fixedAmount || '999');
+            setProductFixedAmountOffer(prod.fixedOffer || '5');
             setProductPrintingCost(prod.printingCost || '');
             setProductMountingCost(prod.mountingCost || '');
             setProductId(prod.prodCode || '');

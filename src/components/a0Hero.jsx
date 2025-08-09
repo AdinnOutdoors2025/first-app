@@ -91,10 +91,8 @@ function HeroSection() {
         setItems(storedCartItems);
     }, []);
 
-
     return (
         <MainLayout>
-        
         <div>
             {/* NAVBAR  */}
             <div className='navbar-main'>
