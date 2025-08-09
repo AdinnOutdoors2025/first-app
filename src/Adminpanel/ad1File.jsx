@@ -383,8 +383,8 @@ function ClientSection() {
             setProductName('');
             setImage('');
             setProductAmount('');
-            setProductFixedAmount('');
-            setProductFixedAmountOffer('');
+            setProductFixedAmount('999');
+            setProductFixedAmountOffer('5');
             setProductMountingCost('');
             setProductPrintingCost('');
             setProductId('');
