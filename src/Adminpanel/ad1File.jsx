@@ -209,7 +209,7 @@ function ClientSection() {
         const squareFeet = prodwidth * prodheight;
         return squareFeet;
     };
-    const [prodType, setProdType] = useState("");
+    const [prodType, setProdType] = useState("Select");
     // // State District selection
     const { initialStateDistricts, initialMediaTypes, toggleStateDropdown, handleStateClick, handleDistrictClick, mediaTypes, setMediaTypes, selectedState, setSelectedState, selectedDistrict, setSelectedDistrict, showDistricts, setShowDistricts, showStates, setShowStates } = useSpot();
 
@@ -660,8 +660,6 @@ function ClientSection() {
                                                 setErrors(prev => ({ ...prev, productFrom: false }));
                                             }} className={`clientDetailsInput locationInput ${errors.productFrom ? 'AdminProdinput-error' : ''}`}></input>
                                         {errors.productFrom && <div className="AdminProderror-message ">Product From is required</div>}
-
-
                                         <br></br>
                                         <label className='locationFromLabel'>To<label style={{ float: 'right' }}>-</label></label>
                                         <input type='text' placeholder='Enter To' value={productTo}
@@ -680,17 +678,10 @@ function ClientSection() {
                                             }}
                                             className={`clientDetailsInput ${errors.productMountingCost ? 'AdminProdinput-error' : ''}`}></input>
                                         {errors.productMountingCost && <div className="AdminProderror-message ">Mouting Cost is required</div>}
-
-
                                     </div>
                                 </div>
-
-
                             </div>
-
-
                         </div>
-
                         {/* Rating section  with OFFER */}
                         <div style={{ display: 'flex', gap: '10px' }}>
                             <div className='manageClientSection' style={{ width: '40%' }}>
@@ -724,8 +715,6 @@ function ClientSection() {
                                 <div className='ProductRatingMain'>
                                     <div className='AdminOfferDetails' >Pay ₹<input type='number' value={productFixedAmount} onChange={(e) => setProductFixedAmount(e.target.value)} className='sizeWidthInput adminOfferAmountInput' readOnly></input> and Get <input type='number' value={productFixedAmountOffer} onChange={(e) => setProductFixedAmountOffer(e.target.value)} className='sizeWidthInput adminOfferAmountPercentage' readOnly></input>% Off <span className='adminOfferRefundDetails'> 100% Refundable </span>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -784,14 +773,13 @@ function ClientSection() {
                                 <div className='manageClientInfoRight'>
                                     <div className='clientDetailHeading'>Media Type</div>
                                     <select className='clientDetailsInput' value={prodType} onChange={(e) => setProdType(e.target.value)} >
+                                          <option value="">Select Media Type</option>
                                         {mediaTypesData.map((media, id) => (
                                             <option key={media._id} value={media.type}>
                                                 {media.type}
                                             </option>
                                         ))}
                                     </select>
-
-
                                 </div>
                             </div>
 
