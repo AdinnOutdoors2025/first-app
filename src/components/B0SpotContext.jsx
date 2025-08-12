@@ -27,7 +27,7 @@ export const SpotProvider = ({ children }) => {
   
     const [stateInput, setStateInput] = useState("");
     const [districtInput, setDistrictInput] = useState("");
-    const [mediaTypeInput, setMediaTypeInput] = useState("Gantry");
+    const [mediaTypeInput, setMediaTypeInput] = useState("");
     const [stateDistricts, setStateDistricts] = useState(initialStateDistricts);
     const [mediaTypes, setMediaTypes] = useState(initialMediaTypes);
     const [selectedState, setSelectedState] = useState("Tamil Nadu");

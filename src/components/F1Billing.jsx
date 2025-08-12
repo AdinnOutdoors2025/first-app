@@ -242,45 +242,6 @@ if (location.pathname.includes('/billing') && !reserveItem) {
                 throw new Error(errorData.message || 'Failed to save order');
             }
             const result = await response.json();
-            //Send Email Notification
-            // try{ 
-            //     const emailResponse = await fetch(
-            //         `${baseUrl}/OrderReserve/send-order-confirmation`,{
-            //             method:'POST',
-            //             headers :{
-            //                 'Content-Type':'application/json',
-            //             },
-            //             body:JSON.stringify(
-            //                 {
-            //                     orderId:result.orderId || result._id,
-            //                     userName:name,
-            //                     userEmail:email,
-            //                     userPhone:phone,
-            //                     userAddress : `${address}, ${city}, ${state} - ${pincode}`,
-            //                     company,
-            //                     productDetails :{
-            //                         name : reserveItem.prodName,
-            //                         image : reserveItem.image,
-            //                         price: reserveItem.price,
-            //                         dateRange:reserveItem.dateRange,
-            //                         totalDays:reserveItem.totalDays,
-            //                         totalAmount:reserveItem.totalAmount
-            //                     },
-            //                     orderDate : new Date().toLocaleDateString()
-            //                 }
-            //             )
-            //         }
-            //     );
-            //     if(!emailResponse.ok){
-            //         console.error("Failed to send order confirmation email");
-            //     }
-
-            // }
-            // catch(emailError){
-            //     console.error("Email sending error:", emailError);
-            // }
-
-
             try {
                 const emailResponse = await fetch(
                     `${baseUrl}/OrderReserve/send-order-confirmation`, {

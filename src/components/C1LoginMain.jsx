@@ -143,13 +143,6 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify
-                // (usePhoneOTP ? {
-                //     phone: userPhone,
-                //     userName: userName
-                // } : {
-                //     email,
-                //     userName: userName
-                // })
                 ({
                 ...(usePhoneOTP ? { phone: userPhone } : { email }),
                 userName: userName // Always include userName

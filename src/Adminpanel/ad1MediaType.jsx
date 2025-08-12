@@ -5,7 +5,7 @@ import { baseUrl } from './BASE_URL';
 
 function MediaTypeSection() {
 
-  const [adminMediaType, setAdminMediaType] = useState('Gantry');
+  const [adminMediaType, setAdminMediaType] = useState('');
   //Fetch
   const [mediaTypesData, setMediaTypesData] = useState([]);
   const [editingId, setEditingId] = useState(null);
@@ -54,8 +54,7 @@ function MediaTypeSection() {
         : `${baseUrl}/mediatype`;
 
       const res = await fetch(url, requestOptions);
-      if (!res.ok) throw new Error(await res.text());
-
+      if (!res.ok) throw new Error(await res.text()); 
       alert(editingId ? 'Media type updated successfully' : 'Media type added successfully');
       setAdminMediaType('');
       setEditingId(null);
@@ -106,7 +105,7 @@ function MediaTypeSection() {
               <div className='mediaContent'>
                 <div className='mediaAdd'>
                   <div className='mediaContent1 adminMediaHeadings'>
-                    Media Type
+                    Media Type 
                     <div> <input
                       type='text'
                       placeholder='Enter Media Type'

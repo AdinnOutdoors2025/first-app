@@ -12,6 +12,7 @@ import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import OrderDetails from './ad1OrderDetails';
 import { useLogin } from '../components/LoginContext';
 import EnquireUsers from '../Adminpanel/ad1EnquireUsers';
+import FooterContact from './ad1FooterContact';
 //Blog page
 import AllBlogPg from './ad2BlogsPg';
 import BlogAddPg from './ad2BlogAddPg';
@@ -31,6 +32,7 @@ function AdminpanelHome() {
   const [activeSubProduct, setActiveSubProduct] = useState(''); // default active
   const [activeSubOrder, setActiveSubOrder] = useState(''); // default active
   const [activeEnquiryUsers, setActiveEnquiryUsers] = useState(''); // default active
+  const [activeFooterContact, setActiveFooterContact] = useState(''); // default active
 
   const [activeBlogPage, setActiveBlogPage] = useState(''); // default active
 
@@ -42,6 +44,7 @@ function AdminpanelHome() {
       setActiveSubOrder('');
       setActiveEnquiryUsers('');
       setActiveBlogPage('');
+      setActiveFooterContact('');
 
     } else {
       setActiveMenu(menu);
@@ -51,8 +54,7 @@ function AdminpanelHome() {
         setActiveSubOrder('');
         setActiveEnquiryUsers('');
         setActiveBlogPage('');
-
-
+        setActiveFooterContact('');
       }
       else if (menu === 'admanager') {
         setActiveSubProduct('All Products'); // 👈 default subcategory when admanager menu is opened
@@ -60,6 +62,8 @@ function AdminpanelHome() {
         setActiveSubOrder('');
         setActiveEnquiryUsers('');
         setActiveBlogPage('');
+        setActiveFooterContact('');
+
 
       }
 
@@ -69,6 +73,8 @@ function AdminpanelHome() {
         setActiveSubProduct('');
         setActiveEnquiryUsers('');
         setActiveBlogPage('');
+        setActiveFooterContact('');
+
 
       }
       else if (menu === 'EnquireUsers') {
@@ -77,6 +83,8 @@ function AdminpanelHome() {
         setActiveSubCategory('');
         setActiveSubProduct('');
         setActiveBlogPage('');
+        setActiveFooterContact('');
+
 
 
       }
@@ -86,6 +94,16 @@ function AdminpanelHome() {
         setActiveSubCategory('');
         setActiveSubProduct('');
         setActiveEnquiryUsers('');
+        setActiveFooterContact('');
+
+      }
+      else if (menu === 'FooterContact') {
+        setActiveFooterContact('All FooterContacts'); // 👈 default subcategory when orders menu is opened
+        setActiveSubOrder('');
+        setActiveSubCategory('');
+        setActiveSubProduct('');
+        setActiveEnquiryUsers('');
+        setActiveBlogPage('');
       }
       else {
         setActiveSubCategory('');
@@ -93,6 +111,8 @@ function AdminpanelHome() {
         setActiveSubOrder('');
         setActiveEnquiryUsers('');
         setActiveBlogPage('');
+        setActiveFooterContact('');
+
       }
     }
   };
@@ -201,7 +221,7 @@ function AdminpanelHome() {
 
 
 
-    const [editBlog, setEditBlog] = useState(null);
+  const [editBlog, setEditBlog] = useState(null);
 
   useEffect(() => {
     // if (location.hash) {
@@ -233,84 +253,7 @@ function AdminpanelHome() {
     }
   }, [location]);
 
-
-
-
   const isEditingBlog = !!editBlog;
-
-
-
-
-
-
-
-
-  //EDIT ORDERS page automatically opens
-  // const [editOrder, setEditOrder] = useState(null);
-
-  // useEffect(() => {
-  //   // Check for order details in location state
-  //   if (location.state?.editOrder) {
-  //     setEditOrder(location.state.order);
-
-  //     // Activate the orders menu and Order Info tab
-  //     setActiveMenu(location.state.activeMenu || 'orders');
-  //     setActiveSubOrder(location.state.activeSubOrder || 'Add Orders');
-
-  //     // Scroll to the order details section if needed
-  //     setTimeout(() => {
-  //       const element = document.getElementById('manageOrderEdit');
-  //       if (element) {
-  //         element.scrollIntoView({ behavior: 'smooth' });
-  //       }
-  //     }, 100);
-
-  //     // Clear the state to prevent re-triggering
-  //     window.history.replaceState({}, document.title, location.pathname + location.hash);
-  //   }
-  // }, [location.state]);
-
-
-
-// //EDIT BLOG THEN AUTOMATICALLY OPEN THE ADD BLOG PAGE 
-//   const [editBlog, setEditBlog] = useState(null);
-
-//   useEffect(() => {
-//     if (location.hash) {
-//       const sectionId = location.hash.replace('#', '');
-//       setActiveMenu(sectionId); // activates sidebar + section
-//       const element = document.getElementById(sectionId);
-//       if (element) {
-//         setTimeout(() => {
-//           element.scrollIntoView({ behavior: 'smooth' });
-//         }, 100); // wait for render
-//       }
-//     }
-
-//     if (location.state?.editBlog) {
-//       setEditBlog(location.state.editBlog);
-//       setActiveMenu('BlogPage'); // ✅ Automatically open 'BlogPage' section
-//       // setActiveBlogPage('Add Blogs'); // ✅ Make "Add Blogs" tab active
-//       setActiveBlogPage(location.state.activeBlogPage || 'Add Blogs'); // 👈 This line sets tab to Add Blogs
-
-//       setTimeout(() => {
-//         const element = document.getElementById('EditBlogPage');
-//         if (element) {
-//           element.scrollIntoView({ behavior: 'smooth' });
-//         }
-//       }, 100);
-//       // Clear location.state after using it (so it doesn't persist)
-//       window.history.replaceState({}, document.title, location.pathname + location.hash);
-
-//     }
-//   }, [location]);
-
-//   const isEditingBlog = !!editBlog;
-
-
-
-
-
   return (
 
     <div>
@@ -468,7 +411,7 @@ function AdminpanelHome() {
                   // setEditOrder(null); // Reset edit state when user clicks manually
                   setActiveSubOrder('All Orders')
                 }}>
-                All Orders  
+                All Orders
               </div>
               <div
                 className={`subcategory-item ${activeSubOrder === 'Add Orders' ? 'active' : ''}`}
@@ -496,15 +439,6 @@ function AdminpanelHome() {
             </div>
           )}
 
-
-
-
-
-
-
-
-
-
           {/* PRODUCT ENQUIRE USERS LIST   */}
           <div className={`adminHeadings ${activeMenu === 'EnquireUsers' ? 'active' : ''}`}
             onClick={() => handleMenuClick('EnquireUsers')}>
@@ -530,30 +464,41 @@ function AdminpanelHome() {
                 }}>
                 All Enquiries
               </div>
-
-              {/* <div
-                className={`subcategory-item ${activeSubOrder === 'Order Info' ? 'active' : ''}`}
-                onClick={() => {
-                  //   setEditProduct(null); // Reset edit state when user clicks manually
-                  setActiveSubOrder('Order Info')
-
-                  // ✅ Also make sure state from URL is cleared (rare case fallback)
-                  // window.history.replaceState({}, document.title, location.pathname + '#orders');
-                }}>
-                Order Info
-              </div> */}
             </div>
           )}
 
+{/* FOOTER CONTACT DETAILS  */}
+           <div className={`adminHeadings ${activeMenu === 'FooterContact' ? 'active' : ''}`}
+            onClick={() => handleMenuClick('FooterContact')}>
+            <div className='sideImageHeading'>
+              {/* <svg xmlns="http://www.w3.org/2000/svg" className='adminHeading-imgs' viewBox="0 0 39 40" fill="currentColor">
+                <path d="M9.14311 27.9541C8.54684 27.9541 8.06916 27.4907 8.06916 26.9194C8.06916 26.3481 8.55343 25.8848 9.14311 25.8848H16.2226C16.8189 25.8848 17.2966 26.3481 17.2966 26.9194C17.2966 27.4907 16.8156 27.9541 16.2226 27.9541H9.14311ZM20.9467 24.9548C20.6304 24.9548 20.3603 24.6946 20.3603 24.3772C20.3603 24.0725 20.6304 23.8123 20.9467 23.8123H22.4785C22.4917 23.8123 22.5246 23.8123 22.5378 23.8123C23.0781 23.825 23.5591 23.9265 23.9643 24.1741C24.4156 24.4502 24.745 24.8691 24.9262 25.4912C24.9262 25.5039 24.9262 25.5198 24.9427 25.5356L25.0942 26.1133H38.2353C38.5647 26.1133 38.8217 26.3735 38.8217 26.6782C38.8217 26.7354 38.8052 26.7925 38.792 26.8528L37.2601 32.8005C37.2008 33.0608 36.9604 33.2354 36.6902 33.2354H27.0774C27.2882 33.9875 27.4991 34.3938 27.7824 34.5811C28.1283 34.7969 28.7278 34.8127 29.7359 34.7969H29.7491H36.5387C36.8681 34.7969 37.1251 35.0571 37.1251 35.3618C37.1251 35.6792 36.8549 35.9268 36.5387 35.9268H29.7458C28.4972 35.9395 27.733 35.9109 27.1169 35.5205C26.4844 35.1143 26.155 34.4224 25.8256 33.1624L23.8127 25.8213C23.8127 25.8054 23.8127 25.8054 23.7995 25.7927C23.7106 25.4753 23.5591 25.2563 23.3482 25.1421C23.1374 25.012 22.8541 24.9548 22.5213 24.9548C22.5049 24.9548 22.4917 24.9548 22.4752 24.9548H20.9467ZM34.7795 36.5901C35.5767 36.5901 36.2224 37.2122 36.2224 37.9802C36.2224 38.7483 35.5767 39.3704 34.7795 39.3704C33.9823 39.3704 33.3366 38.7483 33.3366 37.9802C33.3366 37.2122 33.9823 36.5901 34.7795 36.5901ZM28.4544 36.5901C29.2516 36.5901 29.8973 37.2122 29.8973 37.9802C29.8973 38.7483 29.2516 39.3704 28.4544 39.3704C27.6572 39.3704 27.0115 38.7483 27.0115 37.9802C27.0115 37.2122 27.6605 36.5901 28.4544 36.5901ZM9.14311 11.0249C8.54684 11.0249 8.06916 10.5583 8.06916 9.99023C8.06916 9.41895 8.55343 8.95557 9.14311 8.95557H25.786C26.3823 8.95557 26.86 9.41895 26.86 9.99023C26.86 10.5615 26.379 11.0249 25.786 11.0249H9.14311ZM3.31216 0.367188H31.5214C32.2099 0.367188 32.8359 0.636963 33.2839 1.0686C33.7319 1.50024 34.0119 2.10327 34.0119 2.7666V21.8032H31.8706V2.77612C31.8706 2.68408 31.8311 2.59839 31.7685 2.53491C31.7026 2.47461 31.6137 2.43652 31.5181 2.43652H3.31216C3.21663 2.43652 3.12768 2.47461 3.06179 2.53491C2.99591 2.59521 2.96296 2.68408 2.96296 2.77612V34.0923C2.96296 34.1843 3.00249 34.27 3.06509 34.3335C3.12768 34.397 3.21663 34.4319 3.31545 34.4319H21.4507C21.6516 35.1904 21.879 35.8538 22.1853 36.4854H3.31216C2.62365 36.4854 1.99773 36.2156 1.5497 35.7839C1.09838 35.3555 0.818359 34.7524 0.818359 34.0891V2.76978C0.818359 2.10645 1.09838 1.50024 1.5464 1.0686C1.99443 0.636963 2.62365 0.367188 3.31216 0.367188ZM9.14311 19.4895C8.54684 19.4895 8.06916 19.0261 8.06916 18.4548C8.06916 17.8835 8.55343 17.4202 9.14311 17.4202H25.786C26.3823 17.4202 26.86 17.8835 26.86 18.4548C26.86 19.0261 26.379 19.4895 25.786 19.4895H9.14311Z" fill={activeMenu === 'FooterContact' ? 'black' : 'rgba(227, 31, 37, 1)'} />
+              </svg> */}
+              <i class="fa-solid fa-address-card" style={{ fontSize: '23px', marginRight: '15px' }}></i>
+              Contact
+            </div>
+            <i className={`fas fa-chevron-${activeMenu === 'FooterContact' ? "up" : "down"} ml-2`}></i>
+          </div>
 
 
-
-
+          {/* SubFooterContact  with FooterContact  and add product section */}
+          {activeMenu === 'FooterContact' && (
+            <div className="subcategory-list pl-6">
+              <div
+                className={`subcategory-item ${activeFooterContact === 'All FooterContacts' ? 'active' : ''}`}
+                onClick={() => {
+                  // setEditOrder(null); // Reset edit state when user clicks manually
+                  setActiveFooterContact('All FooterContacts');
+                }}>
+                All Contacts
+              </div>
+            </div>
+          )}
           {/* BLOG PAGE  */}
           <div className={`adminHeadings ${activeMenu === 'BlogPage' ? 'active' : ''}`}
             onClick={() => handleMenuClick('BlogPage')}>
             <div className='sideImageHeading'>
-    
+
               <svg xmlns="http://www.w3.org/2000/svg" className='adminHeading-imgs' viewBox="0 0 39 36" fill="none">
                 <mask id="path-1-inside-1_1763_293017" fill="white">
                   <path d="M10.4699 20.3596C10.3124 20.3596 10.1614 20.2964 10.0501 20.184C9.9387 20.0717 9.87615 19.9192 9.87615 19.7603C9.87615 19.6014 9.9387 19.4489 10.0501 19.3366C10.1614 19.2242 10.3124 19.161 10.4699 19.161H11.3327C11.8382 19.1514 12.3367 19.282 12.7738 19.5387C13.2586 19.8583 13.6038 20.353 13.7386 20.9213C13.7353 20.9287 13.7336 20.9367 13.7336 20.9448C13.7336 20.9528 13.7353 20.9608 13.7386 20.9682L13.8871 21.5924H14.2272V19.1267C14.228 18.9672 14.2912 18.8145 14.4029 18.7017C14.5147 18.5889 14.666 18.5252 14.8241 18.5243H17.9753C18.1333 18.5252 18.2846 18.5889 18.3964 18.7017C18.5082 18.8145 18.5713 18.9672 18.5721 19.1267V20.5905C18.8217 20.3358 19.1188 20.1334 19.4463 19.9952C19.7738 19.857 20.1252 19.7857 20.4802 19.7853C20.7967 19.7838 21.111 19.8399 21.4079 19.9507C21.8177 19.5109 22.3403 19.1944 22.9175 19.0361C23.4948 18.8778 24.1042 18.8841 24.6782 19.0541C25.2522 19.2241 25.7682 19.5513 26.1692 19.9994C26.5701 20.4474 26.8402 20.9988 26.9496 21.5924H27.0949C27.2502 21.5932 27.3988 21.6561 27.5084 21.7672C27.6179 21.8783 27.6794 22.0287 27.6794 22.1854C27.6777 22.2467 27.6683 22.3075 27.6515 22.3664L26.1053 28.6086C26.0757 28.739 26.0028 28.8553 25.8988 28.9382C25.7947 29.021 25.6658 29.0655 25.5332 29.0643H15.891C16.1012 29.8383 16.3146 30.269 16.5899 30.4625C16.9362 30.6904 17.5392 30.706 18.5474 30.6904H25.3786C25.5344 30.6904 25.6839 30.7529 25.7941 30.8641C25.9042 30.9753 25.9662 31.1261 25.9662 31.2834C25.9662 31.4407 25.9042 31.5915 25.7941 31.7027C25.6839 31.8139 25.5344 31.8764 25.3786 31.8764H18.5752C17.3382 31.8764 16.5558 31.8764 15.9404 31.4488C15.325 31.0212 14.9756 30.294 14.6447 28.9707L12.6222 21.2709C12.6222 21.2709 12.6222 21.2709 12.6222 21.2428C12.5953 21.1045 12.5415 20.9729 12.464 20.8556C12.3866 20.7383 12.2869 20.6376 12.1707 20.5593C11.9158 20.414 11.6251 20.3447 11.3327 20.3596H10.4699ZM36.2454 16.9263V33.4682C36.2446 34.0068 36.0323 34.5231 35.6549 34.904C35.2775 35.2848 34.7659 35.4992 34.2323 35.5H5.40447C5.13995 35.4995 4.87813 35.4463 4.63403 35.3435C4.38992 35.2406 4.16832 35.0902 3.98194 34.9007C3.79466 34.7125 3.64608 34.4887 3.54472 34.2424C3.44335 33.996 3.39121 33.7318 3.39128 33.465V16.9482C3.98997 17.0478 4.59728 17.0844 5.20346 17.0574V33.3152C5.20321 33.3616 5.2121 33.4076 5.22962 33.4504C5.24714 33.4933 5.27294 33.5322 5.30551 33.5649C5.33817 33.5972 5.37685 33.6227 5.41931 33.6398C5.46177 33.657 5.50718 33.6655 5.55291 33.6648H15.8786C15.9604 33.3536 16.1418 33.0784 16.3946 32.8819C16.6473 32.6855 16.9574 32.5789 17.2764 32.5787C17.5958 32.5787 17.9063 32.6852 18.1596 32.8816C18.4129 33.078 18.5948 33.3533 18.6773 33.6648H22.2181C22.2999 33.3536 22.4813 33.0784 22.7341 32.8819C22.9869 32.6855 23.2969 32.5789 23.6159 32.5787C23.9354 32.5782 24.2462 32.6845 24.4996 32.881C24.753 33.0775 24.9348 33.3531 25.0168 33.6648H34.0838C34.1765 33.6648 34.2654 33.6276 34.3309 33.5615C34.3965 33.4954 34.4333 33.4056 34.4333 33.3121V16.9794C35.0373 17.0299 35.645 17.0131 36.2454 16.9295V16.9263ZM22.0975 24.0144C22.1161 23.9184 22.1671 23.832 22.2418 23.7698C22.3166 23.7077 22.4104 23.6737 22.5072 23.6737C22.6041 23.6737 22.6979 23.7077 22.7727 23.7698C22.8474 23.832 22.8984 23.9184 22.917 24.0144V26.3084C22.8984 26.4043 22.8474 26.4907 22.7727 26.5529C22.6979 26.615 22.6041 26.649 22.5072 26.649C22.4104 26.649 22.3166 26.615 22.2418 26.5529C22.1671 26.4907 22.1161 26.4043 22.0975 26.3084V24.0144ZM19.6421 24.0144C19.6606 23.9184 19.7117 23.832 19.7864 23.7698C19.8612 23.7077 19.955 23.6737 20.0518 23.6737C20.1487 23.6737 20.2425 23.7077 20.3173 23.7698C20.392 23.832 20.443 23.9184 20.4616 24.0144V26.3084C20.443 26.4043 20.392 26.4907 20.3173 26.5529C20.2425 26.615 20.1487 26.649 20.0518 26.649C19.955 26.649 19.8612 26.615 19.7864 26.5529C19.7117 26.4907 19.6606 26.4043 19.6421 26.3084V24.0144ZM17.1898 24.0144C17.2083 23.9184 17.2594 23.832 17.3341 23.7698C17.4089 23.7077 17.5027 23.6737 17.5995 23.6737C17.6964 23.6737 17.7902 23.7077 17.865 23.7698C17.9397 23.832 17.9907 23.9184 18.0093 24.0144V26.3084C17.9907 26.4043 17.9397 26.4907 17.865 26.5529C17.7902 26.615 17.6964 26.649 17.5995 26.649C17.5027 26.649 17.4089 26.615 17.3341 26.5529C17.2594 26.4907 17.2083 26.4043 17.1898 26.3084V24.0144ZM22.2676 20.475C22.6071 20.7798 22.87 21.1618 23.0345 21.5893H25.9074C25.8135 21.2148 25.6253 20.8712 25.3611 20.5918C25.0969 20.3124 24.7656 20.1066 24.3993 19.9945C24.0331 19.8824 23.6444 19.8677 23.2709 19.9519C22.8974 20.0361 22.5518 20.2163 22.2676 20.475ZM23.2293 22.7753H14.2365L15.5755 27.8658H25.0786L26.3156 22.7753H23.2293ZM17.8887 21.5768C17.8887 21.5362 17.9227 21.4925 17.9413 21.4519V19.5605C17.9413 19.4447 17.8956 19.3335 17.8144 19.2516C17.7333 19.1696 17.6231 19.1236 17.5083 19.1236H15.3529C15.238 19.1236 15.1279 19.1696 15.0467 19.2516C14.9655 19.3335 14.9199 19.4447 14.9199 19.5605V21.5768H17.8887ZM33.6261 14.9819C33.2396 14.7978 32.2871 14.5481 31.9871 14.2484C31.7262 13.9828 31.5053 13.6799 31.3315 13.3496C31.1578 13.6799 30.9369 13.9828 30.676 14.2484C30.0142 14.9132 28.5112 15.3283 27.4938 15.3283C26.4764 15.3283 24.9735 14.9132 24.321 14.2484C24.06 13.9828 23.8392 13.6799 23.6654 13.3496C23.4916 13.6799 23.2707 13.9828 23.0098 14.2484C22.348 14.9132 20.8451 15.3283 19.8276 15.3283C18.8102 15.3283 17.3073 14.9132 16.6455 14.2484C16.378 13.9841 16.1508 13.6812 15.9714 13.3496C15.7976 13.6799 15.5767 13.9828 15.3158 14.2484C14.654 14.9132 13.151 15.3283 12.1336 15.3283C11.1162 15.3283 9.61329 14.9132 8.9515 14.2484C8.69058 13.9828 8.4697 13.6799 8.29591 13.3496C8.12212 13.6799 7.90123 13.9828 7.64031 14.2484C7.20427 14.6854 6.05697 15.0162 5.45085 15.1848C4.22934 15.3346 2.78826 15.1567 1.88217 14.2484C1.54395 13.9065 1.2759 13.5006 1.09335 13.0539C0.910809 12.6072 0.817363 12.1286 0.818367 11.6454V10.1973C0.819307 10.1253 0.837336 10.0547 0.870939 9.99126L3.44386 1.67353C3.65414 0.990012 4.17058 0.549938 5.16944 0.5H34.2663C35.1631 0.596754 35.7476 0.977528 35.9888 1.66729L38.772 9.97566C38.8073 10.0353 38.8275 10.1029 38.8307 10.1723C38.8322 10.1868 38.8322 10.2015 38.8307 10.216V11.6454C38.8305 12.1293 38.7356 12.6083 38.5515 13.055C38.3673 13.5017 38.0975 13.9073 37.7577 14.2484C36.6815 15.3346 35.0425 15.3065 33.6385 14.9819H33.6261Z" />
@@ -573,7 +518,7 @@ function AdminpanelHome() {
                 onClick={() => {
                   // setEditProduct(null); // Reset edit state when user clicks manually
                   setActiveBlogPage('All Blogs');
-                                  // setEditBlog(null);
+                  // setEditBlog(null);
 
                 }}>
                 All Blogs
@@ -581,10 +526,10 @@ function AdminpanelHome() {
               <div
                 className={`subcategory-item ${activeBlogPage === 'Add Blogs' ? 'active' : ''}`}
                 onClick={() => {
-                   setEditBlog(null); // Reset edit state when user clicks manually
+                  setEditBlog(null); // Reset edit state when user clicks manually
                   setActiveBlogPage('Add Blogs')
                   // ✅ Also make sure state from URL is cleared (rare case fallback)
-                //  window.history.replaceState({}, document.title, location.pathname + '#EditBlogPage');
+                  //  window.history.replaceState({}, document.title, location.pathname + '#EditBlogPage');
                 }}>
                 {isEditingBlog ? "Edit Blog" : "Add Blog"}
 
@@ -692,10 +637,7 @@ function AdminpanelHome() {
 
 
         {/* ADMANAGER WITH DRAG & DROP IMAGE SECTION  */}
-
         {/* Show subproduct content */}
-
-        
         {activeSubProduct === 'All Products' && (
           <div className='productsMain'>
             <div>
@@ -738,7 +680,7 @@ function AdminpanelHome() {
           //  id="manageOrderEdit"
           >
             {/* <ImageUploadPage/> */}
-            <ADManage 
+            <ADManage
             // editOrder={editOrder} 
 
             />
@@ -761,6 +703,15 @@ function AdminpanelHome() {
           </div>
         )}
 
+{/* Footer Contact details  */}
+ {activeFooterContact === 'All FooterContacts' && (
+          <div className='productsMain'>
+            <div>
+              {/* <EnquireUsers /> */}
+              <FooterContact />
+            </div>
+          </div>
+        )}
         {/* {activeEnquiryUsers === 'Add Orders' && (
           <div id="manageOrderEdit">
             <ADManage editOrder={editOrder} />
@@ -777,11 +728,11 @@ function AdminpanelHome() {
 
         {activeBlogPage === 'Add Blogs' && (
           <div className="pl-6" id='EditBlogPage' style={{ display: activeBlogPage === 'Add Blogs' ? 'block' : 'none' }}>
-            <BlogAddPg 
+            <BlogAddPg
             // editBlog={editBlog} setEditBlog={setEditBlog}
-             />
+            />
           </div>
-        )} 
+        )}
       </div>
     </div>
 
