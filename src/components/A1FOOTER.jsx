@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import './a4home.css';
 import { baseUrl } from '../Adminpanel/BASE_URL';
 
-
-
-function FooteMain() {
+function FooterMain() {
     const [contactInfo, setContactInfo] = useState('');
     const [isSubmit, setIsSubmit] = useState(false);
     const [message, setMessage] = useState({ text: '', type: '' }); // type: 'success' or 'error'
-
     const [isError, setIsError] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
-
-
 
     const validateContactInfo = (input) => {
         // Simple email regex
@@ -25,8 +20,6 @@ function FooteMain() {
 
         return emailRegex.test(input) || phoneRegex.test(cleanedInput);
     };
-
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -61,7 +54,7 @@ function FooteMain() {
                 },
                 body: JSON.stringify({
                     contactInfo: contactInfo,
-                    timeStamp: new Date().toISOString()
+                    createdAt: new Date().toISOString()
 
                 })
             });
@@ -188,4 +181,4 @@ function FooteMain() {
     )
 }
 
-export default FooteMain;
+export default FooterMain;
