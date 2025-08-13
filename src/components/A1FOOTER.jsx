@@ -54,7 +54,7 @@ function FooterMain() {
                 },
                 body: JSON.stringify({
                     contactInfo: contactInfo,
-                    createdAt: new Date().toISOString()
+                    // createdAt: new Date().toISOString()
 
                 })
             });
