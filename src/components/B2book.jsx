@@ -621,7 +621,7 @@ function BookASite1() {
                             {currentProduct ? (
                                 <div className="col-md-6 col-lg-6 Book-content2"  >
                                     <p className='book-sideHeading'>{currentProduct.prodName}</p>
-                                    <p className='book-size'>Size: {currentProduct.sizeHeight} x {currentProduct.sizeWidth}<span className='slash-bar'>|</span>{currentProduct.sizeHeight * currentProduct.sizeWidth} Sq.ft</p>
+                                    <p className='book-size'>Size: {currentProduct.sizeWidth} x {currentProduct.sizeHeight}<span className='slash-bar'>|</span>{currentProduct.sizeHeight * currentProduct.sizeWidth} Sq.ft</p>
                                     <span className="btn-type">{currentProduct.category}</span>
                                     <span className="badge book-type">{currentProduct.prodLighting}</span>
                                     <span className='star-main'>
