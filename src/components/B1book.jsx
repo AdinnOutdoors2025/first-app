@@ -636,7 +636,7 @@ export default function BookASite() {
                         <div className="board-content-book ">
                           <div className='board-content-top-book'>
                             <span className="board-loc-book">{spot.prodName}</span>
-                            <span className="board-dim-book">{spot.sizeHeight} x {spot.sizeWidth}</span>
+                            <span className="board-dim-book"> {spot.sizeWidth} x {spot.sizeHeight} </span>
                           </div>
                           <div className='board-content-bottom-book'>
                             <span className="board-price-book">₹{spot.price.toLocaleString()}</span>
