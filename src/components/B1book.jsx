@@ -56,7 +56,8 @@ export default function BookASite() {
           similarProduct: product.similarProducts[{}],
           latitude: product.Latitude,
           longitude: product.Longitude,
-          prodLocationLink: product.LocationLink
+          prodLocationLink: product.LocationLink,
+          additionalFiles : product.additionalFiles[{}]
         }));
         setSpots(mappedSpots);
         // Fetch media types

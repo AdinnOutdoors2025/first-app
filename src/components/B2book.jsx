@@ -31,6 +31,15 @@ function BookASite1() {
     const [currentProduct, setCurrentProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    //ADDITIONAL FILES FETCHED FROM DATABASE
+
+    const [additionalFiles, setAdditionalFiles] = useState([]);
+    const [currentMainImage, setCurrentMainImage] = useState('');
+    const [currentPreviewType, setCurrentPreviewType] = useState('image'); // 'image' or 'video'
+    const [currentVideoUrl, setCurrentVideoUrl] = useState('');
+    const [selectedFileIndex, setSelectedFileIndex] = useState(-1); // Track selected file index
+
+    const videoRef = useRef(null);
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -38,6 +47,10 @@ function BookASite1() {
                 if (location.state?.selectedSpot) {
                     setCurrentProduct(location.state?.selectedSpot);
                     fetchSimilarProducts(location.state?.selectedSpot.prodCode);
+                    //ADDITIONAL FILES FETCHED FROM DATABASE
+                    setAdditionalFiles(location.state?.selectedSpot.additionalFiles || []);
+                    setCurrentMainImage(location.state?.selectedSpot.imageUrl);
+                    setSelectedFileIndex(-1);
                     setIsLoading(false);
                     return;
                 }
@@ -75,10 +88,16 @@ function BookASite1() {
                             latitude: data.Latitude,
                             longitude: data.Longitude,
                             LocationLink: data.LocationLink,
+                            additionalFiles: data.additionalFiles || []
                         };
                         setCurrentProduct(mappedSpot);
                         setSelectedSpot(mappedSpot); // Update context as well
                         fetchSimilarProducts(data.prodCode);
+                        //ADDITIONAL FILES FETCHED FROM DATABASE
+                        setAdditionalFiles(data.additionalFiles || []);
+                        setCurrentMainImage(data.image);
+                        setSelectedFileIndex(-1); // Reset selected file index
+
                     }
                     else {
                         console.error("Product not found");
@@ -91,7 +110,7 @@ function BookASite1() {
             }
         };
         fetchProduct();
-    }, [productId, selectedSpot, location.state]);
+    }, [productId, location.state]);
 
     // Navbar js
     const fetchSimilarProducts = async (prodCode) => {
@@ -139,6 +158,7 @@ function BookASite1() {
             latitude: spot.latitude,
             longitude: spot.longitude,
             LocationLink: spot.LocationLink,
+            additionalFiles: spot.additionalFiles || []
         };
         // Generate URL-friendly slug
         const productSlug = `${spot._id}-${slugify(spot.name, { lower: true, strict: true })}`;
@@ -146,6 +166,12 @@ function BookASite1() {
         navigate(`/Product/${productSlug}`, { replace: true });
         setCurrentProduct(mappedSpot);
         setSelectedSpot(mappedSpot);
+        //ADDITIONAL FILES FETCHED FROM DATABASE
+        setAdditionalFiles(spot.additionalFiles || []);
+        setCurrentMainImage(spot.image);
+        setCurrentPreviewType('image');
+        setCurrentVideoUrl('');
+        setSelectedFileIndex(-1);
         // Don't fetch similar products again here - keep the original list
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -161,23 +187,68 @@ function BookASite1() {
     //If i click the orders, signup or login then go the login page
     const navigate = useNavigate();
     //Image change
-    const imgRef = useRef(null); // Reference to the image element
-    const handleImageChange = (image) => {
-        // Switch statement to set image based on color
-        switch (image) {
-            case 'image1':
-                imgRef.current.src = "/images/spot1.png";
-                break;
-            case 'image2':
-                imgRef.current.src = "/images/spot2.png";
-                break;
-            case 'image3':
-                imgRef.current.src = "/images/spot3.png";
-                break;
-            default:
-                imgRef.current.src = "/images/spot1.png"; // Default image
+    // const imgRef = useRef(null); // Reference to the image element
+    // const handleImageChange = (image) => {
+    //     // Switch statement to set image based on color
+    //     switch (image) {
+    //         case 'image1':
+    //             imgRef.current.src = "/images/spot1.png";
+    //             break;
+    //         case 'image2':
+    //             imgRef.current.src = "/images/spot2.png";
+    //             break;
+    //         case 'image3':
+    //             imgRef.current.src = "/images/spot3.png";
+    //             break;
+    //         default:
+    //             imgRef.current.src = "/images/spot1.png"; // Default image
+    //     }
+    // };
+
+
+    // Handle image change for thumbnails
+
+    const handleImageChange = (file, index) => {
+        if (file.type === 'video' || (file.url && file.url.match(/\.(mp4|mov|avi|mkv)$/i))) {
+            // For videos, we'll show a thumbnail or the first frame if available
+            // You might want to implement a video player modal instead
+            console.log("Video selected:", file.url);
+            // For videos, set video mode
+            setCurrentPreviewType('video');
+            setCurrentVideoUrl(file.url);
+            setSelectedFileIndex(index);
+
+            // Optionally open a modal to play the video
+        } else {
+            // For images, update the main image
+            setCurrentPreviewType('image');
+            setCurrentMainImage(file.url);
+            setCurrentVideoUrl('');
+            setSelectedFileIndex(index);
         }
     };
+
+
+    // Handle main product image click to reset to original
+    const handleMainImageClick = () => {
+        if (currentProduct && currentProduct.imageUrl) {
+            setCurrentMainImage(currentProduct.imageUrl);
+            setCurrentPreviewType('image');
+            setCurrentVideoUrl('');
+            setSelectedFileIndex(-1); // Reset to main image
+        }
+    };
+
+    // Check if a file is currently selected
+    const isFileSelected = (index) => {
+        return selectedFileIndex === index;
+    };
+
+    // Check if main image is selected
+    const isMainImageSelected = () => {
+        return selectedFileIndex === -1;
+    };
+
     //Start rating board
     const RatingStars = ({ rating }) => {
         const fullStars = Math.floor(rating);
@@ -446,8 +517,6 @@ function BookASite1() {
             alert("Failed to add item to cart. Please try again.");
         }
     };
-
-
     // RESERVE NOW BUTTON
     const handleReserveNow = () => {
         if (!user) {
@@ -602,7 +671,7 @@ function BookASite1() {
                                 <div className="row bookContentRow1">
                                     <div className='bookContentRow2' style={{ display: 'flex', }}>
                                         <div className='book-images-section'>
-                                            <div className='book-images'>
+                                            {/* <div className='book-images'>
                                                 <img src="/images/spot1.png" className="img-fluid book-img11" alt="Small image1" onClick={() => handleImageChange('image1')} />
                                             </div>
                                             <div className='book-images'>
@@ -610,10 +679,70 @@ function BookASite1() {
                                             </div>
                                             <div className='book-images'>
                                                 <img src="/images/spot3.png" className="img-fluid book-img31" alt="Small image 1" onClick={() => handleImageChange('image3')} />
-                                            </div>
+                                            </div> */}
+                                            {/* Additional files thumbnails */}
+                                            {additionalFiles.map((file, index) => (
+                                                <div
+                                                    key={index}
+                                                    className={`book-images ${isFileSelected(index) ? 'selected' : ''}`}
+                                                    onClick={() => handleImageChange(file, index)} style={{ cursor: 'pointer' }}
+                                                >
+                                                    {file.type === 'video' || (file.url && file.url.match(/\.(mp4|mov|avi|mkv)$/i)) ? (
+
+                                                        <div className="video-thumbnail-wrapper">
+                                                            <video className='book-img11'
+                                                                muted
+                                                                preload="metadata"
+                                                                onLoadedData={(e) => {
+                                                                    // Seek to a middle frame for better thumbnail
+                                                                    if (e.target.duration) {
+                                                                        e.target.currentTime = e.target.duration / 2;
+                                                                    }
+                                                                }}
+                                                            >
+                                                                <source src={file.url} type="video/mp4" />
+                                                            </video>
+                                                            <div className="video-play-icon">▶</div>
+                                                        </div>
+                                                    )
+                                                        : (
+                                                            <img
+                                                                src={file.url}
+                                                                className="img-fluid book-img11"
+                                                                alt={`Additional ${index + 1}`}
+                                                                style={{
+                                                                    width: '100%',
+                                                                    height: '100%',
+                                                                    objectFit: 'cover',
+                                                                    //border: isFileSelected(index) ? '2px solid #007bff' : 'none'
+                                                                    // border: currentPreviewType === 'image' && currentMainImage === file.url ? '2px solid #007bff' : 'none'
+                                                                }}
+                                                            />
+                                                        )}
+                                                </div>
+                                            ))}
                                         </div>
                                         <div className='book-mainImage'>
-                                            <img src={currentProduct.imageUrl} ref={imgRef} className="img-fluid book-mainImg1" alt="Large image" />
+                                            {/* <img src={currentProduct.imageUrl} ref={imgRef} className="img-fluid book-mainImg1" alt="Large image" /> */}
+                                            {currentPreviewType === 'video' ? (
+                                                <video className='book-mainImg1'
+                                                    ref={videoRef}
+                                                    key={currentVideoUrl} // Add key to force re-render
+                                                    controls
+                                                    autoPlay
+                                                >
+                                                    <source src={currentVideoUrl} type="video/mp4" />
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            ) : (
+                                                <img
+                                                    src={currentMainImage || currentProduct?.imageUrl}
+                                                    className="img-fluid book-mainImg1"
+                                                    alt="Large image"
+                                                    onClick={handleMainImageClick}
+                                                />
+                                            )}
+
                                         </div>
                                     </div>
                                 </div>
@@ -684,7 +813,7 @@ function BookASite1() {
                                             toggleOtpMainPage={toggleOtpMainPage}
                                             closeOtpMainPage={closeOtpMainPage}
                                             productData={currentProduct} // Pass the current product details
-/>
+                                        />
                                     </div>)}
                         </div>
                     </div>

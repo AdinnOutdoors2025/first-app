@@ -1,20 +1,11 @@
 * {
     font-family: 'Montserrat';
 }
-
-
 /* Image section  */
-
-
 .book-images {
     height: 95px;
     width: 95px;
     margin-bottom: 10px;
-
-
-    /* margin-bottom: 10px;
-    cursor: pointer;
-    border-radius: 8px; */
 }
 
 
@@ -23,20 +14,15 @@
 .book-img31 {
     height: 95px;
     width: 95px;
-    /* margin-bottom: 10px; */
     cursor: pointer;
     border-radius: 8px;
 }
-
-
-
 
 .book-mainImage {
     width: 100%;
     height: 510px;
     margin-left: 3%;
     margin-right: 1%;
-    /*  border-radius: 32px; */
 }
 
 
@@ -56,14 +42,11 @@
     width: 630px;
     padding-left: 5px;
     padding-right: 5px;
-
-
 }
 
 
 .BookMain {
     display: flex;
-    /* flex-direction: column; */
     margin-left: auto;
     margin-right: auto;
 }
@@ -104,11 +87,9 @@
 
 
 .btn-type {
-    /* cursor: none; */
     text-align: center;
     align-items: center;
     align-content: center;
-    /* width: max-content; */
     border-radius: 10px;
     padding: 5px 10px;
     box-shadow: -2px 2px 2px 0px rgba(51, 51, 51, 0.25);
@@ -123,12 +104,7 @@
     line-height: 17.07px;
     text-align: center;
     position: relative;
-
-
 }
-
-
-
 
 /* Rating board  */
 /* Full stars */
@@ -148,7 +124,6 @@
 .rate-board1 {
     height: 30px;
     width: 90px;
-    /* position: relative; */
 }
 
 
@@ -250,7 +225,6 @@
 
 
 .book-spot {
-    /* width: 411px; */
     width: fit-content;
     padding: 5px 8px;
     border-radius: 7px;
@@ -360,12 +334,6 @@
 }
 
 
-
-
-
-
-
-
 .calender {
     height: 26px;
     width: 26px;
@@ -403,7 +371,6 @@
 .anchor:focus,
 .anchor:active {
     text-decoration: none;
-    /* Removes underline on hover, focus, and active states */
 }
 
 
@@ -558,12 +525,52 @@
 }
 
 
+
+.book-images.selected {
+  border: 2px solid #007bff;
+  /* transform: scale(1.05); */
+}
+
+.video-thumbnail-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+
+.video-thumbnail video {
+    transition: transform 0.3s ease;
+}
+
+.video-thumbnail:hover video {
+    transform: scale(1.05);
+} 
+.book-images:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.video-thumbnail-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 20px;
+  text-shadow: 0 0 5px rgba(0,0,0,0.7);
+}
+
+
 /* Responsive Media Queries */
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
 @media (min-width: 2560px) {
     .Book-content1 {
-        /* border: 1px solid red; */
-        /* margin: auto -1px; */
         padding-left: 18%;
     }
 
@@ -586,7 +593,6 @@
     .book-images {
         height: 135px;
         width: 135px;
-        /* border: 3px solid black; */
         margin-bottom: 15px;
     }
 
@@ -601,7 +607,6 @@
 
     .Book-content2 {
         align-content: center;
-        /* border: 1px solid blue; */
         width: 100%;
         padding-left: 50px;
         padding-right: 5px;
