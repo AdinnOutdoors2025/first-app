@@ -1011,7 +1011,7 @@ function ClientSection() {
             name: p.Prodname
         }));
 
-    const [similarProdId, setSimilarProdId] = useState('#1');
+    const [similarProdId, setSimilarProdId] = useState('');
     const [selectedSimilarProducts, setSelectedSimilarProducts] = useState([]); // Store selected products
 
     const normalizeCode = (code) => (code || '').replace(/^#/, '').trim().toLowerCase();
