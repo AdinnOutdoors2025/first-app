@@ -694,10 +694,15 @@ function BookASite1() {
                                                                 muted
                                                                 preload="metadata"
                                                                 onLoadedData={(e) => {
-                                                                    // Seek to a middle frame for better thumbnail
+                                                                    // Seek to a middle frame for better thumbnail..0 means starting video thumbnail
                                                                     if (e.target.duration) {
-                                                                        e.target.currentTime = e.target.duration / 2;
+                                                                        // e.target.currentTime = e.target.duration / 2;
+                                                                        e.target.currentTime = 0;
                                                                     }
+                                                                }}
+                                                                onSeeked={(e) => {
+                                                                    // This ensures the first frame is displayed after seeking
+                                                                    e.target.pause();
                                                                 }}
                                                             >
                                                                 <source src={file.url} type="video/mp4" />
