@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLogin } from './LoginContext';
 import './creativelogin.css';
-//BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from '../Adminpanel/BASE_URL';
 
 const AdminAuth = () => {
@@ -56,7 +55,7 @@ const AdminAuth = () => {
         console.log('Submitting with:', formData);  // Add this line
         setError('');
         setIsLoading(true);
-        
+
         const endpoint = isRegistering
             ? `${baseUrl}/adminUserLogin/register-admin`
             : `${baseUrl}/adminUserLogin/admin`;
@@ -73,7 +72,7 @@ const AdminAuth = () => {
                     username: formData.username,
                     // ...(formData.password ? { password: formData.password } : {}),
                     // ...(formData.secretCode ? { secretCode: formData.secretCode } : {})
-                    [authField] : formData[authField]
+                    [authField]: formData[authField]
                 };
             const response = await fetch(endpoint, {
                 method: 'POST',
@@ -106,14 +105,14 @@ const AdminAuth = () => {
                     closeLogin();
                     // navigate('/admin');
                     // Redirect based on role
-                // if (data.user.role === 'admin') {
-                //     navigate('/admin');
-                // } else {
-                //     navigate('/');
-                // }
-                // Redirect to the originally requested page or admin dashboard
-                const from = location.state?.from || '/admin';
-                navigate(from, { replace: true });
+                    // if (data.user.role === 'admin') {
+                    //     navigate('/admin');
+                    // } else {
+                    //     navigate('/');
+                    // }
+                    // Redirect to the originally requested page or admin dashboard
+                    const from = location.state?.from || '/admin';
+                    navigate(from, { replace: true });
                 }
             } else {
                 setError(data.message || (isRegistering ? "Registration Failed!" : "Authentication Failed!"));
@@ -121,7 +120,7 @@ const AdminAuth = () => {
         } catch (err) {
             setError('Network error. Please try again.');
             console.error(isRegistering ? 'Registration error:' : 'Login error:', err);
-        } 
+        }
         finally {
             setIsLoading(false);
         }
@@ -158,7 +157,7 @@ const AdminAuth = () => {
                 {error && <div className="admin-user-error-message">{error}</div>}
 
                 <form onSubmit={handleSubmit} className="auth-form">
-                   {/* USER NAME FOR BOTH REGISTER AND LOGIN  */}
+                    {/* USER NAME FOR BOTH REGISTER AND LOGIN  */}
                     <div className="admin-user-form-group">
                         <label>Username</label>
                         <input
@@ -176,66 +175,66 @@ const AdminAuth = () => {
                     </div>
 
 
-{isRegistering ? (
+                    {isRegistering ? (
                         /* REGISTRATION FIELDS */
                         <>
 
-                    <div className="admin-user-form-group password-group">
-                        <label>
-                            Password {isRegistering && '(min 6 characters)'}
-                        </label>
-                        <div className="password-input-container">
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                name="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                                minLength={isRegistering ? "6" : undefined}
-                                className="auth-input"
-                                placeholder={isRegistering ? "Required" : "Optional (use password or secret code)"}
-                            />
-                            <button
-                                type="button"
-                                className="password-toggle"
-                                onClick={() => setShowPassword(!showPassword)}
-                            >
-                                {showPassword ? '👁️' : '👁️‍🗨️'}
-                                {/* {showPassword ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>‍🗨️'} */}
+                            <div className="admin-user-form-group password-group">
+                                <label>
+                                    Password {isRegistering && '(min 6 characters)'}
+                                </label>
+                                <div className="password-input-container">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        required
+                                        minLength={isRegistering ? "6" : undefined}
+                                        className="auth-input"
+                                        placeholder={isRegistering ? "Required" : "Optional (use password or secret code)"}
+                                    />
+                                    <button
+                                        type="button"
+                                        className="password-toggle"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                    >
+                                        {showPassword ? '👁️' : '👁️‍🗨️'}
+                                        {/* {showPassword ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>‍🗨️'} */}
 
-                            </button>
-                        </div>
-                    </div>
+                                    </button>
+                                </div>
+                            </div>
 
-                    <div className="admin-user-form-group password-group">
-                        <label>Secret Code</label>
-                        <div className="password-input-container">
-                            <input
-                                type={showSecretCode ? "text" : "password"}
-                                name="secretCode"
-                                value={formData.secretCode}
-                                onChange={handleChange}
-                                required
-                                className="auth-input"
-                                placeholder={isRegistering ? "Required" : "Optional (use password or secret code)"}
-                            />
-                            <button
-                                type="button"
-                                className="password-toggle"
-                                onClick={() => setShowSecretCode(!showSecretCode)}
-                            >
-                                {showSecretCode ? '👁️' : '👁️‍🗨️'}
-                                {/* {showSecretCode ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>'} */}
+                            <div className="admin-user-form-group password-group">
+                                <label>Secret Code</label>
+                                <div className="password-input-container">
+                                    <input
+                                        type={showSecretCode ? "text" : "password"}
+                                        name="secretCode"
+                                        value={formData.secretCode}
+                                        onChange={handleChange}
+                                        required
+                                        className="auth-input"
+                                        placeholder={isRegistering ? "Required" : "Optional (use password or secret code)"}
+                                    />
+                                    <button
+                                        type="button"
+                                        className="password-toggle"
+                                        onClick={() => setShowSecretCode(!showSecretCode)}
+                                    >
+                                        {showSecretCode ? '👁️' : '👁️‍🗨️'}
+                                        {/* {showSecretCode ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>'} */}
 
-                            </button>
-                        </div>
-                    </div>
+                                    </button>
+                                </div>
+                            </div>
 
-                    </>
- ) : (
+                        </>
+                    ) : (
                         /* LOGIN FIELDS */
                         <>
- <div className="admin-user-form-group">
+                            <div className="admin-user-form-group">
                                 <div className="auth-method-selector">
                                     <button
                                         type="button"
@@ -252,11 +251,11 @@ const AdminAuth = () => {
                                         Secret Code
                                     </button>
                                 </div>
-                                
+
                                 <div className="password-input-container">
                                     <input
-                                        type={authField === 'password' ? 
-                                            (showPassword ? "text" : "password") : 
+                                        type={authField === 'password' ?
+                                            (showPassword ? "text" : "password") :
                                             (showSecretCode ? "text" : "password")
                                         }
                                         name={authField}
@@ -264,65 +263,47 @@ const AdminAuth = () => {
                                         onChange={handleChange}
                                         className="auth-input"
                                         placeholder={
-                                            authField === 'password' ? 
-                                            "Enter your password" : 
-                                            "Enter secret code"
+                                            authField === 'password' ?
+                                                "Enter your password" :
+                                                "Enter secret code"
                                         }
                                     />
-                                    <button 
-                                        type="button" 
+                                    <button
+                                        type="button"
                                         className="password-toggle"
-                                        onClick={() => 
-                                            authField === 'password' ? 
-                                            setShowPassword(!showPassword) : 
-                                            setShowSecretCode(!showSecretCode)
+                                        onClick={() =>
+                                            authField === 'password' ?
+                                                setShowPassword(!showPassword) :
+                                                setShowSecretCode(!showSecretCode)
                                         }
                                     >
-                                        {authField === 'password' ? 
-                                            (showPassword ? '👁️' : '👁️‍🗨️') : 
+                                        {authField === 'password' ?
+                                            (showPassword ? '👁️' : '👁️‍🗨️') :
                                             (showSecretCode ? '👁️' : '👁️‍🗨️')
 
-                                           
+
                                         }
                                     </button>
                                 </div>
                             </div>
-                            
-
-                        <div className="admin-user-remember-me">
-                            <input
-                                type="checkbox"
-                                id="rememberMe"
-                                checked={rememberMe}
-                                onChange={(e) => setRememberMe(e.target.checked)}
-                                className="remember-checkbox"
-                            />
-                            <label htmlFor="rememberMe">Remember me</label>
-                        </div>     
 
 
-
+                            <div className="admin-user-remember-me">
+                                <input
+                                    type="checkbox"
+                                    id="rememberMe"
+                                    checked={rememberMe}
+                                    onChange={(e) => setRememberMe(e.target.checked)}
+                                    className="remember-checkbox"
+                                />
+                                <label htmlFor="rememberMe" style={{ marginBottom: '0px' }}>Remember me</label>
+                            </div>
                         </>
- )}
-
-                    {/* {!isRegistering && (
-                        <div className="admin-user-remember-me">
-                            <input
-                                type="checkbox"
-                                id="rememberMe"
-                                checked={rememberMe}
-                                onChange={(e) => setRememberMe(e.target.checked)}
-                                className="remember-checkbox"
-                            />
-                            <label htmlFor="rememberMe">Remember me</label>
-                        </div>
-                    )} */}
-
+                    )}
                     <button
                         type="submit"
                         className="admin-user-auth-button"
-                        disabled={isLoading}
-                    >
+                        disabled={isLoading} >
                         {isLoading
                             ? (isRegistering ? 'Registering...' : 'Logging in...')
                             : (isRegistering ? 'Register Admin' : 'Login as Admin')}
@@ -343,5 +324,4 @@ const AdminAuth = () => {
         </div>
     );
 };
-
 export default AdminAuth;

@@ -6,10 +6,9 @@ import { useSpot } from '../components/B0SpotContext';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
-import {baseUrl} from './BASE_URL';
+import { baseUrl } from './BASE_URL';
 function AdManageSection() {
     //Start rating board
-    // Function to render star ratings
     const RatingStars = ({ rating }) => {
         const fullStars = Math.floor(rating);
         const halfStar = rating % 1 !== 0;
@@ -59,7 +58,6 @@ function AdManageSection() {
         clientPaidAmount: false
     });
 
-
     const validateForm = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const newErrors = {
@@ -73,7 +71,6 @@ function AdManageSection() {
         setErrors(newErrors);
         return !Object.values(newErrors).some(error => error);
     };
-
 
     // PRODUCTS FETCH AND AUTOFILL FROM DATABASE 
     const [products, setProducts] = useState([]);
@@ -116,14 +113,13 @@ function AdManageSection() {
     const [prodType, setProdType] = useState("");
     const [selectedState, setSelectedState] = useState("");
     const [selectedDistrict, setSelectedDistrict] = useState("");
-    // const [selectedSimilarProducts, setSelectedSimilarProducts] = useState([]);
     const { initialStateDistricts, initialMediaTypes, toggleStateDropdown, handleStateClick, handleDistrictClick, stateDistricts, setStateDistricts, mediaTypes, setMediaTypes, showDistricts, setShowDistricts, showStates, setShowStates } = useSpot();
-    // const [products, setProducts] = useState([]);
     //FETCH PRDOCUTS FROM DATABASE USING USEEFFECT
-
     // Add these state variables
     const [errorMessage, setErrorMessage] = useState('');
     const [showError, setShowError] = useState(false);
+    // Add this state variable at the top of your component
+    const [isSaving, setIsSaving] = useState(false);
     useEffect(() => {
         fetch(`${baseUrl}/products`)
             .then((response) => response.json())
@@ -136,10 +132,7 @@ function AdManageSection() {
             });
     }, []);
     const fetchProductById = (code) => {
-        // Remove # if present in the input
-        // const cleanCode = code.startsWith('#') ? code : `#${code}`;
         const cleanedInput = code.replace(/^#/, '').trim().toLowerCase();
-
         // Reset all fields first
         setProductImage("");
         setProductName("");
@@ -184,11 +177,7 @@ function AdManageSection() {
             setSelectedState(product.location?.state || "");
             setSelectedDistrict(product.location?.district || "");
             setShowError(false); // Hide any existing errors
-
-            // setSelectedSimilarProducts(product.similarProducts || []);
-            // ... set all other fields ...
         } else {
-            // alert("Product not found!");
             setErrorMessage('Product not found!');
             setShowError(true);
             // Auto-hide after 2 seconds
@@ -299,8 +288,6 @@ function AdManageSection() {
 
     };
 
-
-
     // UPDATED DATE CLASS CALCULATION
     const getDateSelectionClass = (date) => {
         if (!date || isNaN(date.getTime())) return "disabled";
@@ -357,6 +344,7 @@ function AdManageSection() {
     const goToPreviousMonth = () => {
         setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
     };
+
     // Calculate total price dynamically when start and end dates are selected
     const pricePerDay = productAmount || 0; // Ensure pricePerDay is defined
     const getAvailableDaysInRange = (start, end) => {
@@ -424,19 +412,18 @@ function AdManageSection() {
     }, []);
 
     const [productsOrderData, setProductsOrderData] = useState([]);
-
     const [editOrder, setEditOrder] = useState(null);
+    // const [bookedDates, setBookedDates] = useState([]);
+
     useEffect(() => {
         const fetchBookedDates = async () => {
             try {
-
                 // Include current order ID in exclusion if editing
                 const url = editOrder
                     ? `${baseUrl}/booked-dates?excludeOrderId=${editOrder._id}`
                     : `${baseUrl}/booked-dates`;
 
                 const res = await fetch(url);
-                //   const res = await fetch('http://localhost:3001/booked-dates');
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
                 }
@@ -472,11 +459,9 @@ function AdManageSection() {
 
     useEffect(() => {
         if (editOrder) {
-
             // UPDATED DATE PARSING FUNCTION
             const parseDate = (dateString) => {
                 if (!dateString) return null;
-
                 // Handle UTC dates consistently
                 if (dateString.includes('T')) {
                     const dt = new Date(dateString);
@@ -583,7 +568,6 @@ function AdManageSection() {
         }
     }, [location.state]);
     const resetForm = () => {
-        // Reset all form fields to empty/default values
         setProductName('');
         setProductImage('');
         setProductAmount('');
@@ -610,65 +594,60 @@ function AdManageSection() {
         setEditOrder(null);
     };
 
-    // const createOrder = async (orderData) => {
-    //     try {
-    //         const response = await fetch(`${baseUrl}/prodOrders`, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(orderData)
-    //         });
+    // Add this function to your component
+    const sendOrderNotifications = async (orderData, orderId) => {
+        try {
+            const response = await fetch(`${baseUrl}/AdminOrder/send-order-notificationsAdmin`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    orderData,
+                    orderId
+                })
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
 
-    //         if (!response.ok) {
-    //             throw new Error('Failed to create order');
-    //         }
+                console.error("Failed to send notifications", errorData);
+                throw new Error('Failed to send notifications');
 
-    //         const result = await response.json();
-    //         alert("Order created successfully!");
-    //         fetchOrders(); // Refresh the orders list
-    //         return result;
-    //     } catch (error) {
-    //         console.error("Error creating order:", error);
-    //         alert("Error creating order. Please try again.");
-    //     }
-    // };
+            }
+        } catch (error) {
+            console.error("Notification sending error:", error);
+            return { success: false, error: error.message };
+        }
+    };
 
+    // Add this SMS function to your component
+    const sendOrderSMS = async (phone, orderId, isAdmin = false) => {
+        try {
+            const response = await fetch(`${baseUrl}/AdminOrder/send-admin-sms`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    phone,
+                    templateId: isAdmin ? "1007478982147905431" : "1007197121174928712",
+                    variables: {
+                        orderId,
+                        customerName: clientName,
+                        amount: clientPaidAmount
+                    }
+                })
+            });
 
-    // const generateNextOrderId = async () => {
-    //     try {
-    //         // Fetch all existing orders to determine the highest ID
-    //         const response = await fetch(`${baseUrl}/prodOrders`);
-    //         const orders = await response.json();
-
-    //         if (orders.length === 0) {
-    //             return 'AD0001'; // First order
-    //         }
-
-    //         // Find the highest existing ID
-    //         const highestId = orders.reduce((max, order) => {
-    //             const orderId = order._id || order.id || '';
-    //             if (orderId.startsWith('AD')) {
-    //                 const num = parseInt(orderId.substring(2));
-    //                 return num > max ? num : max;
-    //             }
-    //             return max;
-    //         }, 0);
-
-    //         // Generate next ID
-    //         const nextId = highestId + 1;
-    //         return `AD${nextId.toString().padStart(4, '0')}`;
-    //     } catch (error) {
-    //         console.error("Error generating order ID:", error);
-    //         // Fallback - generate based on timestamp
-    //         return `AD${Date.now().toString().slice(-4)}`;
-    //     }
-    // };
+            if (!response.ok) {
+                console.error("Failed to send SMS");
+            }
+        } catch (error) {
+            console.error("SMS sending error:", error);
+        }
+    };
 
     //Helper function to generate the next order ID
-
-
-
     const handleSaveProductOrder = async (e) => {
         e.preventDefault();
         // Validate form first
@@ -676,15 +655,15 @@ function AdManageSection() {
             toast.error("Please fill all required fields correctly");
             return;
         }
+        // Set loading state
+        setIsSaving(true);
+
         const today = new Date();
         const formattedToday = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
         try {
-
             // Generate order ID for new orders
             const orderId = editOrder ? editOrder._id : null;
             console.log("Generated Order ID:", orderId);
-
-
             // Validate required fields
             const requiredFields = {
                 clientName: "Client name is required",
@@ -720,11 +699,6 @@ function AdManageSection() {
             const totalPrice = totalDays * (parseFloat(productAmount) || 0);
             // Format dates in local time without timezone conversion
             const formatLocalDate = (date) => {
-                // if (!date || isNaN(date.getTime())) return null;
-                // const year = date.getFullYear();
-                // const month = String(date.getMonth() + 1).padStart(2, '0');
-                // const day = String(date.getDate()).padStart(2, '0');
-                // return `${year}-${month}-${day}`;
                 if (!date || isNaN(date.getTime())) return null;
                 // Use UTC methods to avoid timezone shifts
                 return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
@@ -741,8 +715,6 @@ function AdManageSection() {
 
             // Construct product object properly
             const productData = {
-
-                //  productId:  new mongoose.Types.ObjectId(), // Generate new ID if needed
                 id: productID,
                 prodCode: productID,
                 name: productName,
@@ -769,17 +741,13 @@ function AdManageSection() {
                 booking: {
                     startDate: formatDateForStorage(selectedDates.start),
                     endDate: formatDateForStorage(selectedDates.end),
-                    // currentDate: formattedToday,
                     totalDays: totalDays,
                     totalPrice: totalPrice
                 },
                 bookedDates: availableDays.map(date => formatDateForStorage(date))
-
-
             }
             // Prepare order data
             const orderData = {
-
                 client: {
                     userId: productID,
                     name: clientName,
@@ -791,7 +759,6 @@ function AdManageSection() {
                 products: [productData],
                 status: editOrder?.status || "Added Manually",
                 orderType: "single",
-                ...(!editOrder && { orderId: 'TEMP' }),
             };
             // Submit to backend
             const response = await fetch(
@@ -813,17 +780,62 @@ function AdManageSection() {
             }
 
             const result = await response.json();
-            console.log("Order saved with ID:", result.orderId);
+            console.log("Order saved with ID:", result.orderId || result._id);
+            // Send SMS notifications
+            try {
+                // Send SMS to user
+                if (clientContact) {
+                    await sendOrderSMS(clientContact, result.orderId || result._id);
+                }
 
-            alert(`Order ${editOrder ? 'updated' : 'created'} successfully!with ID: ${result.orderId}`);
+                // Send SMS to admin
+                await sendOrderSMS('reactdeveloper@adinn.co.in', result.orderId || result._id, true);
+            } catch (smsError) {
+                console.error("SMS sending error:", smsError);
+                // Don't fail the order if SMS fails
+            }
+            // AFTER SUCCESSFUL ORDER CREATION - SEND NOTIFICATIONS
+            try {
+                // Prepare order data for notifications
+                const notificationData = {
+                    client: {
+                        name: clientName,
+                        email: clientEmail,
+                        contact: clientContact,
+                        company: clientCompany,
+                        paidAmount: clientPaidAmount
+                    },
+                    products: [{
+                        name: productName,
+                        prodCode: productID,
+                        price: Number(productAmount),
+                        booking: {
+                            startDate: selectedDates.start,
+                            endDate: selectedDates.end,
+                            totalDays: totalDays,
+                            totalPrice: totalPrice
+                        }
+                    }]
+                };
+
+                // Send notifications
+                await sendOrderNotifications(notificationData, result.orderId || result._id);
+            } catch (notificationError) {
+                console.error("Notification error:", notificationError);
+                // Don't fail the order if notifications fail
+            }
+            alert(`Order ${editOrder ? 'updated' : 'created'} successfully!with ID: ${result.orderId || result._id}`);
             resetForm();
 
         } catch (error) {
             console.error("Save error:", error);
             alert(`Error: ${error.message}`);
         }
+        finally {
+            // Reset loading state
+            setIsSaving(false);
+        }
     };
-
 
     // Fetch all orders
     const fetchOrders = async () => {
@@ -836,42 +848,6 @@ function AdManageSection() {
         }
     };
 
-    // const updateOrder = async (id, updatedData) => {
-    //     try {
-    //         if (!id) throw new Error("No order ID provided");
-    //         if (!updatedData) throw new Error("No update data provided");
-
-    //         // Log the data being sent for debugging
-    //         console.log("Sending update data:", updatedData);
-
-    //         const response = await fetch(`${baseUrl}/prodOrders/${id}`, {
-    //             method: 'PUT',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(updatedData)
-    //         });
-
-    //         if (!response.ok) {
-    //             // Try to get more detailed error information
-    //             const errorData = await response.json().catch(() => ({}));
-    //             console.error("Server response error:", errorData);
-    //             throw new Error(errorData.message || `Server responded with status ${response.status}`);
-    //         }
-
-    //         const result = await response.json();
-    //         console.log("Update successful:", result);
-    //         await fetchOrders(); // Refresh the orders list
-    //         return result;
-    //     } catch (error) {
-    //         console.error("Update error details:", {
-    //             message: error.message,
-    //             stack: error.stack,
-    //             data: error.response?.data
-    //         });
-    //         throw error;
-    //     }
-    // };
     return (
         <div>
             <form onSubmit={handleSaveProductOrder}>
@@ -1144,8 +1120,6 @@ function AdManageSection() {
                                         </div>
                                     </div>
                                     <div>
-                                        {/* <input type='number' step='0.1' min='0' max='5' placeholder='Rating' value={prodRating}
-                                    onChange={(e) => handleRatingChange(e.target.value)} className='clientDetailsInput ratingInput'></input> */}
                                         <input type='text' className='clientDetailsInput ratingInput' value={prodRating} readOnly
                                             onChange={(e) => handleRatingChange(e.target.value)} >
                                         </input>
@@ -1168,7 +1142,6 @@ function AdManageSection() {
                             <div className='d-flex manageClientInformation'>
                                 <div className='manageClientInfoLeft'>
                                     <div className='clientDetailHeading'>Location</div>
-
                                     <div className="location-container11">
                                         {/* Input field to display selected state & district */}
 
@@ -1182,15 +1155,15 @@ function AdManageSection() {
                                                 placeholder="Select Location"
                                                 readOnly
                                             />
-                                           
-                                        </div>      
+
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div className='manageClientInfoRight'>
                                     <div className='clientDetailHeading'>Media Type</div>
                                     <input type='text' className='clientDetailsInput' value={prodType} readOnly onChange={(e) => setProdType(e.target.value)} >
                                     </input>
-
                                 </div>
                             </div>
 
@@ -1201,10 +1174,16 @@ function AdManageSection() {
                     selectedDates={selectedDates} setSelectedDates={setSelectedDates} generateMonth={generateMonth} handleDateClick={handleDateClick} resetDates={resetDates} getDateSelectionClass={getDateSelectionClass} goToNextMonth={goToNextMonth} goToPreviousMonth={goToPreviousMonth} bookedDates={bookedDates} currentMonth={currentMonth} setCurrentMonth={setCurrentMonth} confirmedDates={confirmedDates} setConfirmedDates={setConfirmedDates} pricePerDay={pricePerDay} confirmDates={confirmDates} totalDays={totalDays} totalPrice={totalPrice} isSmallScreen={isSmallScreen}
                     isValidDate={(date) => date && !isNaN(date.getTime())} isPastDate={isPastDate}
                 />
-
-                <button className="calendarSaveBtn" type='submit'>
-                    {editOrder ? "Update" : "Save"}
-
+                <button className="calendarSaveBtn" type='submit' disabled={isSaving}>
+                    {/* {editOrder ? "Update" : "Save"} */}
+                    {isSaving ? (
+                        <span>
+                            <i className="fa fa-spinner fa-spin"></i>
+                            {editOrder ? " Updating..." : " Saving..."}
+                        </span>
+                    ) : (
+                        editOrder ? "Update" : "Save"
+                    )}
                 </button>
             </form>
         </div>

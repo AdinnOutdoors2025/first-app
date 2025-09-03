@@ -47,12 +47,6 @@ const BillingDetailsCart = () => {
         setErrors(newErrors);
         return !Object.values(newErrors).some(error => error);
     };
-
-
-
-    // const [name, setName] = useState("");
-    // const [phone, setPhone] = useState("");
-    // const [email, setEmail] = useState("");
     const [name, setName] = useState(user?.userName || "");
     const [phone, setPhone] = useState(user?.userPhone || "");
     const [email, setEmail] = useState(user?.userEmail || "");
@@ -63,19 +57,14 @@ const BillingDetailsCart = () => {
     const [company, setCompany] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [isOpen1, setIsOpen1] = useState(false);
-        const [isLoading, setIsLoading] = useState(false);
-    
-
+    const [isLoading, setIsLoading] = useState(false);
     const statesList = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", " Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"];
-
     const [searchTerm, setSearchTerm] = useState("");
     const filteredStates = statesList.filter((s) =>
         s.toLowerCase().includes(searchTerm.toLowerCase())
     );
     // NAVIGATE    //If i click Continue, go to thank you page
     const navigate = useNavigate();
-
-
     const location = useLocation();
     const { billingInfo, cartItems, subTotal, TotalPrice, totalItems, SpotPay, Offer } = location.state || {};
     // Replace the problematic date handling with this:
@@ -115,14 +104,6 @@ const BillingDetailsCart = () => {
             date.getDate()
         ));
     };
-    // const getCurrentDateFormatted = () => {
-    //     const today = new Date();
-    //     const day = String(today.getDate()).padStart(2, '0');
-    //     const month = String(today.getMonth() + 1).padStart(2, '0');
-    //     const year = today.getFullYear();
-    //     return `${day}/${month}/${year}`;
-    // };
-
     // Helper function to generate array of all dates in range
     const getDateRangeArray = (start, end) => {
         const dates = [];
@@ -136,10 +117,33 @@ const BillingDetailsCart = () => {
 
         return dates;
     };
+    //NEWLY ADDED CODE
+    // Add this function to your component
+    const sendOrderSMS = async (phone, orderId, isAdmin = false) => {
+        try {
+            const response = await fetch(`${baseUrl}/send-sms`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    phone,
+                    templateId: isAdmin ? "1007478982147905431" : "1007197121174928712",
+                    variables: {
+                        orderId,
+                        customerName: name,
+                        amount: SpotPay
+                    }
+                })
+            });
 
-    // Generate all dates in the range for booking
-    // const bookedDates = getDateRangeArray(startDate, endDate);
-
+            if (!response.ok) {
+                console.error("Failed to send SMS");
+            }
+        } catch (error) {
+            console.error("SMS sending error:", error);
+        }
+    };
     const handleSubmitCartThank = async (e) => {
         e.preventDefault();
 
@@ -214,9 +218,9 @@ const BillingDetailsCart = () => {
             products: products,
             status: "UserSideOrder",
             orderType: cartItems.length > 1 ? "cart" : "single"
-        }; 
-setIsLoading(true);
-        try { 
+        };
+        setIsLoading(true);
+        try {
             // Save order to database
             const response = await fetch(`${baseUrl}/prodOrders`, {
                 method: 'POST',
@@ -231,45 +235,17 @@ setIsLoading(true);
 
             const result = await response.json();
 
+            //NEWLY ADDED CODE FOR SMS
+            try {
+                // Send SMS to user
+                await sendOrderSMS(phone, result.orderId);
 
-            //Send Email Notification
-            // try{ 
-            //     const emailResponse = await fetch(
-            //         `${baseUrl}/OrderCart/send-orderCart-confirmation`,{
-            //             method:'POST',
-            //             headers :{
-            //                 'Content-Type':'application/json',
-            //             },
-            //             body:JSON.stringify(
-            //                 {
-            //                     orderId:result.orderId || result._id,
-            //                     userName:name,
-            //                     userEmail:email,
-            //                     userPhone:phone,
-            //                     userAddress : `${address}, ${city}, ${state} - ${pincode}`,
-            //                     company,
-            //                     productDetails :{
-            //                         name : cartItems[0].prodName,
-            //                         image : cartItems[0].image,
-            //                         price: cartItems[0].price,
-            //                         dateRange:cartItems[0].dateRange,
-            //                         totalDays:cartItems[0].totalDays,
-            //                         totalAmount:cartItems[0].totalAmount
-            //                     },
-            //                     orderDate : new Date().toLocaleDateString()
-            //                 }
-            //             )
-            //         }
-            //     );
-            //     if(!emailResponse.ok){
-            //         console.error("Failed to send order confirmation email");
-            //     }
-
-            // }
-            // catch(emailError){
-            //     console.error("Email sending error:", emailError);
-            // }
-
+                // Send SMS to admin
+                await sendOrderSMS('reactdeveloper@adinn.co.in', result.orderId, true);
+            } catch (smsError) {
+                console.error("SMS sending error:", smsError);
+                // Don't fail the order if SMS fails
+            }
             // Inside handleSubmitCartThank function, after order creation:
             try {
                 const emailResponse = await fetch(
@@ -428,10 +404,7 @@ setIsLoading(true);
                                         <input
                                             type="text"
                                             value={phone}
-                                            // onChange={(e) => setPhone(e.target.value)}
-                                            // className="input-field1 phoneInputField1" required pattern="[0-9]{10}"
                                             maxLength='10'
-                                            // onChange={(e) => setPhone(e.target.value)}
                                             onChange={(e) => {
                                                 setPhone(e.target.value);
                                                 setErrors(prev => ({ ...prev, phone: false }));
@@ -451,8 +424,6 @@ setIsLoading(true);
                                     <input
                                         type="email"
                                         value={email}
-                                        // onChange={(e) => setEmail(e.target.value)}
-                                        // className="input-field1" required
                                         onChange={(e) => {
                                             setEmail(e.target.value);
                                             setErrors(prev => ({ ...prev, email: false }));
@@ -471,8 +442,6 @@ setIsLoading(true);
                                     <input
                                         type="text"
                                         value={pincode}
-                                        // onChange={(e) => setPincode(e.target.value)}
-                                        // className="input-field1" required pattern="[0-9]{6}"
                                         onChange={(e) => {
                                             setPincode(e.target.value);
                                             setErrors(prev => ({ ...prev, pincode: false }));
@@ -548,8 +517,6 @@ setIsLoading(true);
                                         <input
                                             type="text"
                                             value={city}
-                                            // onChange={(e) => setCity(e.target.value)}
-                                            // className="input-field1 cityInputField1" required
                                             onChange={(e) => {
                                                 setCity(e.target.value);
                                                 setErrors(prev => ({ ...prev, city: false }));
@@ -566,8 +533,6 @@ setIsLoading(true);
                                     <input
                                         type="text"
                                         value={company}
-                                        // onChange={(e) => setCompany(e.target.value)}
-                                        // className="input-field1" required
                                         onChange={(e) => {
                                             setCompany(e.target.value);
                                             setErrors(prev => ({ ...prev, company: false }));
@@ -584,8 +549,6 @@ setIsLoading(true);
                                     <input
                                         type="text"
                                         value={address}
-                                        // onChange={(e) => setAddress(e.target.value)}
-                                        // className="input-field1" required
                                         onChange={(e) => {
                                             setAddress(e.target.value);
                                             setErrors(prev => ({ ...prev, address: false }));
@@ -601,7 +564,7 @@ setIsLoading(true);
                             {/* Right Section: Order Summary */}
                             <div className="billing-right1">
                                 <div className="billing-section-title1">Order Summary</div>
-                                <div className="billing_contents_right1"> 
+                                <div className="billing_contents_right1">
                                     <div>
                                         <div className='BillingCart-scroll1'>
                                             {
@@ -614,12 +577,10 @@ setIsLoading(true);
                                                                 <div>₹ {item.price.toLocaleString()} Per Day</div>
                                                                 <div>Booked date : {item.dateRange} ({item.totalDays} Days)</div>
                                                                 <div>Booked Amount : {item.totalAmount} </div>
-
-
                                                             </div>
 
                                                         </div>
-                                                ) }   
+                                                )}
                                         </div>
 
                                         <div className="BillingScrollTotalContent">
@@ -638,14 +599,9 @@ setIsLoading(true);
                                         </div>
 
                                     </div>
-
-                                    {/* <div>Total Product Amount : {cartItems.totalAmount}</div>
-                        </div> */}
-
                                     <div className="billing-order-pricing1">
 
                                         {/* MOUNTING CHARGE  */}
-
                                         <div className="billing-orderContentPriceMain1">
                                             <div className="billing-orderContent11">
                                                 <div className="billing-orderContentLeft1">Price</div>
@@ -657,28 +613,20 @@ setIsLoading(true);
                                                 <div className="billing-orderContentRight1">-</div>
                                             </div>
                                         </div>
-
-
-
-
                                         <div className="billing-orderContent1">
                                             <div className="billing-orderContentLeft1 BillingTotalAmt1">Total Amount</div>
                                             <div className="billing-orderContentRight1 BillingTotalAmt1">₹{SpotPay.toLocaleString()}</div>
                                         </div>
 
                                     </div>
-                                    {/* <div className="billingNoteContent1">
-                                <span className="billingNote1"> NOTE : &nbsp;</span>This is for only Reservation Price. For Further details Our team will contact you
-                            </div> */}
-
                                 </div>
                                 {/* Billing button  */}
                                 <div className="billingButton1">
                                     <div> ₹{SpotPay.toLocaleString()}</div>
                                     <div> <button className="billingContinueBtn1" type="submit"
-                                    disabled={isLoading} >
+                                        disabled={isLoading} >
                                         {isLoading ? "Processing..." : "Continue"}
-                                    
+
                                     </button> </div>
                                 </div>
                             </div>
@@ -687,10 +635,8 @@ setIsLoading(true);
                 </div>
                 <MainFooter />
             </div>
-
         </MainLayout>
 
     );
 };
-
 export default BillingDetailsCart;

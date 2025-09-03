@@ -1,32 +1,24 @@
-// UI changed for demo purpose 2nd
 import React, { useState, useEffect } from 'react';
 import './c1login.css';
 import './c2login.css';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from './LoginContext';
 import axios from 'axios';
-//BASE URL OF http://localhost:3001 FILE IMPORT
+//BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from '../Adminpanel/BASE_URL';
-
 
 function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
     //keep me signed checkbox section
     const [keepSignedIn, setKeepSignedIn] = useState(false); // Add this line
     const navigate = useNavigate();
     //SIGN UP DETAILS
-    //Form states
     const { loginUser } = useLogin();
-    // const [isSignUp, setIsSignUp] = useState(false);
-    // const [isSignUp, setIsSignUp] = useState(true);
     // Replace the useState for isSignUp with:
     const [isSignUp, setIsSignUp] = useState(loginMode === 'signup');
-
-
     const [userName, setUserName] = useState('');
     const [userPhone, setUserPhone] = useState('');
-    // const [contact, setContact] = useState('');
     const [email, setEmail] = useState('');
-    // Enter OTP to target next value
+    // Enter OTP to target next value 
     const [enterOtp, setEnterOtp] = useState(new Array(4).fill(""));
     //UI states
     const [otp, setOtp] = useState('');
@@ -42,7 +34,6 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
     const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const validatePhone = (phone) => /^\d{10}$/.test(phone);
 
-
     // Add useEffect to update when loginMode changes
     useEffect(() => {
         setIsSignUp(loginMode === 'signup');
@@ -52,65 +43,103 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
         setEnterOtp(new Array(4).fill(""));
     }, [loginMode]);
 
-
-
-
     const sendOtp = async () => {
         setErrorMessage('');
         setStatus('Validating...');
         // For login
         if (!isSignUp) {
-            const identifier = usePhoneOTP ? userPhone : email;
+            const identifier = userPhone || email;
+
             if (!identifier) {
-                setErrorMessage(`Please enter your ${usePhoneOTP ? 'phone number' : 'email'}`);
+                setErrorMessage('Please enter your email or phone number');
                 return;
             }
-            if (usePhoneOTP && !validatePhone(identifier)) {
-                setErrorMessage('Please enter a valid 10-digit phone number');
-                return;
-            }
+            // Determine if it's a phone or email and clean the input
+            let isPhone = /^\d{10}$/.test(identifier);
+            let cleanedIdentifier = identifier;
 
-
-            if (!usePhoneOTP && !validateEmail(identifier)) {
+            if (isPhone) {
+                cleanedIdentifier = identifier.replace(/\D/g, '');
+                if (cleanedIdentifier.length !== 10) {
+                    setErrorMessage('Please enter a valid 10-digit phone number');
+                    return;
+                }
+            } else if (!validateEmail(identifier)) {
                 setErrorMessage('Please enter a valid email address');
                 return;
             }
-        }
 
+            // Update state immediately before proceeding
+            if (isPhone) {
+                setUsePhoneOTP(true);
+                setUserPhone(cleanedIdentifier);
+                setEmail('');
+            } else {
+                setUsePhoneOTP(false);
+                setEmail(cleanedIdentifier);
+                setUserPhone('');
+            }
 
-        // For signup
-        if (isSignUp) {
+            // Use the cleaned identifier for the API call
+            const loginIdentifier = isPhone ? cleanedIdentifier : cleanedIdentifier;
+
+            try {
+                setStatus('Checking user...');
+                // Check if user exists
+                const checkEndpoint = 'check-user';
+                const checkResponse = await fetch(`${baseUrl}/login/${checkEndpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(isPhone ? { phone: loginIdentifier } : { email: loginIdentifier })
+                });
+
+                const checkData = await checkResponse.json();
+
+                if (!checkData.exists) {
+                    setErrorMessage('User not found. Please sign up.');
+                    return;
+                }
+                // Send OTP
+                await sendOtpRequest(isPhone, loginIdentifier, '');
+
+            } catch (error) {
+                console.error(error);
+                setStatus('Failed');
+                setErrorMessage("Error checking user. Try again later.");
+            }
+        } else {
+            // For signup - this part remains mostly the same
             if (!userName) {
                 setErrorMessage('Please enter your name');
                 return;
             }
 
-
-            if (!userPhone || !validatePhone(userPhone)) {
+            // Clean and validate phone number
+            const cleanedPhone = userPhone.replace(/\D/g, '');
+            if (cleanedPhone.length !== 10) {
                 setErrorMessage('Please enter a valid 10-digit phone number');
                 return;
             }
-
 
             if (!email || !validateEmail(email)) {
                 setErrorMessage('Please enter a valid email address');
                 return;
             }
-        }
 
+            setUsePhoneOTP(false); // For signup, we'll use email by default
 
-        try {
-            setStatus('Checking user...');
-            // Check if user exists (for login) or doesn't exist (for signup)
-            const checkEndpoint = isSignUp ? 'check-user-exists' : 'check-user';
-            const checkResponse = await fetch(`${baseUrl}/login/${checkEndpoint}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(isSignUp ? { email, phone: userPhone } :
-                    usePhoneOTP ? { phone: userPhone } : { email })
-            });
-            const checkData = await checkResponse.json();
-            if (isSignUp) {
+            try {
+                setStatus('Checking user...');
+                // Check if user exists
+                const checkEndpoint = 'check-user-exists';
+                const checkResponse = await fetch(`${baseUrl}/login/${checkEndpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, phone: cleanedPhone })
+                });
+
+                const checkData = await checkResponse.json();
+
                 if (checkData.emailExists) {
                     setErrorMessage('Email already registered. Please login.');
                     return;
@@ -119,38 +148,32 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                     setErrorMessage('Phone already registered. Please login.');
                     return;
                 }
-            } else {
-                if (!checkData.exists) {
-                    setErrorMessage('User not found. Please sign up.');
-                    return;
-                }
+                // Send OTP via email for signup
+                await sendOtpRequest(false, email, userName);
+
+            } catch (error) {
+                console.error(error);
+                setStatus('Failed');
+                setErrorMessage("Error checking user. Try again later.");
             }
-            // Send OTP
+        }
+    };
+
+    // Helper function to send OTP
+    const sendOtpRequest = async (isPhone, identifier, userName) => {
+        try {
             setStatus('Sending OTP...');
-
-
-
-
-            console.log('Sending OTP with:', {
-                email,
-                phone: userPhone,
-                userName,
-                isSignUp
-            });
-
 
             const otpResponse = await fetch(`${baseUrl}/login/send-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify
-                ({
-                ...(usePhoneOTP ? { phone: userPhone } : { email }),
-                userName: userName // Always include userName
-            })
+                body: JSON.stringify({
+                    ...(isPhone ? { phone: identifier } : { email: identifier }),
+                    userName: userName
+                })
             });
-                       
-            const otpData = await otpResponse.json();
 
+            const otpData = await otpResponse.json();
 
             if (otpData.success) {
                 setOtpSent(true);
@@ -166,6 +189,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
             setErrorMessage("Error sending OTP. Try again later.");
         }
     };
+
     const verifyOtp = async () => {
         const finalOtp = enterOtp.join('');
         if (finalOtp.length !== 4) {
@@ -182,45 +206,41 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                     [usePhoneOTP ? 'phone' : 'email']: usePhoneOTP ? userPhone : email,
                     otp: finalOtp,
 
-
                 })
             });
-
 
             if (!verifyResponse.ok) {
                 const errorData = await verifyResponse.json();
                 throw new Error(errorData.message || "Verification failed");
             }
 
-
             const verifyData = await verifyResponse.json();
-
 
             if (!verifyData.verified) {
                 throw new Error("Invalid OTP");
             }
- if (verifyData.verified) {
-            // For signup, create user account
-            if (isSignUp) {
-                const userResponse = await fetch(`${baseUrl}/login/create-user`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ userName, userEmail: email, userPhone })
-                });
+            if (verifyData.verified) {
+                // For signup, create user account
+                if (isSignUp) {
+                    const userResponse = await fetch(`${baseUrl}/login/create-user`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ userName, userEmail: email, userPhone })
+                    });
 
-
-                if (!userResponse.ok) {
-                    const errorData = await userResponse.json();
-                    throw new Error(errorData.error || "Failed to create user");
+                    if (!userResponse.ok) {
+                        const errorData = await userResponse.json();
+                        throw new Error(errorData.error || "Failed to create user");
+                    }
+                    const userData = await userResponse.json();
+                    loginUser(userData.user, keepSignedIn);
+                    alert("Account created successfully!");
+                } else {
+                    // For login, use verified user data
+                    loginUser(verifyData.user, keepSignedIn);
+                    alert("Logged in successfully!");
                 }
-                const userData = await userResponse.json();
-                loginUser(userData.user, keepSignedIn);
-                alert("Account created successfully!");
-            } else {
-                // For login, use verified user data
-                loginUser(verifyData.user, keepSignedIn);
-                alert("Logged in successfully!");
-            }}
+            }
             onClose();
             // navigate("/book1");
         } catch (error) {
@@ -229,7 +249,6 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
             setErrorMessage(error.message || "Verification failed. Try again.");
         }
     };
-
 
     // Toggle between login and signup
     const toggleAuthMode = () => {
@@ -264,8 +283,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
         }
     };
 
-
-    // Enter OTP to target next value
+    // Enter OTP to target next value 
     function handleOtpChange(e, index) {
         if (!/^\d*$/.test(e.target.value)) return; // Only allow numbers
         let otpArray = [...enterOtp];
@@ -292,7 +310,6 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 </div>
             </div>
 
-
             <div className='login-lower'>
                 {!otpSent ? (
                     <>
@@ -305,7 +322,6 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                                     value={userName}
                                     onChange={e => setUserName(e.target.value)}
                                 /><br />
-
 
                                 <input
                                     type="tel"
@@ -338,7 +354,6 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                         )}
                         {errorMessage && <div className="error-message-login">{errorMessage}</div>}
 
-
                         {!isSignUp && (
                             <div>
                                 <label className="checkbox-container">
@@ -350,7 +365,6 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                                 </label>
                             </div>
                         )}
-
 
                         <button type='submit' className="continue-btn" onClick={sendOtp}>
                             {isSignUp ? "Get OTP" : "Send OTP"}

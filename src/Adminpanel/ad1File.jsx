@@ -1078,8 +1078,6 @@ function ClientSection() {
     // const [similarProdId, setSimilarProdId] = useState('#1');
     // Rating section 
     const [prodRating, setProdRating] = useState(4.5);
-
-
     // LATITUDE AND LOGITUDE
     const [prodLatitude, setProdLatitude] = useState('');
     const [prodLongitude, setProdLongitude] = useState('');

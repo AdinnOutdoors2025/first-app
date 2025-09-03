@@ -9,7 +9,7 @@ import LoginPageMain from './C1LoginMain';
 import OtpMain from './D1OtpMain';
 import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
-//IMPORTED use context spot
+//IMPORTED use context spot 
 import { useSpot } from "./B0SpotContext";
 import { MainLayout } from './MainLayout';
 import { useLogin } from './LoginContext';
@@ -31,8 +31,6 @@ function BookASite1() {
     const [currentProduct, setCurrentProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    //ADDITIONAL FILES FETCHED FROM DATABASE
-
     const [additionalFiles, setAdditionalFiles] = useState([]);
     const [currentMainImage, setCurrentMainImage] = useState('');
     const [currentPreviewType, setCurrentPreviewType] = useState('image'); // 'image' or 'video'
@@ -40,6 +38,7 @@ function BookASite1() {
     const [selectedFileIndex, setSelectedFileIndex] = useState(-1); // Track selected file index
 
     const videoRef = useRef(null);
+
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -47,7 +46,6 @@ function BookASite1() {
                 if (location.state?.selectedSpot) {
                     setCurrentProduct(location.state?.selectedSpot);
                     fetchSimilarProducts(location.state?.selectedSpot.prodCode);
-                    //ADDITIONAL FILES FETCHED FROM DATABASE
                     setAdditionalFiles(location.state?.selectedSpot.additionalFiles || []);
                     setCurrentMainImage(location.state?.selectedSpot.imageUrl);
                     setSelectedFileIndex(-1);
@@ -57,13 +55,10 @@ function BookASite1() {
                 // If accessed via direct URL, fetch the product
                 if (productId) {
 
-
                     // Extract the actual ID from the URL (remove the slug part)
                     const actualId = productId.split('-')[0];
                     const response = await fetch(`${baseUrl}/products/${actualId}`);
                     const data = await response.json();
-
-
                     if (response.ok) {
                         const mappedSpot = {
                             id: data._id,
@@ -91,13 +86,11 @@ function BookASite1() {
                             additionalFiles: data.additionalFiles || []
                         };
                         setCurrentProduct(mappedSpot);
-                        setSelectedSpot(mappedSpot); // Update context as well
-                        fetchSimilarProducts(data.prodCode);
-                        //ADDITIONAL FILES FETCHED FROM DATABASE
                         setAdditionalFiles(data.additionalFiles || []);
                         setCurrentMainImage(data.image);
+                        setSelectedSpot(mappedSpot); // Update context as well
                         setSelectedFileIndex(-1); // Reset selected file index
-
+                        fetchSimilarProducts(data.prodCode);
                     }
                     else {
                         console.error("Product not found");
@@ -109,10 +102,11 @@ function BookASite1() {
                 setIsLoading(false);
             }
         };
+
         fetchProduct();
     }, [productId, location.state]);
 
-    // Navbar js
+    // Navbar js 
     const fetchSimilarProducts = async (prodCode) => {
         try {
             const response = await fetch(
@@ -164,30 +158,35 @@ function BookASite1() {
         const productSlug = `${spot._id}-${slugify(spot.name, { lower: true, strict: true })}`;
         // Update URL without page reload
         navigate(`/Product/${productSlug}`, { replace: true });
+
         setCurrentProduct(mappedSpot);
-        setSelectedSpot(mappedSpot);
-        //ADDITIONAL FILES FETCHED FROM DATABASE
         setAdditionalFiles(spot.additionalFiles || []);
         setCurrentMainImage(spot.image);
         setCurrentPreviewType('image');
         setCurrentVideoUrl('');
         setSelectedFileIndex(-1);
+        setSelectedSpot(mappedSpot);
+
         // Don't fetch similar products again here - keep the original list
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
+
     const [isMenuOpen, setMenuOpen] = useState(false);
     const toggleMenu = () => {
         setMenuOpen(!isMenuOpen);
     };
+
     //Nav_user toggle section
     const [isOpen, setIsOpen] = useState(false);
+
     const toggleNavOpen = () => {
         setIsOpen(!isOpen);
     };
     //If i click the orders, signup or login then go the login page
     const navigate = useNavigate();
+
     //Image change
-    // const imgRef = useRef(null); // Reference to the image element
+    const imgRef = useRef(null); // Reference to the image element
     // const handleImageChange = (image) => {
     //     // Switch statement to set image based on color
     //     switch (image) {
@@ -204,6 +203,13 @@ function BookASite1() {
     //             imgRef.current.src = "/images/spot1.png"; // Default image
     //     }
     // };
+    //Start rating board
+    // Function to render star ratings
+
+
+
+
+
 
 
     // Handle image change for thumbnails
@@ -225,6 +231,11 @@ function BookASite1() {
             setCurrentMainImage(file.url);
             setCurrentVideoUrl('');
             setSelectedFileIndex(index);
+
+
+            if (imgRef.current) {
+                imgRef.current.src = file.url;
+            }
         }
     };
 
@@ -236,6 +247,9 @@ function BookASite1() {
             setCurrentPreviewType('image');
             setCurrentVideoUrl('');
             setSelectedFileIndex(-1); // Reset to main image
+            // if (imgRef.current) {
+            //     imgRef.current.src = currentProduct.imageUrl;
+            // }
         }
     };
 
@@ -249,7 +263,7 @@ function BookASite1() {
         return selectedFileIndex === -1;
     };
 
-    //Start rating board
+
     const RatingStars = ({ rating }) => {
         const fullStars = Math.floor(rating);
         const halfStar = rating % 1 !== 0;
@@ -268,6 +282,7 @@ function BookASite1() {
     };
 
     //CALENDER SECTION  
+
     // Replace hardcoded bookedDates with fetched data
     const [bookedDates, setBookedDates] = useState([]);
     const [isCalendarOpen, setIsCalendarOpen] = useState(false); // State to toggle calendar
@@ -275,11 +290,9 @@ function BookASite1() {
     const today = new Date();
     const [currentMonth, setCurrentMonth] = useState(new Date()); // Start with March 2025
 
-
     // const [isCalendarOpen, setIsCalendarOpen] = useState(false); // State to toggle calendar
-    const [isLoginOpen, setIsLoginOpen] = useState(false); // State to toggle Login
+    const [isLoginOpen, setIsLoginOpen] = useState(false); // State to toggle Login 
     const [isOtpMainOpen, setIsOtpMainOpen] = useState(false); // State to toggle Verify OTP page
-
 
     // Add date validation for past dates
     const isPastDate = (date) => {
@@ -288,6 +301,7 @@ function BookASite1() {
         const normalizedDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         return normalizedDate < today;
     };
+
     // Campaign Date Selection
     const [selectedDates, setSelectedDates] = useState({ start: null, end: null });
     const [confirmedDates, setConfirmedDates] = useState({}); // To store confirmed dates
@@ -311,7 +325,6 @@ function BookASite1() {
             days.push(null);
         }
 
-
         // Fill actual days
         for (let day = 1; day <= daysInMonth; day++) {
             const date = new Date(year, month, day);
@@ -323,7 +336,8 @@ function BookASite1() {
     };
     const handleDateClick = (date) => {
         if (!date || isNaN(date.getTime())) return;
-        //Create date without time component
+
+        // Create date without time component
         const normalizedDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         // Check if date is booked or in the past
         const isBooked = bookedDates.some(d =>
@@ -331,14 +345,15 @@ function BookASite1() {
             d.getUTCMonth() === normalizedDate.getUTCMonth() &&
             d.getUTCDate() === normalizedDate.getUTCDate()
         );
+
         const isPast = isPastDate(normalizedDate);
+
         if (isBooked || isPast) return;
         if (bookedDates.some(d =>
             d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
             d.getUTCMonth() === normalizedDate.getUTCMonth() &&
             d.getUTCDate() === normalizedDate.getUTCDate()
         )) return;
-
 
         if (!selectedDates.start || selectedDates.end) {
             setSelectedDates({ start: normalizedDate, end: null });
@@ -354,14 +369,19 @@ function BookASite1() {
         setSelectedDates({ start: null, end: null });
         setConfirmedDates({ start: null, end: null }); // Reset confirmed dates
     };
+
+
     // UPDATED DATE CLASS CALCULATION
     const getDateSelectionClass = (date) => {
         if (!date || isNaN(date.getTime())) return "disabled";
+
+
         const normalizedDate = new Date(Date.UTC(
             date.getFullYear(),
             date.getMonth(),
             date.getDate()
         ));
+
         // Check if date is booked
         const isBooked = bookedDates.some(d =>
             d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
@@ -371,6 +391,7 @@ function BookASite1() {
 
         if (isBooked) return "booked";
         if (isPastDate(normalizedDate)) return "past";
+
         const dateString = date.toISOString().split('T')[0];
         const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         const startUTC = selectedDates.start ? new Date(Date.UTC(
@@ -378,6 +399,7 @@ function BookASite1() {
             selectedDates.start.getMonth(),
             selectedDates.start.getDate()
         )) : null;
+
         const endUTC = selectedDates.end ? new Date(Date.UTC(
             selectedDates.end.getFullYear(),
             selectedDates.end.getMonth(),
@@ -389,11 +411,13 @@ function BookASite1() {
             d.getUTCMonth() === utcDate.getUTCMonth() &&
             d.getUTCDate() === utcDate.getUTCDate()
         )) return "booked";
+
         if (startUTC && utcDate.getTime() === startUTC.getTime()) return "selected-start";
         if (endUTC && utcDate.getTime() === endUTC.getTime()) return "selected-end";
         if (startUTC && endUTC && utcDate > startUTC && utcDate < endUTC) {
             return "selected-range";
         }
+
         return "";
     };
 
@@ -410,15 +434,18 @@ function BookASite1() {
             const dates = await res.json();
             setBookedDates(dates.map(d => new Date(d)));
         };
+
         fetchBookedDates();
     }, [productsOrderData]); // Refresh when orders change
 
     const toggleCalendar = () => {
         setIsCalendarOpen(!isCalendarOpen);
     };
+
     const closeCalendar = () => {
         setIsCalendarOpen(false);
     };
+
     //Toggle LoginPage
     const toggleLoginPage = () => {
         setIsLoginOpen(!isLoginOpen);
@@ -426,6 +453,7 @@ function BookASite1() {
     const closeLoginPage = () => {
         setIsLoginOpen(false);
     };
+
     //Toggle OtpMainPage
     const toggleOtpMainPage = () => {
         setIsOtpMainOpen(!isOtpMainOpen);
@@ -435,6 +463,7 @@ function BookASite1() {
     };
     // //USE CONTEXT SECTION
     // const { selectedSpot } = useSpot();
+
     if (isLoading) {
         return (
             <MainLayout>
@@ -446,7 +475,8 @@ function BookASite1() {
             </MainLayout>
         );
     }
-    // ADD TO CART BUTTON
+
+    // ADD TO CART BUTTON 
     const handleAddToCart = async () => {
         if (!user) {
             openLogin();
@@ -459,6 +489,9 @@ function BookASite1() {
         }
         // Proceed with adding to cart
         console.log("Dates confirmed! Adding to cart...");
+        console.log("Adding to cart for user:", user._id);
+        console.log("Product data:", currentProduct);
+
         const cartItem = {
             userId: user._id,
             productId: currentProduct.id,
@@ -494,10 +527,16 @@ function BookASite1() {
             latitude: currentProduct.latitude,
             longitude: currentProduct.longitude,
             LocationLink: currentProduct.LocationLink,
+            // ... existing reserveItem properties
+            // userId: user._id, // Add user ID to the reservation
             userEmail: user.email,
             userPhone: user.phone,
             userName: user.userName,
+
+            //      totalDays,
+            // totalAmount: totalPrice.toLocaleString()
         };
+    console.log("Cart item being sent:", cartItem);
 
         try {
             const response = await fetch(`${baseUrl}/cart`, {
@@ -507,17 +546,22 @@ function BookASite1() {
                 },
                 body: JSON.stringify(cartItem)
             });
+
             if (!response.ok) {
                 throw new Error('Failed to add to cart');
             }
+
             alert("Item added to cart successfully!");
             navigate("/cart");
         } catch (error) {
             console.error('Error adding to cart:', error);
             alert("Failed to add item to cart. Please try again.");
         }
+
+
     };
-    // RESERVE NOW BUTTON
+
+    // RESERVE NOW BUTTON 
     const handleReserveNow = () => {
         if (!user) {
             openLogin();
@@ -530,18 +574,19 @@ function BookASite1() {
         }
         // Proceed with adding to cart
         console.log("Dates confirmed! Adding to Reserve...");
+
         // Create dates in UTC to avoid timezone issues
         const startDate = new Date(Date.UTC(
             confirmedDates.start.getFullYear(),
             confirmedDates.start.getMonth(),
             confirmedDates.start.getDate()
         ));
+
         const endDate = new Date(Date.UTC(
             confirmedDates.end.getFullYear(),
             confirmedDates.end.getMonth(),
             confirmedDates.end.getDate()
         ));
-
 
         // Calculate total days and price
         const timeDiff = endDate.getTime() - startDate.getTime();
@@ -550,6 +595,7 @@ function BookASite1() {
             prodCode: currentProduct.prodCode,
             image: currentProduct.imageUrl,
             prodName: currentProduct.prodName,
+            // image: currentProduct.imageUrl,
             title: currentProduct.location,
             price: currentProduct.price,
             rating: currentProduct.rating,
@@ -569,6 +615,7 @@ function BookASite1() {
             adType: currentProduct.category,
             totalAmount: totalPrice.toLocaleString(),
             totalDays: totalDays,
+
             SpotOutdoorType: currentProduct.prodLighting,
             PrintingCost: currentProduct.printingCost,
             MountingCost: currentProduct.mountingCost,
@@ -580,7 +627,6 @@ function BookASite1() {
             longitude: currentProduct.longitude,
             LocationLink: currentProduct.LocationLink,
 
-
             // ... existing reserveItem properties
             userId: user._id, // Add user ID to the reservation
             userEmail: user.email,
@@ -588,9 +634,11 @@ function BookASite1() {
             userName: user.userName
         };
         console.log("START DATE", reserveItem.startDate);
+
         // Redirect to Cart Page
         navigate("/billing", { state: { reserveItem } });
     };
+
     // Calculate total price dynamically when start and end dates are selected
     const pricePerDay = currentProduct?.price || 0; // Ensure pricePerDay is defined
     const getAvailableDaysInRange = (start, end) => {
@@ -608,7 +656,6 @@ function BookASite1() {
             );
         };
 
-
         // Create Set of booked dates in UTC
         const bookedUTCDates = new Set(
             bookedDates.map(d => normalizeDate(d))
@@ -621,7 +668,6 @@ function BookASite1() {
             }
             current.setDate(current.getDate() + 1);
         }
-
 
         return days;
     };
@@ -671,15 +717,6 @@ function BookASite1() {
                                 <div className="row bookContentRow1">
                                     <div className='bookContentRow2' style={{ display: 'flex', }}>
                                         <div className='book-images-section'>
-                                            {/* <div className='book-images'>
-                                                <img src="/images/spot1.png" className="img-fluid book-img11" alt="Small image1" onClick={() => handleImageChange('image1')} />
-                                            </div>
-                                            <div className='book-images'>
-                                                <img src="/images/spot2.png" className="img-fluid book-img21 " alt="Small image 1" onClick={() => handleImageChange('image2')} />
-                                            </div>
-                                            <div className='book-images'>
-                                                <img src="/images/spot3.png" className="img-fluid book-img31" alt="Small image 1" onClick={() => handleImageChange('image3')} />
-                                            </div> */}
                                             {/* Additional files thumbnails */}
                                             {additionalFiles.map((file, index) => (
                                                 <div
@@ -694,14 +731,12 @@ function BookASite1() {
                                                                 muted
                                                                 preload="metadata"
                                                                 onLoadedData={(e) => {
-                                                                    // Seek to a middle frame for better thumbnail..0 means starting video thumbnail
+                                                                    // Seek to a middle frame for better thumbnail
                                                                     if (e.target.duration) {
-                                                                        // e.target.currentTime = e.target.duration / 2;
                                                                         e.target.currentTime = 0;
                                                                     }
                                                                 }}
                                                                 onSeeked={(e) => {
-                                                                    // This ensures the first frame is displayed after seeking
                                                                     e.target.pause();
                                                                 }}
                                                             >
@@ -728,26 +763,39 @@ function BookASite1() {
                                             ))}
                                         </div>
                                         <div className='book-mainImage'>
-                                            {/* <img src={currentProduct.imageUrl} ref={imgRef} className="img-fluid book-mainImg1" alt="Large image" /> */}
                                             {currentPreviewType === 'video' ? (
                                                 <video className='book-mainImg1'
                                                     ref={videoRef}
                                                     key={currentVideoUrl} // Add key to force re-render
                                                     controls
                                                     autoPlay
+                                                // style={{
+                                                //     width: '100%',
+                                                //     height: '100%',
+                                                //     // maxHeight: '400px',
+                                                //     // borderRadius: '8px'
+                                                // }}
                                                 >
                                                     <source src={currentVideoUrl} type="video/mp4" />
                                                     Your browser does not support the video tag.
                                                 </video>
                                             ) : (
                                                 <img
+                                                    // ref={imgRef}
                                                     src={currentMainImage || currentProduct?.imageUrl}
                                                     className="img-fluid book-mainImg1"
                                                     alt="Large image"
                                                     onClick={handleMainImageClick}
+                                                // style={{
+                                                //     cursor: 'pointer',
+                                                //     width: '100%',
+                                                //     height: '100%',
+                                                //     borderRadius: '8px',
+                                                //     border: isMainImageSelected() ? '2px solid #007bff' : 'none'
+
+                                                // }}
                                                 />
                                             )}
-
                                         </div>
                                     </div>
                                 </div>
@@ -773,12 +821,10 @@ function BookASite1() {
                                             <a href="#Terms" className='book-condition anchor'>Terms & Condition</a>
                                         </div>
 
-
                                         <div className='book-rateContent2'>
                                             <button className=" book-date" onClick={toggleCalendar}>Select date
                                                 <span><img src='/images/calender_icon.png' className='calender'></img></span>
                                             </button>
-
 
                                         </div>
                                     </div>
@@ -787,7 +833,6 @@ function BookASite1() {
                                     <button className="btn-cart" onClick={handleAddToCart}>Add to Cart</button><br></br>
                                     <button className=" mt-3 mb-2 btn-enquire" onClick={toggleOtpMainPage}>Enquire Now</button><br></br>
                                 </div>
-
 
                             ) : (
                                 <p>No spot selected. Please go back and select a spot.</p>
@@ -810,16 +855,19 @@ function BookASite1() {
                                     </div>
                                 )
                             }
+
                             {/* Login Page open  */}
                             {
                                 isOtpMainOpen && (
                                     <div className="otp-overlay">
+
                                         <OtpMain
                                             toggleOtpMainPage={toggleOtpMainPage}
                                             closeOtpMainPage={closeOtpMainPage}
                                             productData={currentProduct} // Pass the current product details
                                         />
-                                    </div>)}
+                                    </div>
+                                )}
                         </div>
                     </div>
                     <div id='Terms'>
@@ -844,11 +892,12 @@ function BookASite1() {
                                 <div class="container similar mt-5">
                                     <h2 class="NearbyHeading mb-4">Nearby Similar Products</h2>
                                     <div class="row similar-products">
+
                                         {displayedSimilarSpots.length > 0 ? (
                                             displayedSimilarSpots.map(
                                                 (spot) => (
                                                     <div className="col-lg-3 col-md-3 col-sm-12 mb-4 " key={spot._id} >
-                                                        <div className="card board1-book1" >
+                                                        <div className="card board1-book1" onClick={() => handleSimilarProductClick(spot)} style={{ cursor: 'pointer' }}>
                                                             <img src={spot.image} alt={spot.location} className="card-img-top-book1" />
                                                             <span className='board-category-book1'>{spot.category}</span>
                                                             <div className="board-content-book1 ">
@@ -878,10 +927,13 @@ function BookASite1() {
                             </div>
                         </div>
                     </div>
+                    {/* Footer section */}
                 </div>
-                <MainFooter />
             </div>
+            <MainFooter />
+            {/* </div> */}
         </MainLayout>
     )
 }
+
 export default BookASite1;

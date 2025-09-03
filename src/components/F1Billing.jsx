@@ -76,9 +76,9 @@ const BillingDetails = () => {
     //     return <div className="ReserveError">No reserved item found!</div>;
     // }
     // Only show error if coming from booking path
-if (location.pathname.includes('/billing') && !reserveItem) {
-    return <div className="ReserveError">No reserved item found!</div>;
-}
+    if (location.pathname.includes('/billing') && !reserveItem) {
+        return <div className="ReserveError">No reserved item found!</div>;
+    }
 
 
     // const formatDateForDisplay = (date) => {
@@ -128,6 +128,35 @@ if (location.pathname.includes('/billing') && !reserveItem) {
         }
 
         return dates;
+    };
+
+
+    //NEWLY ADDED FUNCTION FOR SMS
+    // Add this function to your component
+    const sendOrderSMS = async (phone, orderId, isAdmin = false) => {
+        try {
+            const response = await fetch(`${baseUrl}/send-sms`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    phone,
+                    templateId: isAdmin ? "1007478982147905431" : "1007197121174928712",
+                    variables: {
+                        orderId,
+                        customerName: name,
+                        amount: reserveItem.SpotPay
+                    }
+                })
+            });
+
+            if (!response.ok) {
+                console.error("Failed to send SMS");
+            }
+        } catch (error) {
+            console.error("SMS sending error:", error);
+        }
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -242,6 +271,17 @@ if (location.pathname.includes('/billing') && !reserveItem) {
                 throw new Error(errorData.message || 'Failed to save order');
             }
             const result = await response.json();
+            //NEWLY ADDED CODE FOR SMS
+            try {
+                // Send SMS to user
+                await sendOrderSMS(phone, result.orderId || result._id);
+
+                // Send SMS to admin
+                await sendOrderSMS('reactdeveloper@adinn.co.in', result.orderId || result._id, true);
+            } catch (smsError) {
+                console.error("SMS sending error:", smsError);
+                // Don't fail the order if SMS fails
+            }
             try {
                 const emailResponse = await fetch(
                     `${baseUrl}/OrderReserve/send-order-confirmation`, {

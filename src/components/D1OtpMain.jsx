@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './d1Otp.css';
 import { useNavigate } from 'react-router-dom';
-
 //BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from '../Adminpanel/BASE_URL';
 
@@ -16,6 +15,7 @@ function OtpMain({ closeOtpMainPage, productData }) {
     const [status, setStatus] = useState('');
     const [otpError, setOtpError] = useState(false);
     const [enterOtp, setEnterOtp] = useState(new Array(6).fill(""));
+    const [isVerifying, setIsVerifying] = useState(false);
 
     // Function to send OTP
     const sendOtp = async () => {
@@ -58,24 +58,26 @@ function OtpMain({ closeOtpMainPage, productData }) {
 
     // Function to verify OTP
     const verifyOtp = async () => {
-        const finalOtp = enterOtp.join('');
-        setOtp(finalOtp);
+        // const finalOtp = enterOtp.join('');
+        // setOtp(finalOtp);
 
-        if (finalOtp.length !== 6) {
+        if (otp.length !== 6) {
             setErrorMessage("Enter a valid 6-digit OTP");
             return;
-        } 
-         
+        }
+        if (isVerifying) return; // Prevent multiple clicks
+        setIsVerifying(true);
         try {
             const response = await fetch(`${baseUrl}/verify/verify-otp`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ 
-                    phone: `+91${phone}`, 
-                    otp: finalOtp,
-                    productData : productData 
+                body: JSON.stringify({
+                    phone: `+91${phone}`,
+                    // otp: finalOtp,
+                    otp: otp,
+                    productData: productData
                 })
             });
 
@@ -101,8 +103,10 @@ function OtpMain({ closeOtpMainPage, productData }) {
             setOtpError(true);
             setErrorMessage(error.message || "Verification failed. Try again.");
         }
+        finally {
+            setIsVerifying(false);
+        }
     };
-    
 
     // Resend OTP with Timer
     const startResendTimer = () => {
@@ -123,8 +127,13 @@ function OtpMain({ closeOtpMainPage, productData }) {
         if (!/^\d*$/.test(e.target.value)) return;
         let otpArray = [...enterOtp];
         otpArray[index] = e.target.value;
+        // setEnterOtp(otpArray);
+        // setOtp(otpArray.join(''));
+        // setOtpError(false);
+        const newOtp = otpArray.join('');
+        // Update both states simultaneously
         setEnterOtp(otpArray);
-        setOtp(otpArray.join(''));
+        setOtp(newOtp);
         setOtpError(false);
 
         if (e.target.value && e.target.nextSibling) {
@@ -148,8 +157,8 @@ function OtpMain({ closeOtpMainPage, productData }) {
                 {verified ? (
                     <div className="thank">
                         <center>
-                            <div> 
-                                <img src='/images/Thankyou.png' className='thankyou-img' alt="Thank You" /> 
+                            <div>
+                                <img src='/images/Thankyou.png' className='thankyou-img' alt="Thank You" />
                             </div>
                         </center>
                         <div className='thankyou-text'>Thank You</div>
@@ -211,7 +220,9 @@ function OtpMain({ closeOtpMainPage, productData }) {
                             )}
                         </span> <br></br>
 
-                        <button className="Submit-btn1" onClick={verifyOtp}>Submit OTP</button><br />
+                        <button className="Submit-btn1" onClick={verifyOtp} disabled={isVerifying}>
+                            {isVerifying ? 'Verifying...' : 'Submit OTP'}
+                        </button><br />
                     </>
                 )}
             </div>
@@ -220,10 +231,6 @@ function OtpMain({ closeOtpMainPage, productData }) {
 }
 
 export default OtpMain;
-
-
-
-
 //  // RUN 
 // // cd backend -> node VerifyMain 
 // // then run D1OtpMain.jsx
