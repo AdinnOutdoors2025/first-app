@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
-import "./F1Billing.css"; // Ensure styles are correctly applied
+import "./F1Billing.css";
 import { useNavigate, useLocation } from 'react-router-dom';
 import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
 import { toast } from 'react-toastify';
-// import axios from 'axios';
 //the mainLayout for login toggle then background gets blurred 
 import { MainLayout } from './MainLayout';
 import { useLogin } from './LoginContext';
-
-//BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from '../Adminpanel/BASE_URL';
 
 const BillingDetails = () => {
@@ -42,13 +39,7 @@ const BillingDetails = () => {
         setErrors(newErrors);
         return !Object.values(newErrors).some(error => error);
     };
-
     // Pre-fill form with user data if available
-
-
-    // const [name, setName] = useState("");
-    // const [phone, setPhone] = useState("");
-    // const [email, setEmail] = useState("");
     const [name, setName] = useState(user?.userName || "");
     const [phone, setPhone] = useState(user?.userPhone || "");
     const [email, setEmail] = useState(user?.userEmail || "");
@@ -60,7 +51,6 @@ const BillingDetails = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isOpen1, setIsOpen1] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
     const statesList = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", " Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"];
     const [searchTerm, setSearchTerm] = useState("");
     const filteredStates = statesList.filter((s) =>
@@ -71,25 +61,10 @@ const BillingDetails = () => {
     // SELECTED ITEM SENT TO BILLING PAGE 
     const location = useLocation();
     const { reserveItem } = location.state || {}; // Destructure from state
-
-    // if (!reserveItem) {
-    //     return <div className="ReserveError">No reserved item found!</div>;
-    // }
     // Only show error if coming from booking path
     if (location.pathname.includes('/billing') && !reserveItem) {
         return <div className="ReserveError">No reserved item found!</div>;
     }
-
-
-    // const formatDateForDisplay = (date) => {
-    //     if (!date || !(date instanceof Date) || isNaN(date.getTime())) return "N/A";
-    //     return date.toLocaleDateString('en-US', { 
-    //         month: 'short', 
-    //         day: 'numeric',
-    //         year: 'numeric'
-    //     });
-    // }; 
-
     const formatDateForStorage = (date) => {
         if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
             console.error("Invalid date:", date);
@@ -101,13 +76,6 @@ const BillingDetails = () => {
             date.getDate()
         ));
     };
-    // const getCurrentDateFormatted = () => {
-    //     const today = new Date();
-    //     const day = String(today.getDate()).padStart(2, '0');
-    //     const month = String(today.getMonth() + 1).padStart(2, '0');
-    //     const year = today.getFullYear();
-    //     return `${day}/${month}/${year}`;
-    // }; 
     const generateUserOrderId = () => {
         const now = new Date();
         const year = now.getFullYear().toString().slice(-2);
@@ -129,8 +97,6 @@ const BillingDetails = () => {
 
         return dates;
     };
-
-
     //NEWLY ADDED FUNCTION FOR SMS
     // Add this function to your component
     const sendOrderSMS = async (phone, orderId, isAdmin = false) => {
@@ -167,7 +133,6 @@ const BillingDetails = () => {
         // Validate form first
         if (!validateForm()) {
             alert("Please fill in all required fields correctly");
-            // toast.error("Please fill all required fields correctly");
             return;
         }
 
@@ -177,14 +142,9 @@ const BillingDetails = () => {
             if (!reserveItem?.startDate || !reserveItem?.endDate) {
                 throw new Error("Invalid date range in reservation");
             }
-
             // Use the Date objects stored in reserveItem
             const startDate = new Date(reserveItem.startDate);;
             const endDate = new Date(reserveItem.endDate);;
-            //   if (!startDate || !endDate || isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-            //             throw new Error("Invalid date range in reservation");
-            //         }
-
             if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
                 throw new Error("Invalid dates");
             }
@@ -352,8 +312,6 @@ const BillingDetails = () => {
         catch (error) {
             console.error("Order submission error:", error);
             alert(`Error: ${error.message || "Failed to submit order"}`);
-
-            //  toast.error(`Error: ${error.message || "Failed to submit order"}`);
         } finally {
             setIsLoading(false);
         }
@@ -397,7 +355,6 @@ const BillingDetails = () => {
                                     {errors.name && <div className="AdminProderror-messageBilling ">Name is required</div>}
 
                                     <span className={`billingInputSpan  ${name.length === 0 ? "" : "inputSpanFill"}`}>Your Name*</span>
-                                    {/* {errors.name && <div className="AdminProderror-messageBilling ">Name is required</div>} */}
                                 </div>
                                 {/* PHONE  */}
                                 <div className="phone-input">
@@ -405,24 +362,18 @@ const BillingDetails = () => {
                                         <div className={`country-code ${errors.phone ? 'AdminProdinput-errorBilling' : ''}`}>
                                             +91
                                         </div>
-                                        {/* <i className={`fa-solid ${isOpen ? "fa-caret-up" : "fa-caret-down"} phoneInputUpDown`}></i> */}
                                     </div>
-
                                     <div className="billingSpan billingPhoneSpan">
                                         <input
                                             type="number"
                                             value={phone} maxLength='10'
-                                            // onChange={(e) => setPhone(e.target.value)}
                                             onChange={(e) => {
                                                 setPhone(e.target.value);
                                                 setErrors(prev => ({ ...prev, phone: false }));
                                             }}
                                             className={`input-field phoneInputField ${errors.phone ? 'AdminProdinput-errorBilling' : ''} `} />
-                                        {/* {errors.phone && <div className="AdminProderror-messageBilling ">Contact Number is required</div>} */}
                                         {errors.phone && <div className="AdminProderror-messageBillingPhone">
                                             {!phone ? "Contact is required" : "Contact must be 10 digits"}
-
-
                                         </div>}
                                         <span className={`billingInputSpan billingPhoneInputSpan  ${phone.length === 0 ? "" : "inputPhoneSpanFill"}`}>Phone Number*</span>
                                     </div>
@@ -473,14 +424,11 @@ const BillingDetails = () => {
                                             type="text"
                                             value={state}
                                             onFocus={() => setIsOpen1(true)}
-
                                             readOnly
-                                            // className="input-field stateInputField" required 
                                             className={`input-field stateInputField ${errors.state ? 'AdminProdinput-errorBilling' : ''}`}
 
                                         />
                                         <span className={`billingInputSpan ${state.length === 0 ? "" : "inputSpanFill"}`}>State*</span>
-
                                         {/* Dropdown Icon */}
                                         <i
                                             className={`fa-solid ${isOpen1 ? "fa-caret-up" : "fa-caret-down"} phoneInputUpDown`}
@@ -616,15 +564,11 @@ const BillingDetails = () => {
 
                             </div>
                         </form>
-
                     </div>
                 </div>
                 <MainFooter />
             </div>
-
         </MainLayout>
-
     );
 };
-
 export default BillingDetails;

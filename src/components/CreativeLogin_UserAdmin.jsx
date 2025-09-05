@@ -21,9 +21,6 @@ const AdminAuth = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [authField, setAuthField] = useState('password'); // New state for auth method
-
-
-
     useEffect(() => {
         if (location.state?.registrationSuccess) {
             setIsRegistering(false);
@@ -34,7 +31,6 @@ const AdminAuth = () => {
     const handleChange = (e) => {
         setFormData({
             ...formData,
-
             [e.target.name]: e.target.value
         });
     };
@@ -49,7 +45,6 @@ const AdminAuth = () => {
         });
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Submitting with:', formData);  // Add this line
@@ -61,17 +56,12 @@ const AdminAuth = () => {
             : `${baseUrl}/adminUserLogin/admin`;
 
         try {
-
             // For registration, send all fields
             // For login, only send username and password
             const payload = isRegistering
                 ? formData
                 : {
-                    // username: formData.username, secretCode: formData.secretCode };
-
                     username: formData.username,
-                    // ...(formData.password ? { password: formData.password } : {}),
-                    // ...(formData.secretCode ? { secretCode: formData.secretCode } : {})
                     [authField]: formData[authField]
                 };
             const response = await fetch(endpoint, {
@@ -104,12 +94,6 @@ const AdminAuth = () => {
 
                     closeLogin();
                     // navigate('/admin');
-                    // Redirect based on role
-                    // if (data.user.role === 'admin') {
-                    //     navigate('/admin');
-                    // } else {
-                    //     navigate('/');
-                    // }
                     // Redirect to the originally requested page or admin dashboard
                     const from = location.state?.from || '/admin';
                     navigate(from, { replace: true });
@@ -178,7 +162,6 @@ const AdminAuth = () => {
                     {isRegistering ? (
                         /* REGISTRATION FIELDS */
                         <>
-
                             <div className="admin-user-form-group password-group">
                                 <label>
                                     Password {isRegistering && '(min 6 characters)'}
@@ -200,8 +183,6 @@ const AdminAuth = () => {
                                         onClick={() => setShowPassword(!showPassword)}
                                     >
                                         {showPassword ? '👁️' : '👁️‍🗨️'}
-                                        {/* {showPassword ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>‍🗨️'} */}
-
                                     </button>
                                 </div>
                             </div>
@@ -224,8 +205,6 @@ const AdminAuth = () => {
                                         onClick={() => setShowSecretCode(!showSecretCode)}
                                     >
                                         {showSecretCode ? '👁️' : '👁️‍🗨️'}
-                                        {/* {showSecretCode ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>'} */}
-
                                     </button>
                                 </div>
                             </div>
@@ -280,14 +259,10 @@ const AdminAuth = () => {
                                         {authField === 'password' ?
                                             (showPassword ? '👁️' : '👁️‍🗨️') :
                                             (showSecretCode ? '👁️' : '👁️‍🗨️')
-
-
                                         }
                                     </button>
                                 </div>
                             </div>
-
-
                             <div className="admin-user-remember-me">
                                 <input
                                     type="checkbox"

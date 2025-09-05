@@ -58,9 +58,6 @@ function OtpMain({ closeOtpMainPage, productData }) {
 
     // Function to verify OTP
     const verifyOtp = async () => {
-        // const finalOtp = enterOtp.join('');
-        // setOtp(finalOtp);
-
         if (otp.length !== 6) {
             setErrorMessage("Enter a valid 6-digit OTP");
             return;
@@ -127,9 +124,6 @@ function OtpMain({ closeOtpMainPage, productData }) {
         if (!/^\d*$/.test(e.target.value)) return;
         let otpArray = [...enterOtp];
         otpArray[index] = e.target.value;
-        // setEnterOtp(otpArray);
-        // setOtp(otpArray.join(''));
-        // setOtpError(false);
         const newOtp = otpArray.join('');
         // Update both states simultaneously
         setEnterOtp(otpArray);
@@ -231,6 +225,3 @@ function OtpMain({ closeOtpMainPage, productData }) {
 }
 
 export default OtpMain;
-//  // RUN 
-// // cd backend -> node VerifyMain 
-// // then run D1OtpMain.jsx

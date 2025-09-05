@@ -4,7 +4,6 @@ import './c2login.css';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from './LoginContext';
 import axios from 'axios';
-//BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from '../Adminpanel/BASE_URL';
 
 function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
@@ -92,7 +91,6 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(isPhone ? { phone: loginIdentifier } : { email: loginIdentifier })
                 });
-
                 const checkData = await checkResponse.json();
 
                 if (!checkData.exists) {
@@ -397,7 +395,6 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                                     }} />))}
                         </div>
                         {otpError && <div className="error-message-login">Enter a correct code</div>}
-                        {/* <br /> */}
                         <div className='otpTime'>
                             {resendTimer > 0 ? (
                                 `Resend OTP in: ${resendTimer} sec`

@@ -9,12 +9,10 @@ import LoginPageMain from './C1LoginMain';
 import OtpMain from './D1OtpMain';
 import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
-//IMPORTED use context spot 
 import { useSpot } from "./B0SpotContext";
 import { MainLayout } from './MainLayout';
 import { useLogin } from './LoginContext';
 import { useParams, useLocation } from "react-router-dom";
-//BASE URL OF http://localhost:3001 FILE IMPORT
 import { baseUrl } from '../Adminpanel/BASE_URL';
 import slugify from 'slugify';
 
@@ -30,15 +28,12 @@ function BookASite1() {
     const [displayedSimilarSpots, setDisplayedSimilarSpots] = useState([]);
     const [currentProduct, setCurrentProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-
     const [additionalFiles, setAdditionalFiles] = useState([]);
     const [currentMainImage, setCurrentMainImage] = useState('');
     const [currentPreviewType, setCurrentPreviewType] = useState('image'); // 'image' or 'video'
     const [currentVideoUrl, setCurrentVideoUrl] = useState('');
     const [selectedFileIndex, setSelectedFileIndex] = useState(-1); // Track selected file index
-
     const videoRef = useRef(null);
-
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -88,7 +83,7 @@ function BookASite1() {
                         setCurrentProduct(mappedSpot);
                         setAdditionalFiles(data.additionalFiles || []);
                         setCurrentMainImage(data.image);
-                        setSelectedSpot(mappedSpot); // Update context as well
+                        setSelectedSpot(mappedSpot);
                         setSelectedFileIndex(-1); // Reset selected file index
                         fetchSimilarProducts(data.prodCode);
                     }
@@ -156,9 +151,7 @@ function BookASite1() {
         };
         // Generate URL-friendly slug
         const productSlug = `${spot._id}-${slugify(spot.name, { lower: true, strict: true })}`;
-        // Update URL without page reload
         navigate(`/Product/${productSlug}`, { replace: true });
-
         setCurrentProduct(mappedSpot);
         setAdditionalFiles(spot.additionalFiles || []);
         setCurrentMainImage(spot.image);
@@ -166,7 +159,6 @@ function BookASite1() {
         setCurrentVideoUrl('');
         setSelectedFileIndex(-1);
         setSelectedSpot(mappedSpot);
-
         // Don't fetch similar products again here - keep the original list
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -203,15 +195,6 @@ function BookASite1() {
     //             imgRef.current.src = "/images/spot1.png"; // Default image
     //     }
     // };
-    //Start rating board
-    // Function to render star ratings
-
-
-
-
-
-
-
     // Handle image change for thumbnails
 
     const handleImageChange = (file, index) => {
@@ -223,22 +206,16 @@ function BookASite1() {
             setCurrentPreviewType('video');
             setCurrentVideoUrl(file.url);
             setSelectedFileIndex(index);
-
-            // Optionally open a modal to play the video
         } else {
-            // For images, update the main image
             setCurrentPreviewType('image');
             setCurrentMainImage(file.url);
             setCurrentVideoUrl('');
             setSelectedFileIndex(index);
-
-
             if (imgRef.current) {
                 imgRef.current.src = file.url;
             }
         }
     };
-
 
     // Handle main product image click to reset to original
     const handleMainImageClick = () => {
@@ -247,9 +224,6 @@ function BookASite1() {
             setCurrentPreviewType('image');
             setCurrentVideoUrl('');
             setSelectedFileIndex(-1); // Reset to main image
-            // if (imgRef.current) {
-            //     imgRef.current.src = currentProduct.imageUrl;
-            // }
         }
     };
 
@@ -262,8 +236,6 @@ function BookASite1() {
     const isMainImageSelected = () => {
         return selectedFileIndex === -1;
     };
-
-
     const RatingStars = ({ rating }) => {
         const fullStars = Math.floor(rating);
         const halfStar = rating % 1 !== 0;
@@ -282,14 +254,12 @@ function BookASite1() {
     };
 
     //CALENDER SECTION  
-
     // Replace hardcoded bookedDates with fetched data
     const [bookedDates, setBookedDates] = useState([]);
     const [isCalendarOpen, setIsCalendarOpen] = useState(false); // State to toggle calendar
     // const [currentMonth, setCurrentMonth] = useState(new Date(2025, 2)); // Start with March 2025
     const today = new Date();
     const [currentMonth, setCurrentMonth] = useState(new Date()); // Start with March 2025
-
     // const [isCalendarOpen, setIsCalendarOpen] = useState(false); // State to toggle calendar
     const [isLoginOpen, setIsLoginOpen] = useState(false); // State to toggle Login 
     const [isOtpMainOpen, setIsOtpMainOpen] = useState(false); // State to toggle Verify OTP page
@@ -307,7 +277,6 @@ function BookASite1() {
     const [confirmedDates, setConfirmedDates] = useState({}); // To store confirmed dates
     console.log(selectedDates);
     console.log("NEW SELECTED START DATE", selectedDates.start);
-    // console.log(" SELECTED START DATE" , selectedDates.start.toISOString());
     const formattedStartDate = selectedDates.start; // Stores full date in ISO format
     const formattedEndDate = selectedDates.end;
     console.log("NEW START DATE", formattedStartDate);
@@ -461,9 +430,6 @@ function BookASite1() {
     const closeOtpMainPage = () => {
         setIsOtpMainOpen(false);
     };
-    // //USE CONTEXT SECTION
-    // const { selectedSpot } = useSpot();
-
     if (isLoading) {
         return (
             <MainLayout>
@@ -626,7 +592,6 @@ function BookASite1() {
             latitude: currentProduct.latitude,
             longitude: currentProduct.longitude,
             LocationLink: currentProduct.LocationLink,
-
             // ... existing reserveItem properties
             userId: user._id, // Add user ID to the reservation
             userEmail: user.email,
@@ -706,9 +671,7 @@ function BookASite1() {
     return (
         <MainLayout>
             <div>
-                {/* </div> */}
                 <MainNavbar />
-                {/* <div className={`calendar-wrapper ${isCalendarOpen ? "calendar-open" : ""}`}> */}
                 <div className={`calendar-wrapper login-wrapper otp-wrapper ${isCalendarOpen ? "calendar-open" : ""} ${isLoginOpen ? "login-open" : ""} ${isOtpMainOpen ? "otp-main-open" : ""} `}>
                     {/* Image with details section  */}
                     <div className="container-fluid mt-5  Book-section " id="similarProdDetailsShows">
@@ -731,7 +694,6 @@ function BookASite1() {
                                                                 muted
                                                                 preload="metadata"
                                                                 onLoadedData={(e) => {
-                                                                    // Seek to a middle frame for better thumbnail
                                                                     if (e.target.duration) {
                                                                         e.target.currentTime = 0;
                                                                     }
@@ -754,8 +716,6 @@ function BookASite1() {
                                                                     width: '100%',
                                                                     height: '100%',
                                                                     objectFit: 'cover',
-                                                                    //border: isFileSelected(index) ? '2px solid #007bff' : 'none'
-                                                                    // border: currentPreviewType === 'image' && currentMainImage === file.url ? '2px solid #007bff' : 'none'
                                                                 }}
                                                             />
                                                         )}
@@ -769,31 +729,16 @@ function BookASite1() {
                                                     key={currentVideoUrl} // Add key to force re-render
                                                     controls
                                                     autoPlay
-                                                // style={{
-                                                //     width: '100%',
-                                                //     height: '100%',
-                                                //     // maxHeight: '400px',
-                                                //     // borderRadius: '8px'
-                                                // }}
                                                 >
                                                     <source src={currentVideoUrl} type="video/mp4" />
                                                     Your browser does not support the video tag.
                                                 </video>
                                             ) : (
                                                 <img
-                                                    // ref={imgRef}
                                                     src={currentMainImage || currentProduct?.imageUrl}
                                                     className="img-fluid book-mainImg1"
                                                     alt="Large image"
                                                     onClick={handleMainImageClick}
-                                                // style={{
-                                                //     cursor: 'pointer',
-                                                //     width: '100%',
-                                                //     height: '100%',
-                                                //     borderRadius: '8px',
-                                                //     border: isMainImageSelected() ? '2px solid #007bff' : 'none'
-
-                                                // }}
                                                 />
                                             )}
                                         </div>
@@ -837,8 +782,6 @@ function BookASite1() {
                             ) : (
                                 <p>No spot selected. Please go back and select a spot.</p>
                             )}
-                            {/* ))} */}
-
                             {/* Calender section Selected dates  */}
                             {isCalendarOpen && (
                                 <div className="calendar-overlay">
@@ -855,7 +798,6 @@ function BookASite1() {
                                     </div>
                                 )
                             }
-
                             {/* Login Page open  */}
                             {
                                 isOtpMainOpen && (
@@ -921,19 +863,15 @@ function BookASite1() {
                                         ) : (
                                             <p className="text-center">No similar products found.</p>
                                         )}
-                                        {/* <!-- Repeat the above block for each product -->  */}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {/* Footer section */}
                 </div>
             </div>
             <MainFooter />
-            {/* </div> */}
         </MainLayout>
     )
 }
-
 export default BookASite1;

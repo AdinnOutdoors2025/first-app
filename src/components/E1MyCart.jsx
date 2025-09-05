@@ -5,7 +5,6 @@ import { useLogin } from './LoginContext';
 import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
 import { MainLayout } from './MainLayout';
-//BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from '../Adminpanel/BASE_URL';
 
 
@@ -50,7 +49,7 @@ const Cart = () => {
             setIsLoading(false);
         }
     };
-     useEffect(() => {
+    useEffect(() => {
         if (user) {
             fetchCartItems();
         } else if (!isLoginOpen) {
@@ -58,7 +57,7 @@ const Cart = () => {
         }
     }, [user, isLoginOpen]);
 
- // Add debugging to see what's happening
+    // Add debugging to see what's happening
     useEffect(() => {
         console.log('User state changed:', user);
         console.log('Items state:', items);
@@ -213,13 +212,13 @@ const Cart = () => {
         });
     };
 
-   
+
     return (
         <MainLayout>
             <div>
                 <MainNavbar />
                 <div className="container-fluid cart-container">
-                                       
+
                     {isLoading ? (
                         <div className="container loading">
                             <div className="spinner-border text-primary" role="status">
@@ -228,90 +227,90 @@ const Cart = () => {
                         </div>
                     ) : (
 
-                    <div className='cart-items-main'>
-                        <h1 className='cart-heading'>My Cart</h1>
-                        <div className="cart-items">
-                            <div className="form-group cart-option">
-                                <div>
-                                    <label className="checkbox-container1">
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedItems.length === items.length && items.length > 0}
-                                            onChange={handleSelectAll}
-                                        />
-                                        <span className="checkmark1">&#x2714;</span>
-                                        <span className='check-content1'>Select all</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <button
-                                        className="select-delete-button"
-                                        onClick={handleDeleteSelected}
-                                        disabled={selectedItems.length === 0}
-                                    >
-                                        <img src='./images/Delete_icon.svg' className='select_delete' alt="Delete Selected" />
-                                    </button>
-                                </div>
-                            </div>
-                            <div className='item-scroll'>
-                                {items.length > 0 ? ( 
-                                    items.map((item) => ( 
-                                        <div className="cart-item-content" key={item._id}>
-                                            <div className='input-checks'>
-                                                <label className="checkbox-container1">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={selectedItems.includes(item._id)}
-                                                        onChange={() => handleSelectItem(item._id)}
-                                                    />
-                                                    <span className="checkmark1">&#x2714;</span>
-                                                </label>
-                                            </div>
-                                            <div className="item-details d-flex">
-                                                <div>
-                                                    <img src={item.image} className='item-img' alt={item.title} />
-                                                </div>
-                                                <div>
-                                                    <div className='item-title'>{item.prodName}</div>
-                                                    <div className='item-price'>₹ {item.price.toLocaleString()}</div>
-                                                    <div className="d-flex itemDateRange">
-                                                        <div className='item-dateRange'>Campaign Date</div>
-                                                        <div className='item-detailSection'> {item.dateRange}</div>
-                                                    </div>
-                                                    <div className="d-flex itemDateRange">
-                                                        <div className='item-dateRange'>Total Amount</div>
-                                                        <div className='item-detailSection'>₹ {item.totalAmount}</div>
-                                                    </div>
-                                                    <div className="d-flex itemSizeDimensions">
-                                                        <div className='item-size'>Size & Dimensions</div>
-                                                        <div className='item-detailSection'> W {item.sizeWidth} x H {item.sizeHeight} <span className='item-slash'> | </span> {item.dimension} Sq.ft</div>
-                                                    </div>
-                                                    <div className="d-flex itemAdType">
-                                                        <div className='item-type'>Ad Type</div>
-                                                        <div className='item-detailSection'> {item.adType}</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <button
-                                                    className="item-delete-button"
-                                                    onClick={() => handleDeleteItem(item._id)}
-                                                >
-                                                    <i className="fa-solid fa-x"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className='text-center align-center'>
-                                        <i className="fas fa-exclamation-circle" style={{ color: 'red', fontSize: '20px', marginRight: '5px' }}></i>
-                                        <span className='NoItems'>No Items in the Cart</span>
+                        <div className='cart-items-main'>
+                            <h1 className='cart-heading'>My Cart</h1>
+                            <div className="cart-items">
+                                <div className="form-group cart-option">
+                                    <div>
+                                        <label className="checkbox-container1">
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedItems.length === items.length && items.length > 0}
+                                                onChange={handleSelectAll}
+                                            />
+                                            <span className="checkmark1">&#x2714;</span>
+                                            <span className='check-content1'>Select all</span>
+                                        </label>
                                     </div>
-                                )}
+                                    <div>
+                                        <button
+                                            className="select-delete-button"
+                                            onClick={handleDeleteSelected}
+                                            disabled={selectedItems.length === 0}
+                                        >
+                                            <img src='./images/Delete_icon.svg' className='select_delete' alt="Delete Selected" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className='item-scroll'>
+                                    {items.length > 0 ? (
+                                        items.map((item) => (
+                                            <div className="cart-item-content" key={item._id}>
+                                                <div className='input-checks'>
+                                                    <label className="checkbox-container1">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={selectedItems.includes(item._id)}
+                                                            onChange={() => handleSelectItem(item._id)}
+                                                        />
+                                                        <span className="checkmark1">&#x2714;</span>
+                                                    </label>
+                                                </div>
+                                                <div className="item-details d-flex">
+                                                    <div>
+                                                        <img src={item.image} className='item-img' alt={item.title} />
+                                                    </div>
+                                                    <div>
+                                                        <div className='item-title'>{item.prodName}</div>
+                                                        <div className='item-price'>₹ {item.price.toLocaleString()}</div>
+                                                        <div className="d-flex itemDateRange">
+                                                            <div className='item-dateRange'>Campaign Date</div>
+                                                            <div className='item-detailSection'> {item.dateRange}</div>
+                                                        </div>
+                                                        <div className="d-flex itemDateRange">
+                                                            <div className='item-dateRange'>Total Amount</div>
+                                                            <div className='item-detailSection'>₹ {item.totalAmount}</div>
+                                                        </div>
+                                                        <div className="d-flex itemSizeDimensions">
+                                                            <div className='item-size'>Size & Dimensions</div>
+                                                            <div className='item-detailSection'> W {item.sizeWidth} x H {item.sizeHeight} <span className='item-slash'> | </span> {item.dimension} Sq.ft</div>
+                                                        </div>
+                                                        <div className="d-flex itemAdType">
+                                                            <div className='item-type'>Ad Type</div>
+                                                            <div className='item-detailSection'> {item.adType}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <button
+                                                        className="item-delete-button"
+                                                        onClick={() => handleDeleteItem(item._id)}
+                                                    >
+                                                        <i className="fa-solid fa-x"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className='text-center align-center'>
+                                            <i className="fas fa-exclamation-circle" style={{ color: 'red', fontSize: '20px', marginRight: '5px' }}></i>
+                                            <span className='NoItems'>No Items in the Cart</span>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
+
                         </div>
-                
-                    </div>
                     )}
                     <div className='cart-items-mainR'>
                         <div className='cart-items-mainRight'>
@@ -352,14 +351,7 @@ const Cart = () => {
                             </div>
                         </div>
                     </div>
-
-                    {/* 
-</>
-
-
-                    )} */}
                 </div>
-
                 <br></br> <br></br>
                 <MainFooter />
             </div>

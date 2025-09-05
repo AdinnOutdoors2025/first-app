@@ -837,17 +837,6 @@ function AdManageSection() {
         }
     };
 
-    // Fetch all orders
-    const fetchOrders = async () => {
-        try {
-            const response = await fetch(`${baseUrl}/prodOrders`);
-            const data = await response.json();
-            setProductsOrderData(data);
-        } catch (error) {
-            console.error("Error fetching orders:", error);
-        }
-    };
-
     return (
         <div>
             <form onSubmit={handleSaveProductOrder}>
@@ -1028,10 +1017,6 @@ function AdManageSection() {
                                         <div className='clientDetailHeading'>Lighting Type</div>
                                         <input type='text' className='clientDetailsInput' value={prodLighting} readOnly
                                             onChange={(e) => setProdLighting(e.target.value)}>
-                                            {/* <option value="Lighting">Lightning</option>
-                                        <option value="Lid">Lid</option>
-                                        <option value="Non-Lid">Non-Lid</option> */}
-
                                         </input>
                                     </div>
                                     <div className='clientDetailSection'>
@@ -1046,8 +1031,6 @@ function AdManageSection() {
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Product ID</div>
                                         <input type='text' placeholder='Enter Product ID' value={productID}
-
-                                            // onChange={(e) => setProductId(e.target.value)} 
                                             onChange={handleProductIdChange}
                                             className='clientDetailsInput'></input>
 
@@ -1113,7 +1096,6 @@ function AdManageSection() {
                                 <div className='ProductRatingMain'>
                                     <div >
                                         <div>
-                                            {/* <span><img src='./images/rating_board.png' className='Product-rate-board1'></img></span> */}
                                             <span className='Product-star-main' >
                                                 <RatingStars1 rating={parseFloat(prodRating) || 0} />
                                             </span>
@@ -1144,7 +1126,6 @@ function AdManageSection() {
                                     <div className='clientDetailHeading'>Location</div>
                                     <div className="location-container11">
                                         {/* Input field to display selected state & district */}
-
                                         <div className="input-wrapper"
                                         // onClick={toggleStateDropdown}
                                         >

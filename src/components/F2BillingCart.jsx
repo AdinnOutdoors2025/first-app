@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./F2BillingCart.css"; // Ensure styles are correctly applied
+import "./F2BillingCart.css";
 import { useNavigate, useLocation } from 'react-router-dom';
 import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
@@ -7,15 +7,11 @@ import { toast } from 'react-toastify';
 //the mainLayout for login toggle then background gets blurred 
 import { MainLayout } from './MainLayout';
 import { useLogin } from './LoginContext';
-
-//BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from '../Adminpanel/BASE_URL';
 
 
 const BillingDetailsCart = () => {
-
     const { user } = useLogin();
-
     //HANDLING ERRORS
     const [errors, setErrors] = useState({
         name: false,
@@ -26,13 +22,10 @@ const BillingDetailsCart = () => {
         city: false,
         address: false,
         company: false,
-
     });
 
     const validateForm = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
         const newErrors = {
             name: !name,
             phone: !phone || phone.toString().length !== 10,
@@ -146,13 +139,11 @@ const BillingDetailsCart = () => {
     };
     const handleSubmitCartThank = async (e) => {
         e.preventDefault();
-
         // Validate form first
         if (!validateForm()) {
             alert("Please fill all required fields correctly");
             return;
         }
-
         // Prepare products data with proper date handling
         const products = cartItems.map(item => {
             // Convert dates to proper format
@@ -189,8 +180,8 @@ const BillingDetailsCart = () => {
                 rating: item.rating,
                 mediaType: item.adType,
                 location: {
-                    state: item.state || 'Unknown', // Provide default if missing,
-                    district: item.district || 'Unknown', // Provide default if missing
+                    state: item.state || 'Unknown',
+                    district: item.district || 'Unknown',
                 },
                 booking: {
                     startDate: startDate,
@@ -352,14 +343,12 @@ const BillingDetailsCart = () => {
     }
     return (
         <MainLayout>
-
             <div>
                 <MainNavbar />
                 <div className="billing-container1">
                     <div className="billing-header1">
                         <div>BILLING DETAILS</div>
                     </div>
-
                     <div >
                         <form onSubmit={handleSubmitCartThank} className="billing-content1">
                             {/* Left Section: Delivery Address */}
@@ -397,7 +386,6 @@ const BillingDetailsCart = () => {
                                         <div className={`country-code1 ${errors.phone ? 'AdminProdinput-errorBilling1' : ''}`}>
                                             +91
                                         </div>
-                                        {/* <i className={`fa-solid ${isOpen ? "fa-caret-up" : "fa-caret-down"} phoneInputUpDown`}></i> */}
                                     </div>
 
                                     <div className="billingSpan1 billingPhoneSpan1">
@@ -462,10 +450,7 @@ const BillingDetailsCart = () => {
                                             value={state}
                                             onFocus={() => setIsOpen1(true)}
                                             readOnly
-                                            // className="input-field1 stateInputField1" required 
                                             className={`input-field1 stateInputField1 ${errors.state ? 'AdminProdinput-errorBilling1' : ''}`}
-
-
                                         />
                                         <span className={`billingInputSpan1 ${state.length === 0 ? "" : "inputSpanFill1"}`}>State*</span>
 
