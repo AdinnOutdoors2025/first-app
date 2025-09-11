@@ -29,17 +29,29 @@ function NavbarMain() {
             }
         };
 
-
         window.addEventListener('resize', handleResize);
-        // Set initial state
         handleResize();
-
-
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    //Newly added code
+    // Add scroll event listener to close dropdown on scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            if (isOpen) {
+                setIsOpen(false);
+            }
+            if (isMenuOpen && isMobile) {
+                setMenuOpen(false);
+            }
+        };
 
+        window.addEventListener('scroll', handleScroll);
 
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [isOpen, isMenuOpen, isMobile]);
 
     const toggleNavOpen = () => {
         //setIsOpen(!isOpen);
@@ -61,11 +73,6 @@ function NavbarMain() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [isOpen]);
-
-
-
-
-
 
     //If i click the orders, signup or login then go the login page
     const navigate = useNavigate();
@@ -92,18 +99,11 @@ function NavbarMain() {
         }
     };
 
-
     useEffect(() => {
         fetchCartCount();
-        // Set up interval to periodically check for cart updates
         const interval = setInterval(fetchCartCount, 30000); // Check every 5 seconds
-
-
         return () => clearInterval(interval);
     }, [user]);
-
-
-
 
     return (
         <div className="container navbar1">
@@ -123,20 +123,13 @@ function NavbarMain() {
                     <img src="/images/BookBtn_logo.png" alt="Image" className="book-btn-image" width="45" height="25" />
                 </button>
                 <i className="fa-solid fa-cart-shopping cart"
-                // onClick={() => navigate("/cart")}
-                onClick={() => {
-    if (user) {
-      navigate("/cart");
-    } else {
-      openLogin('login', '/cart'); // Show login popup, redirect to cart after
-    }
-  }}
-
-
-
-
-                ></i>
-                {/* <p className='cart-number'>{items.length}</p> */}
+                    onClick={() => {
+                        if (user) {
+                            navigate("/cart");
+                        } else {
+                            openLogin('login', '/cart'); // Show login popup, redirect to cart after
+                        }
+                    }}></i>
                 {cartCount > 0 && <p className='cart-number'>{cartCount}</p>}
                 <div className="nav_container">
                     <img src="/images/nav_user.png" alt="User Icon" className='nav_user' onMouseEnter={toggleNavOpen}

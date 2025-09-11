@@ -1,28 +1,20 @@
-.navbar1 {
+.container.navbar1Hero {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 90%;
-    max-width: 73%;
+    align-content: center;
+    width: 100%;
+    max-width: 100%;
     height: 80px;
     margin: 0 auto;
     padding: 0 20px;
-    margin-left: auto;
-    margin-right: auto;
     position: sticky;
     top: 0;
-    background-color: rgba(255, 253, 253, 0.7);
-    border-radius: 32px;
     z-index: 10000;
-    background: transparent;
     box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.15);
 }
 
-.navbar1 {
-    background-color: rgba(255, 253, 253, 0.7);
-}
-
-.navbar1::before {
+.navbar1Hero::before {
     content: '';
     position: absolute;
     top: 0;
@@ -32,29 +24,29 @@
     background: rgba(255, 253, 253, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-radius: 32px;
     z-index: -1;
 }
 
-.nav-content11 img {
+
+.nav-content11Hero img {
     height: 50px;
     width: auto;
     cursor: pointer;
 }
 
-.nav-content21 {
+.nav-content21Hero {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.home-icon {
+.home-iconHero {
     height: 45px;
     width: 45px;
     cursor: pointer;
 }
 
-.contact-btn {
+.contact-btnHero {
     color: black;
     padding: 10px 20px;
     border: 1px solid black;
@@ -65,11 +57,11 @@
     transition: all 0.3s ease;
 }
 
-.contact-btn:hover {
+.contact-btnHero:hover {
     background: rgba(0, 0, 0, 0.1);
 }
 
-.book-btn {
+.book-btnHero {
     position: relative;
     background: rgba(228, 30, 37, 1);
     color: white;
@@ -88,11 +80,11 @@
 
 
 
-.book-btn-text {
+.book-btn-textHero {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.book-btn-image {
+.book-btn-imageHero {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -101,22 +93,23 @@
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.book-btn:hover .book-btn-text {
+.book-btnHero:hover .book-btn-textHero {
     opacity: 0;
 }
 
-.book-btn:hover .book-btn-image {
+.book-btnHero:hover .book-btn-imageHero {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
 }
 
-.cart-container {
+
+.cart-containerHero {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.cart {
+.cartHero {
     cursor: pointer;
     font-size: 30px;
     color: #333;
@@ -124,7 +117,7 @@
 }
 
 
-.cart-number {
+.cart-numberHero {
     color: white;
     background: rgba(228, 30, 37, 1);
     height: 26px;
@@ -137,10 +130,10 @@
     font-size: 16px;
     position: absolute;
     top: 10%;
-    right: 13%;
+    right: 9.4%;
 }
 
-.nav_user {
+.nav_userHero {
     height: 40px;
     width: auto;
     cursor: pointer;
@@ -151,11 +144,11 @@
     transform: scale(1.05);
 } */
 
-.nav_container {
+.nav_containerHero {
     position: relative;
 }
 
-.nav_user-content {
+.nav_user-contentHero {
     position: absolute;
     top: 100%;
     right: 0;
@@ -173,13 +166,13 @@
     transition: all 0.3s ease;
 }
 
-.nav_user-content.open {
+.nav_user-contentHero.open {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-.nav_user_name {
+.nav_user_nameHero {
     font-weight: 500;
     font-size: 15px;
     color: rgba(27, 28, 32, 1);
@@ -188,7 +181,7 @@
     padding: 0;
 }
 
-.nav_user_phone {
+.nav_user_phoneHero {
     float: left;
     font-weight: 400;
     font-size: 15px;
@@ -198,7 +191,7 @@
     padding: 0;
 }
 
-.nav_user_items {
+.nav_user_itemsHero {
     color: rgba(27, 28, 32, 1);
     font-weight: 400;
     font-size: 15px;
@@ -209,11 +202,11 @@
     transition: color 0.3s ease;
 }
 
-.nav_user_items:hover {
+.nav_user_itemsHero:hover {
     color: rgba(228, 30, 37, 1);
 }
 
-.hamburger-menu {
+.hamburger-menuHero {
     display: none;
     cursor: pointer;
     z-index: 1001;
@@ -221,15 +214,18 @@
     color: #333;
 }
 
-.close-btn,
-.bar-btn {
+.close-btnHero,
+.bar-btnHero {
     transition: transform 0.3s ease;
 }
 
-.close-btn:hover,
-.bar-btn:hover {
+.close-btnHero:hover,
+.bar-btnHero:hover {
     transform: scale(1.1);
 }
+
+
+
 
 .laptop-img1 {
     margin-top: 4%;
@@ -274,7 +270,7 @@
     left: 60.3%;
     height: 77px;
     width: 25px;
-} 
+}
 
 @media (min-width: 2560px) {
 
@@ -282,66 +278,64 @@
         height: 100vh;
     } */
 
-    .navbar1 {
-        /* margin: auto 28%;
-        width: 1128px; */
+    .container.navbar1Hero {
         height: 150px;
-        border-radius: 65px;
+
     }
 
-    .navbar1::before {
-        border-radius: 65px;
+    .container.navbar1Hero::before {
+        height: 150px;
+        /* background-color: rgb(238, 151, 151); */
+
     }
 
-    .nav-content11 img {
+    .nav-content11Hero img {
         height: 90px;
         margin-left: 25%;
     }
 
-    .home-icon {
+    .home-iconHero {
         height: 85px;
         width: 85px;
         margin-right: 0px;
     }
 
-    .nav-content21 {
+    .nav-content21Hero {
         gap: 25px;
     }
 
-    .nav-content21 button {
+    .nav-content21Hero button {
         border-radius: 35px;
         padding: 15px 30px;
         font-size: 26px;
     }
 
-    .book-btn-image {
+    .book-btn-imageHero {
         height: 40px;
         width: 75px;
     }
 
-    .cart {
+    .cartHero {
         font-size: 55px;
         margin-left: 4px;
         margin-right: 15px;
     }
 
-    .cart-number {
-        /* height: 33px; */
-        /* width: 33px; */
+    .cart-numberHero {
         padding: 22px;
         font-size: 28px;
         position: absolute;
-        top: 11%;
-        right: 11.5%;
+        top: 10.5%;
+        right: 8.4%;
     }
 
-    .nav_user {
+    .nav_userHero {
         height: 60px;
         width: 120px;
         margin-right: 48px;
     }
 
-    .nav_user-content {
+    .nav_user-contentHero {
         top: 100%;
         right: 40px;
         margin-top: 10px;
@@ -349,23 +343,24 @@
         height: auto;
     }
 
-    .nav_user_phone {
+    .nav_user_phoneHero {
         font-size: 28px;
         line-height: 25.33px;
 
     }
 
-    .nav_user_name {
+    .nav_user_nameHero {
         font-size: 28px;
         line-height: 40.33px;
     }
 
-    .nav_user_items {
+    .nav_user_itemsHero {
         font-weight: 400;
         font-size: 28px;
         line-height: 25.53px;
         margin-top: 25px;
     }
+
 
     .laptop-img1 {
         height: 680px;
@@ -404,39 +399,39 @@
 @media (min-width: 1440px) and (max-width:2559px) {
 
 
-    .home-icon {
+    .home-iconHero {
         height: 50px;
         width: 50px;
         margin-right: 0px;
     }
 
-    .contact-btn,
-    .book-btn {
+    .contact-btnHero,
+    .book-btnHero {
         font-size: 17px;
     }
 
-    .cart {
+    .cartHero {
         font-size: 32px;
     }
 
-    .cart-number {
+    .cart-numberHero {
         top: 10%;
-        right: 13%;
+        right: 9.5%;
         font-size: 17px;
     }
 
-    .nav-content21 {
+    .nav-content21Hero {
         gap: 20px;
     }
 
-    .nav_user {
+    .nav_userHero {
         height: 40px;
         width: 90px;
         margin-right: 15px;
     }
 
 
-    .nav_user-content {
+    .nav_user-contentHero {
         top: 100%;
         right: 20px;
         margin-top: 15px;
@@ -444,18 +439,18 @@
         height: auto;
     }
 
-    .nav_user_phone {
+    .nav_user_phoneHero {
         font-size: 17px;
         line-height: 10.33px;
 
     }
 
-    .nav_user_name {
+    .nav_user_nameHero {
         font-size: 17px;
         line-height: 32.33px;
     }
 
-    .nav_user_items {
+    .nav_user_itemsHero {
         font-weight: 400;
         font-size: 17px;
         line-height: 13.53px;
@@ -505,46 +500,46 @@
 @media (min-width: 992px) and (max-width: 1024px) {
 
 
-    .navbar1 {
+    .navbar1Hero {
         max-width: 70%;
     }
 
 
-    .home-icon {
+    .home-iconHero {
         height: 45px;
         width: 45px;
         margin-right: 0px;
     }
 
-    .contact-btn,
-    .book-btn {
+    .contact-btnHero,
+    .book-btnHero {
         font-size: 15px;
     }
 
-    .cart {
+    .cartHero {
         font-size: 28px;
     }
 
-    .cart-number {
-        top: 12%;
-        right: 15.8%;
+    .cart-numberHero {
+        top: 11%;
+        right: 11%;
         font-size: 15px;
         height: 25px;
         width: 25px;
     }
 
-    .nav-content21 {
+    .nav-content21Hero {
         gap: 20px;
     }
 
-    .nav_user {
+    .nav_userHero {
         height: 35px;
         width: 70px;
         margin-right: 10px;
     }
 
 
-    .nav_user-content {
+    .nav_user-contentHero {
         top: 100%;
         right: 10px;
         margin-top: 12px;
@@ -552,18 +547,18 @@
         height: auto;
     }
 
-    .nav_user_phone {
+    .nav_user_phoneHero {
         font-size: 15px;
         line-height: 10.33px;
 
     }
 
-    .nav_user_name {
+    .nav_user_nameHero {
         font-size: 15px;
         line-height: 32.33px;
     }
 
-    .nav_user_items {
+    .nav_user_itemsHero {
         font-weight: 400;
         font-size: 15px;
         line-height: 13.53px;
@@ -617,54 +612,46 @@
     } */
 
 
-    .navbar1 {
+    .navbar1Hero {
         max-width: 90%;
-        /* height: 70px; */
-        /* border-radius: 20px; */
     }
 
 
-
-    .home-icon {
+    .home-iconHero {
         height: 45px;
         width: 45px;
         margin-right: 0px;
     }
 
-    .contact-btn,
-    .book-btn {
+    .contact-btnHero,
+    .book-btnHero {
         font-size: 13px;
     }
 
-    .cart {
+    .cartHero {
         font-size: 28px;
     }
 
-    .cart-number {
+    .cart-numberHero {
         top: 11%;
-        right: 16%;
+        right: 14.6%;
         font-size: 15px;
         height: 25px;
         width: 25px;
     }
 
-    .nav-content21 {
+    .nav-content21Hero {
         gap: 20px;
     }
 
-
-
-
-
-
-    .nav_user {
+    .nav_userHero {
         height: 35px;
         width: 70px;
         margin-right: 10px;
     }
 
 
-    .nav_user-content {
+    .nav_user-contentHero {
         top: 100%;
         right: 10px;
         margin-top: 12px;
@@ -672,18 +659,18 @@
         height: auto;
     }
 
-    .nav_user_phone {
+    .nav_user_phoneHero {
         font-size: 15px;
         line-height: 10.33px;
 
     }
 
-    .nav_user_name {
+    .nav_user_nameHero {
         font-size: 15px;
         line-height: 32.33px;
     }
 
-    .nav_user_items {
+    .nav_user_itemsHero {
         font-weight: 400;
         font-size: 15px;
         line-height: 13.53px;
@@ -729,25 +716,24 @@
 }
 
 @media (min-width:480px) and (max-width:767px) {
-    /* .nav_user-content {
+    /* .nav_user-contentHero {
         transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
     } */
 
     /* Ensure the mobile menu is properly hidden when closed */
-    .nav-content21:not(.open) {
+    .nav-content21Hero:not(.open) {
         transform: translateX(100%);
     }
 
-    .navbar1 {
+    .container.navbar1Hero {
         height: 70px;
-        max-width: 100%;
     }
 
-    .home-icon {
+    .home-iconHero {
         margin-right: 0;
     }
 
-    .nav_user-content {
+    .nav_user-contentHero {
         display: block !important;
         opacity: 1 !important;
         visibility: visible !important;
@@ -759,29 +745,29 @@
         box-shadow: none;
         border: 1px solid red;
         transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
-    
+
     }
 
-    .nav_user-content.open {
+    .nav_user-contentHero.open {
         display: block;
     }
 
-    .nav_user {
+    .nav_userHero {
         display: none;
     }
 
-    .nav_user_phone {
+    .nav_user_phoneHero {
         font-size: 15px;
         line-height: 10.33px;
 
     }
 
-    .nav_user_name {
+    .nav_user_nameHero {
         font-size: 15px;
         line-height: 31.33px;
     }
 
-    .nav_user_items {
+    .nav_user_itemsHero {
         font-weight: 400;
         font-size: 15px;
         line-height: 13.53px;
@@ -789,7 +775,8 @@
     }
 
 
-    .nav-content21 {
+
+    .nav-content21Hero {
         position: fixed;
         top: 0;
         right: -100%;
@@ -805,16 +792,16 @@
         overflow-y: auto;
     }
 
-    .nav-content21.open {
+    .nav-content21Hero.open {
         right: 0;
     }
 
-    .hamburger-menu {
+    .hamburger-menuHero {
         display: block;
         font-size: 27px;
     }
 
-    .cart-number {
+    .cart-numberHero {
         height: 22px;
         width: 22px;
         font-size: 14px;
@@ -857,14 +844,22 @@
     }
 }
 
-
 @media (min-width: 425px) and (max-width: 479px) {
 
-    .home-icon {
+    /* Ensure the mobile menu is properly hidden when closed */
+    .nav-content21Hero:not(.open) {
+        transform: translateX(100%);
+    }
+
+    .container.navbar1Hero {
+        height: 60px;
+    }
+
+    .home-iconHero {
         margin-right: 0;
     }
 
-    .nav_user-content {
+    .nav_user-contentHero {
         display: block !important;
         opacity: 1 !important;
         visibility: visible !important;
@@ -875,41 +870,43 @@
         background: transparent;
         box-shadow: none;
         border: 1px solid red;
+        transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+
     }
 
-    .nav_user-content.open {
+    .nav_user-contentHero.open {
         display: block;
     }
 
-    .nav_user {
+    .nav_userHero {
         display: none;
     }
 
-    .nav_user_phone {
+    .nav_user_phoneHero {
         font-size: 15px;
         line-height: 10.33px;
 
     }
 
-    .nav_user_name {
+    .nav_user_nameHero {
         font-size: 15px;
         line-height: 31.33px;
     }
 
-    .nav_user_items {
+    .nav_user_itemsHero {
         font-weight: 400;
         font-size: 15px;
         line-height: 13.53px;
         margin-top: 5px;
     }
 
-    .navbar1 {
-        height: 65px;
+    /* .navbar1 {
+        height: 55px;
         max-width: 100%;
-    }
+    } */
 
 
-    .nav-content21 {
+    .nav-content21Hero {
         position: fixed;
         top: 0;
         right: -100%;
@@ -925,16 +922,16 @@
         overflow-y: auto;
     }
 
-    .nav-content21.open {
+    .nav-content21Hero.open {
         right: 0;
     }
 
-    .hamburger-menu {
+    .hamburger-menuHero {
         display: block;
         font-size: 27px;
     }
 
-    .cart-number {
+    .cart-numberHero {
         height: 22px;
         width: 22px;
         font-size: 14px;
@@ -982,11 +979,11 @@
 
 
 @media (min-width: 414px) and (max-width: 424px) {
-    .home-icon {
+    .home-iconHero {
         margin-right: 0;
     }
 
-    .nav_user-content {
+    .nav_user-contentHero {
         display: block !important;
         opacity: 1 !important;
         visibility: visible !important;
@@ -997,43 +994,44 @@
         background: transparent;
         box-shadow: none;
         border: 1px solid red;
-               transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+                transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
 
     }
 
-    .nav_user-content.open {
+    .nav_user-contentHero.open {
         display: block;
     }
 
-    .nav_user {
+    .nav_userHero {
         display: none;
     }
 
-    .nav_user_phone {
+    .nav_user_phoneHero {
         font-size: 15px;
         line-height: 10.33px;
 
     }
 
-    .nav_user_name {
+    .nav_user_nameHero {
         font-size: 15px;
         line-height: 31.33px;
     }
 
-    .nav_user_items {
+    .nav_user_itemsHero {
         font-weight: 400;
         font-size: 15px;
         line-height: 13.53px;
         margin-top: 5px;
     }
 
-    .navbar1 {
+    .container.navbar1Hero {
         height: 65px;
         max-width: 100%;
+        /* border: 1px solid red; */
     }
 
 
-    .nav-content21 {
+    .nav-content21Hero {
         position: fixed;
         top: 0;
         right: -100%;
@@ -1049,20 +1047,20 @@
         overflow-y: auto;
     }
 
-    .nav-content21.open {
+    .nav-content21Hero.open {
         right: 0;
     }
 
-    .hamburger-menu {
+    .hamburger-menuHero {
         display: block;
         font-size: 27px;
     }
 
-    .cart {
+    .cartHero {
         font-size: 33px;
     }
 
-    .cart-number {
+    .cart-numberHero {
         height: 24px;
         width: 24px;
         font-size: 15px;
@@ -1111,16 +1109,16 @@
 @media (min-width: 375px) and (max-width: 413px) {
 
 
-    .home-icon {
+    .home-iconHero {
         margin-right: 0;
     }
 
-    .book-btn,
-    .contact-btn {
+    .book-btnHero,
+    .contact-btnHero {
         font-size: 14px;
     }
 
-    .nav_user-content {
+    .nav_user-contentHero {
         display: block !important;
         opacity: 1 !important;
         visibility: visible !important;
@@ -1135,40 +1133,39 @@
 
     }
 
-    .nav_user-content.open {
+    .nav_user-contentHero.open {
         display: block;
     }
 
-    .nav_user {
+    .nav_userHero {
         display: none;
     }
 
-    .nav_user_phone {
+    .nav_user_phoneHero {
         font-size: 15px;
         line-height: 10.33px;
 
     }
 
-    .nav_user_name {
+    .nav_user_nameHero {
         font-size: 15px;
         line-height: 31.33px;
     }
 
-    .nav_user_items {
+    .nav_user_itemsHero {
         font-weight: 400;
         font-size: 15px;
         line-height: 13.53px;
         margin-top: 5px;
     }
 
-    .navbar1 {
+    .container.navbar1Hero {
         height: 55px;
         width: 100%;
-        max-width: 94%;
     }
 
 
-    .nav-content21 {
+    .nav-content21Hero {
         position: fixed;
         top: 0;
         right: -100%;
@@ -1184,20 +1181,20 @@
         overflow-y: auto;
     }
 
-    .nav-content21.open {
+    .nav-content21Hero.open {
         right: 0;
     }
 
-    .hamburger-menu {
+    .hamburger-menuHero {
         display: block;
         font-size: 27px;
     }
 
-    .cart {
+    .cartHero {
         font-size: 33px;
     }
 
-    .cart-number {
+    .cart-numberHero {
         height: 24px;
         width: 24px;
         font-size: 15px;
@@ -1247,16 +1244,16 @@
 @media (min-width: 360px) and (max-width: 374px) {
 
 
-    .home-icon {
+    .home-iconHero {
         margin-right: 0;
     }
 
-    .book-btn,
-    .contact-btn {
+    .book-btnHero,
+    .contact-btnHero {
         font-size: 14px;
     }
 
-    .nav_user-content {
+    .nav_user-contentHero {
         display: block !important;
         opacity: 1 !important;
         visibility: visible !important;
@@ -1267,44 +1264,43 @@
         background: transparent;
         box-shadow: none;
         border: 1px solid red;
-               transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+                transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
 
     }
 
-    .nav_user-content.open {
+    .nav_user-contentHero.open {
         display: block;
     }
 
-    .nav_user {
+    .nav_userHero {
         display: none;
     }
 
-    .nav_user_phone {
+    .nav_user_phoneHero {
         font-size: 14px;
         line-height: 10.33px;
 
     }
 
-    .nav_user_name {
+    .nav_user_nameHero {
         font-size: 14px;
         line-height: 31.33px;
     }
 
-    .nav_user_items {
+    .nav_user_itemsHero {
         font-weight: 400;
         font-size: 14px;
         line-height: 13.53px;
         margin-top: 3px;
     }
 
-    .navbar1 {
+    .container.navbar1Hero {
         height: 60px;
         width: 100%;
-        max-width: 94%;
     }
 
 
-    .nav-content21 {
+    .nav-content21Hero {
         position: fixed;
         top: 0;
         right: -100%;
@@ -1320,20 +1316,20 @@
         overflow-y: auto;
     }
 
-    .nav-content21.open {
+    .nav-content21Hero.open {
         right: 0;
     }
 
-    .hamburger-menu {
+    .hamburger-menuHero {
         display: block;
         font-size: 27px;
     }
 
-    .cart {
+    .cartHero {
         font-size: 33px;
     }
 
-    .cart-number {
+    .cart-numberHero {
         height: 24px;
         width: 24px;
         font-size: 15px;
@@ -1381,16 +1377,16 @@
 @media (min-width: 320px) and (max-width: 359px) {
 
 
-    .home-icon {
+    .home-iconHero {
         margin-right: 0;
     }
 
-    .book-btn,
-    .contact-btn {
+    .book-btnHero,
+    .contact-btnHero {
         font-size: 14px;
     }
 
-    .nav_user-content {
+    .nav_user-contentHero {
         display: block !important;
         opacity: 1 !important;
         visibility: visible !important;
@@ -1401,19 +1397,19 @@
         background: transparent;
         box-shadow: none;
         border: 1px solid red;
-              transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+               transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
 
     }
 
-    .nav_user-content.open {
+    .nav_user-contentHero.open {
         display: block;
     }
 
-    .nav_user {
+    .nav_userHero {
         display: none;
     }
 
-    .nav_user_phone {
+    .nav_user_phoneHero {
         font-size: 14px;
         line-height: 10.33px;
         margin: 0px 12px;
@@ -1421,13 +1417,13 @@
 
     }
 
-    .nav_user_name {
+    .nav_user_nameHero {
         font-size: 14px;
         line-height: 31.33px;
         margin: 0px 12px;
     }
 
-    .nav_user_items {
+    .nav_user_itemsHero {
         font-weight: 400;
         font-size: 14px;
         line-height: 13.53px;
@@ -1435,14 +1431,14 @@
         margin-top: 10px;
     }
 
-    .navbar1 {
+    .container.navbar1Hero {
         height: 55px;
         width: 100%;
-        max-width: 97%;
+        
     }
 
 
-    .nav-content21 {
+    .nav-content21Hero {
         position: fixed;
         top: 0;
         right: -100%;
@@ -1458,20 +1454,20 @@
         overflow-y: auto;
     }
 
-    .nav-content21.open {
+    .nav-content21Hero.open {
         right: 0;
     }
 
-    .hamburger-menu {
+    .hamburger-menuHero {
         display: block;
         font-size: 25px;
     }
 
-    .cart {
+    .cartHero {
         font-size: 33px;
     }
 
-    .cart-number {
+    .cart-numberHero {
         height: 24px;
         width: 24px;
         font-size: 15px;

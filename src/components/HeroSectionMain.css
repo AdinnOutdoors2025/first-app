@@ -1,52 +1,18 @@
+
 * {
     font-family: Montserrat;
 }
 
-
-.hero-container {
-    position: relative;
-    height: 100vh;
-    width: 100%;
-}
-
-
-/* Add these to your existing CSS */
-#smooth-wrapper {
-    /*position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;*/
-    will-change: transform;
-}
-.menuhide{display:none}
-.main-layout .hero-wrapper .container.navbar1 {
-    max-width: 100%;
-    width: 100%;
-}
-
-.main-layout .hero-wrapper .container.navbar1::before{border-radius: 0;}
-
-#smooth-content {
-    will-change: transform;
-}
-
-
-/* Navbar should be positioned absolutely over the hero */
 .hero-wrapper {
     position: relative;
     width: 100%;
     height: 100vh;
-    /* overflow: hidden; */
 }
 
 .BannerMainSection {
-    /* background: url('/public/images/HeroBannerMobileTest.png'); */
     background: url('/public/images/HeroBannerMainImg.png');
-
     background-position: contain;
-    background-size: 100% 100%;/* w h*/
+    background-size: 100% 100%;
     background-repeat: no-repeat;
     height: 100lvh;
     width: 100%;
@@ -95,28 +61,216 @@
     color: #000000;
     border: none;
     margin-top: 5%;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
-@media (min-width: 480px) and (max-width: 767px) {
-     .BannerMainSection {
-    /* background: url('/public/images/HeroBannerMobileTest.png'); */
-    background-position: contain;
-    background-size: 100% 100%;/* w h*/
-    background-repeat: no-repeat;
-    height: 100lvh;
-    width: 100%;
-    justify-content: center;
-    display: flex;
-    align-content: center;
-    align-items: center;
-    padding: 0 5%;
-    position: absolute;
+
+.HeroBannerMainButton:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.main-content-navbar {
+    position: fixed;
     top: 0;
     left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
+
+.main-content-navbar.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
+
+.main-content-navbar.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+
+/* Responsive Media Queries */
+/* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
+@media (min-width: 2560px) {
+
+    .HeroBannerContent {
+        font-size: 70px;
+        line-height: 65px;
+    }
+
+    .HeroBannerMainButton {
+        font-size: 50px;
+        border-radius: 20px;
+        padding: 20px 30px;
+    }
+}
+
+/* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
+@media (min-width: 1440px) and (max-width: 2559px) {
+
+    .HeroBannerContent {
+        font-size: 35px;
+        line-height: 35px;
+    }
+
+    .HeroBannerMainButton {
+        font-size: 22px;
+        border-radius: 10px;
+        padding: 12px 15px;
+    }
+
+}
+
+/* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
+@media (min-width: 992px) and (max-width: 1023px) {
+    .HeroBannerRight {
+        width: 50%;
+    }
+
+    .HeroBannerContent {
+        font-size: 29px;
+        line-height: 30px;
+    }
+
+    .HeroBannerMainButton {
+        font-size: 19px;
+        border-radius: 8px;
+        padding: 10px 12px;
+    }
+}
+
+/* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .HeroBannerRight {
+        width: 65%;
+    }
+
+    .HeroBannerContent {
+        font-size: 30px;
+        line-height: 28px;
+    }
+
+    .HeroBannerMainButton {
+        font-size: 18px;
+        border-radius: 6px;
+        padding: 10px 12px;
+    }
+}
+
+/* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
+@media (min-width: 480px) and (max-width: 767px) {
+    .HeroBannerRight {
+        width: 95%;
+    }
+
+    .HeroBannerContent {
+        font-size: 30px;
+        line-height: 28px;
+    }
+
+    .HeroBannerMainButton {
+        font-size: 18px;
+        border-radius: 6px;
+        padding: 10px 12px;
+    }
+}
+
+/* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
+@media (min-width: 425px) and (max-width: 479px) {
+    .HeroBannerLeft{
+        width: 30%;
+    }
+    .HeroBannerRight {
+        width: 100%;
+    }
+
+    .HeroBannerContent {
+        font-size: 30px;
+        line-height: 28px;
+    }
+
+    .HeroBannerMainButton {
+        font-size: 18px;
+        border-radius: 6px;
+        padding: 10px 12px;
+    }
+}
+
+/* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
+@media (min-width: 375px) and (max-width: 424px) {
+     .HeroBannerLeft{
+        width: 0%;
+    }
+    .HeroBannerRight {
+        text-align: center;
+        width: 100%;
+    }
+
+    .HeroBannerContent {
+        font-size: 30px;
+        line-height: 28px;
+    }
+
+    .HeroBannerMainButton {
+        font-size: 18px;
+        border-radius: 6px;
+        padding: 10px 12px;
+    }
+}
+
+/* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
+@media (min-width: 360px) and (max-width: 374px) {
+     .HeroBannerLeft{
+        width: 0%;
+    }
+    .HeroBannerRight {
+        text-align: center;
+        width: 100%;
+    }
+
+    .HeroBannerContent {
+        font-size: 30px;
+        line-height: 28px;
+    }
+
+    .HeroBannerMainButton {
+        font-size: 18px;
+        border-radius: 6px;
+        padding: 10px 12px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 359px) {
+     .HeroBannerLeft{
+        width: 0%;
+    }
+    .HeroBannerRight {
+        text-align: center;
+        width: 100%;
+    }
+
+    .HeroBannerContent {
+        font-size: 28px;
+        line-height: 28px;
+    } 
+
+    .HeroBannerMainButton {
+        font-size: 17px;
+        border-radius: 6px;
+        padding: 10px 12px;
+
+    }
+}
+
 .main-layout .main-layout .container.navbar1 {
     visibility: hidden;
+    display: none;
 }
-.main-layout .main-layout .container.navbar1.scrolled-top{
+
+.main-layout .main-layout .container.navbar1.scrolled-top {
     visibility: visible;
+    transition: all 0.3s ease , visibility 0.3s ease;
 }
