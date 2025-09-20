@@ -21,7 +21,6 @@ const BillingDetails = () => {
         city: false,
         address: false,
         company: false,
-
     });
 
     const validateForm = () => {

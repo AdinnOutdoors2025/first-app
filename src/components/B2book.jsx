@@ -651,7 +651,7 @@ function BookASite1() {
         } else {
             alert("Please select & Confirm the Start and End dates to Proceed.");
         }
-    };
+    }; 
     const RatingStarsSimilar = ({ rating }) => {
         const fullStars = Math.floor(rating);
         const halfStar = rating % 1 !== 0;
@@ -680,6 +680,20 @@ function BookASite1() {
                                 <div className="row bookContentRow1">
                                     <div className='bookContentRow2' style={{ display: 'flex', }}>
                                         <div className='book-images-section'>
+
+                                         {/* Current Images should be showed in first with onchange functionalities  */}
+                                        <div 
+                                                className={`book-images ${isMainImageSelected() ? 'selected' : ''}`}
+                                                onClick={() => handleMainImageClick()}
+                                                style={{ cursor: 'pointer' }}
+                                            >
+                                                <img 
+                                                    src={currentProduct?.imageUrl}
+                                                    className="img-fluid book-img11"
+                                                    alt="Main product"
+                                                />
+                                            </div>
+                                            
                                             {/* Additional files thumbnails */}
                                             {additionalFiles.map((file, index) => (
                                                 <div

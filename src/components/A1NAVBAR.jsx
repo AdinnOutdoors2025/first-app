@@ -6,7 +6,6 @@ import LoginPageMain from './C1LoginMain';
 //BASE URL OF http://localhost:3001 FILE IMPORT
 import { baseUrl } from '../Adminpanel/BASE_URL';
 
-
 function NavbarMain() {
     const [isMenuOpen, setMenuOpen] = useState(false);
     const toggleMenu = () => { setMenuOpen(!isMenuOpen); };

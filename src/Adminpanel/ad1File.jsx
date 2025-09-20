@@ -91,7 +91,9 @@ function ClientSection() {
             prodLatitude: !prodLatitude,
             prodLongitude: !prodLongitude,
             prodLocationLink: false,
-            additionalFiles: validAdditionalFiles.length < 3 // Add validation for additional files
+            // additionalFiles: validAdditionalFiles.length < 3 // Add validation for additional files
+            //NEWLY ADDED 2 
+            additionalFiles: validAdditionalFiles.length > 3 // Add validation for additional files
 
         };
         setErrors(newErrors);
@@ -332,7 +334,7 @@ function ClientSection() {
             setProductPrintingCost(prod.printingCost || '');
             setProductMountingCost(prod.mountingCost || '');
             setProductId(prod.prodCode || '');
-            setProdLighting(prod.lighting || 'Lightning');
+            setProdLighting(prod.lighting);
             setProductFrom(prod.from || '');
             setProductTo(prod.to || '');
             setProdRating(prod.rating || 0);
@@ -377,8 +379,12 @@ function ClientSection() {
         }
         // Validate additional files
         const validAdditionalFiles = additionalFiles.filter(file => !file.markedForDeletion);
-        if (validAdditionalFiles.length < 3) {
-            alert(`Please upload ${3 - validAdditionalFiles.length} more file(s)`);
+        // if (validAdditionalFiles.length < 3) {
+        //     alert(`Please upload ${3 - validAdditionalFiles.length} more file(s)`);
+        //     return;
+        // }
+        if (validAdditionalFiles.length > 3) {
+            alert(`Maximum 3 additional files allowed. You have ${validAdditionalFiles.length} files.`);
             return;
         }
 
@@ -397,6 +403,13 @@ function ClientSection() {
         // Optional warning (but still allows submission)
         if (selectedSimilarProducts.length === 0) {
             if (!window.confirm("You haven't added any similar products. Continue anyway?")) {
+                return;
+            }
+        }
+
+        // Show confirmation for products without additional files NEWLY ADDED 2 
+        if (validAdditionalFiles.length === 0) {
+            if (!window.confirm("You haven't added any additional files. Continue without additional files?")) {
                 return;
             }
         }
@@ -571,6 +584,9 @@ function ClientSection() {
             setUploading(false);
         }
     };
+
+
+
     // Add this helper function
     const resetForm = () => {
         setProductName('');
@@ -581,7 +597,7 @@ function ClientSection() {
         setProductMountingCost('');
         setProductPrintingCost('');
         setProductId('');
-        setProdLighting('Lightning');
+        setProdLighting('');
         setProductFrom('');
         setProductTo('');
         setProdRating(0);
@@ -864,9 +880,10 @@ function ClientSection() {
                                                 setProdLighting(e.target.value);
                                                 setErrors(prev => ({ ...prev, prodLighting: false }));
                                             }}>
+                                            <option value="Select">Select</option>
                                             <option value="Not-Lit">Not-Lit</option>
                                             <option value="Front-Lit">Front-Lit</option>
-                                            {/* <option value="Back-Lit">Back-Lit</option> */}
+                                            <option value="Back-Lit">Back-Lit</option>
                                         </select>
                                         {errors.prodLighting && <div className="AdminProderror-message ">Product Lighting is required</div>}
 
@@ -1109,7 +1126,11 @@ function ClientSection() {
 
                                 {errors.additionalFiles && (
                                     <div className="AdminProderror-message">
-                                        Please upload exactly 3 files (currently have {additionalFiles.filter(f => !f.markedForDeletion).length})
+                                        {/* Please upload exactly 3 files (currently have {additionalFiles.filter(f => !f.markedForDeletion).length}) */}
+                                                                                  //NEWLY ADDED 2
+
+                                        Maximum 3 files allowed
+
                                     </div>
                                 )}
                             </div>
