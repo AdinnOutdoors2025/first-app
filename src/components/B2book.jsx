@@ -34,6 +34,9 @@ function BookASite1() {
     const [currentVideoUrl, setCurrentVideoUrl] = useState('');
     const [selectedFileIndex, setSelectedFileIndex] = useState(-1); // Track selected file index
     const videoRef = useRef(null);
+    const [isScrollingPaused, setIsScrollingPaused] = useState(false);
+
+
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -502,7 +505,7 @@ function BookASite1() {
             //      totalDays,
             // totalAmount: totalPrice.toLocaleString()
         };
-    console.log("Cart item being sent:", cartItem);
+        console.log("Cart item being sent:", cartItem);
 
         try {
             const response = await fetch(`${baseUrl}/cart`, {
@@ -651,7 +654,7 @@ function BookASite1() {
         } else {
             alert("Please select & Confirm the Start and End dates to Proceed.");
         }
-    }; 
+    };
     const RatingStarsSimilar = ({ rating }) => {
         const fullStars = Math.floor(rating);
         const halfStar = rating % 1 !== 0;
@@ -668,6 +671,34 @@ function BookASite1() {
             </div>
         );
     };
+
+
+
+
+    // // State for controlling animation
+    // // const [isScrollingPaused, setIsScrollingPaused] = useState(false);
+
+    // // Pause scrolling on hover
+    // const pauseScroll = () => {
+    //     setIsScrollingPaused(true);
+    // };
+
+    // // Resume scrolling when not hovering
+    // const resumeScroll = () => {
+    //     setIsScrollingPaused(false);
+    // };
+
+    // // Use useEffect to control animation
+    // useEffect(() => {
+    //     const scrollContainer = document.querySelector('.book-images-section');
+    //     if (scrollContainer) {
+    //         if (isScrollingPaused) {
+    //             scrollContainer.style.animationPlayState = 'paused';
+    //         } else {
+    //             scrollContainer.style.animationPlayState = 'running';
+    //         }
+    //     }
+    // }, [isScrollingPaused]);
     return (
         <MainLayout>
             <div>
@@ -679,49 +710,47 @@ function BookASite1() {
                             <div className="col-md-6 col-lg-6 Book-content1">
                                 <div className="row bookContentRow1">
                                     <div className='bookContentRow2' style={{ display: 'flex', }}>
-                                        <div className='book-images-section'>
 
-                                         {/* Current Images should be showed in first with onchange functionalities  */}
-                                        <div 
-                                                className={`book-images ${isMainImageSelected() ? 'selected' : ''}`}
-                                                onClick={() => handleMainImageClick()}
-                                                style={{ cursor: 'pointer' }}
-                                            >
-                                                <img 
-                                                    src={currentProduct?.imageUrl}
-                                                    className="img-fluid book-img11"
-                                                    alt="Main product"
-                                                />
-                                            </div>
-                                            
-                                            {/* Additional files thumbnails */}
-                                            {additionalFiles.map((file, index) => (
+                                        <div className='item-scroll-additional'>
+                                            <div className='book-images-section'>
+                                                {/* Current Images should be showed in first with onchange functionalities  */}
                                                 <div
-                                                    key={index}
-                                                    className={`book-images ${isFileSelected(index) ? 'selected' : ''}`}
-                                                    onClick={() => handleImageChange(file, index)} style={{ cursor: 'pointer' }}
-                                                >
-                                                    {file.type === 'video' || (file.url && file.url.match(/\.(mp4|mov|avi|mkv)$/i)) ? (
-
-                                                        <div className="video-thumbnail-wrapper">
-                                                            <video className='book-img11'
-                                                                muted
-                                                                preload="metadata"
-                                                                onLoadedData={(e) => {
-                                                                    if (e.target.duration) {
-                                                                        e.target.currentTime = 0;
-                                                                    }
-                                                                }}
-                                                                onSeeked={(e) => {
-                                                                    e.target.pause();
-                                                                }}
-                                                            >
-                                                                <source src={file.url} type="video/mp4" />
-                                                            </video>
-                                                            <div className="video-play-icon">▶</div>
-                                                        </div>
-                                                    )
-                                                        : (
+                                                    className={`book-images ${isMainImageSelected() ? 'selected' : ''}`}
+                                                    onClick={() => handleMainImageClick()}
+                                                    style={{ cursor: 'pointer' }}>
+                                                    <img
+                                                        src={currentProduct?.imageUrl}
+                                                        className="img-fluid book-img11"
+                                                        alt="Main product"
+                                                    />
+                                                </div>
+                                                {/* Additional files thumbnails */}
+                                                {additionalFiles.map((file, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className={`book-images ${isFileSelected(index) ? 'selected' : ''}`}
+                                                        onClick={() => handleImageChange(file, index)}
+                                                        style={{ cursor: 'pointer' }}
+                                                    >
+                                                        {file.type === 'video' || (file.url && file.url.match(/\.(mp4|mov|avi|mkv)$/i)) ? (
+                                                            <div className="video-thumbnail-wrapper">
+                                                                <video className='book-img11'
+                                                                    muted
+                                                                    preload="metadata"
+                                                                    onLoadedData={(e) => {
+                                                                        if (e.target.duration) {
+                                                                            e.target.currentTime = 0;
+                                                                        }
+                                                                    }}
+                                                                    onSeeked={(e) => {
+                                                                        e.target.pause();
+                                                                    }}
+                                                                >
+                                                                    <source src={file.url} type="video/mp4" />
+                                                                </video>
+                                                                <div className="video-play-icon">▶</div>
+                                                            </div>
+                                                        ) : (
                                                             <img
                                                                 src={file.url}
                                                                 className="img-fluid book-img11"
@@ -733,9 +762,14 @@ function BookASite1() {
                                                                 }}
                                                             />
                                                         )}
-                                                </div>
-                                            ))}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
+
+
+
+
                                         <div className='book-mainImage'>
                                             {currentPreviewType === 'video' ? (
                                                 <video className='book-mainImg1'

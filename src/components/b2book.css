@@ -486,8 +486,6 @@
     overflow: hidden;
     position: relative;
     transition: background 0.3s, color 0.3s;
-
-
 }
 
 
@@ -511,8 +509,6 @@
     transition: left 0.5s ease-in-out;
 }
 
-
-/* On mouse out, move the blur effect back from right to left */
 .btn-enquire:not(:hover)::before {
     left: -100%;
 }
@@ -528,7 +524,7 @@
 /* ADDITIONAL FILES CSS ADDED  */
 .book-images.selected {
     border: 2px solid #007bff;
-    border-radius:8px;
+    border-radius: 8px;
     /* transform: scale(1.05); */
 }
 
@@ -1473,6 +1469,32 @@
 
 }
 
+@media(max-width: 480px) {
+
+    /* .item-scroll-additional {
+        width: 100%;
+        overflow-x: auto; 
+        overflow-y: hidden; 
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+
+    }
+
+    .item-scroll-additional::-webkit-scrollbar {
+        display: none;
+    }
+
+    .book-images-section {
+        display: flex;
+        gap: 10px;
+        width: max-content;
+        margin: 10px 20px;
+    } */
+
+}
 
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
 @media (min-width: 480px) and (max-width: 767px) {
@@ -1493,12 +1515,26 @@
     }
 
 
+    /* SCROLL ANIMATION ADDED FOR SMALL SCREENS  */
+    .item-scroll-additional {
+        width: 100%;
+        overflow-x: auto;
+        /* Enables horizontal scrolling */
+        overflow-y: hidden;
+        /* Hides vertical scrolling */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
 
+    .item-scroll-additional::-webkit-scrollbar {
+        display: none;
+    }
 
     .book-images-section {
         display: flex;
-        gap: 10px;
-        margin: auto;
+        width: 90%;
+        justify-content: space-between;
+        margin: 0px 30px;
     }
 
 
@@ -1545,7 +1581,7 @@
     .book-sideHeading {
         font-size: 23px;
         font-weight: 600;
-        line-height: 20.13px;
+        line-height: 25px;
     }
 
 
@@ -1755,13 +1791,38 @@
     }
 
 
+    /* SCROLL ANIMATION ADDED FOR SMALL SCREENS  */
+    .item-scroll-additional {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        /* Hides vertical scrolling */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        /* border:1px solid red; */
+        margin: auto 8px;
+    }
 
+    .item-scroll-additional::-webkit-scrollbar {
+        display: none;
+    }
 
     .book-images-section {
         display: flex;
         gap: 10px;
-        margin: auto;
+        width: 100%;
+        justify-content: space-between;
+        margin: 0px 5px;
+        /* border: 1px solid black; */
     }
+
+    /* 
+    .book-images-section {
+        display: flex;
+        gap: 10px;
+        margin: auto;
+
+    } */
 
 
     .book-mainImage,
@@ -2004,15 +2065,30 @@
         padding-left: 0px;
     }
 
+    /* SCROLL ANIMATION ADDED FOR SMALL SCREENS  */
+    .item-scroll-additional {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        /* Hides vertical scrolling */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        /* border:1px solid red; */
+        margin: auto 8px;
+    }
 
-
+    .item-scroll-additional::-webkit-scrollbar {
+        display: none;
+    }
 
     .book-images-section {
         display: flex;
         gap: 10px;
-        margin: auto;
+        width: 100%;
+        justify-content: space-between;
+        margin: 0px 5px;
+        /* border: 1px solid black; */
     }
-
 
     .book-mainImage,
     .book-mainImg1 {
@@ -2035,13 +2111,8 @@
         height: 95px;
         width: 100px;
         cursor: pointer;
-        border-radius: 8px;
+        border-radius: 5px;
     }
-
-
-
-
-
 
     .Book-content2 {
         max-width: 100%;
@@ -2050,9 +2121,6 @@
         padding-top: 5%;
         margin: auto;
     }
-
-
-
 
     .book-sideHeading {
         font-size: 22px;
@@ -2261,16 +2329,27 @@
         padding-left: 0px;
     }
 
+    /* SCROLL ANIMATION ADDED FOR SMALL SCREENS  */
+    .item-scroll-additional {
+        width: 98%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        margin: auto 10px;
+    }
 
-
+    .item-scroll-additional::-webkit-scrollbar {
+        display: none;
+    }
 
     .book-images-section {
         display: flex;
         gap: 10px;
-        margin: auto 7%;
-        margin-right: 10px;
+        width: 100%;
+        justify-content: space-between;
+        margin: 0px 5px;
     }
-
 
     .book-mainImage,
     .book-mainImg1 {
@@ -2521,11 +2600,26 @@
         padding-left: 0px;
     }
 
+         /* SCROLL ANIMATION ADDED FOR SMALL SCREENS  */
+    .item-scroll-additional {
+        width: 97%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        margin: auto 10px;
+    }
+
+    .item-scroll-additional::-webkit-scrollbar {
+        display: none;
+    }
+
     .book-images-section {
         display: flex;
         gap: 10px;
-        margin: auto 9%;
-        margin-right: 15px;
+        width: 100%;
+        justify-content: space-between;
+        margin: 0px 5px;
     }
 
     .book-mainImage,
