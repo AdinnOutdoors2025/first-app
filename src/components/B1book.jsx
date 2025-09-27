@@ -23,10 +23,16 @@ export default function BookASite() {
   const [spots, setSpots] = useState([]);
   const [mediaTypes, setMediaTypes] = useState([]);
   const [stateDistricts, setStateDistricts] = useState({});
+
+  //LOADING STATES
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
+
   // Fetch data from backend
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true); // Start loading
+
         // Fetch products
         const productsRes = await fetch(`${baseUrl}/products`);
         const productsData = await productsRes.json();
@@ -57,7 +63,7 @@ export default function BookASite() {
           latitude: product.Latitude,
           longitude: product.Longitude,
           prodLocationLink: product.LocationLink,
-          additionalFiles : product.additionalFiles[{}]
+          additionalFiles: product.additionalFiles[{}]
         }));
         setSpots(mappedSpots);
         // Fetch media types
@@ -75,6 +81,10 @@ export default function BookASite() {
         setStateDistricts(stateMap);
       } catch (error) {
         console.error("Error fetching data:", error);
+      }
+
+      finally {
+        setIsLoading(false); // Stop loading regardless of success/error
       }
     };
     fetchData();
@@ -488,7 +498,7 @@ export default function BookASite() {
                                     className="form-check-input"
                                     id={district}
                                     onChange={() => handleDistrictChange(district)}
-                                    checked={tempDistricts.includes(district)}/>
+                                    checked={tempDistricts.includes(district)} />
                                   <label className="form-check-label" htmlFor={district}>
                                     {district}
                                   </label>
@@ -627,35 +637,43 @@ export default function BookASite() {
             {/* Right Content Area */}
             <div className=" col-12 col-md-9 py-3 px-0 side-right-main">
               <div className="row side-right-content">
-                {currentSpots.length > 0 ? (
-                  currentSpots.map((spot) => (
-                    <div className="col-lg-4 col-md-6 col-sm-12 mb-4 card-board-contents" key={spot.id} >
-                      <div className="card board-book" onClick={() => handleBookNow(spot)} >
-                        <img src={spot.imageUrl} alt={spot.location} className="card-img-top-book" />
-                        <span className='board-category-book'>{spot.category}</span>
-                        <span className='board-location-book'>{spot.location}</span>
-                        <div className="board-content-book ">
-                          <div className='board-content-top-book'>
-                            <span className="board-loc-book">{spot.prodName}</span>
-                            <span className="board-dim-book"> {spot.sizeWidth} x {spot.sizeHeight} </span>
+
+
+                {isLoading ? (
+                  <div className="col-12 text-center loading-container">
+                    <img src='./images/BookLoading.svg' alt="Loading..." className="Book-loading-gif" />
+                  </div>
+                ) :
+                  currentSpots.length > 0 ? (
+                    currentSpots.map((spot) => (
+                      <div className="col-lg-4 col-md-6 col-sm-12 mb-4 card-board-contents" key={spot.id} >
+                        <div className="card board-book" onClick={() => handleBookNow(spot)} >
+                          <img src={spot.imageUrl} alt={spot.location} className="card-img-top-book" />
+                          <span className='board-category-book'>{spot.category}</span>
+                          <span className='board-location-book'>{spot.location}</span>
+                          <div className="board-content-book ">
+                            <div className='board-content-top-book'>
+                              <span className="board-loc-book">{spot.prodName}</span>
+                              <span className="board-dim-book"> {spot.sizeWidth} x {spot.sizeHeight} </span>
+                            </div>
+                            <div className='board-content-bottom-book'>
+                              <span className="board-price-book">₹{spot.price.toLocaleString()}</span>
+                              <img src='./images/rating_board.png' className='rate-board-book'></img>
+                            </div>
+                            <RatingStars rating={spot.rating} />
+                            <button className="board-btn-book" onClick={() => handleBookNow(spot)} >Book Now</button>
                           </div>
-                          <div className='board-content-bottom-book'>
-                            <span className="board-price-book">₹{spot.price.toLocaleString()}</span>
-                            <img src='./images/rating_board.png' className='rate-board-book'></img>
-                          </div>
-                          <RatingStars rating={spot.rating} />
-                          <button className="board-btn-book" onClick={() => handleBookNow(spot)} >Book Now</button>
                         </div>
                       </div>
+                    ))
+                  ) : (
+                    <div className="col-12 text-center">
+                      <h5 className='NoItems'>No results found</h5>
                     </div>
-                  ))
-                ) : (
-                  <div className="col-12 text-center">
-                    <h5 className='NoItems'>No results found</h5>
-                  </div>
-                )}
+                  )}
                 {/* Pagination Component */}
-                {filteredSpots.length > spotsPerPage && (
+                {/* {filteredSpots.length > spotsPerPage && ( */}
+                {!isLoading && filteredSpots.length > spotsPerPage && (
                   <div className="col-12 text-center">
                     <div className="pagination d-flex justify-content-center">
                       <button className="prev-button" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>

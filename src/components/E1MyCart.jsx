@@ -309,7 +309,6 @@ const Cart = () => {
                                     )}
                                 </div>
                             </div>
-
                         </div>
                     )}
                     <div className='cart-items-mainR'>

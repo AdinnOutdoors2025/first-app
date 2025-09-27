@@ -730,8 +730,7 @@ function BookASite1() {
                                                         key={index}
                                                         className={`book-images ${isFileSelected(index) ? 'selected' : ''}`}
                                                         onClick={() => handleImageChange(file, index)}
-                                                        style={{ cursor: 'pointer' }}
-                                                    >
+                                                        style={{ cursor: 'pointer' }}>
                                                         {file.type === 'video' || (file.url && file.url.match(/\.(mp4|mov|avi|mkv)$/i)) ? (
                                                             <div className="video-thumbnail-wrapper">
                                                                 <video className='book-img11'
@@ -766,9 +765,6 @@ function BookASite1() {
                                                 ))}
                                             </div>
                                         </div>
-
-
-
 
                                         <div className='book-mainImage'>
                                             {currentPreviewType === 'video' ? (
