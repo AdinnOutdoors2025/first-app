@@ -1,0 +1,239 @@
+/* * {
+    font-family: 'Montserrat';
+}
+
+.DealScrollAnimMain {
+    background-color: black;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0px;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #FFFFFF;
+    align-items: center;
+}
+
+.DealScrollAnimImg1 {
+    height: 70px;
+    width: 70px;
+} */
+
+
+
+
+* {
+    font-family: 'Montserrat';
+}
+
+.DealScrollAnimMain {
+    background-color: black;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #FFFFFF;
+    align-items: center;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+/* .DealScrollAnimMain .navbar1{
+    top: 73px;
+} */
+.DealScroll-container {
+    display: flex;
+    align-items: center;
+    animation: scrollLeft 20s linear infinite;
+    white-space: nowrap;
+}
+
+.DealScroll-container:hover {
+    animation-play-state: paused;
+}
+
+.DealScroll-item {
+    display: flex;
+    align-items: center;
+    margin: 0 40px;
+    flex-shrink: 0;
+}
+
+.DealScrollAnimImg1 {
+    height: 40px;
+    width: 40px;
+    /* margin: 0 20px; */
+}
+
+@keyframes scrollLeft {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* For responsive design */
+/* @media (max-width: 768px) {
+    .DealScrollAnimMain {
+        font-size: 20px;
+    }
+
+    .DealScrollAnimImg1 {
+        height: 50px;
+        width: 50px;
+        margin: 0 15px;
+    }
+
+    .scroll-item {
+        margin: 0 20px;
+    }
+}
+
+ */
+
+
+/* Responsive Media Queries */
+/* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
+@media (min-width: 2560px) {
+     .DealScrollAnimMain {
+        padding: 20px 0px;
+        font-size: 40px;
+    }
+    .DealScrollAnimImg1 {
+        height: 90px;
+        width: 90px;
+    }
+    .DealScroll-item{
+        margin: 0 20px;
+    }
+}
+
+/* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
+@media (min-width: 1440px) and (max-width: 2559px) {
+     .DealScrollAnimMain {
+        padding: 8px 0px;
+        font-size: 23px;
+    }
+    .DealScrollAnimImg1 {
+        height: 50px;
+        width: 50px;
+    }
+    .DealScroll-item{
+        margin: 0 20px;
+    }
+}
+
+/* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
+@media (min-width: 992px) and (max-width: 1023px) {
+    .DealScrollAnimMain {
+        padding: 6px 0px;
+        font-size: 20px;
+    }
+    .DealScrollAnimImg1 {
+        height: 40px;
+        width: 40px;
+    }
+    .DealScroll-item{
+        margin: 0 20px;
+    }
+}
+
+/* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
+@media (min-width: 768px) and (max-width: 991px) {
+     .DealScrollAnimMain {
+        padding: 6px 0px;
+        font-size: 20px;
+    }
+    .DealScrollAnimImg1 {
+        height: 40px;
+        width: 40px;
+    }
+    .DealScroll-item{
+        margin: 0 20px;
+    }
+}
+
+/* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
+@media (min-width: 480px) and (max-width: 767px) {
+    .DealScrollAnimMain {
+        padding: 8px 0px;
+        font-size: 20px;
+    }
+    .DealScrollAnimImg1 {
+        height: 40px;
+        width: 40px;
+    }
+    .DealScroll-item{
+        margin: 0 10px;
+    }
+
+}
+
+/* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
+@media (min-width: 425px) and (max-width: 479px) {
+     .DealScrollAnimMain {
+        padding: 7px 0px;
+        font-size: 18px;
+    }
+    .DealScrollAnimImg1 {
+        height: 38px;
+        width: 38px;
+    }
+    .DealScroll-item{
+        margin: 0 10px;
+    }
+}
+
+/* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
+@media (min-width: 375px) and (max-width: 424px) {
+     .DealScrollAnimMain {
+        padding: 6px 0px;
+        font-size: 16px;
+    }
+    .DealScrollAnimImg1 {
+        height: 35px;
+        width: 35px;
+    }
+    .DealScroll-item{
+        margin: 0 8px;
+    }
+}
+
+/* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
+@media (min-width: 360px) and (max-width: 374px) {
+     .DealScrollAnimMain {
+        padding: 6px 0px;
+        font-size: 16px;
+    }
+    .DealScrollAnimImg1 {
+        height: 35px;
+        width: 35px;
+    }
+    .DealScroll-item{
+        margin: 0 8px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 359px) {
+     .DealScrollAnimMain {
+        padding: 6px 0px;
+        font-size: 16px;
+    }
+    .DealScrollAnimImg1 {
+        height: 35px;
+        width: 35px;
+    }
+    .DealScroll-item{
+        margin: 0 8px;
+    }
+}

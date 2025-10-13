@@ -37,6 +37,13 @@ import RichText from './Adminpanel/RichText.jsx';
 //BLOG PAGE
 import BlogPage from './components/G1BlogPage.jsx';
 import BlogPageAdmin from './Adminpanel/ad2BlogAddPg.jsx';
+
+//Deal of the Day
+import DealOfTheDay from './components/H1DealDay.jsx';
+
+//DEAL OF THE DAY SCROLL ANIMATION
+import DealScrollAnimation from './components/H2DealScroll.jsx';
+
 function App() {
   const [load, upadateLoad] = useState(true);
 
@@ -84,6 +91,8 @@ function App() {
               <Route path="/Blog/:id" element={<BlogPage />} />
               <Route path="/Blogadmin" element={<BlogPageAdmin />} />
               <Route path="/Rich" element={<RichText />} />
+               <Route path = '/deal' element ={<DealOfTheDay/>}/>
+        <Route path='/DealScroll' element={<DealScrollAnimation />} />
 
               {/* Protected Admin Routes */}
               <Route path="/admin" element={

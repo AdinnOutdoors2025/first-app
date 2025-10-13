@@ -1,0 +1,984 @@
+* {
+    font-family: Montserrat;
+}
+
+.DealBannerMain {
+    background: url('/public/images/DealBaner1.png');
+    background-position: cover;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 100lvh;
+    width: 100%;
+}
+
+.dealBannerContentMain {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    margin: auto;
+    height: 100%;
+    border: 2px solid white;
+}
+
+.dealBannerContentLeft {
+    width: 50%;
+    height: 100px;
+}
+
+.dealBannerContentRight {
+    width: 35%;
+    font-weight: 800;
+    font-style: ExtraBold;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #000000;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+    margin-top: 13%;
+}
+
+.dealBannerContentRight1 {
+    margin-right: 10%;
+}
+
+.dealBannerContentRight2 {
+    margin-top: 15px;
+    margin-left: 10%;
+}
+
+.dealBannerShopBtn {
+    opacity: 1;
+    border-radius: 26px;
+    background: linear-gradient(118.34deg, #AD0001 8.28%, #E41E25 73%);
+    box-shadow: 8px 16px 14px 0px #B60A0D inset;
+    box-shadow: -8px -16px 14px 0px #F71B1D inset;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    padding: 10px 20px;
+    border: none;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #FFFFFF;
+    margin-top: 30px;
+}
+
+.dealAlertContentMain {
+    display: flex;
+    justify-content: space-between;
+    margin: 3% auto;
+    align-items: center;
+}
+
+.dealAlertContent {
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 28px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #000000;
+}
+
+.dealAlertContent1 {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #000000;
+}
+
+.originalPrice {
+    text-decoration: line-through;
+    font-size: 15px;
+    align-items: center;
+    margin-top: 4px;
+}
+
+
+
+.dealAlertContentMain {
+    display: flex;
+    justify-content: space-between;
+    margin: 3% auto;
+    align-items: center;
+}
+
+.dealAlertContent {
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 28px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #000000;
+}
+
+.dealAlertContent1 {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #000000;
+}
+
+.dealAlertMain {
+    display: flex;
+    align-content: center;
+    gap: 30px;
+}
+
+
+/* Smooth scaling animation for the timer image */
+.deal-timer-image {
+    height: 100px;
+    margin: auto;
+    animation: scalePulse 2s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+
+@keyframes scalePulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Blinking/glowing effect for timer text */
+@keyframes textGlow {
+    0% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        opacity: 1;
+    }
+
+    50% {
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.8),
+            0 0 20px rgba(255, 255, 255, 0.6);
+        opacity: 0.9;
+    }
+
+    100% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        opacity: 1;
+    }
+}
+
+/* Smooth color transition for timer numbers */
+.dealAlertTimer {
+    display: inline-block;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    background: linear-gradient(180deg, #142E55 0%, #2DAEBD 100%);
+    border: none;
+    color: #FFFFFF;
+    font-size: 40px;
+    font-weight: 600;
+    padding: 13px 10px;
+    border-radius: 8px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    width: 220px;
+    margin: auto;
+
+}
+
+.DealTimer-separator {
+    padding: 0px 2px;
+
+}
+
+@keyframes colorShift {
+
+    0%,
+    100% {
+        color: #FFFFFF;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    50% {
+        color: #FFD700;
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+    }
+}
+
+/* Hover effects */
+.deal-timer-image:hover {
+    animation: scalePulse 0.5s ease-in-out infinite;
+}
+
+.dealAlertTimer:hover {
+    animation: textGlow 1s ease-in-out infinite, bounce 0.5s ease;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+
+.DealTimerEndBanner {
+    background: url('/public/images/DealTimerEndBanner.png');
+    background-position: cover;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 375px;
+    margin: auto;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.DealTimerEndedBtn {
+    padding: 12px 25px;
+    opacity: 1;
+    border: none;
+    border-radius: 26px;
+    background: linear-gradient(118.34deg, #AD0001 8.28%, #E41E25 73%);
+    box-shadow: 8px 16px 14px 0px #B60A0D inset;
+    box-shadow: -8px -16px 14px 0px #F71B1D inset;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #FFFFFF;
+    margin-top: 23%;
+
+}
+
+.TimerEndedMain{
+    cursor: pointer;
+    padding: 0;
+    margin:0;
+    margin-top:5%;
+}
+.TimerEndedMain img{
+    height: auto;
+    width: 100%;
+}
+
+/* Responsive Media Queries */
+/* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
+@media (min-width: 2560px) {
+    .dealBannerContentRight {
+        width: 35%;
+        font-size: 80px;
+        margin-top: 12%;
+    }
+
+    .dealBannerShopBtn {
+        border-radius: 50px;
+        padding: 20px 45px;
+        font-size: 50px;
+        margin-top: 70px;
+    }
+
+    .dealAlertContentMain {
+        max-width: 1765px;
+    }
+
+    .dealAlertContent {
+        font-size: 50px;
+    }
+
+    .dealAlertContent1 {
+        margin-top: 10px;
+        font-size: 35px;
+    }
+
+    .dealAlertTimer {
+        padding: 25px 50px;
+        border-radius: 15px;
+        height: 100%;
+        font-size: 75px;
+        width: 430px;
+    }
+
+    .DealTimer-separator {
+        padding: 0px 5px;
+    }
+
+    .deal-timer-image {
+        width: 150px;
+        height: 170px;
+    }
+
+    .DealTimerEndBanner {
+        height: 600px;
+
+    }
+
+    .DealTimerEndedBtn {
+        padding: 25px 45px;
+        border-radius: 50px;
+        font-size: 38px;
+        margin-top: 18%;
+    }
+
+
+    .dealAlertMain {
+        gap: 80px;
+    }
+
+    .originalPrice {
+        font-size: 26px;
+        margin-top: 0px;
+    }
+}
+
+/* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
+@media (min-width: 1440px) and (max-width: 2559px) {
+    .dealBannerContentRight {
+        width: 35%;
+        font-size: 40px;
+        margin-top: 12%;
+    }
+
+    .dealBannerContentRight2 {
+        margin-top: 10px;
+        margin-left: 10%;
+    }
+
+    .dealBannerShopBtn {
+        border-radius: 30px;
+        padding: 13px 30px;
+        font-size: 28px;
+        margin-top: 30px;
+    }
+
+    .dealAlertContentMain {
+    }
+
+    .dealAlertContent {
+        font-size: 30px;
+    }
+
+    .dealAlertContent1 {
+        margin-top: 8px;
+        font-size: 25px;
+    }
+
+    .dealAlertTimer {
+        font-size: 40px;
+        width: 230px;
+    }
+
+    .DealTimer-separator {
+        padding: 0px 3px;
+    }
+
+    .deal-timer-image {
+        width: 70px;
+    }
+
+    .DealTimerEndBanner {
+        height: 400px;
+
+    }
+
+    .DealTimerEndedBtn {
+        padding: 16px 25px;
+        border-radius: 50px;
+        font-size: 22px;
+        margin-top: 22%;
+    }
+
+
+    .dealAlertMain {
+        gap: 35px;
+    }
+
+    .originalPrice {
+        font-size: 19px;
+        margin-top: 0px;
+    }
+}
+
+/* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
+@media (min-width: 992px) and (max-width: 1023px) {
+    .dealBannerContentRight {
+        width: 35%;
+        font-size: 32px;
+        margin-top: 13%;
+    }
+
+    .dealBannerContentRight2 {
+        margin-top: 6px;
+        margin-left: 10%;
+    }
+
+    .dealBannerShopBtn {
+        border-radius: 25px;
+        padding: 10px 25px;
+        font-size: 25px;
+        margin-top: 27px;
+    }
+
+    .dealAlertContentMain {
+    }
+
+    .dealAlertContent {
+        font-size: 25px;
+    }
+
+    .dealAlertContent1 {
+        margin-top: 6px;
+        font-size: 20px;
+    }
+
+    .dealAlertTimer {
+        font-size: 38px;
+        width: 200px;
+    }
+
+    .DealTimer-separator {
+        padding: 0px 2px;
+    }
+
+    .deal-timer-image {
+        width: 70px;
+        height: 85px;
+    }
+
+    .DealTimerEndBanner {
+        height: 350px;
+
+    }
+
+    .DealTimerEndedBtn {
+        padding: 14px 20px;
+        border-radius: 50px;
+        font-size: 18px;
+        margin-top: 28%;
+    }
+
+    .dealAlertMain {
+        gap: 35px;
+    }
+
+    .originalPrice {
+        font-size: 13px;
+        margin-top: 2px;
+    }
+}
+
+/* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .dealBannerContentLeft {
+        width: 42%;
+    }
+
+    .dealBannerContentRight {
+        width: 48%;
+        font-size: 28px;
+        margin-top: 19%;
+    }
+
+    .dealBannerContentRight2 {
+        margin-top: 6px;
+        margin-left: 10%;
+    }
+
+    .dealBannerShopBtn {
+        border-radius: 20px;
+        padding: 10px 23px;
+        font-size: 18px;
+        margin-top: 35px;
+    }
+
+    .dealAlertContentMain {
+    }
+
+    .dealAlertContent {
+        font-size: 24px;
+    }
+
+    .dealAlertContent1 {
+        margin-top: 6px;
+        font-size: 19px;
+    }
+
+    .dealAlertTimer {
+        font-size: 35px;
+        width: 180px;
+    }
+
+    .DealTimer-separator {
+        padding: 0px 2px;
+    }
+
+    .deal-timer-image {
+        width: 70px;
+        height: 85px;
+    }
+
+    .DealTimerEndBanner {
+        height: 300px;
+
+    }
+
+    .DealTimerEndedBtn {
+        padding: 12px 18px;
+        border-radius: 50px;
+        font-size: 16px;
+        margin-top: 32%;
+    }
+
+
+    .dealAlertMain {
+        gap: 30px;
+    }
+
+    .originalPrice {
+        font-size: 16px;
+        margin-top: 1px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .DealBannerMain {
+        background: url('/public/images/MobileDealBanner4.png');
+        background-position: cover;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        height: 100lvh;
+        width: 100%;
+    }
+
+    .DealTimerEndBanner {
+        background: url('/public/images/DealTimerEndMobileBanner.png');
+        background-position: cover;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        height: auto;
+    }
+}
+
+/* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
+@media (min-width: 480px) and (max-width: 767px) {
+
+    .dealBannerContentLeft {
+        width: 45%;
+    }
+
+    .dealBannerContentRight {
+        width: 70%;
+        font-size: 24px;
+        margin-top: 35%;
+    }
+
+    .dealBannerContentRight2 {
+        margin-top: 5px;
+        margin-left: 10%;
+    }
+
+    .dealBannerShopBtn {
+        border-radius: 20px;
+        padding: 10px 23px;
+        font-size: 18px;
+        margin-top: 25px;
+    }
+
+    .dealAlertContentMain {
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 11%;
+        margin-bottom: 0px;
+    }
+
+    .dealAlertContent {
+        text-align: center;
+        font-size: 25px;
+    }
+
+    .dealAlertContent1 {
+        margin-top: 6px;
+        font-size: 20px;
+    }
+
+
+    .dealAlertTimer {
+        font-size: 32px;
+        width: 170px;
+    }
+
+    .DealTimer-separator {
+        padding: 0px 2px;
+    }
+
+    .deal-timer-image {
+        width: 68px;
+        height: 68px;
+    }
+
+    .DealTimerEndedBtn {
+        padding: 12px 18px;
+        border-radius: 50px;
+        font-size: 16px;
+        margin-top: 32%;
+    }
+
+
+
+    .dealAlertMain {
+        gap: 30px;
+    }
+
+    .originalPrice {
+        font-size: 19px;
+        margin-top: 1px;
+    }
+
+}
+
+/* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
+@media (min-width: 425px) and (max-width: 479px) {
+    .dealBannerContentLeft {
+        width: 43%;
+    }
+
+    .dealBannerContentRight {
+        width: 72%;
+        font-size: 22px;
+        margin-top: 38%;
+    }
+
+    .dealBannerContentRight2 {
+        margin-top: 5px;
+        margin-left: 10%;
+    }
+
+    .dealBannerShopBtn {
+        border-radius: 20px;
+        padding: 9px 21px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .dealAlertContentMain {
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 12%;
+        margin-bottom: 0px;
+    }
+
+    .dealAlertContent {
+        text-align: center;
+        font-size: 23px;
+    }
+
+    .dealAlertContent1 {
+        margin-top: 6px;
+        font-size: 18px;
+    }
+
+    .dealAlertTimer {
+        font-size: 31px;
+        width: 170px;
+    }
+
+    .DealTimer-separator {
+        padding: 0px 2px;
+    }
+
+    .deal-timer-image {
+        width: 65px;
+        height: 65px;
+    }
+
+    .DealTimerEndedBtn {
+        padding: 12px 18px;
+        border-radius: 50px;
+        font-size: 16px;
+        margin-top: 32%;
+    }
+
+
+    .dealAlertMain {
+        gap: 30px;
+    }
+
+    .originalPrice {
+        font-size: 19px;
+        margin-top: 1px;
+    }
+
+}
+
+/* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
+@media (min-width: 375px) and (max-width: 424px) {
+    .DealBannerMain {
+        background: url('/public/images/MobileDealBanner4.png');
+        background-position: right;
+        background-size: 102% 100%;
+        background-repeat: no-repeat;
+        height: 100lvh;
+        width: 100%;
+    }
+
+    .dealBannerContentLeft {
+        width: 42%;
+    }
+
+    .dealBannerContentRight {
+        width: 91%;
+        font-size: 22px;
+        margin-top: 68%;
+    }
+
+    .dealBannerContentRight2 {
+        margin-top: 5px;
+        margin-left: 10%;
+    }
+
+    .dealBannerShopBtn {
+        border-radius: 20px;
+        padding: 9px 21px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+
+    .dealAlertContentMain {
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 12%;
+        margin-bottom: 0px;
+    }
+
+    .dealAlertContent {
+        text-align: center;
+        font-size: 25px;
+    }
+
+    .dealAlertContent1 {
+        text-align: center;
+        margin-top: 6px;
+        font-size: 20px;
+    }
+
+    .dealAlertTimer {
+        font-size: 31px;
+        width: 170px;
+    }
+
+    .DealTimer-separator {
+        padding: 0px 2px;
+    }
+
+    .deal-timer-image {
+        width: 65px;
+        height: 65px;
+    }
+
+    .DealTimerEndedBtn {
+        padding: 12px 18px;
+        border-radius: 50px;
+        font-size: 16px;
+        margin-top: 32%;
+    }
+
+
+    .dealAlertMain {
+        gap: 30px;
+    }
+
+    .originalPrice {
+        font-size: 19px;
+        margin-top: 1px;
+    }
+
+}
+
+/* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
+@media (min-width: 360px) and (max-width: 374px) {
+    .DealBannerMain {
+        background: url('/public/images/MobileDealBanner4.png');
+        background-position: right;
+        background-size: 102% 100%;
+        background-repeat: no-repeat;
+        height: 100lvh;
+        width: 100%;
+    }
+
+    .dealBannerContentLeft {
+        width: 39%;
+    }
+
+    .dealBannerContentRight {
+        width: 78%;
+        font-size: 20px;
+        margin-top: 75%;
+    }
+
+    .dealBannerContentRight2 {
+        margin-top: 3px;
+        margin-left: 10%;
+    }
+
+    .dealBannerShopBtn {
+        border-radius: 20px;
+        padding: 9px 21px;
+        font-size: 16px;
+        margin-top: 25px;
+    }
+
+    .dealAlertContentMain {
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 12%;
+        margin-bottom: 0px;
+    }
+
+    .dealAlertContent {
+        text-align: center;
+        font-size: 23px;
+    }
+
+    .dealAlertContent1 {
+        text-align: center;
+        margin-top: 6px;
+        font-size: 18px;
+    }
+
+
+    .dealAlertTimer {
+        font-size: 31px;
+        width: 170px;
+    }
+
+    .DealTimer-separator {
+        padding: 0px 2px;
+    }
+
+    .deal-timer-image {
+        width: 65px;
+        height: 65px;
+    }
+
+    .DealTimerEndedBtn {
+        padding: 12px 18px;
+        border-radius: 50px;
+        font-size: 16px;
+        margin-top: 32%;
+    }
+
+
+    .dealAlertMain {
+        gap: 30px;
+    }
+
+    .originalPrice {
+        font-size: 17px;
+        margin-top: 2px;
+    }
+
+}
+
+@media (min-width: 320px) and (max-width: 359px) {
+    .DealBannerMain {
+        background: url('/public/images/MobileDealBanner4.png');
+        background-position: right;
+        background-size: 103% 100%;
+        background-repeat: no-repeat;
+        height: 100lvh;
+        width: 100%;
+    }
+
+    .dealBannerContentLeft {
+        width: 36%;
+    }
+
+    .dealBannerContentRight {
+        width: 85%;
+        font-size: 18.5px;
+        margin-top: 55%;
+    }
+
+    .dealBannerContentRight1 {
+        margin-right: 5%;
+    }
+
+    .dealBannerContentRight2 {
+        margin-top: 3px;
+        margin-left: 10%;
+    }
+
+
+    .dealBannerShopBtn {
+        border-radius: 20px;
+        padding: 9px 21px;
+        font-size: 16px;
+        margin-top: 25px;
+    }
+
+    .dealAlertContentMain {
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 12%;
+        margin-bottom: 0px;
+    }
+
+    .dealAlertContent {
+        text-align: center;
+        font-size: 23px;
+    }
+
+    .dealAlertContent1 {
+        text-align: center;
+        margin-top: 6px;
+        font-size: 18px;
+    }
+
+
+    .dealAlertTimer {
+        font-size: 31px;
+        width: 170px;
+    }
+
+    .DealTimer-separator {
+        padding: 0px 2px;
+    }
+
+    .deal-timer-image {
+        width: 65px;
+        height: 65px;
+    }
+
+    .DealTimerEndedBtn {
+        padding: 12px 18px;
+        border-radius: 50px;
+        font-size: 16px;
+        margin-top: 32%;
+    }
+
+    .dealAlertMain {
+        gap: 30px;
+    }
+
+    .originalPrice {
+        font-size: 17px;
+        margin-top: 2px;
+    }
+}

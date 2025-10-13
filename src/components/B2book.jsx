@@ -37,23 +37,119 @@ function BookASite1() {
     const [isScrollingPaused, setIsScrollingPaused] = useState(false);
 
 
+    // useEffect(() => {
+    //     const fetchProduct = async () => {
+    //         try {
+    //             // If coming from BookASite page, use the context
+    //             if (location.state?.selectedSpot) {
+    //                 setCurrentProduct(location.state?.selectedSpot);
+    //                 fetchSimilarProducts(location.state?.selectedSpot.prodCode);
+    //                 setAdditionalFiles(location.state?.selectedSpot.additionalFiles || []);
+    //                 setCurrentMainImage(location.state?.selectedSpot.imageUrl);
+    //                 setSelectedFileIndex(-1);
+    //                 setIsLoading(false);
+    //                 return;
+    //             }
+    //             // If accessed via direct URL, fetch the product
+    //             if (productId) {
+
+    //                 // Extract the actual ID from the URL (remove the slug part)
+    //                 const actualId = productId.split('-')[0];
+    //                 const response = await fetch(`${baseUrl}/products/${actualId}`);
+    //                 const data = await response.json();
+    //                 if (response.ok) {
+    //                     const mappedSpot = {
+    //                         id: data._id,
+    //                         prodName: data.name,
+    //                         printingCost: data.printingCost,
+    //                         mountingCost: data.mountingCost,
+    //                         prodCode: data.prodCode,
+    //                         prodLighting: data.lighting,
+    //                         productFrom: data.from,
+    //                         productTo: data.to,
+    //                         productFixedAmount: data.fixedAmount,
+    //                         productFixedOffer: data.fixedOffer,
+    //                         location: `${data.location.district}, ${data.location.state}`,
+    //                         category: data.mediaType,
+    //                         price: data.price,
+    //                         sizeHeight: data.height,
+    //                         sizeWidth: data.width,
+    //                         rating: data.rating,
+    //                         imageUrl: data.image,
+    //                         district: data.location.district,
+    //                         state: data.location.state,
+    //                         latitude: data.Latitude,
+    //                         longitude: data.Longitude,
+    //                         LocationLink: data.LocationLink,
+    //                         additionalFiles: data.additionalFiles || []
+    //                     };
+    //                     setCurrentProduct(mappedSpot);
+    //                     setAdditionalFiles(data.additionalFiles || []);
+    //                     setCurrentMainImage(data.image);
+    //                     setSelectedSpot(mappedSpot);
+    //                     setSelectedFileIndex(-1); // Reset selected file index
+    //                     fetchSimilarProducts(data.prodCode);
+    //                 }
+    //                 else {
+    //                     console.error("Product not found");
+    //                 }
+    //                 setIsLoading(false);
+    //             }
+    //         } catch (error) {
+    //             console.error("Error fetching product:", error);
+    //             setIsLoading(false);
+    //         }
+    //     };
+
+    //     fetchProduct();
+    // }, [productId, location.state]);
+
+    // Navbar js 
+   
+   
+   
+   
     useEffect(() => {
         const fetchProduct = async () => {
             try {
+                setIsLoading(true);
+
+                // If coming from Deal of Day page with offer product
+                if (location.state?.isOfferProduct && location.state?.selectedSpot) {
+                    const offerSpot = location.state.selectedSpot;
+
+                    // Create a merged product object with offer details
+                    const mergedProduct = {
+                        ...offerSpot,
+                        // Use offer price for display but keep original price for comparison
+                        displayPrice: offerSpot.price || offerSpot.offerPrice, // Use the offer price
+                        originalPrice: offerSpot.originalPrice || offerSpot.price, // Original price for comparison
+                        isOfferProduct: true
+                    };
+
+                    setCurrentProduct(mergedProduct);
+                    fetchSimilarProducts(offerSpot.prodCode);
+                    setAdditionalFiles(offerSpot.additionalFiles || []);
+                    setCurrentMainImage(offerSpot.imageUrl || offerSpot.image);
+                    setSelectedFileIndex(-1);
+                    setSelectedSpot(mergedProduct);
+                    setIsLoading(false);
+                    return;
+                }
+
                 // If coming from BookASite page, use the context
                 if (location.state?.selectedSpot) {
-                    setCurrentProduct(location.state?.selectedSpot);
-                    fetchSimilarProducts(location.state?.selectedSpot.prodCode);
-                    setAdditionalFiles(location.state?.selectedSpot.additionalFiles || []);
-                    setCurrentMainImage(location.state?.selectedSpot.imageUrl);
+                    setCurrentProduct(location.state.selectedSpot);
+                    fetchSimilarProducts(location.state.selectedSpot.prodCode);
+                    setAdditionalFiles(location.state.selectedSpot.additionalFiles || []);
+                    setCurrentMainImage(location.state.selectedSpot.imageUrl);
                     setSelectedFileIndex(-1);
                     setIsLoading(false);
                     return;
                 }
+
                 // If accessed via direct URL, fetch the product
                 if (productId) {
-
-                    // Extract the actual ID from the URL (remove the slug part)
                     const actualId = productId.split('-')[0];
                     const response = await fetch(`${baseUrl}/products/${actualId}`);
                     const data = await response.json();
@@ -72,6 +168,8 @@ function BookASite1() {
                             location: `${data.location.district}, ${data.location.state}`,
                             category: data.mediaType,
                             price: data.price,
+                            displayPrice: data.price, // Regular price for regular products
+                            originalPrice: data.price,
                             sizeHeight: data.height,
                             sizeWidth: data.width,
                             rating: data.rating,
@@ -81,16 +179,16 @@ function BookASite1() {
                             latitude: data.Latitude,
                             longitude: data.Longitude,
                             LocationLink: data.LocationLink,
-                            additionalFiles: data.additionalFiles || []
+                            additionalFiles: data.additionalFiles || [],
+                            isOfferProduct: false
                         };
                         setCurrentProduct(mappedSpot);
                         setAdditionalFiles(data.additionalFiles || []);
                         setCurrentMainImage(data.image);
                         setSelectedSpot(mappedSpot);
-                        setSelectedFileIndex(-1); // Reset selected file index
+                        setSelectedFileIndex(-1);
                         fetchSimilarProducts(data.prodCode);
-                    }
-                    else {
+                    } else {
                         console.error("Product not found");
                     }
                     setIsLoading(false);
@@ -104,7 +202,7 @@ function BookASite1() {
         fetchProduct();
     }, [productId, location.state]);
 
-    // Navbar js 
+   
     const fetchSimilarProducts = async (prodCode) => {
         try {
             const response = await fetch(
@@ -150,7 +248,9 @@ function BookASite1() {
             latitude: spot.latitude,
             longitude: spot.longitude,
             LocationLink: spot.LocationLink,
-            additionalFiles: spot.additionalFiles || []
+            additionalFiles: spot.additionalFiles || [],
+            isOfferProduct: false
+
         };
         // Generate URL-friendly slug
         const productSlug = `${spot._id}-${slugify(spot.name, { lower: true, strict: true })}`;
@@ -699,6 +799,31 @@ function BookASite1() {
     //         }
     //     }
     // }, [isScrollingPaused]);
+
+    
+    if (isLoading) {
+        return (
+            <MainLayout>
+                <div className="container text-center py-5">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </MainLayout>
+        );
+    }
+
+    if (!currentProduct) {
+        return (
+            <MainLayout>
+                <div className="container text-center py-5">
+                    <h3>Product not found</h3>
+                    <p>The product you are looking for does not exist.</p>
+                </div>
+            </MainLayout>
+        );
+    }
+
     return (
         <MainLayout>
             <div>
@@ -806,7 +931,17 @@ function BookASite1() {
                                     <div className='book-spot mt-3'>{currentProduct.productFrom} <span><img src='/images/Location_arrow.png' className='location-arrow'></img>  </span> {currentProduct.productTo}</div>
                                     <div className='book-rate'>
                                         <div className='book-rateContent1'>
-                                            <span className='rate-perDay'>₹ {currentProduct.price.toLocaleString()} <span className='rate-perDay1'>Per Day</span></span><br></br>
+                                            {/* <span className='rate-perDay'>₹ {currentProduct.price.toLocaleString()} <span className='rate-perDay1'>Per Day</span></span><br></br> */}
+                                            {/* Show offer price and original price for offer products */}
+                                            {currentProduct.isOfferProduct ? (
+                                                <>
+                                                    <span className='rate-perDay offer-price-highlight'>₹ {currentProduct.displayPrice?.toLocaleString() || '0'} <span className='rate-perDay1'>Per Day</span></span>
+                                                    <span className='original-price-strikethrough'>₹ {currentProduct.originalPrice?.toLocaleString() || '0'}</span>
+                                                </>
+                                            ) : (
+                                                <span className='rate-perDay'>₹ {currentProduct.price?.toLocaleString() || '0'} <span className='rate-perDay1'>Per Day</span></span>
+                                            )}
+                                            <br />
                                             <a href="#Terms" className='book-condition anchor'>Terms & Condition</a>
                                         </div>
 
