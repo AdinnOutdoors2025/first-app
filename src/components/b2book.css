@@ -561,6 +561,26 @@
 }
 
 
+
+
+
+
+
+/* Offer price highlight styles */ 
+
+.offer-price-highlight {
+    color: #ff4444 !important;
+    font-weight: bold;
+    font-size: 20px !important;
+}
+
+.original-price-strikethrough {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
 /* Responsive Media Queries */
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
 @media (min-width: 2560px) {
