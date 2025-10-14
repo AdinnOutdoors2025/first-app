@@ -31,19 +31,17 @@ import ProtectedRoute from './components/PROTECTED_ROUTE.jsx';
 import { AdminAuthWrapper } from './Adminpanel/AdminAuthWrapper.jsx';
 import EnquireUserTable from './Adminpanel/ad1EnquireUsers.jsx';
 import PreLoader from './components/PreLoad.jsx';
-
+//Rich Text 
 import RichText from './Adminpanel/RichText.jsx';
-
 //BLOG PAGE
 import BlogPage from './components/G1BlogPage.jsx';
 import BlogPageAdmin from './Adminpanel/ad2BlogAddPg.jsx';
-
 //Deal of the Day
 import DealOfTheDay from './components/H1DealDay.jsx';
-
 //DEAL OF THE DAY SCROLL ANIMATION
 import DealScrollAnimation from './components/H2DealScroll.jsx';
-
+// Scroll to Top Component
+import ScrollToTop from './SCROLL_TO_TOP.jsx';
 function App() {
   const [load, upadateLoad] = useState(true);
 
@@ -62,6 +60,8 @@ function App() {
           {/* <CartProvider> */}
           <Router>
             <PreLoader load={load} />
+            {/* Scroll to Top Component - Add this */}
+            <ScrollToTop />
             {/* <Navbar/> */}
             <Routes>
               {/* IF USER GIVE ANY WRONG / NOT FOUND THEN SHOW THIS PAGE  */}
@@ -69,7 +69,6 @@ function App() {
               {/* Hero Section  */}
               {/* <Route path="/" element={<HeroSection />} /> */}
               <Route path="/" element={<HeroBanner />} />
-
               <Route path="/hero" element={<HeroSection1 />} />
               {/* AboutUs Home section  */}
               <Route path="/home" element={<AdinnHome />} />

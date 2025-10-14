@@ -169,28 +169,13 @@ function AdinnHome3() {
         ]
     };
 
-    //TEXT COLOR AUTOMATICALLY CHANGED BASED ON THE BACKGROUND IMAGE
-    // const img = document.getElementById("bgImage");
-    //   const textContainer = document.getElementById("textContainer");
-    //   const colorThief = new ColorThief();
-    //   function updateTextColor() {
-    //     try {
-    //       const color = colorThief.getColor(img);
-    //       const brightness = (color[0] * 299 + color[1] * 587 + color[2] * 114) / 1000;
-    //       textContainer.style.color = brightness > 150 ? "black" : "white";
-    //     } catch (e) {
-    //       console.warn("Color extraction failed:", e);
-    //     }
-    //   }
-    //   if (img.complete) {
-    //     updateTextColor();
-    //   } else {
-    //     img.addEventListener('load', updateTextColor);
-    //   }
 
     const [blogData, setBlogData] = useState([]);
+        const [isLoading, setIsLoading] = useState(true); // Add loading state
+
     const fetchBlogs = async () => {
         try {
+            setIsLoading(true);
             const response = await fetch(`${baseUrl}/BlogAdd/getBlog`);
             const data = await response.json();
             setBlogData(data);
@@ -198,12 +183,14 @@ function AdinnHome3() {
         catch (err) {
             console.log("Failed to fetch Blogs", err);
         }
+         finally {
+            setIsLoading(false);
+        }
     }
     useEffect(() => {
         fetchBlogs();
     }, []);
- const handleBlogClick = (blogId) => {
-        // navigate(`/Blog/${blog}`); // Navigate to blog details page with ID
+    const handleBlogClick = (blogId) => {
         navigate(`/Blog/${blogId}`); // Navigate to blog details page with ID
 
 
@@ -232,18 +219,23 @@ function AdinnHome3() {
             {/* OOH Insights  section  */}
             <div className='ooh '>
                 <h1 className='heading'><span className='highlight'>OOH </span>Insights</h1>
+                   {isLoading ? (
+                    <div className="col-12 text-center loading-container">
+                        <img src='./images/BookLoading.svg' alt="Loading..." className="Book-loading-gif" />
+                    </div>
+                ) : (
                 <div className='ooh-content '>
                     <Slider {...settings}>
                         {
                             blogData.map((blog, _id) => (
                                 <div className='ooh-inside' key={blog._id} >
                                     <div className='ooh-inside-content'
-                                    onClick={() => handleBlogClick(blog._id)}>
+                                        onClick={() => handleBlogClick(blog._id)}>
                                         <img
                                             // ref={el => imageRefs.current[0] = el}
                                             src={blog.blogImage} className='ooh-img'
                                             crossOrigin="anonymous" // Important for ColorThief to work
-                                            id='bgImage'ref={el => imageRefs.current[_id] = el}></img>
+                                            id='bgImage' ref={el => imageRefs.current[_id] = el}></img>
                                         <div className='eye'>
                                             <div className='eye-content'>
                                                 {/* <span><img src='./images/ooh4.png' className='eyeImg'></img></span>
@@ -267,15 +259,14 @@ function AdinnHome3() {
                                                 </div>
                                             </div>
                                             <button className='ooh-btn'>Read More &nbsp; <img src='./images/Arrow_btn.png' className='arrow'></img></button>
-
-
                                         </div>
                                     </div>
                                 </div>
                             ))
-                        }  
+                        }
                     </Slider>
                 </div>
+                )}
             </div>
         </div>
     )

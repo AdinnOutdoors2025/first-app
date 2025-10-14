@@ -1048,7 +1048,7 @@ import MainFooter from './A1FOOTER.jsx';
 import { useSpot } from "./B0SpotContext";
 import { useNavigate } from "react-router-dom";
 import slugify from 'slugify';
-//BASE URL OF http://localhost:3001 FILE IMPORT 
+//BASE URL OF http://localhost:3001 FILE IMPORT
 import { baseUrl } from '../Adminpanel/BASE_URL';
 import { Statistic } from 'antd';
 const { Countdown } = Statistic;
@@ -1678,7 +1678,7 @@ function H1DealDay() {
                 {timerEnded ?
                     (
                         <div className='container-fluid TimerEndedMain ' onClick={() => navigate("/book")}   >
-                            <img src='./images/DealTimerEndBannerFinal.png' ></img>
+                            <img src='./images/DealTimerEndedFinal1.png' ></img>
                         </div>
                     ) : (
 
@@ -1983,7 +1983,7 @@ function H1DealDay() {
                                         {/* Show loading animation while data is being fetched */}
                                         {isLoading ? (
                                             <div className="col-12 text-center loading-container">
-                                                <img src='./images/BookLoading.gif' alt="Loading..." className="loading-gif" />
+                                                <img src='./images/BookLoading.svg' alt="Loading..." className="Book-loading-gif" />
                                             </div>
                                         ) : currentSpots.length > 0 ? (
                                             currentSpots.map((spot) => (

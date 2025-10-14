@@ -39,6 +39,7 @@ function AdinnHome2() {
         () => {
             const fetchPrimeSpots = async () => {
                 try {
+                    setIsLoading(true);
                     const response = await fetch(`${baseUrl}/products`);
                     const data = await response.json();
                     const visibleProducts = data.filter(
@@ -63,16 +64,19 @@ function AdinnHome2() {
                         to: prod.to,
                         printingCost: prod.printingCost,
                         mountingCost: prod.mountingCost,
-                        latitude : prod.Latitude,
-                        longitude : prod.Longitude,
-                        LocationLink : prod.LocationLink
-                        
+                        latitude: prod.Latitude,
+                        longitude: prod.Longitude,
+                        LocationLink: prod.LocationLink
+
                     }));
                     setPrimeSpotsData(mappedPrimeSpots);
                     setIsLoading(false);
                 }
                 catch (err) {
                     console.log("Failed to fetch prime spots", err);
+                    setIsLoading(false);
+                }
+                finally {
                     setIsLoading(false);
                 }
             };
@@ -101,9 +105,9 @@ function AdinnHome2() {
             imageUrl: spot.image || spot.imageUrl,
             district: spot.location?.district || spot.district,
             state: spot.location?.state || spot.state,
-            latitude : spot.latitude,
-            longitude:spot.longitude,
-            LocationLink:spot.LocationLink
+            latitude: spot.latitude,
+            longitude: spot.longitude,
+            LocationLink: spot.LocationLink
         };
 
 
@@ -113,9 +117,6 @@ function AdinnHome2() {
         });
     };
 
-
-
-
     const NextArrow = (props) => {
         const { onClick } = props;
         return (
@@ -124,7 +125,6 @@ function AdinnHome2() {
             </div>
         );
     };
-
 
     // Custom Previous Arrow
     const PrevArrow = (props) => {
@@ -202,34 +202,42 @@ function AdinnHome2() {
     return (
         <div>
             <h1 className="heading"><span className="highlight">Prime Advertising </span> Spots</h1>
-            <div className="w-3/4 prime ">
-                <Slider {...settings}>
-                    {primeSpotsData.map((spot, index) => (
-                        <div className={`billboard-card ${index === 1 ? 'scaleZoomInLeft' : ''}`} key={spot.id} >
-                            <img src={spot.imageUrl} alt={spot.location} className="card-img-top1-home" />
-                            <span className='board-category1-home'>{spot.category}</span>
-                            <div className="board-content-home ">
-                                <div className="board-content-home-top" style={{}}>
-                                    <span className=" board-loc-home">{spot.prodName}</span>
-                                    <span className="board-dim-home">{spot.dimensions}</span>
-                                </div>
-                                <div className="board-content-home-bottom" style={{}}>
-                                    <span className="board-price-home">₹{spot.price.toLocaleString()}</span>
-                                    <img src='./images/rating_board.png' className='rate-board-home'></img>
-                                </div>
-                                <div >
-                                    <RatingStars rating={spot.rating} />
-                                    <button className="board-btn1-home"
-                                        onClick={() => handleBookNow(spot)} >Book Now</button>
+
+            {isLoading ? (
+                <div className="col-12 text-center loading-container">
+                    <img src='./images/BookLoading.svg' alt="Loading..." className="Book-loading-gif" />
+                </div>
+            ) : (
+
+                <div className="w-3/4 prime ">
+                    <Slider {...settings}>
+                        {primeSpotsData.map((spot, index) => (
+                            <div className={`billboard-card ${index === 1 ? 'scaleZoomInLeft' : ''}`} key={spot.id} >
+                                <img src={spot.imageUrl} alt={spot.location} className="card-img-top1-home" />
+                                <span className='board-category1-home'>{spot.category}</span>
+                                <div className="board-content-home ">
+                                    <div className="board-content-home-top" style={{}}>
+                                        <span className=" board-loc-home">{spot.prodName}</span>
+                                        <span className="board-dim-home">{spot.dimensions}</span>
+                                    </div>
+                                    <div className="board-content-home-bottom" style={{}}>
+                                        <span className="board-price-home">₹{spot.price.toLocaleString()}</span>
+                                        <img src='./images/rating_board.png' className='rate-board-home'></img>
+                                    </div>
+                                    <div >
+                                        <RatingStars rating={spot.rating} />
+                                        <button className="board-btn1-home"
+                                            onClick={() => handleBookNow(spot)} >Book Now</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
 
-                </Slider>
+                    </Slider>
 
 
-            </div>
+                </div>
+            )}
         </div>
     );
 }
