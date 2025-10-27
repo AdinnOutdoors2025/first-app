@@ -879,6 +879,8 @@ export default function BookASite() {
       );
       setSelectedDistricts(updatedDistricts);
     }
+    // Close dropdown after selection
+    setIsOpen2(false);
   };
   //Start rating board
   const RatingStars = ({ rating }) => {
@@ -1083,9 +1085,9 @@ export default function BookASite() {
   return (
     <MainLayout>
       {/* <div> */}
-       <div className='bookMainDeal'>
+      <div className='bookMainDeal'>
 
-      <DealScrollAnim/>
+        <DealScrollAnim />
         {/* Navbar section  */}
         <MainNavbar />
         {/* Side Bar section  */}

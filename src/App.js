@@ -42,6 +42,8 @@ import DealOfTheDay from './components/H1DealDay.jsx';
 import DealScrollAnimation from './components/H2DealScroll.jsx';
 // Scroll to Top Component
 import ScrollToTop from './SCROLL_TO_TOP.jsx';
+//Police_Signal_PoleSizes
+import Sizes from './Adminpanel/Police_Signal_PoleSizes.jsx';
 function App() {
   const [load, upadateLoad] = useState(true);
 
@@ -90,8 +92,8 @@ function App() {
               <Route path="/Blog/:id" element={<BlogPage />} />
               <Route path="/Blogadmin" element={<BlogPageAdmin />} />
               <Route path="/Rich" element={<RichText />} />
-               <Route path = '/deal' element ={<DealOfTheDay/>}/>
-        <Route path='/DealScroll' element={<DealScrollAnimation />} />
+              <Route path='/deal' element={<DealOfTheDay />} />
+              <Route path='/DealScroll' element={<DealScrollAnimation />} />
 
               {/* Protected Admin Routes */}
               <Route path="/admin" element={
@@ -117,6 +119,8 @@ function App() {
               <Route path="/splash" element={<Splash />} />
               <Route path="/splashText" element={<SplashText />} />
               <Route path="/404" element={<NotFound />} />
+              <Route path="/Sizes" element={<Sizes />} />
+
 
               {/* LOGIN FOR ADMIN AND USER   */}
               {/* <Route path="/adminLogin" element={<CreativeAdminLogin />} /> */}

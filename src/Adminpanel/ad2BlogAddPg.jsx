@@ -298,8 +298,6 @@ function AdminBlogAdd() {
 
     
     // Clean up preview URLs
-   
-   
       // Save blog function
     const handleSaveBlog = async (e) => {
         e.preventDefault();

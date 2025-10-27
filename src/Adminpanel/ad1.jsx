@@ -8,7 +8,6 @@ import ImageUploadPage from './ad1File';
 import CategorySection from './ad1Category';
 import MediaTypeSection from './ad1MediaType';
 import { useLocation } from 'react-router-dom';
-import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import OrderDetails from './ad1OrderDetails';
 import { useLogin } from '../components/LoginContext';
 import EnquireUsers from '../Adminpanel/ad1EnquireUsers';
@@ -111,7 +110,7 @@ function AdminpanelHome() {
         setActiveOfferProducts('');
       }
 
-       else if (menu === 'OfferProduct') {
+      else if (menu === 'OfferProduct') {
         setActiveOfferProducts('All Offer'); // 👈 default subcategory when orders menu is opened
         setActiveSubOrder('');
         setActiveSubCategory('');
@@ -277,7 +276,7 @@ function AdminpanelHome() {
 
 
 
-  
+
 
   //EDIT OFFERED PRODUCT REDIRECTION
 
@@ -418,13 +417,6 @@ function AdminpanelHome() {
               </div>
             </div>
           )}
-
-
-
-
-  {/* OFFER PRODUCTS  */}
-
-
 
           {/* OFFERED PRODUCTS ADD SECTION */}
           <div className={`adminHeadings ${activeMenu === 'OfferProduct' ? 'active' : ''}`}
@@ -616,7 +608,7 @@ function AdminpanelHome() {
             <i className={`fas fa-chevron-${activeMenu === 'BlogPage' ? "up" : "down"} ml-2`}></i>
           </div>
 
-          {/* SubProducts with products and add product section */}
+          {/* SubBlogs with products and add Blog section */}
           {activeMenu === 'BlogPage' && (
             <div className="subcategory-list pl-6">
               <div
@@ -763,22 +755,22 @@ function AdminpanelHome() {
 
 
 
-   {/* OFFERED PRODUCTS ADD SECTION */}
+        {/* OFFERED PRODUCTS ADD SECTION */}
         {/* Show Sub Offered Product Content */}
         {activeOfferProducts === 'All Offer' && (
           <div className='productsMain'>
             <div>
-           {/* <OfferAddPg/> */}
-          <AllOffersPg/>
-{/* <Products /> */}
+              {/* <OfferAddPg/> */}
+              <AllOffersPg />
+              {/* <Products /> */}
             </div>
           </div>
         )}
 
         {activeOfferProducts === 'Add Offers' && (
           <div className="pl-6" id='EditOfferProduct' style={{ display: activeOfferProducts === 'Add Offers' ? 'block' : 'none' }}>
-          {/* <AllOffersPg/> */}
-                     <OfferAddPg/>
+            {/* <AllOffersPg/> */}
+            <OfferAddPg />
             {/* <ImageUploadPage editProduct={editProduct} /> */}
           </div>
         )}

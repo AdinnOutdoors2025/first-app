@@ -236,7 +236,6 @@
 
 
 .DealTimerEndBanner {
-    /* background: url('/public/images/DealTimerEndBanner.png'); */
     background-position: cover;
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -245,7 +244,9 @@
     align-items: center;
     align-content: center;
     text-align: center;
-}
+} 
+
+
 
 .DealTimerEndedBtn {
     padding: 12px 25px;
@@ -275,6 +276,12 @@
     height: auto;
     width: 100%;
 }
+
+/* 
+.dealBannerShopBtn :hover{
+    cursor: url('C:\Users\User\Downloads\AdinnOutdoorsUpdated\first-app\build\images\cursorHeart.png');
+} 
+*/
 
 /* Responsive Media Queries */
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */

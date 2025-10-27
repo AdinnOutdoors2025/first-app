@@ -82,7 +82,7 @@ function AdinnHome2() {
             };
             fetchPrimeSpots();
         }, []
-    );
+    ); 
     //SLICK ANIMATIONS EFFECT
     // Custom Next Arrow
     const handleBookNow = (spot) => {
@@ -110,7 +110,7 @@ function AdinnHome2() {
             LocationLink: spot.LocationLink
         };
 
-
+        
         // Navigate to booking page with state
         navigate(`/Product/${spotData.id}-${slugify(spotData.prodName)}`, {
             state: { selectedSpot: spotData }
@@ -197,7 +197,6 @@ function AdinnHome2() {
             </div>
         );
     }
-
 
     return (
         <div>
