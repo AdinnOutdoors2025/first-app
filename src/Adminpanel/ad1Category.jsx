@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import './ad1Category.css';
 //BASE URL OF http://localhost:3001 FILE IMPORT 

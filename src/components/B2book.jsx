@@ -105,10 +105,10 @@ function BookASite1() {
     // }, [productId, location.state]);
 
     // Navbar js 
-   
-   
-   
-   
+
+
+
+
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -170,8 +170,14 @@ function BookASite1() {
                             price: data.price,
                             displayPrice: data.price, // Regular price for regular products
                             originalPrice: data.price,
+                            // sizeHeight: data.height,
+                            // sizeWidth: data.width,
                             sizeHeight: data.height,
                             sizeWidth: data.width,
+                            sizeSide: data.side,
+                            productsquareFeet: data.productsquareFeet,
+
+
                             rating: data.rating,
                             imageUrl: data.image,
                             district: data.location.district,
@@ -202,7 +208,7 @@ function BookASite1() {
         fetchProduct();
     }, [productId, location.state]);
 
-   
+
     const fetchSimilarProducts = async (prodCode) => {
         try {
             const response = await fetch(
@@ -239,8 +245,15 @@ function BookASite1() {
             location: spot.location,
             category: spot.category,
             price: spot.price,
-            sizeHeight: spot.sizeHeight,
-            sizeWidth: spot.sizeWidth,
+            // sizeHeight: spot.sizeHeight,
+            // sizeWidth: spot.sizeWidth,
+
+
+            sizeHeight: spot.height,
+            sizeWidth: spot.width,
+            sizeSide: spot.side,
+            productsquareFeet: spot.productsquareFeet,
+
             rating: spot.rating,
             imageUrl: spot.image,
             district: spot.location.district,
@@ -580,8 +593,13 @@ function BookASite1() {
                 : "N/A",
             startDate: selectedDates.start?.toISOString(),
             endDate: selectedDates.end?.toISOString(),
-            sizeWidth: currentProduct.sizeWidth,
-            sizeHeight: currentProduct.sizeHeight,
+            // sizeWidth: currentProduct.sizeWidth,
+            // sizeHeight: currentProduct.sizeHeight,
+            sizeWidth: currentProduct?.sizeWidth,
+            sizeHeight: currentProduct?.sizeHeight,
+            sizeSide: currentProduct?.sizeSide,
+            productsquareFeet: currentProduct?.productsquareFeet,
+
             dimension: currentProduct.sizeHeight * currentProduct.sizeWidth,
             adType: currentProduct.category,
             totalAmount: totalPrice.toLocaleString(),
@@ -678,8 +696,14 @@ function BookASite1() {
                 : "N/A",
             startDate: selectedDates.start,
             endDate: selectedDates.end,
-            sizeWidth: currentProduct.sizeWidth,
-            sizeHeight: currentProduct.sizeHeight,
+            // sizeWidth: currentProduct.sizeWidth,
+            // sizeHeight: currentProduct.sizeHeight,
+            sizeWidth: currentProduct?.sizeWidth,
+            sizeHeight: currentProduct?.sizeHeight,
+            sizeSide: currentProduct?.sizeSide,
+            productsquareFeet: currentProduct?.productsquareFeet,
+
+
             dimension: currentProduct.sizeHeight * currentProduct.sizeWidth,
             adType: currentProduct.category,
             totalAmount: totalPrice.toLocaleString(),
@@ -800,7 +824,7 @@ function BookASite1() {
     //     }
     // }, [isScrollingPaused]);
 
-    
+
     if (isLoading) {
         return (
             <MainLayout>
@@ -917,7 +941,22 @@ function BookASite1() {
                             {currentProduct ? (
                                 <div className="col-md-6 col-lg-6 Book-content2"  >
                                     <p className='book-sideHeading'>{currentProduct.prodName}</p>
-                                    <p className='book-size'>Size: {currentProduct.sizeWidth} x {currentProduct.sizeHeight}<span className='slash-bar'>|</span>{currentProduct.sizeHeight * currentProduct.sizeWidth} Sq.ft</p>
+                                    {/* <p className='book-size'>Size: {currentProduct.sizeWidth} x {currentProduct.sizeHeight}<span className='slash-bar'>|</span>{currentProduct.sizeHeight * currentProduct.sizeWidth} Sq.ft</p> */}
+                                    {/* <p className='book-size'>Size: {currentProduct.sizeWidth} x {currentProduct.sizeHeight}<span className='slash-bar'>|</span>{currentProduct.productsquareFeet} Sq.ft</p> */}
+                                    <p className='book-size'>
+                                        Size: W {currentProduct.sizeWidth} x H {currentProduct.sizeHeight}
+                                        {/* Show side only for Signal Post and Pole Kiosk */}
+                                        {(currentProduct.category === 'Signal Post' || currentProduct.category === 'Pole Kiosk') &&
+                                            ` x S ${currentProduct.sizeSide}`
+                                        }
+                                        <span className='slash-bar'>|</span>
+                                        {currentProduct.productsquareFeet} Sq.ft
+                                        {/* Show "2-Sided" text for specific categories */}
+                                        {/* {(currentProduct.category === 'Signal Post' || currentProduct.category === 'Pole Kiosk') &&
+                                            <span className='sided-text'> (2-Sided)</span>
+                                        } */}
+                                    </p>
+
                                     <span className="btn-type">{currentProduct.category}</span>
                                     <span className="badge book-type">{currentProduct.prodLighting}</span>
                                     <span className='star-main'>

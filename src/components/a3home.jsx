@@ -9,12 +9,10 @@ import { baseUrl } from '../Adminpanel/BASE_URL';
 import { useNavigate } from 'react-router-dom';
 import slugify from 'slugify';
 
-
 function AdinnHome3() {
     const navigate = useNavigate();
     const imageRefs = useRef([]);
     const textRefs = useRef([]);
-
 
     useEffect(() => {
         const colorThief = new ColorThief();

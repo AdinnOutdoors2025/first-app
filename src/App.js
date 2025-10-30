@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HeroSection from './components/a0Hero'
 import HeroSection1 from './components/a1Hero'
-
 import HeroBanner from './components/HeroSectionMain.jsx';
-
 import AdinnHome from './components/a1home'
 import Calendar from './components/B20CalenderMain.jsx';
 import BookASite from './components/B1book';

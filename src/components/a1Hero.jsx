@@ -6,7 +6,6 @@ import MainNavbar from './A1NAVBAR.jsx';
 // import MainFooter from './A1FOOTER.jsx';
 import { MainLayout } from './MainLayout';
 
-
 function HeroSection1() {
     const [isMenuOpen, setMenuOpen] = useState(false);
 

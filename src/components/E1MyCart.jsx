@@ -7,7 +7,6 @@ import MainFooter from './A1FOOTER.jsx';
 import { MainLayout } from './MainLayout';
 import { baseUrl } from '../Adminpanel/BASE_URL';
 
-
 const Cart = () => {
     const { user, openLogin, closeLogin, isLoggedIn, isLoginOpen } = useLogin();
     const [items, setItems] = useState([]);

@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import './H2DealScroll.css';
 import { useNavigate } from 'react-router-dom';
