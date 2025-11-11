@@ -43,8 +43,7 @@ import ScrollToTop from './SCROLL_TO_TOP.jsx';
 //Police_Signal_PoleSizes
 import Sizes from './Adminpanel/Police_Signal_PoleSizes.jsx';
 function App() {
-  const [load, upadateLoad] = useState(true);
-
+  const [load, upadateLoad] = useState(true); 
   useEffect(() => {
     const timer = setTimeout(() => {
       upadateLoad(false);

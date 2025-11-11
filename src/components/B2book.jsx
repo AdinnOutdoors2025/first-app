@@ -247,8 +247,6 @@ function BookASite1() {
             price: spot.price,
             // sizeHeight: spot.sizeHeight,
             // sizeWidth: spot.sizeWidth,
-
-
             sizeHeight: spot.height,
             sizeWidth: spot.width,
             sizeSide: spot.side,
@@ -600,7 +598,7 @@ function BookASite1() {
             sizeSide: currentProduct?.sizeSide,
             productsquareFeet: currentProduct?.productsquareFeet,
 
-            dimension: currentProduct.sizeHeight * currentProduct.sizeWidth,
+            dimension: currentProduct.sizeWidth * currentProduct.sizeHeight,
             adType: currentProduct.category,
             totalAmount: totalPrice.toLocaleString(),
             totalDays: totalDays,
@@ -704,7 +702,9 @@ function BookASite1() {
             productsquareFeet: currentProduct?.productsquareFeet,
 
 
-            dimension: currentProduct.sizeHeight * currentProduct.sizeWidth,
+            // dimension: currentProduct.sizeHeight * currentProduct.sizeWidth,
+            dimension: currentProduct.sizeWidth * currentProduct.sizeHeight,
+
             adType: currentProduct.category,
             totalAmount: totalPrice.toLocaleString(),
             totalDays: totalDays,
