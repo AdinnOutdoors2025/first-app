@@ -57,22 +57,41 @@ function FooterMain() {
                     // createdAt: new Date().toISOString()
 
                 })
-            });
+            }); 
+                    const result = await response.json();
+
             if (!response.ok) {
                 throw new Error("Failed to submit contact information");
             }
-            // setIsSuccess(true);
+            // // setIsSuccess(true);
+            // setMessage({
+            //     text: 'Thank you for contacting us! We\'ll reach out to you soon.',
+            //     type: 'success'
+            // });
+
+
+
+             // Show success message even if email didn't send
+        if (result.emailSent) {
             setMessage({
                 text: 'Thank you for contacting us! We\'ll reach out to you soon.',
                 type: 'success'
             });
+        } else {
+            setMessage({
+                text: 'Thank you for your interest! We\'ve received your information.',
+                type: 'success'
+            });
+        }
+
+
             setContactInfo('');
-            setTimeout(
-                () => {
-                    // setIsSuccess(false);
-                    setMessage({ text: '', type: '' });
-                }, 5000
-            );
+            // setTimeout(
+            //     () => {
+            //         // setIsSuccess(false);
+            //         setMessage({ text: '', type: '' });
+            //     }, 5000
+            // );
         }
         catch (err) {
             // setIsError("Failed to submit your information. Please try again later");

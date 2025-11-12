@@ -61,7 +61,7 @@ export default function BookASite() {
           sizeWidth: product.width,
           sizeSide: product.side,
           productsquareFeet: product.productsquareFeet,
-          
+
           rating: product.rating,
           imageUrl: product.image,
           district: product.location.district,
@@ -533,7 +533,7 @@ export default function BookASite() {
                   <div className='outdoor mb-4'>
                     <h5 className='sidebar-heading'>Outdoor Medium</h5>
                     <form>
-                      <div className="form-group">
+                      {/* <div className="form-group">
                         {outdoorMediums.map((medium) => (
                           <div className={`form-check d-flex ${selectedOutdoorMedium.includes(medium) ? "checked" : ""}`} key={medium}>
                             <input
@@ -549,7 +549,28 @@ export default function BookASite() {
                             </label>
                           </div>
                         ))}
+                      </div> */}
+
+
+
+                      <div className="form-group">
+                        <div className="form-check d-flex">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id="hoarding"
+                            value="Hoarding"
+                            onChange={handleOutdoorMediumChange}
+                            checked={selectedOutdoorMedium.includes("Hoarding")}
+                          />
+                          <label className="form-check-label" htmlFor="hoarding">
+                            Hoarding
+                          </label>
+                        </div>
                       </div>
+
+
+
                     </form>
                   </div>
                   {/* Sorting Dropdown */}
