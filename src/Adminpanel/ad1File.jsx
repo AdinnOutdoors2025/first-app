@@ -1397,6 +1397,12 @@
 
 
 
+
+
+
+
+
+
 // EXCEL EXTRACTION CORRECTED CODE
 import React, { useState, useContext, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -1448,7 +1454,6 @@ function ClientSection() {
         e.target.value = ''; // Reset file input
     };
 
-    // ENHANCED FILE TYPE DETECTION WITH BETTER URL HANDLING
     const getFileType = (file) => {
         // If it's already a file object with type
         if (file && file.type) {
@@ -1459,19 +1464,8 @@ function ClientSection() {
         const url = file.url || file;
         if (!url) return 'image';
 
-        // Convert to string and handle protocol-relative URLs
-        let urlString = url.toString().toLowerCase().trim();
-        
-        // Handle protocol-relative URLs (//example.com/path)
-        if (urlString.startsWith('//')) {
-            urlString = 'https:' + urlString;
-        }
-        
-        // Handle URLs without protocol
-        if (!urlString.startsWith('http://') && !urlString.startsWith('https://')) {
-            urlString = 'https://' + urlString;
-        }
-
+        // Extract file extension from URL
+        const urlString = url.toString().toLowerCase();
         const urlWithoutParams = urlString.split('?')[0];
         const urlWithoutHash = urlWithoutParams.split('#')[0];
 
@@ -1556,26 +1550,6 @@ function ClientSection() {
         console.warn('Unable to determine file type for URL:', url, 'Defaulting to image');
         return 'image';
     };
-
-    // ENHANCED URL VALIDATION AND NORMALIZATION
-    const normalizeUrl = (url) => {
-        if (!url || typeof url !== 'string') return '';
-        
-        let normalizedUrl = url.trim();
-        
-        // Handle protocol-relative URLs
-        if (normalizedUrl.startsWith('//')) {
-            normalizedUrl = 'https:' + normalizedUrl;
-        }
-        
-        // Add protocol if missing
-        if (!normalizedUrl.startsWith('http://') && !normalizedUrl.startsWith('https://')) {
-            normalizedUrl = 'https://' + normalizedUrl;
-        }
-        
-        return normalizedUrl;
-    };
-
     // Function to generate Google Maps link from coordinates
     const generateLocationLink = (latitude, longitude) => {
         if (!latitude || !longitude) return '';
@@ -1614,7 +1588,7 @@ function ClientSection() {
         // Helper function to add file if it exists - CORRECTED
         const addFileIfExists = (url, columnName) => {
             if (url && url.toString().trim() !== '') {
-                const fileUrl = normalizeUrl(url.toString().trim());
+                const fileUrl = url.toString().trim();
 
                 // Check if this URL is already added to prevent duplicates - FIXED LOGIC
                 const isDuplicate = additionalFiles.some(file =>
@@ -1694,8 +1668,8 @@ function ClientSection() {
             });
         }
 
-        // Use main image URL from input or from Excel (with normalization)
-        const mainImage = normalizeUrl(mainImageUrl.trim() || excelRow['Image'] || " ");
+        // Use main image URL from input or from Excel
+        const mainImage = mainImageUrl.trim() || excelRow['Image'] || " ";
 
         return {
             name: excelRow['Product Name'] || 'Unnamed Product',
@@ -1832,6 +1806,23 @@ function ClientSection() {
         );
     };
 
+
+
+
+    // Debug function to check file type detection
+    const debugFileTypeDetection = (url) => {
+        const fileType = getFileType(url);
+        console.log('File Type Detection Debug:', {
+            url,
+            detectedType: fileType,
+            urlLowerCase: url.toLowerCase(),
+            hasMP4: url.toLowerCase().includes('.mp4'),
+            hasVideoExt: ['.mp4', '.mov', '.avi'].some(ext => url.toLowerCase().endsWith(ext)),
+            hasCatbox: url.toLowerCase().includes('catbox.moe')
+        });
+        return fileType;
+    };
+
     const handleAddFileFromUrl = () => {
         if (!additionalFileUrl.trim()) {
             alert('Please enter a valid URL');
@@ -1845,21 +1836,19 @@ function ClientSection() {
         }
 
         try {
-            // Normalize and validate URL
-            const normalizedUrl = normalizeUrl(additionalFileUrl);
-            new URL(normalizedUrl); // This will throw if invalid
+            // Validate URL
+            new URL(additionalFileUrl);
 
-            const fileType = getFileType(normalizedUrl);
+            const fileType = getFileType(additionalFileUrl);
 
             console.log('URL File Type Detection:', {
-                originalUrl: additionalFileUrl,
-                normalizedUrl: normalizedUrl,
+                url: additionalFileUrl,
                 detectedType: fileType
             });
 
             const newFile = {
-                url: normalizedUrl,
-                previewUrl: normalizedUrl,
+                url: additionalFileUrl.trim(),
+                previewUrl: additionalFileUrl.trim(),
                 id: `url_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
                 type: fileType,
                 markedForDeletion: false,
@@ -2016,15 +2005,13 @@ function ClientSection() {
         fetchProduct();
     };
 
-    // ENHANCED FILE PREVIEW COMPONENT WITH BETTER ERROR HANDLING
     const FilePreview = ({ file, onDelete, uploading }) => {
         const [loading, setLoading] = useState(true);
         const [error, setError] = useState(false);
         const [retryCount, setRetryCount] = useState(0);
 
         const fileType = getFileType(file);
-        // Use normalized URL for preview
-        const previewUrl = normalizeUrl(file.url || file.previewUrl);
+        const previewUrl = file.url || file.previewUrl;
 
         const handleLoad = () => {
             setLoading(false);
@@ -2084,9 +2071,6 @@ function ClientSection() {
                             >
                                 Retry
                             </button>
-                            <div className="url-debug">
-                                <small>URL: {previewUrl}</small>
-                            </div>
                         </div>
                     )}
 
@@ -2127,7 +2111,6 @@ function ClientSection() {
                             onLoad={handleLoad}
                             onError={handleError}
                             loading="lazy"
-                            crossOrigin="anonymous" // This helps with CORS issues
                         />
                     )}
 
@@ -2338,19 +2321,18 @@ function ClientSection() {
         }
 
         try {
-            // Normalize and validate URL
-            const normalizedUrl = normalizeUrl(mainImageInputUrl);
-            new URL(normalizedUrl);
+            // Validate URL
+            new URL(mainImageInputUrl);
 
             // Check if it's likely an image
-            const fileType = getFileType(normalizedUrl);
+            const fileType = getFileType(mainImageInputUrl);
             if (fileType !== 'image') {
                 if (!window.confirm('This URL does not appear to be an image. Continue anyway?')) {
                     return;
                 }
             }
 
-            setImage(normalizedUrl);
+            setImage(mainImageInputUrl);
             setImageFile(null); // Clear any uploaded file
             setMainImageInputUrl('');
             alert('Main image URL set successfully');
@@ -2482,8 +2464,7 @@ function ClientSection() {
         if (state?.editProduct) {
             const prod = state.editProduct;
             setEditProduct(prod);
-            // Normalize image URL when loading from edit
-            setImage(normalizeUrl(prod.image || " "));
+            setImage(prod.image || " ");
             setProductName(prod.name || '');
             setProductAmount(prod.price || '');
             setProductFixedAmount(prod.fixedAmount || '999');
@@ -2512,13 +2493,12 @@ function ClientSection() {
             setProdLongitude(prod.Longitude || '');
             setProdLocationLink(prod.LocationLink || '');
 
-            // Enhanced additional files handling for edit with URL normalization
+            // Enhanced additional files handling for edit
             if (prod.additionalFiles && prod.additionalFiles.length > 0) {
                 const enhancedFiles = prod.additionalFiles.map(file => ({
                     ...file,
-                    url: normalizeUrl(file.url), // Normalize URLs when loading
                     id: file.public_id || `existing_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-                    previewUrl: normalizeUrl(file.url),
+                    previewUrl: file.url,
                     markedForDeletion: false,
                     isNew: false,
                     // Preserve the original file data for proper handling
@@ -2541,7 +2521,6 @@ function ClientSection() {
     useEffect(() => {
         fetchProduct();
     }, []);
-    
     const handleSaveProduct = async (e) => {
         e.preventDefault();
         if (!validateForm()) {
@@ -2642,9 +2621,9 @@ function ClientSection() {
                         filesToUpload.push(file);
                     }
                     else if (file.isFromUrl || file.isFromExcel || (file.url && !file.public_id)) {
-                        // URL files or Excel files - store as-is (with normalized URL)
+                        // URL files or Excel files - store as-is
                         finalAdditionalFiles.push({
-                            url: normalizeUrl(file.url),
+                            url: file.url,
                             public_id: null,
                             type: file.type,
                             isFromUrl: file.isFromUrl || false,
@@ -2654,7 +2633,7 @@ function ClientSection() {
                     else if (file.public_id && file.isFromUrl) {
                         // Special case: URL files that were previously saved
                         finalAdditionalFiles.push({
-                            url: normalizeUrl(file.url),
+                            url: file.url,
                             public_id: null, // Don't use public_id for URL files
                             type: file.type,
                             isFromUrl: true
@@ -2796,7 +2775,6 @@ function ClientSection() {
             setUploading(false);
         }
     };
-
     const resetForm = () => {
         setProductName('');
         setImage('');
@@ -2915,17 +2893,7 @@ function ClientSection() {
 
                     {/* Left side content */}
                     <div className='adManageContentLeft'>
-                        <div className='ManageLeftImg1'>
-                            <img 
-                                src={image} 
-                                className='ManageLeftImg1' 
-                                alt="Product_Image"
-                                onError={(e) => {
-                                    console.error('Failed to load main image:', image);
-                                    e.target.src = './images/placeholder-image.jpg'; // Fallback image
-                                }}
-                            />
-                        </div>
+                        <div className='ManageLeftImg1'><img src={image} className='ManageLeftImg1' alt="Product_Image"></img></div>
 
                         {/* Product details section */}
                         <div className='manageprodMain'>
@@ -3050,15 +3018,7 @@ function ClientSection() {
                                 selectedSimilarProducts.map((product, index) => (
                                     <div className='manageSimilarprod' key={index}>
                                         <div className='manageSimilarImg'>
-                                            <img 
-                                                src={product.image} 
-                                                className='manageSimilarImg'
-                                                alt={product.name}
-                                                onError={(e) => {
-                                                    console.error('Failed to load similar product image:', product.image);
-                                                    e.target.src = './images/placeholder-image.jpg';
-                                                }}
-                                            />
+                                            <img src={product.image} className='manageSimilarImg'></img>
                                         </div>
                                         <div>
                                             <div className='ManageProdRightContent1'>{product.name}</div>
@@ -3118,11 +3078,12 @@ function ClientSection() {
                         </div>
 
                         <div >
+
                             <div className='manageClientSection'>
                                 {/* Main Image Upload Section with URL Input */}
                                 <div className="upload-section" >
                                     <div className='adminProductUrlInput' style={{ marginBottom: '15px' }}>
-                                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '10px' }}>
+                                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '10px',  }}>
                                             <input
                                                 type='url'
                                                 placeholder='Enter main image URL'
@@ -3147,6 +3108,22 @@ function ClientSection() {
                                         </small>
                                     </div>
 
+                                    {/* <input type="file" accept="image/*" id='fileInput' onChange={handleImageUpload} hidden />
+                                <label htmlFor="fileInput" className={`file-upload-box ${errors.image ? 'AdminProdinput-error' : ''}`}>
+                                    <center>
+                                        <img src="./images/FileUpload.svg" height={50} width={50} alt="Upload Icon" />
+                                    </center>
+                                    <div className="upload-text">
+                                        <div className="FileHeading">Drag and Drop an Image or Choose File</div>
+                                        <span className="file-info">1600 x 1200 (4:3) recommended. PNG, JPG and GIF files are allowed</span>
+                                    </div>
+                                </label>
+                                {errors.image && <div className="AdminProderror-message">Product image is required</div>}
+                             */}
+
+
+
+
                                     <div style={{border:'2px dashed gray'}}>
                                         <div className="upload-section">
                                             <input type="file" accept="image/*" id='fileInput' onChange={handleImageUpload} hidden />
@@ -3164,7 +3141,6 @@ function ClientSection() {
                                     </div>
                                 </div>
                             </div>
-
                             {/* Product Section */}
                             <div className='manageClientSection'>
                                 <div className='manageRightSideHeading'>Product Management</div>
