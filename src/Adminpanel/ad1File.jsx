@@ -1397,7 +1397,6 @@
 
 
 
-
 // EXCEL EXTRACTION CORRECTED CODE
 import React, { useState, useContext, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -1460,16 +1459,20 @@ function ClientSection() {
         const url = file.url || file;
         if (!url) return 'image';
 
-        // Convert to string and handle different URL formats
-        const urlString = url.toString().toLowerCase();
+        // Convert to string and handle protocol-relative URLs
+        let urlString = url.toString().toLowerCase().trim();
         
-        // Handle protocol-relative URLs and ensure proper protocol
-        let processedUrl = urlString;
+        // Handle protocol-relative URLs (//example.com/path)
         if (urlString.startsWith('//')) {
-            processedUrl = window.location.protocol + urlString;
+            urlString = 'https:' + urlString;
         }
         
-        const urlWithoutParams = processedUrl.split('?')[0];
+        // Handle URLs without protocol
+        if (!urlString.startsWith('http://') && !urlString.startsWith('https://')) {
+            urlString = 'https://' + urlString;
+        }
+
+        const urlWithoutParams = urlString.split('?')[0];
         const urlWithoutHash = urlWithoutParams.split('#')[0];
 
         // Comprehensive video extensions
@@ -1508,19 +1511,19 @@ function ClientSection() {
         ];
 
         const isVideoDomain = videoDomains.some(domain =>
-            processedUrl.includes(domain)
+            urlString.includes(domain)
         );
 
         const hasVideoIndicator = videoIndicators.some(indicator =>
-            processedUrl.includes(indicator)
+            urlString.includes(indicator)
         );
 
         // Check for common video MIME type patterns
-        const hasVideoMimePattern = processedUrl.includes('video/') ||
-            processedUrl.includes('/video');
+        const hasVideoMimePattern = urlString.includes('video/') ||
+            urlString.includes('/video');
 
         // For catbox.moe specifically - prioritize as video
-        if (processedUrl.includes('catbox.moe')) {
+        if (urlString.includes('catbox.moe')) {
             return 'video';
         }
 
@@ -1538,11 +1541,11 @@ function ClientSection() {
         ];
 
         const hasImagePattern = imagePatterns.some(pattern =>
-            processedUrl.includes(pattern)
+            urlString.includes(pattern)
         );
 
-        const hasImageMimePattern = processedUrl.includes('image/') ||
-            processedUrl.includes('/image');
+        const hasImageMimePattern = urlString.includes('image/') ||
+            urlString.includes('/image');
 
         // If we have strong image indicators, return image
         if (hasImagePattern || hasImageMimePattern) {
@@ -1554,27 +1557,23 @@ function ClientSection() {
         return 'image';
     };
 
-    // ENHANCED URL VALIDATION AND PROCESSING
-    const processImageUrl = (url) => {
-        if (!url || url === " ") return url;
+    // ENHANCED URL VALIDATION AND NORMALIZATION
+    const normalizeUrl = (url) => {
+        if (!url || typeof url !== 'string') return '';
         
-        let processedUrl = url.toString().trim();
+        let normalizedUrl = url.trim();
         
-        // Handle protocol-relative URLs (//example.com/path)
-        if (processedUrl.startsWith('//')) {
-            processedUrl = window.location.protocol + processedUrl;
+        // Handle protocol-relative URLs
+        if (normalizedUrl.startsWith('//')) {
+            normalizedUrl = 'https:' + normalizedUrl;
         }
         
-        // Ensure HTTP URLs are handled properly in HTTPS environments
-        if (processedUrl.startsWith('http://') && window.location.protocol === 'https:') {
-            console.warn('HTTP URL in HTTPS environment:', processedUrl);
-            // You might want to handle this case differently based on your needs
-            // Option 1: Convert to HTTPS (if the server supports it)
-            // processedUrl = processedUrl.replace('http://', 'https://');
-            // Option 2: Keep as is but be aware of potential mixed content issues
+        // Add protocol if missing
+        if (!normalizedUrl.startsWith('http://') && !normalizedUrl.startsWith('https://')) {
+            normalizedUrl = 'https://' + normalizedUrl;
         }
         
-        return processedUrl;
+        return normalizedUrl;
     };
 
     // Function to generate Google Maps link from coordinates
@@ -1615,7 +1614,7 @@ function ClientSection() {
         // Helper function to add file if it exists - CORRECTED
         const addFileIfExists = (url, columnName) => {
             if (url && url.toString().trim() !== '') {
-                const fileUrl = processImageUrl(url);
+                const fileUrl = normalizeUrl(url.toString().trim());
 
                 // Check if this URL is already added to prevent duplicates - FIXED LOGIC
                 const isDuplicate = additionalFiles.some(file =>
@@ -1695,8 +1694,8 @@ function ClientSection() {
             });
         }
 
-        // Use main image URL from input or from Excel (with URL processing)
-        const mainImage = processImageUrl(mainImageUrl.trim() || excelRow['Image'] || " ");
+        // Use main image URL from input or from Excel (with normalization)
+        const mainImage = normalizeUrl(mainImageUrl.trim() || excelRow['Image'] || " ");
 
         return {
             name: excelRow['Product Name'] || 'Unnamed Product',
@@ -1833,150 +1832,6 @@ function ClientSection() {
         );
     };
 
-    // ENHANCED FILE PREVIEW WITH BETTER ERROR HANDLING
-    const FilePreview = ({ file, onDelete, uploading }) => {
-        const [loading, setLoading] = useState(true);
-        const [error, setError] = useState(false);
-        const [retryCount, setRetryCount] = useState(0);
-
-        const fileType = getFileType(file);
-        // Use processed URL for preview
-        const previewUrl = processImageUrl(file.url || file.previewUrl);
-
-        const handleLoad = () => {
-            setLoading(false);
-            setError(false);
-        };
-
-        const handleError = () => {
-            setLoading(false);
-            setError(true);
-            console.error('Failed to load media:', previewUrl, 'Type:', fileType, 'File object:', file);
-        };
-
-        const handleRetry = () => {
-            setLoading(true);
-            setError(false);
-            setRetryCount(prev => prev + 1);
-        };
-
-        // Add cache busting for retries
-        const getUrlWithCacheBust = () => {
-            if (retryCount > 0) {
-                const separator = previewUrl.includes('?') ? '&' : '?';
-                return `${previewUrl}${separator}retry=${retryCount}&t=${Date.now()}`;
-            }
-            return previewUrl;
-        };
-
-        // Debug info
-        useEffect(() => {
-            console.log('FilePreview Debug:', {
-                file,
-                fileType,
-                previewUrl,
-                loading,
-                error
-            });
-        }, [file, fileType, previewUrl, loading, error]);
-
-        return (
-            <div className={`videoPreview`}>
-                <div className="videoPreviewContainer">
-                    {loading && (
-                        <div className="file-loading">
-                            <div className="loading-spinner"></div>
-                            <span>Loading {fileType}...</span>
-                        </div>
-                    )}
-
-                    {error && (
-                        <div className="file-error">
-                            <i className="fa-solid fa-triangle-exclamation"></i>
-                            <span>Failed to load {fileType}</span>
-                            <button
-                                className="retry-btn"
-                                onClick={handleRetry}
-                                disabled={uploading}
-                            >
-                                Retry
-                            </button>
-                            <div className="file-url-info">
-                                <small>URL: {previewUrl.length > 50 ? previewUrl.substring(0, 50) + '...' : previewUrl}</small>
-                            </div>
-                        </div>
-                    )}
-
-                    {!error && fileType === 'video' ? (
-                        <video
-                            key={`video-${retryCount}`}
-                            controls
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover',
-                                display: loading ? 'none' : 'block'
-                            }}
-                            onLoadStart={handleLoad}
-                            onLoadedData={handleLoad}
-                            onCanPlay={handleLoad}
-                            onError={handleError}
-                            preload="metadata"
-                            playsInline
-                            muted
-                        >
-                            <source src={getUrlWithCacheBust()} type="video/mp4" />
-                            <source src={getUrlWithCacheBust()} type="video/webm" />
-                            <source src={getUrlWithCacheBust()} type="video/ogg" />
-                            Your browser does not support the video tag.
-                        </video>
-                    ) : !error && (
-                        <img
-                            key={`image-${retryCount}`}
-                            src={getUrlWithCacheBust()}
-                            alt="Preview"
-                            style={{
-                                objectFit: 'cover',
-                                height: '100%',
-                                width: '100%',
-                                display: loading ? 'none' : 'block'
-                            }}
-                            onLoad={handleLoad}
-                            onError={handleError}
-                            loading="lazy"
-                            crossOrigin="anonymous" // Add crossOrigin for better CORS handling
-                        />
-                    )}
-
-                    <button
-                        className="deleteButton"
-                        onClick={() => onDelete(file)}
-                        disabled={uploading}
-                        title="Delete file"
-                    >
-                        ×
-                    </button>
-
-                    {file.isFromExcel && (
-                        <div className="file-source-badge" title="From Excel">
-                            Excel
-                        </div>
-                    )}
-                    {file.isFromUrl && (
-                        <div className="file-source-badge" title="From URL">
-                            URL
-                        </div>
-                    )}
-
-                    {/* File type indicator */}
-                    <div className={`file-type-indicator ${fileType}`}>
-                        {fileType === 'video' ? 'VID' : 'IMG'}
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
     const handleAddFileFromUrl = () => {
         if (!additionalFileUrl.trim()) {
             alert('Please enter a valid URL');
@@ -1990,21 +1845,21 @@ function ClientSection() {
         }
 
         try {
-            // Validate and process URL
-            const processedUrl = processImageUrl(additionalFileUrl);
-            new URL(processedUrl); // Validate URL
+            // Normalize and validate URL
+            const normalizedUrl = normalizeUrl(additionalFileUrl);
+            new URL(normalizedUrl); // This will throw if invalid
 
-            const fileType = getFileType(processedUrl);
+            const fileType = getFileType(normalizedUrl);
 
             console.log('URL File Type Detection:', {
                 originalUrl: additionalFileUrl,
-                processedUrl: processedUrl,
+                normalizedUrl: normalizedUrl,
                 detectedType: fileType
             });
 
             const newFile = {
-                url: processedUrl,
-                previewUrl: processedUrl,
+                url: normalizedUrl,
+                previewUrl: normalizedUrl,
                 id: `url_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
                 type: fileType,
                 markedForDeletion: false,
@@ -2159,6 +2014,150 @@ function ClientSection() {
 
         // Refresh products list
         fetchProduct();
+    };
+
+    // ENHANCED FILE PREVIEW COMPONENT WITH BETTER ERROR HANDLING
+    const FilePreview = ({ file, onDelete, uploading }) => {
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState(false);
+        const [retryCount, setRetryCount] = useState(0);
+
+        const fileType = getFileType(file);
+        // Use normalized URL for preview
+        const previewUrl = normalizeUrl(file.url || file.previewUrl);
+
+        const handleLoad = () => {
+            setLoading(false);
+            setError(false);
+        };
+
+        const handleError = () => {
+            setLoading(false);
+            setError(true);
+            console.error('Failed to load media:', previewUrl, 'Type:', fileType, 'File object:', file);
+        };
+
+        const handleRetry = () => {
+            setLoading(true);
+            setError(false);
+            setRetryCount(prev => prev + 1);
+        };
+
+        // Add cache busting for retries
+        const getUrlWithCacheBust = () => {
+            if (retryCount > 0) {
+                const separator = previewUrl.includes('?') ? '&' : '?';
+                return `${previewUrl}${separator}retry=${retryCount}&t=${Date.now()}`;
+            }
+            return previewUrl;
+        };
+
+        // Debug info
+        useEffect(() => {
+            console.log('FilePreview Debug:', {
+                file,
+                fileType,
+                previewUrl,
+                loading,
+                error
+            });
+        }, [file, fileType, previewUrl, loading, error]);
+
+        return (
+            <div className={`videoPreview`}>
+                <div className="videoPreviewContainer">
+                    {loading && (
+                        <div className="file-loading">
+                            <div className="loading-spinner"></div>
+                            <span>Loading {fileType}...</span>
+                        </div>
+                    )}
+
+                    {error && (
+                        <div className="file-error">
+                            <i className="fa-solid fa-triangle-exclamation"></i>
+                            <span>Failed to load {fileType}</span>
+                            <button
+                                className="retry-btn"
+                                onClick={handleRetry}
+                                disabled={uploading}
+                            >
+                                Retry
+                            </button>
+                            <div className="url-debug">
+                                <small>URL: {previewUrl}</small>
+                            </div>
+                        </div>
+                    )}
+
+                    {!error && fileType === 'video' ? (
+                        <video
+                            key={`video-${retryCount}`}
+                            controls
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                display: loading ? 'none' : 'block'
+                            }}
+                            onLoadStart={handleLoad}
+                            onLoadedData={handleLoad}
+                            onCanPlay={handleLoad}
+                            onError={handleError}
+                            preload="metadata"
+                            playsInline
+                            muted
+                        >
+                            <source src={getUrlWithCacheBust()} type="video/mp4" />
+                            <source src={getUrlWithCacheBust()} type="video/webm" />
+                            <source src={getUrlWithCacheBust()} type="video/ogg" />
+                            Your browser does not support the video tag.
+                        </video>
+                    ) : !error && (
+                        <img
+                            key={`image-${retryCount}`}
+                            src={getUrlWithCacheBust()}
+                            alt="Preview"
+                            style={{
+                                objectFit: 'cover',
+                                height: '100%',
+                                width: '100%',
+                                display: loading ? 'none' : 'block'
+                            }}
+                            onLoad={handleLoad}
+                            onError={handleError}
+                            loading="lazy"
+                            crossOrigin="anonymous" // This helps with CORS issues
+                        />
+                    )}
+
+                    <button
+                        className="deleteButton"
+                        onClick={() => onDelete(file)}
+                        disabled={uploading}
+                        title="Delete file"
+                    >
+                        ×
+                    </button>
+
+                    {file.isFromExcel && (
+                        <div className="file-source-badge" title="From Excel">
+                            Excel
+                        </div>
+                    )}
+                    {file.isFromUrl && (
+                        <div className="file-source-badge" title="From URL">
+                            URL
+                        </div>
+                    )}
+
+                    {/* File type indicator */}
+                    <div className={`file-type-indicator ${fileType}`}>
+                        {fileType === 'video' ? 'VID' : 'IMG'}
+                    </div>
+                </div>
+            </div>
+        );
     };
 
     // Rest of your existing code remains the same...
@@ -2339,19 +2338,19 @@ function ClientSection() {
         }
 
         try {
-            // Validate and process URL
-            const processedUrl = processImageUrl(mainImageInputUrl);
-            new URL(processedUrl); // Validate URL
+            // Normalize and validate URL
+            const normalizedUrl = normalizeUrl(mainImageInputUrl);
+            new URL(normalizedUrl);
 
             // Check if it's likely an image
-            const fileType = getFileType(processedUrl);
+            const fileType = getFileType(normalizedUrl);
             if (fileType !== 'image') {
                 if (!window.confirm('This URL does not appear to be an image. Continue anyway?')) {
                     return;
                 }
             }
 
-            setImage(processedUrl);
+            setImage(normalizedUrl);
             setImageFile(null); // Clear any uploaded file
             setMainImageInputUrl('');
             alert('Main image URL set successfully');
@@ -2478,13 +2477,13 @@ function ClientSection() {
     const [productsData, setProductsData] = useState([]);
     const [editProduct, setEditProduct] = useState(null);
 
-    // Enhanced useEffect for editing products with URL processing
+    // Enhanced useEffect for editing products
     useEffect(() => {
         if (state?.editProduct) {
             const prod = state.editProduct;
             setEditProduct(prod);
-            // Process image URL when setting edit product
-            setImage(processImageUrl(prod.image || " "));
+            // Normalize image URL when loading from edit
+            setImage(normalizeUrl(prod.image || " "));
             setProductName(prod.name || '');
             setProductAmount(prod.price || '');
             setProductFixedAmount(prod.fixedAmount || '999');
@@ -2513,13 +2512,13 @@ function ClientSection() {
             setProdLongitude(prod.Longitude || '');
             setProdLocationLink(prod.LocationLink || '');
 
-            // Enhanced additional files handling for edit with URL processing
+            // Enhanced additional files handling for edit with URL normalization
             if (prod.additionalFiles && prod.additionalFiles.length > 0) {
                 const enhancedFiles = prod.additionalFiles.map(file => ({
                     ...file,
-                    url: processImageUrl(file.url), // Process URLs for existing files
+                    url: normalizeUrl(file.url), // Normalize URLs when loading
                     id: file.public_id || `existing_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-                    previewUrl: processImageUrl(file.url),
+                    previewUrl: normalizeUrl(file.url),
                     markedForDeletion: false,
                     isNew: false,
                     // Preserve the original file data for proper handling
@@ -2643,9 +2642,9 @@ function ClientSection() {
                         filesToUpload.push(file);
                     }
                     else if (file.isFromUrl || file.isFromExcel || (file.url && !file.public_id)) {
-                        // URL files or Excel files - store as-is (with processed URL)
+                        // URL files or Excel files - store as-is (with normalized URL)
                         finalAdditionalFiles.push({
-                            url: processImageUrl(file.url),
+                            url: normalizeUrl(file.url),
                             public_id: null,
                             type: file.type,
                             isFromUrl: file.isFromUrl || false,
@@ -2655,7 +2654,7 @@ function ClientSection() {
                     else if (file.public_id && file.isFromUrl) {
                         // Special case: URL files that were previously saved
                         finalAdditionalFiles.push({
-                            url: processImageUrl(file.url),
+                            url: normalizeUrl(file.url),
                             public_id: null, // Don't use public_id for URL files
                             type: file.type,
                             isFromUrl: true
@@ -2758,7 +2757,7 @@ function ClientSection() {
                     similarProducts: selectedSimilarProducts.map(prod => ({
                         Prodname: prod.name,
                         ProdCode: prod.prodCode,
-                        image: processImageUrl(prod.image), // Process image URLs for similar products
+                        image: prod.image,
                         ProdPrice: prod.price,
                         ProdPrintingCost: prod.printingCost,
                         ProdMountingCost: prod.mountingCost
@@ -2797,7 +2796,7 @@ function ClientSection() {
             setUploading(false);
         }
     };
-    
+
     const resetForm = () => {
         setProductName('');
         setImage('');
@@ -2909,47 +2908,6 @@ function ClientSection() {
     const squareFeet = Math.round(totalCalculatedWidth * Number(prodheight) * Number(prodSide));
     const ProdSquareFeet = () => squareFeet;
 
-    // ENHANCED IMAGE COMPONENT WITH BETTER ERROR HANDLING
-    const ProductImage = ({ src, alt, className }) => {
-        const [imgError, setImgError] = useState(false);
-        const [imgLoading, setImgLoading] = useState(true);
-        
-        const processedSrc = processImageUrl(src);
-        
-        const handleError = () => {
-            console.error('Failed to load image:', processedSrc);
-            setImgError(true);
-            setImgLoading(false);
-        };
-        
-        const handleLoad = () => {
-            setImgLoading(false);
-            setImgError(false);
-        };
-
-        if (imgError || !processedSrc || processedSrc === " ") {
-            return (
-                <div className={`${className} image-error-placeholder`}>
-                    <i className="fa-solid fa-image"></i>
-                    <span>Image not available</span>
-                </div>
-            );
-        }
-
-        return (
-            <img 
-                src={processedSrc} 
-                alt={alt} 
-                className={className}
-                onLoad={handleLoad}
-                onError={handleError}
-                loading="lazy"
-                crossOrigin="anonymous"
-                style={{ display: imgLoading ? 'none' : 'block' }}
-            />
-        );
-    };
-
     return (
         <div>
             <form onSubmit={handleSaveProduct}>
@@ -2957,9 +2915,16 @@ function ClientSection() {
 
                     {/* Left side content */}
                     <div className='adManageContentLeft'>
-                        {/* Use enhanced ProductImage component */}
                         <div className='ManageLeftImg1'>
-                            <ProductImage src={image} className='ManageLeftImg1' alt="Product_Image" />
+                            <img 
+                                src={image} 
+                                className='ManageLeftImg1' 
+                                alt="Product_Image"
+                                onError={(e) => {
+                                    console.error('Failed to load main image:', image);
+                                    e.target.src = './images/placeholder-image.jpg'; // Fallback image
+                                }}
+                            />
                         </div>
 
                         {/* Product details section */}
@@ -3078,14 +3043,22 @@ function ClientSection() {
                             </div>
                         </div>
 
-                        {/* Similar Product Section - Use enhanced ProductImage */}
+                        {/* Similar Product Section */}
                         <div className='manageprodMain'>
                             <div className='manageprodSideHeading'>Selected Similar products</div>
                             {selectedSimilarProducts.length > 0 ? (
                                 selectedSimilarProducts.map((product, index) => (
                                     <div className='manageSimilarprod' key={index}>
                                         <div className='manageSimilarImg'>
-                                            <ProductImage src={product.image} className='manageSimilarImg' alt={product.name} />
+                                            <img 
+                                                src={product.image} 
+                                                className='manageSimilarImg'
+                                                alt={product.name}
+                                                onError={(e) => {
+                                                    console.error('Failed to load similar product image:', product.image);
+                                                    e.target.src = './images/placeholder-image.jpg';
+                                                }}
+                                            />
                                         </div>
                                         <div>
                                             <div className='ManageProdRightContent1'>{product.name}</div>
@@ -3144,7 +3117,7 @@ function ClientSection() {
                             </div>
                         </div>
 
-                        <div>
+                        <div >
                             <div className='manageClientSection'>
                                 {/* Main Image Upload Section with URL Input */}
                                 <div className="upload-section" >
@@ -3192,7 +3165,6 @@ function ClientSection() {
                                 </div>
                             </div>
 
-                            {/* Rest of your form sections remain exactly the same */}
                             {/* Product Section */}
                             <div className='manageClientSection'>
                                 <div className='manageRightSideHeading'>Product Management</div>
@@ -3584,7 +3556,7 @@ function ClientSection() {
                                                         <div className="suggestion-code">{product.prodCode}</div>
                                                         <div className="suggestion-name">{product.name}</div>
                                                         <div className="suggestion-image">
-                                                            <ProductImage src={product.image} alt={product.name} />
+                                                            <img src={product.image} alt={product.name} />
                                                         </div>
                                                     </div>
                                                 ))}
