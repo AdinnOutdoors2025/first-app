@@ -3564,16 +3564,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-// EXCEL EXTRACTION CORRECTED CODE
 import React, { useState, useContext, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './ad1Manage.css';
@@ -3720,6 +3710,7 @@ function ClientSection() {
         console.warn('Unable to determine file type for URL:', url, 'Defaulting to image');
         return 'image';
     };
+
     // Function to generate Google Maps link from coordinates
     const generateLocationLink = (latitude, longitude) => {
         if (!latitude || !longitude) return '';
@@ -3976,67 +3967,190 @@ function ClientSection() {
         );
     };
 
-    // Debug function to check file type detection
-    const debugFileTypeDetection = (url) => {
-        const fileType = getFileType(url);
-        console.log('File Type Detection Debug:', {
-            url,
-            detectedType: fileType,
-            urlLowerCase: url.toLowerCase(),
-            hasMP4: url.toLowerCase().includes('.mp4'),
-            hasVideoExt: ['.mp4', '.mov', '.avi'].some(ext => url.toLowerCase().endsWith(ext)),
-            hasCatbox: url.toLowerCase().includes('catbox.moe')
-        });
-        return fileType;
-    };
+    // Enhanced File Preview Component with better error handling
+    const FilePreview = ({ file, onDelete, uploading }) => {
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState(false);
+        const [retryCount, setRetryCount] = useState(0);
+        const [useProxy, setUseProxy] = useState(false);
 
-    const handleAddFileFromUrl = () => {
-        if (!additionalFileUrl.trim()) {
-            alert('Please enter a valid URL');
-            return;
-        }
+        const fileType = getFileType(file);
+        const previewUrl = file.url || file.previewUrl;
 
-        const currentNonDeletedFiles = additionalFiles.filter(f => !f.markedForDeletion).length;
-        if (currentNonDeletedFiles >= 3) {
-            alert(`Maximum 3 files allowed. You already have ${currentNonDeletedFiles} files.`);
-            return;
-        }
-
-        try {
-            // Validate URL
-            new URL(additionalFileUrl);
-
-            const fileType = getFileType(additionalFileUrl);
-
-            console.log('URL File Type Detection:', {
-                url: additionalFileUrl,
-                detectedType: fileType
-            });
-
-            const newFile = {
-                url: additionalFileUrl.trim(),
-                previewUrl: additionalFileUrl.trim(),
-                id: `url_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-                type: fileType,
-                markedForDeletion: false,
-                isFromUrl: true,
-                public_id: null,
-                isNew: true
-            };
-
-            setAdditionalFiles(prev => [...prev, newFile]);
-            setAdditionalFileUrl('');
-
-            if (fileType === 'video') {
-                alert('Video URL added successfully. Please note: Some video URLs may not preview correctly in the admin panel but will work on the main site.');
-            } else {
-                alert('Image URL added successfully');
+        // Create a proxy URL for problematic URLs
+        const createProxyUrl = (url) => {
+            if (!url) return url;
+            
+            // Only proxy problematic URLs (like the 68.178.205.50 ones)
+            if (url.includes('68.178.205.50') || url.includes('AdinnEdge1')) {
+                return `${baseUrl}/proxy-image?url=${encodeURIComponent(url)}`;
             }
+            return url;
+        };
 
-        } catch (error) {
-            alert('Please enter a valid URL');
-            console.error('Invalid URL:', error);
-        }
+        const getDisplayUrl = () => {
+            if (useProxy && (previewUrl.includes('68.178.205.50') || previewUrl.includes('AdinnEdge1'))) {
+                return createProxyUrl(previewUrl);
+            }
+            return previewUrl;
+        };
+
+        const displayUrl = getDisplayUrl();
+
+        const handleLoad = () => {
+            setLoading(false);
+            setError(false);
+        };
+
+        const handleError = () => {
+            console.warn('Failed to load media, trying proxy:', previewUrl);
+            
+            if (!useProxy && (previewUrl.includes('68.178.205.50') || previewUrl.includes('AdinnEdge1'))) {
+                // Try with proxy
+                setUseProxy(true);
+                setLoading(true);
+                setError(false);
+            } else {
+                setLoading(false);
+                setError(true);
+            }
+        };
+
+        const handleRetry = () => {
+            setLoading(true);
+            setError(false);
+            setRetryCount(prev => prev + 1);
+            setUseProxy(false); // Reset proxy on manual retry
+        };
+
+        // Add cache busting for retries
+        const getUrlWithCacheBust = () => {
+            let finalUrl = displayUrl;
+            if (retryCount > 0) {
+                const separator = finalUrl.includes('?') ? '&' : '?';
+                finalUrl = `${finalUrl}${separator}retry=${retryCount}&t=${Date.now()}`;
+            }
+            return finalUrl;
+        };
+
+        const finalUrl = getUrlWithCacheBust();
+
+        return (
+            <div className={`videoPreview`}>
+                <div className="videoPreviewContainer">
+                    {loading && (
+                        <div className="file-loading">
+                            <div className="loading-spinner"></div>
+                            <span>Loading {fileType}...</span>
+                            {useProxy && <span className="proxy-badge">Using proxy</span>}
+                        </div>
+                    )}
+
+                    {error && (
+                        <div className="file-error">
+                            <i className="fa-solid fa-triangle-exclamation"></i>
+                            <span>Failed to load {fileType}</span>
+                            <div className="error-actions">
+                                <button
+                                    className="retry-btn"
+                                    onClick={handleRetry}
+                                    disabled={uploading}
+                                >
+                                    Retry
+                                </button>
+                                {!useProxy && (
+                                    <button
+                                        className="proxy-btn"
+                                        onClick={() => {
+                                            setUseProxy(true);
+                                            setLoading(true);
+                                            setError(false);
+                                        }}
+                                        disabled={uploading}
+                                    >
+                                        Try Proxy
+                                    </button>
+                                )}
+                            </div>
+                            <small className="error-url">{previewUrl}</small>
+                        </div>
+                    )}
+
+                    {!error && fileType === 'video' ? (
+                        <video
+                            key={`video-${retryCount}-${useProxy}`}
+                            controls
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                display: loading ? 'none' : 'block'
+                            }}
+                            onLoadStart={handleLoad}
+                            onLoadedData={handleLoad}
+                            onCanPlay={handleLoad}
+                            onError={handleError}
+                            preload="metadata"
+                            playsInline
+                            muted
+                        >
+                            <source src={finalUrl} type="video/mp4" />
+                            <source src={finalUrl} type="video/webm" />
+                            <source src={finalUrl} type="video/ogg" />
+                            Your browser does not support the video tag.
+                        </video>
+                    ) : !error && (
+                        <img
+                            key={`image-${retryCount}-${useProxy}`}
+                            src={finalUrl}
+                            alt="Preview"
+                            style={{
+                                objectFit: 'cover',
+                                height: '100%',
+                                width: '100%',
+                                display: loading ? 'none' : 'block'
+                            }}
+                            onLoad={handleLoad}
+                            onError={handleError}
+                            loading="lazy"
+                            crossOrigin="anonymous"
+                        />
+                    )}
+
+                    <button
+                        className="deleteButton"
+                        onClick={() => onDelete(file)}
+                        disabled={uploading}
+                        title="Delete file"
+                    >
+                        ×
+                    </button>
+
+                    {file.isFromExcel && (
+                        <div className="file-source-badge" title="From Excel">
+                            Excel
+                        </div>
+                    )}
+                    {file.isFromUrl && (
+                        <div className="file-source-badge" title="From URL">
+                            URL
+                        </div>
+                    )}
+
+                    {/* File type indicator */}
+                    <div className={`file-type-indicator ${fileType}`}>
+                        {fileType === 'video' ? 'VID' : 'IMG'}
+                    </div>
+
+                    {/* Proxy indicator */}
+                    {useProxy && !loading && !error && (
+                        <div className="proxy-indicator" title="Loaded via proxy">
+                            Proxy
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
     };
 
     const handleBulkSave = async () => {
@@ -4171,187 +4285,235 @@ function ClientSection() {
         // Refresh products list
         fetchProduct();
     };
+    const handleAddFileFromUrl = () => {
+        if (!additionalFileUrl.trim()) {
+            alert('Please enter a valid URL');
+            return;
+        }
 
-    // ENHANCED FilePreview component with better error handling for HTTP images
-    const FilePreview = ({ file, onDelete, uploading }) => {
-        const [loading, setLoading] = useState(true);
-        const [error, setError] = useState(false);
-        const [retryCount, setRetryCount] = useState(0);
-        const [useProxy, setUseProxy] = useState(false);
+        const currentNonDeletedFiles = additionalFiles.filter(f => !f.markedForDeletion).length;
+        if (currentNonDeletedFiles >= 3) {
+            alert(`Maximum 3 files allowed. You already have ${currentNonDeletedFiles} files.`);
+            return;
+        }
 
-        const fileType = getFileType(file);
-        const previewUrl = file.url || file.previewUrl;
+        try {
+            // Validate URL
+            new URL(additionalFileUrl);
 
-        // Check if URL uses HTTP (not HTTPS) which might have CORS issues
-        const isHttpUrl = previewUrl && previewUrl.startsWith('http://');
-        
-        // Create a proxy URL for HTTP images to avoid CORS issues
-        const getSafeUrl = () => {
-            if (!previewUrl) return '';
-            
-            // For HTTP URLs that are failing, try to use a CORS proxy
-            if (isHttpUrl && (error || useProxy)) {
-                // You can use a CORS proxy service or your own backend proxy
-                const proxyUrl = `${baseUrl}/proxy-image?url=${encodeURIComponent(previewUrl)}`;
-                return proxyUrl;
-            }
-            
-            // For retries, add cache busting
-            if (retryCount > 0) {
-                const separator = previewUrl.includes('?') ? '&' : '?';
-                return `${previewUrl}${separator}retry=${retryCount}&t=${Date.now()}`;
-            }
-            
-            return previewUrl;
-        };
+            const fileType = getFileType(additionalFileUrl);
 
-        const safeUrl = getSafeUrl();
-
-        const handleLoad = () => {
-            setLoading(false);
-            setError(false);
-            console.log('Successfully loaded media:', previewUrl);
-        };
-
-        const handleError = () => {
-            setLoading(false);
-            setError(true);
-            console.error('Failed to load media:', previewUrl, 'Type:', fileType, 'File object:', file);
-            
-            // If it's an HTTP URL and we haven't tried the proxy yet, retry with proxy
-            if (isHttpUrl && !useProxy) {
-                setTimeout(() => {
-                    setUseProxy(true);
-                    setLoading(true);
-                    setError(false);
-                }, 1000);
-            }
-        };
-
-        const handleRetry = () => {
-            setLoading(true);
-            setError(false);
-            setRetryCount(prev => prev + 1);
-            setUseProxy(true); // Always use proxy on manual retry
-        };
-
-        // Debug info
-        useEffect(() => {
-            console.log('FilePreview Debug:', {
-                file,
-                fileType,
-                previewUrl,
-                safeUrl,
-                loading,
-                error,
-                isHttpUrl,
-                useProxy
+            console.log('URL File Type Detection:', {
+                url: additionalFileUrl,
+                detectedType: fileType
             });
-        }, [file, fileType, previewUrl, safeUrl, loading, error, useProxy]);
 
-        return (
-            <div className={`videoPreview`}>
-                <div className="videoPreviewContainer">
-                    {loading && (
-                        <div className="file-loading">
-                            <div className="loading-spinner"></div>
-                            <span>Loading {fileType}...</span>
-                        </div>
-                    )}
+            const newFile = {
+                url: additionalFileUrl.trim(),
+                previewUrl: additionalFileUrl.trim(),
+                id: `url_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                type: fileType,
+                markedForDeletion: false,
+                isFromUrl: true,
+                public_id: null,
+                isNew: true
+            };
 
-                    {error && (
-                        <div className="file-error">
-                            <i className="fa-solid fa-triangle-exclamation"></i>
-                            <span>Failed to load {fileType}</span>
-                            <div className="file-error-details">
-                                <small>URL: {previewUrl}</small>
-                            </div>
-                            <button
-                                className="retry-btn"
-                                onClick={handleRetry}
-                                disabled={uploading}
-                            >
-                                Retry with Proxy
-                            </button>
-                        </div>
-                    )}
+            setAdditionalFiles(prev => [...prev, newFile]);
+            setAdditionalFileUrl('');
 
-                    {!error && fileType === 'video' ? (
-                        <video
-                            key={`video-${retryCount}-${useProxy}`}
-                            controls
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover',
-                                display: loading ? 'none' : 'block'
-                            }}
-                            onLoadStart={handleLoad}
-                            onLoadedData={handleLoad}
-                            onCanPlay={handleLoad}
-                            onError={handleError}
-                            preload="metadata"
-                            playsInline
-                            muted
-                        >
-                            <source src={safeUrl} type="video/mp4" />
-                            <source src={safeUrl} type="video/webm" />
-                            <source src={safeUrl} type="video/ogg" />
-                            Your browser does not support the video tag.
-                        </video>
-                    ) : !error && (
-                        <img
-                            key={`image-${retryCount}-${useProxy}`}
-                            src={safeUrl}
-                            alt="Preview"
-                            style={{
-                                objectFit: 'cover',
-                                height: '100%',
-                                width: '100%',
-                                display: loading ? 'none' : 'block'
-                            }}
-                            onLoad={handleLoad}
-                            onError={handleError}
-                            loading="lazy"
-                            crossOrigin="anonymous" // Important for CORS
-                        />
-                    )}
+            if (fileType === 'video') {
+                alert('Video URL added successfully. Please note: Some video URLs may not preview correctly in the admin panel but will work on the main site.');
+            } else {
+                alert('Image URL added successfully');
+            }
 
-                    <button
-                        className="deleteButton"
-                        onClick={() => onDelete(file)}
-                        disabled={uploading}
-                        title="Delete file"
-                    >
-                        ×
-                    </button>
-
-                    {file.isFromExcel && (
-                        <div className="file-source-badge" title="From Excel">
-                            Excel
-                        </div>
-                    )}
-                    {file.isFromUrl && (
-                        <div className="file-source-badge" title="From URL">
-                            URL
-                        </div>
-                    )}
-
-                    {/* File type indicator */}
-                    <div className={`file-type-indicator ${fileType}`}>
-                        {fileType === 'video' ? 'VID' : 'IMG'}
-                    </div>
-
-                    {/* HTTP warning badge */}
-                    {isHttpUrl && (
-                        <div className="file-http-warning" title="HTTP URL - May have loading issues">
-                            <i className="fa-solid fa-exclamation-triangle"></i>
-                        </div>
-                    )}
-                </div>
-            </div>
-        );
+        } catch (error) {
+            alert('Please enter a valid URL');
+            console.error('Invalid URL:', error);
+        }
     };
+
+    // // ENHANCED FilePreview component with better error handling for HTTP images
+    // const FilePreview = ({ file, onDelete, uploading }) => {
+    //     const [loading, setLoading] = useState(true);
+    //     const [error, setError] = useState(false);
+    //     const [retryCount, setRetryCount] = useState(0);
+    //     const [useProxy, setUseProxy] = useState(false);
+
+    //     const fileType = getFileType(file);
+    //     const previewUrl = file.url || file.previewUrl;
+
+    //     // Check if URL uses HTTP (not HTTPS) which might have CORS issues
+    //     const isHttpUrl = previewUrl && previewUrl.startsWith('http://');
+        
+    //     // Create a proxy URL for HTTP images to avoid CORS issues
+    //     const getSafeUrl = () => {
+    //         if (!previewUrl) return '';
+            
+    //         // For HTTP URLs that are failing, try to use a CORS proxy
+    //         if (isHttpUrl && (error || useProxy)) {
+    //             // You can use a CORS proxy service or your own backend proxy
+    //             const proxyUrl = `${baseUrl}/proxy-image?url=${encodeURIComponent(previewUrl)}`;
+    //             return proxyUrl;
+    //         }
+            
+    //         // For retries, add cache busting
+    //         if (retryCount > 0) {
+    //             const separator = previewUrl.includes('?') ? '&' : '?';
+    //             return `${previewUrl}${separator}retry=${retryCount}&t=${Date.now()}`;
+    //         }
+            
+    //         return previewUrl;
+    //     };
+
+    //     const safeUrl = getSafeUrl();
+
+    //     const handleLoad = () => {
+    //         setLoading(false);
+    //         setError(false);
+    //         console.log('Successfully loaded media:', previewUrl);
+    //     };
+
+    //     const handleError = () => {
+    //         setLoading(false);
+    //         setError(true);
+    //         console.error('Failed to load media:', previewUrl, 'Type:', fileType, 'File object:', file);
+            
+    //         // If it's an HTTP URL and we haven't tried the proxy yet, retry with proxy
+    //         if (isHttpUrl && !useProxy) {
+    //             setTimeout(() => {
+    //                 setUseProxy(true);
+    //                 setLoading(true);
+    //                 setError(false);
+    //             }, 1000);
+    //         }
+    //     };
+
+    //     const handleRetry = () => {
+    //         setLoading(true);
+    //         setError(false);
+    //         setRetryCount(prev => prev + 1);
+    //         setUseProxy(true); // Always use proxy on manual retry
+    //     };
+
+    //     // Debug info
+    //     useEffect(() => {
+    //         console.log('FilePreview Debug:', {
+    //             file,
+    //             fileType,
+    //             previewUrl,
+    //             safeUrl,
+    //             loading,
+    //             error,
+    //             isHttpUrl,
+    //             useProxy
+    //         });
+    //     }, [file, fileType, previewUrl, safeUrl, loading, error, useProxy]);
+
+    //     return (
+    //         <div className={`videoPreview`}>
+    //             <div className="videoPreviewContainer">
+    //                 {loading && (
+    //                     <div className="file-loading">
+    //                         <div className="loading-spinner"></div>
+    //                         <span>Loading {fileType}...</span>
+    //                     </div>
+    //                 )}
+
+    //                 {error && (
+    //                     <div className="file-error">
+    //                         <i className="fa-solid fa-triangle-exclamation"></i>
+    //                         <span>Failed to load {fileType}</span>
+    //                         <div className="file-error-details">
+    //                             <small>URL: {previewUrl}</small>
+    //                         </div>
+    //                         <button
+    //                             className="retry-btn"
+    //                             onClick={handleRetry}
+    //                             disabled={uploading}
+    //                         >
+    //                             Retry with Proxy
+    //                         </button>
+    //                     </div>
+    //                 )}
+
+    //                 {!error && fileType === 'video' ? (
+    //                     <video
+    //                         key={`video-${retryCount}-${useProxy}`}
+    //                         controls
+    //                         style={{
+    //                             width: '100%',
+    //                             height: '100%',
+    //                             objectFit: 'cover',
+    //                             display: loading ? 'none' : 'block'
+    //                         }}
+    //                         onLoadStart={handleLoad}
+    //                         onLoadedData={handleLoad}
+    //                         onCanPlay={handleLoad}
+    //                         onError={handleError}
+    //                         preload="metadata"
+    //                         playsInline
+    //                         muted
+    //                     >
+    //                         <source src={safeUrl} type="video/mp4" />
+    //                         <source src={safeUrl} type="video/webm" />
+    //                         <source src={safeUrl} type="video/ogg" />
+    //                         Your browser does not support the video tag.
+    //                     </video>
+    //                 ) : !error && (
+    //                     <img
+    //                         key={`image-${retryCount}-${useProxy}`}
+    //                         src={safeUrl}
+    //                         alt="Preview"
+    //                         style={{
+    //                             objectFit: 'cover',
+    //                             height: '100%',
+    //                             width: '100%',
+    //                             display: loading ? 'none' : 'block'
+    //                         }}
+    //                         onLoad={handleLoad}
+    //                         onError={handleError}
+    //                         loading="lazy"
+    //                         crossOrigin="anonymous" // Important for CORS
+    //                     />
+    //                 )}
+
+    //                 <button
+    //                     className="deleteButton"
+    //                     onClick={() => onDelete(file)}
+    //                     disabled={uploading}
+    //                     title="Delete file"
+    //                 >
+    //                     ×
+    //                 </button>
+
+    //                 {file.isFromExcel && (
+    //                     <div className="file-source-badge" title="From Excel">
+    //                         Excel
+    //                     </div>
+    //                 )}
+    //                 {file.isFromUrl && (
+    //                     <div className="file-source-badge" title="From URL">
+    //                         URL
+    //                     </div>
+    //                 )}
+
+    //                 {/* File type indicator */}
+    //                 <div className={`file-type-indicator ${fileType}`}>
+    //                     {fileType === 'video' ? 'VID' : 'IMG'}
+    //                 </div>
+
+    //                 {/* HTTP warning badge */}
+    //                 {isHttpUrl && (
+    //                     <div className="file-http-warning" title="HTTP URL - May have loading issues">
+    //                         <i className="fa-solid fa-exclamation-triangle"></i>
+    //                     </div>
+    //                 )}
+    //             </div>
+    //         </div>
+    //     );
+    // };
 
     // Rest of your existing code remains the same...
     const RatingStars = ({ rating }) => {
