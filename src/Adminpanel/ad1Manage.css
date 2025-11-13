@@ -843,14 +843,12 @@
 
 
 
-
-
-
-/* Enhanced File Preview Styles */
+/* Enhanced File Preview Styles for Security */
 .file-error .error-actions {
     display: flex;
     gap: 8px;
     margin-top: 8px;
+    flex-wrap: wrap;
 }
 
 .file-error .proxy-btn {
@@ -876,6 +874,14 @@
     max-width: 100%;
 }
 
+.file-error .security-warning {
+    display: block;
+    margin-top: 5px;
+    color: #d63384;
+    font-size: 11px;
+    font-weight: bold;
+}
+
 .proxy-badge {
     background: #ff6b35;
     color: white;
@@ -890,6 +896,18 @@
     top: 5px;
     left: 5px;
     background: rgba(255, 107, 53, 0.9);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    z-index: 2;
+}
+
+.security-indicator {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(220, 53, 69, 0.9);
     color: white;
     padding: 2px 6px;
     border-radius: 3px;
@@ -917,4 +935,15 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* URL input warnings */
+.url-warning {
+    border: 1px solid #ffc107 !important;
+    background-color: #fff3cd !important;
+}
+
+.url-danger {
+    border: 1px solid #dc3545 !important;
+    background-color: #f8d7da !important;
 }

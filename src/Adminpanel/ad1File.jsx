@@ -3562,8 +3562,6 @@
 
 
 
-
-
 import React, { useState, useContext, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './ad1Manage.css';
@@ -3589,6 +3587,52 @@ function ClientSection() {
     // Main image URL input for Excel
     const [mainImageUrl, setMainImageUrl] = useState('');
 
+    // Enhanced URL validation and conversion
+    const secureUrl = (url) => {
+        if (!url) return url;
+        
+        try {
+            const urlObj = new URL(url);
+            
+            // Force HTTPS for problematic domains
+            if (urlObj.hostname === '68.178.205.50' || url.includes('AdinnEdge1')) {
+                urlObj.protocol = 'https:';
+                return urlObj.toString();
+            }
+            
+            return url;
+        } catch (error) {
+            return url;
+        }
+    };
+
+    // Enhanced URL validation for user input
+    const validateAndSecureUrl = (inputUrl) => {
+        if (!inputUrl.trim()) return '';
+        
+        try {
+            let url = inputUrl.trim();
+            
+            // Add protocol if missing
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+            
+            const urlObj = new URL(url);
+            
+            // Force HTTPS for problematic domains
+            if (urlObj.hostname === '68.178.205.50' || url.includes('AdinnEdge1')) {
+                urlObj.protocol = 'https:';
+            }
+            
+            return urlObj.toString();
+        } catch (error) {
+            // If URL is invalid, return as-is but show warning
+            console.warn('Invalid URL format:', inputUrl);
+            return inputUrl;
+        }
+    };
+
     // Excel file upload handler
     const handleExcelUpload = (e) => {
         const file = e.target.files[0];
@@ -3602,9 +3646,34 @@ function ClientSection() {
                 const sheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[sheetName];
                 const jsonData = XLSX.utils.sheet_to_json(worksheet);
-                setExcelData(jsonData);
+                
+                // Secure URLs in Excel data
+                const securedData = jsonData.map(row => {
+                    const securedRow = { ...row };
+                    
+                    // Secure main image URL
+                    if (securedRow['Image']) {
+                        securedRow['Image'] = secureUrl(securedRow['Image']);
+                    }
+                    
+                    // Secure additional file URLs
+                    const additionalFileColumns = [
+                        'AdditionalFiles1', 'AdditionalFiles2', 'AdditionalFiles3',
+                        'AdditionalFiles4', 'AdditionalFiles5'
+                    ];
+                    
+                    additionalFileColumns.forEach(column => {
+                        if (securedRow[column]) {
+                            securedRow[column] = secureUrl(securedRow[column]);
+                        }
+                    });
+                    
+                    return securedRow;
+                });
+                
+                setExcelData(securedData);
                 setShowExcelPreview(true);
-                alert(`Successfully loaded ${jsonData.length} records from Excel`);
+                alert(`Successfully loaded ${securedData.length} records from Excel`);
             } catch (error) {
                 console.error('Error reading Excel file:', error);
                 alert('Error reading Excel file. Please check the format.');
@@ -3749,7 +3818,7 @@ function ClientSection() {
         // Helper function to add file if it exists - CORRECTED
         const addFileIfExists = (url, columnName) => {
             if (url && url.toString().trim() !== '') {
-                const fileUrl = url.toString().trim();
+                const fileUrl = secureUrl(url.toString().trim());
 
                 // Check if this URL is already added to prevent duplicates - FIXED LOGIC
                 const isDuplicate = additionalFiles.some(file =>
@@ -3830,7 +3899,7 @@ function ClientSection() {
         }
 
         // Use main image URL from input or from Excel
-        const mainImage = mainImageUrl.trim() || excelRow['Image'] || " ";
+        const mainImage = secureUrl(mainImageUrl.trim() || excelRow['Image'] || " ");
 
         return {
             name: excelRow['Product Name'] || 'Unnamed Product',
@@ -3967,7 +4036,7 @@ function ClientSection() {
         );
     };
 
-    // Enhanced File Preview Component with better error handling
+    // Enhanced File Preview Component with HTTPS enforcement
     const FilePreview = ({ file, onDelete, uploading }) => {
         const [loading, setLoading] = useState(true);
         const [error, setError] = useState(false);
@@ -3975,21 +4044,24 @@ function ClientSection() {
         const [useProxy, setUseProxy] = useState(false);
 
         const fileType = getFileType(file);
-        const previewUrl = file.url || file.previewUrl;
+        let previewUrl = file.url || file.previewUrl;
+
+        // Force HTTPS for all URLs
+        previewUrl = secureUrl(previewUrl);
 
         // Create a proxy URL for problematic URLs
         const createProxyUrl = (url) => {
             if (!url) return url;
             
-            // Only proxy problematic URLs (like the 68.178.205.50 ones)
-            if (url.includes('68.178.205.50') || url.includes('AdinnEdge1')) {
+            // Use proxy for problematic HTTP URLs
+            if (url.startsWith('http://')) {
                 return `${baseUrl}/proxy-image?url=${encodeURIComponent(url)}`;
             }
             return url;
         };
 
         const getDisplayUrl = () => {
-            if (useProxy && (previewUrl.includes('68.178.205.50') || previewUrl.includes('AdinnEdge1'))) {
+            if (useProxy && previewUrl.startsWith('http://')) {
                 return createProxyUrl(previewUrl);
             }
             return previewUrl;
@@ -4005,7 +4077,7 @@ function ClientSection() {
         const handleError = () => {
             console.warn('Failed to load media, trying proxy:', previewUrl);
             
-            if (!useProxy && (previewUrl.includes('68.178.205.50') || previewUrl.includes('AdinnEdge1'))) {
+            if (!useProxy && previewUrl.startsWith('http://')) {
                 // Try with proxy
                 setUseProxy(true);
                 setLoading(true);
@@ -4020,13 +4092,13 @@ function ClientSection() {
             setLoading(true);
             setError(false);
             setRetryCount(prev => prev + 1);
-            setUseProxy(false); // Reset proxy on manual retry
+            setUseProxy(false);
         };
 
         // Add cache busting for retries
         const getUrlWithCacheBust = () => {
             let finalUrl = displayUrl;
-            if (retryCount > 0) {
+            if (retryCount > 0 && finalUrl) {
                 const separator = finalUrl.includes('?') ? '&' : '?';
                 finalUrl = `${finalUrl}${separator}retry=${retryCount}&t=${Date.now()}`;
             }
@@ -4034,6 +4106,9 @@ function ClientSection() {
         };
 
         const finalUrl = getUrlWithCacheBust();
+
+        // Show warning for HTTP URLs
+        const showHttpWarning = previewUrl.startsWith('http://');
 
         return (
             <div className={`videoPreview`}>
@@ -4058,7 +4133,7 @@ function ClientSection() {
                                 >
                                     Retry
                                 </button>
-                                {!useProxy && (
+                                {!useProxy && showHttpWarning && (
                                     <button
                                         className="proxy-btn"
                                         onClick={() => {
@@ -4073,6 +4148,11 @@ function ClientSection() {
                                 )}
                             </div>
                             <small className="error-url">{previewUrl}</small>
+                            {showHttpWarning && (
+                                <small className="security-warning">
+                                    ⚠️ HTTP URL blocked by browser for security
+                                </small>
+                            )}
                         </div>
                     )}
 
@@ -4148,10 +4228,135 @@ function ClientSection() {
                             Proxy
                         </div>
                     )}
+
+                    {/* Security warning */}
+                    {showHttpWarning && !useProxy && !loading && !error && (
+                        <div className="security-indicator" title="Insecure HTTP connection">
+                            ⚠️ HTTP
+                        </div>
+                    )}
                 </div>
             </div>
         );
     };
+
+    // Enhanced URL input handler
+    const handleAddFileFromUrl = () => {
+        if (!additionalFileUrl.trim()) {
+            alert('Please enter a valid URL');
+            return;
+        }
+
+        const currentNonDeletedFiles = additionalFiles.filter(f => !f.markedForDeletion).length;
+        if (currentNonDeletedFiles >= 3) {
+            alert(`Maximum 3 files allowed. You already have ${currentNonDeletedFiles} files.`);
+            return;
+        }
+
+        try {
+            // Validate and secure URL
+            const securedUrl = validateAndSecureUrl(additionalFileUrl);
+
+            // Check if it's still HTTP after securing
+            if (securedUrl.startsWith('http://')) {
+                const useHttps = window.confirm(
+                    'This URL uses HTTP which may be blocked by browsers. ' +
+                    'We recommend using HTTPS URLs for better security and compatibility. ' +
+                    'Do you want to continue with this HTTP URL?'
+                );
+                
+                if (!useHttps) {
+                    return;
+                }
+            }
+
+            const fileType = getFileType(securedUrl);
+
+            console.log('URL File Type Detection:', {
+                originalUrl: additionalFileUrl,
+                securedUrl: securedUrl,
+                detectedType: fileType
+            });
+
+            const newFile = {
+                url: securedUrl,
+                previewUrl: securedUrl,
+                id: `url_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                type: fileType,
+                markedForDeletion: false,
+                isFromUrl: true,
+                public_id: null,
+                isNew: true,
+                originalUrl: additionalFileUrl // Keep original for reference
+            };
+
+            setAdditionalFiles(prev => [...prev, newFile]);
+            setAdditionalFileUrl('');
+
+            if (securedUrl.startsWith('http://')) {
+                alert('HTTP URL added. Note: Some browsers may block this content for security reasons.');
+            } else if (fileType === 'video') {
+                alert('Video URL added successfully.');
+            } else {
+                alert('Image URL added successfully');
+            }
+
+        } catch (error) {
+            alert('Please enter a valid URL');
+            console.error('Invalid URL:', error);
+        }
+    };
+
+    // Enhanced main image URL handler
+    const handleMainImageUrlAdd = () => {
+        if (!mainImageInputUrl.trim()) {
+            alert('Please enter a valid image URL');
+            return;
+        }
+
+        try {
+            // Validate and secure URL
+            const securedUrl = validateAndSecureUrl(mainImageInputUrl);
+
+            // Check if it's still HTTP after securing
+            if (securedUrl.startsWith('http://')) {
+                const useHttps = window.confirm(
+                    'This URL uses HTTP which may be blocked by browsers. ' +
+                    'We recommend using HTTPS URLs for better security. ' +
+                    'Do you want to continue with this HTTP URL?'
+                );
+                
+                if (!useHttps) {
+                    return;
+                }
+            }
+
+            // Check if it's likely an image
+            const fileType = getFileType(securedUrl);
+            if (fileType !== 'image') {
+                if (!window.confirm('This URL does not appear to be an image. Continue anyway?')) {
+                    return;
+                }
+            }
+
+            setImage(securedUrl);
+            setImageFile(null); // Clear any uploaded file
+            setMainImageInputUrl('');
+            
+            if (securedUrl.startsWith('http://')) {
+                alert('HTTP image URL set. Note: Some browsers may block this content.');
+            } else {
+                alert('Main image URL set successfully');
+            }
+        } catch (error) {
+            alert('Please enter a valid URL');
+            console.error('Invalid URL:', error);
+        }
+    };
+
+
+
+
 
     const handleBulkSave = async () => {
         if (excelData.length === 0) {
@@ -4285,54 +4490,54 @@ function ClientSection() {
         // Refresh products list
         fetchProduct();
     };
-    const handleAddFileFromUrl = () => {
-        if (!additionalFileUrl.trim()) {
-            alert('Please enter a valid URL');
-            return;
-        }
+    // const handleAddFileFromUrl = () => {
+    //     if (!additionalFileUrl.trim()) {
+    //         alert('Please enter a valid URL');
+    //         return;
+    //     }
 
-        const currentNonDeletedFiles = additionalFiles.filter(f => !f.markedForDeletion).length;
-        if (currentNonDeletedFiles >= 3) {
-            alert(`Maximum 3 files allowed. You already have ${currentNonDeletedFiles} files.`);
-            return;
-        }
+    //     const currentNonDeletedFiles = additionalFiles.filter(f => !f.markedForDeletion).length;
+    //     if (currentNonDeletedFiles >= 3) {
+    //         alert(`Maximum 3 files allowed. You already have ${currentNonDeletedFiles} files.`);
+    //         return;
+    //     }
 
-        try {
-            // Validate URL
-            new URL(additionalFileUrl);
+    //     try {
+    //         // Validate URL
+    //         new URL(additionalFileUrl);
 
-            const fileType = getFileType(additionalFileUrl);
+    //         const fileType = getFileType(additionalFileUrl);
 
-            console.log('URL File Type Detection:', {
-                url: additionalFileUrl,
-                detectedType: fileType
-            });
+    //         console.log('URL File Type Detection:', {
+    //             url: additionalFileUrl,
+    //             detectedType: fileType
+    //         });
 
-            const newFile = {
-                url: additionalFileUrl.trim(),
-                previewUrl: additionalFileUrl.trim(),
-                id: `url_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-                type: fileType,
-                markedForDeletion: false,
-                isFromUrl: true,
-                public_id: null,
-                isNew: true
-            };
+    //         const newFile = {
+    //             url: additionalFileUrl.trim(),
+    //             previewUrl: additionalFileUrl.trim(),
+    //             id: `url_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    //             type: fileType,
+    //             markedForDeletion: false,
+    //             isFromUrl: true,
+    //             public_id: null,
+    //             isNew: true
+    //         };
 
-            setAdditionalFiles(prev => [...prev, newFile]);
-            setAdditionalFileUrl('');
+    //         setAdditionalFiles(prev => [...prev, newFile]);
+    //         setAdditionalFileUrl('');
 
-            if (fileType === 'video') {
-                alert('Video URL added successfully. Please note: Some video URLs may not preview correctly in the admin panel but will work on the main site.');
-            } else {
-                alert('Image URL added successfully');
-            }
+    //         if (fileType === 'video') {
+    //             alert('Video URL added successfully. Please note: Some video URLs may not preview correctly in the admin panel but will work on the main site.');
+    //         } else {
+    //             alert('Image URL added successfully');
+    //         }
 
-        } catch (error) {
-            alert('Please enter a valid URL');
-            console.error('Invalid URL:', error);
-        }
-    };
+    //     } catch (error) {
+    //         alert('Please enter a valid URL');
+    //         console.error('Invalid URL:', error);
+    //     }
+    // };
 
     // // ENHANCED FilePreview component with better error handling for HTTP images
     // const FilePreview = ({ file, onDelete, uploading }) => {
@@ -4686,33 +4891,33 @@ function ClientSection() {
     //  Main image URL input handler
     const [mainImageInputUrl, setMainImageInputUrl] = useState('');
 
-    const handleMainImageUrlAdd = () => {
-        if (!mainImageInputUrl.trim()) {
-            alert('Please enter a valid image URL');
-            return;
-        }
+    // const handleMainImageUrlAdd = () => {
+    //     if (!mainImageInputUrl.trim()) {
+    //         alert('Please enter a valid image URL');
+    //         return;
+    //     }
 
-        try {
-            // Validate URL
-            new URL(mainImageInputUrl);
+    //     try {
+    //         // Validate URL
+    //         new URL(mainImageInputUrl);
 
-            // Check if it's likely an image
-            const fileType = getFileType(mainImageInputUrl);
-            if (fileType !== 'image') {
-                if (!window.confirm('This URL does not appear to be an image. Continue anyway?')) {
-                    return;
-                }
-            }
+    //         // Check if it's likely an image
+    //         const fileType = getFileType(mainImageInputUrl);
+    //         if (fileType !== 'image') {
+    //             if (!window.confirm('This URL does not appear to be an image. Continue anyway?')) {
+    //                 return;
+    //             }
+    //         }
 
-            setImage(mainImageInputUrl);
-            setImageFile(null); // Clear any uploaded file
-            setMainImageInputUrl('');
-            alert('Main image URL set successfully');
-        } catch (error) {
-            alert('Please enter a valid URL');
-            console.error('Invalid URL:', error);
-        }
-    };
+    //         setImage(mainImageInputUrl);
+    //         setImageFile(null); // Clear any uploaded file
+    //         setMainImageInputUrl('');
+    //         alert('Main image URL set successfully');
+    //     } catch (error) {
+    //         alert('Please enter a valid URL');
+    //         console.error('Invalid URL:', error);
+    //     }
+    // };
 
     const generateGoogleMapsLink = () => {
         if (!prodLatitude || !prodLongitude) {
@@ -4742,6 +4947,7 @@ function ClientSection() {
             setProdRating(newRating);
         }
     };
+
 
     const [prodType, setProdType] = useState("Select");
     const { toggleStateDropdown, handleStateClick, handleDistrictClick, selectedState, setSelectedState, selectedDistrict, setSelectedDistrict, showDistricts, setShowDistricts, showStates, setShowStates } = useSpot();
