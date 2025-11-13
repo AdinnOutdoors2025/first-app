@@ -843,59 +843,23 @@
 
 
 
-/* Enhanced File Preview Styles for Security */
-.file-error .error-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 8px;
-    flex-wrap: wrap;
-}
 
-.file-error .proxy-btn {
-    background: #ff6b35;
-    color: white;
-    border: none;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    cursor: pointer;
-}
 
-.file-error .proxy-btn:hover:not(:disabled) {
-    background: #e55a2b;
-}
 
-.file-error .error-url {
-    display: block;
-    margin-top: 8px;
-    font-size: 10px;
-    color: #666;
-    word-break: break-all;
-    max-width: 100%;
-}
 
-.file-error .security-warning {
-    display: block;
-    margin-top: 5px;
-    color: #d63384;
-    font-size: 11px;
-    font-weight: bold;
-}
 
-.proxy-badge {
-    background: #ff6b35;
-    color: white;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-size: 10px;
-    margin-left: 8px;
-}
 
-.proxy-indicator {
+
+
+
+
+
+
+.file-source-badge {
     position: absolute;
     top: 5px;
     left: 5px;
-    background: rgba(255, 107, 53, 0.9);
+    background: rgba(0, 0, 0, 0.7);
     color: white;
     padding: 2px 6px;
     border-radius: 3px;
@@ -903,47 +867,52 @@
     z-index: 2;
 }
 
-.security-indicator {
+.drive-badge {
+    background: #4285F4;
+    top: 25px; /* Position below the main source badge */
+}
+
+.file-type-indicator {
     position: absolute;
     top: 5px;
     right: 5px;
-    background: rgba(220, 53, 69, 0.9);
+    background: rgba(0, 0, 0, 0.7);
     color: white;
     padding: 2px 6px;
     border-radius: 3px;
     font-size: 10px;
+    font-weight: bold;
     z-index: 2;
 }
 
-.file-loading {
+.file-type-indicator.video {
+    background: #ff4757;
+}
+
+.file-type-indicator.image {
+    background: #2ed573;
+}
+
+.file-loading, .file-error {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    height: 100%;
+    color: #666;
 }
 
-.loading-spinner {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid #3498db;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+.retry-btn {
+    margin-top: 5px;
+    padding: 2px 8px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* URL input warnings */
-.url-warning {
-    border: 1px solid #ffc107 !important;
-    background-color: #fff3cd !important;
-}
-
-.url-danger {
-    border: 1px solid #dc3545 !important;
-    background-color: #f8d7da !important;
+.retry-btn:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
 }
