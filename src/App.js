@@ -51,7 +51,6 @@ function App() {
 
     return () => clearTimeout(timer);
   }, []);
-
   return (
     <div>
       <SpotProvider>
