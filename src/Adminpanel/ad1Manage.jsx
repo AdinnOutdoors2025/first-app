@@ -289,9 +289,59 @@ function AdManageSection() {
     };
 
     // UPDATED DATE CLASS CALCULATION
+    // const getDateSelectionClass = (date) => {
+    //     if (!date || isNaN(date.getTime())) return "disabled";
+
+
+    //     const normalizedDate = new Date(Date.UTC(
+    //         date.getFullYear(),
+    //         date.getMonth(),
+    //         date.getDate()
+    //     ));
+
+    //     // Check if date is booked
+    //     const isBooked = bookedDates.some(d =>
+    //         d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
+    //         d.getUTCMonth() === normalizedDate.getUTCMonth() &&
+    //         d.getUTCDate() === normalizedDate.getUTCDate()
+    //     );
+
+    //     if (isBooked) return "booked";
+    //     if (isPastDate(normalizedDate)) return "past";
+
+    //     const dateString = date.toISOString().split('T')[0];
+    //     const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    //     const startUTC = selectedDates.start ? new Date(Date.UTC(
+    //         selectedDates.start.getFullYear(),
+    //         selectedDates.start.getMonth(),
+    //         selectedDates.start.getDate()
+    //     )) : null;
+
+    //     const endUTC = selectedDates.end ? new Date(Date.UTC(
+    //         selectedDates.end.getFullYear(),
+    //         selectedDates.end.getMonth(),
+    //         selectedDates.end.getDate()
+    //     )) : null;
+
+    //     if (bookedDates.some(d =>
+    //         d.getUTCFullYear() === utcDate.getUTCFullYear() &&
+    //         d.getUTCMonth() === utcDate.getUTCMonth() &&
+    //         d.getUTCDate() === utcDate.getUTCDate()
+    //     )) return "booked";
+
+    //     if (startUTC && utcDate.getTime() === startUTC.getTime()) return "selected-start";
+    //     if (endUTC && utcDate.getTime() === endUTC.getTime()) return "selected-end";
+    //     if (startUTC && endUTC && utcDate > startUTC && utcDate < endUTC) {
+    //         return "selected-range";
+    //     }
+
+    //     return "";
+    // };
+
+
+    // UPDATED DATE CLASS CALCULATION
     const getDateSelectionClass = (date) => {
         if (!date || isNaN(date.getTime())) return "disabled";
-
 
         const normalizedDate = new Date(Date.UTC(
             date.getFullYear(),
@@ -299,17 +349,31 @@ function AdManageSection() {
             date.getDate()
         ));
 
-        // Check if date is booked
-        const isBooked = bookedDates.some(d =>
-            d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
-            d.getUTCMonth() === normalizedDate.getUTCMonth() &&
-            d.getUTCDate() === normalizedDate.getUTCDate()
-        );
+        // // Check if date is booked for this specific product
+        // const isBooked = bookedDates.some(d => {
+        //     const bookedDate = new Date(d);
+        //     return (
+        //         bookedDate.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
+        //         bookedDate.getUTCMonth() === normalizedDate.getUTCMonth() &&
+        //         bookedDate.getUTCDate() === normalizedDate.getUTCDate()
+        //     );
+        // });
+        // Check if date is booked for THIS SPECIFIC PRODUCT only
+        const isBooked = bookedDates.some(bookedDate => {
+            const normalizedBooked = new Date(Date.UTC(
+                bookedDate.getUTCFullYear(),
+                bookedDate.getUTCMonth(),
+                bookedDate.getUTCDate()
+            ));
+            return normalizedDate.getTime() === normalizedBooked.getTime();
+        });
+
+        console.log(`📅 Date: ${normalizedDate.toISOString()}, Booked: ${isBooked}`);
+
 
         if (isBooked) return "booked";
         if (isPastDate(normalizedDate)) return "past";
 
-        const dateString = date.toISOString().split('T')[0];
         const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         const startUTC = selectedDates.start ? new Date(Date.UTC(
             selectedDates.start.getFullYear(),
@@ -322,12 +386,6 @@ function AdManageSection() {
             selectedDates.end.getMonth(),
             selectedDates.end.getDate()
         )) : null;
-
-        if (bookedDates.some(d =>
-            d.getUTCFullYear() === utcDate.getUTCFullYear() &&
-            d.getUTCMonth() === utcDate.getUTCMonth() &&
-            d.getUTCDate() === utcDate.getUTCDate()
-        )) return "booked";
 
         if (startUTC && utcDate.getTime() === startUTC.getTime()) return "selected-start";
         if (endUTC && utcDate.getTime() === endUTC.getTime()) return "selected-end";
@@ -401,7 +459,8 @@ function AdManageSection() {
             setConfirmedDates({ start: startUTC, end: endUTC });
             setIsCalendarOpen(false);
         }
-    };
+    }; 
+
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 991);
     useEffect(() => {
         const handleResize = () => {
@@ -415,49 +474,201 @@ function AdManageSection() {
     const [editOrder, setEditOrder] = useState(null);
     // const [bookedDates, setBookedDates] = useState([]);
 
+    // useEffect(() => {
+    //     const fetchBookedDates = async () => {
+    //         try {
+    //             // Include current order ID in exclusion if editing
+    //             const url = editOrder
+    //                 ? `${baseUrl}/booked-dates?excludeOrderId=${editOrder._id}`
+    //                 : `${baseUrl}/booked-dates`;
+
+    //             const res = await fetch(url);
+    //             if (!res.ok) {
+    //                 throw new Error(`HTTP error! status: ${res.status}`);
+    //             }
+
+    //             const data = await res.json();
+
+    //             // Ensure data is an array before mapping
+    //             if (!Array.isArray(data)) {
+    //                 throw new Error('Invalid data format received');
+    //             }
+
+    //             // Safely parse dates
+    //             const parsedDates = data
+    //                 .map(d => {
+    //                     try {
+    //                         return new Date(d);
+    //                     } catch (e) {
+    //                         console.warn('Invalid date format:', d);
+    //                         return null;
+    //                     }
+    //                 })
+    //                 .filter(date => date instanceof Date && !isNaN(date));
+
+    //             setBookedDates(parsedDates);
+    //         } catch (err) {
+    //             console.error('Error fetching booked dates:', err);
+    //             setBookedDates([]); // Reset to empty array on error
+    //         }
+    //     };
+
+    //     fetchBookedDates();
+    // }, [editOrder]); // Add editOrder to dependency array if needed
+
+    // UPDATED: Fetch booked dates for specific product only
     useEffect(() => {
         const fetchBookedDates = async () => {
-            try {
-                // Include current order ID in exclusion if editing
-                const url = editOrder
-                    ? `${baseUrl}/booked-dates?excludeOrderId=${editOrder._id}`
-                    : `${baseUrl}/booked-dates`;
+            if (productID && productID.trim() !== '') {
+                try {
+                    // Clean the product ID
+                    const cleanProductId = productID.replace(/^#/, '').trim();
 
-                const res = await fetch(url);
-                if (!res.ok) {
-                    throw new Error(`HTTP error! status: ${res.status}`);
+                    // Build URL with proper exclusion
+                    let url = `${baseUrl}/booked-dates/${encodeURIComponent(cleanProductId)}`;
+
+                    if (editOrder && editOrder._id) {
+                        url += `?excludeOrderId=${editOrder._id}`;
+                    }
+
+                    console.log(`🔄 Fetching booked dates from: ${url}`);
+
+                    const res = await fetch(url);
+                    if (!res.ok) {
+                        throw new Error(`HTTP ${res.status}`);
+                    }
+
+                    const dates = await res.json();
+                    console.log(`📅 Received ${dates.length} booked dates for product ${cleanProductId}`);
+
+                    // Convert to Date objects properly
+                    const dateObjects = dates.map(d => {
+                        const date = new Date(d);
+                        return new Date(Date.UTC(
+                            date.getUTCFullYear(),
+                            date.getUTCMonth(),
+                            date.getUTCDate()
+                        ));
+                    });
+
+                    setBookedDates(dateObjects);
+                } catch (error) {
+                    console.error("❌ Error fetching booked dates:", error);
+                    setBookedDates([]);
                 }
-
-                const data = await res.json();
-
-                // Ensure data is an array before mapping
-                if (!Array.isArray(data)) {
-                    throw new Error('Invalid data format received');
-                }
-
-                // Safely parse dates
-                const parsedDates = data
-                    .map(d => {
-                        try {
-                            return new Date(d);
-                        } catch (e) {
-                            console.warn('Invalid date format:', d);
-                            return null;
-                        }
-                    })
-                    .filter(date => date instanceof Date && !isNaN(date));
-
-                setBookedDates(parsedDates);
-            } catch (err) {
-                console.error('Error fetching booked dates:', err);
-                setBookedDates([]); // Reset to empty array on error
+            } else {
+                setBookedDates([]);
             }
         };
 
         fetchBookedDates();
-    }, [editOrder]); // Add editOrder to dependency array if needed
+    }, [productID, editOrder]);
 
-    useEffect(() => {
+
+    // useEffect(() => {
+    //     if (editOrder) {
+    //         // UPDATED DATE PARSING FUNCTION
+    //         const parseDate = (dateString) => {
+    //             if (!dateString) return null;
+    //             // Handle UTC dates consistently
+    //             if (dateString.includes('T')) {
+    //                 const dt = new Date(dateString);
+    //                 return new Date(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth(), dt.getUTCDate()));
+    //             }
+    //             const parts = dateString.split('-');
+    //             if (parts.length === 3) {
+    //                 return new Date(Date.UTC(
+    //                     parseInt(parts[0]),
+    //                     parseInt(parts[1]) - 1,
+    //                     parseInt(parts[2])
+    //                 ));
+    //             }
+
+    //             return null;
+    //         };
+    //         const startDate = parseDate(editOrder.booking?.startDate);
+    //         const endDate = parseDate(editOrder.booking?.endDate);
+    //         if (startDate && endDate && !isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+    //             // Ensure dates are ordered correctly
+    //             const orderedDates = startDate > endDate ?
+    //                 { start: endDate, end: startDate } :
+    //                 { start: startDate, end: endDate };
+    //             setSelectedDates(orderedDates);
+    //             setConfirmedDates(orderedDates);
+    //         }
+    //         // Populate all form fields with the editOrder data
+    //         setClientName(editOrder.client.name || "");
+    //         setClientEmail(editOrder.client.email || "");
+    //         setClientContact(editOrder.client.contact || "");
+    //         setClientCompany(editOrder.client.company || "");
+    //         setClientPaidAmount(editOrder.client.paidAmount || "");
+    //         setProductId(editOrder.product.id || "");
+    //         setProductName(editOrder.product.name || "");
+    //         setProductImage(editOrder.product.image || "");
+    //         setProductAmount(editOrder.product.price?.toString() || "");
+    //         setProductPrintingCost(editOrder.product.printingCost?.toString() || "");
+    //         setProductMountingCost(editOrder.product.mountingCost?.toString() || "");
+    //         setProdLighting(editOrder.product.lighting || "");
+    //         setProdWidth(editOrder.product.size.width?.toString() || 0);
+    //         setProdHeight(editOrder.product.size.height?.toString() || 0);
+    //         setProductFixedAmount(editOrder.product.fixedAmount?.toString() || 0);
+    //         setProductFixedAmountOffer(editOrder.product.fixedAmountOffer?.toString() || 0);
+    //         setProdRating(editOrder.product.rating || 0);
+    //         setProductFrom(editOrder.product.fromLocation || "");
+    //         setProductTo(editOrder.product.toLocation || "");
+    //         setProdType(editOrder.product.mediaType || "");
+    //         setSelectedState(editOrder.product.location.state || "");
+    //         setSelectedDistrict(editOrder.product.location.district || "");
+
+    //         // Handle dates - parse from ISO string or formatted string
+    //         if (editOrder.booking.startDate && editOrder.booking.endDate) {
+    //             try {
+    //                 // Try parsing as ISO string first
+    //                 let startDate = new Date(editOrder.booking.startDate);
+    //                 let endDate = new Date(editOrder.booking.endDate);
+
+    //                 // If parsing failed (invalid date), try alternative formats
+    //                 if (isNaN(startDate.getTime())) {
+    //                     // Handle other date formats if needed
+    //                     const dateParts = editOrder.booking.startDate.split(' ');
+    //                     if (dateParts.length === 2) {
+    //                         const month = new Date(Date.parse(dateParts[0] + " 1, 2025")).getMonth();
+    //                         const day = parseInt(dateParts[1]);
+    //                         startDate = new Date(2025, month, day);
+    //                     }
+    //                 }
+
+    //                 if (isNaN(endDate.getTime())) {
+    //                     const dateParts = editOrder.booking.endDate.split(' ');
+    //                     if (dateParts.length === 2) {
+    //                         const month = new Date(Date.parse(dateParts[0] + " 1, 2025")).getMonth();
+    //                         const day = parseInt(dateParts[1]);
+    //                         endDate = new Date(2025, month, day);
+    //                     }
+    //                 }
+
+    //                 if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+    //                     setSelectedDates({ start: startDate, end: endDate });
+    //                     setConfirmedDates({ start: startDate, end: endDate });
+    //                 } else {
+    //                     console.warn("Could not parse dates from order data");
+    //                     setSelectedDates({ start: null, end: null });
+    //                     setConfirmedDates({ start: null, end: null });
+    //                 }
+    //             } catch (error) {
+    //                 console.error("Error parsing dates:", error);
+    //                 setSelectedDates({ start: null, end: null });
+    //                 setConfirmedDates({ start: null, end: null });
+    //             }
+    //         }
+    //     } else {
+    //         resetForm();
+    //     }
+    // }, [editOrder]);
+
+    // Inside your component:
+    
+      useEffect(() => {
         if (editOrder) {
             // UPDATED DATE PARSING FUNCTION
             const parseDate = (dateString) => {
@@ -558,7 +769,6 @@ function AdManageSection() {
         }
     }, [editOrder]);
 
-    // Inside your component:
     const location = useLocation();
 
     useEffect(() => {

@@ -249,3 +249,29 @@
 .error-messageOrderDetails i {
     margin-right: 8px;
 }
+
+
+
+
+
+
+
+/* NEWLY ADDED FOR BOOK DATE CONFLICT ERROR MESSSAGE  */
+.date.booked.conflict {
+    background-color: #ff6b6b !important;
+    color: white !important;
+    cursor: not-allowed !important;
+}
+
+.date.booked.conflict:hover {
+    background-color: #ff5252 !important;
+}
+
+.conflict-message {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+}

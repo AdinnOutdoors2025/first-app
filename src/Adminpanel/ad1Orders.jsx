@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from './BASE_URL';
 
-const OrdersTable = () => {
+const OrdersTable = () => { 
     //FETCHED PRODUCTS ORDER PAGE
     const [productsOrderData, setProductsOrderData] = useState([]);
     // In your fetchOrders function, normalize the data
     const fetchOrders = async () => {
-        try {
+        try { 
             const response = await fetch(`${baseUrl}/prodOrders`);
             const data = await response.json();
             // Add safe product fallback
@@ -19,9 +19,9 @@ const OrdersTable = () => {
                 products: order.products || [], // Ensure product exists
                 booking: order.products?.[0]?.booking || {}  // Ensure booking exists
             }));
-
             setProductsOrderData(normalizedData);
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("Error fetching orders:", error);
         }
     };

@@ -41,14 +41,23 @@ const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, gen
                 {currentMonth.getFullYear()}
               </span> */}
 
-                {(() => {
+                {/* {(() => {
                   const nextMonthDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1);
                   return (
                     <span className="month-year">
                       {nextMonthDate.toLocaleString("default", { month: "long" })} {nextMonthDate.getFullYear()}
                     </span>
                   );
-                })()}
+                })()} */}
+
+                <span className="month-year">
+          {new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1).toLocaleString("default", {
+            month: "long",
+          })}{" "}
+          {new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1).getFullYear()}
+        </span>
+
+
                 <div className="nav-button" onClick={goToNextMonth}>
                   <i className="fa-solid fa-arrow-right right-arr"></i>
                 </div>
@@ -112,7 +121,6 @@ const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, gen
                   </div>
                   <div className="calendar-legend-responsive-content2">
                 
-                    // In the legend section, update date display:
 <span>
     Start Date: <span style={{ color: 'red' }}>
         {selectedDates.start?.toLocaleDateString('en-US', { 

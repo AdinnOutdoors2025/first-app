@@ -34,26 +34,86 @@ function OrderDetails({ order }) {
     //CALENDER EDIT
     // Initialize with order's existing dates
     const [selectedDates, setSelectedDates] = useState({
-        start: safeOrder.products?.[activeProductIndex]?.booking ? new Date(safeOrder.products?.[activeProductIndex].booking.startDate) : null,
-        end: safeOrder.products?.[activeProductIndex]?.booking ? new Date(safeOrder.products?.[activeProductIndex].booking.endDate) : null
+        // start: safeOrder.products?.[activeProductIndex]?.booking ? new Date(safeOrder.products?.[activeProductIndex].booking.startDate) : null,
+        // end: safeOrder.products?.[activeProductIndex]?.booking ? new Date(safeOrder.products?.[activeProductIndex].booking.endDate) : null
+        start: null,
+        end: null
     });
     // In your OrderDetails component, update the fetchBookedDates useEffect:
+    // useEffect(() => {
+    //     const fetchBookedDates = async () => {
+    //         if (!safeOrder?._id || !safeOrder.products?.[activeProductIndex]?._id) return;
+    //         try {
+    //             const response = await fetch(
+    //                 `${baseUrl}/booked-dates?excludeOrderId=${safeOrder._id}&excludeProductId=${safeOrder.products[activeProductIndex]._id}`
+    //             );
+    //             const dates = await response.json();
+    //             setBookedDates(dates.map(d => new Date(d)));
+    //         } catch (error) {
+    //             console.error('Error fetching booked dates:', error);
+    //         }
+    //     };
+    //     fetchBookedDates();
+    // }, [safeOrder, activeProductIndex]);
+   
     useEffect(() => {
-        const fetchBookedDates = async () => {
-            if (!safeOrder?._id || !safeOrder.products?.[activeProductIndex]?._id) return;
+    const fetchBookedDates = async () => {
+        const currentProduct = safeOrder.products?.[activeProductIndex];
+        if (currentProduct?.prodCode) {
             try {
-                const response = await fetch(
-                    `${baseUrl}/booked-dates?excludeOrderId=${safeOrder._id}&excludeProductId=${safeOrder.products[activeProductIndex]._id}`
-                );
-                const dates = await response.json();
-                setBookedDates(dates.map(d => new Date(d)));
+                const cleanProductCode = currentProduct.prodCode.replace(/^#/, '').trim();
+                let url = `${baseUrl}/booked-dates/${encodeURIComponent(cleanProductCode)}`;
+                
+                // Exclude current order when editing
+                if (safeOrder._id) {
+                    url += `?excludeOrderId=${safeOrder._id}`;
+                }
+                
+                console.log(`🔄 OrderDetails: Fetching booked dates from: ${url}`);
+                
+                const res = await fetch(url);
+                if (res.ok) {
+                    const dates = await res.json();
+                    const dateObjects = dates.map(d => {
+                        const date = new Date(d);
+                        return new Date(Date.UTC(
+                            date.getUTCFullYear(),
+                            date.getUTCMonth(),
+                            date.getUTCDate()
+                        ));
+                    });
+                    setBookedDates(dateObjects);
+                    console.log(`📅 OrderDetails: Loaded ${dateObjects.length} booked dates`);
+                } else {
+                    setBookedDates([]);
+                }
             } catch (error) {
-                console.error('Error fetching booked dates:', error);
+                console.error("❌ OrderDetails: Error fetching booked dates:", error);
+                setBookedDates([]);
             }
-        };
-        fetchBookedDates();
-    }, [safeOrder, activeProductIndex]);
+        } else {
+            setBookedDates([]);
+        }
+    };
+
+    fetchBookedDates();
+}, [safeOrder.products, activeProductIndex, safeOrder._id]);
+
+   
+   
     // Initialize selectedDates based on active product
+    // useEffect(() => {
+    //     if (safeOrder.products[activeProductIndex]?.booking) {
+    //         const booking = safeOrder.products[activeProductIndex].booking;
+    //         setSelectedDates({
+    //             start: booking.startDate ? new Date(booking.startDate) : null,
+    //             end: booking.endDate ? new Date(booking.endDate) : null
+    //         });
+    //     } else {
+    //         setSelectedDates({ start: null, end: null });
+    //     }
+    // }, [activeProductIndex, safeOrder.products]);
+
     useEffect(() => {
         if (safeOrder.products[activeProductIndex]?.booking) {
             const booking = safeOrder.products[activeProductIndex].booking;
@@ -65,6 +125,7 @@ function OrderDetails({ order }) {
             setSelectedDates({ start: null, end: null });
         }
     }, [activeProductIndex, safeOrder.products]);
+
 
 
     // Replace hardcoded bookedDates with fetched data
@@ -122,18 +183,23 @@ function OrderDetails({ order }) {
         // Check if date is booked or in the past
         const isBooked = bookedDates.some(d => {
             const bookedDate = new Date(d);
-            return bookedDate.getTime() === normalizedDate.getTime();
+            // return bookedDate.getTime() === normalizedDate.getTime();
+        return (
+                bookedDate.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
+                bookedDate.getUTCMonth() === normalizedDate.getUTCMonth() &&
+                bookedDate.getUTCDate() === normalizedDate.getUTCDate()
+            );
         });
 
 
         const isPast = isPastDate(normalizedDate);
 
         if (isBooked || isPast) return;
-        if (bookedDates.some(d =>
-            d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
-            d.getUTCMonth() === normalizedDate.getUTCMonth() &&
-            d.getUTCDate() === normalizedDate.getUTCDate()
-        )) return;
+        // if (bookedDates.some(d =>
+        //     d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
+        //     d.getUTCMonth() === normalizedDate.getUTCMonth() &&
+        //     d.getUTCDate() === normalizedDate.getUTCDate()
+        // )) return;
 
         if (!selectedDates.start || selectedDates.end) {
             setSelectedDates({ start: normalizedDate, end: null });
@@ -154,59 +220,108 @@ function OrderDetails({ order }) {
 
 
     // UPDATED DATE CLASS CALCULATION
+    // const getDateSelectionClass = (date) => {
+    //     if (!date || isNaN(date.getTime())) return "disabled";
+
+
+    //     const normalizedDate = new Date(Date.UTC(
+    //         date.getFullYear(),
+    //         date.getMonth(),
+    //         date.getDate()
+    //     ));
+
+    //     // Check if date is booked
+    //     const isBooked = bookedDates.some(d =>
+    //         d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
+    //         d.getUTCMonth() === normalizedDate.getUTCMonth() &&
+    //         d.getUTCDate() === normalizedDate.getUTCDate()
+    //     );
+
+    //     const isPast = isPastDate(normalizedDate);
+
+    //     // Return combined classes if both conditions apply
+    //     if (isBooked && isPast) return "past booked";
+    //     if (isBooked) return "booked";
+    //     if (isPast) return "past";
+
+
+    //     const dateString = date.toISOString().split('T')[0];
+    //     const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    //     const startUTC = selectedDates.start ? new Date(Date.UTC(
+    //         selectedDates.start.getFullYear(),
+    //         selectedDates.start.getMonth(),
+    //         selectedDates.start.getDate()
+    //     )) : null;
+
+    //     const endUTC = selectedDates.end ? new Date(Date.UTC(
+    //         selectedDates.end.getFullYear(),
+    //         selectedDates.end.getMonth(),
+    //         selectedDates.end.getDate()
+    //     )) : null;
+
+    //     if (bookedDates.some(d =>
+    //         d.getUTCFullYear() === utcDate.getUTCFullYear() &&
+    //         d.getUTCMonth() === utcDate.getUTCMonth() &&
+    //         d.getUTCDate() === utcDate.getUTCDate()
+    //     )) return "booked";
+
+    //     if (startUTC && utcDate.getTime() === startUTC.getTime()) return "selected-start";
+    //     if (endUTC && utcDate.getTime() === endUTC.getTime()) return "selected-end";
+    //     if (startUTC && endUTC && utcDate > startUTC && utcDate < endUTC) {
+    //         return "selected-range";
+    //     }
+
+    //     return "";
+    // };
+
     const getDateSelectionClass = (date) => {
-        if (!date || isNaN(date.getTime())) return "disabled";
+    if (!date || isNaN(date.getTime())) return "disabled";
 
+    const normalizedDate = new Date(Date.UTC(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+    ));
 
-        const normalizedDate = new Date(Date.UTC(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate()
-        ));
-
-        // Check if date is booked
-        const isBooked = bookedDates.some(d =>
-            d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
-            d.getUTCMonth() === normalizedDate.getUTCMonth() &&
-            d.getUTCDate() === normalizedDate.getUTCDate()
+    // Check if date is booked for this specific product
+    const isBooked = bookedDates.some(d => {
+        const bookedDate = new Date(d);
+        return (
+            bookedDate.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
+            bookedDate.getUTCMonth() === normalizedDate.getUTCMonth() &&
+            bookedDate.getUTCDate() === normalizedDate.getUTCDate()
         );
+    });
 
-        const isPast = isPastDate(normalizedDate);
+    const isPast = isPastDate(normalizedDate);
 
-        // Return combined classes if both conditions apply
-        if (isBooked && isPast) return "past booked";
-        if (isBooked) return "booked";
-        if (isPast) return "past";
+    // Return combined classes if both conditions apply
+    if (isBooked && isPast) return "past booked";
+    if (isBooked) return "booked";
+    if (isPast) return "past";
 
+    const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const startUTC = selectedDates.start ? new Date(Date.UTC(
+        selectedDates.start.getFullYear(),
+        selectedDates.start.getMonth(),
+        selectedDates.start.getDate()
+    )) : null;
 
-        const dateString = date.toISOString().split('T')[0];
-        const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-        const startUTC = selectedDates.start ? new Date(Date.UTC(
-            selectedDates.start.getFullYear(),
-            selectedDates.start.getMonth(),
-            selectedDates.start.getDate()
-        )) : null;
+    const endUTC = selectedDates.end ? new Date(Date.UTC(
+        selectedDates.end.getFullYear(),
+        selectedDates.end.getMonth(),
+        selectedDates.end.getDate()
+    )) : null;
 
-        const endUTC = selectedDates.end ? new Date(Date.UTC(
-            selectedDates.end.getFullYear(),
-            selectedDates.end.getMonth(),
-            selectedDates.end.getDate()
-        )) : null;
+    if (startUTC && utcDate.getTime() === startUTC.getTime()) return "selected-start";
+    if (endUTC && utcDate.getTime() === endUTC.getTime()) return "selected-end";
+    if (startUTC && endUTC && utcDate > startUTC && utcDate < endUTC) {
+        return "selected-range";
+    }
 
-        if (bookedDates.some(d =>
-            d.getUTCFullYear() === utcDate.getUTCFullYear() &&
-            d.getUTCMonth() === utcDate.getUTCMonth() &&
-            d.getUTCDate() === utcDate.getUTCDate()
-        )) return "booked";
+    return "";
+};
 
-        if (startUTC && utcDate.getTime() === startUTC.getTime()) return "selected-start";
-        if (endUTC && utcDate.getTime() === endUTC.getTime()) return "selected-end";
-        if (startUTC && endUTC && utcDate > startUTC && utcDate < endUTC) {
-            return "selected-range";
-        }
-
-        return "";
-    };
 
     const goToNextMonth = () => {
         setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
@@ -264,96 +379,221 @@ function OrderDetails({ order }) {
     console.log(totalPrice);
     console.log(totalDays);
 
-    const confirmDates = async () => {
+    // const confirmDates = async () => {
+    //     if (!selectedDates.start || !selectedDates.end) {
+    //         alert('Please select both start and end dates');
+    //         return;
+    //     }
+    //     setIsLoading(true);
+    //     setError(null);
+    //     try {
+
+
+    //         // Validate dates
+    //         if (isNaN(selectedDates.start.getTime()) || isNaN(selectedDates.end.getTime())) {
+    //             throw new Error('Invalid date selection');
+    //         }
+
+    //         // Ensure start date is before end date
+    //         if (selectedDates.start > selectedDates.end) {
+    //             throw new Error('Start date must be before end date');
+    //         }
+
+
+    //         // Generate all dates in the range
+    //         const bookedDates = [];
+    //         const current = new Date(selectedDates.start);
+    //         const end = new Date(selectedDates.end);
+
+
+    //         // Normalize dates to UTC midnight
+    //         current.setUTCHours(0, 0, 0, 0);
+    //         end.setUTCHours(0, 0, 0, 0);
+
+
+    //         while (current <= end) {
+    //             bookedDates.push(new Date(current));
+    //             current.setDate(current.getDate() + 1);
+    //         }
+
+
+
+    //         // Calculate total days and price
+    //         const totalDays = availableDays.length;
+    //         const productPrice = safeOrder.products[activeProductIndex]?.price || 0;
+    //         const totalPrice = totalDays * productPrice;
+
+    //         // Prepare the update data - modified this part
+    //         const updatedProducts = safeOrder.products.map((product, index) =>
+    //             index === activeProductIndex ? {
+    //                 ...product,
+    //                 booking: {
+    //                     startDate: selectedDates.start.toISOString(),
+    //                     endDate: selectedDates.end.toISOString(),
+    //                     totalDays: totalDays,
+    //                     totalPrice: totalPrice
+    //                 },
+    //                 bookedDates: bookedDates.map(d => d.toISOString())
+    //             } : product
+    //         );
+
+
+    //         const response = await fetch(`${baseUrl}/prodOrders/${safeOrder._id}`, {
+    //             method: 'PUT',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify({
+    //                 products: updatedProducts  // Changed from updateData to products
+    //             })
+    //         });
+
+    //         // First check if the response is OK
+    //         if (!response.ok) {
+    //             const errorData = await response.json().catch(() => ({}));
+    //             throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+    //         }
+    //         const updatedOrder = await response.json();
+    //         // Update local state and close calendar
+    //         setConfirmedDates(selectedDates);
+    //         setIsCalenderOpen(false);
+    //         // Show success message
+    //         alert('Dates updated successfully!');
+    //         // Force reload or update parent state if needed
+    //         window.location.reload();
+
+    //     } catch (error) {
+    //         console.error('Update error:', error);
+    //         setError(error.message || 'Failed to update dates');
+    //         alert(`Update failed: ${error.message}`);
+    //     }
+    //     finally {
+    //         setIsLoading(false);
+    //     }
+    // };
+
+
+        const confirmDates = async () => {
         if (!selectedDates.start || !selectedDates.end) {
             alert('Please select both start and end dates');
             return;
         }
+
+        // Normalize dates to UTC for consistent comparison
+        const startUTC = new Date(Date.UTC(
+            selectedDates.start.getFullYear(),
+            selectedDates.start.getMonth(),
+            selectedDates.start.getDate()
+        ));
+
+        const endUTC = new Date(Date.UTC(
+            selectedDates.end.getFullYear(),
+            selectedDates.end.getMonth(),
+            selectedDates.end.getDate()
+        ));
+
+        if (isNaN(startUTC.getTime()) || isNaN(endUTC.getTime())) {
+            alert('Invalid date selection');
+            return;
+        }
+
+        if (startUTC > endUTC) {
+            alert('Start date must be before end date');
+            return;
+        }
+
+        // Check for conflicts with THIS PRODUCT only
+        const selectedRangeDates = [];
+        const current = new Date(startUTC);
+
+        while (current <= endUTC) {
+            selectedRangeDates.push(new Date(current));
+            current.setDate(current.getDate() + 1);
+        }
+
+        // Check conflicts only for this specific product
+        const hasConflict = selectedRangeDates.some(selectedDate => {
+            return bookedDates.some(bookedDate => {
+                const selectedUTC = new Date(Date.UTC(
+                    selectedDate.getFullYear(),
+                    selectedDate.getMonth(),
+                    selectedDate.getDate()
+                ));
+                const bookedUTC = new Date(Date.UTC(
+                    bookedDate.getFullYear(),
+                    bookedDate.getMonth(),
+                    bookedDate.getDate()
+                ));
+                return selectedUTC.getTime() === bookedUTC.getTime();
+            });
+        });
+
+        if (hasConflict) {
+            alert('Selected dates conflict with existing bookings for THIS PRODUCT. Please choose different dates.');
+            return;
+        }
+
         setIsLoading(true);
         setError(null);
+
         try {
+            // Generate booked dates for the new range
+            const updatedBookedDates = [];
+            const currentDate = new Date(startUTC);
 
-
-            // Validate dates
-            if (isNaN(selectedDates.start.getTime()) || isNaN(selectedDates.end.getTime())) {
-                throw new Error('Invalid date selection');
+            while (currentDate <= endUTC) {
+                updatedBookedDates.push(new Date(currentDate));
+                currentDate.setDate(currentDate.getDate() + 1);
             }
 
-            // Ensure start date is before end date
-            if (selectedDates.start > selectedDates.end) {
-                throw new Error('Start date must be before end date');
-            }
-
-
-            // Generate all dates in the range
-            const bookedDates = [];
-            const current = new Date(selectedDates.start);
-            const end = new Date(selectedDates.end);
-
-
-            // Normalize dates to UTC midnight
-            current.setUTCHours(0, 0, 0, 0);
-            end.setUTCHours(0, 0, 0, 0);
-
-
-            while (current <= end) {
-                bookedDates.push(new Date(current));
-                current.setDate(current.getDate() + 1);
-            }
-
-
-
-            // Calculate total days and price
-            const totalDays = availableDays.length;
+            // Calculate pricing
+            const totalDays = updatedBookedDates.length;
             const productPrice = safeOrder.products[activeProductIndex]?.price || 0;
             const totalPrice = totalDays * productPrice;
 
-            // Prepare the update data - modified this part
-            const updatedProducts = safeOrder.products.map((product, index) =>
-                index === activeProductIndex ? {
-                    ...product,
-                    booking: {
-                        startDate: selectedDates.start.toISOString(),
-                        endDate: selectedDates.end.toISOString(),
-                        totalDays: totalDays,
-                        totalPrice: totalPrice
-                    },
-                    bookedDates: bookedDates.map(d => d.toISOString())
-                } : product
-            );
-
+            // Update only the active product
+            const updatedProducts = safeOrder.products.map((product, index) => {
+                if (index === activeProductIndex) {
+                    return {
+                        ...product,
+                        booking: {
+                            startDate: startUTC.toISOString(),
+                            endDate: endUTC.toISOString(),
+                            totalDays: totalDays,
+                            totalPrice: totalPrice
+                        },
+                        bookedDates: updatedBookedDates.map(d => d.toISOString())
+                    };
+                }
+                return product;
+            });
 
             const response = await fetch(`${baseUrl}/prodOrders/${safeOrder._id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    products: updatedProducts  // Changed from updateData to products
-                })
+                body: JSON.stringify({ products: updatedProducts })
             });
 
-            // First check if the response is OK
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
                 throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
             }
+
             const updatedOrder = await response.json();
-            // Update local state and close calendar
-            setConfirmedDates(selectedDates);
+
+            setConfirmedDates({ start: startUTC, end: endUTC });
             setIsCalenderOpen(false);
-            // Show success message
-            alert('Dates updated successfully!');
-            // Force reload or update parent state if needed
+
+            alert('✅ Dates updated successfully!');
             window.location.reload();
 
         } catch (error) {
-            console.error('Update error:', error);
+            console.error('❌ Update error:', error);
             setError(error.message || 'Failed to update dates');
-            alert(`Update failed: ${error.message}`);
-        }
-        finally {
+            alert(`❌ Update failed: ${error.message}`);
+        } finally {
             setIsLoading(false);
         }
     };
+
 
 
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 991);
