@@ -36,79 +36,6 @@ function BookASite1() {
     const videoRef = useRef(null);
     const [isScrollingPaused, setIsScrollingPaused] = useState(false);
 
-
-    // useEffect(() => {
-    //     const fetchProduct = async () => {
-    //         try {
-    //             // If coming from BookASite page, use the context
-    //             if (location.state?.selectedSpot) {
-    //                 setCurrentProduct(location.state?.selectedSpot);
-    //                 fetchSimilarProducts(location.state?.selectedSpot.prodCode);
-    //                 setAdditionalFiles(location.state?.selectedSpot.additionalFiles || []);
-    //                 setCurrentMainImage(location.state?.selectedSpot.imageUrl);
-    //                 setSelectedFileIndex(-1);
-    //                 setIsLoading(false);
-    //                 return;
-    //             }
-    //             // If accessed via direct URL, fetch the product
-    //             if (productId) {
-
-    //                 // Extract the actual ID from the URL (remove the slug part)
-    //                 const actualId = productId.split('-')[0];
-    //                 const response = await fetch(`${baseUrl}/products/${actualId}`);
-    //                 const data = await response.json();
-    //                 if (response.ok) {
-    //                     const mappedSpot = {
-    //                         id: data._id,
-    //                         prodName: data.name,
-    //                         printingCost: data.printingCost,
-    //                         mountingCost: data.mountingCost,
-    //                         prodCode: data.prodCode,
-    //                         prodLighting: data.lighting,
-    //                         productFrom: data.from,
-    //                         productTo: data.to,
-    //                         productFixedAmount: data.fixedAmount,
-    //                         productFixedOffer: data.fixedOffer,
-    //                         location: `${data.location.district}, ${data.location.state}`,
-    //                         category: data.mediaType,
-    //                         price: data.price,
-    //                         sizeHeight: data.height,
-    //                         sizeWidth: data.width,
-    //                         rating: data.rating,
-    //                         imageUrl: data.image,
-    //                         district: data.location.district,
-    //                         state: data.location.state,
-    //                         latitude: data.Latitude,
-    //                         longitude: data.Longitude,
-    //                         LocationLink: data.LocationLink,
-    //                         additionalFiles: data.additionalFiles || []
-    //                     };
-    //                     setCurrentProduct(mappedSpot);
-    //                     setAdditionalFiles(data.additionalFiles || []);
-    //                     setCurrentMainImage(data.image);
-    //                     setSelectedSpot(mappedSpot);
-    //                     setSelectedFileIndex(-1); // Reset selected file index
-    //                     fetchSimilarProducts(data.prodCode);
-    //                 }
-    //                 else {
-    //                     console.error("Product not found");
-    //                 }
-    //                 setIsLoading(false);
-    //             }
-    //         } catch (error) {
-    //             console.error("Error fetching product:", error);
-    //             setIsLoading(false);
-    //         }
-    //     };
-
-    //     fetchProduct();
-    // }, [productId, location.state]);
-
-    // Navbar js 
-
-
-
-
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -176,8 +103,6 @@ function BookASite1() {
                             sizeWidth: data.width,
                             sizeSide: data.side,
                             productsquareFeet: data.productsquareFeet,
-
-
                             rating: data.rating,
                             imageUrl: data.image,
                             district: data.location.district,
@@ -273,6 +198,11 @@ function BookASite1() {
         setCurrentVideoUrl('');
         setSelectedFileIndex(-1);
         setSelectedSpot(mappedSpot);
+
+         // Reset calendar dates when switching products
+        setSelectedDates({ start: null, end: null });
+        setConfirmedDates({ start: null, end: null });
+
         // Don't fetch similar products again here - keep the original list
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -419,7 +349,6 @@ function BookASite1() {
     };
     const handleDateClick = (date) => {
         if (!date || isNaN(date.getTime())) return;
-
         // Create date without time component
         const normalizedDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         // Check if date is booked or in the past
@@ -453,29 +382,28 @@ function BookASite1() {
         setConfirmedDates({ start: null, end: null }); // Reset confirmed dates
     };
 
-
     // UPDATED DATE CLASS CALCULATION
     const getDateSelectionClass = (date) => {
         if (!date || isNaN(date.getTime())) return "disabled";
-
-
         const normalizedDate = new Date(Date.UTC(
             date.getFullYear(),
             date.getMonth(),
             date.getDate()
         ));
 
-        // Check if date is booked
-        const isBooked = bookedDates.some(d =>
-            d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
-            d.getUTCMonth() === normalizedDate.getUTCMonth() &&
-            d.getUTCDate() === normalizedDate.getUTCDate()
-        );
+        // Check if date is booked for this specific product
+        const isBooked = bookedDates.some(d => {
+            const bookedDate = new Date(d);
+            return (
+                bookedDate.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
+                bookedDate.getUTCMonth() === normalizedDate.getUTCMonth() &&
+                bookedDate.getUTCDate() === normalizedDate.getUTCDate()
+            );
+        });
 
         if (isBooked) return "booked";
         if (isPastDate(normalizedDate)) return "past";
 
-        const dateString = date.toISOString().split('T')[0];
         const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         const startUTC = selectedDates.start ? new Date(Date.UTC(
             selectedDates.start.getFullYear(),
@@ -488,12 +416,6 @@ function BookASite1() {
             selectedDates.end.getMonth(),
             selectedDates.end.getDate()
         )) : null;
-
-        if (bookedDates.some(d =>
-            d.getUTCFullYear() === utcDate.getUTCFullYear() &&
-            d.getUTCMonth() === utcDate.getUTCMonth() &&
-            d.getUTCDate() === utcDate.getUTCDate()
-        )) return "booked";
 
         if (startUTC && utcDate.getTime() === startUTC.getTime()) return "selected-start";
         if (endUTC && utcDate.getTime() === endUTC.getTime()) return "selected-end";
@@ -511,15 +433,38 @@ function BookASite1() {
         setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
     };
     const [productsOrderData, setProductsOrderData] = useState([]);
+    
+    // useEffect(() => {
+    //     const fetchBookedDates = async () => {
+    //         const res = await fetch(`${baseUrl}/booked-dates`);
+    //         const dates = await res.json();
+    //         setBookedDates(dates.map(d => new Date(d)));
+    //     };
+
+    //     fetchBookedDates();
+    // }, [productsOrderData]); // Refresh when orders change
+
+
+
+ // UPDATED: Fetch booked dates for specific product
     useEffect(() => {
         const fetchBookedDates = async () => {
-            const res = await fetch(`${baseUrl}/booked-dates`);
-            const dates = await res.json();
-            setBookedDates(dates.map(d => new Date(d)));
+            if (currentProduct?.prodCode) {
+                try {
+                    const res = await fetch(`${baseUrl}/booked-dates/${currentProduct.prodCode}`);
+                    const dates = await res.json();
+                    setBookedDates(dates.map(d => new Date(d)));
+                } catch (error) {
+                    console.error("Error fetching booked dates:", error);
+                    setBookedDates([]);
+                }
+            }
         };
 
-        fetchBookedDates();
-    }, [productsOrderData]); // Refresh when orders change
+        if (currentProduct) {
+            fetchBookedDates();
+        }
+    }, [currentProduct, productsOrderData]);
 
     const toggleCalendar = () => {
         setIsCalendarOpen(!isCalendarOpen);
@@ -543,7 +488,8 @@ function BookASite1() {
     };
     const closeOtpMainPage = () => {
         setIsOtpMainOpen(false);
-    };
+    }; 
+
     if (isLoading) {
         return (
             <MainLayout>
@@ -763,6 +709,7 @@ function BookASite1() {
 
         return days;
     };
+
     const availableDays =
         selectedDates.start && selectedDates.end
             ? getAvailableDaysInRange(selectedDates.start, selectedDates.end)
@@ -795,8 +742,6 @@ function BookASite1() {
             </div>
         );
     };
-
-
 
 
     // // State for controlling animation

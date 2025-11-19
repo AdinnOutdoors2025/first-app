@@ -1,7 +1,3 @@
-
-
-
-// src/components/ProductTable.js
 import React, { useState, useEffect } from 'react';
 import './ad1Orders.css';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { baseUrl } from './BASE_URL';
 
 const OrdersTable = () => {
-
     //FETCHED PRODUCTS ORDER PAGE
     const [productsOrderData, setProductsOrderData] = useState([]);
     // In your fetchOrders function, normalize the data

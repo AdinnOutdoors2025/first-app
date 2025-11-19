@@ -134,7 +134,6 @@ const BillingDetails = () => {
             alert("Please fill in all required fields correctly");
             return;
         }
-
         setIsLoading(true);
         try {
 

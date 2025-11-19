@@ -55,13 +55,10 @@ export default function BookASite() {
           location: `${product.location.district}, ${product.location.state}`,
           category: product.mediaType,
           price: product.price,
-          // sizeHeight: product.height,
-          // sizeWidth: product.width,
           sizeHeight: product.height,
           sizeWidth: product.width,
           sizeSide: product.side,
           productsquareFeet: product.productsquareFeet,
-
           rating: product.rating,
           imageUrl: product.image,
           district: product.location.district,
