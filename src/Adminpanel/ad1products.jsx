@@ -104,7 +104,7 @@ const ProductTable = () => {
 
     // Pagination States
     const [currentPage, setCurrentPage] = useState(1);
-    const productsPerPage = 10;
+    const productsPerPage = 150;
     // Update filtered products when filter changes
     useEffect(() => {
         let filtered;
