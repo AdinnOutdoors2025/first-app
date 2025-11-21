@@ -226,6 +226,8 @@ const ProductTable = () => {
                             <th className='TableProductName'>Name</th>
                             <th>SQ.ID</th>
                             <th>Price</th>
+                            <th>Media Type</th>
+
                             <th>Size</th>
                             <th>Ratings</th>
                             <th> </th>
@@ -246,6 +248,7 @@ const ProductTable = () => {
                                             <td className='TableProductName'>{product.name}</td>
                                             <td>{product.prodCode}</td>
                                             <td className='TableProductPrice'>{product.price}</td>
+                                            <td className='TableProductPrice'>{product.mediaType}</td>
                                             <td>{product.width} X {product.height} | {product.productsquareFeet} Sq.ft </td>
                                             <td>
                                                 <div className='d-flex productRate'>

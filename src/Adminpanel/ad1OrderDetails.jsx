@@ -647,6 +647,7 @@ function OrderDetails({ order }) {
                         </div>
                     </div>
 
+
                     {/* Client Section  */}
                     <div className='order-manageClientSection'>
                         <div className='order-manageRightSideHeading'>Client Information</div>
