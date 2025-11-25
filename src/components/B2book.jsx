@@ -199,7 +199,7 @@ function BookASite1() {
         setSelectedFileIndex(-1);
         setSelectedSpot(mappedSpot);
 
-         // Reset calendar dates when switching products
+        // Reset calendar dates when switching products
         setSelectedDates({ start: null, end: null });
         setConfirmedDates({ start: null, end: null });
 
@@ -433,7 +433,7 @@ function BookASite1() {
         setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
     };
     const [productsOrderData, setProductsOrderData] = useState([]);
-    
+
     // useEffect(() => {
     //     const fetchBookedDates = async () => {
     //         const res = await fetch(`${baseUrl}/booked-dates`);
@@ -446,7 +446,7 @@ function BookASite1() {
 
 
 
- // UPDATED: Fetch booked dates for specific product
+    // UPDATED: Fetch booked dates for specific product
     useEffect(() => {
         const fetchBookedDates = async () => {
             if (currentProduct?.prodCode) {
@@ -488,7 +488,7 @@ function BookASite1() {
     };
     const closeOtpMainPage = () => {
         setIsOtpMainOpen(false);
-    }; 
+    };
 
     if (isLoading) {
         return (
@@ -908,9 +908,15 @@ function BookASite1() {
                                         <span><img src='/images/rating_board.png' className='rate-board1'></img></span>
                                         <span><RatingStars rating={currentProduct.rating} /> </span>
                                     </span>
-                                    <span className='productLocationImg'>
+                                    {/* <span className='productLocationImg'>
                                         <a href={currentProduct.LocationLink} target='_blank'> <i class="fa-solid fa-location-dot" /></a>
+                                    </span> */}
+                                   
+                                    <span className='productLocationImg'>
+                                        <a href={currentProduct.LocationLink} target='_blank'> <img src="/images/mapiconaddin.png" alt="location icon" className="locationImgIcon" /><span className="viewlocation">View Location</span></a>
                                     </span>
+
+
                                     <div className="book-price my-3">Printing Cost<span className='cost-gap'>: ₹ {currentProduct.printingCost.toLocaleString()}</span> <span className='slash-bar1'>|</span> Mounting Cost<span className='cost-gap'>: ₹ {currentProduct.mountingCost.toLocaleString()}</span></div>
                                     <div className='book-spot mt-3'>{currentProduct.productFrom} <span><img src='/images/Location_arrow.png' className='location-arrow'></img>  </span> {currentProduct.productTo}</div>
                                     <div className='book-rate'>

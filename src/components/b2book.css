@@ -578,6 +578,24 @@
     margin-left: 10px;
 }
 
+.viewlocation {
+    font-size: 16px;   
+    margin-left: 6px;  
+    font-weight: 700;
+    color: #065AD1;
+    text-decoration: none !important;
+}
+.viewlocation:hover {
+    text-decoration: none !important;
+}
+
+.locationImgIcon{
+    width: 30px;
+    height: 40px;
+}
+
+
+
 /* Responsive Media Queries */
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
 @media (min-width: 2560px) {
