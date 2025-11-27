@@ -563,7 +563,7 @@
 
 
 
-/* Offer price highlight styles */ 
+/* Offer price highlight styles */
 
 .offer-price-highlight {
     color: #ff4444 !important;
@@ -579,17 +579,18 @@
 }
 
 .viewlocation {
-    font-size: 16px;   
-    margin-left: 6px;  
+    font-size: 16px;
+    margin-left: 6px;
     font-weight: 700;
     color: #065AD1;
     text-decoration: none !important;
 }
+
 .viewlocation:hover {
     text-decoration: none !important;
 }
 
-.locationImgIcon{
+.locationImgIcon {
     width: 30px;
     height: 40px;
 }
@@ -614,7 +615,7 @@
 
     .book-mainImg1 {
         width: 100%;
-        object-fit:cover;
+        object-fit: cover;
         height: 650px;
         border-radius: 32px;
     }
@@ -840,6 +841,15 @@
         margin: auto 20px;
     }
 
+    .locationImgIcon {
+        width: 40px;
+        height: 50px;
+    }
+
+    .viewlocation {
+        font-size: 28px;
+        margin-left: 15px;
+    }
 
 }
 
@@ -871,7 +881,7 @@
     .book-mainImage,
     .book-mainImg1 {
         width: 100%;
-        object-fit:cover;
+        object-fit: cover;
         height: 510px;
         margin-left: 2.5%;
         margin-right: 0.5%;
@@ -880,7 +890,7 @@
 
 
     .book-mainImg1 {
-        object-fit:cover;
+        object-fit: cover;
         border-radius: 32px;
     }
 
@@ -1068,6 +1078,15 @@
         font-size: 28px;
     }
 
+    .locationImgIcon {
+        width: 30px;
+        height: 40px;
+    }
+
+    .viewlocation {
+        font-size: 20px;
+        margin-left: 10px;
+    }
 
 }
 
@@ -1098,7 +1117,7 @@
 
     .book-mainImage,
     .book-mainImg1 {
-        object-fit:cover;
+        object-fit: cover;
         width: 100%;
         height: 500px;
         margin-left: 1.5%;
@@ -1278,7 +1297,15 @@
         font-size: 25px;
     }
 
+    .locationImgIcon {
+        width: 25px;
+        height: 33px;
+    }
 
+    .viewlocation {
+        font-size: 16px;
+        margin-left: 8px;
+    }
 
 
 }
@@ -1307,7 +1334,7 @@
 
     .book-mainImage,
     .book-mainImg1 {
-        object-fit:cover;
+        object-fit: cover;
         width: 100%;
         height: 500px;
     }
@@ -1501,34 +1528,15 @@
     }
 
 
-
-
-}
-
-@media(max-width: 480px) {
-
-    /* .item-scroll-additional {
-        width: 100%;
-        overflow-x: auto; 
-        overflow-y: hidden; 
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-
+    .locationImgIcon {
+        width: 25px;
+        height: 33px;
     }
 
-    .item-scroll-additional::-webkit-scrollbar {
-        display: none;
+    .viewlocation {
+        font-size: 16px;
+        margin-left: 8px;
     }
-
-    .book-images-section {
-        display: flex;
-        gap: 10px;
-        width: max-content;
-        margin: 10px 20px;
-    } */
 
 }
 
@@ -1576,7 +1584,7 @@
 
     .book-mainImage,
     .book-mainImg1 {
-        object-fit:cover;
+        object-fit: cover;
         width: 100%;
         height: 500px;
         margin: auto 4px;
@@ -1795,6 +1803,15 @@
         font-size: 24px;
     }
 
+    .locationImgIcon {
+        width: 25px;
+        height: 33px;
+    }
+
+    .viewlocation {
+        font-size: 15px;
+        margin-left: 8px;
+    }
 
 
 
@@ -1846,7 +1863,7 @@
 
     .book-mainImage,
     .book-mainImg1 {
-        object-fit:cover;
+        object-fit: cover;
         width: 100%;
         height: 400px;
         margin: auto 4px;
@@ -2054,6 +2071,15 @@
         font-size: 23px;
     }
 
+    .locationImgIcon {
+        width: 23px;
+        height: 30px;
+    }
+
+    .viewlocation {
+        font-size: 13px;
+        margin-left: 4px;
+    }
 
 }
 
@@ -2102,7 +2128,7 @@
 
     .book-mainImage,
     .book-mainImg1 {
-        object-fit:cover;
+        object-fit: cover;
         width: 100%;
         height: 400px;
         margin: auto 4px;
@@ -2318,7 +2344,15 @@
         font-size: 24px;
     }
 
+    .locationImgIcon {
+        width: 23px;
+        height: 30px;
+    }
 
+    .viewlocation {
+        font-size: 12px;
+        margin-left: 4px;
+    }
 }
 
 
@@ -2364,7 +2398,7 @@
 
     .book-mainImage,
     .book-mainImg1 {
-        object-fit:cover;
+        object-fit: cover;
         width: 100%;
         height: 350px;
         margin: auto 4px;
@@ -2591,6 +2625,15 @@
         font-size: 24px;
     }
 
+    .locationImgIcon {
+        width: 23px;
+        height: 30px;
+    }
+
+    .viewlocation {
+        font-size: 12px;
+        margin-left: 4px;
+    }
 
 }
 
@@ -2636,7 +2679,7 @@
 
     .book-mainImage,
     .book-mainImg1 {
-        object-fit:cover;
+        object-fit: cover;
         width: 100%;
         height: 320px;
         margin: auto 3px;
@@ -2856,5 +2899,14 @@
         margin: auto 2px;
     }
 
+    .locationImgIcon {
+        width: 23px;
+        height: 30px;
+    }
+
+    .viewlocation {
+        font-size: 12px;
+        margin-left: 4px;
+    }
 
 }

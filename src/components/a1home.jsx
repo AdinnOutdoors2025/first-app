@@ -351,6 +351,7 @@ import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
 import { MainLayout } from './MainLayout';
 import Splash from './splashCursor.jsx';
+import ScrollHero from './ScrollHero.jsx';  //thendral added
 
 function AdinnHome() {
   // WHAT WE DO SECTION
@@ -524,6 +525,11 @@ function AdinnHome() {
       <div>
         {/* <Splash/> */}
         <MainNavbar />
+         {/* //thendral added */}
+               <div className="scrollhero-wrapper">  
+           {/* <ScrollHero /> */}
+           {/* <ScrollHero /> */}
+       </div>
         {/* About us content  */}
         <div className='about container-fluid'>
           <div className='heading about-heading'>About <span className='highlight'>Us</span></div>
@@ -531,7 +537,7 @@ function AdinnHome() {
             <div className='about-content1'>
               <div className='about-content1-heading'>Who <span className='highlight'>we</span> are </div>
               <div className='about-content-para'> Adinn Outdoor owns over 550 outdoor ad spaces across Tamil Nadu and extends even outside the state. Our media network spans diverse formats from billboards to police booths and we have successfully amplified brand visibility and achieved tangible results. We make sure your brand is visible to the right people at the ideal time. With 25 Years of Excellence , we know where to put your ads to get the most impact. If you want to reach more people and expand the visibility of your ads , we're here to help. </div>
-              <div className='about-content-para about-content-para-last'><span className='highlight contactUs'>Contact Us</span>to take your brand to new heights at prime locations ,where visibility shines.</div>
+              <div className='about-content-para about-content-para-last'><span className='highlight contactUs'> Contact Us </span>to take your brand to new heights at prime locations ,where visibility shines.</div>
             </div>
             <div className='about-content2 img-fluid'>
               <img src='./images/road_gif.png'></img>

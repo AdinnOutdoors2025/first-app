@@ -350,64 +350,41 @@
 @keyframes moveLogo {
   0% {
     left: 9%;
-    /* animation-delay: s; */
-
   }
 
   14% {
     left: 20%;
-    /* animation-delay: 2s; */
   }
 
   28% {
     left: 36%;
-    /* animation-delay: 2s; */
-
   }
 
   42% {
     left: 50%;
-    /* animation-delay: 2s; */
-
   }
 
   57% {
     left: 61%;
-    /* animation-delay: 2s; */
-
   }
 
   71% {
     left: 75%;
-    /* animation-delay: 2s; */
-
-  }
-
-  /* 85% {
-    left: 92%;
-
-  } */
+  } 
   100% {
     left: 92%;
-    /* animation-delay: 2s; */
-
   }
 }
-
-
 
 /* Animation for fade-in effect */
 @keyframes fade-in {
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
 }
-
-
 
 
 /* What we achieved section  */
@@ -769,6 +746,7 @@
   }
 
 }
+
 
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
 @media (min-width: 768px) and (max-width: 991px) {

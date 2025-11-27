@@ -270,5 +270,4 @@ function AdinnHome3() {
     )
 }
 
-
 export default AdinnHome3;

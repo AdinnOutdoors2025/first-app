@@ -1,0 +1,352 @@
+/* Height is set to 400vh to create the "scroll distance" */
+.scroll-container {
+  height: 300vh; 
+  position: relative;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.sticky-view {
+  position: sticky;
+  top: 0; /* Adjust for both main navbar (80px) + secondary navbar (70px) */
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.horizontal-track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+  -moz-perspective: 1000px;
+  letter-spacing: 0;
+  font-size: 0;
+  transform: translateZ(0);
+}
+
+.hero-panel {
+  width: 100vw;
+  height: 100%;
+  position: relative;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Enhanced image container with loading and error states */
+.hero-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 101vw !important;
+  height: 100vh;
+  object-fit: cover !important;
+  object-position: center;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+}
+
+/* Loading overlay styles */
+.image-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, #f0f0f0 25%, #e0e0e0 25%, #e0e0e0 50%, #f0f0f0 50%, #f0f0f0 75%, #e0e0e0 75%, #e0e0e0);
+  background-size: 20px 20px;
+  animation: loading-shimmer 1.5s infinite linear;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+@keyframes loading-shimmer {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error overlay styles */
+.image-error-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+}
+
+.error-content {
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.error-content span {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.error-content p {
+  font-size: 1rem;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Lower left quadrant content positioning */
+.hero-content-centered {
+  position: absolute;
+  bottom: 80px;
+  left: 60px;
+  color: white;
+  z-index: 10;
+  max-width: 500px;
+}
+
+.hero-text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;  /* Ensure left alignment */
+}
+
+.hero-description {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin: 0 0 20px 0;
+  font-weight: 600;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  text-align: left;  /* Explicit left alignment */
+}
+
+/* Solid colored action button */
+.hero-action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: white;
+  border: none;
+  border-radius: 6px;
+  color: black;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+  align-self: flex-start;
+}
+
+.hero-action-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  color:#fff;
+}
+
+.hero-action-button:active {
+  transform: translateY(0);
+  color:#fff;
+}
+
+.button-text {
+  font-weight: 500;
+}
+
+.button-icon {
+  font-size: 1rem;
+}
+
+/* Tablet specific adjustments (768px - 1024px) */
+/* @media (min-width: 768px) and (max-width: 1024px) {
+  .sticky-view {
+    top: 0px; 
+    height: 100vh !important;
+  }
+  
+   .hero-content-centered {
+    bottom: 90px;
+    left: 40px;
+    max-width: 400px;
+  } 
+  
+  .hero-description {
+    font-size: 1.3rem;
+  }
+  
+  .hero-action-button {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+} */
+
+/* Mobile Preview Section (Hidden on Desktop) */
+.mobile-content-preview {
+  display: none; 
+}
+
+/* ===========================
+   MOBILE CINEMA LOGIC (60/40 Split)
+   Replaces previous mobile logic
+=========================== */
+@media (max-width: 1024px) {
+  /* 1. Main Wrapper */
+  .scroll-container {
+    height: 300vh; /* Reduced scroll distance for mobile */
+  }
+
+  /* 2. Sticky Viewport */
+  .sticky-view {
+    top: 0; /* Reset top for mobile hero */
+    height: 100vh !important; /* Force full screen */
+    background: #ffffff; /* Match content background */
+    display: flex;
+    flex-direction: column; /* Split stack */
+    z-index: 20;
+  }
+
+  /* 3. Top Media Pane (60%) */
+  .horizontal-track {
+    height: 60vh;
+    will-change: transform;
+    /* Optional: can add scroll-snap here if moving to native scroll later */
+  }
+
+  /* 4. Individual Panels */
+  .hero-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background: #000; */
+  }
+
+  .hero-image-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .hero-image {
+    width: 105% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* Ensure cover for the 60vh area */
+    max-width: none;
+    max-height: none;
+  }
+
+  /* Hide original floating text on mobile since we have the context pane */
+  .hero-content-centered {
+    display: none;
+  }
+
+  /* 5. Bottom Context Pane (40%) */
+  .mobile-content-preview {
+    display: flex;
+    height: 100vh; 
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    /* border-top: 1px solid rgba(0,0,0,0.1); */
+    background: #fff;
+    z-index: 20;
+  }
+
+  /* .preview-inner {
+    max-width: 400px;
+  } */
+
+  .mobile-content-preview h2 {
+    font-size: 1.5rem;
+    margin: 0 0 10px 0;
+    color: #1a1a1a;
+    font-weight: 700;
+  }
+
+  .mobile-content-preview p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #555;
+    margin-bottom: 15px;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .scroll-hint {
+    font-size: 0.8rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: pulse 2s infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* High-resolution displays optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .hero-image {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .horizontal-track {
+    will-change: auto;
+  }
+  
+  .hero-image {
+    transition: none;
+  }
+  
+  .image-loading-overlay {
+    animation: none;
+  }
+  
+  .loading-spinner {
+    animation: none;
+  }
+}
