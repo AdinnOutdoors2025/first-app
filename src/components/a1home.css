@@ -747,6 +747,30 @@
 
 }
 
+ /* {//thendral added} */
+@media(max-width: 1024px){
+  .scrollhero-wrapper {
+  position: relative;
+}
+
+ .about {
+    position: relative !important;
+    top: 0 !important;
+    z-index: 2 !important;
+  }
+  .about-content2 img{
+    height: auto !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+ .about-desktop{
+     display: none !important;
+ }
+}
+ /* {//thendral added} */
+
+
+
 
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
 @media (min-width: 768px) and (max-width: 991px) {
@@ -1925,3 +1949,28 @@
   }
 }
 
+
+
+@media(max-width: 768px){
+  .about-content1-heading {
+    font-size: 28px;
+    font-weight: 500;
+    /* line-height: 62px; */
+    margin-bottom: 12px;
+   text-align: left !important;
+  }
+
+  .about-content-para {
+    font-size: 16px;
+    text-align: left !important;
+    margin-bottom: 0px;
+  }
+   /* {//thendral added} */
+   .about-mobile-content{ 
+    display: none !important;
+   }
+   .hero-image{
+    width: 108% !important;
+   }
+    /* {//thendral added} */
+}

@@ -37,7 +37,7 @@ function HeroSectionMain() {
                     <MainNavbarHero />
                 </div>
 
-               <div className='BannerMainSection'>
+               {/* <div className='BannerMainSection'>
                     <div className='HeroBannerLeft'></div>
                     <div className='HeroBannerRight'>
                         <div className='HeroBannerContent' >
@@ -49,7 +49,7 @@ function HeroSectionMain() {
                             </button> 
                         </div>
                     </div>
-                </div> 
+                </div>  */}
                 {/* //thendral added */}
                 {/* <div className="scrollhero-wrapper">
                     <ScrollHero />

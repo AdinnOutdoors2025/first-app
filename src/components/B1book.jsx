@@ -53,7 +53,7 @@ export default function BookASite() {
           productFixedAmount: product.fixedAmount,
           productFixedOffer: product.fixedOffer,
           location: `${product.location.district}, ${product.location.state}`,
-          category: product.mediaType,
+          category: product.mediaType.trim(),
           price: product.price,
           sizeHeight: product.height,
           sizeWidth: product.width,
@@ -73,7 +73,7 @@ export default function BookASite() {
         // Fetch media types
         const mediaRes = await fetch(`${baseUrl}/mediatype`);
         const mediaData = await mediaRes.json();
-        setMediaTypes(mediaData.map(m => m.type));
+        setMediaTypes(mediaData.map(m => m.type.trim()));
         // Fetch locations
         const locationsRes = await fetch(`${baseUrl}/category`);
         const locationsData = await locationsRes.json();
@@ -196,9 +196,9 @@ export default function BookASite() {
   // Convert to lowercase and compare to make filtering case-insensitive
   let filteredSpots = spots.filter((spot) => {
     // const spotLocation = spot.location.toLowerCase();
-    const spotState = spot.state.toLowerCase();
-    const spotDistrict = spot.district.toLowerCase();
-    const spotCategory = spot.category?.toLowerCase() || "";
+    const spotState = spot.state ? spot.state.toLowerCase().trim() : '';
+    const spotDistrict = spot.district ? spot.district.toLowerCase().trim() : '';
+    const spotCategory = spot.category ? spot.category.toLowerCase().trim() : '';
     const isStateMatch =
       selectedStates.length === 0 ||
       selectedStates.some((state) => spotState.includes(state.toLowerCase()));
@@ -207,7 +207,7 @@ export default function BookASite() {
       selectedDistricts.some((district) => spotDistrict.includes(district.toLowerCase()));
     const isCategoryMatch =
       selectedOutdoorMedium.length === 0 ||
-      selectedOutdoorMedium.some((medium) => spotCategory === medium.toLowerCase());
+      selectedOutdoorMedium.some((medium) => spotCategory === medium.toLowerCase().trim());
     return isStateMatch && isDistrictMatch && isCategoryMatch;
   });
 

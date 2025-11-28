@@ -108,13 +108,11 @@ function MainNavbarHero() {
         return () => clearInterval(interval);
     }, [user]);
 
-
-
     return (
 
         <div className="container navbar1Hero">
             <div className="nav-content11Hero">
-                <img src="/images/adinn_logo.png" alt="Adinn Logo" onClick={() => navigate('/home')} />
+                <img src="/images/adinn_logo.png" alt="Adinn Logo" onClick={() => navigate('/')} />
             </div>
 
             <div className={`nav-content21Hero ${isMenuOpen ? "open" : ""}`}>

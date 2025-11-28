@@ -69,7 +69,7 @@ function App() {
               <Route path="/" element={<HeroBanner />} />
               <Route path="/hero" element={<HeroSection1 />} />
               {/* AboutUs Home section  */}
-              <Route path="/home" element={<AdinnHome />} />
+              {/* <Route path="/home" element={<AdinnHome />} /> */}
               <Route path="/rich" element={<RichText />} />
 
               {/* Book a site section  */}

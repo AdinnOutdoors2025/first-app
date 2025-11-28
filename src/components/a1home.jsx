@@ -51,7 +51,7 @@
 //  // Auto-scroll for mobile
 //   useEffect(() => {
 //     if (!isMobile || isPaused || isDragging) return;
-    
+
 //     const interval = setInterval(() => {
 //       setActiveIndex(prev => (prev + 1) % dragItems.length);
 //     }, 3000);
@@ -62,16 +62,16 @@
 //   // Scroll to active item on mobile
 //   useEffect(() => {
 //     if (!isMobile || !scrollContainerRef.current) return;
-    
+
 //     const container = scrollContainerRef.current;
 //     const activeItem = container.children[activeIndex];
-    
+
 //     if (activeItem) {
 //       const containerWidth = container.offsetWidth;
 //       const itemWidth = activeItem.offsetWidth;
 //       const itemOffset = activeItem.offsetLeft;
 //       const scrollPosition = itemOffset - (containerWidth / 2) + (itemWidth / 2);
-      
+
 //       container.scrollTo({
 //         left: scrollPosition,
 //         behavior: 'smooth'
@@ -79,7 +79,7 @@
 //     }
 //   }, [activeIndex, isMobile]);
 
-  
+
 //   // Automatic movement
 //   useEffect(() => {
 //     if (isPaused || isDragging) return;
@@ -525,13 +525,12 @@ function AdinnHome() {
       <div>
         {/* <Splash/> */}
         <MainNavbar />
-         {/* //thendral added */}
-               <div className="scrollhero-wrapper">  
-           {/* <ScrollHero /> */}
-           {/* <ScrollHero /> */}
-       </div>
+        {/* //thendral added */}
+        {/* <div className="scrollhero-wrapper">
+          <ScrollHero />
+        </div> */}
         {/* About us content  */}
-        <div className='about container-fluid'>
+        {/* <div className='about container-fluid'>
           <div className='heading about-heading'>About <span className='highlight'>Us</span></div>
           <div className='about-content'>
             <div className='about-content1'>
@@ -543,7 +542,39 @@ function AdinnHome() {
               <img src='./images/road_gif.png'></img>
             </div>
           </div>
+        </div> */}
+
+        {/* //thendral added */}
+        <div className="scrollhero-wrapper">
+          {/* <ScrollHero /> */}
+          <ScrollHero />
         </div>
+
+        {/* About us content  */}
+        <div className='about about-desktop container-fluid' style={{ padding: '100px 20px' }}>
+          <div className='heading about-heading about-mobile-content'>About <span className='highlight'>Us</span></div>
+          <div className='about-content'>
+            <div className='about-content1 about-mobile-content'>
+              <div className='about-content1-heading'>Who <span className='highlight'>we</span> are </div>
+              <div className='about-content-para'> Adinn Outdoor owns over 550 outdoor ad spaces across Tamil Nadu and extends even outside the state. Our media network spans diverse formats from billboards to police booths and we have successfully amplified brand visibility and achieved tangible results. We make sure your brand is visible to the right people at the ideal time. With 25 Years of Excellence, we know where to put your ads to get the most impact. If you want to reach more people and expand the visibility of your ads, we’re here to help. </div>
+              <div className='about-content-para about-content-para-last'><span className='highlight contactUs'>Contact Us </span>to take your brand to new heights at prime locations, where visibility shines.</div>
+            </div>
+            <div className='about-content2 img-fluid'>
+              <img src='./images/road_gif.png'></img>
+            </div>
+          </div>
+        </div>
+        {/* //thendral added */}
+
+
+
+
+
+
+
+
+
+
 
         {/* Client section */}
         <div className="client">

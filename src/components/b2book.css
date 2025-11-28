@@ -561,8 +561,6 @@
 }
 
 
-
-
 /* Offer price highlight styles */
 
 .offer-price-highlight {
@@ -1392,7 +1390,6 @@
     .rate-board1 {
         height: 30px;
         width: 85px;
-        /* position: relative; */
     }
 
 
@@ -1422,11 +1419,9 @@
         line-height: 19.38px;
     }
 
-
     .cost-gap {
         font-weight: 600;
     }
-
 
     .btn-type,
     .book-spot {
@@ -1438,18 +1433,15 @@
         border-radius: 10px;
     }
 
-
     .rate-perDay {
         font-size: 27px;
         font-weight: 600;
     }
 
-
     .rate-perDay1 {
         font-size: 16px;
         font-weight: 500;
     }
-
 
     .book-date {
         width: auto;
@@ -1459,19 +1451,16 @@
         border-radius: 32px;
     }
 
-
     .calender {
         height: 26px;
         width: 26px;
     }
-
 
     .payOffer {
         font-size: 17px;
         font-weight: 600;
         line-height: 19.5px;
     }
-
 
     .btn-pay,
     .btn-cart {
@@ -1482,13 +1471,8 @@
         width: auto;
         height: auto;
         padding: 12px 20px;
-
-
         border-radius: 32px;
     }
-
-
-
 
     .btn-enquire {
         font-size: 24px;
@@ -1660,12 +1644,10 @@
         font-size: 14px;
     }
 
-
     .rating-star {
         bottom: 6.6px;
         left: 4px;
     }
-
 
     .book-price {
         height: auto;
@@ -1676,7 +1658,6 @@
         padding: 10px 0px;
     }
 
-
     .cost-gap {
         font-size: 17px;
         font-weight: 600;
@@ -1685,17 +1666,11 @@
 
     .slash-bar {
         margin: 0px 15px;
-
-
-
-
     }
-
 
     .slash-bar1 {
         margin: 0px 2px;
     }
-
 
     .location-arrow {
         width: 92px;
@@ -1703,18 +1678,15 @@
         padding-bottom: 3px;
     }
 
-
     .rate-perDay {
         font-size: 23px;
         font-weight: 600;
     }
 
-
     .rate-perDay1 {
         font-size: 14px;
         font-weight: 500;
     }
-
 
     .anchor {
         color: rgba(6, 90, 209, 1);
@@ -1725,11 +1697,9 @@
         text-decoration: none;
     }
 
-
     .book-rateContent2 {
         margin-left: 15px;
     }
-
 
     .book-date {
         width: auto;
@@ -1739,19 +1709,16 @@
         border-radius: 32px;
     }
 
-
     .calender {
         height: 25px;
         width: 25px;
     }
-
 
     .payOffer {
         font-size: 16px;
         font-weight: 600;
         line-height: 19.5px;
     }
-
 
     .btn-pay,
     .btn-cart {
@@ -1764,7 +1731,6 @@
         padding: 12px 20px;
         border-radius: 32px;
     }
-
 
     .btn-enquire {
         font-size: 20px;
@@ -1788,7 +1754,6 @@
         font-weight: 600;
     }
 
-
     .noSelectedGoBackBtn {
         font-size: 16px;
         margin: 8px auto;
@@ -1797,7 +1762,6 @@
         padding: 6px 70px;
         border-radius: 55px;
     }
-
 
     .productLocationImg {
         font-size: 24px;
@@ -1812,9 +1776,6 @@
         font-size: 15px;
         margin-left: 8px;
     }
-
-
-
 }
 
 
