@@ -173,7 +173,12 @@ function H1DealDay() {
 
                 // Convert to stateDistricts format
                 const stateMap = locationsData.reduce((acc, curr) => {
-                    acc[curr.state] = curr.districts;
+                    //NEWLY ADDED 
+          // Clean district names by removing hidden characters
+          const cleanedDistricts = curr.districts.map(district =>
+            district.replace(/[\u200B-\u200D\uFEFF]/g, '').trim()
+          );
+                    acc[curr.state] = cleanedDistricts;
                     return acc;
                 }, {});
 
@@ -242,6 +247,8 @@ function H1DealDay() {
             );
             setSelectedDistricts(updatedDistricts);
         }
+        // Close dropdown after selection
+    setIsOpen2(false);
     };
     //Start rating board
     // Function to render star ratings
@@ -287,25 +294,73 @@ function H1DealDay() {
         );
     };
 
+     // NEWLY ADDED Clean district names for comparison
+  const cleanDistrictName = (name) => {
+    return name ? name.toLowerCase().replace(/[\u200B-\u200D\uFEFF]/g, '').trim() : '';
+  };
+
     // Filter offer spots (only show offer products in deal of the day)
     let filteredSpots = offerSpots.filter((spot) => {
-        const spotState = spot.state.toLowerCase();
-        const spotDistrict = spot.district.toLowerCase();
-        const spotCategory = spot.category?.toLowerCase() || "";
+       // const spotLocation = spot.location.toLowerCase();
+    const spotState = spot.state ? spot.state.toLowerCase().trim() : '';
+    // const spotDistrict = spot.district ? spot.district.toLowerCase().trim() : '';
+    //NEWLY ADDED
+    const spotDistrict = cleanDistrictName(spot.district);
 
-        const isStateMatch =
-            selectedStates.length === 0 ||
-            selectedStates.some((state) => spotState.includes(state.toLowerCase()));
+    const spotCategory = spot.category ? spot.category.toLowerCase().trim() : '';
 
-        const isDistrictMatch =
-            selectedDistricts.length === 0 ||
-            selectedDistricts.some((district) => spotDistrict.includes(district.toLowerCase()));
+    //NEWLY ADDED Clean selected districts as well
+    const cleanedSelectedDistricts = selectedDistricts.map(district =>
+      cleanDistrictName(district)
+    );
+    if (selectedStates.length > 0 || selectedDistricts.length > 0) {
+      console.log("Filtering spot:", {
+        prodName: spot.prodName,
+        spotDistrict: spot.district,
+        cleanedSpotDistrict: spotDistrict,
+        selectedDistricts,
+        cleanedSelectedDistricts
+      });
+    }
+        // const isStateMatch =
+        //     selectedStates.length === 0 ||
+        //     selectedStates.some((state) => spotState.includes(state.toLowerCase()));
+        // const isDistrictMatch =
+        //     selectedDistricts.length === 0 ||
+        //     selectedDistricts.some((district) => spotDistrict.includes(district.toLowerCase()));
+        // const isCategoryMatch =
+        //     selectedOutdoorMedium.length === 0 ||
+        //     selectedOutdoorMedium.some((medium) => spotCategory === medium.toLowerCase());
+        // return isStateMatch && isDistrictMatch && isCategoryMatch;
+    // State match - use exact matching
+    const isStateMatch =
+      selectedStates.length === 0 ||
+      selectedStates.some((state) =>
+        state.toLowerCase().trim() === spotState
+      );
 
-        const isCategoryMatch =
-            selectedOutdoorMedium.length === 0 ||
-            selectedOutdoorMedium.some((medium) => spotCategory === medium.toLowerCase());
+    // District match - use cleaned names for comparison  
+    const isDistrictMatch =
+      cleanedSelectedDistricts.length === 0 ||
+      cleanedSelectedDistricts.some((district) =>
+        district === spotDistrict
+      );
 
-        return isStateMatch && isDistrictMatch && isCategoryMatch;
+    // Category match
+    const isCategoryMatch =
+      selectedOutdoorMedium.length === 0 ||
+      selectedOutdoorMedium.some((medium) =>
+        medium.toLowerCase().trim() === spotCategory
+      );
+
+    const result = isStateMatch && isDistrictMatch && isCategoryMatch;
+
+    if (result && (selectedStates.length > 0 || selectedDistricts.length > 0)) {
+      console.log("✅ Spot matches filter:", spot.prodName);
+    }
+
+    return result;
+   
     });
 
     //  Sorting function
@@ -626,7 +681,7 @@ function H1DealDay() {
                                     {isSmallScreen ? (
                                         <div className='FilterSection-mobile d-flex'>
                                             {/* Outdoor Section */}
-                                            <div className='outdoor1 position-relative' onClick={toggleFilterSectionMedium}>
+                                            {/* <div className='outdoor1 position-relative' onClick={toggleFilterSectionMedium}>
                                                 <div > <img src='./images/Filter_responsive_img1.svg' className='Filter_responsive_img1'></img>Medium</div>
                                             </div>
                                             {isFilterOpenMedium && (
@@ -669,7 +724,7 @@ function H1DealDay() {
                                                         <button className='filterDoneButton' onClick={handleMediumFilterDone}>Done</button>
                                                     </div>
                                                 </div>
-                                            )}
+                                            )} */}
 
 
                                             {/* Sorting Dropdown */}
@@ -795,7 +850,7 @@ function H1DealDay() {
                                     ) : (
                                         <>
                                             {/* Outdoor Section */}
-                                            <div className='outdoor mb-4'>
+                                            {/* <div className='outdoor mb-4'>
                                                 <h5 className='sidebar-heading'>Outdoor Medium</h5>
                                                 <form>
                                                     <div className="form-group">
@@ -816,7 +871,7 @@ function H1DealDay() {
                                                         ))}
                                                     </div>
                                                 </form>
-                                            </div>
+                                            </div> */}
 
                                             {/* Sorting Dropdown */}
                                             <div className='sorting mb-4'>

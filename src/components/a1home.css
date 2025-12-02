@@ -769,9 +769,6 @@
 }
  /* {//thendral added} */
 
-
-
-
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
 @media (min-width: 768px) and (max-width: 991px) {
 
@@ -1951,6 +1948,7 @@
 
 
 
+
 @media(max-width: 768px){
   .about-content1-heading {
     font-size: 28px;
@@ -1962,7 +1960,7 @@
 
   .about-content-para {
     font-size: 16px;
-    text-align: left !important;
+    text-align: justify !important;
     margin-bottom: 0px;
   }
    /* {//thendral added} */

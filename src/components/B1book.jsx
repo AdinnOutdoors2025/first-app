@@ -79,10 +79,24 @@ export default function BookASite() {
         const locationsData = await locationsRes.json();
         // Convert to stateDistricts format
         const stateMap = locationsData.reduce((acc, curr) => {
-          acc[curr.state] = curr.districts;
+         //NEWLY ADDED 
+           // Clean district names by removing hidden characters
+          const cleanedDistricts = curr.districts.map(district => 
+            district.replace(/[\u200B-\u200D\uFEFF]/g, '').trim()
+          );
+         
+         
+         
+          acc[curr.state] = cleanedDistricts;
           return acc;
         }, {});
-        setStateDistricts(stateMap);
+        setStateDistricts(stateMap); 
+
+         // Debug log to see cleaned data
+        console.log("Cleaned stateDistricts for Tamil Nadu:", stateMap["Tamil Nadu"]);
+        
+
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -150,6 +164,8 @@ export default function BookASite() {
     // Close dropdown after selection
     setIsOpen2(false);
   };
+
+
   //Start rating board
   const RatingStars = ({ rating }) => {
     const fullStars = Math.floor(rating);
@@ -193,23 +209,89 @@ export default function BookASite() {
       prev.includes(district) ? prev.filter((d) => d !== district) : [...prev, district]
     );
   };
+
+// NEWLY ADDED Clean district names for comparison
+  const cleanDistrictName = (name) => {
+    return name ? name.toLowerCase().replace(/[\u200B-\u200D\uFEFF]/g, '').trim() : '';
+  };
+
+
   // Convert to lowercase and compare to make filtering case-insensitive
   let filteredSpots = spots.filter((spot) => {
     // const spotLocation = spot.location.toLowerCase();
     const spotState = spot.state ? spot.state.toLowerCase().trim() : '';
-    const spotDistrict = spot.district ? spot.district.toLowerCase().trim() : '';
+    // const spotDistrict = spot.district ? spot.district.toLowerCase().trim() : '';
+   //NEWLY ADDED
+    const spotDistrict = cleanDistrictName(spot.district);
+
     const spotCategory = spot.category ? spot.category.toLowerCase().trim() : '';
+  
+  //NEWLY ADDED Clean selected districts as well
+    const cleanedSelectedDistricts = selectedDistricts.map(district => 
+      cleanDistrictName(district)
+    );
+    if (selectedStates.length > 0 || selectedDistricts.length > 0) {
+      console.log("Filtering spot:", {
+        prodName: spot.prodName,
+        spotDistrict: spot.district,
+        cleanedSpotDistrict: spotDistrict,
+        selectedDistricts,
+        cleanedSelectedDistricts
+      });
+    }
+  
+
+
+
+    // const isStateMatch =
+    //   selectedStates.length === 0 ||
+    //   selectedStates.some((state) => spotState.includes(state.toLowerCase()));
+    // const isDistrictMatch =
+    //   selectedDistricts.length === 0 ||
+    //   selectedDistricts.some((district) => spotDistrict.includes(district.toLowerCase()));
+    // const isCategoryMatch =
+    //   selectedOutdoorMedium.length === 0 ||
+    //   selectedOutdoorMedium.some((medium) => spotCategory === medium.toLowerCase().trim());
+    // return isStateMatch && isDistrictMatch && isCategoryMatch;
+  
+
+        // State match - use exact matching
     const isStateMatch =
       selectedStates.length === 0 ||
-      selectedStates.some((state) => spotState.includes(state.toLowerCase()));
+      selectedStates.some((state) => 
+        state.toLowerCase().trim() === spotState
+      );
+
+    // District match - use cleaned names for comparison  
     const isDistrictMatch =
-      selectedDistricts.length === 0 ||
-      selectedDistricts.some((district) => spotDistrict.includes(district.toLowerCase()));
+      cleanedSelectedDistricts.length === 0 ||
+      cleanedSelectedDistricts.some((district) => 
+        district === spotDistrict
+      );
+
+    // Category match
     const isCategoryMatch =
       selectedOutdoorMedium.length === 0 ||
-      selectedOutdoorMedium.some((medium) => spotCategory === medium.toLowerCase().trim());
-    return isStateMatch && isDistrictMatch && isCategoryMatch;
+      selectedOutdoorMedium.some((medium) => 
+        medium.toLowerCase().trim() === spotCategory
+      );
+
+    const result = isStateMatch && isDistrictMatch && isCategoryMatch;
+    
+    if (result && (selectedStates.length > 0 || selectedDistricts.length > 0)) {
+      console.log("✅ Spot matches filter:", spot.prodName);
+    }
+    
+    return result; 
   });
+
+
+
+  console.log("Filtered spots count:", filteredSpots.length);
+  console.log("Selected states:", selectedStates);
+  console.log("Selected districts:", selectedDistricts);
+  console.log("Cleaned selected districts:", selectedDistricts.map(d => cleanDistrictName(d)));
+
 
 
   //  Sorting function
@@ -366,7 +448,7 @@ export default function BookASite() {
               {isSmallScreen ? (
                 <div className='FilterSection-mobile d-flex'>
                   {/* Outdoor Section */}
-                  <div className='outdoor1 position-relative' onClick={toggleFilterSectionMedium}>
+                  {/* <div className='outdoor1 position-relative' onClick={toggleFilterSectionMedium}>
                     <div > <img src='./images/Filter_responsive_img1.svg' className='Filter_responsive_img1'></img>Medium</div>
                   </div>
                   {isFilterOpenMedium && (
@@ -409,7 +491,7 @@ export default function BookASite() {
                         <button className='filterDoneButton' onClick={handleMediumFilterDone}>Done</button>
                       </div>
                     </div>
-                  )}
+                  )} */}
                   {/* Sorting Dropdown */}
                   <div className='sorting1 position-relative' onClick={toggleFilterSectionSorting}>
                     <div> <img src='./images/Filter_responsive_img2.svg' className='Filter_responsive_img2'></img>Sort</div>
@@ -527,10 +609,12 @@ export default function BookASite() {
               ) : (
                 <>
                   {/* Outdoor Section */}
-                  <div className='outdoor mb-4'>
+                  {/* <div className='outdoor mb-4'>
                     <h5 className='sidebar-heading'>Outdoor Medium</h5>
                     <form>
-                      {/* <div className="form-group">
+
+                    OUTDOOR FILTER FETCH FROM DATABASE
+                      <div className="form-group">
                         {outdoorMediums.map((medium) => (
                           <div className={`form-check d-flex ${selectedOutdoorMedium.includes(medium) ? "checked" : ""}`} key={medium}>
                             <input
@@ -546,10 +630,10 @@ export default function BookASite() {
                             </label>
                           </div>
                         ))}
-                      </div> */}
+                      </div>
 
 
-
+SINGLE HOARDING OUTDOOR MEDIUM
                       <div className="form-group">
                         <div className="form-check d-flex">
                           <input
@@ -569,7 +653,7 @@ export default function BookASite() {
 
 
                     </form>
-                  </div>
+                  </div> */}
                   {/* Sorting Dropdown */}
                   <div className='sorting mb-4'>
                     <h5 className='sidebar-heading'>Sort</h5>
