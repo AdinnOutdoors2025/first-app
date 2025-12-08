@@ -17,6 +17,7 @@ import { useParams, useLocation } from "react-router-dom";
 //BASE URL OF http://localhost:3001 FILE IMPORT
 import { baseUrl } from '../Adminpanel/BASE_URL';
 import slugify from 'slugify';
+import { formatIndianCurrency } from './FORMATED_AMOUNT';
 
 function BookASite1() {
     const { productId } = useParams(); // Get productId from URL
@@ -354,54 +355,7 @@ function BookASite1() {
         setConfirmedDates({ start: null, end: null });
     };
 
-    // // UPDATED DATE CLASS CALCULATION
-    // const getDateSelectionClass = (date) => {
-    //     if (!date || isNaN(date.getTime())) return "disabled";
-
-    //     const normalizedDate = new Date(Date.UTC(
-    //         date.getFullYear(),
-    //         date.getMonth(),
-    //         date.getDate()
-    //     ));
-
-    //     // Check if date is booked
-    //     const isBooked = bookedDates.some(d =>
-    //         d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
-    //         d.getUTCMonth() === normalizedDate.getUTCMonth() &&
-    //         d.getUTCDate() === normalizedDate.getUTCDate()
-    //     );
-
-    //     if (isBooked) return "booked";
-    //     if (isPastDate(normalizedDate)) return "past";
-
-    //     const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    //     const startUTC = selectedDates.start ? new Date(Date.UTC(
-    //         selectedDates.start.getFullYear(),
-    //         selectedDates.start.getMonth(),
-    //         selectedDates.start.getDate()
-    //     )) : null;
-
-    //     const endUTC = selectedDates.end ? new Date(Date.UTC(
-    //         selectedDates.end.getFullYear(),
-    //         selectedDates.end.getMonth(),
-    //         selectedDates.end.getDate()
-    //     )) : null;
-
-    //     if (bookedDates.some(d =>
-    //         d.getUTCFullYear() === utcDate.getUTCFullYear() &&
-    //         d.getUTCMonth() === utcDate.getUTCMonth() &&
-    //         d.getUTCDate() === utcDate.getUTCDate()
-    //     )) return "booked";
-
-    //     if (startUTC && utcDate.getTime() === startUTC.getTime()) return "selected-start";
-    //     if (endUTC && utcDate.getTime() === endUTC.getTime()) return "selected-end";
-    //     if (startUTC && endUTC && utcDate > startUTC && utcDate < endUTC) {
-    //         return "selected-range";
-    //     }
-
-    //     return "";
-    // };
-    // UPDATED DATE CLASS CALCULATION
+    // // UPDATED DATE CLASS CALCULATION  
     const getDateSelectionClass = (date) => {
         if (!date || isNaN(date.getTime())) return "disabled";
         const normalizedDate = new Date(Date.UTC(
@@ -454,17 +408,6 @@ function BookASite1() {
     };
 
     const [productsOrderData, setProductsOrderData] = useState([]);
-
-    // useEffect(() => {
-    //     const fetchBookedDates = async () => {
-    //         const res = await fetch(`${baseUrl}/booked-dates`);
-    //         const dates = await res.json();
-    //         setBookedDates(dates.map(d => new Date(d)));
-    //     };
-
-    //     fetchBookedDates();
-    // }, [productsOrderData]);
-    // UPDATED: Fetch booked dates for specific product
     useEffect(() => {
         const fetchBookedDates = async () => {
             if (currentProduct?.prodCode) {
@@ -863,7 +806,6 @@ function BookASite1() {
                             {currentProduct ? (
                                 <div className="col-md-6 col-lg-6 Book-content2"  >
                                     <p className='book-sideHeading'>{currentProduct.prodName}</p>
-                                    {/* <p className='book-size'>Size: {currentProduct.sizeWidth} x {currentProduct.sizeHeight}<span className='slash-bar'>|</span>{currentProduct.productsquareFeet} Sq.ft</p> */}
                                     <p className='book-size'>
                                         Size: {currentProduct.sizeWidth} x {currentProduct.sizeHeight}
                                         {/* Show side only for Signal Post and Pole Kiosk */}
@@ -887,10 +829,10 @@ function BookASite1() {
                                     {/* <span className='productLocationImg'>
                                         <a href={currentProduct.LocationLink} target='_blank' rel="noopener noreferrer"> <i className="fa-solid fa-location-dot" /></a>
                                     </span> */}
-                                      <span className='productLocationImg'>
+                                    <span className='productLocationImg'>
                                         <a href={currentProduct.LocationLink} target='_blank'> <img src="/images/mapiconaddin.png" alt="location icon" className="locationImgIcon" /><span className="viewlocation">View Location</span></a>
                                     </span>
-                                    
+
                                     <div className="book-price my-3">Printing Cost<span className='cost-gap'>: ₹ {currentProduct.printingCost?.toLocaleString() || '0'}</span> <span className='slash-bar1'>|</span> Mounting Cost<span className='cost-gap'>: ₹ {currentProduct.mountingCost?.toLocaleString() || '0'}</span></div>
                                     <div className='book-spot mt-3'>{currentProduct.productFrom} <span><img src='/images/Location_arrow.png' className='location-arrow'></img>  </span> {currentProduct.productTo}</div>
                                     <div className='book-rate'>
@@ -902,7 +844,7 @@ function BookASite1() {
                                                     <span className='original-price-strikethrough'>₹ {currentProduct.originalPrice?.toLocaleString() || '0'}</span>
                                                 </>
                                             ) : (
-                                                <span className='rate-perDay'>₹ {currentProduct.price?.toLocaleString() || '0'} <span className='rate-perDay1'>Per Day</span></span>
+                                                <span className='rate-perDay'>₹ {currentProduct.price?.toLocaleString() || '0'} <span className='rate-perDay1'>/ Per Day</span></span>
                                             )}
                                             <br />
                                             <a href="#Terms" className='book-condition anchor'>Terms & Condition</a>
@@ -914,10 +856,11 @@ function BookASite1() {
                                             </button>
                                         </div>
                                     </div>
-                                    <span className="me-2 payOffer">Pay {currentProduct.productFixedAmount} and Get {currentProduct.productFixedOffer}% Off <span className='refund'>100% Refundable</span></span><br></br>
-                                    <button className="me-4 btn-pay" onClick={handleReserveNow} >Reserve Now</button>
+                                    {/* <span className="me-2 payOffer">Pay {currentProduct.productFixedAmount} and Get {currentProduct.productFixedOffer}% Off <span className='refund'>100% Refundable</span></span><br></br> */}
+                                    <button className="me-4 btn-pay" onClick={handleReserveNow} >Book Now</button>
                                     <button className="btn-cart" onClick={handleAddToCart}>Add to Cart</button><br></br>
-                                    <button className=" mt-3 mb-2 btn-enquire" onClick={toggleOtpMainPage}>Enquire Now</button><br></br>
+                                    <button className=" mt-3 mb-2 btn-enquire" onClick={toggleOtpMainPage}>For More Details</button><br></br>
+                            
                                 </div>
 
                             ) : (
@@ -956,8 +899,8 @@ function BookASite1() {
                                             confirmDates={confirmDates}
                                             totalDays={totalDays}
                                             totalPrice={totalPrice}
-                                            calendarErrorMessage ={calendarErrorMessage}
-                                            setCalendarErrorMessage ={setCalendarErrorMessage}
+                                            calendarErrorMessage={calendarErrorMessage}
+                                            setCalendarErrorMessage={setCalendarErrorMessage}
 
                                         />
                                     </div>

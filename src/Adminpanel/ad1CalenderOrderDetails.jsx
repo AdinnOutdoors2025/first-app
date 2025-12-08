@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../components/B20CalenderMain.css";
-// const bookedDates = [new Date(2025, 2, 10), new Date(2025, 2, 12), new Date(2025, 2, 18)];
+import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
 
 const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, generateMonth, handleDateClick, resetDates, getDateSelectionClass, goToNextMonth, goToPreviousMonth, bookedDates, currentMonth, confirmedDates, setConfirmedDates, pricePerDay, confirmDates, totalPrice, isPastDate }) => {
   // CALENDER SECTION 
@@ -9,7 +9,7 @@ const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, gen
 
   return (
     <div>
-      <div className="calendar-container" style={{ marginBottom: '15px' }}>
+      <div className="calendar-container" style={{ marginBottom: '15px', width:'100%' }}>
         <div className="calendar-header">
           {isSmallScreen ? (
             <>
@@ -143,7 +143,8 @@ const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, gen
 <br></br>
                     {/* Total Amount Calculation */}
                     <span>
-                      Amount: <span style={{ color: 'red' }}>₹{totalPrice.toLocaleString()}</span>
+                      {/* Amount: <span style={{ color: 'red' }}>₹{totalPrice.toLocaleString()}</span> */}
+                      Amount: <span style={{ color: 'red' }}>{formatIndianCurrency(totalPrice, true)}</span>
                     </span>
                     <br />
                   </div>
@@ -184,7 +185,9 @@ const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, gen
                 </span> <br></br>
 
                 <span>
-                  Amount: <span style={{ color: 'red' }}>₹{totalPrice.toLocaleString()}</span>
+                  {/* Amount: <span style={{ color: 'red' }}>₹{totalPrice.toLocaleString()}</span> */}
+                      Amount: <span style={{ color: 'red' }}>{formatIndianCurrency(totalPrice, true)}</span>
+
                 </span>
                 <br />
 

@@ -11,6 +11,7 @@ import slugify from 'slugify';
 import { baseUrl } from '../Adminpanel/BASE_URL';
 //DEAL OF THE DAY PAGE SCROLL ANIMATION
 import DealScrollAnim from './H2DealScroll.jsx';
+import { formatIndianCurrency } from './FORMATED_AMOUNT';
 
 
 export default function BookASite() {
@@ -34,7 +35,6 @@ export default function BookASite() {
     const fetchData = async () => {
       try {
         setIsLoading(true); // Start loading
-
         // Fetch products
         const productsRes = await fetch(`${baseUrl}/products`);
         const productsData = await productsRes.json();
@@ -79,22 +79,22 @@ export default function BookASite() {
         const locationsData = await locationsRes.json();
         // Convert to stateDistricts format
         const stateMap = locationsData.reduce((acc, curr) => {
-         //NEWLY ADDED 
-           // Clean district names by removing hidden characters
-          const cleanedDistricts = curr.districts.map(district => 
+          //NEWLY ADDED 
+          // Clean district names by removing hidden characters
+          const cleanedDistricts = curr.districts.map(district =>
             district.replace(/[\u200B-\u200D\uFEFF]/g, '').trim()
           );
-         
-         
-         
+
+
+
           acc[curr.state] = cleanedDistricts;
           return acc;
         }, {});
-        setStateDistricts(stateMap); 
+        setStateDistricts(stateMap);
 
-         // Debug log to see cleaned data
+        // Debug log to see cleaned data
         console.log("Cleaned stateDistricts for Tamil Nadu:", stateMap["Tamil Nadu"]);
-        
+
 
 
       } catch (error) {
@@ -210,7 +210,7 @@ export default function BookASite() {
     );
   };
 
-// NEWLY ADDED Clean district names for comparison
+  // NEWLY ADDED Clean district names for comparison
   const cleanDistrictName = (name) => {
     return name ? name.toLowerCase().replace(/[\u200B-\u200D\uFEFF]/g, '').trim() : '';
   };
@@ -221,13 +221,13 @@ export default function BookASite() {
     // const spotLocation = spot.location.toLowerCase();
     const spotState = spot.state ? spot.state.toLowerCase().trim() : '';
     // const spotDistrict = spot.district ? spot.district.toLowerCase().trim() : '';
-   //NEWLY ADDED
+    //NEWLY ADDED
     const spotDistrict = cleanDistrictName(spot.district);
 
     const spotCategory = spot.category ? spot.category.toLowerCase().trim() : '';
-  
-  //NEWLY ADDED Clean selected districts as well
-    const cleanedSelectedDistricts = selectedDistricts.map(district => 
+
+    //NEWLY ADDED Clean selected districts as well
+    const cleanedSelectedDistricts = selectedDistricts.map(district =>
       cleanDistrictName(district)
     );
     if (selectedStates.length > 0 || selectedDistricts.length > 0) {
@@ -239,9 +239,6 @@ export default function BookASite() {
         cleanedSelectedDistricts
       });
     }
-  
-
-
 
     // const isStateMatch =
     //   selectedStates.length === 0 ||
@@ -253,46 +250,42 @@ export default function BookASite() {
     //   selectedOutdoorMedium.length === 0 ||
     //   selectedOutdoorMedium.some((medium) => spotCategory === medium.toLowerCase().trim());
     // return isStateMatch && isDistrictMatch && isCategoryMatch;
-  
 
-        // State match - use exact matching
+
+    // State match - use exact matching
     const isStateMatch =
       selectedStates.length === 0 ||
-      selectedStates.some((state) => 
+      selectedStates.some((state) =>
         state.toLowerCase().trim() === spotState
       );
 
     // District match - use cleaned names for comparison  
     const isDistrictMatch =
       cleanedSelectedDistricts.length === 0 ||
-      cleanedSelectedDistricts.some((district) => 
+      cleanedSelectedDistricts.some((district) =>
         district === spotDistrict
       );
 
     // Category match
     const isCategoryMatch =
       selectedOutdoorMedium.length === 0 ||
-      selectedOutdoorMedium.some((medium) => 
+      selectedOutdoorMedium.some((medium) =>
         medium.toLowerCase().trim() === spotCategory
       );
 
     const result = isStateMatch && isDistrictMatch && isCategoryMatch;
-    
+
     if (result && (selectedStates.length > 0 || selectedDistricts.length > 0)) {
       console.log("✅ Spot matches filter:", spot.prodName);
     }
-    
-    return result; 
+
+    return result;
   });
-
-
 
   console.log("Filtered spots count:", filteredSpots.length);
   console.log("Selected states:", selectedStates);
   console.log("Selected districts:", selectedDistricts);
   console.log("Cleaned selected districts:", selectedDistricts.map(d => cleanDistrictName(d)));
-
-
 
   //  Sorting function
   // Ensure sorting happens after filtering
@@ -771,7 +764,9 @@ SINGLE HOARDING OUTDOOR MEDIUM
                               <span className="board-dim-book"> {spot.sizeWidth} x {spot.sizeHeight} </span>
                             </div>
                             <div className='board-content-bottom-book'>
-                              <span className="board-price-book">₹{spot.price.toLocaleString()}</span>
+                              {/* <span className="board-price-book">₹{spot.price.toLocaleString()}<span className='board-price-bookPerDay'> / Per Day</span></span> */}
+                              <span className="board-price-book">{formatIndianCurrency(spot.price, true)}<span className='board-price-bookPerDay'> / Per Day</span></span>
+                             
                               <img src='./images/rating_board.png' className='rate-board-book'></img>
                             </div>
                             <RatingStars rating={spot.rating} />

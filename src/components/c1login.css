@@ -120,6 +120,7 @@
 
 .otp_signInUpSpan {
     font-weight: 700;
+    cursor: pointer;
 }
 
 .checkbox-container {

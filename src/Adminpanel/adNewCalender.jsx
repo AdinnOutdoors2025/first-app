@@ -9,7 +9,7 @@ const Calendar = ({ isSmallScreen, closeCalendar, selectedDates, generateMonth, 
 
   return (
     <div>
-      <div className="calendar-container" style={{ marginBottom: '15px' }}>
+      <div className="calendar-container" style={{ marginBottom: '15px', width:'100%' }}>
         <div className="calendar-header">
           {isSmallScreen ? (
             <>
@@ -121,7 +121,7 @@ const Calendar = ({ isSmallScreen, closeCalendar, selectedDates, generateMonth, 
                   </div>
                 </div>
                 <div className="calenderLegendButtons">
-                  <div>   <div className="confirm-button" onClick={confirmDates}>Confirm</div> </div>
+                  {/* <div>   <div className="confirm-button" onClick={confirmDates}>Confirm</div> </div> */}
                   <div> <div className="reset-button" onClick={resetDates}>Reset Date</div></div></div>
               </div>
             </>
@@ -157,7 +157,7 @@ const Calendar = ({ isSmallScreen, closeCalendar, selectedDates, generateMonth, 
                 </span>
                 <br />
                 <br />
-                <div className="confirm-button" onClick={confirmDates}>Confirm</div>
+                {/* <div className="confirm-button" onClick={confirmDates}>Confirm</div> */}
                 <div className="reset-button" onClick={resetDates}>
                   Reset Date
                 </div>

@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { MainLayout } from './MainLayout';
 import { useLogin } from './LoginContext';
 import { baseUrl } from '../Adminpanel/BASE_URL';
+import { formatIndianCurrency } from './FORMATED_AMOUNT';
 
 
 const BillingDetailsCart = () => {
@@ -341,6 +342,7 @@ const BillingDetailsCart = () => {
             </MainLayout>
         );
     }
+
     return (
         <MainLayout>
             <div>
@@ -554,17 +556,20 @@ const BillingDetailsCart = () => {
                                         <div className='BillingCart-scroll1'>
                                             {
                                                 cartItems.map(
-                                                    (item, index) =>
-                                                        <div className="billing-order-item1" key={index}>
-                                                            <img src={item.image} alt="Product" className="billing-order-img1" />
-                                                            <div className="billing-order-title1">
-                                                                <div>{item.prodName}</div>
-                                                                <div>₹ {item.price.toLocaleString()} Per Day</div>
-                                                                <div>Booked date : {item.dateRange} ({item.totalDays} Days)</div>
-                                                                <div>Booked Amount : {item.totalAmount} </div>
+                                                    (item, index) => {
+                                                        const cleanedTotalAmount = cleanPrice(item.totalAmount);
+                                                        return (
+                                                            <div className="billing-order-item1" key={index}>
+                                                                <img src={item.image} alt="Product" className="billing-order-img1" />
+                                                                <div className="billing-order-title1">
+                                                                    <div>{item.prodName}</div>
+                                                                    <div>{formatIndianCurrency(item.price, true)} Per Day</div>
+                                                                    <div>Booked date : {item.dateRange} ({item.totalDays} Days)</div>
+                                                                    <div>Booked Amount : {formatIndianCurrency(cleanedTotalAmount, true)}</div>
+                                                                </div>
                                                             </div>
-
-                                                        </div>
+                                                        )
+                                                    }
                                                 )}
                                         </div>
 
@@ -575,14 +580,15 @@ const BillingDetailsCart = () => {
                                             </div>
                                             <div className="billing-orderTotalAmtContent1">
                                                 <div className="billingTotalLeft1">Total Amount</div>
-                                                <div className="billingTotalRight1"> {subTotal.toLocaleString()}</div>
+                                                {/* <div className="billingTotalRight1"> {subTotal.toLocaleString()}</div> */}
+                                                <div className="billingTotalRight1"> {formatIndianCurrency(subTotal, true)}</div>
+
                                             </div>
 
                                         </div>
-                                        <div className="BillingScrollDiscount">
+                                        {/* <div className="BillingScrollDiscount">
                                             Enjoy a {Offer}% discount on your total amount when you pre-book
-                                        </div>
-
+                                        </div> */}
                                     </div>
                                     <div className="billing-order-pricing1">
 
@@ -590,7 +596,9 @@ const BillingDetailsCart = () => {
                                         <div className="billing-orderContentPriceMain1">
                                             <div className="billing-orderContent11">
                                                 <div className="billing-orderContentLeft1">Price</div>
-                                                <div className="billing-orderContentRight1">₹{SpotPay.toLocaleString()}</div>
+                                                {/* <div className="billing-orderContentRight1">₹{SpotPay.toLocaleString()}</div> */}
+                                                <div className="billing-orderContentRight1">{formatIndianCurrency(subTotal, true)}</div>
+
                                             </div>
 
                                             <div className="billing-orderContent1 billingMountingcharge1">
@@ -600,14 +608,18 @@ const BillingDetailsCart = () => {
                                         </div>
                                         <div className="billing-orderContent1">
                                             <div className="billing-orderContentLeft1 BillingTotalAmt1">Total Amount</div>
-                                            <div className="billing-orderContentRight1 BillingTotalAmt1">₹{SpotPay.toLocaleString()}</div>
+                                            {/* <div className="billing-orderContentRight1 BillingTotalAmt1">₹{SpotPay.toLocaleString()}</div> */}
+                                            <div className="billing-orderContentRight1 BillingTotalAmt1">{formatIndianCurrency(subTotal, true)}</div>
+
                                         </div>
 
                                     </div>
                                 </div>
                                 {/* Billing button  */}
                                 <div className="billingButton1">
-                                    <div> ₹{SpotPay.toLocaleString()}</div>
+                                    {/* <div> ₹{SpotPay.toLocaleString()}</div> */}
+                                    <div>{formatIndianCurrency(subTotal, true)}</div>
+
                                     <div> <button className="billingContinueBtn1" type="submit"
                                         disabled={isLoading} >
                                         {isLoading ? "Processing..." : "Continue"}

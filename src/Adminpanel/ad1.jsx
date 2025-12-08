@@ -523,7 +523,7 @@ function AdminpanelHome() {
                 Add Order
                 {/* {editOrder ? "Edit Order" : "Add Order"} */}
               </div>
-              <div
+              {/* <div
                 className={`subcategory-item ${activeSubOrder === 'Order Info' ? 'active' : ''}`}
                 onClick={() => {
                   //   setEditProduct(null); // Reset edit state when user clicks manually
@@ -533,7 +533,7 @@ function AdminpanelHome() {
                   // window.history.replaceState({}, document.title, location.pathname + '#orders');
                 }}>
                 Order Info
-              </div>
+              </div> */}
             </div>
           )}
 

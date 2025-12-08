@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { MainLayout } from './MainLayout';
 import { useLogin } from './LoginContext';
 import { baseUrl } from '../Adminpanel/BASE_URL';
+import { formatIndianCurrency } from './FORMATED_AMOUNT';
 
 const BillingDetails = () => {
     const { user } = useLogin();
@@ -314,6 +315,31 @@ const BillingDetails = () => {
             setIsLoading(false);
         }
     };
+
+       // AMOUNT CONVERTED INTO INDIAN CURRENCY
+    const parseAmount = (amount) => {
+        if (!amount && amount !== 0) return 0;
+        
+        if (typeof amount === 'number') return amount;
+        
+        if (typeof amount === 'string') {
+            // Remove any commas, currency symbols, and spaces
+            const cleaned = amount.replace(/[₹$,¥\s]/g, '').replace(/,/g, '');
+            const parsed = parseFloat(cleaned);
+            return isNaN(parsed) ? 0 : parsed;
+        }
+        
+        return 0;
+    };
+
+    // Ensure the amount is properly parsed
+const safePrice = typeof reserveItem.price === 'string' 
+    ? parseFloat(reserveItem.price.replace(/[^0-9.]/g, '')) 
+    : reserveItem.price;
+const safeTotalAmount = typeof reserveItem.totalAmount === 'string' 
+    ? parseFloat(reserveItem.totalAmount.replace(/[^0-9.]/g, '')) 
+    : reserveItem.totalAmount;
+
     return (
         <MainLayout>
             <div>
@@ -424,7 +450,6 @@ const BillingDetails = () => {
                                             onFocus={() => setIsOpen1(true)}
                                             readOnly
                                             className={`input-field stateInputField ${errors.state ? 'AdminProdinput-errorBilling' : ''}`}
-
                                         />
                                         <span className={`billingInputSpan ${state.length === 0 ? "" : "inputSpanFill"}`}>State*</span>
                                         {/* Dropdown Icon */}
@@ -526,9 +551,11 @@ const BillingDetails = () => {
                                         <img src={reserveItem.image} alt="Product" className="billing-order-img" />
                                         <div className="billing-order-title">
                                             <div>{reserveItem.prodName}</div>
-                                            <div>₹ {reserveItem.price.toLocaleString()} Per Day</div>
+                                            {/* <div>₹ {reserveItem.price.toLocaleString()} Per Day</div> */}
+                                            <div>{formatIndianCurrency(safePrice, true)} Per Day</div>
+
                                             <div>Booked date : {reserveItem.dateRange} ({reserveItem.totalDays} Days)</div>
-                                            <div>Booked Amount : {reserveItem.totalAmount} </div>
+                                            <div>Booked Amount : {formatIndianCurrency(safeTotalAmount, true)}</div>
                                         </div>
                                     </div>
 
@@ -536,12 +563,16 @@ const BillingDetails = () => {
                                     <div className="billing-order-pricing">
                                         <div className="billing-orderContent">
                                             <div className="billing-orderContentLeft">Price</div>
-                                            <div className="billing-orderContentRight">₹{reserveItem.SpotPay.toLocaleString()}</div>
+                                            {/* <div className="billing-orderContentRight">₹{reserveItem.SpotPay.toLocaleString()}</div> */}
+                                            <div className="billing-orderContentRight">{formatIndianCurrency(safeTotalAmount, true)}</div>
+
                                         </div>
 
                                         <div className="billing-orderContent">
                                             <div className="billing-orderContentLeft BillingTotalAmt">Total Amount</div>
-                                            <div className="billing-orderContentRight BillingTotalAmt">₹{reserveItem.SpotPay.toLocaleString()}</div>
+                                            {/* <div className="billing-orderContentRight BillingTotalAmt">₹{reserveItem.SpotPay.toLocaleString()}</div> */}
+                                            <div className="billing-orderContentRight BillingTotalAmt">{formatIndianCurrency(safeTotalAmount, true)}</div>
+
                                         </div>
                                     </div>
                                     <div className="billingNoteContent">
@@ -552,7 +583,8 @@ const BillingDetails = () => {
                                 </div>
                                 {/* Billing button  */}
                                 <div className="billingButton">
-                                    <div> ₹{reserveItem.SpotPay.toLocaleString()}</div>
+                                    {/* <div> ₹{reserveItem.SpotPay.toLocaleString()}</div> */}
+                                    <div className="billingTotalAmount"> {formatIndianCurrency(safeTotalAmount, true)}</div>
                                     <div> <button className="billingContinueBtn" type='submit'
                                         disabled={isLoading} >
                                         {isLoading ? "Processing..." : "Continue"}

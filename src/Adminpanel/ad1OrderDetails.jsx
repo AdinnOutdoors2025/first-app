@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 import CalendarOrderDetails from './ad1CalenderOrderDetails';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from './BASE_URL';
+import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
+
 
 function OrderDetails({ order }) {
     // Handle null/undefined order state
@@ -469,8 +471,6 @@ function OrderDetails({ order }) {
     //         setIsLoading(false);
     //     }
     // };
-
-
         const confirmDates = async () => {
         if (!selectedDates.start || !selectedDates.end) {
             alert('Please select both start and end dates');
@@ -628,7 +628,14 @@ function OrderDetails({ order }) {
                                 </div>
                                 <div className='order-clientDetailSection'>
                                     <div className='order-clientDetailHeading'>Payment</div>
-                                    <input type='text' placeholder='Enter Payment' className='order-clientDetailsInput' value={`₹${safeOrder.client?.paidAmount}` || ''}
+                                    {/* <input type='text' placeholder='Enter Payment' className='order-clientDetailsInput' value={`₹${safeOrder.client?.paidAmount}` || ''}
+                                        readOnly ></input> */}
+                                        <input type='text' placeholder='Enter Payment' className='order-clientDetailsInput' value={formatIndianCurrency(safeOrder.products.reduce((sum, p) => sum + (p.booking?.totalPrice || 0), 0), true)}
+                                        readOnly ></input>
+                                </div>
+                                <div className='order-clientDetailSection'>
+                                    <div className='order-clientDetailHeading'>Order Taken By</div>
+                                    <input type='text' placeholder='Enter Status' className='order-clientDetailsInput' value={safeOrder.status || ''}
                                         readOnly ></input>
                                 </div>
                             </div>
@@ -753,7 +760,7 @@ function OrderDetails({ order }) {
                         {/*  EDIT ICON CLICK THEN ONLY OPEN THE CALENDER   */}
                         {
                             isCalenderOpen && (
-                                <div >
+                                <div className='calendar_admin' >
                                     <CalendarOrderDetails
                                         selectedDates={selectedDates} setSelectedDates={setSelectedDates} generateMonth={generateMonth} handleDateClick={handleDateClick} resetDates={resetDates} getDateSelectionClass={getDateSelectionClass} goToNextMonth={goToNextMonth} goToPreviousMonth={goToPreviousMonth} bookedDates={bookedDates} currentMonth={currentMonth} setCurrentMonth={setCurrentMonth} confirmedDates={confirmedDates} setConfirmedDates={setConfirmedDates} pricePerDay={safeOrder.products[activeProductIndex]?.price || 0} confirmDates={confirmDates} totalDays={totalDays} totalPrice={totalPrice} isSmallScreen={isSmallScreen} closeCalender={closeCalender}
                                         isValidDate={(date) => date && !isNaN(date.getTime())} isPastDate={isPastDate}
@@ -781,13 +788,17 @@ function OrderDetails({ order }) {
                             </div>
                             <div className="admin-orderContent">
                                 <div className="admin-orderContentLeft">Total Amount</div>
-                                <div className="admin-orderContentRight"> ₹{safeOrder.products.reduce((sum, p) => sum + (p.booking?.totalPrice || 0), 0)}</div>
+                                {/* <div className="admin-orderContentRight"> ₹{safeOrder.products.reduce((sum, p) => sum + (p.booking?.totalPrice || 0), 0)}</div> */}
+                                <div className="admin-orderContentRight" style={{width:'auto'}}> {formatIndianCurrency(safeOrder.products.reduce((sum, p) => sum + (p.booking?.totalPrice || 0), 0), true)}</div>
+
                             </div>
                         </div>
                     </div>
                     <div className="admin-orderContent admin-totalPaidAmt">
                         <div className="admin-orderContentLeft adminTotalAmt">Paid Amount</div>
-                        <div className="admin-orderContentRight adminTotalAmt">{`₹${safeOrder.client?.paidAmount}` || 0}</div>
+                        {/* <div className="admin-orderContentRight adminTotalAmt">{`₹${safeOrder.client?.paidAmount}` || 0}</div> */}
+                        <div className="admin-orderContentRight adminTotalAmt" style={{width:'auto'}}>{formatIndianCurrency(safeOrder.products.reduce((sum, p) => sum + (p.booking?.totalPrice || 0), 0), true)}</div>
+
                     </div>
 
                 </>

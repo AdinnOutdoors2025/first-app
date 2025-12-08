@@ -102,43 +102,46 @@ function OdometerComponent() {
 
           <div className="achieved-inside">
             {/* Inside content */}
+             {/* Completed Projects  */}
             <div className="inside-content">
-              <div id="completedProjects" className="inside-num" style={{display:'flex'}}>
-              {showPlus && counters.completedProjects > 0 && (
-              <span className="plus-symbol">+</span>
-            )}
+              <div id="completedProjects" className="inside-num" style={{ display: 'flex' }}>
+                {showPlus && counters.completedProjects > 0 && (
+                  <span className="plus-symbol">+</span>
+                )}
               </div>
               <div className="inside-para">Completed Projects</div>
             </div>
 
-
+            {/* Satisfied Customers  */}
             <div className="inside-content">
-              <div id="ongoingProjects" className="inside-num" style={{display:'flex'}}>
-              
-              {showPlus && counters.ongoingProjects > 0 && (
-              <span className="plus-symbol">+</span>
-            )}            
-          </div>
-              <div className="inside-para">Ongoing Projects</div>
+              <div id="satisfiedCustomers" className="inside-num" style={{ display: 'flex' }}>
+                {showPlus && counters.satisfiedCustomers > 0 && (
+                  <span className="plus-symbol">+</span>
+                )}
+              </div>
+              <div className="inside-para">Satisfied Customers</div>
             </div>
 
-
+            {/* Expert workers  */}
             <div className="inside-content">
               <div id="expertWorkers" className="inside-num" >
-             000
+                000
               </div>
               <div className="inside-para">Expert Workers</div>
             </div>
 
-
+            {/* Ongoing projects  */}
             <div className="inside-content">
-              <div id="satisfiedCustomers" className="inside-num" style={{display:'flex'}}>
-              {showPlus && counters.satisfiedCustomers > 0 && (
-              <span className="plus-symbol">+</span>
-            )}
+              <div id="ongoingProjects" className="inside-num" style={{ display: 'flex' }}>
+
+                {showPlus && counters.ongoingProjects > 0 && (
+                  <span className="plus-symbol">+</span>
+                )}
               </div>
-              <div className="inside-para">Satisfied Customers</div>
+              <div className="inside-para">Ongoing Projects</div>
             </div>
+
+
           </div>
         </div>
       </div>

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./B20CalenderMain.css";
-// const bookedDates = [new Date(2025, 2, 10), new Date(2025, 2, 12), new Date(2025, 2, 18)];
+import { formatIndianCurrency } from './FORMATED_AMOUNT';
 
 const Calendar = ({ closeCalendar, selectedDates, generateMonth, handleDateClick, resetDates, getDateSelectionClass, goToNextMonth, goToPreviousMonth, bookedDates, currentMonth, confirmedDates, setConfirmedDates, pricePerDay, confirmDates, totalPrice, calendarErrorMessage, setCalendarErrorMessage }) => {
-
-
   //CALENDER SMALL SCREENS
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 991);
 
@@ -15,7 +13,6 @@ const Calendar = ({ closeCalendar, selectedDates, generateMonth, handleDateClick
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
   return (
 
     <div className={`calendar-container ${isSmallScreen ? 'scrollable' : ''}`}>
@@ -123,7 +120,9 @@ const Calendar = ({ closeCalendar, selectedDates, generateMonth, handleDateClick
                   </span> <br></br>
                   {/* Total Amount Calculation */}
                   <span>
-                    Amount: <span style={{ color: 'red' }}>₹{totalPrice.toLocaleString()}</span>
+                    {/* Amount: <span style={{ color: 'red' }}>₹{totalPrice.toLocaleString()}</span> */}
+                    Amount: <span style={{ color: 'red' }}>{formatIndianCurrency(totalPrice, true)}</span>
+
                   </span>
                   <br />
                 </div>
@@ -205,7 +204,9 @@ const Calendar = ({ closeCalendar, selectedDates, generateMonth, handleDateClick
               </div>
               <div className="calendarAmountMain">
                 <span>
-                  Amount: <span style={{ color: 'red' }}>₹{totalPrice.toLocaleString()}</span>
+                  {/* Amount: <span style={{ color: 'red' }}>₹{totalPrice.toLocaleString()}</span> */}
+                    Amount: <span style={{ color: 'red' }}>{formatIndianCurrency(totalPrice, true)}</span>
+
                 </span>
                 <br />
                 {/* <span> End Date: {selectedDates.end ? selectedDates.end.toDateString() : "--"}</span> <br /> */}

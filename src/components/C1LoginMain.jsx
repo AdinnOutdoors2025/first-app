@@ -52,7 +52,8 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
             if (!identifier) {
                 setErrorMessage('Please enter your email or phone number');
                 return;
-            }
+            } 
+
             // Determine if it's a phone or email and clean the input
             let isPhone = /^\d{10}$/.test(identifier);
             let cleanedIdentifier = identifier;
@@ -80,7 +81,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
             }
 
             // Use the cleaned identifier for the API call
-            const loginIdentifier = isPhone ? cleanedIdentifier : cleanedIdentifier;
+          //  const loginIdentifier = isPhone ? cleanedIdentifier : cleanedIdentifier;
 
             try {
                 setStatus('Checking user...');
@@ -89,7 +90,9 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 const checkResponse = await fetch(`${baseUrl}/login/${checkEndpoint}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(isPhone ? { phone: loginIdentifier } : { email: loginIdentifier })
+                    // body: JSON.stringify(isPhone ? { phone: loginIdentifier } : { email: loginIdentifier })
+                    body: JSON.stringify(isPhone ? { phone: cleanedIdentifier } : { email: cleanedIdentifier })
+
                 });
                 const checkData = await checkResponse.json();
 
@@ -98,7 +101,8 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                     return;
                 }
                 // Send OTP
-                await sendOtpRequest(isPhone, loginIdentifier, '');
+                // await sendOtpRequest(isPhone, loginIdentifier, '')
+                await sendOtpRequest(isPhone, cleanedIdentifier, '');
 
             } catch (error) {
                 console.error(error);
@@ -124,8 +128,11 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 return;
             }
 
-            setUsePhoneOTP(false); // For signup, we'll use email by default
-
+            // setUsePhoneOTP(false); // For signup, we'll use email by default
+              // For signup, use phone for OTP by default
+            setUsePhoneOTP(true);
+            setUserPhone(cleanedPhone); 
+    
             try {
                 setStatus('Checking user...');
                 // Check if user exists
@@ -145,9 +152,12 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 if (checkData.phoneExists) {
                     setErrorMessage('Phone already registered. Please login.');
                     return;
-                }
-                // Send OTP via email for signup
-                await sendOtpRequest(false, email, userName);
+                } 
+
+                // // Send OTP via email for signup
+                // await sendOtpRequest(false, email, userName);
+                 // Send OTP via SMS for signup (phone will be used)
+                await sendOtpRequest(true, cleanedPhone, userName);
 
             } catch (error) {
                 console.error(error);
@@ -162,13 +172,23 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
         try {
             setStatus('Sending OTP...');
 
+             // For login, we need to pass whether it's signup or not
+            const requestBody = {
+                ...(isPhone ? { phone: identifier } : { email: identifier }),
+                userName: userName,
+                isSignUp: isSignUp // Pass this flag to backend
+            };
+
             const otpResponse = await fetch(`${baseUrl}/login/send-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    ...(isPhone ? { phone: identifier } : { email: identifier }),
-                    userName: userName
-                })
+                body: JSON.stringify(
+                //     {
+                //     ...(isPhone ? { phone: identifier } : { email: identifier }),
+                //     userName: userName
+                // } 
+                requestBody
+            )
             });
 
             const otpData = await otpResponse.json();
@@ -177,6 +197,17 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 setOtpSent(true);
                 startResendTimer();
                 setStatus('OTP Sent!');
+                // For localhost testing: Show OTP in console when using phone
+                if (isPhone && otpData.testOtp ) {
+                    console.log('=========================================');
+                    console.log('TESTING MODE - SMS OTP (Localhost):');
+                    console.log('=========================================');
+                    console.log(`Phone: ${identifier}`);
+                    console.log(`OTP: ${otpData.testOtp}`);
+                    console.log('=========================================');
+                    console.log('NOTE: In production, this would be sent via SMS');
+                    console.log('=========================================');
+                } 
             } else {
                 setStatus('Failed');
                 setErrorMessage(otpData.message || "Failed to send OTP. Try again.");
@@ -238,8 +269,10 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                     loginUser(verifyData.user, keepSignedIn);
                     alert("Logged in successfully!");
                 }
+                setVerified(true);
+                onClose();
             }
-            onClose();
+            // onClose();
             // navigate("/book1");
         } catch (error) {
             console.error("Verification error:", error);
@@ -269,17 +302,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
             if (resendTimer === 0) clearInterval(interval);
         }, 1000);
     };
-    //Check if the user exists are not
-    const checkUserExists = async (email) => {
-        try {
-            const response = await axios.post(`${baseUrl}/login/check-user`, { email });
-            return response.data.exists;
-        }
-        catch (error) {
-            console.log("Error Checking User:", error);
-            return false;
-        }
-    };
+   
 
     // Enter OTP to target next value 
     function handleOtpChange(e, index) {
@@ -378,7 +401,9 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 ) : (
                     <>
                         <div className='verifyOtp'>VERIFY WITH OTP</div>
-                        <div className='verifySent'>Sent to {usePhoneOTP ? userPhone : email}</div>
+                        {/* <div className='verifySent'>Sent to {usePhoneOTP ? userPhone : email}</div> */}
+                        <div className='verifySent'>Sent to {usePhoneOTP ? `+91 ${userPhone}` : email}</div>
+
                         <div className='otpBox'>
                             {enterOtp.map((data, i) => (
                                 <input

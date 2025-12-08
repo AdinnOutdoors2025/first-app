@@ -6,6 +6,8 @@ import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
 import { MainLayout } from './MainLayout';
 import { baseUrl } from '../Adminpanel/BASE_URL';
+import { formatIndianCurrency } from './FORMATED_AMOUNT';
+
 
 const Cart = () => {
     const { user, openLogin, closeLogin, isLoggedIn, isLoginOpen } = useLogin();
@@ -212,6 +214,24 @@ const Cart = () => {
     };
 
 
+
+    //FORMAT THE AMOUNT INTO INDIAN CURRENCY
+    const parseAmount = (amount) => {
+        if (!amount && amount !== 0) return 0;
+        
+        if (typeof amount === 'number') return amount;
+        
+        if (typeof amount === 'string') {
+            // Remove any commas, currency symbols, and spaces
+            const cleaned = amount.replace(/[₹$,¥\s]/g, '').replace(/,/g, '');
+            const parsed = parseFloat(cleaned);
+            return isNaN(parsed) ? 0 : parsed;
+        }
+        
+        return 0;
+    };
+
+
     return (
         <MainLayout>
             <div>
@@ -253,7 +273,11 @@ const Cart = () => {
                                 </div>
                                 <div className='item-scroll'>
                                     {items.length > 0 ? (
-                                        items.map((item) => (
+                                        items.map((item) => {
+                                            // Parse amounts for this item
+                                            const priceAmount = parseAmount(item.price);
+                                            const totalAmount = parseAmount(item.totalAmount);
+                                            return (
                                             <div className="cart-item-content" key={item._id}>
                                                 <div className='input-checks'>
                                                     <label className="checkbox-container1">
@@ -271,14 +295,14 @@ const Cart = () => {
                                                     </div>
                                                     <div>
                                                         <div className='item-title'>{item.prodName}</div>
-                                                        <div className='item-price'>₹ {item.price.toLocaleString()}</div>
+                                                        <div className='item-price'>{formatIndianCurrency(priceAmount, true)} / Per Day</div>
                                                         <div className="d-flex itemDateRange">
                                                             <div className='item-dateRange'>Campaign Date</div>
                                                             <div className='item-detailSection'> {item.dateRange}</div>
                                                         </div>
                                                         <div className="d-flex itemDateRange">
                                                             <div className='item-dateRange'>Total Amount</div>
-                                                            <div className='item-detailSection'>₹ {item.totalAmount}</div>
+                                                            <div className='item-detailSection'>{formatIndianCurrency(totalAmount, true)}</div>
                                                         </div>
                                                         <div className="d-flex itemSizeDimensions">
                                                             <div className='item-size'>Size & Dimensions</div>
@@ -299,7 +323,8 @@ const Cart = () => {
                                                     </button>
                                                 </div>
                                             </div>
-                                        ))
+                                            )
+                                    })
                                     ) : (
                                         <div className='text-center align-center'>
                                             <i className="fas fa-exclamation-circle" style={{ color: 'red', fontSize: '20px', marginRight: '5px' }}></i>
@@ -315,22 +340,26 @@ const Cart = () => {
                             <div className="cart-summary">
                                 <div className='item-subTotal'>
                                     <div> Subtotal<br />({totalItems} items)</div>
-                                    <div>₹{subTotal.toLocaleString()}</div>
+                                    {/* <div>₹{subTotal.toLocaleString()}</div> */}
+                                    <div>{formatIndianCurrency(subTotal, true)}</div>
+
                                 </div>
                                 <div className='item-totalAmount'>
                                     <div>Total Amount</div>
-                                    <div>₹{subTotal.toLocaleString()}</div>
+                                    <div>{formatIndianCurrency(subTotal, true)}</div>
                                 </div>
                                 <button
                                     className="me-4 cart-btn-pay"
                                     onClick={handleCheckout}
                                     disabled={items.length === 0}
                                 >
-                                    Pay ₹{cartAmount.toLocaleString()}
+                                    {/* Pay ₹{cartAmount.toLocaleString()} */}
+                                    Pay {formatIndianCurrency(subTotal, true)}
+
                                 </button>
-                                <div className="item-reserve-button">
+                                {/* <div className="item-reserve-button">
                                     Reserve at ₹{cartAmount.toLocaleString()} & Get {cartOffer.toLocaleString()}% Off
-                                </div>
+                                </div> */}
                             </div>
                             <div className="help-section">
                                 <div className='help-section-content'>

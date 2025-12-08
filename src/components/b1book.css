@@ -437,6 +437,11 @@
     top: 73px;
 }
 
+.board-price-bookPerDay {
+    color: rgba(51, 51, 51, 1);
+    font-size: 14px;
+    font-weight: 600;
+}
 
 /* Responsive Media Queries */
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
@@ -642,14 +647,20 @@
         margin-top: 10%;
         margin-bottom: 5%;
     }
+
+    .board-price-bookPerDay {
+        font-size: 22px;
+    }
 }
 
 /* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
 @media (min-width: 1440px) and (max-width: 2559px) {
+
     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
     .bookMainDeal .navbar1 {
         top: 75px;
     }
+
     .side-bar-content {
         width: 122%;
         margin: auto -12px;
@@ -828,15 +839,19 @@
         margin-top: 10%;
         margin-bottom: 5%;
     }
-
+.board-price-bookPerDay {
+        font-size: 17px;
+    }
 }
 
 /* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
 @media (min-width: 992px) and (max-width: 1023px) {
+
     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
     .bookMainDeal .navbar1 {
         top: 60px;
     }
+
     .side-bar-main {
         /* margin: auto -2%;*/
     }
@@ -1037,17 +1052,23 @@
         margin-top: 10%;
         margin-bottom: 5%;
     }
+    .board-price-bookPerDay {
+        font-size: 11px;
+    }
 }
 
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
 @media (min-width: 768px) and (max-width: 991px) {
-     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
+
+    /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
     .bookMainDeal .navbar1 {
         top: 60px;
     }
-    .bookMainDeal  .side-bar-main{
+
+    .bookMainDeal .side-bar-main {
         margin-top: 8%;
     }
+
     .side-bar-main {
         margin: auto -11px;
         /* border: 1px solid black; */
@@ -1246,6 +1267,9 @@
         /* gap: -1px;*/
         margin-top: 8%;
         margin-bottom: 5%;
+    } 
+     .board-price-bookPerDay {
+        font-size: 14px;
     }
 
 }
@@ -1704,6 +1728,9 @@
         /* gap: 5px; */
         margin-top: 10%;
         margin-bottom: 5%;
+    }
+      .board-price-bookPerDay {
+        font-size: 17px;
     }
 
 }
@@ -2176,6 +2203,9 @@
     .pagination {
         margin-top: 10%;
         margin-bottom: 5%;
+    }
+        .board-price-bookPerDay {
+        font-size: 16px;
     }
 }
 
@@ -2658,6 +2688,9 @@
     .pagination {
         margin-top: 10%;
         margin-bottom: 5%;
+    } 
+     .board-price-bookPerDay {
+        font-size: 16px;
     }
 }
 
@@ -3059,6 +3092,9 @@
     .pagination {
         margin-top: 10%;
         margin-bottom: 5%;
+    }
+     .board-price-bookPerDay {
+        font-size: 15px;
     }
 }
 
@@ -3466,11 +3502,14 @@
         margin-top: 10%;
         margin-bottom: 10%;
     }
+     .board-price-bookPerDay {
+        font-size: 15px;
+    }
 }
 
-.Book-loading-gif{
+.Book-loading-gif {
     height: 100px;
-    align-items:center;
+    align-items: center;
     align-content: center;
     text-align: center;
     margin: auto;
