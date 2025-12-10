@@ -157,6 +157,7 @@ const OrdersTable = () => {
                             <th><div>Order Date</div></th>
                             <th><div>Booking Date</div></th>
                             <th><div>Status</div></th>
+                            <th><div>Handle By</div></th>
                             <th><div> </div></th>
                         </tr>
                     </thead>
@@ -208,6 +209,7 @@ const OrdersTable = () => {
 
                                 </td>
                                 <td>{order.status}</td>
+                                <td>{order.handled_by ? order.handled_by : "-"}</td>
                                 <td className="order-threeDotsTd" onClick={() => toggleMenu(order._id)}>
                                     <div className="order-actionMenuRow">
                                         {/* 3 Dots */}
