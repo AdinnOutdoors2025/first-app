@@ -156,7 +156,7 @@ const OrdersTable = () => {
                             <th><div>Product ID</div></th>
                             <th><div>Order Date</div></th>
                             <th><div>Booking Date</div></th>
-                            <th><div>Status</div></th>
+                            <th><div>Order Placed By</div></th>
                             <th><div>Handle By</div></th>
                             <th><div> </div></th>
                         </tr>

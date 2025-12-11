@@ -7,6 +7,30 @@ import { baseUrl } from './BASE_URL';
 import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
 
 
+
+const formatEditedDateTime = (dateString) => {
+  if (!dateString) return "";
+
+  const date = new Date(dateString);
+
+  // Date
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = date.toLocaleString("en-US", { month: "short" }); // Dec
+  const year = date.getFullYear();
+
+  
+  const time = date.toLocaleTimeString("en-IN", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  }).toLowerCase(); // convert AM/PM to am/pm
+
+  return `${day}-${month}-${year}, ${time}`;
+};
+
+
+
+
 function OrderDetails({ order }) {
     // Handle null/undefined order state
 
@@ -608,6 +632,21 @@ function OrderDetails({ order }) {
 
     return (
         <div className='adminOrderDetailsMain'>
+                   
+            <div className="order-card-header">
+            <h2 className="order-title">Order Information</h2>
+
+
+            {safeOrder.handled_by && safeOrder.handled_by.trim() !== "" && (
+                <span className="order-taken-by">
+                    Order Handled By: {safeOrder.handled_by || "-"}
+                </span>
+            )}
+
+
+        
+            </div>
+
             {!safeOrder._id ? (
                 <div className="no-order-selected">
                     <h3>No order selected</h3>
@@ -633,11 +672,7 @@ function OrderDetails({ order }) {
                                         <input type='text' placeholder='Enter Payment' className='order-clientDetailsInput' value={formatIndianCurrency(safeOrder.products.reduce((sum, p) => sum + (p.booking?.totalPrice || 0), 0), true)}
                                         readOnly ></input>
                                 </div>
-                                <div className='order-clientDetailSection'>
-                                    <div className='order-clientDetailHeading'>Order Taken By</div>
-                                    <input type='text' placeholder='Enter Status' className='order-clientDetailsInput' value={safeOrder.status || ''}
-                                        readOnly ></input>
-                                </div>
+                      
                             </div>
                             <div className='order-manageClientInfoRight'>
                                 <div className='order-clientDetailSection'>
@@ -646,7 +681,7 @@ function OrderDetails({ order }) {
                                         readOnly  ></input>
                                 </div>
                                 <div className='order-clientDetailSection'>
-                                    <div className='order-clientDetailHeading'>Status</div>
+                                    <div className='order-clientDetailHeading'>Order Taken By</div>
                                     <input type='text' placeholder='Enter Status' className='order-clientDetailsInput' value={safeOrder.status || ''}
                                         readOnly ></input>
                                 </div>
@@ -688,7 +723,25 @@ function OrderDetails({ order }) {
 
                     {/* Product Section  */}
                     <div className='order-manageClientSection adminOrder_productSection'>
-                        <div className='order-manageRightSideHeading admin-OrderTableHeading'>Product Information</div>
+                        {/* <div className='order-manageRightSideHeading admin-OrderTableHeading'>Product Information</div> */}
+
+                        {/* Show last edited  */}
+                                                <div className='order-manageRightSideHeading admin-OrderTableHeading' 
+                            style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                            
+                            <span>Product Information</span>
+
+                            
+                            {safeOrder.last_edited && (
+                                    <span style={{ fontSize: "14px", color: "#555", fontWeight: 500 }}>
+                                          <i className="fa-solid fa-pen-to-square lastEditedIcon"></i>&nbsp;Last Edited On:{" "}
+                                         {formatEditedDateTime(safeOrder.last_edited)}
+                                    </span>
+                                )}
+                                                    </div>
+                        {/* Show last edited  */}
+
+
 
                         {/* Product Tabs */}
                         <div className="product-tabs">
