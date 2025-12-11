@@ -124,6 +124,30 @@ const BillingDetails = () => {
             console.error("SMS sending error:", error);
         }
     };
+
+
+     // AMOUNT CONVERTED INTO INDIAN CURRENCY
+    const parseAmount = (amount) => {
+        if (amount === null || amount === undefined || amount === '') return 0;
+        if (typeof amount === 'number') return amount;
+
+        if (typeof amount === 'string') {
+            // Remove any commas, currency symbols, and spaces
+            const cleaned = amount.replace(/[₹$,¥\s]/g, '').replace(/,/g, '');
+            const parsed = parseFloat(cleaned);
+            return isNaN(parsed) ? 0 : parsed;
+        }
+        // Try to convert to number
+        const parsed = Number(amount);
+        return isNaN(parsed) ? 0 : parsed;
+    };
+
+     // Parse the amounts once at the beginning
+    const parsedPrice = parseAmount(reserveItem?.price || 0);
+    const parsedTotalAmount = parseAmount(reserveItem?.totalAmount || 0);
+    const parsedSpotPay = parseAmount(reserveItem?.SpotPay || 0);
+    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!user) {
@@ -149,16 +173,16 @@ const BillingDetails = () => {
             }
             // Generate all dates in the range for booking
             const bookedDates = getDateRangeArray(startDate, endDate);
-            // Helper function to clean and convert price strings to numbers
-            const cleanPrice = (price) => {
-                if (typeof price === 'number') return price;
-                if (typeof price === 'string') {
-                    // Remove commas and any non-numeric characters except decimal point
-                    const cleaned = price.replace(/[^0-9.]/g, '');
-                    return parseFloat(cleaned) || 0;
-                }
-                return 0;
-            };
+            // // Helper function to clean and convert price strings to numbers
+            // const cleanPrice = (price) => {
+            //     if (typeof price === 'number') return price;
+            //     if (typeof price === 'string') {
+            //         // Remove commas and any non-numeric characters except decimal point
+            //         const cleaned = price.replace(/[^0-9.]/g, '');
+            //         return parseFloat(cleaned) || 0;
+            //     }
+            //     return 0;
+            // };
             // Generate order ID
             const orderId = generateUserOrderId();
             // Prepare order data
@@ -173,50 +197,59 @@ const BillingDetails = () => {
                     pincode: pincode,
                     state: state,
                     city: city,
-                    paidAmount: cleanPrice(reserveItem.SpotPay).toString(),
+                //  paidAmount: cleanPrice(reserveItem.SpotPay).toString(),
+                    paidAmount: parsedSpotPay, // Use raw number
+
                 },
                 products: [{
                     id: reserveItem.id,
                     prodCode: reserveItem.prodCode,
                     name: reserveItem.prodName,
                     image: reserveItem.image,
-                    price: cleanPrice(reserveItem.price),
-                    printingCost: cleanPrice(reserveItem.PrintingCost || 0), // Add if available
-                    mountingCost: cleanPrice(reserveItem.MountingCost || 0), // Add if available
-                    lighting: reserveItem.SpotOutdoorType || "Not Specified", // Add if available
-                    fixedAmount: cleanPrice(reserveItem.SpotPay || 0), // Add if available
-                    fixedAmountOffer: cleanPrice(reserveItem.Offer || 0), // Add if available
+                    price: parsedPrice,
+                    // printingCost: cleanPrice(reserveItem.PrintingCost || 0), // Add if available
+                    // mountingCost: cleanPrice(reserveItem.MountingCost || 0), // Add if available
+                     printingCost: parseAmount(reserveItem.PrintingCost || 0),
+                    mountingCost: parseAmount(reserveItem.MountingCost || 0),
+                    lighting: reserveItem.SpotOutdoorType || "Not Specified", 
+                    fixedAmount: parsedSpotPay, 
+                    // fixedAmountOffer: cleanPrice(reserveItem.Offer || 0), 
+                    // size: {
+                    //     width: cleanPrice(reserveItem.sizeHeight || 0), 
+                    //     height: cleanPrice(reserveItem.sizeWidth || 0), 
+                    //     squareFeet: cleanPrice(reserveItem.dimension || 0)
+                    // },
+                     fixedAmountOffer: parseAmount(reserveItem.Offer || 0),
                     size: {
-                        width: cleanPrice(reserveItem.sizeHeight || 0), // Add if available
-                        height: cleanPrice(reserveItem.sizeWidth || 0), // Add if available
-                        squareFeet: cleanPrice(reserveItem.dimension || 0)// Add if available
+                        width: parseAmount(reserveItem.sizeHeight || 0),
+                        height: parseAmount(reserveItem.sizeWidth || 0),
+                        squareFeet: parseAmount(reserveItem.dimension || 0)
                     },
-                    fromLocation: reserveItem.FromSpot || "Not Specified", // Add if available
-                    toLocation: reserveItem.ToSpot || "Not Specified", // Add if available
-                    rating: reserveItem.rating || 0, // Add if available
-                    mediaType: reserveItem.adType || "Not Specified", // Add if available
+                    fromLocation: reserveItem.FromSpot || "Not Specified", 
+                    toLocation: reserveItem.ToSpot || "Not Specified", 
+                    rating: reserveItem.rating || 0, 
+                    mediaType: reserveItem.adType || "Not Specified", 
                     location: {
-                        state: reserveItem.state || "Not Specified", // Add if available
-                        district: reserveItem.district || "Not Specified" // Add if available
+                        state: reserveItem.state || "Not Specified", 
+                        district: reserveItem.district || "Not Specified" 
                     },
                     booking: {
                         startDate: formatDateForStorage(startDate),
                         endDate: formatDateForStorage(endDate),
                         // currentDate: getCurrentDateFormatted(),
                         totalDays: reserveItem.totalDays,
-                        totalPrice: cleanPrice(reserveItem.totalAmount)
+                        // totalPrice: cleanPrice(reserveItem.totalAmount)
+                        totalPrice: parsedTotalAmount
+                        
+                        
                     },
                     bookedDates: bookedDates,
 
                 }],
                 status: "UserSideOrder",
                 orderType: "single"
-                // bookedDates: bookedDates,
-                // orderId: orderId
-
             };
 
-            // Save to database
             // Save to database using fetch instead of axios
             const response = await fetch(`${baseUrl}/prodOrders`, {
                 method: 'POST',
@@ -260,12 +293,12 @@ const BillingDetails = () => {
                             prodCode: reserveItem.prodCode,
                             name: reserveItem.prodName,
                             image: reserveItem.image,
-                            price: cleanPrice(reserveItem.price),
+                            price: parsedPrice,
                             booking: {
                                 startDate: reserveItem.startDate,
                                 endDate: reserveItem.endDate,
                                 totalDays: reserveItem.totalDays,
-                                totalPrice: cleanPrice(reserveItem.totalAmount)
+                                totalPrice: parsedTotalAmount
                             },
                             fromLocation: reserveItem.FromSpot,
                             toLocation: reserveItem.ToSpot,
@@ -276,7 +309,7 @@ const BillingDetails = () => {
                             }
                         }],
                         orderDate: new Date().toLocaleDateString(),
-                        totalAmount: reserveItem.totalAmount
+                        totalAmount: parsedTotalAmount
                     })
                 }
                 );
@@ -314,22 +347,6 @@ const BillingDetails = () => {
         } finally {
             setIsLoading(false);
         }
-    };
-
-       // AMOUNT CONVERTED INTO INDIAN CURRENCY
-    const parseAmount = (amount) => {
-        if (!amount && amount !== 0) return 0;
-        
-        if (typeof amount === 'number') return amount;
-        
-        if (typeof amount === 'string') {
-            // Remove any commas, currency symbols, and spaces
-            const cleaned = amount.replace(/[₹$,¥\s]/g, '').replace(/,/g, '');
-            const parsed = parseFloat(cleaned);
-            return isNaN(parsed) ? 0 : parsed;
-        }
-        
-        return 0;
     };
 
     // Ensure the amount is properly parsed
@@ -555,7 +572,7 @@ const safeTotalAmount = typeof reserveItem.totalAmount === 'string'
                                             <div>{formatIndianCurrency(safePrice, true)} Per Day</div>
 
                                             <div>Booked date : {reserveItem.dateRange} ({reserveItem.totalDays} Days)</div>
-                                            <div>Booked Amount : {formatIndianCurrency(safeTotalAmount, true)}</div>
+                                            <div>Booked Amount : {formatIndianCurrency(parsedTotalAmount)}</div>
                                         </div>
                                     </div>
 
@@ -564,14 +581,14 @@ const safeTotalAmount = typeof reserveItem.totalAmount === 'string'
                                         <div className="billing-orderContent">
                                             <div className="billing-orderContentLeft">Price</div>
                                             {/* <div className="billing-orderContentRight">₹{reserveItem.SpotPay.toLocaleString()}</div> */}
-                                            <div className="billing-orderContentRight">{formatIndianCurrency(safeTotalAmount, true)}</div>
+                                            <div className="billing-orderContentRight">{formatIndianCurrency(parsedTotalAmount)}</div>
 
                                         </div>
 
                                         <div className="billing-orderContent">
                                             <div className="billing-orderContentLeft BillingTotalAmt">Total Amount</div>
                                             {/* <div className="billing-orderContentRight BillingTotalAmt">₹{reserveItem.SpotPay.toLocaleString()}</div> */}
-                                            <div className="billing-orderContentRight BillingTotalAmt">{formatIndianCurrency(safeTotalAmount, true)}</div>
+                                            <div className="billing-orderContentRight BillingTotalAmt">{formatIndianCurrency(parsedTotalAmount)}</div>
 
                                         </div>
                                     </div>
@@ -584,7 +601,7 @@ const safeTotalAmount = typeof reserveItem.totalAmount === 'string'
                                 {/* Billing button  */}
                                 <div className="billingButton">
                                     {/* <div> ₹{reserveItem.SpotPay.toLocaleString()}</div> */}
-                                    <div className="billingTotalAmount"> {formatIndianCurrency(safeTotalAmount, true)}</div>
+                                    <div className="billingTotalAmount"> {formatIndianCurrency(parsedTotalAmount)}</div>
                                     <div> <button className="billingContinueBtn" type='submit'
                                         disabled={isLoading} >
                                         {isLoading ? "Processing..." : "Continue"}

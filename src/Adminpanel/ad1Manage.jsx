@@ -563,111 +563,7 @@ function AdManageSection() {
 
         fetchBookedDates();
     }, [productID, editOrder]);
-
-
-    // useEffect(() => {
-    //     if (editOrder) {
-    //         // UPDATED DATE PARSING FUNCTION
-    //         const parseDate = (dateString) => {
-    //             if (!dateString) return null;
-    //             // Handle UTC dates consistently
-    //             if (dateString.includes('T')) {
-    //                 const dt = new Date(dateString);
-    //                 return new Date(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth(), dt.getUTCDate()));
-    //             }
-    //             const parts = dateString.split('-');
-    //             if (parts.length === 3) {
-    //                 return new Date(Date.UTC(
-    //                     parseInt(parts[0]),
-    //                     parseInt(parts[1]) - 1,
-    //                     parseInt(parts[2])
-    //                 ));
-    //             }
-
-    //             return null;
-    //         };
-    //         const startDate = parseDate(editOrder.booking?.startDate);
-    //         const endDate = parseDate(editOrder.booking?.endDate);
-    //         if (startDate && endDate && !isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
-    //             // Ensure dates are ordered correctly
-    //             const orderedDates = startDate > endDate ?
-    //                 { start: endDate, end: startDate } :
-    //                 { start: startDate, end: endDate };
-    //             setSelectedDates(orderedDates);
-    //             setConfirmedDates(orderedDates);
-    //         }
-    //         // Populate all form fields with the editOrder data
-    //         setClientName(editOrder.client.name || "");
-    //         setClientEmail(editOrder.client.email || "");
-    //         setClientContact(editOrder.client.contact || "");
-    //         setClientCompany(editOrder.client.company || "");
-    //         setClientPaidAmount(editOrder.client.paidAmount || "");
-    //         setProductId(editOrder.product.id || "");
-    //         setProductName(editOrder.product.name || "");
-    //         setProductImage(editOrder.product.image || "");
-    //         setProductAmount(editOrder.product.price?.toString() || "");
-    //         setProductPrintingCost(editOrder.product.printingCost?.toString() || "");
-    //         setProductMountingCost(editOrder.product.mountingCost?.toString() || "");
-    //         setProdLighting(editOrder.product.lighting || "");
-    //         setProdWidth(editOrder.product.size.width?.toString() || 0);
-    //         setProdHeight(editOrder.product.size.height?.toString() || 0);
-    //         setProductFixedAmount(editOrder.product.fixedAmount?.toString() || 0);
-    //         setProductFixedAmountOffer(editOrder.product.fixedAmountOffer?.toString() || 0);
-    //         setProdRating(editOrder.product.rating || 0);
-    //         setProductFrom(editOrder.product.fromLocation || "");
-    //         setProductTo(editOrder.product.toLocation || "");
-    //         setProdType(editOrder.product.mediaType || "");
-    //         setSelectedState(editOrder.product.location.state || "");
-    //         setSelectedDistrict(editOrder.product.location.district || "");
-
-    //         // Handle dates - parse from ISO string or formatted string
-    //         if (editOrder.booking.startDate && editOrder.booking.endDate) {
-    //             try {
-    //                 // Try parsing as ISO string first
-    //                 let startDate = new Date(editOrder.booking.startDate);
-    //                 let endDate = new Date(editOrder.booking.endDate);
-
-    //                 // If parsing failed (invalid date), try alternative formats
-    //                 if (isNaN(startDate.getTime())) {
-    //                     // Handle other date formats if needed
-    //                     const dateParts = editOrder.booking.startDate.split(' ');
-    //                     if (dateParts.length === 2) {
-    //                         const month = new Date(Date.parse(dateParts[0] + " 1, 2025")).getMonth();
-    //                         const day = parseInt(dateParts[1]);
-    //                         startDate = new Date(2025, month, day);
-    //                     }
-    //                 }
-
-    //                 if (isNaN(endDate.getTime())) {
-    //                     const dateParts = editOrder.booking.endDate.split(' ');
-    //                     if (dateParts.length === 2) {
-    //                         const month = new Date(Date.parse(dateParts[0] + " 1, 2025")).getMonth();
-    //                         const day = parseInt(dateParts[1]);
-    //                         endDate = new Date(2025, month, day);
-    //                     }
-    //                 }
-
-    //                 if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
-    //                     setSelectedDates({ start: startDate, end: endDate });
-    //                     setConfirmedDates({ start: startDate, end: endDate });
-    //                 } else {
-    //                     console.warn("Could not parse dates from order data");
-    //                     setSelectedDates({ start: null, end: null });
-    //                     setConfirmedDates({ start: null, end: null });
-    //                 }
-    //             } catch (error) {
-    //                 console.error("Error parsing dates:", error);
-    //                 setSelectedDates({ start: null, end: null });
-    //                 setConfirmedDates({ start: null, end: null });
-    //             }
-    //         }
-    //     } else {
-    //         resetForm();
-    //     }
-    // }, [editOrder]);
-
-    // Inside your component:
-    
+  
       useEffect(() => {
         if (editOrder) {
             // UPDATED DATE PARSING FUNCTION
@@ -1019,6 +915,7 @@ function AdManageSection() {
                         name: productName,
                         prodCode: productID,
                         price: Number(productAmount),
+                        image : productImage,
                         booking: {
                             startDate: selectedDates.start,
                             endDate: selectedDates.end,
@@ -1045,6 +942,20 @@ function AdManageSection() {
             // Reset loading state
             setIsSaving(false);
         }
+    };
+
+
+
+    
+     // Fix for paidAmount display issue
+    const handlePaidAmountChange = (e) => {
+        const value = e.target.value;
+        // Remove non-numeric characters except decimal point
+        const numericValue = value.replace(/[^0-9.]/g, '');
+        // Parse to number
+        const parsedValue = parseFloat(numericValue) || '';
+        setClientPaidAmount(parsedValue);
+        setErrors(prev => ({ ...prev, clientPaidAmount: false }));
     };
 
     return (
@@ -1176,10 +1087,12 @@ function AdManageSection() {
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Paid Amount</div>
                                         <input type='number' placeholder='Enter Paid Amount' value={clientPaidAmount}
-                                            onChange={(e) => {
-                                                setClientPaidAmount(e.target.value);
-                                                setErrors(prev => ({ ...prev, clientPaidAmount: false }));
-                                            }} className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
+                                            // onChange={(e) => {
+                                            //     setClientPaidAmount(e.target.value);
+                                            //     setErrors(prev => ({ ...prev, clientPaidAmount: false }));
+                                            // }} 
+                                            onChange={handlePaidAmountChange}
+                                            className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
                                         {errors.clientPaidAmount && <div className="AdminClienterror-message">Paid Amount is required</div>}
                                     </div>
                                 </div>
