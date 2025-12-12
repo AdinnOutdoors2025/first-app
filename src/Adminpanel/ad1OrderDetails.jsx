@@ -30,10 +30,72 @@ const formatEditedDateTime = (dateString) => {
 };
 
 function OrderDetails({ order }) {
-  /* Set order statuses */
+ 
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [selectedProductId, setSelectedProductId] = useState(null);
+
+  const handleDeleteClick = (orderId, productId) => {
+    setSelectedOrderId(orderId);
+    setSelectedProductId(productId);
+    setShowDeletePopup(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await axios.get(
+        `${baseUrl}/deleteProductOrder/${selectedProductId}/${selectedOrderId}`
+      );
+      setOrderData((prev) => ({
+        ...prev,
+        products: prev.products.filter((p) => p.id !== selectedOrderId),
+      }));
+    } catch (err) {
+      // toast.error("Failed to delete");
+    }
+    setShowDeletePopup(false);
+  };
+
+  // Handle null/undefined order state
+
+  const location = useLocation();
+  const [activeProductIndex, setActiveProductIndex] = useState(0);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // CALENDER EDIT SECTION
+  const [isCalenderOpen, setIsCalenderOpen] = useState(false);
+  const openCalender = () => {
+    setIsCalenderOpen(!isCalendarOpen);
+  };
+  const closeCalender = () => {
+    setIsCalenderOpen(false);
+  };
+
+  // Add default values for null case
+  // const safeOrder = order || location.state?.order || {
+  //     products: [{}],
+  //     client: {},
+  //     status: ""
+  // };
+
+  const initialOrder = order ||
+    location.state?.order || {
+      products: [],
+      client: {},
+      status: "",
+    };
+
+  const [orderData, setOrderData] = useState(initialOrder);
+  const safeOrder = orderData;
+
+  /* delete product */
+
+   /* Set order statuses */
 
   const [orderStatuses, setOrderStatuses] = useState([]);
-  const [selectOrderStauts, setSelectOrderStatus] = useState([]);
+  const [selectOrderStauts, setSelectOrderStatus] = useState([safeOrder.order_status || ""]);
   const [showAddInput, setShowAddInput] = useState(false);
   const [newStatus, setNewStatus] = useState("");
   const fetchOrderStatuses = async () => {
@@ -110,66 +172,6 @@ function OrderDetails({ order }) {
   };
 
   /* Set order statuses */
-  const [showDeletePopup, setShowDeletePopup] = useState(false);
-  const [selectedOrderId, setSelectedOrderId] = useState(null);
-  const [selectedProductId, setSelectedProductId] = useState(null);
-
-  const handleDeleteClick = (orderId, productId) => {
-    setSelectedOrderId(orderId);
-    setSelectedProductId(productId);
-    setShowDeletePopup(true);
-  };
-
-  const confirmDelete = async () => {
-    try {
-      await axios.get(
-        `${baseUrl}/deleteProductOrder/${selectedProductId}/${selectedOrderId}`
-      );
-      setOrderData((prev) => ({
-        ...prev,
-        products: prev.products.filter((p) => p.id !== selectedOrderId),
-      }));
-    } catch (err) {
-      // toast.error("Failed to delete");
-    }
-    setShowDeletePopup(false);
-  };
-
-  // Handle null/undefined order state
-
-  const location = useLocation();
-  const [activeProductIndex, setActiveProductIndex] = useState(0);
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  // CALENDER EDIT SECTION
-  const [isCalenderOpen, setIsCalenderOpen] = useState(false);
-  const openCalender = () => {
-    setIsCalenderOpen(!isCalendarOpen);
-  };
-  const closeCalender = () => {
-    setIsCalenderOpen(false);
-  };
-
-  // Add default values for null case
-  // const safeOrder = order || location.state?.order || {
-  //     products: [{}],
-  //     client: {},
-  //     status: ""
-  // };
-
-  const initialOrder = order ||
-    location.state?.order || {
-      products: [],
-      client: {},
-      status: "",
-    };
-
-  const [orderData, setOrderData] = useState(initialOrder);
-  const safeOrder = orderData;
-
-  /* delete product */
 
   const cancelDelete = () => {
     setShowDeletePopup(false);
@@ -782,8 +784,8 @@ function OrderDetails({ order }) {
             </div>
             {/* show order status */}
             <div className="order-status-dropdown">
-              <label>Order Status</label>
-              <select onChange={handleStatusChange}>
+              <label>Order Status </label>
+              <select onChange={handleStatusChange} value={selectOrderStauts}> 
                 <option value="">Select Status</option>
                 {orderStatuses.map((status) => (
                   <option key={status._id} value={status.name}>
