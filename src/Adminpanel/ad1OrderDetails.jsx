@@ -6,6 +6,7 @@ import CalendarOrderDetails from "./ad1CalenderOrderDetails";
 import { baseUrl } from "./BASE_URL";
 import { formatIndianCurrency } from "../components/FORMATED_AMOUNT";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const formatEditedDateTime = (dateString) => {
   if (!dateString) return "";
@@ -29,6 +30,86 @@ const formatEditedDateTime = (dateString) => {
 };
 
 function OrderDetails({ order }) {
+  /* Set order statuses */
+
+  const [orderStatuses, setOrderStatuses] = useState([]);
+  const [selectOrderStauts, setSelectOrderStatus] = useState([]);
+  const [showAddInput, setShowAddInput] = useState(false);
+  const [newStatus, setNewStatus] = useState("");
+  const fetchOrderStatuses = async () => {
+    try {
+      const res = await axios.get(`${baseUrl}/getOrderStatuses`);
+      setOrderStatuses(res.data.data || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleStatusChange = (e) => {
+    const value = e.target.value;
+    if (value === "__add_new__") {
+      setShowAddInput(true);
+      return;
+    } else {
+      setShowAddInput(false);
+      setSelectOrderStatus(value);
+      updateOrderStatus(value);
+    }
+  };
+
+  const setNewStatusInput = (newStatus) => {
+    setNewStatus(newStatus);
+  };
+
+  const updateOrderStatus = async (statusValue) => {
+    try {
+      const res = await axios.put(
+        `${baseUrl}/updateOrderStatus/${safeOrder._id}`,
+        {
+          status: statusValue,
+        }
+      );
+
+      if (res.data?.status === true) {
+        toast.success(res.data.message || "Status Updated successfully!");
+      } else {
+        toast.error(res.data.message || "Server Error!");
+      }
+    } catch (err) {
+      console.error("Status update failed", err);
+    }
+  };
+
+  const addNewStatus = async () => {
+    if (!newStatus.trim()) return;
+
+    try {
+      const res = await axios.post(`${baseUrl}/addOrderStatus`, {
+        name: newStatus,
+        createdAt: new Date(),
+        updatedAt: null,
+      });
+
+      setOrderStatuses((prev) => [...prev, newStatus]);
+      setShowAddInput(false);
+
+      // Show toast with backend message
+      if (res.data?.status === true) {
+        toast.success(res.data.message || "Status added successfully!");
+      } else {
+        toast.error(res.data.message || "Server Error!");
+      }
+
+      setShowAddInput(false);
+      setNewStatus("");
+
+      fetchOrderStatuses(); // refresh dropdown list
+    } catch (err) {
+      console.error("Error adding status", err);
+    }
+  };
+
+  /* Set order statuses */
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
   const [selectedProductId, setSelectedProductId] = useState(null);
@@ -41,7 +122,6 @@ function OrderDetails({ order }) {
 
   const confirmDelete = async () => {
     try {
-      
       await axios.get(
         `${baseUrl}/deleteProductOrder/${selectedProductId}/${selectedOrderId}`
       );
@@ -90,7 +170,6 @@ function OrderDetails({ order }) {
   const safeOrder = orderData;
 
   /* delete product */
-
 
   const cancelDelete = () => {
     setShowDeletePopup(false);
@@ -673,13 +752,14 @@ function OrderDetails({ order }) {
       setIsSmallScreen(window.innerWidth <= 991);
     };
     window.addEventListener("resize", handleResize);
+    fetchOrderStatuses();
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <div className="adminOrderDetailsMain">
       <div className="order-card-header">
-        <h2 className="order-title">Order Information</h2>
+        {/* <h2 className="order-title">Order Information</h2> */}
 
         {safeOrder.handled_by && safeOrder.handled_by.trim() !== "" && (
           <span className="order-taken-by">
@@ -700,6 +780,41 @@ function OrderDetails({ order }) {
             <div className="order-manageRightSideHeading">
               Order Information
             </div>
+            {/* show order status */}
+            <div className="order-status-dropdown">
+              <label>Order Status</label>
+              <select onChange={handleStatusChange}>
+                <option value="">Select Status</option>
+                {orderStatuses.map((status) => (
+                  <option key={status._id} value={status.name}>
+                    {status.name}
+                  </option>
+                ))}
+                <option value="__add_new__">+ Add New Status</option>
+              </select>
+            </div>
+            {showAddInput && (
+              <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+                <input
+                  onChange={(e) => setNewStatusInput(e.target.value)}
+                  type="text"
+                  placeholder="Enter new status"
+                  className="order-clientDetailsInput"
+                />
+                <button
+                  onClick={addNewStatus}
+                  style={{
+                    background: "green",
+                    color: "#fff",
+                    padding: "5px 10px",
+                    borderRadius: "5px",
+                  }}
+                >
+                  Add
+                </button>
+              </div>
+            )}
+            {/* show order status */}
             <div className="d-flex order-manageClientInformation">
               <div className="order-manageClientInfoLeft">
                 <div className="order-clientDetailSection">

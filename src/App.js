@@ -42,6 +42,10 @@ import DealScrollAnimation from './components/H2DealScroll.jsx';
 import ScrollToTop from './SCROLL_TO_TOP.jsx';
 //Police_Signal_PoleSizes
 import Sizes from './Adminpanel/Police_Signal_PoleSizes.jsx';
+/* Add toast message -SK */
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+/* Add toast message -SK */
 function App() {
   const [load, upadateLoad] = useState(true); 
   useEffect(() => {
@@ -53,6 +57,7 @@ function App() {
   }, []);
   return (
     <div>
+      <ToastContainer position="top-right" autoClose={2000} />
       <SpotProvider>
         <LoginProvider>
           {/* <CartProvider> */}
