@@ -4,12 +4,22 @@ import { useNavigate } from 'react-router-dom';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from './BASE_URL';
 
-const OrdersTable = () => { 
+const OrdersTable = () => {
+    // Handled by the admin name
+
+    const [showHandlerModal, setShowHandlerModal] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [handlerName, setHandlerName] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [handlerError, setHandlerError] = useState('');
+    const [handlerSuccess, setHandlerSuccess] = useState('');
+    // Handled by the admin name
+
     //FETCHED PRODUCTS ORDER PAGE
     const [productsOrderData, setProductsOrderData] = useState([]);
     // In your fetchOrders function, normalize the data
     const fetchOrders = async () => {
-        try { 
+        try {
             const response = await fetch(`${baseUrl}/prodOrders`);
             const data = await response.json();
             // Add safe product fallback
@@ -20,7 +30,7 @@ const OrdersTable = () => {
                 booking: order.products?.[0]?.booking || {}  // Ensure booking exists
             }));
             setProductsOrderData(normalizedData);
-        } 
+        }
         catch (error) {
             console.error("Error fetching orders:", error);
         }
@@ -51,9 +61,6 @@ const OrdersTable = () => {
         }
         return false;
     });
-
-
-
 
     // Calculate Total Pages
     const totalPages = Math.ceil(filteredOrders.length / productsPerPage);
@@ -99,17 +106,295 @@ const OrdersTable = () => {
     };
 
     const navigate = useNavigate();
-    // view details of the order  
+
+    // Handled by the admin name
+    // Handle view order details with handler input
     const handleViewOrderDetails = (order) => {
-        navigate(
-            '/admin#orderDetailsPg', {
+        setSelectedOrder(order);
+        setHandlerName('');
+        setHandlerError('');
+        setHandlerSuccess('');
+
+        // Check if order already has a handler
+        if (order.handled_by && order.handled_by.trim() !== '') {
+            // const confirmView = window.confirm(
+            //     `This order is already handled by "${order.handled_by}". Do you want to view it anyway?`
+            // );
+            // if (confirmView) {
+            //     navigate('/admin#orderDetailsPg', {
+            //         state: {
+            //             order,
+            //             activeMenu: 'orders',
+            //             activeSubOrder: 'Order Info'
+            //         }
+            //     });
+            // }
+
+           // CHANGED: If order already has a handler, go directly to order details
+        if (order.handled_by && order.handled_by.trim() !== '') {
+            navigate('/admin#orderDetailsPg', {
+                state: {
+                    order,
+                    activeMenu: 'orders',
+                    activeSubOrder: 'Order Info'
+                }
+            });
+        } else {
+            // Only show modal if no handler exists
+            setShowHandlerModal(true);
+        }
+        }
+        else {
+            setShowHandlerModal(true);
+        }
+    };
+
+    // // Handle handler name submission
+    // const handleSubmitHandler = async () => {
+    //     if (!handlerName.trim()) {
+    //         setHandlerError('Please enter your name');
+    //         return;
+    //     }
+
+    //     // Validate name (only letters and spaces allowed)
+    //     const nameRegex = /^[a-zA-Z\s]{2,50}$/;
+    //     if (!nameRegex.test(handlerName.trim())) {
+    //         setHandlerError('Please enter a valid name (2-50 characters, letters only)');
+    //         return;
+    //     }
+
+    //     setIsSubmitting(true);
+    //     setHandlerError('');
+    //     setHandlerSuccess('');
+
+    //     try {
+    //         console.log('Submitting handler for order:', selectedOrder._id);
+    //         console.log('Request URL:', `${baseUrl}/prodOrders/${selectedOrder._id}/handled-by`);
+
+    //         const response = await fetch(`${baseUrl}/prodOrders/${selectedOrder._id}/handled-by`, {
+    //             method: 'PUT',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //                 handled_by: handlerName.trim(),
+    //                 last_edited: new Date().toISOString() // Add this to update last_edited
+    //             })
+    //         });
+
+    //         try {
+    //             const data = await response.json();
+
+    //             if (!response.ok) {
+    //                 // Handle server errors (400, 500, etc.)
+    //                 throw new Error(data.message || `Server error: ${response.status}`);
+    //             }
+
+    //             // Check if order is already handled
+    //             if (data.already_handled) {
+    //                 const proceed = window.confirm(
+    //                     `This order is already handled by "${data.current_handler}". Do you want to proceed anyway?`
+    //                 );
+    //                 if (proceed) {
+    //                     // Navigate to order details
+    //                     navigate('/admin#orderDetailsPg', {
+    //                         state: {
+    //                             order: selectedOrder,
+    //                             activeMenu: 'orders',
+    //                             activeSubOrder: 'Order Info'
+    //                         }
+    //                     });
+    //                     closeHandlerModal();
+    //                 }
+    //                 return;
+    //             }
+
+    //             // Check if success is false
+    //             if (!data.success) {
+    //                 throw new Error(data.message || 'Failed to update handler');
+    //             }
+
+    //             setHandlerSuccess(data.message || 'Handler name saved successfully!');
+
+    //             // Update local state
+    //             const updatedOrders = productsOrderData.map(order =>
+    //                 order._id === selectedOrder._id
+    //                     ? {
+    //                         ...order,
+    //                         handled_by: handlerName.trim(),
+    //                         last_edited: new Date().toISOString()
+    //                     }
+    //                     : order
+    //             );
+    //             setProductsOrderData(updatedOrders);
+
+    //             // Navigate after short delay
+    //             setTimeout(() => {
+    //                 navigate('/admin#orderDetailsPg', {
+    //                     state: {
+    //                         order: {
+    //                             ...selectedOrder,
+    //                             handled_by: handlerName.trim(),
+    //                             last_edited: new Date().toISOString()
+    //                         },
+    //                         activeMenu: 'orders',
+    //                         activeSubOrder: 'Order Info'
+    //                     }
+    //                 });
+    //                 closeHandlerModal();
+    //             }, 1000);
+
+    //         } catch (jsonError) {
+    //             // If JSON parsing fails, try text
+    //             const text = await responseClone.text();
+    //             console.error('Failed to parse JSON, response text:', text.substring(0, 200));
+
+    //             // Check if it's an HTML error page
+    //             if (text.includes('<!DOCTYPE') || text.includes('<html')) {
+    //                 throw new Error('Server returned an error page. Please check server logs.');
+    //             }
+
+    //             // Check for specific success messages in text
+    //             if (text.includes('success') || text.includes('updated') || text.includes('Handler')) {
+    //                 // Assume success if we see these keywords
+    //                 setHandlerSuccess('Handler name updated successfully!');
+
+    //                 // Update local state
+    //                 const updatedOrders = productsOrderData.map(order =>
+    //                     order._id === selectedOrder._id
+    //                         ? {
+    //                             ...order,
+    //                             handled_by: handlerName.trim(),
+    //                             last_edited: new Date().toISOString()
+    //                         }
+    //                         : order
+    //                 );
+    //                 setProductsOrderData(updatedOrders);
+
+    //                 setTimeout(() => {
+    //                     navigate('/admin#orderDetailsPg', {
+    //                         state: {
+    //                             order: {
+    //                                 ...selectedOrder,
+    //                                 handled_by: handlerName.trim(),
+    //                                 last_edited: new Date().toISOString()
+    //                             },
+    //                             activeMenu: 'orders',
+    //                             activeSubOrder: 'Order Info'
+    //                         }
+    //                     });
+    //                     closeHandlerModal();
+    //                 }, 1000);
+    //             } else {
+    //                 throw new Error('Server returned unexpected response format');
+    //             }
+    //         }
+
+    //     } catch (error) {
+    //         console.error('Handler submission error:', error);
+    //         setHandlerError(error.message || 'Failed to save handler name. Please try again.');
+    //     } finally {
+    //         setIsSubmitting(false);
+    //     }
+    // };
+
+
+
+     // Handle handler name submission
+    const handleSubmitHandler = async () => {
+        if (!handlerName.trim()) {
+            setHandlerError('Please enter your name');
+            return;
+        }
+
+        const nameRegex = /^[a-zA-Z\s]{2,50}$/;
+        if (!nameRegex.test(handlerName.trim())) {
+            setHandlerError('Please enter a valid name (2-50 characters, letters only)');
+            return;
+        }
+
+        setIsSubmitting(true);
+        setHandlerError('');
+        setHandlerSuccess('');
+
+        try {
+            const response = await fetch(`${baseUrl}/prodOrders/${selectedOrder._id}/handled-by`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    handled_by: handlerName.trim(),
+                    last_edited: new Date().toISOString()
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || `Server error: ${response.status}`);
+            }
+
+            setHandlerSuccess('Handler name saved successfully!');
+
+            // Update local state
+            const updatedOrders = productsOrderData.map(order =>
+                order._id === selectedOrder._id
+                    ? {
+                        ...order,
+                        handled_by: handlerName.trim(),
+                        last_edited: new Date().toISOString()
+                    }
+                    : order
+            );
+            setProductsOrderData(updatedOrders);
+
+            // Navigate to order details
+            setTimeout(() => {
+                navigate('/admin#orderDetailsPg', {
+                    state: {
+                        order: {
+                            ...selectedOrder,
+                            handled_by: handlerName.trim(),
+                            last_edited: new Date().toISOString()
+                        },
+                        activeMenu: 'orders',
+                        activeSubOrder: 'Order Info'
+                    }
+                });
+                closeHandlerModal();
+            }, 1000);
+
+        } catch (error) {
+            console.error('Handler submission error:', error);
+            setHandlerError(error.message || 'Failed to save handler name. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+    // Close handler modal
+    const closeHandlerModal = () => {
+        setShowHandlerModal(false);
+        setHandlerName('');
+        setHandlerError('');
+        setHandlerSuccess('');
+        setSelectedOrder(null);
+    };
+
+    // Handle direct navigation without entering handler
+    const handleSkipHandler = () => {
+        navigate('/admin#orderDetailsPg', {
             state: {
-                order,
+                order: selectedOrder,
                 activeMenu: 'orders',
                 activeSubOrder: 'Order Info'
             }
-        })
-    }
+        });
+        setShowHandlerModal(false);
+    };
+
+    // Handled by the admin name
+
     // EDIT PRODUCT 
     const handleAction = (action, order) => {
         if (action === 'Edit') {
@@ -139,6 +424,108 @@ const OrdersTable = () => {
 
     return (
         <div>
+
+            {/* NEWLY ADDED Handled by admin  */}
+            {/* Handler Name Modal */}
+            {showHandlerModal && selectedOrder && (
+                <div className="handler-modal-overlay">
+                    <div className="handler-modal">
+                        <div className="handler-modal-header">
+                            <h3>Enter Your Name
+                                {/* {selectedOrder.handled_by ? 'Update Handler' : 'Enter Your Name'} */}
+                            </h3>
+                            <button className="handler-modal-close" onClick={closeHandlerModal}>
+                                <i className="fas fa-times"></i>
+                            </button>
+                        </div>
+
+                        <div className="handler-modal-body">
+                            <p className="handler-modal-instruction">
+                                Please enter your name to mark yourself as handling this order.
+                                {/* {selectedOrder.handled_by
+                                    ? `Current handler: "${selectedOrder.handled_by}"`
+                                    : 'Please enter your name to mark yourself as handling this order.'} */}
+
+                            </p>
+
+                            <div className="handler-input-group">
+                                <label htmlFor="handlerName">
+                                Your Name *
+                                    {/* {selectedOrder.handled_by ? 'New Handler Name *' : 'Your Name *'} */}
+                                </label>
+                                <input
+                                    type="text"
+                                    id="handlerName"
+                                    placeholder=
+                                    "Enter your full name"
+                                    // {selectedOrder.handled_by
+                                    //     ? "Enter new handler name"
+                                    //     : "Enter your full name"}
+                                    value={handlerName}
+                                    onChange={(e) => setHandlerName(e.target.value)}
+                                    disabled={isSubmitting}
+                                    className={handlerError ? 'error' : ''}
+                                    onKeyPress={(e) => {
+                                        if (e.key === 'Enter') {
+                                            handleSubmitHandler();
+                                        }
+                                    }}
+                                />
+                                {handlerError && (
+                                    <div className="handler-error-message">
+                                        <i className="fas fa-exclamation-circle"></i>
+                                        {handlerError}
+                                    </div>
+                                )}
+                                {handlerSuccess && (
+                                    <div className="handler-success-message">
+                                        <i className="fas fa-check-circle"></i>
+                                        {handlerSuccess}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="handler-order-info">
+                                <p><strong>Order ID:</strong> {selectedOrder.orderId}</p>
+                                <p><strong>Client:</strong> {selectedOrder.client?.name || 'N/A'}</p>
+                                {/* {selectedOrder.handled_by && (
+                                    <p><strong>Current Handler:</strong> {selectedOrder.handled_by}</p>
+                                )} */}
+                            </div>
+                        </div>
+
+                        <div className="handler-modal-footer">
+                            <button
+                                className="handler-btn-skip"
+                                onClick={handleSkipHandler}
+                                disabled={isSubmitting}
+                            >
+                            Skip (View Only)
+                                {/* {selectedOrder.handled_by ? 'Cancel' : 'Skip (View Only)'} */}
+
+                            </button>
+                            <button
+                                className="handler-btn-submit"
+                                onClick={handleSubmitHandler}
+                                disabled={isSubmitting || !handlerName.trim()}
+                            >
+                                {isSubmitting ? (
+                                    <>
+                                        <span className="handler-spinner"></span>
+                                        Saving...
+                                        {/* {selectedOrder.handled_by ? 'Updating...' : 'Saving...'} */}
+                                    </>
+                                ) : (
+                                    "Submit & View Order"
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* NEWLY ADDED Handled by admin  */}
+
+
             <div className='productsHeader'>
                 <div className='productsHeading'>All Orders</div>
                 <div className="Admin-order-search">

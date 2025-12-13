@@ -7,6 +7,9 @@ import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from './BASE_URL';
+
+import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
+
 function AdManageSection() {
     //Start rating board
     const RatingStars = ({ rating }) => {
@@ -288,58 +291,6 @@ function AdManageSection() {
 
     };
 
-    // UPDATED DATE CLASS CALCULATION
-    // const getDateSelectionClass = (date) => {
-    //     if (!date || isNaN(date.getTime())) return "disabled";
-
-
-    //     const normalizedDate = new Date(Date.UTC(
-    //         date.getFullYear(),
-    //         date.getMonth(),
-    //         date.getDate()
-    //     ));
-
-    //     // Check if date is booked
-    //     const isBooked = bookedDates.some(d =>
-    //         d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
-    //         d.getUTCMonth() === normalizedDate.getUTCMonth() &&
-    //         d.getUTCDate() === normalizedDate.getUTCDate()
-    //     );
-
-    //     if (isBooked) return "booked";
-    //     if (isPastDate(normalizedDate)) return "past";
-
-    //     const dateString = date.toISOString().split('T')[0];
-    //     const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    //     const startUTC = selectedDates.start ? new Date(Date.UTC(
-    //         selectedDates.start.getFullYear(),
-    //         selectedDates.start.getMonth(),
-    //         selectedDates.start.getDate()
-    //     )) : null;
-
-    //     const endUTC = selectedDates.end ? new Date(Date.UTC(
-    //         selectedDates.end.getFullYear(),
-    //         selectedDates.end.getMonth(),
-    //         selectedDates.end.getDate()
-    //     )) : null;
-
-    //     if (bookedDates.some(d =>
-    //         d.getUTCFullYear() === utcDate.getUTCFullYear() &&
-    //         d.getUTCMonth() === utcDate.getUTCMonth() &&
-    //         d.getUTCDate() === utcDate.getUTCDate()
-    //     )) return "booked";
-
-    //     if (startUTC && utcDate.getTime() === startUTC.getTime()) return "selected-start";
-    //     if (endUTC && utcDate.getTime() === endUTC.getTime()) return "selected-end";
-    //     if (startUTC && endUTC && utcDate > startUTC && utcDate < endUTC) {
-    //         return "selected-range";
-    //     }
-
-    //     return "";
-    // };
-
-
-    // UPDATED DATE CLASS CALCULATION
     const getDateSelectionClass = (date) => {
         if (!date || isNaN(date.getTime())) return "disabled";
 
@@ -472,50 +423,7 @@ function AdManageSection() {
 
     const [productsOrderData, setProductsOrderData] = useState([]);
     const [editOrder, setEditOrder] = useState(null);
-    // const [bookedDates, setBookedDates] = useState([]);
-
-    // useEffect(() => {
-    //     const fetchBookedDates = async () => {
-    //         try {
-    //             // Include current order ID in exclusion if editing
-    //             const url = editOrder
-    //                 ? `${baseUrl}/booked-dates?excludeOrderId=${editOrder._id}`
-    //                 : `${baseUrl}/booked-dates`;
-
-    //             const res = await fetch(url);
-    //             if (!res.ok) {
-    //                 throw new Error(`HTTP error! status: ${res.status}`);
-    //             }
-
-    //             const data = await res.json();
-
-    //             // Ensure data is an array before mapping
-    //             if (!Array.isArray(data)) {
-    //                 throw new Error('Invalid data format received');
-    //             }
-
-    //             // Safely parse dates
-    //             const parsedDates = data
-    //                 .map(d => {
-    //                     try {
-    //                         return new Date(d);
-    //                     } catch (e) {
-    //                         console.warn('Invalid date format:', d);
-    //                         return null;
-    //                     }
-    //                 })
-    //                 .filter(date => date instanceof Date && !isNaN(date));
-
-    //             setBookedDates(parsedDates);
-    //         } catch (err) {
-    //             console.error('Error fetching booked dates:', err);
-    //             setBookedDates([]); // Reset to empty array on error
-    //         }
-    //     };
-
-    //     fetchBookedDates();
-    // }, [editOrder]); // Add editOrder to dependency array if needed
-
+  
     // UPDATED: Fetch booked dates for specific product only
     useEffect(() => {
         const fetchBookedDates = async () => {
@@ -860,7 +768,9 @@ function AdManageSection() {
                     email: clientEmail,
                     contact: clientContact,
                     company: clientCompany,
-                    paidAmount: Number(clientPaidAmount)
+                    totalAmount : totalPrice,
+                    paidAmount: Number(clientPaidAmount),
+                    balanceAmount : balanceAmount
                 },
                 products: [productData],
                 status: editOrder?.status || "Added Manually",
@@ -957,6 +867,18 @@ function AdManageSection() {
         setClientPaidAmount(parsedValue);
         setErrors(prev => ({ ...prev, clientPaidAmount: false }));
     };
+
+ // Calculate all amounts properly
+    const numericProductAmount = parseFloat(productAmount) || 0;
+    const numericClientPaidAmount = parseFloat(clientPaidAmount) || 0;
+    const numericTotalPrice = totalPrice || 0;
+    const balanceAmount = numericTotalPrice - numericClientPaidAmount;
+
+    // Format amount for display
+    const formattedProductAmount = formatIndianCurrency(numericProductAmount, true);
+    const formattedTotalPrice = formatIndianCurrency(numericTotalPrice, true);
+    const formattedBalanceAmount = formatIndianCurrency(balanceAmount, true);
+    const formattedPaidAmount = formatIndianCurrency(numericClientPaidAmount, true);
 
     return (
         <div>
@@ -1085,16 +1007,18 @@ function AdManageSection() {
                                         </div>}
                                     </div>
                                     <div className='clientDetailSection'>
-                                        <div className='clientDetailHeading'>Paid Amount</div>
-                                        <input type='number' placeholder='Enter Paid Amount' value={clientPaidAmount}
-                                            // onChange={(e) => {
-                                            //     setClientPaidAmount(e.target.value);
-                                            //     setErrors(prev => ({ ...prev, clientPaidAmount: false }));
-                                            // }} 
-                                            onChange={handlePaidAmountChange}
-                                            className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
-                                        {errors.clientPaidAmount && <div className="AdminClienterror-message">Paid Amount is required</div>}
+                                        <div className='clientDetailHeading'>Overall Amount</div>
+                                        <input type='text' placeholder='Enter Overall Amount' value={formattedTotalPrice} readOnly
+                                            className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}
+                                        />
                                     </div>
+                                    <div className='clientDetailSection'>
+                                        <div className='clientDetailHeading'>Balance Amount</div>
+                                        <input type='text' placeholder='Enter Balance Amount' value={formattedBalanceAmount} readOnly
+                                            className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}
+                                        />
+                                    </div>
+
                                 </div>
                                 <div className='manageClientInfoRight'>
                                     <div className='clientDetailSection'>
@@ -1116,6 +1040,20 @@ function AdManageSection() {
                                             }} className={errors.clientCompany ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
                                         {errors.clientCompany && <div className="AdminClienterror-message">Client Company is required</div>}
                                     </div>
+
+
+                                    <div className='clientDetailSection'>
+                                        <div className='clientDetailHeading'>Paid Amount</div>
+                                        <input type='text' placeholder='Enter Paid Amount' value={formattedPaidAmount}
+                                            // onChange={(e) => {
+                                            //     setClientPaidAmount(e.target.value);
+                                            //     setErrors(prev => ({ ...prev, clientPaidAmount: false }));
+                                            // }} 
+                                            onChange={handlePaidAmountChange}
+                                            className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
+                                        {errors.clientPaidAmount && <div className="AdminClienterror-message">Paid Amount is required</div>}
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -1133,8 +1071,10 @@ function AdManageSection() {
                                     </div>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Price</div>
-                                        <input type='number' placeholder='Enter Price' value={productAmount} readOnly
-                                            onChange={(e) => { setProductAmount(e.target.value) }} className='clientDetailsInput'></input>
+                                        <input type='text' placeholder='Enter Price' value={formattedProductAmount} readOnly
+                                            // onChange={(e) => { setProductAmount(e.target.value) }}
+
+                                             className='clientDetailsInput'></input>
                                     </div>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Lighting Type</div>
@@ -1270,7 +1210,6 @@ function AdManageSection() {
                                     </input>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
