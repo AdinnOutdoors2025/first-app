@@ -3,6 +3,7 @@
     margin: 20px;
 }
 
+
 .order-manageClientSection {
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.order-15);
     width: 650px;
@@ -12,6 +13,7 @@
     padding: 15px;
     margin-bottom: 15px;
 }
+
 
 .order-manageRightSideHeading {
     color: rgba(227, 31, 37, 1);
@@ -26,16 +28,19 @@
     border-image-slice: 1;
 }
 
+
 .order-manageClientInformation {
     display: flex;
     gap: 10px;
 }
+
 
 .order-manageClientInfoLeft,
 .order-manageClientInfoRight {
     width: 50%;
     margin: 25px auto;
 }
+
 
 .order-clientDetailHeading {
     font-weight: 600;
@@ -44,6 +49,7 @@
     letter-spacing: 0%;
     color: rgba(227, 31, 37, 1);
 }
+
 
 .order-clientDetailsInput {
     outline: none;
@@ -57,24 +63,31 @@
     letter-spacing: 0%;
 }
 
+
 .order-clientDetailsInput::-webkit-outer-spin-button,
 .order-clientDetailsInput::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
+
 .order-clientDetailsInput {
     -moz-appearance: textfield;
 }
+
 
 .order-clientDetailsInput::placeholder {
     font-size: 14px;
     font-weight: 0;
 }
 
+
 .order-clientDetailSection {
     margin-bottom: 30px;
 }
+
+
+
 
 
 
@@ -88,7 +101,9 @@
     color: rgba(27, 28, 32, 1);
     margin-top: 10px;
 
+
 }
+
 
 .admin-orderContent {
     display: flex;
@@ -98,13 +113,16 @@
     /* padding-bottom: 20px; */
 }
 
+
 .adminOrder_productSection {
     margin-bottom: 0px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     width: 100%;
 
+
 }
+
 
 .admin-totalPaidAmt {
     font-family: Montserrat;
@@ -121,6 +139,7 @@
     border-bottom-right-radius: 20px;
 }
 
+
 .admin-orderContentRight {
     width: 60px;
     text-align: center;
@@ -129,6 +148,7 @@
 .admin-OrderTableHeading{
     margin-bottom: 20px;
 }
+
 
 .OrderDetailsEdit{
     cursor: pointer;
@@ -140,12 +160,14 @@
     color:green;
 }
 
+
 /* Product Tabs */
 .product-tabs {
     display: flex;
     margin-bottom: 15px;
     border-bottom: 1px solid #ddd;
 }
+
 
 .product-tab {
     padding: 8px 15px;
@@ -157,21 +179,26 @@
     border-radius: 4px 4px 0 0;
 }
 
+
 .product-tab.active {
     /* background: #fff; */
     background-color: #ffe6e6;
+
 
     border-bottom: 1px solid #fff;
     margin-bottom: -1px;
     font-weight: bold;
 }
 
+
 /* Active product row */
 .active-product {
     /* background-color: #f9f9f9; */
     background-color: #ffe6e6;
 
+
 }
+
 
 /* Calendar Modal */
 .calendar-modal {
@@ -189,6 +216,7 @@
     overflow: auto;
 }
 
+
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -196,9 +224,11 @@
     margin-bottom: 15px;
 }
 
+
 .modal-header h3 {
     margin: 0;
 }
+
 
 .modal-header button {
     background: none;
@@ -206,6 +236,7 @@
     font-size: 1.5rem;
     cursor: pointer;
 }
+
 
 /* Loading and error states */
 .loading-overlay {
@@ -221,6 +252,7 @@
     justify-content: center;
 }
 
+
 .spinner {
     border: 4px solid #f3f3f3;
     border-top: 4px solid #3498db;
@@ -231,10 +263,12 @@
     margin-bottom: 10px;
 }
 
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
 
 .error-messageOrderDetails {
     color: #d9534f;
@@ -246,9 +280,17 @@
     align-items: center;
 }
 
+
 .error-messageOrderDetails i {
     margin-right: 8px;
 }
+
+
+
+
+
+
+
 
 
 
@@ -263,9 +305,11 @@
     cursor: not-allowed !important;
 }
 
+
 .date.booked.conflict:hover {
     background-color: #ff5252 !important;
 }
+
 
 .conflict-message {
     background-color: #fff3cd;
@@ -275,6 +319,7 @@
     border-radius: 4px;
     margin: 10px 0;
 }
+
 
 /* order take by label show as order details page */
 .order-card-header {
@@ -286,10 +331,12 @@
   margin: auto;       /* Center the block */
 }
 
+
 .order-title {
   font-size: 22px;
   font-weight: 700;
 }
+
 
 .order-taken-by {
   background: #fff;
@@ -300,17 +347,39 @@
   white-space: nowrap;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   position: absolute;
-  right : 691px;
-  top : 85px;
+  right : 345px;
 }
 
 
+
+
 /* order take by label show as order details page */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* In your ad1OrderDetails.css */
+/* In your ad1OrderDetails.css */
 .handler-info-section {
     display: flex;
     align-items: center;
     gap: 15px;
 }
+
 
 .edit-handler-btn {
     background: #4a90e2;
@@ -326,28 +395,34 @@
     transition: all 0.2s;
 }
 
+
 .edit-handler-btn:hover:not(:disabled) {
     background: #3a7bc8;
     transform: translateY(-1px);
 }
+
 
 .edit-handler-btn:disabled {
     opacity: 0.7;
     cursor: not-allowed;
 }
 
+
 .edit-handler-btn i {
     font-size: 12px;
 }
+
 
 .fa-spinner {
     animation: spin 1s linear infinite;
 }
 
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
 
 .order-taken-by {
     display: flex;
@@ -361,8 +436,264 @@
     border: 1px solid #bee3f8;
 }
 
+
 .order-taken-by i {
     color: #4a90e2;
 }
 
 
+
+
+
+
+
+/* Order Status Container */
+.order-status-container {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.order-status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.order-status-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a5568;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.current-status-display {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3748;
+  background: #f7fafc;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Dropdown Styles */
+.order-status-dropdown {
+  width: 100%;
+}
+
+.dropdown-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.status-select {
+  width: 100%;
+  padding: 10px 40px 10px 12px;
+  font-size: 14px;
+  color: #2d3748;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  height: 42px;
+}
+
+.status-select:hover {
+  border-color: #cbd5e0;
+  background: #f8fafc;
+}
+
+.status-select:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.1);
+}
+
+.dropdown-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #718096;
+  pointer-events: none;
+  font-size: 12px;
+}
+
+/* Status Options */
+.status-select option {
+  padding: 10px;
+  font-size: 14px;
+  color: #2d3748;
+  background: white;
+}
+
+.status-select option:hover {
+  background: #4299e1;
+  color: white;
+}
+
+.status-select option[value="__add_new__"] {
+  color: #48bb78;
+  font-weight: 600;
+  background: #f0fff4;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+  margin-top: 5px;
+}
+
+/* Add New Status Section */
+.add-status-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #edf2f7;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.add-status-input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.new-status-input {
+  flex: 1;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #2d3748;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.2s ease;
+  height: 42px;
+}
+
+.new-status-input:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.1);
+}
+
+.new-status-input::placeholder {
+  color: #a0aec0;
+  font-weight: 400;
+}
+
+.add-status-button {
+  padding: 0 20px;
+  height: 42px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background: #48bb78;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.add-status-button:hover {
+  background: #38a169;
+  transform: translateY(-1px);
+}
+
+.add-status-button:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .order-status-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .add-status-input-group {
+    flex-direction: column;
+  }
+  
+  .new-status-input,
+  .add-status-button {
+    width: 100%;
+  }
+  
+  .add-status-button {
+    padding: 12px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* ORDER EDIT DELETE BUTTON  */
+
+
+.action-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.status-edit-icon {
+    cursor: pointer;
+    font-size: 20px;
+    color: #4299e1;
+    padding: 6px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    background: rgba(66, 153, 225, 0.1);
+}
+
+.status-edit-icon:hover {
+    color: white;
+    background: #4299e1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(66, 153, 225, 0.3);
+}
+
+.status-delete-icon {
+    cursor: pointer;
+    font-size: 20px;
+    color: #f56565;
+    padding: 6px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    background: rgba(245, 101, 101, 0.1);
+}
+
+.status-delete-icon:hover {
+    color: white;
+    background: #f56565;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(245, 101, 101, 0.3);
+}
