@@ -112,7 +112,7 @@ const BillingDetails = () => {
                     variables: {
                         orderId,
                         customerName: name,
-                        amount: reserveItem.SpotPay
+                        // amount: reserveItem.SpotPay
                     }
                 })
             });
