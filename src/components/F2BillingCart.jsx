@@ -213,6 +213,7 @@ const BillingDetailsCart = () => {
         };
         setIsLoading(true);
         try {
+            console.log(orderData);
             // Save order to database
             const response = await fetch(`${baseUrl}/prodOrders`, {
                 method: 'POST',
