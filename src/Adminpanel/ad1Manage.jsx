@@ -410,7 +410,7 @@ function AdManageSection() {
             setConfirmedDates({ start: startUTC, end: endUTC });
             setIsCalendarOpen(false);
         }
-    }; 
+    };
 
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 991);
     useEffect(() => {
@@ -423,7 +423,7 @@ function AdManageSection() {
 
     const [productsOrderData, setProductsOrderData] = useState([]);
     const [editOrder, setEditOrder] = useState(null);
-  
+
     // UPDATED: Fetch booked dates for specific product only
     useEffect(() => {
         const fetchBookedDates = async () => {
@@ -471,8 +471,8 @@ function AdManageSection() {
 
         fetchBookedDates();
     }, [productID, editOrder]);
-  
-      useEffect(() => {
+
+    useEffect(() => {
         if (editOrder) {
             // UPDATED DATE PARSING FUNCTION
             const parseDate = (dateString) => {
@@ -768,9 +768,9 @@ function AdManageSection() {
                     email: clientEmail,
                     contact: clientContact,
                     company: clientCompany,
-                    totalAmount : totalPrice,
+                    totalAmount: totalPrice,
                     paidAmount: Number(clientPaidAmount),
-                    balanceAmount : balanceAmount
+                    balanceAmount: balanceAmount
                 },
                 products: [productData],
                 status: editOrder?.status || "Added Manually",
@@ -825,7 +825,7 @@ function AdManageSection() {
                         name: productName,
                         prodCode: productID,
                         price: Number(productAmount),
-                        image : productImage,
+                        image: productImage,
                         booking: {
                             startDate: selectedDates.start,
                             endDate: selectedDates.end,
@@ -856,8 +856,8 @@ function AdManageSection() {
 
 
 
-    
-     // Fix for paidAmount display issue
+
+    // Fix for paidAmount display issue
     const handlePaidAmountChange = (e) => {
         const value = e.target.value;
         // Remove non-numeric characters except decimal point
@@ -868,7 +868,7 @@ function AdManageSection() {
         setErrors(prev => ({ ...prev, clientPaidAmount: false }));
     };
 
- // Calculate all amounts properly
+    // Calculate all amounts properly
     const numericProductAmount = parseFloat(productAmount) || 0;
     const numericClientPaidAmount = parseFloat(clientPaidAmount) || 0;
     const numericTotalPrice = totalPrice || 0;
@@ -981,86 +981,11 @@ function AdManageSection() {
 
                     {/* Right section  */}
                     <div>
-                        {/* Client Section  */}
-                        <div className='manageClientSection'>
-                            <div className='manageRightSideHeading'>Client Information</div>
-                            <div className='d-flex manageClientInformation'>
-                                <div className='manageClientInfoLeft'>
-                                    <div className='clientDetailSection'>
-                                        <div className='clientDetailHeading'>Client Name</div>
-                                        <input type='text' placeholder='Enter Name' value={clientName}
-                                            onChange={(e) => {
-                                                setClientName(e.target.value);
-                                                setErrors(prev => ({ ...prev, clientName: false }));
-                                            }} className={errors.clientName ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
-                                        {errors.clientName && <div className="AdminClienterror-message">Name is required</div>}
-                                    </div>
-                                    <div className='clientDetailSection'>
-                                        <div className='clientDetailHeading'>Client Email</div>
-                                        <input type='email' placeholder='Enter Email' value={clientEmail}
-                                            onChange={(e) => {
-                                                setClientEmail(e.target.value);
-                                                setErrors(prev => ({ ...prev, clientEmail: false }));
-                                            }} className={errors.clientEmail ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
-                                        {errors.clientEmail && <div className="AdminClienterror-message">
-                                            {!clientEmail ? "Email is required" : "Invalid email format"}
-                                        </div>}
-                                    </div>
-                                    <div className='clientDetailSection'>
-                                        <div className='clientDetailHeading'>Overall Amount</div>
-                                        <input type='text' placeholder='Enter Overall Amount' value={formattedTotalPrice} readOnly
-                                            className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}
-                                        />
-                                    </div>
-                                    <div className='clientDetailSection'>
-                                        <div className='clientDetailHeading'>Balance Amount</div>
-                                        <input type='text' placeholder='Enter Balance Amount' value={formattedBalanceAmount} readOnly
-                                            className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}
-                                        />
-                                    </div>
-
-                                </div>
-                                <div className='manageClientInfoRight'>
-                                    <div className='clientDetailSection'>
-                                        <div className='clientDetailHeading'>Client Contact</div>
-                                        <input type='number' maxLength='10' placeholder='Enter Contact' value={clientContact}
-                                            onChange={(e) => {
-                                                setClientContact(e.target.value);
-                                                setErrors(prev => ({ ...prev, clientContact: false }));
-                                            }} className={errors.clientContact ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
-                                        {errors.clientContact && <div className="AdminClienterror-message">
-                                            {!clientContact ? "Contact is required" : "Contact must be 10 digits"}</div>}
-                                    </div>
-                                    <div className='clientDetailSection'>
-                                        <div className='clientDetailHeading'>Company Name</div>
-                                        <input type='text' placeholder='Enter Company' value={clientCompany}
-                                            onChange={(e) => {
-                                                setClientCompany(e.target.value);
-                                                setErrors(prev => ({ ...prev, clientCompany: false }));
-                                            }} className={errors.clientCompany ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
-                                        {errors.clientCompany && <div className="AdminClienterror-message">Client Company is required</div>}
-                                    </div>
-
-
-                                    <div className='clientDetailSection'>
-                                        <div className='clientDetailHeading'>Paid Amount</div>
-                                        <input type='text' placeholder='Enter Paid Amount' value={formattedPaidAmount}
-                                            // onChange={(e) => {
-                                            //     setClientPaidAmount(e.target.value);
-                                            //     setErrors(prev => ({ ...prev, clientPaidAmount: false }));
-                                            // }} 
-                                            onChange={handlePaidAmountChange}
-                                            className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
-                                        {errors.clientPaidAmount && <div className="AdminClienterror-message">Paid Amount is required</div>}
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
 
                         {/* Product Section  */}
                         <div className='manageClientSection'>
                             <div className='manageRightSideHeading'>Product Management</div>
+                            <div className='text-center clientDetailHeading' style={{color:"blue", marginTop:"5px"}}>Enter the Product ID to place the order</div>
                             <div className='d-flex manageClientInformation'>
 
                                 <div className='manageClientInfoLeft'>
@@ -1074,7 +999,7 @@ function AdManageSection() {
                                         <input type='text' placeholder='Enter Price' value={formattedProductAmount} readOnly
                                             // onChange={(e) => { setProductAmount(e.target.value) }}
 
-                                             className='clientDetailsInput'></input>
+                                            className='clientDetailsInput'></input>
                                     </div>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Lighting Type</div>
@@ -1152,6 +1077,86 @@ function AdManageSection() {
 
                         </div>
 
+
+                        {/* Client Section  */}
+                        <div className='manageClientSection'>
+                            <div className='manageRightSideHeading'>Client Information</div>
+                            <div className='d-flex manageClientInformation'>
+                                <div className='manageClientInfoLeft'>
+                                    <div className='clientDetailSection'>
+                                        <div className='clientDetailHeading'>Client Name</div>
+                                        <input type='text' placeholder='Enter Name' value={clientName}
+                                            onChange={(e) => {
+                                                setClientName(e.target.value);
+                                                setErrors(prev => ({ ...prev, clientName: false }));
+                                            }} className={errors.clientName ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
+                                        {errors.clientName && <div className="AdminClienterror-message">Name is required</div>}
+                                    </div>
+                                    <div className='clientDetailSection'>
+                                        <div className='clientDetailHeading'>Client Email</div>
+                                        <input type='email' placeholder='Enter Email' value={clientEmail}
+                                            onChange={(e) => {
+                                                setClientEmail(e.target.value);
+                                                setErrors(prev => ({ ...prev, clientEmail: false }));
+                                            }} className={errors.clientEmail ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
+                                        {errors.clientEmail && <div className="AdminClienterror-message">
+                                            {!clientEmail ? "Email is required" : "Invalid email format"}
+                                        </div>}
+                                    </div>
+                                    <div className='clientDetailSection'>
+                                        <div className='clientDetailHeading'>Overall Amount</div>
+                                        <input type='text' placeholder='Enter Overall Amount' value={formattedTotalPrice} readOnly
+                                            className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}
+                                        />
+                                    </div>
+                                    <div className='clientDetailSection'>
+                                        <div className='clientDetailHeading'>Balance Amount</div>
+                                        <input type='text' placeholder='Enter Balance Amount' value={formattedBalanceAmount} readOnly
+                                            className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}
+                                        />
+                                    </div>
+
+                                </div>
+                                <div className='manageClientInfoRight'>
+                                    <div className='clientDetailSection'>
+                                        <div className='clientDetailHeading'>Client Contact</div>
+                                        <input type='number' maxLength='10' placeholder='Enter Contact' value={clientContact}
+                                            onChange={(e) => {
+                                                setClientContact(e.target.value);
+                                                setErrors(prev => ({ ...prev, clientContact: false }));
+                                            }} className={errors.clientContact ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
+                                        {errors.clientContact && <div className="AdminClienterror-message">
+                                            {!clientContact ? "Contact is required" : "Contact must be 10 digits"}</div>}
+                                    </div>
+                                    <div className='clientDetailSection'>
+                                        <div className='clientDetailHeading'>Company Name</div>
+                                        <input type='text' placeholder='Enter Company' value={clientCompany}
+                                            onChange={(e) => {
+                                                setClientCompany(e.target.value);
+                                                setErrors(prev => ({ ...prev, clientCompany: false }));
+                                            }} className={errors.clientCompany ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
+                                        {errors.clientCompany && <div className="AdminClienterror-message">Client Company is required</div>}
+                                    </div>
+
+
+                                    <div className='clientDetailSection'>
+                                        <div className='clientDetailHeading'>Paid Amount</div>
+                                        <input type='text' placeholder='Enter Paid Amount' value={formattedPaidAmount}
+                                            // onChange={(e) => {
+                                            //     setClientPaidAmount(e.target.value);
+                                            //     setErrors(prev => ({ ...prev, clientPaidAmount: false }));
+                                            // }} 
+                                            onChange={handlePaidAmountChange}
+                                            className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
+                                        {errors.clientPaidAmount && <div className="AdminClienterror-message">Paid Amount is required</div>}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
                         {/* Rating section  with OFFER */}
                         <div style={{ display: 'flex', gap: '10px' }}>
                             <div className='manageClientSection' style={{ width: '40%' }}>
@@ -1171,14 +1176,15 @@ function AdManageSection() {
                                     </div>
                                 </div>
                             </div>
-                            <div className='manageClientSection' style={{ width: '60%' }}>
+                            {/* Offers and Fixed Amount section  */}
+                            {/* <div className='manageClientSection' style={{ width: '60%' }}>
                                 <div className='clientDetailHeading'>Offers</div>
                                 <div className='ProductRatingMain'>
                                     <div className='AdminOfferDetails' >Pay ₹<input type='number' value={productFixedAmount} onChange={(e) => setProductFixedAmount(e.target.value)} className='sizeWidthInput adminOfferAmountInput' readOnly></input> and Get <input type='number' value={productFixedAmountOffer} onChange={(e) => setProductFixedAmountOffer(e.target.value)} className='sizeWidthInput adminOfferAmountPercentage' readOnly></input>% Off <span className='adminOfferRefundDetails'> 100% Refundable </span>
                                     </div>
 
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                         {/* Select Category section   */}

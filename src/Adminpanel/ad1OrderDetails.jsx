@@ -77,13 +77,6 @@ function OrderDetails({ order, onOrderUpdate }) {
         setIsCalenderOpen(false);
     };
 
-    // Add default values for null case
-    // const safeOrder = order || location.state?.order || {
-    //     products: [{}],
-    //     client: {},
-    //     status: ""
-    // };
-
     // Add local state for the order
     const [localOrder, setLocalOrder] = useState(null);
     // Initialize localOrder when order or location.state changes
@@ -112,9 +105,15 @@ function OrderDetails({ order, onOrderUpdate }) {
     /* Set order statuses */
 
     const [orderStatuses, setOrderStatuses] = useState([]);
-    const [selectOrderStauts, setSelectOrderStatus] = useState([safeOrder.order_status || ""]);
+    const [selectOrderStatus, setSelectOrderStatus] = useState("");
     const [showAddInput, setShowAddInput] = useState(false);
     const [newStatus, setNewStatus] = useState("");
+    
+    // Check if handler is assigned
+    const [hasHandlerAssigned, setHasHandlerAssigned] = useState(
+        safeOrder.handled_by && safeOrder.handled_by.trim() !== ""
+    );
+
     const fetchOrderStatuses = async () => {
         try {
             const res = await axios.get(`${baseUrl}/getOrderStatuses`);
@@ -132,7 +131,9 @@ function OrderDetails({ order, onOrderUpdate }) {
         } else {
             setShowAddInput(false);
             setSelectOrderStatus(value);
-            updateOrderStatus(value);
+            if (value) {
+                updateOrderStatus(value);
+            }
         }
     };
 
@@ -141,6 +142,8 @@ function OrderDetails({ order, onOrderUpdate }) {
     };
 
     const updateOrderStatus = async (statusValue) => {
+        if (!statusValue || statusValue.trim() === "") return;
+        
         try {
             const res = await axios.put(
                 `${baseUrl}/updateOrderStatus/${safeOrder._id}`,
@@ -199,8 +202,6 @@ function OrderDetails({ order, onOrderUpdate }) {
     //CALENDER EDIT
     // Initialize with order's existing dates
     const [selectedDates, setSelectedDates] = useState({
-        // start: safeOrder.products?.[activeProductIndex]?.booking ? new Date(safeOrder.products?.[activeProductIndex].booking.startDate) : null,
-        // end: safeOrder.products?.[activeProductIndex]?.booking ? new Date(safeOrder.products?.[activeProductIndex].booking.endDate) : null
         start: null,
         end: null,
     });
@@ -267,7 +268,6 @@ function OrderDetails({ order, onOrderUpdate }) {
     // Replace hardcoded bookedDates with fetched data
     const [bookedDates, setBookedDates] = useState([]);
     const [isCalendarOpen, setIsCalendarOpen] = useState(false); // State to toggle calendar
-    // const [currentMonth, setCurrentMonth] = useState(new Date(2025, 2)); // Start with March 2025
     const today = new Date();
     const [currentMonth, setCurrentMonth] = useState(new Date()); // Start with March 2025
 
@@ -282,7 +282,6 @@ function OrderDetails({ order, onOrderUpdate }) {
     };
 
     // Campaign Date Selection
-    //  const [selectedDates, setSelectedDates] = useState({ start: null, end: null });
     const [confirmedDates, setConfirmedDates] = useState({}); // To store confirmed dates
 
     const formattedStartDate = selectedDates.start; // Stores full date in ISO format
@@ -320,7 +319,6 @@ function OrderDetails({ order, onOrderUpdate }) {
         // Check if date is booked or in the past
         const isBooked = bookedDates.some((d) => {
             const bookedDate = new Date(d);
-            // return bookedDate.getTime() === normalizedDate.getTime();
             return (
                 bookedDate.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
                 bookedDate.getUTCMonth() === normalizedDate.getUTCMonth() &&
@@ -331,11 +329,6 @@ function OrderDetails({ order, onOrderUpdate }) {
         const isPast = isPastDate(normalizedDate);
 
         if (isBooked || isPast) return;
-        // if (bookedDates.some(d =>
-        //     d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
-        //     d.getUTCMonth() === normalizedDate.getUTCMonth() &&
-        //     d.getUTCDate() === normalizedDate.getUTCDate()
-        // )) return;
 
         if (!selectedDates.start || selectedDates.end) {
             setSelectedDates({ start: normalizedDate, end: null });
@@ -607,12 +600,26 @@ function OrderDetails({ order, onOrderUpdate }) {
         };
         window.addEventListener("resize", handleResize);
         fetchOrderStatuses();
+        
+        // Update hasHandlerAssigned whenever safeOrder changes
+        if (safeOrder.handled_by && safeOrder.handled_by.trim() !== "") {
+            setHasHandlerAssigned(true);
+        } else {
+            setHasHandlerAssigned(false);
+        }
+        
+        // Initialize selectOrderStatus with empty string (for "Select Status" placeholder)
+        if (safeOrder.order_status && safeOrder.order_status.trim() !== "") {
+            setSelectOrderStatus(safeOrder.order_status);
+        } else {
+            setSelectOrderStatus(""); // Empty for "Select Status" placeholder
+        }
+        
         return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    }, [safeOrder.handled_by, safeOrder.order_status]);
 
 
-    //NEW ADDED HANDLER NAME ADDED
-    // Updated updateHandlerName function
+    // Updated updateHandlerName function - FIXED
     const updateHandlerName = async (newHandlerName) => {
         if (!newHandlerName || newHandlerName.trim() === '') {
             alert('Handler name cannot be empty');
@@ -626,7 +633,6 @@ function OrderDetails({ order, onOrderUpdate }) {
         try {
             setIsLoading(true);
 
-
             const response = await fetch(`${baseUrl}/prodOrders/${safeOrder._id}/handled-by`, {
                 method: 'PUT',
                 headers: {
@@ -637,28 +643,26 @@ function OrderDetails({ order, onOrderUpdate }) {
                 })
             });
 
-
             if (response.ok) {
                 const data = await response.json();
 
-
+                // Update both localOrder AND orderData to ensure UI updates immediately
                 const updatedOrder = {
                     ...safeOrder,
                     handled_by: newHandlerName.trim(),
                     last_edited: new Date().toISOString()
                 };
 
-
+                // Update both states
                 setLocalOrder(updatedOrder);
-
+                setOrderData(updatedOrder);
+                setHasHandlerAssigned(true); // Set to true when handler is assigned
 
                 if (onOrderUpdate) {
                     onOrderUpdate(updatedOrder);
                 }
 
-
                 alert('✅ Handler updated successfully!');
-
 
             } else {
                 const errorData = await response.json().catch(() => ({}));
@@ -677,10 +681,9 @@ function OrderDetails({ order, onOrderUpdate }) {
     // Update the prompt handler
     const handleEditHandler = () => {
         const newHandler = prompt(
-            `Current handler: ${safeOrder.handled_by}\n\nEnter new handler name:`,
+            `Current handler: ${safeOrder.handled_by || '-'}\n\nEnter new handler name:`,
             safeOrder.handled_by || ''
         );
-
 
         if (newHandler && newHandler.trim() !== '' && newHandler.trim() !== safeOrder.handled_by) {
             updateHandlerName(newHandler.trim());
@@ -693,44 +696,45 @@ function OrderDetails({ order, onOrderUpdate }) {
     return (
         <div className="adminOrderDetailsMain">
 
+            {/* ALWAYS SHOW Handler Assignment Section - Never Hide */}
             <div className="order-card-header">
-                {safeOrder.handled_by && safeOrder.handled_by.trim() !== "" ? (
-                    <div className="handler-info-section">
-                        <span className="order-taken-by">
-                            <i className="fas fa-user-circle"></i>
-                            Order Handled By: {safeOrder.handled_by || "-"}
-                        </span>
-                        <button
-                            className="edit-handler-btn"
-                            onClick={handleEditHandler}
-                            disabled={isLoading}
-                        >
-                            {isLoading ? (
-                                <>
-                                    <i className="fas fa-spinner fa-spin"></i> Updating...
-                                </>
-                            ) : (
-                                <>
-                                    <i className="fas fa-edit"></i> Edit
-                                </>
-                            )}
-                        </button>
-                    </div>
-                ) : (
-                    <div className="handler-info-section">
-                        <span className="order-taken-by">
-                            <i className="fas fa-user-circle"></i>
-                            Order Handled By: -
-                        </span>
-                        <button
-                            className="edit-handler-btn"
-                            onClick={handleEditHandler}
-                            disabled={isLoading}
-                        >
-                            <i className="fas fa-user-plus"></i> Assign Handler
-                        </button>
-                    </div>
-                )}
+                <div className="handler-info-section">
+                    <span className="order-taken-by">
+                        <i className="fas fa-user-circle"></i>
+                        Order Handled By: {safeOrder.handled_by || "-"}
+                    </span>
+                    <button
+                        className="edit-handler-btn"
+                        onClick={handleEditHandler}
+                        disabled={isLoading}
+                    >
+                        {safeOrder.handled_by && safeOrder.handled_by.trim() !== "" ? (
+                            <>
+                                {isLoading ? (
+                                    <>
+                                        <i className="fas fa-spinner fa-spin"></i> Updating...
+                                    </>
+                                ) : (
+                                    <>
+                                        <i className="fas fa-edit"></i> Edit Handler
+                                    </>
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                {isLoading ? (
+                                    <>
+                                        <i className="fas fa-spinner fa-spin"></i> Assigning...
+                                    </>
+                                ) : (
+                                    <>
+                                        <i className="fas fa-user-plus"></i> Assign Handler
+                                    </>
+                                )}
+                            </>
+                        )}
+                    </button>
+                </div>
             </div>
 
 
@@ -746,60 +750,59 @@ function OrderDetails({ order, onOrderUpdate }) {
                         <div className="order-manageRightSideHeading">
                             Order Information
                         </div>
-                        {/* show order status */}
-
-
-
-                        {/* show order status */}
-                        <div className="order-status-container">
-                            <div className="order-status-header">
-                                <label className="order-status-label">Order Status</label>
-                                <div className="current-status-display">
-                                    {selectOrderStauts || "Not Selected"}
-                                </div>
-                            </div>
-
-                            <div className="order-status-dropdown">
-                                <div className="dropdown-wrapper">
-                                    <select
-                                        onChange={handleStatusChange}
-                                        value={selectOrderStauts}
-                                        className="status-select"
-                                    >
-                                        <option value="">Select Status</option>
-                                        {orderStatuses.map((status) => (
-                                            <option key={status._id} value={status.name}>
-                                                {status.name}
-                                            </option>
-                                        ))}
-                                        <option value="__add_new__">+ Add New Status</option>
-                                    </select>
-                                    <div className="dropdown-arrow">
-                                        <i className="fas fa-chevron-down"></i>
+                        
+                        {/* Conditionally render status section ONLY when handler is assigned */}
+                        {hasHandlerAssigned && (
+                            <div className="order-status-container">
+                                <div className="order-status-header">
+                                    <label className="order-status-label">Order Status</label>
+                                    <div className="current-status-display">
+                                        {selectOrderStatus || "Select Status"}
                                     </div>
                                 </div>
-                            </div>
 
-                            {showAddInput && (
-                                <div className="add-status-section">
-                                    <div className="add-status-input-group">
-                                        <input
-                                            onChange={(e) => setNewStatusInput(e.target.value)}
-                                            type="text"
-                                            placeholder="Enter new status"
-                                            className="new-status-input"
-                                        />
-                                        <button
-                                            onClick={addNewStatus}
-                                            className="add-status-button"
+                                <div className="order-status-dropdown">
+                                    <div className="dropdown-wrapper">
+                                        <select
+                                            onChange={handleStatusChange}
+                                            value={selectOrderStatus}
+                                            className="status-select"
                                         >
-                                            Add
-                                        </button>
+                                            <option value="">Select Status</option>
+                                            {orderStatuses.map((status) => (
+                                                <option key={status._id} value={status.name}>
+                                                    {status.name}
+                                                </option>
+                                            ))}
+                                            <option value="__add_new__">+ Add New Status</option>
+                                        </select>
+                                        <div className="dropdown-arrow">
+                                            <i className="fas fa-chevron-down"></i>
+                                        </div>
                                     </div>
                                 </div>
-                            )}
-                        </div>
-                        {/* show order status */}
+
+                                {showAddInput && (
+                                    <div className="add-status-section">
+                                        <div className="add-status-input-group">
+                                            <input
+                                                onChange={(e) => setNewStatusInput(e.target.value)}
+                                                type="text"
+                                                placeholder="Enter new status"
+                                                className="new-status-input"
+                                            />
+                                            <button
+                                                onClick={addNewStatus}
+                                                className="add-status-button"
+                                            >
+                                                Add
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                        
                         <div className="d-flex order-manageClientInformation">
                             <div className="order-manageClientInfoLeft">
                                 <div className="order-clientDetailSection">
@@ -814,8 +817,6 @@ function OrderDetails({ order, onOrderUpdate }) {
                                 </div>
                                 <div className="order-clientDetailSection">
                                     <div className="order-clientDetailHeading">Payment</div>
-                                    {/* <input type='text' placeholder='Enter Payment' className='order-clientDetailsInput' value={`₹${safeOrder.client?.paidAmount}` || ''}
-                                        readOnly ></input> */}
                                     <input
                                         type="text"
                                         placeholder="Enter Payment"
@@ -920,9 +921,6 @@ function OrderDetails({ order, onOrderUpdate }) {
 
                     {/* Product Section  */}
                     <div className="order-manageClientSection adminOrder_productSection">
-                        {/* <div className='order-manageRightSideHeading admin-OrderTableHeading'>Product Information</div> */}
-
-                        {/* Show last edited  */}
                         <div
                             className="order-manageRightSideHeading admin-OrderTableHeading"
                             style={{
@@ -945,7 +943,6 @@ function OrderDetails({ order, onOrderUpdate }) {
                                 </span>
                             )}
                         </div>
-                        {/* Show last edited  */}
 
                         {/* Product Tabs */}
                         <div className="product-tabs">
@@ -1025,7 +1022,8 @@ function OrderDetails({ order, onOrderUpdate }) {
                                         </td>
 
                                         <td>
-                                            {safeOrder.handled_by && safeOrder.handled_by.trim() !== "" && (
+                                            {/* Conditionally show action buttons based on handler assignment */}
+                                            {hasHandlerAssigned && (
                                                 <div className="action-buttons">
                                                     <i
                                                         className="fa-solid fa-pen-to-square status-edit-icon"
@@ -1045,8 +1043,6 @@ function OrderDetails({ order, onOrderUpdate }) {
                                                 </div>
                                             )}
                                         </td>
-                                    
-                                    
                                     </tr>
                                 ))}
                             </tbody>
@@ -1103,12 +1099,10 @@ function OrderDetails({ order, onOrderUpdate }) {
                             </div>
                             <div className="admin-orderContent">
                                 <div className="admin-orderContentLeft">Total Amount</div>
-                                {/* <div className="admin-orderContentRight"> ₹{safeOrder.products.reduce((sum, p) => sum + (p.booking?.totalPrice || 0), 0)}</div> */}
                                 <div
                                     className="admin-orderContentRight"
                                     style={{ width: "auto" }}
                                 >
-                                    {" "}
                                     {formatIndianCurrency(
                                         safeOrder.products.reduce(
                                             (sum, p) => sum + (p.booking?.totalPrice || 0),
@@ -1124,7 +1118,6 @@ function OrderDetails({ order, onOrderUpdate }) {
                         <div className="admin-orderContentLeft adminTotalAmt">
                             Paid Amount
                         </div>
-                        {/* <div className="admin-orderContentRight adminTotalAmt">{`₹${safeOrder.client?.paidAmount}` || 0}</div> */}
                         <div
                             className="admin-orderContentRight adminTotalAmt"
                             style={{ width: "auto" }}

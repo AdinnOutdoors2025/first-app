@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
 import { toast } from 'react-toastify';
-//the mainLayout for login toggle then background gets blurred 
+//the mainLayout for login toggle then background gets blurred
 import { MainLayout } from './MainLayout';
 import { useLogin } from './LoginContext';
 import { baseUrl } from '../Adminpanel/BASE_URL';
