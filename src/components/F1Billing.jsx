@@ -198,7 +198,7 @@ const BillingDetails = () => {
                     state: state,
                     city: city,
                 //  paidAmount: cleanPrice(reserveItem.SpotPay).toString(),
-                    paidAmount: parsedSpotPay, // Use raw number
+                    // paidAmount: parsedSpotPay, // Use raw number
 
                 },
                 products: [{

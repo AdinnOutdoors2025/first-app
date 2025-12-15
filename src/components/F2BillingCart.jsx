@@ -205,7 +205,7 @@ const BillingDetailsCart = () => {
                 pincode: pincode,
                 state: state,
                 city: city,
-                paidAmount: cleanPrice(SpotPay).toString(),
+                // paidAmount: cleanPrice(SpotPay).toString(),
             },
             products: products,
             status: "UserSideOrder",

@@ -696,3 +696,90 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(245, 101, 101, 0.3);
 }
+/* Payment tool tip */
+/* Tooltip container (only icon triggers) */
+.tooltip-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 6px;
+}
+
+/* Info icon */
+.info-icon {
+  font-size: 14px;
+  cursor: pointer;
+  color: #ff3b3b;
+}
+
+/* "View payment history" text */
+.tooltip-label {
+  font-size: 12px;
+  color: #ff3b3b;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Tooltip content */
+.tooltip-content {
+  position: absolute;
+  top: 22px;
+  left: 0;
+  width: 300px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 13px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: none;
+  z-index: 999;
+}
+
+/* Show tooltip ONLY on icon/label hover -SK */
+.tooltip-icon-wrapper:hover .tooltip-content {
+  display: block;
+}
+
+.tooltip-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.tooltip-row {
+  margin-bottom: 4px;
+}
+
+.tooltip-row.bold {
+  font-weight: 600;
+}
+
+/* Table */
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.payment-table th,
+.payment-table td {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 4px 6px;
+  text-align: left;
+}
+
+.payment-table th {
+  font-weight: 600;
+  background: #f7f7f7;
+}
+
+.tooltip-summary {
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+/* Payment tool tip */
+
+
