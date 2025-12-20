@@ -152,6 +152,187 @@
     margin: 5px 44%;
     margin-bottom: 15px;
 }
+/* PRIME SPOTS  */
+.confirmPrimeBtn {
+    border: none;
+    color: rgba(255, 255, 255, 1);
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 5%;
+    background: rgba(227, 31, 37, 1);
+    padding: 10px 30px;
+    border-radius: 32px;
+    /* margin: 5px 44%;
+    margin-bottom: 15px; */
+} 
+
+
+
+
+
+
+
+
+
+/* Prime Status Toggle Styles */
+.prime-status-toggle {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.prime-toggle-btn {
+    padding: 8px 16px;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    background: #f8f9fa;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.prime-toggle-btn.active-prime {
+    background: linear-gradient(135deg, #ffd700, #ffa500);
+    color: #000;
+    border-color: #ffa500;
+}
+
+.prime-toggle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.prime-toggle-container {
+    margin-top: 5px;
+}
+
+.prime-toggle-btn-lg {
+    padding: 12px 24px;
+    border: 3px solid #ddd;
+    border-radius: 25px;
+    background: #f8f9fa;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+}
+
+.prime-toggle-btn-lg.active-prime-lg {
+    background: linear-gradient(135deg, #ffd700, #ffa500);
+    color: #000;
+    border-color: #ffa500;
+    box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+}
+
+.prime-toggle-btn-lg.inactive-prime-lg {
+    background: #e9ecef;
+    color: #6c757d;
+    border-color: #ced4da;
+}
+
+.prime-toggle-btn-lg:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Prime badge in table */
+.prime-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 8px;
+}
+
+.prime-badge.active {
+    background: linear-gradient(135deg, #ffd700, #ffa500);
+    color: #000;
+}
+
+.prime-badge.inactive {
+    background: #e9ecef;
+    color: #6c757d;
+}
+
+/* Action buttons */
+.confirmPrimeBtn {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.confirmPrimeBtn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.confirmPrimeBtn:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+}
+
+.cancelPrimeBtn {
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 2px solid #dee2e6;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.cancelPrimeBtn:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+}
+
+.deletePrimeBtn {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.deletePrimeBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+/* Prime spot highlight in table */
+.prime-spot-row {
+    position: relative;
+}
+
+
+/* PRIME SPOTS  */
+
 
 /* Half-star */
 .fa-star-half-alt {
@@ -915,4 +1096,245 @@
 .retry-btn:disabled {
     background: #6c757d;
     cursor: not-allowed;
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Add these styles to your existing CSS files */
+
+/* Prime Status Toggle Styles */
+.prime-toggle-container {
+    display: flex;
+    align-items: center;
+}
+
+.prime-toggle-btn-lg {
+    padding: 10px 20px;
+    border: 2px solid #ddd;
+    background: #f8f9fa;
+    color: #6c757d;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.prime-toggle-btn-lg:hover {
+    background: #e9ecef;
+}
+
+.prime-toggle-btn-lg.active-prime-lg {
+    background: #ffd700;
+    color: #000;
+    border-color: #ffc107;
+}
+
+.prime-toggle-btn-lg.inactive-prime-lg {
+    background: #6c757d;
+    color: #fff;
+    border-color: #5a6268;
+}
+
+/* Prime Badge Styles */
+.prime-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.prime-badge.active {
+    background: linear-gradient(135deg, #ffd700, #ffc107);
+    color: #000;
+    border: 1px solid #ffc107;
+}
+
+.prime-badge.inactive {
+    background: #6c757d;
+    color: #fff;
+    border: 1px solid #5a6268;
+}
+
+.prime-badge.undefined {
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+}
+
+/* Prime Row Highlight */
+.prime-spot-row {
+    background-color: rgba(255, 215, 0, 0.05);
+}
+
+.prime-spot-row:hover {
+    background-color: rgba(255, 215, 0, 0.1);
+}
+
+/* Button Styles */
+.confirmPrimeBtn {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.confirmPrimeBtn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #218838, #1e9e8a);
+    transform: translateY(-2px);
+}
+
+.confirmPrimeBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.cancelPrimeBtn {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.cancelPrimeBtn:hover {
+    background: #5a6268;
+}
+
+.removePrimeBtn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.removePrimeBtn:hover {
+    background: #c82333;
+}
+
+/* Error and Success Messages */
+.error-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.AdminClienterror-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.AdminProdinput-error {
+    border-color: #dc3545 !important;
+}
+
+/* Suggestions Dropdown */
+.suggestions-dropdown {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    width: 100%;
+    margin-top: 2px;
+}
+
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.suggestion-item:hover {
+    background: #f8f9fa;
+}
+
+/* Loading States */
+.admin-products-loading {
+    text-align: center;
+    padding: 50px;
+}
+
+.admin-spinner-border {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    border: 0.25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: .75s linear infinite spinner-border;
+}
+
+@keyframes spinner-border {
+    to { transform: rotate(360deg); }
+}
+
+.admin-no-products {
+    text-align: center;
+    padding: 50px;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
 }

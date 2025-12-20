@@ -21,6 +21,10 @@ import BlogAddPg from './ad2BlogAddPg';
 import OfferAddPg from './ad1OfferAdd';
 import AllOffersPg from './ad1OfferShowPg';
 
+//Prime Spots Add Page
+import PrimeAddPg from './ad1PrimesAdd';
+import AllPrimesPg from './ad1PrimesShowPg';
+
 // export const CategoryContext = createContext();
 function AdminpanelHome() {
 
@@ -39,6 +43,8 @@ function AdminpanelHome() {
   const [activeFooterContact, setActiveFooterContact] = useState(''); // default active
   const [activeBlogPage, setActiveBlogPage] = useState(''); // default active
   const [activeOfferProducts, setActiveOfferProducts] = useState('');
+  const [activePrimeSpots, setActivePrimeSpots] = useState('');
+
 
 
   const handleMenuClick = (menu) => {
@@ -51,6 +57,7 @@ function AdminpanelHome() {
       setActiveBlogPage('');
       setActiveFooterContact('');
       setActiveOfferProducts('');
+      setActivePrimeSpots('');
 
     } else {
       setActiveMenu(menu);
@@ -62,6 +69,8 @@ function AdminpanelHome() {
         setActiveBlogPage('');
         setActiveFooterContact('');
         setActiveOfferProducts('');
+      setActivePrimeSpots('');
+
       }
       else if (menu === 'admanager') {
         setActiveSubProduct('All Products'); // 👈 default subcategory when admanager menu is opened
@@ -71,6 +80,8 @@ function AdminpanelHome() {
         setActiveBlogPage('');
         setActiveFooterContact('');
         setActiveOfferProducts('');
+      setActivePrimeSpots('');
+
       }
 
       else if (menu === 'orders') {
@@ -81,6 +92,8 @@ function AdminpanelHome() {
         setActiveBlogPage('');
         setActiveFooterContact('');
         setActiveOfferProducts('');
+      setActivePrimeSpots('');
+
       }
       else if (menu === 'EnquireUsers') {
         setActiveEnquiryUsers('All Enquiries'); // 👈 default subcategory when orders menu is opened
@@ -90,6 +103,8 @@ function AdminpanelHome() {
         setActiveBlogPage('');
         setActiveFooterContact('');
         setActiveOfferProducts('');
+      setActivePrimeSpots('');
+
       }
       else if (menu === 'BlogPage') {
         setActiveBlogPage('All Blogs'); // 👈 default subcategory when orders menu is opened
@@ -99,6 +114,8 @@ function AdminpanelHome() {
         setActiveEnquiryUsers('');
         setActiveFooterContact('');
         setActiveOfferProducts('');
+      setActivePrimeSpots('');
+
       }
       else if (menu === 'FooterContact') {
         setActiveFooterContact('All FooterContacts'); // 👈 default subcategory when orders menu is opened
@@ -108,6 +125,8 @@ function AdminpanelHome() {
         setActiveEnquiryUsers('');
         setActiveBlogPage('');
         setActiveOfferProducts('');
+      setActivePrimeSpots('');
+
       }
 
       else if (menu === 'OfferProduct') {
@@ -118,6 +137,22 @@ function AdminpanelHome() {
         setActiveEnquiryUsers('');
         setActiveBlogPage('');
         setActiveFooterContact('');
+      setActivePrimeSpots('');
+
+
+      }
+
+      
+      else if (menu === 'PrimeSpots') {
+        setActivePrimeSpots('All Prime Spots'); // 👈 default subcategory when orders menu is opened
+        setActiveSubOrder('');
+        setActiveSubCategory('');
+        setActiveSubProduct('');
+        setActiveEnquiryUsers('');
+        setActiveBlogPage('');
+        setActiveFooterContact('');
+     setActiveOfferProducts('')
+
 
       }
       else {
@@ -128,6 +163,8 @@ function AdminpanelHome() {
         setActiveBlogPage('');
         setActiveFooterContact('');
         setActiveOfferProducts('');
+      setActivePrimeSpots('');
+
 
 
       }
@@ -314,6 +351,33 @@ function AdminpanelHome() {
   const isEditingOffProd = !!editOffProd;
 
 
+
+  
+  //EDIT PRIME SPOTS PRODUCT REDIRECTION
+
+  const [editPrimeSpots, setEditPrimeSpots] = useState(null);
+
+  useEffect(() => {
+    if (location.state?.editPrimeSpots) {
+      setEditPrimeSpots(location.state.editPrimeSpots);
+      setActiveMenu('PrimeSpots'); // ✅ Automatically open 'OfferProduct' section
+      setActivePrimeSpots(location.state.activePrimeSpots || 'Add Primes'); // 👈 This line sets tab to Add Products
+
+      setTimeout(() => {
+        const element = document.getElementById('EditPrimeSpots');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+      // Clear location.state after using it (so it doesn't persist)
+      window.history.replaceState({}, document.title, location.pathname + location.hash);
+
+    }
+  }, [location]);
+
+  const isEditingPrimeSpots = !!editPrimeSpots;
+
+
   return (
 
     <div>
@@ -359,7 +423,8 @@ function AdminpanelHome() {
           </div>
         </nav>
 
-      </div>
+      </div> 
+
       {/* Sidebar with admin panel content section  */}
       <div className='AdminPanelHome-content d-flex'>
         {/* LEFT CONTENT  */}
@@ -454,6 +519,56 @@ function AdminpanelHome() {
               </div>
             </div>
           )}
+
+
+
+
+
+
+ {/* PRIME SPOTS ADD SECTION */}
+          <div className={`adminHeadings ${activeMenu === 'PrimeSpots' ? 'active' : ''}`}
+            onClick={() => handleMenuClick('PrimeSpots')}>
+            <div className='sideImageHeading'>
+              <svg xmlns="http://www.w3.org/2000/svg" className='adminHeading-imgs' viewBox="0 0 36 36" fill="currentColor">
+                <path d="M4.70344 14.7443L3.07991 10.2127C3.03603 10.0904 3.0167 9.96061 3.02302 9.83082C3.02934 9.70104 3.06119 9.57378 3.11674 9.45631C3.1723 9.33885 3.25047 9.2335 3.34679 9.14628C3.4431 9.05906 3.55567 8.99169 3.67805 8.94802C3.75293 8.92284 3.83027 8.90565 3.90877 8.89675L8.57714 8.40969L9.06135 3.70714C9.07452 3.57786 9.11304 3.45244 9.17473 3.33807C9.23642 3.2237 9.32005 3.12262 9.42085 3.0406C9.52165 2.95859 9.63763 2.89726 9.76215 2.86012C9.88668 2.82298 10.0173 2.81076 10.1466 2.82416C10.2155 2.82988 10.2834 2.84423 10.3488 2.86688L14.9061 4.03754L17.5493 0.978457C17.7207 0.780006 17.9635 0.657283 18.2249 0.637011C18.4863 0.616739 18.7451 0.70056 18.945 0.870221C19.0103 0.927772 19.0686 0.992777 19.1187 1.06391L21.6822 4.5303L26.2139 2.87828C26.3371 2.83361 26.4679 2.81382 26.5988 2.82005C26.7297 2.82628 26.858 2.8584 26.9764 2.91455C27.0948 2.97071 27.2009 3.04978 27.2886 3.1472C27.3762 3.24462 27.4437 3.35846 27.4871 3.48212C27.5148 3.55838 27.533 3.63779 27.5412 3.71853L28.0254 8.42108L32.7279 8.8939C32.8895 8.91025 33.0445 8.96614 33.1793 9.05663C33.3141 9.14713 33.4246 9.26944 33.5009 9.41276C33.5772 9.55608 33.617 9.71599 33.6168 9.87836C33.6166 10.0407 33.5765 10.2005 33.4998 10.3437L31.4206 14.2658L35.4082 17.3505C35.5112 17.4297 35.5976 17.5286 35.6623 17.6413C35.727 17.754 35.7687 17.8784 35.7851 18.0073C35.8015 18.1363 35.7923 18.2672 35.7579 18.3925C35.7235 18.5178 35.6647 18.6351 35.5848 18.7377C35.5274 18.8146 35.4582 18.8819 35.3797 18.937L31.9048 21.5205L33.5568 26.0521C33.6458 26.2988 33.6334 26.5707 33.5224 26.8082C33.4113 27.0458 33.2107 27.2297 32.9643 27.3196C32.8881 27.3474 32.8087 27.3655 32.7279 27.3737L28.0254 27.8579L27.5412 32.5349C27.5139 32.7956 27.3843 33.035 27.1809 33.2005C26.9775 33.366 26.7169 33.4441 26.456 33.4178C26.3297 33.4044 26.2071 33.3677 26.0942 33.3096L22.1636 31.2503L19.0732 35.2379C18.9793 35.3605 18.858 35.4594 18.719 35.5266C18.58 35.5937 18.4271 35.6273 18.2727 35.6245C18.1183 35.6217 17.9668 35.5827 17.8302 35.5106C17.6937 35.4385 17.576 35.3353 17.4866 35.2094L14.9004 31.7202L10.3687 33.3552C10.2298 33.4039 10.0818 33.421 9.93546 33.4052C9.78912 33.3894 9.64816 33.3411 9.52286 33.2638C9.39757 33.1866 9.29111 33.0823 9.21127 32.9587C9.13142 32.835 9.0802 32.6951 9.06135 32.5491L8.57714 28.345L3.80053 27.3566C3.67345 27.3308 3.5527 27.2802 3.44523 27.2076C3.33775 27.1351 3.24565 27.042 3.1742 26.9338C3.10276 26.8256 3.05338 26.7043 3.02889 26.577C3.0044 26.4496 3.00528 26.3187 3.03149 26.1917C3.04032 26.131 3.05658 26.0717 3.07991 26.0151L4.70344 21.5233L1.20003 18.9285C0.989643 18.7718 0.849926 18.5382 0.811487 18.2787C0.773047 18.0193 0.839019 17.7551 0.994948 17.5442C1.05634 17.4619 1.13036 17.3898 1.21427 17.3306L4.70344 14.7443ZM22.474 12.9784L16.6549 23.0956C16.5998 23.1959 16.5359 23.2912 16.4641 23.3804C16.4004 23.4626 16.321 23.5313 16.2305 23.5826C16.1324 23.631 16.0262 23.6609 15.9172 23.6709C15.7934 23.6855 15.6688 23.6922 15.5441 23.6909H14.4447C14.3575 23.6909 14.2739 23.6564 14.212 23.5951C14.1501 23.5337 14.115 23.4504 14.1143 23.3633C14.1144 23.2951 14.1352 23.2285 14.1741 23.1725L19.996 13.0439C20.0497 12.944 20.1117 12.8487 20.1811 12.7591V12.742C20.2435 12.6674 20.3187 12.6047 20.4033 12.5568C20.5093 12.5097 20.6235 12.4836 20.7394 12.4799C20.8613 12.4654 20.9841 12.4587 21.1068 12.46H22.2034C22.2906 12.46 22.3742 12.4944 22.4361 12.5557C22.498 12.6171 22.5331 12.7004 22.5338 12.7875C22.5337 12.8557 22.5129 12.9223 22.474 12.9784ZM20.3663 23.2522C19.8764 22.7395 19.6286 21.9534 19.6286 20.8938C19.6286 19.8343 19.8764 19.0481 20.3663 18.5354C20.8562 18.0227 21.6537 17.7664 22.7589 17.7664C23.864 17.7664 24.6615 18.0227 25.1514 18.5354C25.6413 19.0481 25.8863 19.8343 25.8863 20.8938C25.8863 21.9534 25.6413 22.7395 25.1514 23.2522C24.6615 23.7649 23.864 24.0213 22.7589 24.0213C21.6537 24.0213 20.8562 23.7649 20.3663 23.2522ZM22.0753 19.9938V22.2724H22.4455C22.7577 22.2793 23.0698 22.2545 23.3769 22.1983C23.4396 22.1471 23.4709 22.0075 23.4709 21.7825V19.5038H22.6164C22.4625 19.4873 22.3069 19.5129 22.1664 19.5779C22.1066 19.6292 22.0753 19.7687 22.0753 19.9938ZM11.4511 17.7237C10.9612 17.211 10.7162 16.4248 10.7162 15.3653C10.7162 14.3057 10.9612 13.5196 11.4511 13.0069C11.941 12.4942 12.7385 12.2378 13.8437 12.2378C14.9488 12.2378 15.7463 12.4942 16.2362 13.0069C16.7261 13.5196 16.9711 14.3057 16.9711 15.3653C16.9711 16.4248 16.7261 17.211 16.2362 17.7237C15.7463 18.2364 14.9488 18.4927 13.8437 18.4927C12.7385 18.4927 11.941 18.2364 11.4511 17.7237ZM13.1601 14.4652V16.7438H14.0146C14.1679 16.76 14.3226 16.7334 14.4617 16.6669C14.5244 16.6157 14.5557 16.4761 14.5557 16.2511V13.9724H14.1684C13.857 13.9648 13.5457 13.9906 13.2398 14.0493C13.1772 14.0978 13.1458 14.2373 13.1458 14.4623L13.1601 14.4652ZM5.35856 10.7339L6.78271 14.7215C6.86756 14.9257 6.88168 15.1525 6.82285 15.3656C6.76401 15.5788 6.63559 15.7661 6.458 15.8979L3.45019 18.1338L6.46939 20.3726C6.64196 20.4999 6.76856 20.6798 6.83019 20.8853C6.89182 21.0907 6.88515 21.3106 6.81119 21.5119L5.31298 25.6533L9.63102 26.5534C9.84984 26.5824 10.0527 26.6836 10.2075 26.841C10.3623 26.9983 10.4601 27.2029 10.4855 27.4221L10.9099 31.0965L14.9118 29.6552C15.1122 29.5746 15.3335 29.5619 15.5418 29.619C15.7501 29.6761 15.934 29.7999 16.0653 29.9714L18.3184 33.0134L21.0926 29.4217C21.2313 29.2262 21.4362 29.0876 21.6692 29.0316C21.9022 28.9756 22.1477 29.0059 22.3601 29.1169L25.724 30.8857L26.1512 26.8667C26.1738 26.6421 26.2726 26.4321 26.4312 26.2714C26.5897 26.1108 26.7985 26.0093 27.0228 25.9837L31.2782 25.5366L29.797 21.5176C29.7215 21.317 29.7135 21.0972 29.7741 20.8916C29.8348 20.686 29.9608 20.5058 30.1331 20.3783L33.1723 18.1224L29.6062 15.3681C29.4017 15.2302 29.2557 15.0213 29.1962 14.782C29.1368 14.5426 29.1682 14.2897 29.2843 14.0721L31.0674 10.7111L27.0342 10.2981C26.8076 10.2744 26.5961 10.1734 26.4353 10.0121C26.2745 9.85072 26.1742 9.63892 26.1512 9.4123L25.704 5.17117L21.6851 6.63804C21.4843 6.7126 21.2648 6.72015 21.0595 6.65956C20.8541 6.59898 20.6739 6.47351 20.5457 6.30194L18.2443 3.19729L16.0226 5.7807C15.9021 5.92059 15.7449 6.02404 15.5688 6.0794C15.3927 6.13476 15.2046 6.13982 15.0257 6.09402L10.9128 5.04869L10.4627 9.4009C10.4421 9.62926 10.3428 9.84334 10.1817 10.0065C10.0206 10.1697 9.80782 10.2717 9.57975 10.2953L5.35856 10.7339Z" stroke={activeMenu === 'PrimeSpots' ? 'black' : 'rgba(227, 31, 37, 1)'} />
+              </svg>
+              Prime Spots
+            </div>
+            <i className={`fas fa-chevron-${activeMenu === 'PrimeSpots' ? "up" : "down"} ml-2`}></i>
+          </div>
+
+          {/* SubPrimeSpots section with Add Primes and Edit Primes section */}
+          {activeMenu === 'PrimeSpots' && (
+            <div className="subcategory-list pl-6">
+              <div
+                className={`subcategory-item ${activePrimeSpots === 'All Prime Spots' ? 'active' : ''}`}
+                onClick={() => {
+                  // setEditProduct(null); // Reset edit state when user clicks manually
+                  setActivePrimeSpots('All Prime Spots')
+                }}>
+                All Primes
+              </div>
+              <div
+                className={`subcategory-item ${activePrimeSpots === 'Add Primes' ? 'active' : ''}`}
+                onClick={() => {
+                  setEditPrimeSpots(null); // Reset edit state when user clicks manually
+                  setActivePrimeSpots('Add Primes')
+
+                  // ✅ Also make sure state from URL is cleared (rare case fallback)
+                  // window.history.replaceState({}, document.title, location.pathname + '#OfferProduct');
+                }}>
+                {isEditingPrimeSpots ? "Edit Primes" : "Add Primes"}
+              </div>
+            </div>
+          )}
+
+
+
+
+
+
+
+
 
 
 
@@ -778,6 +893,34 @@ function AdminpanelHome() {
 
 
 
+        {/* OFFERED PRODUCTS ADD SECTION */}
+        {/* Show Sub Offered Product Content */}
+        {activePrimeSpots === 'All Prime Spots' && (
+          <div className='productsMain'>
+            <div>
+              {/* <OfferAddPg/> */}
+              {/* <AllOffersPg /> */}
+              <AllPrimesPg />
+              {/* <Products /> */}
+            </div>
+          </div>
+        )}
+
+        {activePrimeSpots === 'Add Primes' && (
+          <div className="pl-6" id='EditPrimeSpots' style={{ display: activePrimeSpots === 'Add Primes' ? 'block' : 'none' }}>
+            {/* <AllOffersPg/> */}
+            {/* <OfferAddPg /> */}
+            <PrimeAddPg />
+
+
+           
+            {/* <ImageUploadPage editProduct={editProduct} /> */}
+          </div>
+        )}
+
+
+
+
 
 
 
@@ -840,7 +983,8 @@ function AdminpanelHome() {
               <FooterContact />
             </div>
           </div>
-        )}
+        )} 
+
         {/* {activeEnquiryUsers === 'Add Orders' && (
           <div id="manageOrderEdit">
             <ADManage editOrder={editOrder} />

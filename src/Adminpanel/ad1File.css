@@ -71,7 +71,7 @@ color: rgba(227, 31, 37, 1);
 .suggestions-dropdown {
   position: absolute;
   z-index: 1000;
-  width: 100%;
+  width: 40%;
   max-height: 300px;
   overflow-y: auto;
   background: white;

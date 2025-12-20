@@ -631,7 +631,8 @@ function AddOfferProduct() {
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Lighting Type</div>
                                         <input 
-                                            type='text' 
+                                            type='text'
+                                            placeholder='Lighting Type' 
                                             value={prodLighting} 
                                             readOnly
                                             className='clientDetailsInput'
@@ -643,6 +644,7 @@ function AddOfferProduct() {
                                         <div className='clientDetailHeading'>Product ID</div>
                                         <input 
                                             type='text' 
+                                            placeholder='Product ID'
                                             value={productID} 
                                             readOnly
                                             className='clientDetailsInput'
@@ -663,13 +665,15 @@ function AddOfferProduct() {
                                         <label className='locationFromLabel'>From</label>
                                         <input 
                                             type='text' 
+                                            placeholder='From'
                                             value={productFrom} 
                                             readOnly
                                             className='clientDetailsInput locationInput'
-                                        />
+                                        /><br></br>
                                         <label className='locationFromLabel'>To</label>
                                         <input 
                                             type='text' 
+                                            placeholder='To'
                                             value={productTo} 
                                             readOnly
                                             className='clientDetailsInput locationInput'

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./ad1OrderDetails.css";
 import { useLocation } from "react-router-dom";
 import CalendarOrderDetails from "./ad1CalenderOrderDetails";
-//BASE URL OF http://localhost:3001 FILE IMPORT
 import { baseUrl } from "./BASE_URL";
 import { formatIndianCurrency } from "../components/FORMATED_AMOUNT";
 import axios from "axios";
@@ -12,74 +11,281 @@ const formatEditedDateTime = (dateString) => {
   if (!dateString) return "";
 
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) return "";
 
-  if (isNaN(date.getTime())) {
-    return "";
-  }
-
-  // Date
   const day = date.getDate().toString().padStart(2, "0");
-  const month = date.toLocaleString("en-US", { month: "short" }); // Dec
+  const month = date.toLocaleString("en-US", { month: "short" });
   const year = date.getFullYear();
-
+  
   const time = date
     .toLocaleTimeString("en-IN", {
       hour: "2-digit",
       minute: "2-digit",
       hour12: true,
     })
-    .toLowerCase(); // convert AM/PM to am/pm
+    .toLowerCase();
 
   return `${day}-${month}-${year}, ${time}`;
 };
 
 function OrderDetails({ order, onOrderUpdate }) {
-
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
   const [selectedProductId, setSelectedProductId] = useState(null);
+  const [deleteProductName, setDeleteProductName] = useState("");
+  const [handlerName, setHandlerName] = useState("");
 
-  const handleDeleteClick = (orderId, productId) => {
+  // Payment history state - ensure it's always an array
+  const [paymentHistory, setPaymentHistory] = useState([]);
+
+  const refreshOrderData = async () => {
+    try {
+      const response = await fetch(`${baseUrl}/prodOrders/${safeOrder._id}`);
+      const updatedOrder = await response.json();
+      
+      if (updatedOrder) {
+        setOrderData(updatedOrder);
+        setLocalOrder(updatedOrder);
+        
+        // Ensure payment history is always an array
+        const normalizedPaymentHistory = Array.isArray(updatedOrder.client?.paidAmount) 
+          ? updatedOrder.client.paidAmount 
+          : [];
+        setPaymentHistory(normalizedPaymentHistory);
+        
+        if (onOrderUpdate) {
+          onOrderUpdate(updatedOrder);
+        }
+      }
+    } catch (error) {
+      console.error("Error refreshing order data:", error);
+    }
+  };
+
+// const confirmDelete = async () => {
+//   try {
+//     const orderToDeleteFrom = safeOrder;
+//     const product = safeOrder.products.find(p => p._id === selectedProductId);
+//     const isCurrentlyDeleted = product?.deleted || false;
+
+//     // Use _id for API calls
+//     let endpoint = '';
+    
+//     if (isCurrentlyDeleted) {
+//       // Restore product
+//       endpoint = `${baseUrl}/deleteProductOrder/${safeOrder._id}/${selectedProductId}?deletedBy=${encodeURIComponent(handlerName)}`;
+//     } else {
+//       // Delete product
+//       endpoint = `${baseUrl}/deleteProductOrder/${safeOrder._id}/${selectedProductId}?deletedBy=${encodeURIComponent(handlerName)}`;
+//     }
+
+//     const response = await fetch(endpoint);
+//     const result = await response.json();
+
+//     if (result.status) {
+//       // Update local state immediately
+//       const updatedProducts = safeOrder.products.map(p => {
+//         if (p._id === selectedProductId) {
+//           return {
+//             ...p,
+//             deleted: !isCurrentlyDeleted,
+//             deletedAt: isCurrentlyDeleted ? null : new Date(),
+//             deletedBy: isCurrentlyDeleted ? null : handlerName
+//           };
+//         }
+//         return p;
+//       });
+
+//       // Calculate new totals
+//       const activeProducts = updatedProducts.filter(p => !p.deleted);
+//       const newTotalAmount = activeProducts.reduce((sum, p) => sum + (p.booking?.totalPrice || 0), 0);
+      
+//       // Update order data
+//       const updatedOrder = {
+//         ...safeOrder,
+//         products: updatedProducts,
+//         client: {
+//           ...safeOrder.client,
+//           totalAmount: newTotalAmount,
+//           balanceAmount: Math.max(newTotalAmount - totalPaidAmount, 0)
+//         }
+//       };
+
+//       setOrderData(updatedOrder);
+//       setLocalOrder(updatedOrder);
+
+//       // Send email notification
+//       try {
+//         await fetch(`${baseUrl}/notifications/send-product-deletion-notification`, {
+//           method: 'POST',
+//           headers: { 'Content-Type': 'application/json' },
+//           body: JSON.stringify({
+//             orderId: safeOrder.orderId,
+//             productId: selectedProductId,
+//             productName: deleteProductName,
+//             client: orderToDeleteFrom.client,
+//             orderDetails: updatedOrder, // Send updated order
+//             action: isCurrentlyDeleted ? 'restore' : 'delete',
+//             handler: handlerName,
+//             createdAt: safeOrder.createdAt
+//           })
+//         });
+//       } catch (emailError) {
+//         console.error("Failed to send notification:", emailError);
+//         toast.warning(
+//           isCurrentlyDeleted
+//             ? "Product restored but email notification failed"
+//             : "Product marked as deleted but email notification failed"
+//         );
+//       }
+
+//       toast.success(
+//         isCurrentlyDeleted
+//           ? "Product restored successfully"
+//           : "Product marked as deleted successfully"
+//       );
+//     } else {
+//       toast.error(result.message || "Failed to update product status");
+//     }
+//   } catch (err) {
+//     console.error("Error in confirmDelete:", err);
+//     toast.error("Failed to update product status");
+//   }
+//   setShowDeletePopup(false);
+// };
+
+
+
+const confirmDelete = async () => {
+  try {
+    const orderToDeleteFrom = safeOrder;
+    const product = safeOrder.products.find(p => p._id === selectedProductId);
+    const isCurrentlyDeleted = product?.deleted || false;
+
+    // Use _id for API calls
+    let endpoint = '';
+    
+    if (isCurrentlyDeleted) {
+      // Restore product
+      endpoint = `${baseUrl}/deleteProductOrder/${safeOrder._id}/${selectedProductId}?deletedBy=${encodeURIComponent(handlerName)}`;
+    } else {
+      // Delete product
+      endpoint = `${baseUrl}/deleteProductOrder/${safeOrder._id}/${selectedProductId}?deletedBy=${encodeURIComponent(handlerName)}`;
+    }
+
+    const response = await fetch(endpoint);
+    const result = await response.json();
+
+    if (result.status) {
+      // Update local state immediately
+      const updatedProducts = safeOrder.products.map(p => {
+        if (p._id === selectedProductId) {
+          return {
+            ...p,
+            deleted: !isCurrentlyDeleted,
+            deletedAt: isCurrentlyDeleted ? null : new Date(),
+            deletedBy: isCurrentlyDeleted ? null : handlerName
+          };
+        }
+        return p;
+      });
+
+      // Calculate new totals
+      const activeProducts = updatedProducts.filter(p => !p.deleted);
+      const newTotalAmount = activeProducts.reduce((sum, p) => sum + (p.booking?.totalPrice || 0), 0);
+      
+      // Create updated order with all changes
+      const updatedOrder = {
+        ...safeOrder,
+        products: updatedProducts,
+        client: {
+          ...safeOrder.client,
+          totalAmount: newTotalAmount,
+          balanceAmount: Math.max(newTotalAmount - totalPaidAmount, 0)
+        },
+        last_edited: new Date().toISOString()
+      };
+
+      // Update local state immediately
+      setOrderData(updatedOrder);
+      setLocalOrder(updatedOrder);
+
+      // Send email notification with UPDATED order data
+      try {
+        const notificationResponse = await fetch(`${baseUrl}/notifications/send-product-deletion-notification`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            orderId: safeOrder.orderId,
+            productId: selectedProductId,
+            productName: deleteProductName,
+            client: updatedOrder.client, // Send updated client info
+            orderDetails: updatedOrder, // Send COMPLETELY UPDATED order
+            action: isCurrentlyDeleted ? 'restore' : 'delete',
+            handler: handlerName,
+            createdAt: safeOrder.createdAt
+          })
+        });
+
+        const notificationResult = await notificationResponse.json();
+        console.log('Notification sent with counts:', notificationResult.counts);
+        
+        if (!notificationResult.success) {
+          toast.warning(
+            `Product ${isCurrentlyDeleted ? 'restored' : 'deleted'} but email notification failed: ${notificationResult.error}`
+          );
+        }
+      } catch (emailError) {
+        console.error("Failed to send notification:", emailError);
+        toast.warning(
+          isCurrentlyDeleted
+            ? "Product restored but email notification failed"
+            : "Product marked as deleted but email notification failed"
+        );
+      }
+
+      toast.success(
+        isCurrentlyDeleted
+          ? "Product restored successfully"
+          : "Product marked as deleted successfully"
+      );
+    } else {
+      toast.error(result.message || "Failed to update product status");
+    }
+  } catch (err) {
+    console.error("Error in confirmDelete:", err);
+    toast.error("Failed to update product status");
+  }
+  setShowDeletePopup(false);
+};
+
+
+  const handleDeleteClick = (orderId, productId, productName) => {
     setSelectedOrderId(orderId);
     setSelectedProductId(productId);
+    setDeleteProductName(productName || "Product");
+    
+    const currentHandler = safeOrder.handled_by || "Admin";
+    setHandlerName(currentHandler);
+    
     setShowDeletePopup(true);
   };
 
-  const confirmDelete = async () => {
-    try {
-      await axios.get(
-        `${baseUrl}/deleteProductOrder/${selectedProductId}/${selectedOrderId}`
-      );
-      setOrderData((prev) => ({
-        ...prev,
-        products: prev.products.filter((p) => p.id !== selectedOrderId),
-      }));
-    } catch (err) {
-      // toast.error("Failed to delete");
-    }
+  const cancelDelete = () => {
     setShowDeletePopup(false);
   };
 
-  // Handle null/undefined order state
-
   const location = useLocation();
   const [activeProductIndex, setActiveProductIndex] = useState(0);
-
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // CALENDER EDIT SECTION
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
-  const openCalender = () => {
-    setIsCalenderOpen(!isCalendarOpen);
-  };
-  const closeCalender = () => {
-    setIsCalenderOpen(false);
-  };
+  
+  const openCalender = () => setIsCalenderOpen(!isCalenderOpen);
+  const closeCalender = () => setIsCalenderOpen(false);
 
-  // Add local state for the order
   const [localOrder, setLocalOrder] = useState(null);
-  // Initialize localOrder when order or location.state changes
+  
   useEffect(() => {
     const newOrder = order ||
       location.state?.order || {
@@ -101,195 +307,85 @@ function OrderDetails({ order, onOrderUpdate }) {
   const [orderData, setOrderData] = useState(initialOrder);
   const safeOrder = orderData;
 
-  /* delete product */
-
-  /* Set order statuses */
-
   const [orderStatuses, setOrderStatuses] = useState([]);
   const [selectOrderStatus, setSelectOrderStatus] = useState("");
   const [showAddInput, setShowAddInput] = useState(false);
   const [newStatus, setNewStatus] = useState("");
-  const [cancelAddInput, setCancelReasonInput] = useState(false);
+  const [showCancelReasonInput, setShowCancelReasonInput] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
-
-  // Check if handler is assigned
   const [hasHandlerAssigned, setHasHandlerAssigned] = useState(
     safeOrder.handled_by && safeOrder.handled_by.trim() !== ""
   );
+  const [isOrderCancelled, setIsOrderCancelled] = useState(
+    safeOrder.order_status === "Cancelled"
+  );
 
-  const fetchOrderStatuses = async () => {
-    try {
-      const res = await axios.get(`${baseUrl}/getOrderStatuses`);
-      setOrderStatuses(res.data.data || []);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  const handleStatusChange = (e) => {
-    const value = e.target.value;
-    if (value === "__add_new__") {
-      setShowAddInput(true);
-      setCancelReasonInput(false);
-      return;
-    } else if (value === "Cancelled") {
-      setCancelReasonInput(true);
-    } else {
-      setCancelReasonInput(false);
-      setShowAddInput(false);
-      setSelectOrderStatus(value);
-      updateOrderStatus(value);
-    }
-  };
+  // Calculate active and deleted products
+  const activeProducts = safeOrder.products?.filter(p => !p.deleted) || [];
+  const deletedProducts = safeOrder.products?.filter(p => p.deleted) || [];
 
-  const setNewStatusInput = (newStatus) => {
-    setNewStatus(newStatus);
-  };
-
-    const setCancelReasonValue = (cancelReason) => {
-    setCancelReason(cancelReason);
-  };
-
-  const updateOrderStatus = async (statusValue) => {
-    if (!statusValue || statusValue.trim() === "") return;
-
-    try {
-      const res = await axios.put(
-        `${baseUrl}/updateOrderStatus/${safeOrder._id}`,
-        {
-          cancel: false,
-          status: statusValue,
-        }
-      );
-
-      if (res.data?.status === true) {
-        toast.success(res.data.message || "Status Updated successfully!");
-      } else {
-        toast.error(res.data.message || "Server Error!");
+  // Calculate totals - FIXED VERSION
+  const calculateActiveTotals = () => {
+    if (!safeOrder.products) return 0;
+    return safeOrder.products.reduce((sum, product) => {
+      if (!product.deleted) {
+        return sum + (product.booking?.totalPrice || 0);
       }
-    } catch (err) {
-      console.error("Status update failed", err);
-    }
+      return sum;
+    }, 0);
   };
 
-   const saveCancelReason = async () => {
-    if (!cancelReason.trim()) {
-      toast.error("Please enter a cancel reason");
-      return;
-    }
-    
-    try {
-      const res = await axios.put(
-        `${baseUrl}/updateOrderStatus/${safeOrder._id}`,
-        {
-          cancel: true,
-          reason: cancelReason,
-          status : 'Cancelled'
-        }
-      );
-      if (res.data?.status === true) {
-        setCancelReasonInput(false);
-        setCancelReason("");
-        setCancelReasonInput(false);
-        toast.success(res.data.message || "Status Updated successfully!");
-      } else {
-        toast.error(res.data.message || "Server Error!");
-      }
-    } catch (err) {
-      console.error("Error adding status", err);
-    }
-  };
-
-  const addNewStatus = async () => {
-    if (!newStatus.trim()) return;
-
-    try {
-      const res = await axios.post(`${baseUrl}/addOrderStatus`, {
-        name: newStatus,
-        createdAt: new Date(),
-        updatedAt: null,
-      });
-
-      setOrderStatuses((prev) => [...prev, newStatus]);
-      setShowAddInput(false);
-
-      // Show toast with backend message
-      if (res.data?.status === true) {
-        toast.success(res.data.message || "Status added successfully!");
-      } else {
-        toast.error(res.data.message || "Server Error!");
-      }
-
-      setShowAddInput(false);
-      setNewStatus("");
-
-      fetchOrderStatuses(); // refresh dropdown list
-    } catch (err) {
-      console.error("Error adding status", err);
-    }
-  };
-
-  /* Set order statuses */
-  /* update remaining amount */
-
-  const formatDateTime = (date) => {
-    const d = new Date(date);
-    return d.toLocaleString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    });
-  };
-
-  const totalAmount = safeOrder.products.reduce(
-    (sum, p) => sum + (p.booking?.totalPrice || 0),
+  // Payment calculations - FIXED
+  const totalAmount = calculateActiveTotals();
+  
+  // Ensure payment history is always an array
+  const initialPaidArray = Array.isArray(safeOrder.client?.paidAmount) 
+    ? safeOrder.client.paidAmount 
+    : [];
+  
+  const totalPaidAmount = initialPaidArray.reduce(
+    (sum, p) => sum + (Number(p.amount) || 0),
     0
   );
 
-  // Initial paid array from DB
-  const initialPaidArray = Array.isArray(safeOrder.client.paidAmount)
-    ? safeOrder.client.paidAmount
-    : [];
-
-  // 2. Total paid amount
-  const totalPaidAmount = Array.isArray(safeOrder.client.paidAmount)
-    ? safeOrder.client.paidAmount.reduce(
-        (sum, p) => sum + (Number(p.amount) || 0),
-        0
-      )
-    : 0;
-
-  // 3. Check if fully paid
-  // const isFullyPaid =
-  // 4. React States
   const [advanceAmount, setAdvanceAmount] = useState(0);
-  const [hiddenRemainingAmount, setHiddenRemainingAmount] = useState(0);
-  const [paymentHistory, setPaymentHistory] = useState(initialPaidArray);
   const [remainingAmount, setRemainingAmount] = useState(
-    safeOrder.client.balanceAmount > 0
-      ? safeOrder.client.balanceAmount
-      : totalAmount - initialPaidArray.reduce((s, a) => s + a, 0)
+    Math.max(totalAmount - totalPaidAmount, 0)
   );
-  const totalPaid = paymentHistory.reduce((sum, p) => sum + (p.amount || 0), 0);
-  const isFullyPaid = remainingAmount <= 0;
-  /* --- Handle Advance Amount Change --- */
-  const handleAdvanceChange = (e) => {
-    if (isFullyPaid) return; // prevent editing when fully paid
 
+  // Initialize payment history
+  useEffect(() => {
+    if (safeOrder.client?.paidAmount) {
+      if (Array.isArray(safeOrder.client.paidAmount)) {
+        setPaymentHistory(safeOrder.client.paidAmount);
+      } else if (typeof safeOrder.client.paidAmount === 'number') {
+        // Convert single number to array format
+        setPaymentHistory([{ 
+          amount: safeOrder.client.paidAmount, 
+          paidAt: safeOrder.createdAt || new Date() 
+        }]);
+      } else {
+        setPaymentHistory([]);
+      }
+    } else {
+      setPaymentHistory([]);
+    }
+  }, [safeOrder.client?.paidAmount, safeOrder.createdAt]);
+
+  // Recalculate remaining amount when totals change
+  useEffect(() => {
+    const activeTotal = calculateActiveTotals();
+    const paidTotal = paymentHistory.reduce((sum, p) => sum + (p.amount || 0), 0);
+    const newRemaining = Math.max(activeTotal - paidTotal, 0);
+    setRemainingAmount(newRemaining);
+  }, [safeOrder.products, paymentHistory]);
+
+  const handleAdvanceChange = (e) => {
+    if (isFullyPaid) return;
     let value = e.target.value.replace(/[^0-9]/g, "");
     const adv = Number(value);
-
     setAdvanceAmount(adv);
-
-    const newTotalPaid = totalPaidAmount + adv;
-
-    if (hiddenRemainingAmount != 0) {
-      setRemainingAmount(hiddenRemainingAmount - adv);
-    } else {
-      setRemainingAmount(totalAmount - newTotalPaid);
-    }
+    setRemainingAmount(Math.max(totalAmount - (totalPaidAmount + adv), 0));
   };
 
   const handleSaveAmounts = async () => {
@@ -298,60 +394,76 @@ function OrderDetails({ order, onOrderUpdate }) {
         toast.error("Enter valid amount");
         return;
       }
+      
       const payload = {
         orderId: safeOrder.orderId,
         advanceAmount: advanceAmount,
       };
 
-      const response = await axios.post(
-        `${baseUrl}/updateOrderAmounts`,
-        payload
-      );
+      const response = await fetch(`${baseUrl}/updateOrderAmounts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
 
-      if (response.data.status) {
-        const updatedPaid = response.data.data.client.paidAmount;
-        const updatedRemaining = response.data.data.client.balanceAmount;
-        setAdvanceAmount(0);
+      const data = await response.json();
+
+      if (data.status) {
+        // Update payment history - ensure it's an array
+        const updatedPaid = Array.isArray(data.data?.client?.paidAmount) 
+          ? data.data.client.paidAmount 
+          : [];
+        
         setPaymentHistory(updatedPaid);
-        setRemainingAmount(updatedRemaining);
-        setHiddenRemainingAmount(response.data.data.client.balanceAmount);
+        setAdvanceAmount(0);
+        
+        // Update local state
+        setOrderData(prev => ({
+          ...prev,
+          client: {
+            ...prev.client,
+            paidAmount: updatedPaid,
+            balanceAmount: data.data?.client?.balanceAmount || remainingAmount,
+            totalAmount: totalAmount,
+          },
+          last_edited: new Date().toISOString()
+        }));
+        
         toast.success("Amounts saved successfully!");
+        
+        // Refresh data to ensure consistency
+        await refreshOrderData();
       } else {
-        toast.error(response.data.message || "Failed to save amounts");
+        toast.error(data.message || "Failed to save amounts");
       }
     } catch (error) {
-      toast.error(error);
+      console.error("Error saving amounts:", error);
+      toast.error("Error saving amounts");
     }
   };
 
-  /* update remaining amount */
+  // Calendar state
+  const [selectedDates, setSelectedDates] = useState({ start: null, end: null });
+  const [bookedDates, setBookedDates] = useState([]);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [confirmedDates, setConfirmedDates] = useState({});
 
-  const cancelDelete = () => {
-    setShowDeletePopup(false);
-  };
-
-  /* delete product */
-
-  //CALENDER EDIT
-  // Initialize with order's existing dates
-  const [selectedDates, setSelectedDates] = useState({
-    start: null,
-    end: null,
-  });
-
+  // Fetch booked dates - UPDATED to exclude deleted products
   useEffect(() => {
     const fetchBookedDates = async () => {
       const currentProduct = safeOrder.products?.[activeProductIndex];
+      
+      // Don't fetch dates for deleted products
+      if (currentProduct?.deleted) {
+        setBookedDates([]);
+        return;
+      }
+      
       if (currentProduct?.prodCode) {
         try {
-          const cleanProductCode = currentProduct.prodCode
-            .replace(/^#/, "")
-            .trim();
-          let url = `${baseUrl}/booked-dates/${encodeURIComponent(
-            cleanProductCode
-          )}`;
+          const cleanProductCode = currentProduct.prodCode.replace(/^#/, "").trim();
+          let url = `${baseUrl}/booked-dates/${encodeURIComponent(cleanProductCode)}`;
 
-          // Exclude current order when editing
           if (safeOrder._id) {
             url += `?excludeOrderId=${safeOrder._id}`;
           }
@@ -374,7 +486,7 @@ function OrderDetails({ order, onOrderUpdate }) {
             setBookedDates([]);
           }
         } catch (error) {
-          console.error("❌ OrderDetails: Error fetching booked dates:", error);
+          console.error("Error fetching booked dates:", error);
           setBookedDates([]);
         }
       } else {
@@ -385,8 +497,9 @@ function OrderDetails({ order, onOrderUpdate }) {
     fetchBookedDates();
   }, [safeOrder.products, activeProductIndex, safeOrder._id]);
 
+  // Update selected dates when product changes
   useEffect(() => {
-    if (safeOrder.products[activeProductIndex]?.booking) {
+    if (safeOrder.products[activeProductIndex]?.booking && !safeOrder.products[activeProductIndex]?.deleted) {
       const booking = safeOrder.products[activeProductIndex].booking;
       setSelectedDates({
         start: booking.startDate ? new Date(booking.startDate) : null,
@@ -397,13 +510,7 @@ function OrderDetails({ order, onOrderUpdate }) {
     }
   }, [activeProductIndex, safeOrder.products]);
 
-  // Replace hardcoded bookedDates with fetched data
-  const [bookedDates, setBookedDates] = useState([]);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false); // State to toggle calendar
-  const today = new Date();
-  const [currentMonth, setCurrentMonth] = useState(new Date()); // Start with March 2025
-
-  // Add date validation for past dates
+  // Helper functions for calendar
   const isPastDate = (date) => {
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
@@ -413,12 +520,6 @@ function OrderDetails({ order, onOrderUpdate }) {
     return normalizedDate < today;
   };
 
-  // Campaign Date Selection
-  const [confirmedDates, setConfirmedDates] = useState({}); // To store confirmed dates
-
-  const formattedStartDate = selectedDates.start; // Stores full date in ISO format
-  const formattedEndDate = selectedDates.end;
-
   const generateMonth = (monthDate) => {
     const year = monthDate.getFullYear();
     const month = monthDate.getMonth();
@@ -427,28 +528,27 @@ function OrderDetails({ order, onOrderUpdate }) {
     const daysInMonth = lastDay.getDate();
     const startDay = firstDay.getDay();
     const days = [];
-    // Fill empty days
+    
     for (let i = 0; i < startDay; i++) {
       days.push(null);
     }
 
-    // Fill actual days
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
       days.push(date);
     }
-    // Fill remaining days
+    
     while (days.length < 42) days.push(null);
     return days;
   };
+
   const handleDateClick = (date) => {
     if (!date || isNaN(date.getTime())) return;
 
-    // Create date without time component
     const normalizedDate = new Date(
       Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
     );
-    // Check if date is booked or in the past
+    
     const isBooked = bookedDates.some((d) => {
       const bookedDate = new Date(d);
       return (
@@ -472,10 +572,12 @@ function OrderDetails({ order, onOrderUpdate }) {
       }
     }
   };
+
   const resetDates = () => {
     setSelectedDates({ start: null, end: null });
-    setConfirmedDates({ start: null, end: null }); // Reset confirmed dates
+    setConfirmedDates({ start: null, end: null });
   };
+
   const getDateSelectionClass = (date) => {
     if (!date || isNaN(date.getTime())) return "disabled";
 
@@ -483,7 +585,6 @@ function OrderDetails({ order, onOrderUpdate }) {
       Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
     );
 
-    // Check if date is booked for this specific product
     const isBooked = bookedDates.some((d) => {
       const bookedDate = new Date(d);
       return (
@@ -495,7 +596,6 @@ function OrderDetails({ order, onOrderUpdate }) {
 
     const isPast = isPastDate(normalizedDate);
 
-    // Return combined classes if both conditions apply
     if (isBooked && isPast) return "past booked";
     if (isBooked) return "booked";
     if (isPast) return "past";
@@ -538,14 +638,14 @@ function OrderDetails({ order, onOrderUpdate }) {
       new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1)
     );
   };
+  
   const goToPreviousMonth = () => {
     setCurrentMonth(
       new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1)
     );
   };
 
-  // Calculate total price dynamically when start and end dates are selected
-  const pricePerDay = safeOrder.products[activeProductIndex]?.price || 0; // Ensure pricePerDay is defined
+  const pricePerDay = safeOrder.products[activeProductIndex]?.price || 0;
 
   const getAvailableDaysInRange = (start, end) => {
     if (!start || !end || isNaN(start.getTime()) || isNaN(end.getTime())) {
@@ -556,11 +656,9 @@ function OrderDetails({ order, onOrderUpdate }) {
     const current = new Date(start);
     const lastDay = new Date(end);
 
-    // Normalize to UTC midnight for comparison
     current.setUTCHours(0, 0, 0, 0);
     lastDay.setUTCHours(0, 0, 0, 0);
 
-    // Create Set of booked dates in UTC for faster lookup
     const bookedUTCDates = new Set(
       bookedDates.map((d) =>
         Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())
@@ -596,7 +694,6 @@ function OrderDetails({ order, onOrderUpdate }) {
       return;
     }
 
-    // Normalize dates to UTC for consistent comparison
     const startUTC = new Date(
       Date.UTC(
         selectedDates.start.getFullYear(),
@@ -623,7 +720,6 @@ function OrderDetails({ order, onOrderUpdate }) {
       return;
     }
 
-    // Check for conflicts with THIS PRODUCT only
     const selectedRangeDates = [];
     const current = new Date(startUTC);
 
@@ -632,7 +728,6 @@ function OrderDetails({ order, onOrderUpdate }) {
       current.setDate(current.getDate() + 1);
     }
 
-    // Check conflicts only for this specific product
     const hasConflict = selectedRangeDates.some((selectedDate) => {
       return bookedDates.some((bookedDate) => {
         const selectedUTC = new Date(
@@ -664,7 +759,6 @@ function OrderDetails({ order, onOrderUpdate }) {
     setError(null);
 
     try {
-      // Generate booked dates for the new range
       const updatedBookedDates = [];
       const currentDate = new Date(startUTC);
 
@@ -673,12 +767,10 @@ function OrderDetails({ order, onOrderUpdate }) {
         currentDate.setDate(currentDate.getDate() + 1);
       }
 
-      // Calculate pricing
       const totalDays = updatedBookedDates.length;
       const productPrice = safeOrder.products[activeProductIndex]?.price || 0;
       const totalPrice = totalDays * productPrice;
 
-      // Update only the active product
       const updatedProducts = safeOrder.products.map((product, index) => {
         if (index === activeProductIndex) {
           return {
@@ -709,20 +801,52 @@ function OrderDetails({ order, onOrderUpdate }) {
       }
 
       const updatedOrder = await response.json();
+      
+      // Store old dates for email notification
+      const oldBookingData = safeOrder.products[activeProductIndex]?.booking;
+      
+      // Send email notification for date update
+      try {
+        await axios.post(`${baseUrl}/notifications/send-date-update-notification`, {
+          orderId: safeOrder.orderId,
+          client: safeOrder.client,
+          product: safeOrder.products[activeProductIndex],
+          oldDates: oldBookingData,
+          newDates: {
+            startDate: startUTC.toISOString(),
+            endDate: endUTC.toISOString(),
+            totalDays: totalDays,
+            totalPrice: totalPrice
+          },
+          orderDetails: safeOrder,
+          handler: safeOrder.handled_by,
+              createdAt : safeOrder.createdAt,
+
+        });
+      } catch (emailError) {
+        console.error("Failed to send date update email:", emailError);
+        toast.warning("Dates updated but email notification failed");
+      }
 
       setConfirmedDates({ start: startUTC, end: endUTC });
       setIsCalenderOpen(false);
 
-      alert("✅ Dates updated successfully!");
-      window.location.reload();
+      // Update local state
+      setOrderData(prev => ({
+        ...prev,
+        products: updatedProducts,
+        last_edited: new Date().toISOString()
+      }));
+
+      toast.success("✅ Dates updated successfully and notifications sent!");
     } catch (error) {
       console.error("❌ Update error:", error);
       setError(error.message || "Failed to update dates");
-      alert(`❌ Update failed: ${error.message}`);
+      toast.error(`❌ Update failed: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
-  };
+  }; 
 
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 991);
 
@@ -731,36 +855,302 @@ function OrderDetails({ order, onOrderUpdate }) {
       setIsSmallScreen(window.innerWidth <= 991);
     };
     window.addEventListener("resize", handleResize);
+    
     fetchOrderStatuses();
 
-    // Update hasHandlerAssigned whenever safeOrder changes
     if (safeOrder.handled_by && safeOrder.handled_by.trim() !== "") {
       setHasHandlerAssigned(true);
     } else {
       setHasHandlerAssigned(false);
     }
 
-    // Initialize selectOrderStatus with empty string (for "Select Status" placeholder)
+    const isCancelled = safeOrder.order_status === "Cancelled";
+    setIsOrderCancelled(isCancelled);
+
     if (safeOrder.order_status && safeOrder.order_status.trim() !== "") {
       setSelectOrderStatus(safeOrder.order_status);
     } else {
-      setSelectOrderStatus(""); // Empty for "Select Status" placeholder
+      setSelectOrderStatus("");
     }
 
     return () => window.removeEventListener("resize", handleResize);
   }, [safeOrder.handled_by, safeOrder.order_status]);
 
-  // Updated updateHandlerName function - FIXED
+  const fetchOrderStatuses = async () => {
+    try {
+      const res = await fetch(`${baseUrl}/getOrderStatuses`);
+      const data = await res.json();
+      setOrderStatuses(data.data || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleStatusChange = (e) => {
+    const value = e.target.value;
+    if (value === "__add_new__") {
+      setShowAddInput(true);
+      setShowCancelReasonInput(false);
+      return;
+    } else if (value === "Cancelled") {
+      setShowCancelReasonInput(true);
+      setSelectOrderStatus(value);
+    } else {
+      setShowCancelReasonInput(false);
+      setShowAddInput(false);
+      setSelectOrderStatus(value);
+      updateOrderStatus(value);
+    }
+  };
+
+  const setNewStatusInput = (newStatus) => {
+    setNewStatus(newStatus);
+  };
+
+  const setCancelReasonValue = (cancelReason) => {
+    setCancelReason(cancelReason);
+  };
+
+  const updateOrderStatus = async (statusValue) => {
+    if (!statusValue || statusValue.trim() === "") return;
+
+    try {
+      const response = await fetch(`${baseUrl}/updateOrderStatus/${safeOrder._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cancel: false,
+          status: statusValue,
+        })
+      });
+
+      const res = await response.json();
+
+      if (res?.status === true) {
+        setIsOrderCancelled(statusValue === "Cancelled");
+        setOrderData(prev => ({
+          ...prev,
+          order_status: statusValue
+        }));
+        
+        toast.success(res.message || "Status Updated successfully!");
+      } else {
+        toast.error(res.message || "Server Error!");
+      }
+    } catch (err) {
+      console.error("Status update failed", err);
+    }
+  };
+
+  // const saveCancelReason = async () => {
+  //   if (!cancelReason.trim()) {
+  //     toast.error("Please enter a cancel reason");
+  //     return;
+  //   }
+    
+  //   try {
+  //     const response = await fetch(`${baseUrl}/updateOrderStatus/${safeOrder._id}`, {
+  //       method: 'PUT',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         cancel: true,
+  //         reason: cancelReason,
+  //         status: 'Cancelled'
+  //       })
+  //     });
+      
+  //     const res = await response.json();
+
+  //     if (res?.status === true) {
+  //       // Send cancellation email
+  //       try {
+  //         await fetch(`${baseUrl}/notifications/send-cancellation-notification`, {
+  //           method: 'POST',
+  //           headers: { 'Content-Type': 'application/json' },
+  //           body: JSON.stringify({
+  //             orderId: safeOrder.orderId,
+  //             client: safeOrder.client,
+  //             cancelReason: cancelReason,
+  //             orderDetails: safeOrder,
+  //             handler: safeOrder.handled_by,
+  //             createdAt : safeOrder.createdAt,
+  //             totalItems : safeOrder.products.length
+  //           })
+  //         });
+  //       } catch (emailError) {
+  //         console.error("Failed to send cancellation email:", emailError);
+  //         toast.warning("Order cancelled but email notification failed");
+  //       }
+        
+  //       // Update local state
+  //       setIsOrderCancelled(true);
+  //       setShowCancelReasonInput(false);
+  //       setCancelReason("");
+  //       setOrderData(prev => ({
+  //         ...prev,
+  //         order_status: 'Cancelled',
+  //         cancel_reason: cancelReason
+  //       }));
+        
+  //       toast.success(res.message || "Order cancelled successfully!");
+  //     } else {
+  //       toast.error(res.message || "Server Error!");
+  //     }
+  //   } catch (err) {
+  //     console.error("Error adding status", err);
+  //     toast.error("Failed to cancel order");
+  //   }
+  // };
+
+
+  
+// In the saveCancelReason function, add date release logic
+const saveCancelReason = async () => {
+  if (!cancelReason.trim()) {
+    toast.error("Please enter a cancel reason");
+    return;
+  }
+  
+  try {
+    const response = await fetch(`${baseUrl}/updateOrderStatus/${safeOrder._id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        cancel: true,
+        reason: cancelReason,
+        status: 'Cancelled'
+      })
+    });
+    
+    const res = await response.json();
+
+    if (res?.status === true) {
+      // Mark all products as deleted when order is cancelled
+      const cancelledProducts = safeOrder.products.map(product => ({
+        ...product,
+        deleted: true,
+        deletedAt: new Date(),
+        deletedBy: handlerName || 'System',
+        cancellationReason: cancelReason
+      }));
+
+      // Update local state
+      const updatedOrder = {
+        ...safeOrder,
+        products: cancelledProducts,
+        order_status: 'Cancelled',
+        order_cancel_reason: cancelReason,
+        client: {
+          ...safeOrder.client,
+          totalAmount: 0, // No active products, so total is 0
+          balanceAmount: 0
+        }
+      };
+
+      setOrderData(updatedOrder);
+      setIsOrderCancelled(true);
+      setShowCancelReasonInput(false);
+      setCancelReason("");
+
+      // Send cancellation email
+      try {
+        await fetch(`${baseUrl}/notifications/send-cancellation-notification`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            orderId: safeOrder.orderId,
+            client: safeOrder.client,
+            cancelReason: cancelReason,
+            orderDetails: updatedOrder,
+            handler: safeOrder.handled_by,
+            createdAt: safeOrder.createdAt,
+            totalItems: safeOrder.products.length
+          })
+        });
+      } catch (emailError) {
+        console.error("Failed to send cancellation email:", emailError);
+        toast.warning("Order cancelled but email notification failed");
+      }
+
+      // Update each product to mark as deleted (free up dates)
+      try {
+        for (const product of safeOrder.products) {
+          if (!product.deleted) {
+            await fetch(`${baseUrl}/deleteProductOrder/${safeOrder._id}/${product._id}?deletedBy=${encodeURIComponent(handlerName || 'System')}`, {
+              method: 'GET'
+            });
+          }
+        }
+      } catch (productUpdateError) {
+        console.error("Error updating products on cancellation:", productUpdateError);
+        toast.warning("Order cancelled but product updates incomplete");
+      }
+
+      toast.success(res.message || "Order cancelled successfully!");
+    } else {
+      toast.error(res.message || "Server Error!");
+    }
+  } catch (err) {
+    console.error("Error adding status", err);
+    toast.error("Failed to cancel order");
+  }
+}; 
+
+
+  const addNewStatus = async () => {
+    if (!newStatus.trim()) return;
+
+    try {
+      const response = await fetch(`${baseUrl}/addOrderStatus`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: newStatus,
+          createdAt: new Date(),
+          updatedAt: null,
+        })
+      });
+
+      const res = await response.json();
+
+      if (res?.status === true) {
+        setShowAddInput(false);
+        setNewStatus("");
+        fetchOrderStatuses();
+        toast.success("Status added successfully!");
+      } else {
+        toast.error(res.message || "Failed to add status");
+      }
+    } catch (err) {
+      console.error("Error adding status", err);
+      toast.error("Failed to add status");
+    }
+  };
+
+  const formatDateTime = (date) => {
+    if (!date) return "";
+    const d = new Date(date);
+    return d.toLocaleString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
   const updateHandlerName = async (newHandlerName) => {
     if (!newHandlerName || newHandlerName.trim() === "") {
-      alert("Handler name cannot be empty");
+      toast.error("Handler name cannot be empty");
       return;
     }
-    // Don't proceed if name is same as current
+    
     if (newHandlerName.trim() === safeOrder.handled_by) {
-      alert("No changes made. Handler name is the same.");
+      toast.info("No changes made. Handler name is the same.");
       return;
     }
+    
     try {
       setIsLoading(true);
 
@@ -780,36 +1170,33 @@ function OrderDetails({ order, onOrderUpdate }) {
       if (response.ok) {
         const data = await response.json();
 
-        // Update both localOrder AND orderData to ensure UI updates immediately
         const updatedOrder = {
           ...safeOrder,
           handled_by: newHandlerName.trim(),
           last_edited: new Date().toISOString(),
         };
 
-        // Update both states
         setLocalOrder(updatedOrder);
         setOrderData(updatedOrder);
-        setHasHandlerAssigned(true); // Set to true when handler is assigned
+        setHasHandlerAssigned(true);
 
         if (onOrderUpdate) {
           onOrderUpdate(updatedOrder);
         }
 
-        alert(" Handler updated successfully!");
+        toast.success("Handler updated successfully!");
       } else {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || "Failed to update handler");
       }
     } catch (error) {
       console.error("Error updating handler:", error);
-      alert(`❌ Error: ${error.message || "Failed to update handler"}`);
+      toast.error(`❌ Error: ${error.message || "Failed to update handler"}`);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Update the prompt handler
   const handleEditHandler = () => {
     const newHandler = prompt(
       `Current handler: ${
@@ -825,13 +1212,135 @@ function OrderDetails({ order, onOrderUpdate }) {
     ) {
       updateHandlerName(newHandler.trim());
     } else if (newHandler && newHandler.trim() === safeOrder.handled_by) {
-      alert("No changes made. Handler name is the same.");
+      toast.info("No changes made. Handler name is the same.");
     }
+  };
+
+  const canEditDelete = hasHandlerAssigned && !isOrderCancelled;
+  const isFullyPaid = remainingAmount <= 0;
+
+  // Render product row
+  const renderProductRow = (product, index) => {
+    const isDeleted = product.deleted;
+    const rowClass = isDeleted ? "deleted-product-row" : "";
+    
+    return (
+      <tr
+        key={index}
+        className={`${activeProductIndex === index ? "active-product" : ""} ${rowClass}`}
+      >
+        <td>
+          <img
+            src={product.image}
+            alt="Product"
+            className={`productImg ${isDeleted ? "deleted-product-image" : ""}`}
+          />
+          {isDeleted && (
+            <div className="deleted-badge">DELETED</div>
+          )}
+        </td> 
+        <td>
+          <div className={isDeleted ? "strikethrough-text" : ""}>
+            {product.prodCode}
+          </div>
+        </td>
+        
+        <td className="order-TableOrderName">
+          <div className={isDeleted ? "strikethrough-text" : ""}>
+            {product.name || "No name"}
+          </div>
+          {isDeleted && product.deletedBy && (
+            <div className="deleted-info">
+              <small>Deleted by: {product.deletedBy}</small>
+              {product.deletedAt && (
+                <small> on {formatDateTime(product.deletedAt)}</small>
+              )}
+            </div>
+          )}
+        </td>
+        <td>
+          <div className={isDeleted ? "strikethrough-text" : ""}>
+            {safeOrder.status}
+          </div>
+        </td>
+        <td>
+          <div className={isDeleted ? "strikethrough-text" : ""}>
+            ₹{product.price || 0}
+          </div>
+        </td>
+        <td>
+          {product.booking?.startDate ? (
+            <div className={isDeleted ? "strikethrough-text" : ""}>
+              {new Date(product.booking.startDate).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+              })}
+              {" "}-{" "}
+              {new Date(product.booking.endDate).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+              })}
+              {" "}({product.booking?.totalDays || 0} Days)
+            </div>
+          ) : (
+            "--"
+          )}
+        </td>
+
+        <td>
+          {canEditDelete && !isOrderCancelled && (
+            <div className="action-buttons">
+              {!isDeleted && (
+                <>
+                  <i
+                    className="fa-solid fa-pen-to-square status-edit-icon"
+                    title="Edit Dates"
+                    onClick={() => {
+                      setActiveProductIndex(index);
+                      setIsCalenderOpen(true);
+                    }}
+                  ></i>
+                  <i
+                    className="fa-solid fa-trash status-delete-icon"
+                    title="Delete Product"
+                    onClick={() => {
+                      handleDeleteClick(
+                        safeOrder._id,
+                        product._id,
+                        product.name
+                      );
+                    }}
+                  ></i>
+                </>
+              )}
+              {isDeleted && (
+                <i
+                  className="fa-solid fa-rotate-left status-restore-icon"
+                  title="Restore Product"
+                  onClick={() => {
+                    handleDeleteClick(
+                      safeOrder._id,
+                      product._id,
+                      product.name
+                    );
+                  }}
+                ></i>
+              )}
+            </div>
+          )}
+          {isOrderCancelled && (
+            <div className="disabled-actions">
+              <span className="disabled-text">Actions disabled</span>
+            </div>
+          )}
+        </td>
+      </tr>
+    );
   };
 
   return (
     <div className="adminOrderDetailsMain">
-      {/* ALWAYS SHOW Handler Assignment Section - Never Hide */}
+      {/* Handler Assignment Section */}
       <div className="order-card-header">
         <div className="handler-info-section">
           <span className="order-taken-by">
@@ -872,6 +1381,19 @@ function OrderDetails({ order, onOrderUpdate }) {
         </div>
       </div>
 
+      {/* Cancellation Warning Banner */}
+      {isOrderCancelled && (
+        <div className="cancelled-order-banner">
+          <i className="fas fa-exclamation-triangle"></i>
+          <span>This order has been CANCELLED. Editing is disabled.</span>
+          {safeOrder.cancel_reason && (
+            <span className="cancel-reason">
+              Reason: {safeOrder.cancel_reason}
+            </span>
+          )}
+        </div>
+      )}
+
       {!safeOrder._id ? (
         <div className="no-order-selected">
           <h3>No order selected</h3>
@@ -879,44 +1401,46 @@ function OrderDetails({ order, onOrderUpdate }) {
         </div>
       ) : (
         <>
-          {/* Order details Section  */}
+          {/* Order details Section */}
           <div className="order-manageClientSection">
             <div className="order-manageRightSideHeading">
               Order Information
             </div>
 
-            {/* Conditionally render status section ONLY when handler is assigned */}
             {hasHandlerAssigned && (
               <div className="order-status-container">
                 <div className="order-status-header">
                   <label className="order-status-label">Order Status</label>
-                  <div className="current-status-display">
+                  <div className={`current-status-display ${isOrderCancelled ? 'cancelled-status' : ''}`}>
                     {selectOrderStatus || "Select Status"}
                   </div>
                 </div>
 
-                <div className="order-status-dropdown">
-                  <div className="dropdown-wrapper">
-                    <select
-                      onChange={handleStatusChange}
-                      value={selectOrderStatus}
-                      className="status-select"
-                    >
-                      <option value="">Select Status</option>
-                      {orderStatuses.map((status) => (
-                        <option key={status._id} value={status.name}>
-                          {status.name}
-                        </option>
-                      ))}
-                      <option value="__add_new__">+ Add New Status</option>
-                    </select>
-                    <div className="dropdown-arrow">
-                      <i className="fas fa-chevron-down"></i>
+                {!isOrderCancelled && (
+                  <div className="order-status-dropdown">
+                    <div className="dropdown-wrapper">
+                      <select
+                        onChange={handleStatusChange}
+                        value={selectOrderStatus}
+                        className="status-select"
+                        disabled={isOrderCancelled}
+                      >
+                        <option value="">Select Status</option>
+                        {orderStatuses.map((status) => (
+                          <option key={status._id} value={status.name}>
+                            {status.name}
+                          </option>
+                        ))}
+                        <option value="__add_new__">+ Add New Status</option>
+                      </select>
+                      <div className="dropdown-arrow">
+                        <i className="fas fa-chevron-down"></i>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
 
-                {showAddInput && (
+                {showAddInput && !isOrderCancelled && (
                   <div className="add-status-section">
                     <div className="add-status-input-group">
                       <input
@@ -934,31 +1458,28 @@ function OrderDetails({ order, onOrderUpdate }) {
                     </div>
                   </div>
                 )}
+
+                {showCancelReasonInput && !isOrderCancelled && (
+                  <div className="add-status-section">
+                    <div className="add-status-input-group">
+                      <input
+                        onChange={(e) => setCancelReasonValue(e.target.value)}
+                        type="text"
+                        placeholder="Enter cancellation reason"
+                        className="new-status-input"
+                        value={cancelReason}
+                      />
+                      <button
+                        onClick={saveCancelReason}
+                        className="add-status-button cancel-reason-btn"
+                      >
+                        Confirm Cancel
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
-            {/* order cancel reason */}
-            {cancelAddInput && (
-              <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-                <input
-                  onChange={(e) => setCancelReasonValue(e.target.value)}
-                  type="text"
-                  placeholder="Enter Cancel Reason"
-                  className="order-clientDetailsInput"
-                />
-                <button
-                  onClick={saveCancelReason}
-                  style={{
-                    background: "green",
-                    color: "#fff",
-                    padding: "5px 10px",
-                    borderRadius: "5px",
-                  }}
-                >
-                  Add
-                </button>
-              </div>
-            )}
-            {/* order cancel reason */}
 
             <div className="d-flex order-manageClientInformation">
               <div className="order-manageClientInfoLeft">
@@ -978,18 +1499,12 @@ function OrderDetails({ order, onOrderUpdate }) {
                     type="text"
                     placeholder="Enter Payment"
                     className="order-clientDetailsInput"
-                    value={formatIndianCurrency(
-                      safeOrder.products.reduce(
-                        (sum, p) => sum + (p.booking?.totalPrice || 0),
-                        0
-                      ),
-                      true
-                    )}
+                    value={formatIndianCurrency(totalAmount, true)}
                     readOnly
                   ></input>
                 </div>
 
-                     <div className="order-clientDetailSection">
+                <div className="order-clientDetailSection">
                   <div className="order-clientDetailHeading">
                     Advance Amount
                   </div>
@@ -999,6 +1514,7 @@ function OrderDetails({ order, onOrderUpdate }) {
                     className="order-clientDetailsInput"
                     value={advanceAmount}
                     onChange={handleAdvanceChange}
+                    disabled={isOrderCancelled}
                   />
                 </div>
                 <div className="order-clientDetailSection">
@@ -1041,7 +1557,7 @@ function OrderDetails({ order, onOrderUpdate }) {
                         <div className="tooltip-summary">
                           <div>
                             <strong>Total Paid:</strong> ₹
-                            {formatIndianCurrency(totalPaid)}
+                            {formatIndianCurrency(totalPaidAmount)}
                           </div>
                           <div>
                             <strong>Remaining:</strong> ₹
@@ -1073,13 +1589,12 @@ function OrderDetails({ order, onOrderUpdate }) {
                     borderRadius: "5px",
                   }}
                   onClick={handleSaveAmounts}
+                  disabled={isOrderCancelled || isFullyPaid}
                 >
                   Save
                 </button>
-
-
-                
               </div>
+              
               <div className="order-manageClientInfoRight">
                 <div className="order-clientDetailSection">
                   <div className="order-clientDetailHeading">Date</div>
@@ -1088,9 +1603,9 @@ function OrderDetails({ order, onOrderUpdate }) {
                     placeholder="Enter Date"
                     className="order-clientDetailsInput"
                     value={
-                      new Date(safeOrder.createdAt).toLocaleDateString(
-                        "en-GB"
-                      ) || " "
+                      safeOrder.createdAt
+                        ? new Date(safeOrder.createdAt).toLocaleDateString("en-GB")
+                        : ""
                     }
                     readOnly
                   ></input>
@@ -1111,7 +1626,7 @@ function OrderDetails({ order, onOrderUpdate }) {
             </div>
           </div>
 
-          {/* Client Section  */}
+          {/* Client Section */}
           <div className="order-manageClientSection">
             <div className="order-manageRightSideHeading">
               Client Information
@@ -1167,7 +1682,7 @@ function OrderDetails({ order, onOrderUpdate }) {
             </div>
           </div>
 
-          {/* Product Section  */}
+          {/* Product Section */}
           <div className="order-manageClientSection adminOrder_productSection">
             <div
               className="order-manageRightSideHeading admin-OrderTableHeading"
@@ -1192,6 +1707,21 @@ function OrderDetails({ order, onOrderUpdate }) {
               )}
             </div>
 
+            {/* Product Summary Stats */}
+            <div className="product-summary-stats">
+              <span className="active-products-count">
+                <i className="fas fa-check-circle"></i> Active Products: {activeProducts.length}
+              </span>
+              {deletedProducts.length > 0 && (
+                <span className="deleted-products-count">
+                  <i className="fas fa-trash"></i> Deleted Products: {deletedProducts.length}
+                </span>
+              )}
+              <span className="total-products-count">
+                <i className="fas fa-boxes"></i> Total Products: {safeOrder.products.length}
+              </span>
+            </div>
+
             {/* Product Tabs */}
             <div className="product-tabs">
               {safeOrder.products.map((product, index) => (
@@ -1199,10 +1729,16 @@ function OrderDetails({ order, onOrderUpdate }) {
                   key={index}
                   className={`product-tab ${
                     activeProductIndex === index ? "active" : ""
-                  }`}
+                  } ${product.deleted ? "deleted-tab" : ""}`}
                   onClick={() => setActiveProductIndex(index)}
+                  disabled={isOrderCancelled}
                 >
                   Product {index + 1}
+                  {product.deleted && (
+                    <span className="tab-deleted-icon">
+                      <i className="fas fa-ban"></i>
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
@@ -1211,7 +1747,10 @@ function OrderDetails({ order, onOrderUpdate }) {
               <thead>
                 <tr>
                   <th>
-                    <div>Product</div>
+                    <div></div>
+                  </th>
+                   <th>
+                    <div>Product ID</div>
                   </th>
                   <th>
                     <div className="TableOrderName">Name</div>
@@ -1229,75 +1768,13 @@ function OrderDetails({ order, onOrderUpdate }) {
                 </tr>
               </thead>
               <tbody>
-                {safeOrder.products.map((product, index) => (
-                  <tr
-                    key={index}
-                    className={
-                      activeProductIndex === index ? "active-product" : ""
-                    }
-                  >
-                    <td>
-                      <img
-                        src={product.image}
-                        alt="Product"
-                        className="productImg"
-                      />
-                    </td>
-                    <td className="order-TableOrderName">
-                      {product.name || "No name"}
-                    </td>
-                    <td>{safeOrder.status}</td>
-                    <td>₹{product.price || 0}</td>
-                    <td>
-                      {product.booking?.startDate
-                        ? new Date(
-                            product.booking.startDate
-                          ).toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                          })
-                        : "--"}{" "}
-                      -{" "}
-                      {product.booking?.endDate
-                        ? new Date(product.booking.endDate).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "short",
-                              day: "numeric",
-                            }
-                          )
-                        : "--"}{" "}
-                      ({product.booking?.totalDays || 0} Days)
-                    </td>
-
-                    <td>
-                      {/* Conditionally show action buttons based on handler assignment */}
-                      {hasHandlerAssigned && (
-                        <div className="action-buttons">
-                          <i
-                            className="fa-solid fa-pen-to-square status-edit-icon"
-                            title="Edit Dates"
-                            onClick={() => {
-                              setActiveProductIndex(index);
-                              setIsCalenderOpen(true);
-                            }}
-                          ></i>
-                          <i
-                            className="fa-solid fa-trash status-delete-icon"
-                            title="Delete Product"
-                            onClick={() => {
-                              handleDeleteClick(product.id, safeOrder.orderId);
-                            }}
-                          ></i>
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                ))}
+                {safeOrder.products.map((product, index) => 
+                  renderProductRow(product, index)
+                )}
               </tbody>
             </table>
-            {/*  EDIT ICON CLICK THEN ONLY OPEN THE CALENDER   */}
-            {isCalenderOpen && (
+            
+            {isCalenderOpen && canEditDelete && !safeOrder.products[activeProductIndex]?.deleted && (
               <div className="calendar_admin">
                 <CalendarOrderDetails
                   selectedDates={selectedDates}
@@ -1341,6 +1818,18 @@ function OrderDetails({ order, onOrderUpdate }) {
 
             <div className="admin-order-pricing">
               <div className="admin-orderContent">
+                <div className="admin-orderContentLeft">Active Products</div>
+                <div className="admin-orderContentRight">
+                  {activeProducts.length}
+                </div>
+              </div>
+              <div className="admin-orderContent">
+                <div className="admin-orderContentLeft">Deleted Products</div>
+                <div className="admin-orderContentRight">
+                  {deletedProducts.length}
+                </div>
+              </div>
+              <div className="admin-orderContent">
                 <div className="admin-orderContentLeft">Total Products</div>
                 <div className="admin-orderContentRight">
                   {safeOrder.products.length}
@@ -1352,17 +1841,12 @@ function OrderDetails({ order, onOrderUpdate }) {
                   className="admin-orderContentRight"
                   style={{ width: "auto" }}
                 >
-                  {formatIndianCurrency(
-                    safeOrder.products.reduce(
-                      (sum, p) => sum + (p.booking?.totalPrice || 0),
-                      0
-                    ),
-                    true
-                  )}
+                  {formatIndianCurrency(totalAmount, true)}
                 </div>
               </div>
             </div>
           </div>
+          
           <div className="admin-orderContent admin-totalPaidAmt">
             <div className="admin-orderContentLeft adminTotalAmt">
               Paid Amount
@@ -1371,76 +1855,91 @@ function OrderDetails({ order, onOrderUpdate }) {
               className="admin-orderContentRight adminTotalAmt"
               style={{ width: "auto" }}
             >
-              {formatIndianCurrency(
-                safeOrder.products.reduce(
-                  (sum, p) => sum + (p.booking?.totalPrice || 0),
-                  0
-                ),
-                true
-              )}
+              {formatIndianCurrency(totalPaidAmount, true)}
             </div>
           </div>
         </>
       )}
 
+      {/* Delete/Restore Confirmation Popup */}
       {showDeletePopup && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            background: "rgba(0,0,0,0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 999,
-          }}
-        >
-          <div
-            style={{
-              background: "#fff",
-              padding: "20px",
-              borderRadius: "8px",
-              width: "300px",
-              textAlign: "center",
-            }}
-          >
-            <h3>Are you sure?</h3>
-            <p>Do you want to delete this product?</p>
+        <div className="delete-popup-overlay">
+          <div className="delete-popup-content">
+            <div className="delete-popup-header">
+              {safeOrder.products.find(p => p._id === selectedProductId)?.deleted ? (
+                <>
+                  <i className="fas fa-rotate-left restore-icon"></i>
+                  <h3>Restore Product</h3>
+                </>
+              ) : (
+                <>
+                  <i className="fas fa-exclamation-triangle warning-icon"></i>
+                  <h3>Mark Product as Deleted</h3>
+                </>
+              )}
+            </div>
+            
+            <div className="delete-popup-body">
+              {safeOrder.products.find(p => p._id === selectedProductId)?.deleted ? (
+                <>
+                  <p>
+                    Are you sure you want to restore <strong>"{deleteProductName}"</strong> in Order <strong>{selectedOrderId}</strong>?
+                  </p>
+                  <p className="restore-warning">
+                    <i className="fas fa-check-circle"></i>
+                    The product will be restored and included in total calculations again.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>
+                    Are you sure you want to mark <strong>"{deleteProductName}"</strong> as DELETED in Order <strong>{selectedOrderId}</strong>?
+                  </p>
+                  <p className="delete-warning">
+                    <i className="fas fa-exclamation-circle"></i>
+                    The product will be shown with strikeout but not removed. It will not be included in total calculations.
+                  </p>
+                </>
+              )}
+              
+              <div className="affected-products">
+                <p><strong>After this action:</strong></p>
+                <ul>
+                  <li>Product will be {safeOrder.products.find(p => p._id === selectedProductId)?.deleted ? "restored" : "marked as deleted"}</li>
+                  <li>Total amount will be recalculated</li>
+                  <li>Email notifications will be sent</li>
+                  <li>Product will {safeOrder.products.find(p => p._id === selectedProductId)?.deleted ? "" : "NOT"} be included in totals</li>
+                </ul>
+              </div>
+              
+              <div className="action-by-section">
+                <p>
+                  <strong>Action will be performed by:</strong> {handlerName}
+                </p>
+              </div>
+            </div>
 
-            <div
-              style={{
-                marginTop: "20px",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
+            <div className="delete-popup-buttons">
               <button
                 onClick={confirmDelete}
-                style={{
-                  background: "red",
-                  color: "#fff",
-                  padding: "8px 15px",
-                  borderRadius: "5px",
-                  border: "none",
-                }}
+                className={safeOrder.products.find(p => p._id === selectedProductId)?.deleted ? "restore-confirm-btn" : "delete-confirm-btn"}
               >
-                Yes, Delete
+                {safeOrder.products.find(p => p._id === selectedProductId)?.deleted ? (
+                  <>
+                    <i className="fas fa-rotate-left"></i> Yes, Restore Product
+                  </>
+                ) : (
+                  <>
+                    <i className="fas fa-trash"></i> Yes, Mark as Deleted
+                  </>
+                )}
               </button>
 
               <button
                 onClick={cancelDelete}
-                style={{
-                  background: "gray",
-                  color: "#fff",
-                  padding: "8px 15px",
-                  borderRadius: "5px",
-                  border: "none",
-                }}
+                className="delete-cancel-btn"
               >
-                No
+                <i className="fas fa-times"></i> Cancel
               </button>
             </div>
           </div>
@@ -1449,4 +1948,5 @@ function OrderDetails({ order, onOrderUpdate }) {
     </div>
   );
 }
+
 export default OrderDetails;
