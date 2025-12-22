@@ -141,32 +141,57 @@ const BillingDetailsCart = () => {
 
 
        
-    const sendOrderSMS = async (phone, orderId, customerName, amount) => {
-        try {
-            const response = await fetch(`${baseUrl}/OrderCart/send-sms`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    phone,
-                    orderId,
-                    customerName,
-                    amount: amount || 0
-                    // Remove templateId from here
-                })
-            });
+    // const sendOrderSMS = async (phone, orderId, amount) => {
+    //     try {
+    //         const response = await fetch(`${baseUrl}/OrderCart/send-sms`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //                 phone,
+    //                 orderId,
+    //                 amount: amount || 0
+    //                 // Remove templateId from here
+    //             })
+    //         });
     
-            const result = await response.json();
-            if (!response.ok || !result.success) {
-                console.error("Failed to send SMS:", result.error);
-            } else {
-                console.log("SMS sent successfully");
-            }
-        } catch (error) {
-            console.error("SMS sending error:", error);
+    //         const result = await response.json();
+    //         if (!response.ok || !result.success) {
+    //             console.error("Failed to send SMS:", result.error);
+    //         } else {
+    //             console.log("SMS sent successfully");
+    //         }
+    //     } catch (error) {
+    //         console.error("SMS sending error:", error);
+    //     }
+    // }; 
+
+
+    const sendOrderSMS = async (phone, orderId) => {
+    try {
+        const response = await fetch(`${baseUrl}/OrderCart/send-sms`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                phone,
+                orderId
+                // Only send orderId, not templateId
+            })
+        });
+
+        const result = await response.json();
+        if (!response.ok || !result.success) {
+            console.error("Failed to send SMS:", result.error);
+        } else {
+            console.log("SMS sent successfully");
         }
-    }; 
+    } catch (error) {
+        console.error("SMS sending error:", error);
+    }
+};
 
     const handleSubmitCartThank = async (e) => {
         e.preventDefault();
