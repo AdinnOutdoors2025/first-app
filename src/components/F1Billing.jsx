@@ -761,7 +761,7 @@ const BillingDetails = () => {
     // In your BillingDetails component, update the sendOrderSMS function:
 const sendOrderSMS = async (phone, orderId, customerName, amount) => {
     try {
-        const response = await fetch(`${baseUrl}/send-sms`, {
+        const response = await fetch(`${baseUrl}/OrderReserve/send-sms`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
