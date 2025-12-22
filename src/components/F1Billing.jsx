@@ -726,36 +726,66 @@ const BillingDetails = () => {
         return dates;
     };
     
-    // UPDATED SMS FUNCTION - SIMPLIFIED
-    const sendOrderSMS = async (phone, orderId, customerName, amount) => {
-        try {
-            const response = await fetch(`${baseUrl}/send-sms`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    phone,
-                    templateId: "1007197121174928712", // User template only
-                    variables: {
-                        orderId,
-                        customerName,
-                        amount: amount || 0
-                    }
-                })
-            });
+    // // UPDATED SMS FUNCTION - SIMPLIFIED
+    // const sendOrderSMS = async (phone, orderId, customerName, amount) => {
+    //     try {
+    //         const response = await fetch(`${baseUrl}/send-sms`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //                 phone,
+    //                 templateId: "1007197121174928712", // User template only
+    //                 variables: {
+    //                     orderId,
+    //                     customerName,
+    //                     amount: amount || 0
+    //                 }
+    //             })
+    //         });
 
-            const result = await response.json();
-            if (!response.ok || !result.success) {
-                console.error("Failed to send SMS:", result.error);
-            } else {
-                console.log("SMS sent successfully");
-            }
-        } catch (error) {
-            console.error("SMS sending error:", error);
-            // Don't throw error - continue with order processing
+    //         const result = await response.json();
+    //         if (!response.ok || !result.success) {
+    //             console.error("Failed to send SMS:", result.error);
+    //         } else {
+    //             console.log("SMS sent successfully");
+    //         }
+    //     } catch (error) {
+    //         console.error("SMS sending error:", error);
+    //         // Don't throw error - continue with order processing
+    //     }
+    // };
+
+
+    // In your BillingDetails component, update the sendOrderSMS function:
+const sendOrderSMS = async (phone, orderId, customerName, amount) => {
+    try {
+        const response = await fetch(`${baseUrl}/send-sms`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                phone,
+                orderId,
+                customerName,
+                amount: amount || 0
+                // Remove templateId from here
+            })
+        });
+
+        const result = await response.json();
+        if (!response.ok || !result.success) {
+            console.error("Failed to send SMS:", result.error);
+        } else {
+            console.log("SMS sent successfully");
         }
-    };
+    } catch (error) {
+        console.error("SMS sending error:", error);
+        // Don't throw error - continue with order processing
+    }
+};
 
     // AMOUNT CONVERTED INTO INDIAN CURRENCY
     const parseAmount = (amount) => {
