@@ -758,7 +758,7 @@ const BillingDetails = () => {
     // };
 
 
-    // In your BillingDetails component, update the sendOrderSMS function:
+   
 const sendOrderSMS = async (phone, orderId, customerName, amount) => {
     try {
         const response = await fetch(`${baseUrl}/OrderReserve/send-sms`, {
@@ -783,7 +783,6 @@ const sendOrderSMS = async (phone, orderId, customerName, amount) => {
         }
     } catch (error) {
         console.error("SMS sending error:", error);
-        // Don't throw error - continue with order processing
     }
 };
 

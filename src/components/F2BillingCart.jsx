@@ -113,31 +113,61 @@ const BillingDetailsCart = () => {
     };
     //NEWLY ADDED CODE
     // Add this function to your component
-    const sendOrderSMS = async (phone, orderId, isAdmin = false) => {
+    // const sendOrderSMS = async (phone, orderId, isAdmin = false) => {
+    //     try {
+    //         const response = await fetch(`${baseUrl}/send-sms`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //                 phone,
+    //                 templateId: isAdmin ? "1007478982147905431" : "1007197121174928712",
+    //                 variables: {
+    //                     orderId,
+    //                     customerName: name,
+    //                     amount: SpotPay
+    //                 }
+    //             })
+    //         });
+
+    //         if (!response.ok) {
+    //             console.error("Failed to send SMS");
+    //         }
+    //     } catch (error) {
+    //         console.error("SMS sending error:", error);
+    //     }
+    // };
+
+
+       
+    const sendOrderSMS = async (phone, orderId, customerName, amount) => {
         try {
-            const response = await fetch(`${baseUrl}/send-sms`, {
+            const response = await fetch(`${baseUrl}/OrderCart/send-sms`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     phone,
-                    templateId: isAdmin ? "1007478982147905431" : "1007197121174928712",
-                    variables: {
-                        orderId,
-                        customerName: name,
-                        amount: SpotPay
-                    }
+                    orderId,
+                    customerName,
+                    amount: amount || 0
+                    // Remove templateId from here
                 })
             });
-
-            if (!response.ok) {
-                console.error("Failed to send SMS");
+    
+            const result = await response.json();
+            if (!response.ok || !result.success) {
+                console.error("Failed to send SMS:", result.error);
+            } else {
+                console.log("SMS sent successfully");
             }
         } catch (error) {
             console.error("SMS sending error:", error);
         }
-    };
+    }; 
+
     const handleSubmitCartThank = async (e) => {
         e.preventDefault();
         // Validate form first
