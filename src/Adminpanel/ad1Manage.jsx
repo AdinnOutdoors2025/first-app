@@ -634,8 +634,38 @@ function AdManageSection() {
         }
     };
 
-    // Add this SMS function to your component
-    const sendOrderSMS = async (phone, orderId, isAdmin = false) => {
+    // // Add this SMS function to your component
+    // const sendOrderSMS = async (phone, orderId, isAdmin = false) => {
+    //     try {
+    //         const response = await fetch(`${baseUrl}/AdminOrder/send-admin-sms`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //                 phone,
+    //                 templateId: isAdmin ? "1007478982147905431" : "1007197121174928712",
+    //                 variables: {
+    //                     orderId,
+    //                     customerName: clientName,
+    //                     amount: clientPaidAmount
+    //                 }
+    //             })
+    //         });
+
+    //         if (!response.ok) {
+    //             console.error("Failed to send SMS");
+    //         }
+    //     } catch (error) {
+    //         console.error("SMS sending error:", error);
+    //     }
+    // };
+
+
+
+
+    // Update the sendOrderSMS function in your ad1Manage.jsx component:
+    const sendOrderSMS = async (phone, orderId) => {
         try {
             const response = await fetch(`${baseUrl}/AdminOrder/send-admin-sms`, {
                 method: 'POST',
@@ -644,11 +674,10 @@ function AdManageSection() {
                 },
                 body: JSON.stringify({
                     phone,
-                    templateId: isAdmin ? "1007478982147905431" : "1007197121174928712",
+                    templateId: "1007478982147905431", // User template only
                     variables: {
                         orderId,
-                        customerName: clientName,
-                        amount: clientPaidAmount
+                        // Only send orderId for user SMS
                     }
                 })
             });
@@ -854,207 +883,207 @@ function AdManageSection() {
     //     }
     // };
 
-const handleSaveProductOrder = async (e) => {
-    e.preventDefault();
-    // Validate form first
-    if (!validateForm()) {
-        toast.error("Please fill all required fields correctly");
-        return;
-    }
-    // Set loading state
-    setIsSaving(true);
-
-    try {
-        // Validate required fields
-        const requiredFields = {
-            clientName: "Client name is required",
-            clientContact: "Client contact is required",
-            productID: "Product ID is required",
-        };
-
-        for (const [field, message] of Object.entries(requiredFields)) {
-            if (!eval(field)) {
-                throw new Error(message);
-            }
+    const handleSaveProductOrder = async (e) => {
+        e.preventDefault();
+        // Validate form first
+        if (!validateForm()) {
+            toast.error("Please fill all required fields correctly");
+            return;
         }
+        // Set loading state
+        setIsSaving(true);
 
-        // Validate dates
-        if (!selectedDates.start || !selectedDates.end) {
-            throw new Error("Please select both start and end dates");
-        }
-
-        if (isNaN(selectedDates.start.getTime()) || isNaN(selectedDates.end.getTime())) {
-            throw new Error("Invalid dates selected");
-        }
-
-        if (selectedDates.start > selectedDates.end) {
-            throw new Error("End date must be after start date");
-        }
-
-        // Calculate available days
-        const availableDays = getAvailableDaysInRange(selectedDates.start, selectedDates.end);
-        const totalDays = availableDays.length;
-        if (totalDays === 0) {
-            throw new Error("No available days in selected range");
-        }
-        const totalPrice = totalDays * (parseFloat(productAmount) || 0);
-        
-        // Format dates properly for storage
-        const formatDateForStorage = (date) => {
-            if (!date || isNaN(date.getTime())) return null;
-            // Return as Date object
-            return new Date(Date.UTC(
-                date.getFullYear(),
-                date.getMonth(),
-                date.getDate()
-            ));
-        };
-
-        // Create booked dates array
-        const bookedDatesArray = availableDays.map(date => formatDateForStorage(date));
-
-        // Construct product object properly
-        const productData = {
-            id: productID,
-            prodCode: productID,
-            name: productName,
-            image: productImage,
-            price: Number(productAmount) || 0,
-            printingCost: Number(productPrintingCost) || 0,
-            mountingCost: Number(productMountingCost) || 0,
-            lighting: prodLighting || "",
-            fixedAmount: Number(productFixedAmount) || 0,
-            fixedAmountOffer: Number(productFixedAmountOffer) || 0,
-            size: {
-                width: Number(prodwidth) || 0,
-                height: Number(prodheight) || 0,
-                squareFeet: Number(ProdSquareFeet()) || 0
-            },
-            fromLocation: productFrom || "",
-            toLocation: productTo || "",
-            rating: Number(prodRating) || 0,
-            mediaType: prodType || "",
-            location: {
-                state: selectedState || "",
-                district: selectedDistrict || ""
-            },
-            booking: {
-                startDate: formatDateForStorage(selectedDates.start),
-                endDate: formatDateForStorage(selectedDates.end),
-                totalDays: totalDays,
-                totalPrice: totalPrice
-            },
-            bookedDates: bookedDatesArray,
-            deleted: false,
-            deletedAt: null,
-            deletedBy: null
-        };
-
-        // Prepare order data - FIXED: Set both status and order_status
-        const orderData = {
-            client: {
-                userId: productID,
-                name: clientName,
-                email: clientEmail || "",
-                contact: clientContact,
-                company: clientCompany || "",
-                totalAmount: totalPrice,
-                // FIX: paidAmount should be array of objects
-                paidAmount: [{
-                    amount: Number(clientPaidAmount) || 0,
-                    paidAt: new Date()
-                }],
-                balanceAmount: balanceAmount
-            },
-            products: [productData],
-            status: "Added Manually", // This is always "Added Manually" for admin orders
-            order_status: " ", // This will show in the table
-            orderType: "single",
-            last_edited: new Date()
-        };
-
-        console.log("Sending order data:", JSON.stringify(orderData, null, 2));
-
-        // Submit to backend
-        const response = await fetch(
-            editOrder
-                ? `${baseUrl}/prodOrders/${editOrder._id}`
-                : `${baseUrl}/prodOrders`,
-            {
-                method: editOrder ? 'PUT' : 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(orderData)
-            }
-        );
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Failed to save order');
-        }
-
-        const result = await response.json();
-        console.log("Order saved with ID:", result.orderId || result._id);
-        
-        // Send SMS notifications
         try {
-            // Send SMS to user
-            if (clientContact) {
-                await sendOrderSMS(clientContact, result.orderId || result._id);
-            }
-
-            // Send SMS to admin
-            await sendOrderSMS('reactdeveloper@adinn.co.in', result.orderId || result._id, true);
-        } catch (smsError) {
-            console.error("SMS sending error:", smsError);
-            // Don't fail the order if SMS fails
-        }
-        
-        // AFTER SUCCESSFUL ORDER CREATION - SEND NOTIFICATIONS
-        try {
-            // Prepare order data for notifications
-            const notificationData = {
-                client: {
-                    name: clientName,
-                    email: clientEmail,
-                    contact: clientContact,
-                    company: clientCompany,
-                    paidAmount: clientPaidAmount
-                },
-                products: [{
-                    name: productName,
-                    prodCode: productID,
-                    price: Number(productAmount),
-                    image: productImage,
-                    booking: {
-                        startDate: selectedDates.start,
-                        endDate: selectedDates.end,
-                        totalDays: totalDays,
-                        totalPrice: totalPrice
-                    }
-                }]
+            // Validate required fields
+            const requiredFields = {
+                clientName: "Client name is required",
+                clientContact: "Client contact is required",
+                productID: "Product ID is required",
             };
 
-            // Send notifications
-            await sendOrderNotifications(notificationData, result.orderId || result._id);
-        } catch (notificationError) {
-            console.error("Notification error:", notificationError);
-            // Don't fail the order if notifications fail
-        }
-        
-        alert(`Order ${editOrder ? 'updated' : 'created'} successfully! with ID: ${result.orderId || result._id}`);
-        resetForm();
+            for (const [field, message] of Object.entries(requiredFields)) {
+                if (!eval(field)) {
+                    throw new Error(message);
+                }
+            }
 
-    } catch (error) {
-        console.error("Save error:", error);
-        alert(`Error: ${error.message}`);
-    }
-    finally {
-        // Reset loading state
-        setIsSaving(false);
-    }
-};
+            // Validate dates
+            if (!selectedDates.start || !selectedDates.end) {
+                throw new Error("Please select both start and end dates");
+            }
+
+            if (isNaN(selectedDates.start.getTime()) || isNaN(selectedDates.end.getTime())) {
+                throw new Error("Invalid dates selected");
+            }
+
+            if (selectedDates.start > selectedDates.end) {
+                throw new Error("End date must be after start date");
+            }
+
+            // Calculate available days
+            const availableDays = getAvailableDaysInRange(selectedDates.start, selectedDates.end);
+            const totalDays = availableDays.length;
+            if (totalDays === 0) {
+                throw new Error("No available days in selected range");
+            }
+            const totalPrice = totalDays * (parseFloat(productAmount) || 0);
+
+            // Format dates properly for storage
+            const formatDateForStorage = (date) => {
+                if (!date || isNaN(date.getTime())) return null;
+                // Return as Date object
+                return new Date(Date.UTC(
+                    date.getFullYear(),
+                    date.getMonth(),
+                    date.getDate()
+                ));
+            };
+
+            // Create booked dates array
+            const bookedDatesArray = availableDays.map(date => formatDateForStorage(date));
+
+            // Construct product object properly
+            const productData = {
+                id: productID,
+                prodCode: productID,
+                name: productName,
+                image: productImage,
+                price: Number(productAmount) || 0,
+                printingCost: Number(productPrintingCost) || 0,
+                mountingCost: Number(productMountingCost) || 0,
+                lighting: prodLighting || "",
+                fixedAmount: Number(productFixedAmount) || 0,
+                fixedAmountOffer: Number(productFixedAmountOffer) || 0,
+                size: {
+                    width: Number(prodwidth) || 0,
+                    height: Number(prodheight) || 0,
+                    squareFeet: Number(ProdSquareFeet()) || 0
+                },
+                fromLocation: productFrom || "",
+                toLocation: productTo || "",
+                rating: Number(prodRating) || 0,
+                mediaType: prodType || "",
+                location: {
+                    state: selectedState || "",
+                    district: selectedDistrict || ""
+                },
+                booking: {
+                    startDate: formatDateForStorage(selectedDates.start),
+                    endDate: formatDateForStorage(selectedDates.end),
+                    totalDays: totalDays,
+                    totalPrice: totalPrice
+                },
+                bookedDates: bookedDatesArray,
+                deleted: false,
+                deletedAt: null,
+                deletedBy: null
+            };
+
+            // Prepare order data - FIXED: Set both status and order_status
+            const orderData = {
+                client: {
+                    userId: productID,
+                    name: clientName,
+                    email: clientEmail || "",
+                    contact: clientContact,
+                    company: clientCompany || "",
+                    totalAmount: totalPrice,
+                    // FIX: paidAmount should be array of objects
+                    paidAmount: [{
+                        amount: Number(clientPaidAmount) || 0,
+                        paidAt: new Date()
+                    }],
+                    balanceAmount: balanceAmount
+                },
+                products: [productData],
+                status: "Added Manually", // This is always "Added Manually" for admin orders
+                order_status: " ", // This will show in the table
+                orderType: "single",
+                last_edited: new Date()
+            };
+
+            console.log("Sending order data:", JSON.stringify(orderData, null, 2));
+
+            // Submit to backend
+            const response = await fetch(
+                editOrder
+                    ? `${baseUrl}/prodOrders/${editOrder._id}`
+                    : `${baseUrl}/prodOrders`,
+                {
+                    method: editOrder ? 'PUT' : 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderData)
+                }
+            );
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to save order');
+            }
+
+            const result = await response.json();
+            console.log("Order saved with ID:", result.orderId || result._id);
+
+            // Send SMS notifications
+            try {
+                // Send SMS to user
+                if (clientContact) {
+                    await sendOrderSMS(clientContact, result.orderId || result._id);
+                }
+
+                // Send SMS to admin
+                await sendOrderSMS('reactdeveloper@adinn.co.in', result.orderId || result._id, true);
+            } catch (smsError) {
+                console.error("SMS sending error:", smsError);
+                // Don't fail the order if SMS fails
+            }
+
+            // AFTER SUCCESSFUL ORDER CREATION - SEND NOTIFICATIONS
+            try {
+                // Prepare order data for notifications
+                const notificationData = {
+                    client: {
+                        name: clientName,
+                        email: clientEmail,
+                        contact: clientContact,
+                        company: clientCompany,
+                        paidAmount: clientPaidAmount
+                    },
+                    products: [{
+                        name: productName,
+                        prodCode: productID,
+                        price: Number(productAmount),
+                        image: productImage,
+                        booking: {
+                            startDate: selectedDates.start,
+                            endDate: selectedDates.end,
+                            totalDays: totalDays,
+                            totalPrice: totalPrice
+                        }
+                    }]
+                };
+
+                // Send notifications
+                await sendOrderNotifications(notificationData, result.orderId || result._id);
+            } catch (notificationError) {
+                console.error("Notification error:", notificationError);
+                // Don't fail the order if notifications fail
+            }
+
+            alert(`Order ${editOrder ? 'updated' : 'created'} successfully! with ID: ${result.orderId || result._id}`);
+            resetForm();
+
+        } catch (error) {
+            console.error("Save error:", error);
+            alert(`Error: ${error.message}`);
+        }
+        finally {
+            // Reset loading state
+            setIsSaving(false);
+        }
+    };
 
 
     // Fix for paidAmount display issue
@@ -1185,7 +1214,7 @@ const handleSaveProductOrder = async (e) => {
                         {/* Product Section  */}
                         <div className='manageClientSection'>
                             <div className='manageRightSideHeading'>Product Management</div>
-                            <div className='text-center clientDetailHeading' style={{color:"blue", marginTop:"5px"}}>Enter the Product ID to place the order</div>
+                            <div className='text-center clientDetailHeading' style={{ color: "blue", marginTop: "5px" }}>Enter the Product ID to place the order</div>
                             <div className='d-flex manageClientInformation'>
 
                                 <div className='manageClientInfoLeft'>
