@@ -5,20 +5,20 @@ import React, { useEffect, useRef, useState } from 'react'
 import './HeroSectionMain.css';
 import { MainLayout } from './MainLayout';
 import MainNavbar from './A1NAVBAR.jsx';
+import MainNavbar1 from './A1NAVBARHEROMOBILE.jsx';
 import MainNavbarHero from './A1NAVBARHERO.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from './LoginContext';
 import AdinnHome from '../components/a1home';
 import { gsap } from 'gsap';
 import { ScrollTrigger, ScrollSmoother } from 'gsap/all';
-import ScrollHero from './ScrollHero.jsx';  //thendral added
-
+import ScrollHero from './ScrollHero.jsx';
 
 function HeroSectionMain() {
     const navigate = useNavigate();
     const [isScrolled, setIsScrolled] = useState(false);
     const heroRef = useRef(null);
-
+    
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
@@ -36,8 +36,17 @@ function HeroSectionMain() {
                 <div className={`hero-navbar ${isScrolled ? 'hidden' : ''}`}>
                     <MainNavbarHero />
                 </div>
+                          <div className="hero-navbar1">
+    {/* <MainNavbarHero /> */}
+     <MainNavbar1 />
+</div>
 
-               {/* <div className='BannerMainSection'>
+                 {/* <HorizontalScrollBanner /> */}
+                 {/* <div className="scrollhero-wrapper">
+    <ScrollHero />
+</div> */}
+
+                 {/* <div className='BannerMainSection'>
                     <div className='HeroBannerLeft'></div>
                     <div className='HeroBannerRight'>
                         <div className='HeroBannerContent' >
@@ -50,19 +59,14 @@ function HeroSectionMain() {
                         </div>
                     </div>
                 </div>  */}
-                {/* //thendral added */}
-                {/* <div className="scrollhero-wrapper">
-                    <ScrollHero />
-                </div> */}
-
             </div>
 
             {/* Main Content with its own navbar */}
             <div className={`main-content-navbar ${isScrolled ? 'visible' : 'hidden'}`}>
                 <MainNavbar />
             </div>
-
-            <AdinnHome />
+            
+            <AdinnHome/>
         </MainLayout>
     )
 }

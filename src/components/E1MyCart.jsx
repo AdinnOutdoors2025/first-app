@@ -3,10 +3,12 @@ import './E1MyCart.css';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from './LoginContext';
 import MainNavbar from './A1NAVBAR.jsx';
+import NavbarWrapper from './NavbarWrapper.jsx';
 import MainFooter from './A1FOOTER.jsx';
 import { MainLayout } from './MainLayout';
 import { baseUrl } from '../Adminpanel/BASE_URL';
 import { formatIndianCurrency } from './FORMATED_AMOUNT';
+
 
 
 const Cart = () => {
@@ -235,7 +237,8 @@ const Cart = () => {
     return (
         <MainLayout>
             <div>
-                <MainNavbar />
+                {/* <MainNavbar /> */}
+                <NavbarWrapper />
                 <div className="container-fluid cart-container">
 
                     {isLoading ? (

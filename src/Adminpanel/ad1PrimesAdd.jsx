@@ -691,7 +691,7 @@
 //                         </div>
 
 //                         {/* Rating and Offers Section */}
-//                         <div style={{ display: 'flex', gap: '10px' }}>
+//                         <div style={{  'flex', gap: '10px' }}>
 //                             <div className='manageClientSection' style={{ width: '40%' }}>
 //                                 <div className='clientDetailHeading'>Ratings</div>
 //                                 <div className='ProductRatingMain'>

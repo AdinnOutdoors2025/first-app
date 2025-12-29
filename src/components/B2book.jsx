@@ -18,6 +18,8 @@ import { useParams, useLocation } from "react-router-dom";
 import { baseUrl } from '../Adminpanel/BASE_URL';
 import slugify from 'slugify';
 import { formatIndianCurrency } from './FORMATED_AMOUNT';
+import NavbarWrapper from './NavbarWrapper.jsx';
+
 
 function BookASite1() {
     const { productId } = useParams(); // Get productId from URL
@@ -714,7 +716,9 @@ function BookASite1() {
     return (
         <MainLayout>
             <div>
-                <MainNavbar />
+                {/* <MainNavbar /> */}
+                <NavbarWrapper />
+
                 <div className={`calendar-wrapper login-wrapper otp-wrapper ${isCalendarOpen ? "calendar-open" : ""} ${isLoginOpen ? "login-open" : ""} ${isOtpMainOpen ? "otp-main-open" : ""} `}>
                     {/* Image with details section  */}
                     <div className="container-fluid mt-5  Book-section " id="similarProdDetailsShows">

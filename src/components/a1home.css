@@ -746,8 +746,7 @@
   }
 
 }
-
- /* {//thendral added} */
+ /* //thendral added */
 @media(max-width: 1024px){
   .scrollhero-wrapper {
   position: relative;
@@ -755,7 +754,7 @@
 
  .about {
     position: relative !important;
-    top: 0 !important;
+    top: -30px !important;
     z-index: 2 !important;
   }
   .about-content2 img{
@@ -767,8 +766,7 @@
      display: none !important;
  }
 }
- /* {//thendral added} */
-
+ /* //thendral added */
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
 @media (min-width: 768px) and (max-width: 991px) {
 
@@ -872,19 +870,16 @@
   .plus-symbol {
     font-size: 20px;
   }
-
-
-
 }
 
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
 @media (min-width: 480px) and (max-width: 767px) {
 
   .heading {
-    margin: 4% auto;
+    margin: 4% auto; 
     font-size: 30px;
   }
-
+  
   .about-content-para {
     font-size: 18px;
     text-align: justify;
@@ -907,7 +902,8 @@
 
   .about-content2 img {
     height: 500px;
-    width: 100%;
+    width: 100%;   /*thendral1 added*/
+    margin-top: 10px; /*thendral1 added*/
     margin-bottom: 25px;
   }
 
@@ -1094,13 +1090,13 @@
     font-size: 30px;
     font-weight: 500;
     margin-bottom: 15px;
+    justify-content: left; /*Thendral26/12/25*/
   }
 
   .about-content-para {
     font-size: 18px;
-    text-align: justify;
+    text-align: left; /*Thendral26/12/25*/
     margin-bottom: 0px;
-
   }
 
 
@@ -1119,9 +1115,12 @@
 
   .about-content2 img {
     height: 500px;
-    width: 100%;
+    width: 100%;  /*thendral1 added*/
     margin-bottom: 25px;
   }
+  .about-heading {
+        margin: 0% !important; /*thendral1 added*/
+    }
 
   .client-content {
     margin-top: 5px;
@@ -1322,8 +1321,14 @@
     text-align: justify;
     margin-bottom: 0px;
   }
-
-
+  /*Thendral26/12/25*/
+  .about {
+    position: relative !important;
+    top: 50 !important;
+    z-index: 2 !important;
+  }
+/*Thendral26/12/25*/
+  
   .about-content {
     flex-wrap: wrap;
   }
@@ -1339,10 +1344,15 @@
 
 
   .about-content2 img {
-    height: 500px;
-    width: 100%;
+    height: auto !important;
+    width: 100%; /*thendral1 added*/
     margin-bottom: 25px;
   }
+
+  .about-heading {
+        margin: 10px !important; /*thendral1 added*/
+    }
+  
 
   .client-content {
     margin-top: 5px;
@@ -1511,7 +1521,7 @@
 /* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
 @media (min-width: 360px) and (max-width: 374px) {
   .heading {
-    margin: 11% auto;
+    margin: 5% auto; /*Thendral26/12/25*/
     font-size: 30px;
     line-height: 35.2px;
   }
@@ -1546,10 +1556,14 @@
 
   .about-content2 img {
     height: 500px;
-    width: 100%;
+    width: 100%; /*thendral1 added*/
     margin-bottom: 25px;
   }
-
+/*Thendral26/12/25*/
+      .about-heading {
+        margin: 2px !important;
+    }
+/*Thendral26/12/25*/
   .client-content {
     margin-top: 5px;
   }
@@ -1717,7 +1731,7 @@
 
 @media (min-width: 320px) and (max-width: 359px) {
   .heading {
-    margin: 10% auto;
+    margin: 1% auto; /*Thendral26/12/25*/
     font-size: 27px;
     line-height: 32.2px;
   }
@@ -1752,10 +1766,14 @@
 
   .about-content2 img {
     height: 350px;
-    width: 100%;
+    width: 80%; /*thendral1 added*/
     margin-bottom: 25px;
   }
-
+/*Thendral26/12/25*/
+     .about-heading {
+        margin: 4px !important;
+    }
+/*Thendral26/12/25*/
   .client-content {
     margin-top: 5px;
   }
@@ -1945,10 +1963,7 @@
     opacity: 1;
   }
 }
-
-
-
-
+/*Thendral26/12/25*/
 @media(max-width: 768px){
   .about-content1-heading {
     font-size: 28px;
@@ -1957,18 +1972,31 @@
     margin-bottom: 12px;
    text-align: left !important;
   }
+  .about-heading{
+    margin: 0 ;
+  }
 
   .about-content-para {
     font-size: 16px;
-    text-align: justify !important;
+    text-align: left !important;
     margin-bottom: 0px;
   }
-   /* {//thendral added} */
+  /* Thendral26/12/25 */
+   /* //thendral added */
    .about-mobile-content{ 
+    display: block !important;
+   }
+   .about-mobile-heading{
     display: none !important;
    }
    .hero-image{
     width: 108% !important;
    }
-    /* {//thendral added} */
+   .about-desktop{
+    padding: 30px 20px !important;
+   }
+   .desktop-only{
+      display: none;
+   }
+    /* //thendral added */
 }

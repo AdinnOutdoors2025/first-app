@@ -7,6 +7,7 @@ import MainFooter from './A1FOOTER.jsx';
 import { MainLayout } from './MainLayout';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from '../Adminpanel/BASE_URL';
+import NavbarWrapper from './NavbarWrapper.jsx';
 
 function MyOrder() {
     // const { user } = useLogin();
@@ -171,7 +172,8 @@ function MyOrder() {
     return (
         <MainLayout>
             <div>
-                <MainNavbar />
+                {/* <MainNavbar /> */}
+                <NavbarWrapper />
                 <div className='container order-items-main'>
                     <h1 className='order-heading'>All Order</h1>
                     <div className="order-items">

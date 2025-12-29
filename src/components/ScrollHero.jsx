@@ -424,7 +424,9 @@ const handleClick = (url) => {
             <div className='about-content-para'> Adinn Outdoor owns over 550 outdoor ad spaces across Tamil Nadu and extends even outside the state. Our media network spans diverse formats from billboards to police booths and we have successfully amplified brand visibility and achieved tangible results. We make sure your brand is visible to the right people at the ideal time. With 25 Years of Excellence , we know where to put your ads to get the most impact. If you want to reach more people and expand the visibility of your ads , we’re here to help. </div> 
      <div className='about-content-para about-content-para-last'><span className='highlight contactUs'>Contact Us</span>to take your brand to new heights at prime locations ,where visibility shines.</div>
           </div>
-          <div className='about-content2 img-fluid'>
+          {/* thendral 26/12/25 */}
+          <div className='about-content2 img-fluid mobile-only-image'> 
+            {/* thendral 26/12/25 */}
             <img src='./images/road_gif.png'></img>
           </div>
         </div>

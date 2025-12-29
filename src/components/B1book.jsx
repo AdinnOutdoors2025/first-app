@@ -834,10 +834,25 @@ import { baseUrl } from '../Adminpanel/BASE_URL';
 //DEAL OF THE DAY PAGE SCROLL ANIMATION
 import DealScrollAnim from './H2DealScroll.jsx';
 import { formatIndianCurrency } from './FORMATED_AMOUNT';
+import A1NAVBARHEROMOBILE from './A1NAVBARHEROMOBILE';
+
+
 
 export default function BookASite() {
   // Navbar js
   const [isMenuOpen, setMenuOpen] = useState(false);
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
@@ -1215,7 +1230,9 @@ export default function BookASite() {
     <MainLayout>
       <div className='bookMainDeal'>
         <DealScrollAnim />
-        <MainNavbar />
+        {/* <MainNavbar /> */}
+        {isMobile ? <A1NAVBARHEROMOBILE /> : <MainNavbar />}
+
         
         <div className="container side-bar-main">
           <div className="row side-bar-content">

@@ -409,12 +409,13 @@ width: 40px;
   .navbar img {
       height: 40px;
   }
-
+/*Thendral26/12/25*/
   .home-icon {
-      height: 25px;
-      width: 25px;
+      height: 35px !important;
+      width: 35px !important;
+      margin-left: 60px !important;
   }
-
+/*Thendral26/12/25*/
   .main-img1 {
       height: 70px;
       width: 90px;
@@ -449,7 +450,22 @@ width: 40px;
   font-size: 20px;
   cursor: pointer;
 }
-
+/*Thendral26/12/25*/
+@media (min-width: 420px) and (max-width: 500px) {
+ .home-icon{
+  margin-left: 90px !important;
+ }
+}
+@media (min-width: 320px) and (max-width: 370px) {
+.home-icon{
+  margin-left: 60px !important;
+}
+.cart{
+  font-size: 24px !important;
+  margin-right: 20px;
+}
+}
+/*Thendral26/12/25*/
 @media (max-width: 991px) {
   /* Show hamburger for smaller screens */
   .hamburger-menu {

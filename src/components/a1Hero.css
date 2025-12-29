@@ -29,8 +29,10 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 253, 253, 0.7);
-    backdrop-filter: blur(10px);
+ /*Thendral26/12/25*/   /* background: rgba(255, 253, 253, 0.7);
+    backdrop-filter: blur(10px); */
+    box-shadow: 0px 4px 4px 0px #00000040; 
+    backdrop-filter: blur(20px);  /*Thendral26/12/25*/
     -webkit-backdrop-filter: blur(10px);
     border-radius: 32px;
     z-index: -1;
@@ -727,6 +729,89 @@
 
 }
 
+ @media (min-width:651px) and (max-width:767px) {
+       /* .nav-content21.open {
+        right: 25px !important;
+        top: 60px !important;
+        height: auto !important;
+        width: 490px !important;
+        border-bottom-left-radius: 20px !important;
+        border-bottom-right-radius: 20px !important;
+        z-index: -4 !important;
+        margin-top: 0px !important;
+    } */
+     .nav_container{
+        right: 25%;
+    }
+}
+
+@media (min-width:551px) and (max-width:650px) {
+
+       /* .nav-content21.open {
+        right: 25px !important;
+        top: 60px !important;
+        height: auto !important;
+        width: 490px !important;
+        border-bottom-left-radius: 20px !important;
+        border-bottom-right-radius: 20px !important;
+        z-index: -4 !important;
+        margin-top: 0px !important;
+    } */
+     .nav_container{
+        right: 22%;
+    }
+}
+@media screen and (min-width: 600px) and (max-width: 767px) {
+  .mobile-content-preview {
+    display: block;
+  }
+
+  .about-heading {
+    display: block;
+    text-align: center;
+    font-size: 28px;
+  }
+
+  .mobile-only-image {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .mobile-only-image img {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+  }
+}
+
+@media (min-width:480px) and (max-width:550px) {
+       /* .nav-content21.open {
+        right: 25px !important;
+        top: 60px !important;
+        height: auto !important;
+        border-bottom-left-radius: 20px !important;
+        border-bottom-right-radius: 20px !important;
+        z-index: -4 !important;
+        margin-top: 0px !important;
+    } */
+    .nav_container{
+        right: 20%;
+    }
+        .about-content2 img {
+            width: 100% !important;
+        }
+} 
+@media (min-width:440px) and (max-width:479px) {
+.nav-content21.open{
+    width: 90% !important;
+}
+}
+@media (min-width:425px) and (max-width:439px) {
+.nav-content21.open{
+    width: 390px !important;
+}
+}
 @media (min-width:480px) and (max-width:767px) {
     /* .nav_user-content {
         transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
@@ -741,11 +826,11 @@
         height: 70px;
         max-width: 100%;
     }
-
-    .home-icon {
+/*Thendral26/12/25*/
+    /* .home-icon {
         margin-right: 0;
-    }
-
+    } */
+/*Thendral26/12/25*/
     .nav_user-content {
         display: block !important;
         opacity: 1 !important;
@@ -756,7 +841,7 @@
         margin-top: 0;
         background: transparent;
         box-shadow: none;
-        border: 1px solid red;
+        /* border: 1px solid red; */
         transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
     
     }
@@ -789,7 +874,7 @@
 
 
     .nav-content21 {
-        position: fixed;
+         /* position: fixed;
         top: 0;
         right: -100%;
         width: 300px;
@@ -801,16 +886,48 @@
         gap: 20px;
         box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
         transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;  */
+         position: fixed;
+        top: 60px;
+        right: -100%;
+        width: 363px;
+        height: auto !important;
+        background: rgba(255, 255, 255, 0.98);
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        gap: 20px;
+        box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+        transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         overflow-y: auto;
+        border-bottom-left-radius: 20px;
+       border-bottom-right-radius: 20px;
     }
 
     .nav-content21.open {
-        right: 0;
+        right: 0px !important;
+        top: 60px !important;
+        height: auto !important;
+        /* width: 490px !important; */
+        border-bottom-left-radius: 20px !important;
+        border-bottom-right-radius: 20px !important;
+        z-index: -4 !important;
+        margin-top: 0px !important;
+        position: absolute;
+    width: 100% !important;  
     }
+     /* .nav-content21.open {
+    position: absolute;
+    width: 100%;        
+} */
+ /* .nav_container{
+        right: 25% !important;
+    } */
 
     .hamburger-menu {
         display: block;
-        font-size: 27px;
+        font-size: 30px;
     }
 
     .cart-number {
@@ -858,10 +975,11 @@
 
 
 @media (min-width: 425px) and (max-width: 479px) {
-
-    .home-icon {
+/*Thendral26/12/25*/
+    /* .home-icon {
         margin-right: 0;
-    }
+    } */
+     /*Thendral26/12/25*/
 
     .nav_user-content {
         display: block !important;
@@ -873,7 +991,7 @@
         margin-top: 0;
         background: transparent;
         box-shadow: none;
-        border: 1px solid red;
+      /*Thendral26/12/25*/  /* border: 1px solid red; */   /*Thendral26/12/25*/
     }
 
     .nav_user-content.open {
@@ -907,8 +1025,8 @@
         max-width: 100%;
     }
 
-
-    .nav-content21 {
+/*Thendral26/12/25*/
+    /* .nav-content21 {
         position: fixed;
         top: 0;
         right: -100%;
@@ -926,11 +1044,43 @@
 
     .nav-content21.open {
         right: 0;
+    } */
+     .nav-content21.open {
+                right: 20px!important;
+        top: 60px!important;
+        height: auto !important;
+        /* width: 390px !important; */
+        border-bottom-left-radius: 20px !important;
+        border-bottom-right-radius: 20px !important;
+        z-index: -4 !important;
+        margin-top: -10px!important;
     }
-
+      .nav-content21 {
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        width: 363px;
+        height: auto !important;
+        background: rgba(255, 255, 255, 0.98);
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        gap: 20px;
+        box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+        transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        border-bottom-left-radius: 20px;
+       border-bottom-right-radius: 20px;
+    }
+      .nav_container{
+        right:40px;
+    }
+/*Thendral26/12/25*/
     .hamburger-menu {
         display: block;
-        font-size: 27px;
+        font-size: 30px;
+        padding-right: 20px;
     }
 
     .cart-number {
@@ -976,14 +1126,20 @@
         height: 48px;
         width: 14px;
     }
-
+        .home-icon {
+        height: 45px !important;
+        width: 45px !important;
+        }
+        .cart{
+            padding-right: 20px !important;
+        }
 }
 
 
 @media (min-width: 414px) and (max-width: 424px) {
-    .home-icon {
+  /*Thendral26/12/25*/  /* .home-icon {
         margin-right: 0;
-    }
+    } */ /*Thendral26/12/25*/
 
     .nav_user-content {
         display: block !important;
@@ -995,7 +1151,7 @@
         margin-top: 0;
         background: transparent;
         box-shadow: none;
-        border: 1px solid red;
+ /*Thendral26/12/25*/       /* border: 1px solid red; */
                transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
 
     }
@@ -1031,8 +1187,8 @@
         max-width: 100%;
     }
 
-
-    .nav-content21 {
+/*Thendral26/12/25*/
+    /* .nav-content21 {
         position: fixed;
         top: 0;
         right: -100%;
@@ -1050,8 +1206,40 @@
 
     .nav-content21.open {
         right: 0;
-    }
+    } */
 
+     .nav-content21.open {
+                right: 18px!important;
+        top: 60px!important;
+        height: auto !important;
+        width: 375px !important;
+        border-bottom-left-radius: 20px !important;
+        border-bottom-right-radius: 20px !important;
+        z-index: -4 !important;
+        margin-top: -10px!important;
+    }
+      .nav-content21 {
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        width: 363px;
+        height: auto !important;
+        background: rgba(255, 255, 255, 0.98);
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        gap: 20px;
+        box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+        transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        border-bottom-left-radius: 20px;
+       border-bottom-right-radius: 20px;
+    }
+      .nav_container{
+        right:40px;
+    }
+/*Thendral26/12/25*/
     .hamburger-menu {
         display: block;
         font-size: 27px;
@@ -1107,12 +1295,12 @@
 }
 
 
-@media (min-width: 375px) and (max-width: 413px) {
+@media (min-width: 375px) and (max-width: 414px) {
 
-
-    .home-icon {
+/*Thendral26/12/25*/
+    /* .home-icon {
         margin-right: 0;
-    }
+    } */ /*Thendral26/12/25*/
 
     .book-btn,
     .contact-btn {
@@ -1126,10 +1314,10 @@
         position: relative;
         right: auto;
         top: auto;
-        margin-top: 0;
+        margin-top: -20px; /*Thendral26/12/25*/
         background: transparent;
         box-shadow: none;
-        border: 1px solid red;
+        /* border: 1px solid red; */ /*Thendral26/12/25*/
                transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
 
     }
@@ -1166,8 +1354,9 @@
         max-width: 94%;
     }
 
+    /*Thendral26/12/25*/
 
-    .nav-content21 {
+    /* .nav-content21 {
         position: fixed;
         top: 0;
         right: -100%;
@@ -1185,17 +1374,60 @@
 
     .nav-content21.open {
         right: 0;
+    } */
+
+    .nav-content21 {
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        width: 363px;
+        height: auto !important;
+        background: rgba(255, 255, 255, 0.98);
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 20px;
+        padding-bottom: 20px;        gap: 20px;
+        box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+        transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        border-bottom-left-radius: 20px;
+       border-bottom-right-radius: 20px;
     }
 
+    .nav-content21.open {
+                right: 13px;
+        top: 60px;
+        height: auto !important;
+        width: 363px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        z-index: -4;
+        margin-top: -15px;
+        padding-top: 40px;
+        padding-bottom: 25px;
+    }
+      .bookMainDeal .nav-content21.open {
+    top: 110px !important; 
+}
+ .bookMainDeal .nav-content21 {
+    top: 110px !important; 
+}
+    .nav_container{
+        right:40px;
+    }
+/*Thendral26/12/25*/
     .hamburger-menu {
         display: block;
         font-size: 27px;
+        /* padding-left: 20px !important; */
+        padding-right: 20px;
     }
-
+/*Thendral26/12/25*/
     .cart {
-        font-size: 33px;
+        font-size: 24px !important;
+        padding-right: 20px !important;
     }
-
+/*Thendral26/12/25*/
     .cart-number {
         height: 24px;
         width: 24px;
@@ -1241,15 +1473,63 @@
 
 
 }
-
-
+/*Thendral26/12/25*/
+@media (min-width: 400px) and (max-width: 413px){
+ .nav-content21.open {
+                right: 13px!important;
+        top: 60px!important;
+        height: auto !important;
+        width: 383px !important;
+        border-bottom-left-radius: 20px !important;
+        border-bottom-right-radius: 20px !important;
+        z-index: -4 !important;
+        margin-top: -10px!important;
+    }
+   
+      .nav-content21 {
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        width: 363px;
+        height: auto !important;
+        background: rgba(255, 255, 255, 0.98);
+        flex-direction: column;
+        justify-content: center;
+padding-top: 10px;
+        padding-bottom: 10px;           gap: 20px;
+        box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+        transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        border-bottom-left-radius: 20px;
+       border-bottom-right-radius: 20px;
+    }
+     .bookMainDeal .nav-content21.open {
+    top: 110px !important; 
+}
+ .bookMainDeal .nav-content21 {
+    top: 110px !important; 
+}
+}
+@media (min-width: 373px) and (max-width: 380px){
+ .nav-content21.open {
+                right: 13px!important;
+        top: 60px!important;
+        height: auto !important;
+        width: 350px !important;
+        border-bottom-left-radius: 20px !important;
+        border-bottom-right-radius: 20px !important;
+        z-index: -4 !important;
+        margin-top: -10px!important;
+    }
+}
+/*Thendral26/12/25*/
 @media (min-width: 360px) and (max-width: 374px) {
 
-
-    .home-icon {
+/*Thendral26/12/25*/
+    /* .home-icon {
         margin-right: 0;
-    }
-
+    } */
+/*Thendral26/12/25*/
     .book-btn,
     .contact-btn {
         font-size: 14px;
@@ -1263,9 +1543,9 @@
         right: auto;
         top: auto;
         margin-top: 0;
-        background: transparent;
+        /* background: transparent; */ /*Thendral26/12/25*/
         box-shadow: none;
-        border: 1px solid red;
+        /* border: 1px solid red; */ /*Thendral26/12/25*/
                transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
 
     }
@@ -1305,33 +1585,61 @@
 
     .nav-content21 {
         position: fixed;
-        top: 0;
+        top: 60px; /*Thendral26/12/25*/
         right: -100%;
-        width: 220px;
-        height: 100lvh;
+        width: 320px;
+        height: auto !important; /*Thendral26/12/25*/
         background: rgba(255, 255, 255, 0.98);
         flex-direction: column;
         justify-content: center;
-        padding-top: 30px;
+        padding-top: 20px !important; /*Thendral26/12/25*/
+         padding-bottom: 20px !important; /*Thendral26/12/25*/
         gap: 20px;
         box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
-        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         overflow-y: auto;
-    }
+ /*Thendral26/12/25*/       border-bottom-left-radius: 20px;
+       border-bottom-right-radius: 20px;
+       box-shadow: 0px 4px 4px 0px #00000040;
+backdrop-filter: blur(20px); /*Thendral26/12/25*/
 
+    }
+/*Thendral26/12/25*/
     .nav-content21.open {
-        right: 0;
+        right: 13px;
+         top: 60px;
+        height: auto !important;
+         width: 330px;
+         margin-top:-20px;
+        border-bottom-left-radius: 20px;
+       border-bottom-right-radius: 20px;
+       z-index: -4;
+       box-shadow: 0px 4px 4px 0px #00000040;
+backdrop-filter: blur(20px);
+ padding-top: 20px !important;
+         padding-bottom: 20px !important;
     }
-
+     .bookMainDeal .nav-content21.open {
+    top: 110px !important; 
+}
+ .bookMainDeal .nav-content21 {
+    top: 110px !important; 
+}
+    .nav_container{
+        right:20px;
+    }
+/*Thendral26/12/25*/
     .hamburger-menu {
         display: block;
         font-size: 27px;
+         padding-right: 20px !important; /*Thendral26/12/25*/
     }
-
+/*Thendral26/12/25*/
     .cart {
-        font-size: 33px;
+         font-size: 24px !important;
+        padding-right: 0px !important; 
     }
-
+/*Thendral26/12/25*/
     .cart-number {
         height: 24px;
         width: 24px;
@@ -1379,11 +1687,11 @@
 
 @media (min-width: 320px) and (max-width: 359px) {
 
-
-    .home-icon {
+/*Thendral26/12/25*/
+    /* .home-icon {
         margin-right: 0;
-    }
-
+    } */
+/*Thendral26/12/25*/
     .book-btn,
     .contact-btn {
         font-size: 14px;
@@ -1399,7 +1707,7 @@
         margin-top: 0;
         background: transparent;
         box-shadow: none;
-        border: 1px solid red;
+  /*Thendral26/12/25*/      /* border: 1px solid red; */
               transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
 
     }
@@ -1440,8 +1748,8 @@
         max-width: 97%;
     }
 
-
-    .nav-content21 {
+/*Thendral26/12/25*/
+    /* .nav-content21 {
         position: fixed;
         top: 0;
         right: -100%;
@@ -1459,17 +1767,67 @@
 
     .nav-content21.open {
         right: 0;
+    } */
+
+    .nav-content21 {
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        width: 300px;
+        height: auto !important;
+        background: rgba(255, 255, 255, 0.98);
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 20px !important;
+         padding-bottom: 20px !important;
+        gap: 20px;
+        box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+        transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        border-bottom-left-radius: 20px;
+       border-bottom-right-radius: 20px;
+       box-shadow: 0px 4px 4px 0px #00000040;
+backdrop-filter: blur(20px);
+
     }
 
+    .nav-content21.open {
+        right: 13px;
+         top: 60px;
+        height: auto !important;
+         width: 300px;
+         margin-top:-20px;
+        border-bottom-left-radius: 20px;
+       border-bottom-right-radius: 20px;
+       z-index: -4;
+       box-shadow: 0px 4px 4px 0px #00000040;
+backdrop-filter: blur(20px);
+ padding-top: 20px !important;
+         padding-bottom: 20px !important;
+    }
+     .bookMainDeal .nav-content21.open {
+    top: 110px !important; 
+}
+ .bookMainDeal .nav-content21 {
+    top: 110px !important; 
+}
+    .nav_container{
+        right:10px;
+    }
+    .home-cta-buttons-mobile{
+       padding-top: 10px !important;
+    }
+/*Thendral26/12/25*/
     .hamburger-menu {
         display: block;
         font-size: 25px;
     }
-
+/*Thendral26/12/25*/
     .cart {
-        font-size: 33px;
+        font-size: 24px !important;
+        margin-right: 20px !important
     }
-
+/*Thendral26/12/25*/
     .cart-number {
         height: 24px;
         width: 24px;

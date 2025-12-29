@@ -6,7 +6,7 @@
 .hero-wrapper {
     position: relative;
     width: 100%;
-    height: 10vh;
+    height: 10vh; /*Thendral26/12/25*/
 }
 
 .BannerMainSection {
@@ -140,6 +140,11 @@
         border-radius: 8px;
         padding: 10px 12px;
     }
+    /*Thendral26/12/25*/
+    .hero-wrapper {
+    height: 0vh; 
+}  
+/*Thendral26/12/25*/
 }
 
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
@@ -158,6 +163,11 @@
         border-radius: 6px;
         padding: 10px 12px;
     }
+    /*Thendral26/12/25*/
+    .hero-wrapper {
+    height: 5vh;
+}
+/*Thendral26/12/25*/
 }
 
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
@@ -176,6 +186,11 @@
         border-radius: 6px;
         padding: 10px 12px;
     }
+    /*Thendral26/12/25*/
+    .hero-wrapper {
+    height: 0vh;
+}
+/*Thendral26/12/25*/
 }
 
 /* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
