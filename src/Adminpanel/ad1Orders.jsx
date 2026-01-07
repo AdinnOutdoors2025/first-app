@@ -542,9 +542,9 @@ const OrdersTable = () => {
                             <th><div className='TableOrderName'>Order ID</div></th>
                             <th><div>Product ID</div></th>
                             <th><div>Order Date</div></th>
-                            <th><div>Booking Date</div></th>
-                            <th><div>Order Placed By</div></th>
-                            <th><div>Handle By</div></th>
+                            <th><div>Reserved</div></th>
+                            <th><div>Submitter</div></th>
+                            <th><div>Handler</div></th>
                             <th><div>Status</div></th>
 
                             <th><div> </div></th>
@@ -597,9 +597,39 @@ const OrdersTable = () => {
                                     }
 
                                 </td>
-                                <td>{order.status}</td>
+                                {/* <td>{order.status}</td>
                                 <td>{order.handled_by ? order.handled_by : "-"}</td>
-                                <td>{order.order_status}</td>
+                                <td>{order.order_status}</td> */}
+
+
+                                <td>
+  {(() => {
+    // Display "UserSideOrder" for user orders, "Added Manually" for admin orders
+    if (order.status === "UserSideOrder") {
+      return "UserSideOrder";
+    } else if (order.status === "Added Manually") {
+      return "Added Manually";
+    } else {
+      return order.status || "-";
+    }
+  })()}
+</td>
+
+<td>{order.handled_by ? order.handled_by : "-"}</td>
+<td>
+  {(() => {
+    // Display order_status if available, otherwise show status
+    if (order.order_status && order.order_status !== "pending") {
+      return order.order_status;
+    } else if (order.status === "UserSideOrder") {
+      return "Payment Pending";
+    } else {
+      return order.status || "-";
+    }
+  })()}
+</td>
+
+
                                 <td className="order-threeDotsTd" onClick={() => toggleMenu(order._id)}>
                                     <div className="order-actionMenuRow">
                                         {/* 3 Dots */}

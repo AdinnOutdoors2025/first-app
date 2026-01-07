@@ -35,6 +35,12 @@ function OrderDetails({ order, onOrderUpdate }) {
   const [deleteProductName, setDeleteProductName] = useState("");
   const [handlerName, setHandlerName] = useState("");
 
+// Add the handleConfirmOrder function
+const [confirmationNotes, setConfirmationNotes] = useState('');
+const [showConfirmDialog, setShowConfirmDialog] = useState(false); 
+
+
+
   // Payment history state - ensure it's always an array
   const [paymentHistory, setPaymentHistory] = useState([]);
 
@@ -61,100 +67,6 @@ function OrderDetails({ order, onOrderUpdate }) {
       console.error("Error refreshing order data:", error);
     }
   };
-
-// const confirmDelete = async () => {
-//   try {
-//     const orderToDeleteFrom = safeOrder;
-//     const product = safeOrder.products.find(p => p._id === selectedProductId);
-//     const isCurrentlyDeleted = product?.deleted || false;
-
-//     // Use _id for API calls
-//     let endpoint = '';
-    
-//     if (isCurrentlyDeleted) {
-//       // Restore product
-//       endpoint = `${baseUrl}/deleteProductOrder/${safeOrder._id}/${selectedProductId}?deletedBy=${encodeURIComponent(handlerName)}`;
-//     } else {
-//       // Delete product
-//       endpoint = `${baseUrl}/deleteProductOrder/${safeOrder._id}/${selectedProductId}?deletedBy=${encodeURIComponent(handlerName)}`;
-//     }
-
-//     const response = await fetch(endpoint);
-//     const result = await response.json();
-
-//     if (result.status) {
-//       // Update local state immediately
-//       const updatedProducts = safeOrder.products.map(p => {
-//         if (p._id === selectedProductId) {
-//           return {
-//             ...p,
-//             deleted: !isCurrentlyDeleted,
-//             deletedAt: isCurrentlyDeleted ? null : new Date(),
-//             deletedBy: isCurrentlyDeleted ? null : handlerName
-//           };
-//         }
-//         return p;
-//       });
-
-//       // Calculate new totals
-//       const activeProducts = updatedProducts.filter(p => !p.deleted);
-//       const newTotalAmount = activeProducts.reduce((sum, p) => sum + (p.booking?.totalPrice || 0), 0);
-      
-//       // Update order data
-//       const updatedOrder = {
-//         ...safeOrder,
-//         products: updatedProducts,
-//         client: {
-//           ...safeOrder.client,
-//           totalAmount: newTotalAmount,
-//           balanceAmount: Math.max(newTotalAmount - totalPaidAmount, 0)
-//         }
-//       };
-
-//       setOrderData(updatedOrder);
-//       setLocalOrder(updatedOrder);
-
-//       // Send email notification
-//       try {
-//         await fetch(`${baseUrl}/notifications/send-product-deletion-notification`, {
-//           method: 'POST',
-//           headers: { 'Content-Type': 'application/json' },
-//           body: JSON.stringify({
-//             orderId: safeOrder.orderId,
-//             productId: selectedProductId,
-//             productName: deleteProductName,
-//             client: orderToDeleteFrom.client,
-//             orderDetails: updatedOrder, // Send updated order
-//             action: isCurrentlyDeleted ? 'restore' : 'delete',
-//             handler: handlerName,
-//             createdAt: safeOrder.createdAt
-//           })
-//         });
-//       } catch (emailError) {
-//         console.error("Failed to send notification:", emailError);
-//         toast.warning(
-//           isCurrentlyDeleted
-//             ? "Product restored but email notification failed"
-//             : "Product marked as deleted but email notification failed"
-//         );
-//       }
-
-//       toast.success(
-//         isCurrentlyDeleted
-//           ? "Product restored successfully"
-//           : "Product marked as deleted successfully"
-//       );
-//     } else {
-//       toast.error(result.message || "Failed to update product status");
-//     }
-//   } catch (err) {
-//     console.error("Error in confirmDelete:", err);
-//     toast.error("Failed to update product status");
-//   }
-//   setShowDeletePopup(false);
-// };
-
-
 
 const confirmDelete = async () => {
   try {
@@ -274,6 +186,59 @@ const confirmDelete = async () => {
   const cancelDelete = () => {
     setShowDeletePopup(false);
   };
+// RAC CONCEPTS 
+const handleConfirmOrder = async () => {
+  if (!safeOrder.handled_by) {
+    toast.error("Please assign a handler before confirming");
+    return;
+  }
+
+  try {
+    setIsLoading(true);
+    
+    const response = await fetch(`${baseUrl}/orders/${safeOrder._id}/confirm`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        confirmedBy: safeOrder.handled_by,
+        notes: confirmationNotes
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      // Update local state
+      const updatedOrder = {
+        ...safeOrder,
+        order_status: 'confirmed',
+        status: 'Confirmed',
+        confirmed_at: new Date().toISOString(),
+        confirmed_by: safeOrder.handled_by,
+        confirmation_notes: confirmationNotes,
+        last_edited: new Date().toISOString()
+      };
+      
+      setOrderData(updatedOrder);
+      setLocalOrder(updatedOrder);
+      
+      toast.success("✅ Order confirmed successfully!");
+      setShowConfirmDialog(false);
+      setConfirmationNotes('');
+      
+      // Refresh order data
+      await refreshOrderData();
+    } else {
+      toast.error(result.message || "Failed to confirm order");
+    }
+  } catch (error) {
+    console.error("Error confirming order:", error);
+    toast.error("Failed to confirm order");
+  } finally {
+    setIsLoading(false);
+  }
+};
+// RAC CONCEPTS 
 
   const location = useLocation();
   const [activeProductIndex, setActiveProductIndex] = useState(0);
@@ -886,23 +851,66 @@ const confirmDelete = async () => {
     }
   };
 
-  const handleStatusChange = (e) => {
-    const value = e.target.value;
-    if (value === "__add_new__") {
-      setShowAddInput(true);
-      setShowCancelReasonInput(false);
+  // const handleStatusChange = (e) => {
+  //   const value = e.target.value;
+  //   if (value === "__add_new__") {
+  //     setShowAddInput(true);
+  //     setShowCancelReasonInput(false);
+  //     return;
+  //   } else if (value === "Cancelled") {
+  //     setShowCancelReasonInput(true);
+  //     setSelectOrderStatus(value);
+  //   } else {
+  //     setShowCancelReasonInput(false);
+  //     setShowAddInput(false);
+  //     setSelectOrderStatus(value);
+  //     updateOrderStatus(value);
+  //   }
+  // };
+
+
+
+
+  // Update handleStatusChange function in ad1OrderDetails.js
+const handleStatusChange = (e) => {
+  const value = e.target.value;
+  
+  // Special handling for "Order Confirmed"
+  if (value === "Order Confirmed") {
+    const confirmChange = window.confirm(
+      "⚠️ IMPORTANT: Changing status to 'Order Confirmed' will:\n\n" +
+      "1. Lock the booking dates (turn them RED)\n" +
+      "2. Make dates unavailable for other users\n" +
+      "3. Cannot be undone automatically\n\n" +
+      "Are you sure you want to confirm this order?"
+    );
+    
+    if (!confirmChange) {
+      setSelectOrderStatus(prev => prev); // Keep previous value
       return;
-    } else if (value === "Cancelled") {
-      setShowCancelReasonInput(true);
-      setSelectOrderStatus(value);
+    }
+  }
+  
+  if (value === "__add_new__") {
+    setShowAddInput(true);
+    setShowCancelReasonInput(false);
+    return;
+  } else if (value === "Cancelled") {
+    setShowCancelReasonInput(true);
+    setSelectOrderStatus(value);
+  } else {
+    setShowCancelReasonInput(false);
+    setShowAddInput(false);
+    setSelectOrderStatus(value);
+    
+    // Update order status immediately for "Order Confirmed"
+    if (value === "Order Confirmed") {
+      updateOrderStatus(value, true); // Pass true for confirmation
     } else {
-      setShowCancelReasonInput(false);
-      setShowAddInput(false);
-      setSelectOrderStatus(value);
       updateOrderStatus(value);
     }
-  };
-
+  }
+};
   const setNewStatusInput = (newStatus) => {
     setNewStatus(newStatus);
   };
@@ -911,36 +919,36 @@ const confirmDelete = async () => {
     setCancelReason(cancelReason);
   };
 
-  const updateOrderStatus = async (statusValue) => {
-    if (!statusValue || statusValue.trim() === "") return;
+  // const updateOrderStatus = async (statusValue) => {
+  //   if (!statusValue || statusValue.trim() === "") return;
 
-    try {
-      const response = await fetch(`${baseUrl}/updateOrderStatus/${safeOrder._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          cancel: false,
-          status: statusValue,
-        })
-      });
+  //   try {
+  //     const response = await fetch(`${baseUrl}/updateOrderStatus/${safeOrder._id}`, {
+  //       method: 'PUT',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         cancel: false,
+  //         status: statusValue,
+  //       })
+  //     });
 
-      const res = await response.json();
+  //     const res = await response.json();
 
-      if (res?.status === true) {
-        setIsOrderCancelled(statusValue === "Cancelled");
-        setOrderData(prev => ({
-          ...prev,
-          order_status: statusValue
-        }));
+  //     if (res?.status === true) {
+  //       setIsOrderCancelled(statusValue === "Cancelled");
+  //       setOrderData(prev => ({
+  //         ...prev,
+  //         order_status: statusValue
+  //       }));
         
-        toast.success(res.message || "Status Updated successfully!");
-      } else {
-        toast.error(res.message || "Server Error!");
-      }
-    } catch (err) {
-      console.error("Status update failed", err);
-    }
-  };
+  //       toast.success(res.message || "Status Updated successfully!");
+  //     } else {
+  //       toast.error(res.message || "Server Error!");
+  //     }
+  //   } catch (err) {
+  //     console.error("Status update failed", err);
+  //   }
+  // };
 
   // const saveCancelReason = async () => {
   //   if (!cancelReason.trim()) {
@@ -1005,6 +1013,97 @@ const confirmDelete = async () => {
 
   
 // In the saveCancelReason function, add date release logic
+// Update updateOrderStatus function
+// const updateOrderStatus = async (statusValue, isConfirmation = false) => {
+//   if (!statusValue || statusValue.trim() === "") return;
+
+//   try {
+//     const response = await fetch(`${baseUrl}/updateOrderStatus/${safeOrder._id}`, {
+//       method: 'PUT',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({
+//         cancel: false,
+//         status: statusValue,
+//         isConfirmation: isConfirmation // Flag for confirmation
+//       })
+//     });
+
+//     const res = await response.json();
+
+//     if (res?.status === true) {
+//       setIsOrderCancelled(statusValue === "Cancelled");
+//       setOrderData(prev => ({
+//         ...prev,
+//         order_status: statusValue,
+//         // If confirming, also update status to "Confirmed"
+//         ...(isConfirmation && { status: "Confirmed" })
+//       }));
+      
+//       // If confirming order, send confirmation notifications
+//       if (isConfirmation) {
+//         try {
+//           await fetch(`${baseUrl}/notifications/send-order-confirmation`, {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({
+//               orderId: safeOrder.orderId,
+//               client: safeOrder.client,
+//               orderDetails: safeOrder,
+//               confirmedBy: safeOrder.handled_by || "Admin",
+//               confirmedAt: new Date().toISOString()
+//             })
+//           });
+          
+//           toast.success("✅ Order confirmed! Dates are now locked and notifications sent.");
+//         } catch (notifyError) {
+//           console.error("Notification error:", notifyError);
+//           toast.success("✅ Order confirmed! (Notifications failed)");
+//         }
+//       } else {
+//         toast.success(res.message || "Status Updated successfully!");
+//       }
+//     } else {
+//       toast.error(res.message || "Server Error!");
+//     }
+//   } catch (err) {
+//     console.error("Status update failed", err);
+//   }
+// };
+
+
+const updateOrderStatus = async (statusValue, isConfirmation = false) => {
+  if (!statusValue || statusValue.trim() === "") return;
+
+  try {
+    const response = await fetch(`${baseUrl}/updateOrderStatus/${safeOrder._id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        cancel: false,
+        status: statusValue,
+        isConfirmation: isConfirmation
+      })
+    });
+
+    const res = await response.json();
+
+    if (res?.status === true) {
+      setIsOrderCancelled(statusValue === "Cancelled");
+      // ONLY update order_status, NOT the main status field
+      setOrderData(prev => ({
+        ...prev,
+        order_status: statusValue
+      }));
+      
+      toast.success(res.message || "Status Updated successfully!");
+    } else {
+      toast.error(res.message || "Server Error!");
+    }
+  } catch (err) {
+    console.error("Status update failed", err);
+  }
+};
+
 const saveCancelReason = async () => {
   if (!cancelReason.trim()) {
     toast.error("Please enter a cancel reason");
@@ -1845,7 +1944,179 @@ const saveCancelReason = async () => {
                 </div>
               </div>
             </div>
+          </div> 
+{/* 
+{safeOrder.order_status === 'pending' && (
+  <div className="confirm-order-section">
+    <button 
+      className="confirm-order-btn"
+      onClick={() => setShowConfirmDialog(true)}
+      disabled={!safeOrder.handled_by}
+    >
+      <i className="fas fa-check-circle"></i> Confirm Order
+    </button>
+    {!safeOrder.handled_by && (
+      <small className="confirm-order-hint">
+        Assign a handler first to confirm order
+      </small>
+    )}
+  </div>
+)}
+
+{showConfirmDialog && (
+  <div className="confirm-dialog-overlay">
+    <div className="confirm-dialog">
+      <h3>Confirm Order</h3>
+      <p>Are you sure you want to confirm order <strong>{safeOrder.orderId}</strong>?</p>
+      <p>This will:</p>
+      <ul>
+        <li>Change order status from Pending to Confirmed</li>
+        <li>Make booked dates unavailable for others</li>
+        <li>Send confirmation email to customer</li>
+        <li>Cannot be undone automatically</li>
+      </ul>
+      
+      <div className="confirm-dialog-buttons">
+        <button 
+          className="confirm-dialog-confirm"
+          onClick={confirmOrder}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Confirming...' : 'Yes, Confirm Order'}
+        </button>
+        <button 
+          className="confirm-dialog-cancel"
+          onClick={() => setShowConfirmDialog(false)}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)} */}
+
+
+
+
+<div className="order-confirmation-section">
+  {safeOrder.order_status === 'pending' && (
+    <>
+      <div className="order-queue-status">
+        <h4>Queue Status</h4>
+        <div className="queue-info">
+          <div className="queue-badge pending">
+            <i className="fas fa-clock"></i> PENDING CONFIRMATION
           </div>
+          <p>This order is in the queue. Dates are shown as orange to other users.</p>
+          <p>Confirming will make dates red (unavailable) for others.</p>
+        </div>
+      </div>
+      
+      <div className="confirm-order-action">
+        <button 
+          className="btn-confirm-order"
+          onClick={() => setShowConfirmDialog(true)}
+          disabled={!safeOrder.handled_by}
+        >
+          <i className="fas fa-check-circle"></i> Confirm Order
+        </button>
+        
+        {!safeOrder.handled_by && (
+          <small className="confirm-order-note">
+            Assign a handler first to confirm order
+          </small>
+        )}
+      </div>
+    </>
+  )}
+  
+  {safeOrder.order_status === 'confirmed' && (
+    <div className="order-confirmation-status">
+      <div className="confirmation-badge confirmed">
+        <i className="fas fa-check-circle"></i> CONFIRMED
+      </div>
+      <p>Confirmed by: {safeOrder.confirmed_by}</p>
+      <p>Confirmed on: {safeOrder.confirmed_at ? new Date(safeOrder.confirmed_at).toLocaleString('en-IN') : 'N/A'}</p>
+      {safeOrder.confirmation_notes && (
+        <p>Notes: {safeOrder.confirmation_notes}</p>
+      )}
+    </div>
+  )}
+</div>
+
+{showConfirmDialog && (
+  <div className="confirm-order-dialog-overlay">
+    <div className="confirm-order-dialog">
+      <div className="dialog-header">
+        <h3><i className="fas fa-check-circle"></i> Confirm Order</h3>
+        <button className="close-dialog" onClick={() => setShowConfirmDialog(false)}>
+          <i className="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div className="dialog-body">
+        <div className="confirmation-warning">
+          <i className="fas fa-exclamation-triangle"></i>
+          <p><strong>Warning:</strong> Confirming this order will:</p>
+        </div>
+        
+        <ul className="confirmation-effects">
+          <li><i className="fas fa-calendar-times"></i> Make booked dates <span className="red-text">RED</span> (unavailable) for others</li>
+          <li><i className="fas fa-envelope"></i> Send confirmation email to customer</li>
+          <li><i className="fas fa-lock"></i> Lock the dates for this customer</li>
+          <li><i className="fas fa-sync-alt"></i> Update all pending queue positions</li>
+          <li><i className="fas fa-undo"></i> Cannot be automatically undone</li>
+        </ul>
+        
+        <div className="order-summary">
+          <h5>Order Summary:</h5>
+          <p><strong>Order ID:</strong> {safeOrder.orderId}</p>
+          <p><strong>Customer:</strong> {safeOrder.client?.name}</p>
+          <p><strong>Total Amount:</strong> ₹{safeOrder.client?.totalAmount?.toLocaleString('en-IN')}</p>
+          <p><strong>Dates:</strong> {safeOrder.products?.length > 0 ? 
+            `${new Date(safeOrder.products[0].booking.startDate).toLocaleDateString('en-IN')} to ${new Date(safeOrder.products[0].booking.endDate).toLocaleDateString('en-IN')}` : 
+            'N/A'}</p>
+        </div>
+        
+        <div className="confirmation-notes">
+          <label htmlFor="confirmNotes">Add Notes (Optional):</label>
+          <textarea 
+            id="confirmNotes"
+            placeholder="Add any notes about this confirmation..."
+            value={confirmationNotes}
+            onChange={(e) => setConfirmationNotes(e.target.value)}
+            rows="3"
+          />
+        </div>
+      </div>
+      
+      <div className="dialog-footer">
+        <button 
+          className="btn-confirm"
+          onClick={handleConfirmOrder}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <>
+              <i className="fas fa-spinner fa-spin"></i> Confirming...
+            </>
+          ) : (
+            <>
+              <i className="fas fa-check"></i> Confirm Order
+            </>
+          )}
+        </button>
+        <button 
+          className="btn-cancel"
+          onClick={() => setShowConfirmDialog(false)}
+          disabled={isLoading}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
           
           <div className="admin-orderContent admin-totalPaidAmt">
             <div className="admin-orderContentLeft adminTotalAmt">

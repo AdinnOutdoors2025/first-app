@@ -688,22 +688,59 @@ const BillingDetails = () => {
     const navigate = useNavigate();
     // SELECTED ITEM SENT TO BILLING PAGE 
     const location = useLocation();
+
+
+
+
+
+    // Add this to BillingDetails.js before the form submit
+const [queueMessage, setQueueMessage] = useState('');
+const [hasQueueDates, setHasQueueDates] = useState(false);
+useEffect(() => {
+  if (location.state?.queueInfo) {
+    setQueueMessage(location.state.queueInfo.queueMessage);
+    setHasQueueDates(location.state.queueInfo.hasQueue);
+  }
+}, [location.state]);
+
+
+
+
     const { reserveItem } = location.state || {}; // Destructure from state
     // Only show error if coming from booking path
     if (location.pathname.includes('/billing') && !reserveItem) {
         return <div className="ReserveError">No reserved item found!</div>;
     }
-    const formatDateForStorage = (date) => {
-        if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
-            console.error("Invalid date:", date);
-            return null;
-        }
-        return new Date(Date.UTC(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate()
-        ));
-    };
+    // const formatDateForStorage = (date) => {
+    //     if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
+    //         console.error("Invalid date:", date);
+    //         return null;
+    //     }
+    //     return new Date(Date.UTC(
+    //         date.getFullYear(),
+    //         date.getMonth(),
+    //         date.getDate()
+    //     ));
+    // };
+  // Update the formatDateForStorage function
+const formatDateForStorage = (date) => {
+  if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
+    console.error("Invalid date:", date);
+    return null;
+  }
+  
+  try {
+    return new Date(Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    ));
+  } catch (error) {
+    console.error("Error formatting date for storage:", error);
+    return null;
+  }
+};
+  
     const generateUserOrderId = () => {
         const now = new Date();
         const year = now.getFullYear().toString().slice(-2);
@@ -712,19 +749,38 @@ const BillingDetails = () => {
         const randomNum = Math.floor(1000 + Math.random() * 9000);
         return `US${year}${month}${day}${randomNum}`;
     };
-    // Helper function to generate array of all dates in range
-    const getDateRangeArray = (start, end) => {
-        const dates = [];
-        const current = new Date(start);
-        const endDate = new Date(end);
+    // // Helper function to generate array of all dates in range
+    // const getDateRangeArray = (start, end) => {
+    //     const dates = [];
+    //     const current = new Date(start);
+    //     const endDate = new Date(end);
 
-        while (current <= endDate) {
-            dates.push(formatDateForStorage(new Date(current)));
-            current.setDate(current.getDate() + 1);
-        }
+    //     while (current <= endDate) {
+    //         dates.push(formatDateForStorage(new Date(current)));
+    //         current.setDate(current.getDate() + 1);
+    //     }
 
-        return dates;
-    };
+    //     return dates;
+    // };
+
+
+
+    // Update the getDateRangeArray function
+const getDateRangeArray = (start, end) => {
+  const dates = [];
+  const current = new Date(start);
+  const endDate = new Date(end);
+
+  while (current <= endDate) {
+    const formattedDate = formatDateForStorage(new Date(current));
+    if (formattedDate) {
+      dates.push(formattedDate);
+    }
+    current.setDate(current.getDate() + 1);
+  }
+
+  return dates;
+};
     
     // // UPDATED SMS FUNCTION - SIMPLIFIED
     // const sendOrderSMS = async (phone, orderId, customerName, amount) => {
@@ -808,184 +864,588 @@ const sendOrderSMS = async (phone, orderId, customerName, amount) => {
     const parsedSpotPay = parseAmount(reserveItem?.SpotPay || 0);
     
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!user) {
-            alert("Please login to complete your order");
-            return;
-        }
-        // Validate form first
-        if (!validateForm()) {
-            alert("Please fill in all required fields correctly");
-            return;
-        }
-        setIsLoading(true);
-        try {
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     if (!user) {
+    //         alert("Please login to complete your order");
+    //         return;
+    //     }
+    //     // Validate form first
+    //     if (!validateForm()) {
+    //         alert("Please fill in all required fields correctly");
+    //         return;
+    //     }
+    //     setIsLoading(true);
+    //     try {
 
-            if (!reserveItem?.startDate || !reserveItem?.endDate) {
-                throw new Error("Invalid date range in reservation");
-            }
-            // Use the Date objects stored in reserveItem
-            const startDate = new Date(reserveItem.startDate);
-            const endDate = new Date(reserveItem.endDate);
-            if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-                throw new Error("Invalid dates");
-            }
-            // Generate all dates in the range for booking
-            const bookedDates = getDateRangeArray(startDate, endDate);
-            // Generate order ID
-            const orderId = generateUserOrderId();
+    //         if (!reserveItem?.startDate || !reserveItem?.endDate) {
+    //             throw new Error("Invalid date range in reservation");
+    //         }
+    //         // Use the Date objects stored in reserveItem
+    //         const startDate = new Date(reserveItem.startDate);
+    //         const endDate = new Date(reserveItem.endDate);
+    //         if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+    //             throw new Error("Invalid dates");
+    //         }
+    //         // Generate all dates in the range for booking
+    //         const bookedDates = getDateRangeArray(startDate, endDate);
+    //         // Generate order ID
+    //         const orderId = generateUserOrderId();
             
-            // Prepare order data
-            const orderData = {
-                client: {
-                    userId: user._id, // Link order to user
-                    name: name,
-                    email: email,
-                    contact: phone,
-                    company: company,
-                    address: address,
-                    pincode: pincode,
-                    state: state,
-                    city: city,
-                },
-                products: [{
-                    id: reserveItem.id,
-                    prodCode: reserveItem.prodCode,
-                    name: reserveItem.prodName,
-                    image: reserveItem.image,
-                    price: parsedPrice,
-                    printingCost: parseAmount(reserveItem.PrintingCost || 0),
-                    mountingCost: parseAmount(reserveItem.MountingCost || 0),
-                    lighting: reserveItem.SpotOutdoorType || "Not Specified", 
-                    fixedAmount: parsedSpotPay, 
-                    fixedAmountOffer: parseAmount(reserveItem.Offer || 0),
-                    size: {
-                        width: parseAmount(reserveItem.sizeHeight || 0),
-                        height: parseAmount(reserveItem.sizeWidth || 0),
-                        squareFeet: parseAmount(reserveItem.dimension || 0)
-                    },
-                    fromLocation: reserveItem.FromSpot || "Not Specified", 
-                    toLocation: reserveItem.ToSpot || "Not Specified", 
-                    rating: reserveItem.rating || 0, 
-                    mediaType: reserveItem.adType || "Not Specified", 
-                    location: {
-                        state: reserveItem.state || "Not Specified", 
-                        district: reserveItem.district || "Not Specified" 
-                    },
-                    booking: {
-                        startDate: formatDateForStorage(startDate),
-                        endDate: formatDateForStorage(endDate),
-                        totalDays: reserveItem.totalDays,
-                        totalPrice: parsedTotalAmount
-                    },
-                    bookedDates: bookedDates,
-                }],
-                status: "UserSideOrder",
-                orderType: "single"
-            };
+    //         // Prepare order data
+    //         const orderData = {
+    //             client: {
+    //                 userId: user._id, // Link order to user
+    //                 name: name,
+    //                 email: email,
+    //                 contact: phone,
+    //                 company: company,
+    //                 address: address,
+    //                 pincode: pincode,
+    //                 state: state,
+    //                 city: city,
+    //             },
+    //             products: [{
+    //                 id: reserveItem.id,
+    //                 prodCode: reserveItem.prodCode,
+    //                 name: reserveItem.prodName,
+    //                 image: reserveItem.image,
+    //                 price: parsedPrice,
+    //                 printingCost: parseAmount(reserveItem.PrintingCost || 0),
+    //                 mountingCost: parseAmount(reserveItem.MountingCost || 0),
+    //                 lighting: reserveItem.SpotOutdoorType || "Not Specified", 
+    //                 fixedAmount: parsedSpotPay, 
+    //                 fixedAmountOffer: parseAmount(reserveItem.Offer || 0),
+    //                 size: {
+    //                     width: parseAmount(reserveItem.sizeHeight || 0),
+    //                     height: parseAmount(reserveItem.sizeWidth || 0),
+    //                     squareFeet: parseAmount(reserveItem.dimension || 0)
+    //                 },
+    //                 fromLocation: reserveItem.FromSpot || "Not Specified", 
+    //                 toLocation: reserveItem.ToSpot || "Not Specified", 
+    //                 rating: reserveItem.rating || 0, 
+    //                 mediaType: reserveItem.adType || "Not Specified", 
+    //                 location: {
+    //                     state: reserveItem.state || "Not Specified", 
+    //                     district: reserveItem.district || "Not Specified" 
+    //                 },
+    //                 booking: {
+    //                     startDate: formatDateForStorage(startDate),
+    //                     endDate: formatDateForStorage(endDate),
+    //                     totalDays: reserveItem.totalDays,
+    //                     totalPrice: parsedTotalAmount
+    //                 },
+    //                 bookedDates: bookedDates,
+    //             }],
+    //             status: "UserSideOrder",
+    //             orderType: "single"
+    //         };
 
-            // Save to database using fetch instead of axios
-            const response = await fetch(`${baseUrl}/prodOrders`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(orderData)
-            });
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Failed to save order');
-            }
-            const result = await response.json();
+    //         // Save to database using fetch instead of axios
+    //         const response = await fetch(`${baseUrl}/prodOrders`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(orderData)
+    //         });
+    //         if (!response.ok) {
+    //             const errorData = await response.json();
+    //             throw new Error(errorData.message || 'Failed to save order');
+    //         }
+    //         const result = await response.json();
             
-            // Send SMS to user only
-            try {
-                await sendOrderSMS(phone, result.orderId || result._id, name, parsedTotalAmount);
-            } catch (smsError) {
-                console.error("SMS sending error:", smsError);
-                // Don't fail the order if SMS fails
-            }
+    //         // Send SMS to user only
+    //         try {
+    //             await sendOrderSMS(phone, result.orderId || result._id, name, parsedTotalAmount);
+    //         } catch (smsError) {
+    //             console.error("SMS sending error:", smsError);
+    //             // Don't fail the order if SMS fails
+    //         }
             
-            // Send email confirmation
-            try {
-                const emailResponse = await fetch(
-                    `${baseUrl}/OrderReserve/send-order-confirmation`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        orderId: result.orderId || result._id,
-                        userName: name,
-                        userEmail: email,
-                        userPhone: phone,
-                        userAddress: `${address}, ${city}, ${state} - ${pincode}`,
-                        company,
-                        products: [{
-                            id: reserveItem.id,
-                            prodCode: reserveItem.prodCode,
-                            name: reserveItem.prodName,
-                            image: reserveItem.image,
-                            price: parsedPrice,
-                            booking: {
-                                startDate: reserveItem.startDate,
-                                endDate: reserveItem.endDate,
-                                totalDays: reserveItem.totalDays,
-                                totalPrice: parsedTotalAmount
-                            },
-                            fromLocation: reserveItem.FromSpot,
-                            toLocation: reserveItem.ToSpot,
-                            size: {
-                                width: reserveItem.sizeWidth,
-                                height: reserveItem.sizeHeight,
-                                squareFeet: reserveItem.dimension
-                            }
-                        }],
-                        orderDate: new Date().toLocaleDateString(),
-                        totalAmount: parsedTotalAmount
-                    })
-                });
+    //         // Send email confirmation
+    //         try {
+    //             const emailResponse = await fetch(
+    //                 `${baseUrl}/OrderReserve/send-order-confirmation`, {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //                 body: JSON.stringify({
+    //                     orderId: result.orderId || result._id,
+    //                     userName: name,
+    //                     userEmail: email,
+    //                     userPhone: phone,
+    //                     userAddress: `${address}, ${city}, ${state} - ${pincode}`,
+    //                     company,
+    //                     products: [{
+    //                         id: reserveItem.id,
+    //                         prodCode: reserveItem.prodCode,
+    //                         name: reserveItem.prodName,
+    //                         image: reserveItem.image,
+    //                         price: parsedPrice,
+    //                         booking: {
+    //                             startDate: reserveItem.startDate,
+    //                             endDate: reserveItem.endDate,
+    //                             totalDays: reserveItem.totalDays,
+    //                             totalPrice: parsedTotalAmount
+    //                         },
+    //                         fromLocation: reserveItem.FromSpot,
+    //                         toLocation: reserveItem.ToSpot,
+    //                         size: {
+    //                             width: reserveItem.sizeWidth,
+    //                             height: reserveItem.sizeHeight,
+    //                             squareFeet: reserveItem.dimension
+    //                         }
+    //                     }],
+    //                     orderDate: new Date().toLocaleDateString(),
+    //                     totalAmount: parsedTotalAmount
+    //                 })
+    //             });
 
-                if (!emailResponse.ok) {
-                    const errorData = await emailResponse.json();
-                    console.error("Failed to send order confirmation email:", errorData);
-                }
-            } catch (emailError) {
-                console.error("Email sending error:", emailError);
-            }
+    //             if (!emailResponse.ok) {
+    //                 const errorData = await emailResponse.json();
+    //                 console.error("Failed to send order confirmation email:", errorData);
+    //             }
+    //         } catch (emailError) {
+    //             console.error("Email sending error:", emailError);
+    //         }
 
-            navigate("/thankyou1", {
-                state: {
-                    billingInfo: {
-                        name,
-                        email,
-                        phone,
-                        pincode,
-                        state,
-                        city,
-                        address,
-                        company,
-                    }, reserveItem,
-                    orderId: result.orderId || result._id
-                }
-            });
-        }
-        catch (error) {
-            console.error("Order submission error:", error);
-            alert(`Error: ${error.message || "Failed to submit order"}`);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+    //         navigate("/thankyou1", {
+    //             state: {
+    //                 billingInfo: {
+    //                     name,
+    //                     email,
+    //                     phone,
+    //                     pincode,
+    //                     state,
+    //                     city,
+    //                     address,
+    //                     company,
+    //                 }, reserveItem,
+    //                 orderId: result.orderId || result._id
+    //             }
+    //         });
+    //     }
+    //     catch (error) {
+    //         console.error("Order submission error:", error);
+    //         alert(`Error: ${error.message || "Failed to submit order"}`);
+    //     } finally {
+    //         setIsLoading(false);
+    //     }
+    // };
 
     // Ensure the amount is properly parsed
+   
+   // Update the handleSubmit function in BillingDetails.js
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   if (!user) {
+//     alert("Please login to complete your order");
+//     return;
+//   }
+  
+//   // Validate form first
+//   if (!validateForm()) {
+//     alert("Please fill in all required fields correctly");
+//     return;
+//   }
+  
+//   setIsLoading(true);
+//   try {
+//     if (!reserveItem?.startDate || !reserveItem?.endDate) {
+//       throw new Error("Invalid date range in reservation");
+//     }
+    
+//     // Use the Date objects stored in reserveItem
+//     const startDate = new Date(reserveItem.startDate);
+//     const endDate = new Date(reserveItem.endDate);
+//     if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+//       throw new Error("Invalid dates");
+//     }
+    
+//     // Generate all dates in the range for booking
+//     const bookedDates = getDateRangeArray(startDate, endDate);
+    
+//     // Generate order ID
+//     const orderId = generateUserOrderId();
+    
+//     // Calculate if there are pending dates in selection
+//     const pendingCount = reserveItem.pendingDatesCount || 0;
+    
+//     // Prepare order data with CORRECT order_status
+//     const orderData = {
+//       client: {
+//         userId: user._id,
+//         name: name,
+//         email: email,
+//         contact: phone,
+//         company: company,
+//         address: address,
+//         pincode: pincode,
+//         state: state,
+//         city: city,
+//       },
+//       products: [{
+//         id: reserveItem.id,
+//         prodCode: reserveItem.prodCode,
+//         name: reserveItem.prodName,
+//         image: reserveItem.image,
+//         price: parsedPrice,
+//         printingCost: parseAmount(reserveItem.PrintingCost || 0),
+//         mountingCost: parseAmount(reserveItem.MountingCost || 0),
+//         lighting: reserveItem.SpotOutdoorType || "Not Specified", 
+//         fixedAmount: parsedSpotPay, 
+//         fixedAmountOffer: parseAmount(reserveItem.Offer || 0),
+//         size: {
+//           width: parseAmount(reserveItem.sizeWidth || 0),
+//           height: parseAmount(reserveItem.sizeHeight || 0), // Fixed: was using sizeHeight for width
+//           squareFeet: parseAmount(reserveItem.dimension || 0)
+//         },
+//         fromLocation: reserveItem.FromSpot || "Not Specified", 
+//         toLocation: reserveItem.ToSpot || "Not Specified", 
+//         rating: reserveItem.rating || 0, 
+//         mediaType: reserveItem.adType || "Not Specified", 
+//         location: {
+//           state: reserveItem.state || "Not Specified", 
+//           district: reserveItem.district || "Not Specified" 
+//         },
+//         booking: {
+//           startDate: formatDateForStorage(startDate),
+//           endDate: formatDateForStorage(endDate),
+//           totalDays: reserveItem.totalDays,
+//           totalPrice: parsedTotalAmount
+//         },
+//         bookedDates: bookedDates,
+//       }],
+//       status: "UserSideOrder",
+//       order_status: pendingCount > 0 ? "pending" : "confirmed", // Set proper order_status
+//       orderType: "single"
+//     };
+
+//     console.log("📤 Submitting order:", {
+//       orderId: orderId,
+//       status: orderData.status,
+//       order_status: orderData.order_status,
+//       totalAmount: parsedTotalAmount
+//     });
+
+//     // Save to database
+//     const response = await fetch(`${baseUrl}/prodOrders`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(orderData)
+//     });
+    
+//     const result = await response.json();
+    
+//     if (!response.ok) {
+//       console.error("Order creation failed:", result);
+//       throw new Error(result.message || 'Failed to save order');
+//     }
+    
+//     console.log("✅ Order created successfully:", result);
+    
+//     // Send SMS to user only
+//     try {
+//       await sendOrderSMS(phone, result.orderId || result._id, name, parsedTotalAmount);
+//     } catch (smsError) {
+//       console.error("SMS sending error:", smsError);
+//       // Don't fail the order if SMS fails
+//     }
+    
+//     // Send email confirmation
+//     try {
+//       const emailResponse = await fetch(
+//         `${baseUrl}/OrderReserve/send-order-confirmation`, {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//           orderId: result.orderId || result._id,
+//           userName: name,
+//           userEmail: email,
+//           userPhone: phone,
+//           userAddress: `${address}, ${city}, ${state} - ${pincode}`,
+//           company,
+//           products: [{
+//             id: reserveItem.id,
+//             prodCode: reserveItem.prodCode,
+//             name: reserveItem.prodName,
+//             image: reserveItem.image,
+//             price: parsedPrice,
+//             booking: {
+//               startDate: reserveItem.startDate,
+//               endDate: reserveItem.endDate,
+//               totalDays: reserveItem.totalDays,
+//               totalPrice: parsedTotalAmount
+//             },
+//             fromLocation: reserveItem.FromSpot,
+//             toLocation: reserveItem.ToSpot,
+//             size: {
+//               width: reserveItem.sizeWidth,
+//               height: reserveItem.sizeHeight,
+//               squareFeet: reserveItem.dimension
+//             }
+//           }],
+//           orderDate: new Date().toLocaleDateString(),
+//           totalAmount: parsedTotalAmount,
+//           orderStatus: result.order_status || "pending"
+//         })
+//       });
+
+//       if (!emailResponse.ok) {
+//         const errorData = await emailResponse.json();
+//         console.error("Failed to send order confirmation email:", errorData);
+//       }
+//     } catch (emailError) {
+//       console.error("Email sending error:", emailError);
+//     }
+
+//     // Navigate to thank you page
+//     navigate("/thankyou1", {
+//       state: {
+//         billingInfo: {
+//           name,
+//           email,
+//           phone,
+//           pincode,
+//           state,
+//           city,
+//           address,
+//           company,
+//         },
+//         reserveItem,
+//         orderId: result.orderId || result._id,
+//         orderStatus: result.order_status || "pending"
+//       }
+//     });
+//   } catch (error) {
+//     console.error("❌ Order submission error:", error);
+//     alert(`Error: ${error.message || "Failed to submit order"}`);
+//   } finally {
+//     setIsLoading(false);
+//   }
+// }; 
+
+
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!user) {
+    alert("Please login to complete your order");
+    return;
+  }
+  
+  // Validate form first
+  if (!validateForm()) {
+    alert("Please fill in all required fields correctly");
+    return;
+  }
+  
+  setIsLoading(true);
+  
+  try {
+    // Detailed console logging
+    console.log("=== ORDER SUBMISSION START ===");
+    console.log("User:", user);
+    console.log("Reserve Item:", reserveItem);
+    console.log("Billing Info:", {
+                name, email, phone, pincode, state, city, address, company
+    });
+    
+    // Validate dates
+    if (!reserveItem?.startDate || !reserveItem?.endDate) {
+      throw new Error("Invalid date range in reservation");
+    }
+    
+    const startDate = new Date(reserveItem.startDate);
+    const endDate = new Date(reserveItem.endDate);
+    
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      throw new Error("Invalid dates");
+    }
+    
+    // Generate dates and log them
+    const bookedDates = getDateRangeArray(startDate, endDate);
+    console.log("Booked Dates Array:", bookedDates.map(d => d.toISOString()));
+    
+    const orderId = generateUserOrderId();
+    console.log("Generated Order ID:", orderId);
+    
+    // Prepare order payload
+    const orderData = {
+      client: {
+        userId: user._id,
+        name: name,
+        email: email,
+        contact: phone,
+        company: company,
+        address: address,
+        pincode: pincode,
+        state: state,
+        city: city,
+      },
+      products: [{
+        id: reserveItem.id,
+        prodCode: reserveItem.prodCode,
+        name: reserveItem.prodName,
+        image: reserveItem.image,
+        price: parsedPrice,
+        printingCost: parseAmount(reserveItem.PrintingCost || 0),
+        mountingCost: parseAmount(reserveItem.MountingCost || 0),
+        lighting: reserveItem.SpotOutdoorType || "Not Specified",
+        fixedAmount: parsedSpotPay,
+        fixedAmountOffer: parseAmount(reserveItem.Offer || 0),
+        size: {
+          width: parseAmount(reserveItem.sizeWidth || 0),
+          height: parseAmount(reserveItem.sizeHeight || 0),
+          squareFeet: parseAmount(reserveItem.dimension || 0)
+        },
+        fromLocation: reserveItem.FromSpot || "Not Specified",
+        toLocation: reserveItem.ToSpot || "Not Specified",
+        rating: reserveItem.rating || 0,
+        mediaType: reserveItem.adType || "Not Specified",
+        location: {
+          state: reserveItem.state || "Not Specified",
+          district: reserveItem.district || "Not Specified"
+        },
+        booking: {
+          startDate: formatDateForStorage(startDate),
+          endDate: formatDateForStorage(endDate),
+          totalDays: reserveItem.totalDays,
+          totalPrice: parsedTotalAmount
+        },
+        bookedDates: bookedDates,
+      }],
+      status: "UserSideOrder",
+      // order_status: reserveItem.pendingDatesCount > 0 ? "pending" : "confirmed",
+      order_status: "Pending Client Confirmation",
+      orderType: "single"
+    };
+    
+    console.log("Order Payload:", JSON.stringify(orderData, null, 2));
+    console.log("=== ORDER SUBMISSION PAYLOAD END ===");
+    
+    // Send to server
+    const response = await fetch(`${baseUrl}/prodOrders`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(orderData)
+    });
+    
+    console.log("Response Status:", response.status);
+    const result = await response.json();
+    console.log("Server Response:", result);
+
+    console.log('ORDER DATA FOR SUBMISSIION IN RESERVER A PRODUCT:', orderData);                   
+    
+    if (!response.ok) {
+      throw new Error(result.message || 'Failed to save order');
+    }
+     console.log("✅ Order created successfully:", result);
+    
+    // Send SMS to user only
+    try {
+      await sendOrderSMS(phone, result.orderId || result._id, name, parsedTotalAmount);
+    } catch (smsError) {
+      console.error("SMS sending error:", smsError);
+      // Don't fail the order if SMS fails
+    }
+    
+    // Send email confirmation
+    try {
+      const emailResponse = await fetch(
+        `${baseUrl}/OrderReserve/send-order-confirmation`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          orderId: result.orderId || result._id,
+          userName: name,
+          userEmail: email,
+          userPhone: phone,
+          userAddress: `${address}, ${city}, ${state} - ${pincode}`,
+          company,
+          products: [{
+            id: reserveItem.id,
+            prodCode: reserveItem.prodCode,
+            name: reserveItem.prodName,
+            image: reserveItem.image,
+            price: parsedPrice,
+            booking: {
+              startDate: reserveItem.startDate,
+              endDate: reserveItem.endDate,
+              totalDays: reserveItem.totalDays,
+              totalPrice: parsedTotalAmount
+            },
+            fromLocation: reserveItem.FromSpot,
+            toLocation: reserveItem.ToSpot,
+            size: {
+              width: reserveItem.sizeWidth,
+              height: reserveItem.sizeHeight,
+              squareFeet: reserveItem.dimension
+            }
+          }],
+          orderDate: new Date().toLocaleDateString(),
+          totalAmount: parsedTotalAmount,
+          // orderStatus: result.order_status || "pending"
+        })
+      });
+
+      if (!emailResponse.ok) {
+        const errorData = await emailResponse.json();
+        console.error("Failed to send order confirmation email:", errorData);
+      }
+    } catch (emailError) {
+      console.error("Email sending error:", emailError);
+    }
+
+    // Navigate to thank you page
+    navigate("/thankyou1", {
+      state: {
+        billingInfo: {
+          name,
+          email,
+          phone,
+          pincode,
+          state,
+          city,
+          address,
+          company,
+        },
+        reserveItem,
+        orderId: result.orderId || result._id,
+        orderStatus: result.order_status || "Pending Client Confirmation"
+      }
+    });
+
+  } catch (error) {
+    console.error("❌ Order submission error:", error);
+    alert(`Error: ${error.message || "Failed to submit order"}`);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
     const safePrice = typeof reserveItem?.price === 'string' 
         ? parseFloat(reserveItem.price.replace(/[^0-9.]/g, '')) 
         : reserveItem?.price || 0;
     const safeTotalAmount = typeof reserveItem?.totalAmount === 'string' 
         ? parseFloat(reserveItem.totalAmount.replace(/[^0-9.]/g, '')) 
         : reserveItem?.totalAmount || 0;
+
+
+
+        //RAC CONCEPTS 
+
 
     return (
         <MainLayout>
@@ -1235,6 +1695,29 @@ const sendOrderSMS = async (phone, orderId, customerName, amount) => {
                             </div>
                         </form>
                     </div>
+
+
+{hasQueueDates && (
+  <div className="queue-alert-billing">
+    <div className="queue-alert-header">
+      <i className="fas fa-clock"></i>
+      <h5>Queue Information</h5>
+    </div>
+    <div className="queue-alert-body">
+      <p>{queueMessage}</p>
+      <div className="queue-tips">
+        <strong>How the queue works:</strong>
+        <ul>
+          <li>Your booking will be in "Pending" status (orange dates)</li>
+          <li>Admin will review and confirm your booking</li>
+          <li>Once confirmed, dates turn red and are locked</li>
+          <li>If pending orders ahead of you get cancelled, you move up</li>
+          <li>You'll receive email updates on queue status</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+)}
                 </div>
                 <MainFooter />
             </div>
