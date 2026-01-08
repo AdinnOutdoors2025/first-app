@@ -121,14 +121,14 @@ function NavbarMain() {
                     <span className='book-btn-text' >Book a site</span>
                     <img src="/images/BookBtn_logo.png" alt="Image" className="book-btn-image" width="45" height="25" />
                 </button>
-                <i className="fa-solid fa-cart-shopping cart"
+                {/* <i className="fa-solid fa-cart-shopping cart"
                     onClick={() => {
                         if (user) {
                             navigate("/cart");
                         } else {
                             openLogin('login', '/cart'); // Show login popup, redirect to cart after
                         }
-                    }}></i>
+                    }}></i> */}
                 {cartCount > 0 && <p className='cart-number'>{cartCount}</p>}
                 <div className="nav_container">
                     <img src="/images/nav_user.png" alt="User Icon" className='nav_user' onMouseEnter={toggleNavOpen}
@@ -138,7 +138,13 @@ function NavbarMain() {
                             user ? (
                                 //Afer Login Content
                                 <>
-                                    <span className='nav_user_name'>Hello {user.userName}</span> <br></br>
+                                    {user?.userName && (
+                                    <>
+                                        <span className="nav_user_name">Hello {user.userName}</span>
+                                        <br />
+                                    </>
+                                    )}
+                                    {/* <span className='nav_user_name'>Hello {user.userName}</span> <br></br> */}
                                     <span className='nav_user_phone'>{user.userPhone}</span> <br></br>
                                     <span className='nav_user_items' onClick={() => navigate("/order")}>Orders</span> <br></br>
                                     <span className='nav_user_items' onClick={logoutUser}>Sign Out</span> <br></br>

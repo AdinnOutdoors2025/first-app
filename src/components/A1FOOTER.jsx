@@ -191,7 +191,7 @@ function FooterMain() {
                         <div className="copy2"></div>
                         <div className="copy22">Terms</div>
                         <div className="copy3"></div>
-                        <div className="copy33">Policy & Privacy</div>
+                        <div className="copy33">Privacy & Policy</div>
                         <div className="copy4"></div>
                     </div>
                 </div>

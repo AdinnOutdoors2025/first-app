@@ -130,7 +130,7 @@ function MainNavbarHero() {
                     <img src="/images/BookBtn_logo.png" alt="Book Button" className="book-btn-imageHero" width="45" height="25" />
                 </button>
 
-                <i className="fa-solid fa-cart-shopping cartHero"
+                {/* <i className="fa-solid fa-cart-shopping cartHero"
                     // onClick={() => navigate("/cart")}
                     onClick={() => {
                         if (user) {
@@ -138,7 +138,7 @@ function MainNavbarHero() {
                         } else {
                             openLogin('login', '/cart'); // Show login popup, redirect to cart after
                         }
-                    }}></i>
+                    }}></i> */}
                 {cartCount > 0 && <p className='cart-numberHero'>{cartCount}</p>}
 
                 <div className="nav_containerHero">
@@ -155,7 +155,7 @@ function MainNavbarHero() {
                             </>
                         ) : (
                             <>
-                                <span className='nav_user_nameHero'>Hello User</span> <br />
+                                {/* <span className='nav_user_nameHero'>Hello User</span> <br /> */}
                                 <span className='nav_user_itemsHero' onClick={() => openLogin('signup')}>Sign Up</span> <br />
                                 <span className='nav_user_itemsHero' onClick={() => openLogin('login')}>Log In</span> <br />
                             </>
