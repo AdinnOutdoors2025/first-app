@@ -154,134 +154,289 @@ const Calendar = ({ closeCalendar, selectedDates, generateMonth, handleDateClick
 
 
             {/* ADDED: Error message display above calendar */}
-            {/* {calendarErrorMessage && (
+            {calendarErrorMessage && (
                                             <div className="calendar-error-message">
                                                 <div className="error-icon">⚠️</div>
                                                 <div className="error-text">{calendarErrorMessage}</div>
                                             </div>
-                                        )} */}
+                                        )}
           </>
         ) : (
           // Large Screen Layout: Legend + 2 Months side by side
-          <div className="large-calendar-layout">
-            {/* Legend Section */}
-            <div className="calendar-legend">
-              <div className="calenderLegendContentsMain">
-                <i className="fa-solid fa-circle dot-booked"></i>
-                <span> Booked Dates</span> <br />
-                <i className="fa-solid fa-circle dot-available"></i>
-                <span> Available Dates</span> <br />
-                <i className="fa-solid fa-circle dot-pending"></i>
-                <span> Pendings </span>
-                <br />
-              </div>
-              {/* <span> Start Date: {selectedDates.start ? selectedDates.start.getMonthYear() : "--"}</span> <br /> */}
-              <div className="calendarStartEndMain" >
-                <div>
-                  <span>
-                    Start Date: <span style={{ color: 'red' }}>
-                      {selectedDates.start
-                        ? `${selectedDates.start.toLocaleString("en-US", { month: "short" })} ${selectedDates.start.getDate()}`
-                        : "--"}
-                    </span>
-                  </span> <br></br>
-                </div>
-                <div>
-                  ---
-                </div>
+          // <div className="large-calendar-layout">
+          //   {/* Legend Section */}
+          //   <div className="calendar-legend">
+          //     <div className="calenderLegendContentsMain">
+          //       <i className="fa-solid fa-circle dot-booked"></i>
+          //       <span> Booked Dates</span> <br />
+          //       <i className="fa-solid fa-circle dot-available"></i>
+          //       <span> Available Dates</span> <br />
+          //       <i className="fa-solid fa-circle dot-pending"></i>
+          //       <span> Pendings </span>
+          //       <br />
+          //     </div>
+          //     {/* <span> Start Date: {selectedDates.start ? selectedDates.start.getMonthYear() : "--"}</span> <br /> */}
+          //     <div className="calendarStartEndMain" >
+          //       <div>
+          //         <span>
+          //           Start Date: <span style={{ color: 'red' }}>
+          //             {selectedDates.start
+          //               ? `${selectedDates.start.toLocaleString("en-US", { month: "short" })} ${selectedDates.start.getDate()}`
+          //               : "--"}
+          //           </span>
+          //         </span> <br></br>
+          //       </div>
+          //       <div>
+          //         ---
+          //       </div>
 
 
-                <div>
-                  <span>
-                    End Date: <span style={{ color: 'red' }}>
-                      {selectedDates.end
-                        ? `${selectedDates.end.toLocaleString("en-US", { month: "short" })} ${selectedDates.end.getDate()}`
-                        : "--"}
-                    </span>
-                  </span>
-                </div>
+          //       <div>
+          //         <span>
+          //           End Date: <span style={{ color: 'red' }}>
+          //             {selectedDates.end
+          //               ? `${selectedDates.end.toLocaleString("en-US", { month: "short" })} ${selectedDates.end.getDate()}`
+          //               : "--"}
+          //           </span>
+          //         </span>
+          //       </div>
 
-              </div>
-              <div className="calendarAmountMain">
-                <span>
-                  {/* Amount: <span style={{ color: 'red' }}>₹{totalPrice.toLocaleString()}</span> */}
-                    Amount: <span style={{ color: 'red' }}>{formatIndianCurrency(totalPrice, true)}</span>
+          //     </div>
+          //     <div className="calendarAmountMain">
+          //       <span>
+          //         {/* Amount: <span style={{ color: 'red' }}>₹{totalPrice.toLocaleString()}</span> */}
+          //           Amount: <span style={{ color: 'red' }}>{formatIndianCurrency(totalPrice, true)}</span>
 
-                </span>
-                <br />
-                {/* <span> End Date: {selectedDates.end ? selectedDates.end.toDateString() : "--"}</span> <br /> */}
-                <br />
-              </div> 
+          //       </span>
+          //       <br />
+          //       {/* <span> End Date: {selectedDates.end ? selectedDates.end.toDateString() : "--"}</span> <br /> */}
+          //       <br />
+          //     </div> 
   
 
 
-              <div className="calendarBtnsResetConfirm">
-                <button className="confirm-button" onClick={confirmDates}>Reserve Slot</button>
-                <button className="reset-button" onClick={resetDates}>
-                  Reset Date
-                </button>
-              </div>  
+          //     <div className="calendarBtnsResetConfirm">
+          //       <button className="confirm-button" onClick={confirmDates}>Reserve Slot</button>
+          //       <button className="reset-button" onClick={resetDates}>
+          //         Reset Date
+          //       </button>
+          //     </div>  
 
 
 
-              <div className="calendarPendingNoteMain">
-                <div className="calendarPendingAsh">
-                  <img src='/images/CalenderPendingAsh.svg' className="calendarPendingAsh"></img>
-                </div>
-                <div className="calendarPendingContents" ><i className="fa-solid fa-circle dot-pending"></i></div>
-                <div className="calendarPendingContents">indicates a reserved date. If the booking isn’t confirmed, the slot will pass to the next request.</div>
-              </div> 
+          //     <div className="calendarPendingNoteMain">
+          //       <div className="calendarPendingAsh">
+          //         <img src='/images/CalenderPendingAsh.svg' className="calendarPendingAsh"></img>
+          //       </div>
+          //       <div className="calendarPendingContents" ><i className="fa-solid fa-circle dot-pending"></i></div>
+          //       <div className="calendarPendingContents">indicates a reserved date. If the booking isn’t confirmed, the slot will pass to the next request.</div>
+          //     </div> 
 
-            </div>
+          //   </div>
 
-            {/* Calendar Grid for 2 months */} 
+          //   {/* Calendar Grid for 2 months */} 
 
-            {[0, 1].map((offset) => {
-              const monthToRender = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + offset);
-              return (
-                <div key={offset} className="calendar-grid">
-                  <div className="day">Sun</div>
-                  <div className="day">Mon</div>
-                  <div className="day">Tue</div>
-                  <div className="day">Wed</div>
-                  <div className="day">Thu</div>
-                  <div className="day">Fri</div>
-                  <div className="day">Sat</div>
-                  {/* <div className="day">Sun</div> */}
-                  {generateMonth(monthToRender).map((date, index) => (
-                    <div
-                      key={index}
-                      className={`date ${date
-                        ? bookedDates.some((d) => d.getTime() === date.getTime())
-                          ? "booked"
-                          : getDateSelectionClass(date)
-                        // ? "selected-date"
-                        // : "available-date"
-                        : ""
-                        }`}
-                      onClick={() => handleDateClick(date)}
-                      style={{ pointerEvents: bookedDates.some((d) => d.getTime() === date?.getTime()) ? "none" : "auto" }}
-                    >
-                      {date ? date.getDate() : ""}
-                    </div>
-                  ))}
-                </div>
-              );
-            })}
+          //   {[0, 1].map((offset) => {
+          //     const monthToRender = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + offset);
+          //     return (
+          //       <div key={offset} className="calendar-grid">
+          //         <div className="day">Sun</div>
+          //         <div className="day">Mon</div>
+          //         <div className="day">Tue</div>
+          //         <div className="day">Wed</div>
+          //         <div className="day">Thu</div>
+          //         <div className="day">Fri</div>
+          //         <div className="day">Sat</div>
+          //         {/* <div className="day">Sun</div> */}
+          //         {generateMonth(monthToRender).map((date, index) => (
+          //           <div
+          //             key={index}
+          //             className={`date ${date
+          //               ? bookedDates.some((d) => d.getTime() === date.getTime())
+          //                 ? "booked"
+          //                 : getDateSelectionClass(date)
+          //               // ? "selected-date"
+          //               // : "available-date"
+          //               : ""
+          //               }`}
+          //             onClick={() => handleDateClick(date)}
+          //             style={{ pointerEvents: bookedDates.some((d) => d.getTime() === date?.getTime()) ? "none" : "auto" }}
+          //           >
+          //             {date ? date.getDate() : ""}
+          //           </div>
+          //         ))}
+          //       </div>
+          //     );
+          //   })}
         
+          // </div>
+          <div className="large-calendar-layout">
+
+    {/* LEFT COLUMN – 30% */}
+    <div className="calendar-left-column">
+      <div className="calendar-legend">
+
+        {/* --- EXISTING LEGEND CONTENT (UNCHANGED) --- */}
+        <div className="calenderLegendContentsMain">
+          <i className="fa-solid fa-circle dot-booked"></i>
+          <span> Booked Dates</span><br />
+          <i className="fa-solid fa-circle dot-available"></i>
+          <span> Available Dates</span><br />
+          <i className="fa-solid fa-circle dot-pending"></i>
+          <span> Pendings </span>
+        </div>
+
+        <div className="calendarStartEndMain">
+          <div>
+            Start Date:
+            <span style={{ color: "red" }}>
+              {selectedDates.start
+                ? ` ${selectedDates.start.toLocaleString("en-US", { month: "short" })} ${selectedDates.start.getDate()}`
+                : " --"}
+            </span>
           </div>
+          <div>---</div>
+          <div>
+            End Date:
+            <span style={{ color: "red" }}>
+              {selectedDates.end
+                ? ` ${selectedDates.end.toLocaleString("en-US", { month: "short" })} ${selectedDates.end.getDate()}`
+                : " --"}
+            </span>
+          </div>
+        </div>
+
+        <div className="calendarAmountMain">
+          Amount:
+          <span style={{ color: "red" }}>
+            {formatIndianCurrency(totalPrice, true)}
+          </span>
+        </div>
+
+        <div className="calendarBtnsResetConfirm">
+          <button className="confirm-button" onClick={confirmDates}>
+            Reserve Slot
+          </button>
+          <button className="reset-button" onClick={resetDates}>
+            Reset Date
+          </button>
+        </div>
+
+        <div className="calendarPendingNoteMain">
+          <img src="/images/CalenderPendingAsh.svg" />
+          <div>
+            <i className="fa-solid fa-circle dot-pending"></i>
+            indicates a reserved date. If the booking isn’t confirmed, the slot will pass to the next request.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    {/* RIGHT COLUMN – 70% */}
+    <div className="calendar-right-column">
+
+      {/* CALENDAR GRIDS */}
+      <div className="calendar-grids-row">
+        {[0, 1].map((offset) => {
+          const monthToRender = new Date(
+            currentMonth.getFullYear(),
+            currentMonth.getMonth() + offset
+          );
+
+          return (
+            <div key={offset} className="calendar-grid">
+              <div className="day">Sun</div>
+              <div className="day">Mon</div>
+              <div className="day">Tue</div>
+              <div className="day">Wed</div>
+              <div className="day">Thu</div>
+              <div className="day">Fri</div>
+              <div className="day">Sat</div>
+
+              {generateMonth(monthToRender).map((date, index) => (
+                <div
+                  key={index}
+                  className={`date ${
+                    date
+                      ? bookedDates.some((d) => d.getTime() === date.getTime())
+                        ? "booked"
+                        : getDateSelectionClass(date)
+                      : ""
+                  }`}
+                  onClick={() => handleDateClick(date)}
+                  style={{
+                    pointerEvents: bookedDates.some(
+                      (d) => d.getTime() === date?.getTime()
+                    )
+                      ? "none"
+                      : "auto",
+                  }}
+                >
+                  {date ? date.getDate() : ""}
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ERROR MESSAGE (INSIDE RIGHT COLUMN) */}
+      {calendarErrorMessage && (
+        <div className="calendar-error-message">
+          <img src="/images/CalendarAlertImg.svg" />
+          <div className="calendar_error-text">
+            Please select & confirm the
+            <span className="calendar-error-messageBold">
+              {" "}Start and End dates
+            </span>{" "}
+            to proceed.
+          </div>
+        </div>
+      )}
+
+    </div>
+  </div>
         )} 
-        <>
+        {/* <>
           {calendarErrorMessage && (
             <div className="calendar-error-message">
               <div className="calendarAlertIconMain" >
-                {/* ⚠️ */}
                 <img src='/images/CalendarAlertImg.svg' className="calendarAlertIcon"></img>
               </div>
               <div className="calendar_error-text">Please select & confirm the <span className="calendar-error-messageBold">Start and End dates</span> to proceed.</div>
             </div>
           )}
-        </>
+        </> */}
+        {/* <>
+  {calendarErrorMessage && (
+    <div className="calendar-two-column">
+      <div className="calendar-left-column"> */}
+        {/* Empty column */}
+      {/* </div>
+
+      <div className="calendar-right-column">
+        <div className="calendar-error-message">
+          <div className="calendarAlertIconMain">
+            <img
+              src="/images/CalendarAlertImg.svg"
+              className="calendarAlertIcon"
+              alt="alert"
+            />
+          </div>
+
+          <div className="calendar_error-text">
+            Please select &amp; confirm the
+            <span className="calendar-error-messageBold">
+              {" "}Start and End dates
+            </span>{" "}
+            to proceed.
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+</> */}
       </div>
     </div>
   );
