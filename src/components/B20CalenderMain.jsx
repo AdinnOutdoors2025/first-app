@@ -94,15 +94,15 @@
 //             <div className="calendar-legend">
 
 //               <div className="calendar-legend-responsive">
-//                 <div className=" calendar-legend-responsive-content1">
-//                   <i className="fa-solid fa-circle dot-booked"></i>
-//                   <span> Booked Dates</span> <br />
-//                   <i className="fa-solid fa-circle dot-available"></i>
-//                   <span> Available Dates</span> <br />
-//                   <i className="fa-solid fa-circle dot-pending"></i>
-//                   <span> Pendings </span> <br />
+                // <div className=" calendar-legend-responsive-content1">
+                //   <i className="fa-solid fa-circle dot-booked"></i>
+                //   <span> Booked Dates</span> <br />
+                //   <i className="fa-solid fa-circle dot-available"></i>
+                //   <span> Available Dates</span> <br />
+                //   <i className="fa-solid fa-circle dot-pending"></i>
+                //   <span> Pendings </span> <br />
 
-//                 </div>
+                // </div>
 //                 <div className="calendar-legend-responsive-content2">
 //                   <span>
 //                     Start Date: <span style={{ color: 'red' }}>
@@ -289,8 +289,7 @@
 
 // export default Calendar;
 
-
-// PERFECT CODE FOR DATE CONFLICT CHECK (1,2) AND DATE SELECTION UI 
+// Correctly selects the date selects and open window correctly works -previous
 import React, { useState, useEffect } from "react";
 import "./B20CalenderMain.css";
 import { formatIndianCurrency } from './FORMATED_AMOUNT';
@@ -304,8 +303,8 @@ const Calendar = ({
   getDateSelectionClass, 
   goToNextMonth, 
   goToPreviousMonth, 
-  confirmedDates = [], // Renamed from bookedDates
-  pendingDates = [],   // New prop for pending dates
+  confirmedDates = [],
+  pendingDates = [],
   currentMonth, 
   setCurrentMonth,
   pricePerDay, 
@@ -318,7 +317,14 @@ const Calendar = ({
   isDateBooked,
   isDatePending,
   showQueueInfo = false,
-  queuePosition = null
+  queuePosition = null,
+  isWindowExpanded = false,
+  currentWindowStart = null,
+  currentWindowEnd = null,
+  isSelectionConfirmed = false,
+  INITIAL_SELECTION_DAYS = 10,
+  AVAILABLE_WINDOW_DAYS = 180,
+  MIN_BOOKING_DAYS = 7
 }) => {
 
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 991);
@@ -333,51 +339,21 @@ const Calendar = ({
 
   // // Get custom class for date based on status
   // const getDateCustomClass = (date) => {
-  //   if (!date) return "";
-    
-  //   const baseClass = getDateSelectionClass(date);
-    
-  //   // Check if date is in selected range
-  //   if (selectedDates.start && selectedDates.end && date) {
-  //     const normalizedDate = new Date(Date.UTC(
-  //       date.getFullYear(),
-  //       date.getMonth(),
-  //       date.getDate()
-  //     ));
-      
-  //     const startUTC = selectedDates.start ? new Date(Date.UTC(
-  //       selectedDates.start.getFullYear(),
-  //       selectedDates.start.getMonth(),
-  //       selectedDates.start.getDate()
-  //     )) : null;
-
-  //     const endUTC = selectedDates.end ? new Date(Date.UTC(
-  //       selectedDates.end.getFullYear(),
-  //       selectedDates.end.getMonth(),
-  //       selectedDates.end.getDate()
-  //     )) : null;
-
-  //     if (startUTC && normalizedDate.getTime() === startUTC.getTime()) {
-  //       return "selected-start";
-  //     }
-  //     if (endUTC && normalizedDate.getTime() === endUTC.getTime()) {
-  //       return "selected-end";
-  //     }
-  //     if (startUTC && endUTC && normalizedDate > startUTC && normalizedDate < endUTC) {
-  //       return "selected-range";
-  //     }
-  //   }
-    
-  //   return baseClass;
-  // };
-
-
-  //  // Get custom class for date based on status
-  // const getDateCustomClass = (date) => {
   //   if (!date || isNaN(date.getTime())) return "";
     
   //   try {
   //     const baseClass = getDateSelectionClass(date);
+      
+  //     // For booked dates, always return "booked" (red)
+  //     if (baseClass === "booked") return "booked";
+      
+  //     // For outside window dates - check if date is outside current window
+  //     if (baseClass === "outside-window") {
+  //       return "outside-window";
+  //     }
+      
+  //     // For past dates
+  //     if (baseClass === "past") return "past";
       
   //     // Check if date is in selected range
   //     if (selectedDates.start && selectedDates.end && date) {
@@ -399,14 +375,17 @@ const Calendar = ({
   //         selectedDates.end.getDate()
   //       )) : null;
 
-  //       if (startUTC && normalizedDate.getTime() === startUTC.getTime()) {
-  //         return "selected-start";
-  //       }
-  //       if (endUTC && normalizedDate.getTime() === endUTC.getTime()) {
-  //         return "selected-end";
-  //       }
-  //       if (startUTC && endUTC && normalizedDate > startUTC && normalizedDate < endUTC) {
-  //         return "selected-range";
+  //       // Only apply selection styling if date is available
+  //       if (baseClass !== "booked" && baseClass !== "outside-window" && baseClass !== "past") {
+  //         if (startUTC && normalizedDate.getTime() === startUTC.getTime()) {
+  //           return "selected-start";
+  //         }
+  //         if (endUTC && normalizedDate.getTime() === endUTC.getTime()) {
+  //           return "selected-end";
+  //         }
+  //         if (startUTC && endUTC && normalizedDate > startUTC && normalizedDate < endUTC) {
+  //           return "selected-range";
+  //         }
   //       }
   //     }
       
@@ -417,56 +396,96 @@ const Calendar = ({
   //   }
   // };
 
-  // Get custom class for date based on status
+
+
+  // Update the getDateCustomClass function to handle confirmed state
 const getDateCustomClass = (date) => {
-  if (!date || isNaN(date.getTime())) return "";
-  
-  try {
-    const baseClass = getDateSelectionClass(date);
+    if (!date || isNaN(date.getTime())) return "";
     
-    // For booked dates, always return "booked" (red) - they should never show as selected
-    if (baseClass === "booked") return "booked";
-    
-    // Check if date is in selected range
-    if (selectedDates.start && selectedDates.end && date) {
-      const normalizedDate = new Date(Date.UTC(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate()
-      ));
-      
-      const startUTC = selectedDates.start ? new Date(Date.UTC(
-        selectedDates.start.getFullYear(),
-        selectedDates.start.getMonth(),
-        selectedDates.start.getDate()
-      )) : null;
+    try {
+        const baseClass = getDateSelectionClass(date);
+        
+        // For booked dates, always return "booked" (red)
+        if (baseClass === "booked") return "booked";
+        
+        // For confirmed state, show only selected range as available
+        if (isSelectionConfirmed && selectedDates.start && selectedDates.end) {
+            const normalizedDate = new Date(Date.UTC(
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate()
+            ));
+            
+            const startUTC = new Date(Date.UTC(
+                selectedDates.start.getFullYear(),
+                selectedDates.start.getMonth(),
+                selectedDates.start.getDate()
+            ));
+            
+            const endUTC = new Date(Date.UTC(
+                selectedDates.end.getFullYear(),
+                selectedDates.end.getMonth(),
+                selectedDates.end.getDate()
+            ));
+            
+            // Check if date is within selected range
+            const isInSelectedRange = normalizedDate >= startUTC && normalizedDate <= endUTC;
+            
+            if (!isInSelectedRange) {
+                return "outside-window";
+            }
+        }
+        
+        // For outside window dates
+        if (baseClass === "outside-window") {
+            return "outside-window";
+        }
+        
+        // For past dates
+        if (baseClass === "past") return "past";
+        
+        // Check if date is in selected range
+        if (selectedDates.start && selectedDates.end && date) {
+            const normalizedDate = new Date(Date.UTC(
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate()
+            ));
+            
+            const startUTC = selectedDates.start ? new Date(Date.UTC(
+                selectedDates.start.getFullYear(),
+                selectedDates.start.getMonth(),
+                selectedDates.start.getDate()
+            )) : null;
 
-      const endUTC = selectedDates.end ? new Date(Date.UTC(
-        selectedDates.end.getFullYear(),
-        selectedDates.end.getMonth(),
-        selectedDates.end.getDate()
-      )) : null;
+            const endUTC = selectedDates.end ? new Date(Date.UTC(
+                selectedDates.end.getFullYear(),
+                selectedDates.end.getMonth(),
+                selectedDates.end.getDate()
+            )) : null;
 
-      // Only apply selection styling if date is available (not booked)
-      if (baseClass !== "booked") {
-        if (startUTC && normalizedDate.getTime() === startUTC.getTime()) {
-          return "selected-start";
+            // Only apply selection styling if date is available
+            if (baseClass !== "booked" && baseClass !== "outside-window" && baseClass !== "past") {
+                if (startUTC && normalizedDate.getTime() === startUTC.getTime()) {
+                    return "selected-start";
+                }
+                if (endUTC && normalizedDate.getTime() === endUTC.getTime()) {
+                    return "selected-end";
+                }
+                if (startUTC && endUTC && normalizedDate > startUTC && normalizedDate < endUTC) {
+                    return "selected-range";
+                }
+            }
         }
-        if (endUTC && normalizedDate.getTime() === endUTC.getTime()) {
-          return "selected-end";
-        }
-        if (startUTC && endUTC && normalizedDate > startUTC && normalizedDate < endUTC) {
-          return "selected-range";
-        }
-      }
+        
+        return baseClass; 
+        console.log(baseClass)
+    } catch (error) {
+        console.warn("Error in getDateCustomClass:", error);
+        return "";
     }
-    
-    return baseClass;
-  } catch (error) {
-    console.warn("Error in getDateCustomClass:", error);
-    return "";
-  }
-};
+};   
+
 
   // Calculate total calendar days and available days for display
   const calculateDisplayInfo = () => {
@@ -494,6 +513,71 @@ const getDateCustomClass = (date) => {
   };
 
   const { calendarDays, availableDays, pendingInRange } = calculateDisplayInfo();
+
+  // // Get window info text
+  // const getWindowInfo = () => {
+  //   if (isSelectionConfirmed && selectedDates.start && selectedDates.end) {
+  //     return `Selected Range: ${selectedDates.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${selectedDates.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`;
+  //   } else if (isWindowExpanded) {
+  //     return `Available window: ${AVAILABLE_WINDOW_DAYS} days from today`;
+  //   } else {
+  //     return `Initial window: ${INITIAL_SELECTION_DAYS} days from today`;
+  //   }
+  // };
+
+  // // Get minimum days info
+  // const getMinimumDaysInfo = () => {
+  //   if (selectedDates.start && selectedDates.end) {
+  //     const days = Math.ceil(Math.abs(selectedDates.end - selectedDates.start) / (1000 * 60 * 60 * 24)) + 1;
+  //     if (days < MIN_BOOKING_DAYS) {
+  //       return `Minimum ${MIN_BOOKING_DAYS} days required (currently ${days} days)`;
+  //     }
+  //   }
+  //   return `Minimum booking: ${MIN_BOOKING_DAYS} days`;
+  // };
+
+// Update the getWindowInfo function
+const getWindowInfo = () => {
+    if (isSelectionConfirmed && selectedDates.start && selectedDates.end) {
+        return `✅ Confirmed Range: ${selectedDates.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${selectedDates.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`;
+    } else if (isWindowExpanded) {
+        return `Available window: ${AVAILABLE_WINDOW_DAYS} days from today`;
+    } else {
+        return `Initial window: ${INITIAL_SELECTION_DAYS} days from today`;
+    }
+};
+
+// // Update the getMinimumDaysInfo function
+// const getMinimumDaysInfo = () => {
+//     if (isSelectionConfirmed && selectedDates.start && selectedDates.end) {
+//         const days = Math.ceil(Math.abs(selectedDates.end - selectedDates.start) / (1000 * 60 * 60 * 24)) + 1;
+//         return `Confirmed booking: ${days} days`;
+//     } else if (selectedDates.start && selectedDates.end) {
+//         const days = Math.ceil(Math.abs(selectedDates.end - selectedDates.start) / (1000 * 60 * 60 * 24)) + 1;
+//         if (days < MIN_BOOKING_DAYS) {
+//             return `Minimum ${MIN_BOOKING_DAYS} days required (currently ${days} days)`;
+//         }
+//         return `Selected: ${days} days`;
+//     }
+//     return `Minimum booking: ${MIN_BOOKING_DAYS} days`;
+// }; 
+
+// Update the getMinimumDaysInfo function
+const getMinimumDaysInfo = () => {
+    if (isSelectionConfirmed && selectedDates.start && selectedDates.end) {
+        const days = Math.ceil(Math.abs(selectedDates.end - selectedDates.start) / (1000 * 60 * 60 * 24)) + 1;
+        return `Confirmed booking: ${days} days`;
+    } else if (selectedDates.start && selectedDates.end) {
+        const days = Math.ceil(Math.abs(selectedDates.end - selectedDates.start) / (1000 * 60 * 60 * 24)) + 1;
+        const availableDays = getAvailableDaysInRange ? getAvailableDaysInRange(selectedDates.start, selectedDates.end).length : days;
+        
+        if (availableDays < MIN_BOOKING_DAYS) {
+            return `Minimum ${MIN_BOOKING_DAYS} available days required (currently ${availableDays} available days)`;
+        }
+        return `Selected: ${days} calendar days (${availableDays} available days)`;
+    }
+    return `Minimum booking: ${MIN_BOOKING_DAYS} available days required`;
+};
 
   return (
     <div className={`calendar-container ${isSmallScreen ? 'scrollable' : ''}`}>
@@ -541,7 +625,7 @@ const getDateCustomClass = (date) => {
 
       <div className={`calendar-body ${isSmallScreen ? "small-screen-calendar" : "large-screen-calendar"}`}>
         {isSmallScreen ? (
-          <>
+          <> 
             <div className="calendar-grid">
               <div className="day">Sun</div>
               <div className="day">Mon</div>
@@ -554,9 +638,16 @@ const getDateCustomClass = (date) => {
                 <div
                   key={index}
                   className={`date ${getDateCustomClass(date)}`}
-                  onClick={() => handleDateClick(date)}
+                  onClick={() => {
+                    // Only allow clicks on dates that are not outside window or past
+                    const dateClass = getDateCustomClass(date);
+                    if (dateClass !== "outside-window" && dateClass !== "past") {
+                      handleDateClick(date);
+                    }
+                  }}
                   style={{ 
-                    pointerEvents: isDateBooked && date && isDateBooked(date) ? "none" : "auto"
+                    pointerEvents: getDateCustomClass(date) === "outside-window" || getDateCustomClass(date) === "past" ? "none" : "auto",
+                    cursor: getDateCustomClass(date) === "outside-window" || getDateCustomClass(date) === "past" ? "not-allowed" : "pointer"
                   }}
                 >
                   {date ? date.getDate() : ""}
@@ -571,11 +662,17 @@ const getDateCustomClass = (date) => {
               <div className="calendar-legend-responsive">
                 <div className=" calendar-legend-responsive-content1">
                   <i className="fa-solid fa-circle dot-booked"></i>
-                  <span> Confirmed Booked Dates</span> <br />
-                  <i className="fa-solid fa-circle" style={{color: 'orange', fontSize: '10px'}}></i>
-                  <span> Pending Reservations (Queue)</span> <br />
+                  <span> Booked Dates</span> <br />
                   <i className="fa-solid fa-circle dot-available"></i>
                   <span> Available Dates</span> <br />
+
+                  <i className="fa-solid fa-circle" style={{color: 'orange', fontSize: '10px'}}></i>
+                  <span> Pending </span> <br />
+                  
+                  {/* <i className="fa-solid fa-circle" style={{color: '#999', fontSize: '10px'}}></i>
+                  <span> Past Dates</span> <br />
+                  <i className="fa-solid fa-circle" style={{color: '#ccc', fontSize: '10px'}}></i>
+                  <span> Not Available Yet</span> <br /> */}
                   {showQueueInfo && queuePosition && (
                     <>
                       <i className="fa-solid fa-clock" style={{color: '#ff9800', fontSize: '10px'}}></i>
@@ -598,7 +695,7 @@ const getDateCustomClass = (date) => {
                         : "--"}
                     </span>
                   </span> <br />
-                  <span>
+                  {/* <span>
                     Calendar Days: <span style={{ color: 'blue' }}>
                       {calendarDays}
                     </span>
@@ -607,14 +704,14 @@ const getDateCustomClass = (date) => {
                     Available Days: <span style={{ color: 'green' }}>
                       {availableDays}
                     </span>
-                  </span><br />
-                  {pendingInRange > 0 && (
+                  </span><br /> */}
+                  {/* {pendingInRange > 0 && (
                     <span>
                       In Queue: <span style={{ color: 'orange', fontWeight: 'bold' }}>
                         {pendingInRange} date{pendingInRange > 1 ? 's' : ''}
                       </span>
                     </span>
-                  )}
+                  )} */}
                   <br />
                   <span>
                     Amount: <span style={{ color: 'red' }}>
@@ -622,11 +719,11 @@ const getDateCustomClass = (date) => {
                     </span>
                   </span>
                   <br />
-                  {pricePerDay > 0 && (
+                  {/* {pricePerDay > 0 && (
                     <small style={{ fontSize: '10px', color: '#666' }}>
                       ({availableDays} days × ₹{pricePerDay.toLocaleString()})
                     </small>
-                  )}
+                  )} */}
                 </div>
               </div>
 
@@ -638,7 +735,7 @@ const getDateCustomClass = (date) => {
                   <i className="fa-solid fa-circle" style={{color: 'orange', fontSize: '10px'}}></i>
                 </div>
                 <div className="calendarPendingContents">
-                indicates a reserved date. If the booking isn’t confirmed, the slot will pass to the next request.
+                indicates a reserved date. If the booking isn't confirmed, the slot will pass to the next request.
                 </div>
               </div>
 
@@ -656,12 +753,18 @@ const getDateCustomClass = (date) => {
           <div className="large-calendar-layout">
             <div className="calendar-legend">
               <div className="calenderLegendContentsMain">
-                <i className="fa-solid fa-circle dot-booked"></i>
-                <span> Confirmed Booked Dates</span> <br />
-                <i className="fa-solid fa-circle" style={{color: 'orange', fontSize: '10px'}}></i>
-                <span> Pending Reservations (Queue)</span> <br />
-                <i className="fa-solid fa-circle dot-available"></i>
-                <span> Available Dates</span> <br />
+                 <i className="fa-solid fa-circle dot-booked"></i>
+                  <span> Booked Dates</span> <br />
+                  <i className="fa-solid fa-circle dot-available"></i>
+                  <span> Available Dates</span> <br />
+
+                  <i className="fa-solid fa-circle" style={{color: 'orange', fontSize: '10px'}}></i>
+                  <span> Pending </span> <br />
+
+                {/* <i className="fa-solid fa-circle" style={{color: '#999', fontSize: '10px'}}></i>
+                <span> Past Dates</span> <br />
+                <i className="fa-solid fa-circle" style={{color: '#ccc', fontSize: '10px'}}></i>
+                <span> Not Available Yet</span> <br /> */}
                 {showQueueInfo && queuePosition && (
                   <>
                     <i className="fa-solid fa-clock" style={{color: '#ff9800', fontSize: '10px'}}></i>
@@ -695,7 +798,7 @@ const getDateCustomClass = (date) => {
               </div>
               
               <div className="calendarDaysInfo">
-                <span>
+                {/* <span>
                   Calendar Days: <span style={{ color: 'blue' }}>
                     {calendarDays}
                   </span>
@@ -704,19 +807,19 @@ const getDateCustomClass = (date) => {
                   Available Days: <span style={{ color: 'green' }}>
                     {availableDays}
                   </span>
-                </span><br />
-                {pendingInRange > 0 && (
+                </span><br /> */}
+                {/* {pendingInRange > 0 && (
                   <span>
                     In Queue: <span style={{ color: 'orange', fontWeight: 'bold' }}>
                       {pendingInRange} date{pendingInRange > 1 ? 's' : ''}
                     </span>
                   </span>
-                )}
-                {pricePerDay > 0 && (
+                )} */}
+                {/* {pricePerDay > 0 && (
                   <small style={{ fontSize: '10px', color: '#666' }}>
                     ({availableDays} available days × ₹{pricePerDay.toLocaleString()}/day)
                   </small>
-                )}
+                )} */}
               </div>
               
               <div className="calendarAmountMain">
@@ -744,7 +847,8 @@ const getDateCustomClass = (date) => {
                   <i className="fa-solid fa-circle" style={{color: 'orange', fontSize: '10px'}}></i>
                 </div>
                 <div className="calendarPendingContents">
-indicates a reserved date. If the booking isn’t confirmed, the slot will pass to the next request.                </div>
+                  indicates a reserved date. If the booking isn't confirmed, the slot will pass to the next request.
+                </div>
               </div>
             </div>
 
@@ -763,9 +867,16 @@ indicates a reserved date. If the booking isn’t confirmed, the slot will pass 
                     <div
                       key={index}
                       className={`date ${getDateCustomClass(date)}`}
-                      onClick={() => handleDateClick(date)}
+                      onClick={() => {
+                        // Only allow clicks on dates that are not outside window or past
+                        const dateClass = getDateCustomClass(date);
+                        if (dateClass !== "outside-window" && dateClass !== "past") {
+                          handleDateClick(date);
+                        }
+                      }}
                       style={{ 
-                        pointerEvents: isDateBooked && date && isDateBooked(date) ? "none" : "auto"
+                        pointerEvents: getDateCustomClass(date) === "outside-window" || getDateCustomClass(date) === "past" ? "none" : "auto",
+                        cursor: getDateCustomClass(date) === "outside-window" || getDateCustomClass(date) === "past" ? "not-allowed" : "pointer"
                       }}
                     >
                       {date ? date.getDate() : ""}
@@ -812,4 +923,4 @@ indicates a reserved date. If the booking isn’t confirmed, the slot will pass 
   );
 };
 
-export default Calendar;
+export default Calendar;  

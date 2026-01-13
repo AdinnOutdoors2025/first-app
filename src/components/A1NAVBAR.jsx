@@ -128,8 +128,8 @@ function NavbarMain() {
                         } else {
                             openLogin('login', '/cart'); // Show login popup, redirect to cart after
                         }
-                    }}></i> */}
-                {cartCount > 0 && <p className='cart-number'>{cartCount}</p>}
+                    }}></i> 
+                {cartCount > 0 && <p className='cart-number'>{cartCount}</p>} */}
                 <div className="nav_container">
                     <img src="/images/nav_user.png" alt="User Icon" className='nav_user' onMouseEnter={toggleNavOpen}
                         onClick={toggleNavOpen} />

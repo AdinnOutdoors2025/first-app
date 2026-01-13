@@ -627,7 +627,7 @@
 
 import React, { useState, useEffect } from "react";
 import "./F1Billing.css";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
 import { toast } from 'react-toastify';
@@ -638,7 +638,10 @@ import { baseUrl } from '../Adminpanel/BASE_URL';
 import { formatIndianCurrency } from './FORMATED_AMOUNT';
 
 const BillingDetails = () => {
-    const { user } = useLogin();
+
+        const { productId } = useParams();
+    
+    const { user, openLogin } = useLogin();
     //HANDLING ERRORS
     const [errors, setErrors] = useState({
         name: false,
@@ -707,6 +710,7 @@ useEffect(() => {
 
 
     const { reserveItem } = location.state || {}; // Destructure from state
+    console.log('RESERVE ITEM', reserveItem);
     // Only show error if coming from booking path
     if (location.pathname.includes('/billing') && !reserveItem) {
         return <div className="ReserveError">No reserved item found!</div>;
@@ -1232,6 +1236,40 @@ const sendOrderSMS = async (phone, orderId, customerName, amount) => {
 // }; 
 
 
+// Add this function to check date availability before final submission
+const checkDateAvailability = async (prodCode, startDate, endDate, excludeOrderId = null) => {
+    try {
+        const params = new URLSearchParams({
+            startDate: startDate.toISOString().split('T')[0],
+            endDate: endDate.toISOString().split('T')[0]
+        });
+        
+        if (excludeOrderId) {
+            params.append('excludeOrderId', excludeOrderId);
+        }
+
+        const response = await fetch(`${baseUrl}/check-date-conflicts/${prodCode}?${params}`);
+        const data = await response.json();
+        
+        console.log('Date availability check result:', data);
+        
+        return {
+            isAvailable: data.success && !data.hasConflicts,
+            hasConflicts: data.hasConflicts,
+            conflictingDates: data.confirmedConflicts || [],
+            pendingConflicts: data.pendingConflicts || [],
+            availableDates: data.availableDates || [],
+            message: data.message || 'Date availability check completed'
+        };
+    } catch (error) {
+        console.error('Error checking date availability:', error);
+        return {
+            isAvailable: false,
+            hasConflicts: true,
+            message: 'Failed to verify date availability. Please try again.'
+        };
+    }
+}; 
 
 
 const handleSubmit = async (e) => {
@@ -1240,7 +1278,22 @@ const handleSubmit = async (e) => {
     alert("Please login to complete your order");
     return;
   }
-  
+  // Check if user has _id
+  if (!user._id) {
+    console.error("User object missing _id:", user);
+    alert("User session error. Please try logging in again.");
+    
+    // Clear invalid user session
+    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
+    
+    // Redirect to login
+    openLogin('login', window.location.pathname);
+    return;
+  } 
+
+
+
   // Validate form first
   if (!validateForm()) {
     alert("Please fill in all required fields correctly");
@@ -1269,6 +1322,36 @@ const handleSubmit = async (e) => {
     if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
       throw new Error("Invalid dates");
     }
+
+
+
+    //   // ===== DATE REVALIDATION AT BILLING =====
+    //     console.log("🔄 Revalidating date availability at billing...");
+    //     const dateAvailability = await checkDateAvailability(
+    //         reserveItem.prodCode,
+    //         startDate,
+    //         endDate
+    //     );
+        
+    //     if (!dateAvailability.isAvailable) {
+    //         console.error("Date conflicts detected at billing:", dateAvailability);
+    //         alert(`Date conflict detected: ${dateAvailability.message}\n\nPlease go back and select new available dates.`);
+            
+    //         // Optionally navigate back to product page with calendar open
+    //         // You might want to save the billing info and redirect
+    //         navigate(`/Product/${productId}`, {
+    //             state: {
+    //                 billingInfo: { name, email, phone, pincode, state, city, address, company },
+    //                 showCalendar: true,
+    //                 dateConflict: true,
+    //                 conflictMessage: dateAvailability.message
+    //             }
+    //         });
+    //         setIsLoading(false);
+    //         return;
+    //     }
+    //     console.log("✅ Date revalidation passed at billing");
+    //     // ===== END DATE REVALIDATION ===== 
     
     // Generate dates and log them
     const bookedDates = getDateRangeArray(startDate, endDate);
@@ -1434,6 +1517,8 @@ const handleSubmit = async (e) => {
     setIsLoading(false);
   }
 };
+
+console.log('USER ID:', user._id);
 
     const safePrice = typeof reserveItem?.price === 'string' 
         ? parseFloat(reserveItem.price.replace(/[^0-9.]/g, '')) 

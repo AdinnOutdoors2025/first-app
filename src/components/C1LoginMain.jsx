@@ -219,69 +219,148 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
         }
     };
 
-    const verifyOtp = async () => {
-        const finalOtp = enterOtp.join('');
-        if (finalOtp.length !== 4) {
-            setErrorMessage("Enter a valid 4-digit OTP");
-            setOtpError(true);
-            return;
-        }
-        try {
-            setStatus("Verifying...");
-            const verifyResponse = await fetch(`${baseUrl}/login/verify-otp`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    [usePhoneOTP ? 'phone' : 'email']: usePhoneOTP ? userPhone : email,
-                    otp: finalOtp,
+    // const verifyOtp = async () => {
+    //     const finalOtp = enterOtp.join('');
+    //     if (finalOtp.length !== 4) {
+    //         setErrorMessage("Enter a valid 4-digit OTP");
+    //         setOtpError(true);
+    //         return;
+    //     }
+    //     try {
+    //         setStatus("Verifying...");
+    //         const verifyResponse = await fetch(`${baseUrl}/login/verify-otp`, {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify({
+    //                 [usePhoneOTP ? 'phone' : 'email']: usePhoneOTP ? userPhone : email,
+    //                 otp: finalOtp,
 
-                })
-            });
+    //             })
+    //         });
 
-            if (!verifyResponse.ok) {
-                const errorData = await verifyResponse.json();
-                throw new Error(errorData.message || "Verification failed");
-            }
+    //         if (!verifyResponse.ok) {
+    //             const errorData = await verifyResponse.json();
+    //             throw new Error(errorData.message || "Verification failed");
+    //         }
 
-            const verifyData = await verifyResponse.json();
+    //         const verifyData = await verifyResponse.json();
 
-            if (!verifyData.verified) {
-                throw new Error("Invalid OTP");
-            }
-            if (verifyData.verified) {
-                // For signup, create user account
-                if (isSignUp) {
-                    const userResponse = await fetch(`${baseUrl}/login/create-user`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ userName, userEmail: email, userPhone })
-                    });
+    //         if (!verifyData.verified) {
+    //             throw new Error("Invalid OTP");
+    //         }
+    //         if (verifyData.verified) {
+    //             // For signup, create user account
+    //             if (isSignUp) {
+    //                 const userResponse = await fetch(`${baseUrl}/login/create-user`, {
+    //                     method: 'POST',
+    //                     headers: { 'Content-Type': 'application/json' },
+    //                     body: JSON.stringify({ userName, userEmail: email, userPhone })
+    //                 });
 
-                    if (!userResponse.ok) {
-                        const errorData = await userResponse.json();
-                        throw new Error(errorData.error || "Failed to create user");
-                    }
-                    const userData = await userResponse.json();
-                    loginUser(userData.user, keepSignedIn);
-                    alert("Account created successfully!");
-                } else {
-                    // For login, use verified user data
-                    loginUser(verifyData.user, keepSignedIn);
-                    alert("Logged in successfully!");
-                }
-                setVerified(true);
-                onClose();
-            }
-            // onClose();
-            // navigate("/book1");
-        } catch (error) {
-            console.error("Verification error:", error);
-            setOtpError(true);
-            setErrorMessage(error.message || "Verification failed. Try again.");
-        }
-    };
+    //                 if (!userResponse.ok) {
+    //                     const errorData = await userResponse.json();
+    //                     throw new Error(errorData.error || "Failed to create user");
+    //                 }
+    //                 const userData = await userResponse.json();
+    //                 loginUser(userData.user, keepSignedIn);
+    //                 alert("Account created successfully!");
+    //             } else {
+    //                 // For login, use verified user data
+    //                 loginUser(verifyData.user, keepSignedIn);
+    //                 alert("Logged in successfully!");
+    //             }
+    //             setVerified(true);
+    //             onClose();
+    //         }
+    //         // onClose();
+    //         // navigate("/book1");
+    //     } catch (error) {
+    //         console.error("Verification error:", error);
+    //         setOtpError(true);
+    //         setErrorMessage(error.message || "Verification failed. Try again.");
+    //     }
+    // };
 
     // Toggle between login and signup
+   
+   
+   const verifyOtp = async () => {
+    const finalOtp = enterOtp.join('');
+    if (finalOtp.length !== 4) {
+        setErrorMessage("Enter a valid 4-digit OTP");
+        setOtpError(true);
+        return;
+    }
+    
+    try {
+        setStatus("Verifying...");
+        const verifyResponse = await fetch(`${baseUrl}/login/verify-otp`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                [usePhoneOTP ? 'phone' : 'email']: usePhoneOTP ? userPhone : email,
+                otp: finalOtp,
+            })
+        });
+
+        if (!verifyResponse.ok) {
+            const errorData = await verifyResponse.json();
+            throw new Error(errorData.message || "Verification failed");
+        }
+
+        const verifyData = await verifyResponse.json();
+        console.log("Verify OTP response:", verifyData); // Debug log
+
+        if (!verifyData.verified) {
+            throw new Error("Invalid OTP");
+        }
+        
+        if (verifyData.verified) {
+            // For signup, create user account
+            if (isSignUp) {
+                const userResponse = await fetch(`${baseUrl}/login/create-user`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userName, userEmail: email, userPhone })
+                });
+
+                if (!userResponse.ok) {
+                    const errorData = await userResponse.json();
+                    throw new Error(errorData.error || "Failed to create user");
+                }
+                const userData = await userResponse.json();
+                console.log("Signup response:", userData); // Debug log
+                
+                // Check if userData has the expected structure
+                if (!userData.user || !userData.user._id) {
+                    console.error("Signup response missing user._id:", userData);
+                    throw new Error("Account created but failed to get user details. Please try logging in.");
+                }
+                
+                loginUser(userData.user, keepSignedIn);
+                alert("Account created successfully!");
+            } else {
+                // For login, use verified user data
+                console.log("Login user data:", verifyData.user); // Debug log
+                
+                if (!verifyData.user || !verifyData.user._id) {
+                    throw new Error("User data incomplete. Please try again.");
+                }
+                
+                loginUser(verifyData.user, keepSignedIn);
+                alert("Logged in successfully!");
+            }
+            setVerified(true);
+            onClose();
+        }
+    } catch (error) {
+        console.error("Verification error:", error);
+        setOtpError(true);
+        setErrorMessage(error.message || "Verification failed. Try again.");
+    }
+};
+
+
     const toggleAuthMode = () => {
         const newMode = isSignUp ? 'login' : 'signup';
         setIsSignUp(!isSignUp);

@@ -6,27 +6,35 @@ import { baseUrl } from "./BASE_URL";
 import { formatIndianCurrency } from "../components/FORMATED_AMOUNT";
 import axios from "axios";
 import { toast } from "react-toastify";
+//FORMATTER DATE AND TIME
+import { formatIndianDateTime, formatForTable, formatBookingRange, getBookingStatus } from '../../src/DateTimeFormatter';
+
+// const formatEditedDateTime = (dateString) => {
+//   if (!dateString) return "";
+
+//   const date = new Date(dateString);
+//   if (isNaN(date.getTime())) return "";
+
+//   const day = date.getDate().toString().padStart(2, "0");
+//   const month = date.toLocaleString("en-US", { month: "short" });
+//   const year = date.getFullYear();
+  
+//   const time = date
+//     .toLocaleTimeString("en-IN", {
+//       hour: "2-digit",
+//       minute: "2-digit",
+//       hour12: true,
+//     })
+//     .toLowerCase();
+
+//   return `${day}-${month}-${year}, ${time}`;
+// };
+
 
 const formatEditedDateTime = (dateString) => {
-  if (!dateString) return "";
-
-  const date = new Date(dateString);
-  if (isNaN(date.getTime())) return "";
-
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = date.toLocaleString("en-US", { month: "short" });
-  const year = date.getFullYear();
-  
-  const time = date
-    .toLocaleTimeString("en-IN", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    })
-    .toLowerCase();
-
-  return `${day}-${month}-${year}, ${time}`;
-};
+    if (!dateString) return "";
+    return formatIndianDateTime(dateString);
+}; 
 
 function OrderDetails({ order, onOrderUpdate }) {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
@@ -1348,14 +1356,22 @@ const saveCancelReason = async () => {
           <div className={isDeleted ? "strikethrough-text" : ""}>
             {product.name || "No name"}
           </div>
-          {isDeleted && product.deletedBy && (
+          {/* {isDeleted && product.deletedBy && (
             <div className="deleted-info">
               <small>Deleted by: {product.deletedBy}</small>
               {product.deletedAt && (
                 <small> on {formatDateTime(product.deletedAt)}</small>
               )}
             </div>
-          )}
+          )} */}
+          {isDeleted && product.deletedBy && (
+        <div className="deleted-info">
+            <small>Deleted by: {product.deletedBy}</small>
+            {product.deletedAt && (
+                <small> on {formatIndianDateTime(product.deletedAt)}</small>
+            )}
+        </div>
+    )}
         </td>
         <td>
           <div className={isDeleted ? "strikethrough-text" : ""}>
@@ -1644,7 +1660,8 @@ const saveCancelReason = async () => {
                                 <tr key={index}>
                                   <td>{index + 1}</td>
                                   <td>₹{formatIndianCurrency(p.amount)}</td>
-                                  <td>{formatDateTime(p.paidAt)}</td>
+                                  {/* <td>{formatDateTime(p.paidAt)}</td> */}
+                                  <td>{formatIndianDateTime(p.paidAt)}</td>
                                 </tr>
                               ))}
                             </tbody>
@@ -1695,7 +1712,7 @@ const saveCancelReason = async () => {
               </div>
               
               <div className="order-manageClientInfoRight">
-                <div className="order-clientDetailSection">
+                {/* <div className="order-clientDetailSection">
                   <div className="order-clientDetailHeading">Date</div>
                   <input
                     type="text"
@@ -1708,7 +1725,23 @@ const saveCancelReason = async () => {
                     }
                     readOnly
                   ></input>
-                </div>
+                </div> */}
+
+
+                <div className="order-clientDetailSection">
+        <div className="order-clientDetailHeading">Date & Time</div>
+        <input
+            type="text"
+            placeholder="Enter Date"
+            className="order-clientDetailsInput"
+            value={
+                safeOrder.createdAt
+                    ? formatIndianDateTime(safeOrder.createdAt)
+                    : ""
+            }
+            readOnly
+        ></input>
+    </div>
                 <div className="order-clientDetailSection">
                   <div className="order-clientDetailHeading">
                     Order Taken By
@@ -1841,7 +1874,21 @@ const saveCancelReason = async () => {
                 </button>
               ))}
             </div>
-
+ {/*  booking status display */}
+    <div className="booking-status-display">
+        {safeOrder.products?.map((product, index) => {
+            if (product.booking?.startDate && product.booking?.endDate) {
+                const status = getBookingStatus(product.booking.startDate, product.booking.endDate);
+                return (
+                    <div key={index} className={`booking-status-badge ${status.status}`}>
+                        <i className={`fas fa-${status.status === 'active' ? 'play' : status.status === 'upcoming' ? 'clock' : 'check'}`}></i>
+                        {status.message}
+                    </div>
+                );
+            }
+            return null;
+        })}
+    </div>
             <table>
               <thead>
                 <tr>
@@ -2035,11 +2082,16 @@ const saveCancelReason = async () => {
       <div className="confirmation-badge confirmed">
         <i className="fas fa-check-circle"></i> CONFIRMED
       </div>
-      <p>Confirmed by: {safeOrder.confirmed_by}</p>
+      {/* <p>Confirmed by: {safeOrder.confirmed_by}</p>
       <p>Confirmed on: {safeOrder.confirmed_at ? new Date(safeOrder.confirmed_at).toLocaleString('en-IN') : 'N/A'}</p>
       {safeOrder.confirmation_notes && (
         <p>Notes: {safeOrder.confirmation_notes}</p>
-      )}
+      )} */}
+      <p>Confirmed by: {safeOrder.confirmed_by}</p>
+            <p>Confirmed on: {safeOrder.confirmed_at ? formatIndianDateTime(safeOrder.confirmed_at) : 'N/A'}</p>
+            {safeOrder.confirmation_notes && (
+                <p>Notes: {safeOrder.confirmation_notes}</p>
+            )}
     </div>
   )}
 </div>

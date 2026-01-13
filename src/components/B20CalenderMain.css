@@ -197,14 +197,12 @@
     color: rgba(76, 187, 23, 1);
     cursor: pointer;
 }
-
+/* 
 .booked {
     color: rgba(228, 30, 37, 1);
-    pointer-events: none;
+    pointer-events: auto !important;
     cursor: not-allowed;
-
-    /* opacity: 0.6; */
-}
+} */
 
 
 /* Wrapper to blur background when calendar is open */
@@ -466,7 +464,7 @@
 }
 
 /* Queue indicator dot */
-.queue-indicator-dot {
+/* .queue-indicator-dot {
     position: absolute;
     top: 2px;
     right: 2px;
@@ -474,45 +472,83 @@
     height: 6px;
     background-color: orange;
     border-radius: 50%;
-}
+} */
 
 
 /* RAC CONCEPTS */
+/* DATE OPEN WINDOW  */
+
+/* Style for dates outside window */
+.outside-window {
+    color: #ccc !important;
+    /* pointer-events: none; */
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: #f9f9f9 !important;
+    position: relative;
+}
+
+
+/* For confirmed state - dates outside selected range */
+.outside-window-disabled {
+    color: #ccc !important;
+    background-color: #f9f9f9 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    opacity: 0.5;
+}
+
+
+/* Minimum days warning */
+.minimum-days-warning {
+    border: 2px dashed #ff9800 !important;
+    background-color: #fff3e0 !important;
+} 
+
+
+
+/* Outside window dates (for frontend only, not admin) */
+.date.outside-window {
+    color: #ccc !important;
+    pointer-events: auto !important; /* Allow click for error message */
+    cursor: not-allowed !important;
+    opacity: 0.5 !important;
+    background-color: #f9f9f9 !important;
+}
+
+/* Past booked dates */
+.date.past.booked {
+    background-color: #8B0000 !important;
+    color: white !important;
+    border: 2px solid #5a0000 !important;
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+}
+
+/* Queue indicator dot */
+/* .queue-indicator-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 6px;
+    height: 6px;
+    background-color: orange;
+    border-radius: 50%;
+}  */
+/* DATE OPEN WINDOW  */
+
+
 
 /* Responsive Media Queries */
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
 @media (min-width: 2560px) {
-    /* .calendar-container {
-        background-color: white;
-        width: 100%;
-        max-width: 65%;
-        margin: 0 auto;
-        border-radius: 48px;
-    } */
-
+    
     .dot-booked,
     .dot-available {
         font-size: 20px;
     }
 
-    /* .reset-button,
-    .confirm-button {
-        font-size: 24px;
-        font-weight: 600;
-        line-height: 14.63px;
-        letter-spacing: 0.05em;
-        padding: 13px 18px;
-        border-radius: 32px;
-        border: 3px solid rgba(227, 31, 37, 1);
-        margin: auto 30px;
-        margin-bottom: 15px;
-    } */
-
-    /* .confirm-button {
-        padding: 14px 38px;
-
-    } */
-
+    
     .calendar-header {
         padding: 15px;
     }
@@ -534,27 +570,7 @@
         font-size: 37px;
     }
 
-    /* 
-    .calendar-legend {
-        font-size: 24px;
-        font-weight: 600;
-        line-height: 36.63px;
-        letter-spacing: 0.05em;
-        height: 560px;
-        margin: 0px;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 32px;
-        margin-right: 25px;
-    } */
-
-    /* .calendar-grid {
-        
-        gap: 10px 10px;
-        padding: 15px 0;
-        padding-right: 15px;
-    } */
-
+    
     .date {
         font-size: 32px;
         font-weight: 500;
@@ -674,12 +690,7 @@
         padding-top: 8%;
     }
 
-    /* .calendar-container {
-        width: 100%;
-        max-width: 900px;
-        margin: 0 auto;
-        border-radius: 30px;
-    } */
+    
 
     .nav-button {
         font-size: 20px;
@@ -698,40 +709,13 @@
         font-size: 25px;
     }
 
-    /* .calendar-legend {
-        font-size: 13px;
-        font-weight: 600;
-        line-height: 19.63px;
-        height: 340px;
-        margin: 0px;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        margin-right: 0px;
-        padding-left: 16px;
-        margin-right: 10px;
-    } */
-
+    
     .dot-booked,
     .dot-available {
         font-size: 11px;
     }
 
-    /* .reset-button,
-    .confirm-button {
-        border: 1.5px solid rgba(227, 31, 37, 1);
-        border-radius: 32px;
-        font-size: 13px;
-        font-weight: 600;
-        line-height: 14.63px;
-        letter-spacing: 0.05em;
-        padding: 5px 10px;
-        margin: auto 15px;
-        margin-bottom: 10px;
-    }
 
-    .confirm-button {
-        padding: 5px 20px;
-    } */
 
     .large-calendar-layout {
         justify-content: space-between;
@@ -740,11 +724,6 @@
     }
 
 
-    /* .calendar-grid {
-        gap: 5px;
-        padding: 10px 0;
-        padding-right: 8px;
-    } */
 
     .date {
         font-size: 20px;
@@ -880,42 +859,12 @@
         padding: 5px;
     }
 
-    /* .calendar-container {
-        width: 100%;
-        height: 365px;
-        max-width: 82%;
-        margin: 0 auto;
-        border-radius: 40px;
-    } */
+    
 
     .dot-booked,
     .dot-available {
         font-size: 10px;
     }
-
-    /* 
-    .calendar-legend {
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 18.63px;
-        letter-spacing: 0.05em;
-        height: 325px;
-        margin: 0px;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 8px;
-        margin-right: 10px;
-    }
-
-    .reset-button {
-        border-radius: 32px;
-        border: 1.5px solid rgba(227, 31, 37, 1);
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 15.63px;
-        letter-spacing: 0.05em;
-        padding: 5px 10px;
-    } */
 
     .day {
         font-size: 15px;
@@ -924,11 +873,7 @@
         letter-spacing: 0.05em;
     }
 
-    /* .calendar-grid {
-        gap: 5px;
-        padding: 25px 0;
-        padding-right: 1px;
-    } */
+   
 
     .date {
         font-size: 17.5px;
@@ -1081,13 +1026,6 @@
         letter-spacing: 0.05em;
     }
 
-    /* .calendar-container {
-        width: 100%;
-        max-height: auto;
-        max-width: 65%;
-        margin: 0 auto;
-        border-radius: 35px;
-    } */
 
     .nav-button {
         font-size: 20px;
@@ -1099,14 +1037,6 @@
         font-size: 10px;
     }
 
-    /* .calendar-legend {
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 21.63px;
-        letter-spacing: 0.05em;
-        height: auto;
-        padding: 6px 0px;
-    } */
 
     .calendar-legend-responsive {
         display: flex;
@@ -1125,24 +1055,7 @@
         margin: auto 22%;
     }
 
-    /* .reset-button,
-    .confirm-button {
-
-        border-radius: 17px;
-        border: 1.5px solid rgba(227, 31, 37, 1);
-        color: rgba(51, 51, 51, 1);
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 15.63px;
-        letter-spacing: 0.05em;
-        padding: 7px 12px;
-    }
-
-    .confirm-button {
-        color: white;
-        padding: 7px 22px;
-    } */
-
+  
     .day {
         font-size: 17px;
         font-weight: 500;
@@ -1151,12 +1064,7 @@
         letter-spacing: 0.05em;
     }
 
-    /* .calendar-grid {
-        height: 42%;
-        gap: 5px;
-        height: 300px;
-        padding: 5px 25px;
-    } */
+
 
     .date {
         font-size: 19px;
@@ -1273,15 +1181,7 @@
 
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
 @media (min-width: 480px) and (max-width: 767px) {
-    /* .calendar-scroll {
-        border-radius: 35px;
-        width: 100%;
-        height: 370px;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        scrollbar-width: none;
-    } */
-
+   
     .calendar-overlay {
         padding-top: 18%;
     }
@@ -1311,14 +1211,7 @@
         letter-spacing: 0.05em;
     }
 
-    /* .calendar-container {
-        width: 100%;
-        max-height: auto;
-        max-width: 95%;
-        margin: 0 auto;
-        border-radius: 35px;
-    } */
-
+   
     .nav-button {
         font-size: 20px;
     }
@@ -1328,14 +1221,7 @@
         font-size: 10px;
     }
 
-    /* .calendar-legend {
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 16.63px;
-        letter-spacing: 0.05em;
-        height: auto;
-        padding: 4px 0px;
-    } */
+   
 
     .calendar-legend-responsive {
         display: flex;
@@ -1353,23 +1239,7 @@
         margin: 3px 21%;
     }
 
-    /* .reset-button,
-    .confirm-button {
-        border-radius: 17px;
-        border: 1.5px solid rgba(227, 31, 37, 1);
-        color: rgba(51, 51, 51, 1);
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 12.63px;
-        letter-spacing: 0.05em;
-        padding: 7px 12px;
-    }
-
-    .confirm-button {
-        color: white;
-        padding: 7px 20px;
-    } */
-
+   
     .day {
         font-size: 16px;
         font-weight: 500;
@@ -1378,12 +1248,7 @@
         letter-spacing: 0.05em;
     }
 
-    /* .calendar-grid {
-        height: 42%;
-        gap: 4px;
-        height: 282px;
-        padding: 3px 25px;
-    } */
+   
 
     .date {
         font-size: 18px;
@@ -1488,15 +1353,7 @@
 
 /* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
 @media (min-width: 425px) and (max-width: 479px) {
-    /* .calendar-scroll {
-        border-radius: 35px;
-        width: 100%;
-        height: 370px;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        scrollbar-width: none;
-    } */
-
+   
     .calendar-overlay {
         padding-top: 20%;
     }
@@ -1526,13 +1383,6 @@
         letter-spacing: 0.05em;
     }
 
-    /* .calendar-container {
-        width: 100%;
-        max-height: auto;
-        max-width: 95%;
-        margin: 0 auto;
-        border-radius: 30px;
-    } */
 
     .nav-button {
         font-size: 20px;
@@ -1544,14 +1394,7 @@
         font-size: 10px;
     }
 
-    /* .calendar-legend {
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 16.63px;
-        letter-spacing: 0.05em;
-        height: auto;
-        padding: 3px 0px;
-    } */
+ 
 
     .calendar-legend-responsive {
         display: flex;
@@ -1569,25 +1412,7 @@
         margin: 3px 14%;
     }
 
-    /* 
-
-
-    .reset-button {
-        border-radius: 16px;
-        border: 1.5px solid rgba(227, 31, 37, 1);
-        color: rgba(51, 51, 51, 1);
-        font-size: 12.5px;
-        font-weight: 600;
-        line-height: 12.63px;
-        letter-spacing: 0.05em;
-        padding: 8px 13px;
-    }
-
-    .confirm-button {
-        color: white;
-        padding: 10px 30px;
-    } */
-
+   
     .day {
         font-size: 16px;
         font-weight: 500;
@@ -1596,12 +1421,7 @@
         letter-spacing: 0.05em;
     }
 
-    /* .calendar-grid {
-        height: 42%;
-        gap: 5px;
-        height: 282px;
-        padding: 3px 20px;
-    } */
+   
 
     .date {
         font-size: 18px;
@@ -1705,14 +1525,7 @@
 
 /* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
 @media (min-width: 375px) and (max-width: 424px) {
-    /* .calendar-scroll {
-        border-radius: 35px;
-        width: 100%;
-        height: 370px;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        scrollbar-width: none;
-    } */
+   
 
     .calendar-overlay {
         padding-top: 18%;
@@ -1743,13 +1556,7 @@
         letter-spacing: 0.05em;
     }
 
-    /* .calendar-container {
-        width: 100%;
-        max-height: auto;
-        max-width: 100%;
-        margin: 0 auto;
-        border-radius: 30px;
-    } */
+   
 
     .nav-button {
         font-size: 20px;
@@ -1760,14 +1567,7 @@
         font-size: 10px;
     }
 
-    /* .calendar-legend {
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 16.63px;
-        letter-spacing: 0.05em;
-        height: auto;
-        padding: 2px 0px;
-    } */
+
 
     .calendar-legend-responsive {
         display: flex;
@@ -1785,24 +1585,7 @@
         margin: 3px 10%;
     }
 
-    /* 
-    .reset-button {
-        border-radius: 16px;
-        border: 1.5px solid rgba(227, 31, 37, 1);
-        color: rgba(51, 51, 51, 1);
-        font-size: 12.5px;
-        font-weight: 600;
-        line-height: 12.63px;
-        letter-spacing: 0.05em;
-        padding: 8px 13px;
-    }
-
-    .confirm-button {
-        color: white;
-        padding: 10px 30px;
-    } */
-
-
+    
     .day {
         font-size: 15px;
         font-weight: 500;
@@ -1811,12 +1594,6 @@
         letter-spacing: 0.05em;
     }
 
-    /* .calendar-grid {
-        height: 42%;
-        gap: 5px;
-        height: 282px;
-        padding: 4px 15px;
-    } */
 
     .date {
         font-size: 17px;
@@ -1923,14 +1700,6 @@
 
 /* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
 @media (min-width: 360px) and (max-width: 374px) {
-    /* .calendar-scroll {
-        border-radius: 35px;
-        width: 100%;
-        height: 370px;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        scrollbar-width: none;
-    } */
 
     .calendar-overlay {
         padding-top: 19%;
@@ -1962,14 +1731,7 @@
         letter-spacing: 0.05em;
     }
 
-    /* .calendar-container {
-        width: 100%;
-        max-height: auto;
-        max-width: 100%;
-        margin: 0 auto;
-        border-radius: 30px;
-    } */
-
+  
     .nav-button {
         font-size: 20px;
         /* padding: 5px; */
@@ -1980,15 +1742,7 @@
         font-size: 10px;
     }
 
-    /* .calendar-legend {
-        font-size: 11px;
-        font-weight: 600;
-        line-height: 16.63px;
-        letter-spacing: 0.05em;
-        height: auto;
-        padding: 2px 0px;
-    } */
-
+  
     .calendar-legend-responsive {
         display: flex;
         justify-content: space-around;
@@ -2006,25 +1760,7 @@
         margin: 3px 9%;
     }
 
-    /* 
-    .reset-button {
-        border-radius: 16px;
-        border: 1.5px solid rgba(227, 31, 37, 1);
-        color: rgba(51, 51, 51, 1);
-        font-size: 12.5px;
-        font-weight: 600;
-        line-height: 12.63px;
-        letter-spacing: 0.05em;
-        padding: 8px 13px;
-    }
-
-    .confirm-button {
-        color: white;
-        padding: 10px 30px;
-    } */
-
-
-    .day {
+      .day {
         font-size: 15px;
         font-weight: 500;
         padding-bottom: 5px;
@@ -2142,15 +1878,7 @@
 }
 
 @media (min-width: 320px) and (max-width: 359px) {
-    /* .calendar-scroll {
-        border-radius: 35px;
-        width: 100%;
-        height: 370px;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        scrollbar-width: none;
-    } */
-
+   
     .calendar-overlay {
         padding-top: 20%;
     }
@@ -2180,14 +1908,7 @@
         letter-spacing: 0.05em;
     }
 
-    /* .calendar-container {
-        width: 100%;
-        max-height: auto;
-        max-width: 100%;
-        margin: 0 auto;
-        border-radius: 28px;
-    } */
-
+  
     .nav-button {
         font-size: 18px;
         /* padding: 5px; */
@@ -2198,15 +1919,7 @@
         font-size: 9px;
     }
 
-    /* .calendar-legend {
-        font-size: 11px;
-        font-weight: 600;
-        line-height: 16.63px;
-        letter-spacing: 0.05em;
-        height: auto;
-        padding: 4px 0px;
-    } */
-
+   
     .calendar-legend-responsive {
         display: flex;
         justify-content: space-around;
@@ -2223,21 +1936,7 @@
         margin: 3px 5%;
     }
 
-    /* .reset-button {
-        border-radius: 16px;
-        border: 1.5px solid rgba(227, 31, 37, 1);
-        color: rgba(51, 51, 51, 1);
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 12.63px;
-        letter-spacing: 0.05em;
-        padding: 8px 13px;
-    }
-
-    .confirm-button {
-        color: white;
-        padding: 10px 27px;
-    } */
+   
 
     .day {
         font-size: 13px;
@@ -2247,11 +1946,7 @@
         letter-spacing: 0.05em;
     }
 
-    /* .calendar-grid {
-        gap: 5px;
-        height: 282px;
-        padding: 10px 5px;
-    } */
+   
 
     .date {
         font-size: 15px;
@@ -2362,17 +2057,46 @@
 
 /* Past date styling */
 .date.past {
-    opacity: 1;
+    /* opacity: 1;
     background-color: #f0f0f0;
     color: #666;
     pointer-events: none;
     cursor: not-allowed;
-    position: relative;
+    position: relative; */
+     background-color: #f0f0f0 !important;
+    color: #999 !important;
+    cursor: not-allowed !important;
+    pointer-events: auto !important; /* Allow click for error message */
+    /* text-decoration: line-through !important; */
+    opacity: 0.7 !important;
 }
 
 .date.disabled {
-    visibility: hidden;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    
 }
+/* Booked dates */
+.date.booked {
+    color: rgba(228, 30, 37, 1) !important;
+    pointer-events: auto !important;
+    cursor: not-allowed !important;
+    /* opacity: 0.7 !important; */
+}
+
+/* Pending dates */
+.date.pending {
+    color: orange !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+/* Available dates */
+.date.available {
+    color: rgba(76, 187, 23, 1) !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+} 
 
 /* Past booked dates - more prominent style */
 .date.past.booked {

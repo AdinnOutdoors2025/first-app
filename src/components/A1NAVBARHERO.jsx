@@ -138,8 +138,8 @@ function MainNavbarHero() {
                         } else {
                             openLogin('login', '/cart'); // Show login popup, redirect to cart after
                         }
-                    }}></i> */}
-                {cartCount > 0 && <p className='cart-numberHero'>{cartCount}</p>}
+                    }}></i> 
+                {cartCount > 0 && <p className='cart-numberHero'>{cartCount}</p>} */}
 
                 <div className="nav_containerHero">
                     <img src="/images/nav_user.png" alt="User Icon" className='nav_userHero'

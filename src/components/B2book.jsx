@@ -1037,7 +1037,11 @@
 
 
 
-// PERFECT CODE FOR DATE CONFLICT CHECK (1,2) AND DATE SELECTION UI 
+
+// // B2BOOK.JSX
+//  CODE Date open window but select conflicts
+// Correctly selects the date selects and open window correctly works  - UPDATED BUT HAVE SOME ISSUES
+
 import React, { useState, useRef, useEffect } from 'react';
 import '../components/b2book.css';
 import '../components/B21book.css';
@@ -1054,7 +1058,10 @@ import { MainLayout } from './MainLayout';
 import { useLogin } from './LoginContext';
 import { useParams, useLocation } from "react-router-dom";
 import { baseUrl } from '../Adminpanel/BASE_URL';
-import slugify from 'slugify';
+import slugify from 'slugify'; 
+// DATE OPEN WINDOW  
+import { DATE_CONFIG } from '../Adminpanel/BASE_URL.js';
+// DATE OPEN WINDOW 
 
 function BookASite1() {
     const { productId } = useParams();
@@ -1076,6 +1083,14 @@ function BookASite1() {
     const [calendarErrorMessage, setCalendarErrorMessage] = useState('');
     const [dateSuggestions, setDateSuggestions] = useState([]);
 
+    // DATE OPEN WINDOW - Use constants from config
+    const INITIAL_SELECTION_DAYS = DATE_CONFIG.INITIAL_SELECTION_DAYS;
+    const MIN_BOOKING_DAYS = DATE_CONFIG.MIN_BOOKING_DAYS;
+    const AVAILABLE_WINDOW_DAYS = DATE_CONFIG.AVAILABLE_WINDOW_DAYS;
+    const SHOW_ONLY_AVAILABLE_WINDOW = DATE_CONFIG.SHOW_ONLY_AVAILABLE_WINDOW;
+
+    console.log('DATE CONFIG:', { INITIAL_SELECTION_DAYS, MIN_BOOKING_DAYS, AVAILABLE_WINDOW_DAYS, SHOW_ONLY_AVAILABLE_WINDOW });
+
     // Queue system states
     const [confirmedDates, setConfirmedDates] = useState([]);
     const [pendingDates, setPendingDates] = useState([]);
@@ -1083,6 +1098,469 @@ function BookASite1() {
     const [showQueueInfo, setShowQueueInfo] = useState(false);
 
     const videoRef = useRef(null);
+
+    // Calendar states
+    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+    const today = new Date();
+    const [currentMonth, setCurrentMonth] = useState(new Date());
+    const [isLoginOpen, setIsLoginOpen] = useState(false);
+    const [isOtpMainOpen, setIsOtpMainOpen] = useState(false);
+
+    // Date Selection State
+    const [selectedDates, setSelectedDates] = useState({ start: null, end: null });
+    const [campaignConfirmedDates, setCampaignConfirmedDates] = useState({});
+
+    // NEW: Window management state
+    const [isWindowExpanded, setIsWindowExpanded] = useState(false);
+    const [currentWindowStart, setCurrentWindowStart] = useState(null);
+    const [currentWindowEnd, setCurrentWindowEnd] = useState(null);
+    const [isSelectionConfirmed, setIsSelectionConfirmed] = useState(false);
+
+    // // Initialize date window when calendar opens or product changes
+    // useEffect(() => {
+    //     if (isCalendarOpen && currentProduct) {
+    //         if (!isSelectionConfirmed) {
+    //             initializeDateWindow();
+    //         }
+    //     }
+    // }, [isCalendarOpen, currentProduct]); 
+
+
+
+
+
+
+
+
+    //LASTLY NEWLY ADDED 
+
+    // Add this useEffect to persist confirmed dates when calendar opens
+useEffect(() => {
+    if (isCalendarOpen && currentProduct) {
+        // Check if we have confirmed dates from previous session
+        if (campaignConfirmedDates.start && campaignConfirmedDates.end) {
+            // Set window to show only confirmed range
+            setCurrentWindowStart(campaignConfirmedDates.start);
+            setCurrentWindowEnd(campaignConfirmedDates.end);
+            setIsWindowExpanded(false);
+            setIsSelectionConfirmed(true);
+            
+            // Also set selected dates to confirmed dates
+            setSelectedDates({ 
+                start: campaignConfirmedDates.start, 
+                end: campaignConfirmedDates.end 
+            });
+            
+            setCalendarErrorMessage(
+                `✅ Confirmed dates: ${campaignConfirmedDates.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${campaignConfirmedDates.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`
+            );
+            
+            console.log('Restoring confirmed dates:', {
+                start: campaignConfirmedDates.start.toISOString().split('T')[0],
+                end: campaignConfirmedDates.end.toISOString().split('T')[0]
+            });
+        } else if (selectedDates.start && selectedDates.end) {
+            // We have selected dates but not confirmed yet
+            expandDateWindow(selectedDates.start);
+            // setCalendarErrorMessage(
+            //     `Selected: ${selectedDates.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${selectedDates.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}\n` +
+            //     `Minimum ${MIN_BOOKING_DAYS} days required.`
+            // );
+        } else {
+            // No selection yet, initialize fresh
+            initializeDateWindow();
+            // setCalendarErrorMessage(
+            //     `Available window: Next ${INITIAL_SELECTION_DAYS} days from today.\n` +
+            //     `Click a date to auto-select ${MIN_BOOKING_DAYS} days minimum.`
+            // );
+        }
+    }
+}, [isCalendarOpen, currentProduct]);
+    //LASTLY NEWLY ADDED 
+
+
+    // // Initialize or reset the date window
+    // const initializeDateWindow = () => {
+    //     const today = new Date();
+    //     today.setUTCHours(0, 0, 0, 0);
+        
+    //     // Set initial window (INITIAL_SELECTION_DAYS from today)
+    //     const windowEnd = new Date(today);
+    //     windowEnd.setDate(today.getDate() + INITIAL_SELECTION_DAYS - 1);
+        
+    //     setCurrentWindowStart(today);
+    //     setCurrentWindowEnd(windowEnd);
+    //     setIsWindowExpanded(false);
+    //     setIsSelectionConfirmed(false);
+        
+    //     // Reset current month to show today's month
+    //     setCurrentMonth(new Date(today));
+        
+    //     console.log('Window initialized:', {
+    //         start: today.toISOString().split('T')[0],
+    //         end: windowEnd.toISOString().split('T')[0],
+    //         days: INITIAL_SELECTION_DAYS
+    //     });
+    // };
+
+
+    // Update the initializeDateWindow function to not reset confirmed dates
+const initializeDateWindow = () => {
+    // Only initialize if we don't have confirmed dates
+    if (campaignConfirmedDates.start && campaignConfirmedDates.end) {
+        return; // Keep existing confirmed dates
+    }
+    
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    
+    // Set initial window (INITIAL_SELECTION_DAYS from today)
+    const windowEnd = new Date(today);
+    windowEnd.setDate(today.getDate() + INITIAL_SELECTION_DAYS - 1);
+    
+    setCurrentWindowStart(today);
+    setCurrentWindowEnd(windowEnd);
+    setIsWindowExpanded(false);
+    setIsSelectionConfirmed(false);
+    
+    // Reset current month to show today's month
+    setCurrentMonth(new Date(today));
+    
+    console.log('Window initialized:', {
+        start: today.toISOString().split('T')[0],
+        end: windowEnd.toISOString().split('T')[0],
+        days: INITIAL_SELECTION_DAYS
+    });
+};
+
+    // // Check if date is within current window
+    // const isDateWithinCurrentWindow = (date) => {
+    //     if (!date || isNaN(date.getTime())) return false;
+    //     if (!currentWindowStart || !currentWindowEnd) return true; // Allow all dates if window not set
+        
+    //     const normalizedDate = new Date(Date.UTC(
+    //         date.getFullYear(),
+    //         date.getMonth(),
+    //         date.getDate()
+    //     ));
+        
+    //     const normalizedStart = new Date(Date.UTC(
+    //         currentWindowStart.getFullYear(),
+    //         currentWindowStart.getMonth(),
+    //         currentWindowStart.getDate()
+    //     ));
+        
+    //     const normalizedEnd = new Date(Date.UTC(
+    //         currentWindowEnd.getFullYear(),
+    //         currentWindowEnd.getMonth(),
+    //         currentWindowEnd.getDate()
+    //     ));
+        
+    //     return normalizedDate >= normalizedStart && normalizedDate <= normalizedEnd;
+    // };
+
+    // Check if date is within current window
+const isDateWithinCurrentWindow = (date) => {
+    if (!date || isNaN(date.getTime())) return false;
+    
+    // If no window set, allow all dates
+    if (!currentWindowStart || !currentWindowEnd) return true;
+    
+    const normalizedDate = new Date(Date.UTC(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+    ));
+    
+    const normalizedStart = new Date(Date.UTC(
+        currentWindowStart.getFullYear(),
+        currentWindowStart.getMonth(),
+        currentWindowStart.getDate()
+    ));
+    
+    const normalizedEnd = new Date(Date.UTC(
+        currentWindowEnd.getFullYear(),
+        currentWindowEnd.getMonth(),
+        currentWindowEnd.getDate()
+    ));
+    
+    // When window is expanded (to 3650 days), this allows all future dates
+    return normalizedDate >= normalizedStart && normalizedDate <= normalizedEnd;
+};
+
+    // Expand window when start date is selected
+    const expandDateWindow = (startDate) => {
+        const today = new Date();
+        today.setUTCHours(0, 0, 0, 0);
+         // Set window start to today
+    setCurrentWindowStart(today);
+    
+        // Expand to AVAILABLE_WINDOW_DAYS from today (not from start date)
+        const expandedEnd = new Date(today);
+        expandedEnd.setDate(today.getDate() + AVAILABLE_WINDOW_DAYS - 1);
+        
+        // setCurrentWindowStart(today);
+        setCurrentWindowEnd(expandedEnd);
+        setIsWindowExpanded(true);
+        
+        console.log('Window expanded:', {
+            start: today.toISOString().split('T')[0],
+            end: expandedEnd.toISOString().split('T')[0],
+            days: AVAILABLE_WINDOW_DAYS
+        });
+    };
+
+    // // Reset to initial window
+    // const resetToInitialWindow = () => {
+    //     const today = new Date();
+    //     today.setUTCHours(0, 0, 0, 0);
+        
+    //     const windowEnd = new Date(today);
+    //     windowEnd.setDate(today.getDate() + INITIAL_SELECTION_DAYS - 1);
+        
+    //     setCurrentWindowStart(today);
+    //     setCurrentWindowEnd(windowEnd);
+    //     setIsWindowExpanded(false);
+    //     setIsSelectionConfirmed(false);
+    //     setCurrentMonth(new Date(today));
+    // };
+
+
+    // Update the resetToInitialWindow function
+const resetToInitialWindow = () => {
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    
+    const windowEnd = new Date(today);
+    windowEnd.setDate(today.getDate() + INITIAL_SELECTION_DAYS - 1);
+    
+    setCurrentWindowStart(today);
+    setCurrentWindowEnd(windowEnd);
+    setIsWindowExpanded(false);
+    setIsSelectionConfirmed(false);
+    setCurrentMonth(new Date(today));
+};
+
+    // // Reset dates completely
+    // const resetDates = () => {
+    //     setSelectedDates({ start: null, end: null });
+    //     setCampaignConfirmedDates({ start: null, end: null });
+    //     setCalendarErrorMessage("");
+    //     setShowQueueInfo(false);
+    //     setIsSelectionConfirmed(false);
+    //     resetToInitialWindow();
+    // };
+
+    // Update the resetDates function to properly clear everything
+const resetDates = () => {
+    setSelectedDates({ start: null, end: null });
+    setCampaignConfirmedDates({ start: null, end: null });
+    setCalendarErrorMessage("");
+    setShowQueueInfo(false);
+    setIsSelectionConfirmed(false);
+    resetToInitialWindow();
+};
+
+    // // Auto-select minimum 7 days when start date is clicked
+    // const autoSelectMinimumDays = (startDate) => {
+    //     const today = new Date();
+    //     today.setUTCHours(0, 0, 0, 0);
+        
+    //     // Calculate end date (6 days after start date = total 7 days)
+    //     const endDate = new Date(startDate);
+    //     endDate.setDate(startDate.getDate() + (MIN_BOOKING_DAYS - 1));
+        
+    //     // Check if end date is within expanded window (180 days from today)
+    //     const maxWindowEnd = new Date(today);
+    //     maxWindowEnd.setDate(today.getDate() + AVAILABLE_WINDOW_DAYS - 1);
+        
+    //     if (endDate > maxWindowEnd) {
+    //         // If end date exceeds 180 days, adjust to max window
+    //         endDate.setTime(maxWindowEnd.getTime());
+    //     }
+        
+    //     // Check for conflicts
+    //     const conflictBlocks = getConflictBlocks(startDate, endDate);
+    //     const availableDays = getAvailableDaysInRange(startDate, endDate);
+        
+    //     if (availableDays.length >= MIN_BOOKING_DAYS) {
+    //         // Set the selection
+    //         setSelectedDates({ start: startDate, end: endDate });
+            
+    //         if (conflictBlocks.length === 0) {
+    //             setCalendarErrorMessage(
+    //                 `✅ Auto-selected ${MIN_BOOKING_DAYS} days: ${startDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${endDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`
+    //             );
+    //         } else {
+    //             setCalendarErrorMessage(
+    //                 `⚠️ Auto-selected ${MIN_BOOKING_DAYS} days with ${conflictBlocks.length} conflict block(s).\nYou can adjust the end date.`
+    //             );
+    //         }
+    //     } else {
+    //         // Try to find alternative range
+    //         const range = findNextAvailableRange(startDate);
+    //         if (range) {
+    //             setSelectedDates({ start: range.start, end: range.end });
+    //             setCalendarErrorMessage(
+    //                 `✅ Found available ${range.days} days: ${range.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${range.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`
+    //             );
+    //         } else {
+    //             setCalendarErrorMessage(
+    //                 `❌ Cannot find ${MIN_BOOKING_DAYS} continuous available days starting from ${startDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}.`
+    //             );
+    //         }
+    //     }
+    // };
+
+
+    const autoSelectMinimumDays = (startDate) => {
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    
+    // Calculate end date (6 days after start date = total 7 days)
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + (MIN_BOOKING_DAYS - 1));
+    
+    // Check if end date is within available window (3650 days from today)
+    const maxWindowEnd = new Date(today);
+    maxWindowEnd.setDate(today.getDate() + AVAILABLE_WINDOW_DAYS - 1);
+    
+    if (endDate > maxWindowEnd) {
+        // If end date exceeds window, find alternative range
+        const range = findNextAvailableRange(startDate);
+        if (range) {
+            setSelectedDates({ start: range.start, end: range.end });
+            setCalendarErrorMessage(
+                `✅ Auto-selected ${range.days} days: ${range.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${range.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`
+            );
+        } else {
+            setCalendarErrorMessage(
+                `❌ Cannot find ${MIN_BOOKING_DAYS} continuous available days starting from ${startDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}.`
+            );
+        }
+        return;
+    }
+    
+    // Check for conflicts
+    const conflictBlocks = getConflictBlocks(startDate, endDate);
+    const availableDays = getAvailableDaysInRange(startDate, endDate).length;
+    
+    if (availableDays >= MIN_BOOKING_DAYS) {
+        // Set the selection
+        setSelectedDates({ start: startDate, end: endDate });
+        
+        // if (conflictBlocks.length === 0) {
+        //     setCalendarErrorMessage(
+        //         `✅ Auto-selected ${MIN_BOOKING_DAYS} days: ${startDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${endDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`
+        //     );
+        // } else {
+        //     setCalendarErrorMessage(
+        //         `⚠️ Auto-selected ${MIN_BOOKING_DAYS} days with ${conflictBlocks.length} conflict block(s).\nYou can adjust the end date.`
+        //     );
+        // }
+    } else {
+        // Try to find alternative range
+        const range = findNextAvailableRange(startDate);
+        if (range) {
+            setSelectedDates({ start: range.start, end: range.end });
+            setCalendarErrorMessage(
+                `✅ Found available ${range.days} days: ${range.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${range.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`
+            );
+        } else {
+            setCalendarErrorMessage(
+                `❌ Cannot find ${MIN_BOOKING_DAYS} continuous available days starting from ${startDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}.`
+            );
+        }
+    }
+};
+
+    // Find next available range starting from a date
+    const findNextAvailableRange = (startDate) => {
+        let current = new Date(startDate);
+        let consecutiveDays = 0;
+        let rangeStart = null;
+        const maxWindowEnd = new Date(currentWindowEnd || new Date());
+        
+        while (current <= maxWindowEnd && consecutiveDays < MIN_BOOKING_DAYS) {
+            if (!isDateBooked(current) && !isPastDate(current)) {
+                if (consecutiveDays === 0) {
+                    rangeStart = new Date(current);
+                }
+                consecutiveDays++;
+            } else {
+                consecutiveDays = 0;
+                rangeStart = null;
+            }
+            current.setDate(current.getDate() + 1);
+        }
+        
+        if (consecutiveDays >= MIN_BOOKING_DAYS && rangeStart) {
+            const endDate = new Date(rangeStart);
+            endDate.setDate(rangeStart.getDate() + consecutiveDays - 1);
+            return {
+                start: rangeStart,
+                end: endDate,
+                days: consecutiveDays
+            };
+        }
+        return null;
+    };
+
+
+
+    // In BookASite1.jsx - Add this function to handle outside-window error messages
+const handleOutsideWindowClick = (date) => {
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    
+    if (!isWindowExpanded) {
+        const windowEnd = new Date(today);
+        windowEnd.setDate(today.getDate() + INITIAL_SELECTION_DAYS - 1);
+        
+        setCalendarErrorMessage(
+            `🟡 Date outside initial selection window\n` +
+            `📅 Selected: ${date.toLocaleDateString('en-IN', { 
+                weekday: 'short', 
+                day: 'numeric', 
+                month: 'short' 
+            })}\n` +
+            `✅ Available window: ${today.toLocaleDateString('en-IN', { 
+                day: 'numeric', 
+                month: 'short' 
+            })} - ${windowEnd.toLocaleDateString('en-IN', { 
+                day: 'numeric', 
+                month: 'short' 
+            })}\n` +
+            `📝 Click a date within the green window to begin selection`
+        );
+    } else {
+        const windowEnd = new Date(today);
+        windowEnd.setDate(today.getDate() + AVAILABLE_WINDOW_DAYS - 1);
+        
+        setCalendarErrorMessage(
+            `🟡 Date outside available window\n` +
+            `📅 Selected: ${date.toLocaleDateString('en-IN', { 
+                weekday: 'short', 
+                day: 'numeric', 
+                month: 'short' 
+            })}\n` +
+            `✅ Available window: ${today.toLocaleDateString('en-IN', { 
+                day: 'numeric', 
+                month: 'short' 
+            })} - ${windowEnd.toLocaleDateString('en-IN', { 
+                day: 'numeric', 
+                month: 'short' 
+            })}\n` +
+            `📆 ${AVAILABLE_WINDOW_DAYS} days available from today`
+        );
+    }
+    
+    // Clear message after 5 seconds
+    setTimeout(() => {
+        setCalendarErrorMessage("");
+    }, 5000);
+}; 
+
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -1248,7 +1726,8 @@ function BookASite1() {
         setSelectedFileIndex(-1);
         setSelectedSpot(mappedSpot);
         setSelectedDates({ start: null, end: null });
-        setConfirmedDates({ start: null, end: null });
+        setCampaignConfirmedDates({ start: null, end: null });
+        setIsSelectionConfirmed(false);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -1312,193 +1791,91 @@ function BookASite1() {
         );
     };
 
-    // CALENDAR SECTION - Updated with Queue System
-    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-    const today = new Date();
-    const [currentMonth, setCurrentMonth] = useState(new Date());
-    const [isLoginOpen, setIsLoginOpen] = useState(false);
-    const [isOtpMainOpen, setIsOtpMainOpen] = useState(false);
-
-    // Date Selection State
-    const [selectedDates, setSelectedDates] = useState({ start: null, end: null });
-    const [campaignConfirmedDates, setCampaignConfirmedDates] = useState({});
-
-
     const fetchDates = async () => {
-  if (currentProduct?.prodCode) {
-    try {
-      const res = await fetch(`${baseUrl}/booked-dates/${currentProduct.prodCode}`);
-      const data = await res.json();
+        if (currentProduct?.prodCode) {
+            try {
+                const res = await fetch(`${baseUrl}/booked-dates/${currentProduct.prodCode}`);
+                const data = await res.json();
 
-      if (res.ok) {
-        // Handle both old and new response formats
-        let confirmedDatesArray = [];
-        let pendingDatesArray = [];
-        
-        // New format
-        if (data.confirmed && Array.isArray(data.confirmed)) {
-          if (typeof data.confirmed[0] === 'string') {
-            // Array of strings
-            confirmedDatesArray = data.confirmed;
-          } else {
-            // Array of objects
-            confirmedDatesArray = data.confirmed.map(item => item.date || item);
-          }
+                if (res.ok) {
+                    let confirmedDatesArray = [];
+                    let pendingDatesArray = [];
+                    
+                    if (data.confirmed && Array.isArray(data.confirmed)) {
+                        if (typeof data.confirmed[0] === 'string') {
+                            confirmedDatesArray = data.confirmed;
+                        } else {
+                            confirmedDatesArray = data.confirmed.map(item => item.date || item);
+                        }
+                    }
+                    
+                    if (data.pending && Array.isArray(data.pending)) {
+                        pendingDatesArray = data.pending.map(item => ({
+                            ...item,
+                            date: item.date || item
+                        }));
+                    }
+                    
+                    const validConfirmedDates = confirmedDatesArray.filter(d => {
+                        try {
+                            const date = new Date(d);
+                            return !isNaN(date.getTime());
+                        } catch {
+                            return false;
+                        }
+                    }).map(d => {
+                        const date = new Date(d);
+                        return new Date(Date.UTC(
+                            date.getUTCFullYear(),
+                            date.getUTCMonth(),
+                            date.getUTCDate()
+                        ));
+                    });
+
+                    const validPendingDates = pendingDatesArray.filter(p => {
+                        const dateStr = p.date;
+                        try {
+                            const date = new Date(dateStr);
+                            return !isNaN(date.getTime());
+                        } catch {
+                            return false;
+                        }
+                    }).map(p => {
+                        const date = new Date(p.date);
+                        return {
+                            ...p,
+                            date: new Date(Date.UTC(
+                                date.getUTCFullYear(),
+                                date.getUTCMonth(),
+                                date.getUTCDate()
+                            ))
+                        };
+                    });
+
+                    setConfirmedDates(validConfirmedDates);
+                    setPendingDates(validPendingDates);
+
+                    if (user) {
+                        fetchQueuePosition(currentProduct.prodCode);
+                    }
+                } else {
+                    setConfirmedDates([]);
+                    setPendingDates([]);
+                }
+            } catch (error) {
+                console.error("Error fetching dates:", error);
+                setConfirmedDates([]);
+                setPendingDates([]);
+            }
         }
-        
-        if (data.pending && Array.isArray(data.pending)) {
-          pendingDatesArray = data.pending.map(item => ({
-            ...item,
-            date: item.date || item
-          }));
-        }
-        
-        // Filter and convert to Date objects
-        const validConfirmedDates = confirmedDatesArray.filter(d => {
-          try {
-            const date = new Date(d);
-            return !isNaN(date.getTime());
-          } catch {
-            return false;
-          }
-        }).map(d => {
-          const date = new Date(d);
-          return new Date(Date.UTC(
-            date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate()
-          ));
-        });
+    };
 
-        const validPendingDates = pendingDatesArray.filter(p => {
-          const dateStr = p.date;
-          try {
-            const date = new Date(dateStr);
-            return !isNaN(date.getTime());
-          } catch {
-            return false;
-          }
-        }).map(p => {
-          const date = new Date(p.date);
-          return {
-            ...p,
-            date: new Date(Date.UTC(
-              date.getUTCFullYear(),
-              date.getUTCMonth(),
-              date.getUTCDate()
-            ))
-          };
-        });
-
-        setConfirmedDates(validConfirmedDates);
-        setPendingDates(validPendingDates);
-
-        if (user) {
-          fetchQueuePosition(currentProduct.prodCode);
-        }
-      } else {
-        setConfirmedDates([]);
-        setPendingDates([]);
-      }
-    } catch (error) {
-      console.error("Error fetching dates:", error);
-      setConfirmedDates([]);
-      setPendingDates([]);
-    }
-  }
-};
-    // Fetch dates with queue system
     useEffect(() => {
-//       const fetchDates = async () => {
-//   if (currentProduct?.prodCode) {
-//     try {
-//       const res = await fetch(`${baseUrl}/booked-dates/${currentProduct.prodCode}`);
-//       const data = await res.json();
-
-//       if (res.ok) {
-//         // Handle both old and new response formats
-//         let confirmedDatesArray = [];
-//         let pendingDatesArray = [];
-        
-//         // New format
-//         if (data.confirmed && Array.isArray(data.confirmed)) {
-//           if (typeof data.confirmed[0] === 'string') {
-//             // Array of strings
-//             confirmedDatesArray = data.confirmed;
-//           } else {
-//             // Array of objects
-//             confirmedDatesArray = data.confirmed.map(item => item.date || item);
-//           }
-//         }
-        
-//         if (data.pending && Array.isArray(data.pending)) {
-//           pendingDatesArray = data.pending.map(item => ({
-//             ...item,
-//             date: item.date || item
-//           }));
-//         }
-        
-//         // Filter and convert to Date objects
-//         const validConfirmedDates = confirmedDatesArray.filter(d => {
-//           try {
-//             const date = new Date(d);
-//             return !isNaN(date.getTime());
-//           } catch {
-//             return false;
-//           }
-//         }).map(d => {
-//           const date = new Date(d);
-//           return new Date(Date.UTC(
-//             date.getUTCFullYear(),
-//             date.getUTCMonth(),
-//             date.getUTCDate()
-//           ));
-//         });
-
-//         const validPendingDates = pendingDatesArray.filter(p => {
-//           const dateStr = p.date;
-//           try {
-//             const date = new Date(dateStr);
-//             return !isNaN(date.getTime());
-//           } catch {
-//             return false;
-//           }
-//         }).map(p => {
-//           const date = new Date(p.date);
-//           return {
-//             ...p,
-//             date: new Date(Date.UTC(
-//               date.getUTCFullYear(),
-//               date.getUTCMonth(),
-//               date.getUTCDate()
-//             ))
-//           };
-//         });
-
-//         setConfirmedDates(validConfirmedDates);
-//         setPendingDates(validPendingDates);
-
-//         if (user) {
-//           fetchQueuePosition(currentProduct.prodCode);
-//         }
-//       } else {
-//         setConfirmedDates([]);
-//         setPendingDates([]);
-//       }
-//     } catch (error) {
-//       console.error("Error fetching dates:", error);
-//       setConfirmedDates([]);
-//       setPendingDates([]);
-//     }
-//   }
-// };
-
         if (currentProduct) {
             fetchDates();
         }
     }, [currentProduct, user]);
 
-    // Fetch queue position
     const fetchQueuePosition = async (prodCode) => {
         try {
             const response = await fetch(`${baseUrl}/pending-reservations/${prodCode}`);
@@ -1525,7 +1902,7 @@ function BookASite1() {
         return normalizedDate < today;
     };
 
-    // Check if date is confirmed booked (red) - with error handling
+    // Check if date is confirmed booked (red)
     const isDateBooked = (date) => {
         if (!date || isNaN(date.getTime())) return false;
 
@@ -1554,7 +1931,7 @@ function BookASite1() {
         }
     };
 
-    // Check if date is pending (orange) - with error handling
+    // Check if date is pending (orange)
     const isDatePending = (date) => {
         if (!date || isNaN(date.getTime())) return false;
 
@@ -1581,13 +1958,12 @@ function BookASite1() {
             console.warn("Error in isDatePending:", error);
             return false;
         }
-    }; 
+    };
 
-    // Generate date suggestions
     const fetchDateSuggestions = async (startDate) => {
         try {
             const response = await fetch(
-                `${baseUrl}/date-suggestions/${currentProduct.prodCode}?requiredDays=7&startFrom=${startDate.toISOString()}`
+                `${baseUrl}/date-suggestions/${currentProduct.prodCode}?requiredDays=${MIN_BOOKING_DAYS}&startFrom=${startDate.toISOString()}`
             );
             const data = await response.json();
 
@@ -1602,7 +1978,6 @@ function BookASite1() {
         }
     };
 
-    // Get conflict blocks in a date range
     const getConflictBlocks = (start, end) => {
         if (!start || !end || isNaN(start.getTime()) || isNaN(end.getTime())) {
             return [];
@@ -1617,7 +1992,6 @@ function BookASite1() {
                 const blockStart = new Date(current);
                 let blockEnd = new Date(current);
                 
-                // Extend block while consecutive dates are booked
                 while (current <= normalizedEnd && isDateBooked(current)) {
                     blockEnd = new Date(current);
                     current.setDate(current.getDate() + 1);
@@ -1636,284 +2010,335 @@ function BookASite1() {
         return blocks;
     };
 
-    // NEW: Function to find a range with 7 available days from a start date
     const findRangeWith7AvailableDays = (startDate) => {
         let availableDays = 0;
         let current = new Date(startDate);
         let endDate = new Date(startDate);
-        let maxSearchDays = 60; // Search up to 60 days ahead
+        const maxWindowEnd = currentWindowEnd || new Date();
         
-        for (let i = 0; i < maxSearchDays; i++) {
+        while (current <= maxWindowEnd && availableDays < MIN_BOOKING_DAYS) {
             if (!isDateBooked(current) && !isPastDate(current)) {
                 availableDays++;
-                if (availableDays === 7) {
+                if (availableDays === MIN_BOOKING_DAYS) {
                     endDate = new Date(current);
                     break;
                 }
+            } else {
+                availableDays = 0;
+                startDate = new Date(current);
+                startDate.setDate(startDate.getDate() + 1);
+                current = new Date(startDate);
+                endDate = new Date(startDate);
+                continue;
             }
             current.setDate(current.getDate() + 1);
         }
         
-        return availableDays === 7 ? { start: startDate, end: endDate } : null;
+        return availableDays === MIN_BOOKING_DAYS ? { start: startDate, end: endDate } : null;
     };
 
-    const handleDateClick = async (date) => {
-        if (!date || isNaN(date.getTime())) {
-            console.warn("Invalid date clicked:", date);
+    // // Validate minimum days selection
+    // const validateMinimumDays = (start, end) => {
+    //     if (!start || !end) return { valid: false, days: 0, message: "Please select both start and end dates." };
+        
+    //     const days = calculateDaysDifference(start, end);
+    //     const availableDays = getAvailableDaysInRange(start, end).length;
+        
+    //     if (availableDays < MIN_BOOKING_DAYS) {
+    //         return {
+    //             valid: false,
+    //             days: days,
+    //             availableDays: availableDays,
+    //             message: `Minimum ${MIN_BOOKING_DAYS} available days required. Selected range has ${days} calendar days with only ${availableDays} available days.`
+    //         };
+    //     }
+        
+    //     return {
+    //         valid: true,
+    //         days: days,
+    //         availableDays: availableDays,
+    //         message: `✅ ${days} days selected with ${availableDays} available days.`
+    //     };
+    // };
+
+
+    // Validate minimum days selection - UPDATED VERSION
+const validateMinimumDays = (start, end) => {
+    if (!start || !end) {
+        return { 
+            valid: false, 
+            days: 0, 
+            availableDays: 0, 
+            message: "Please select both start and end dates." 
+        };
+    }
+    
+    const days = calculateDaysDifference(start, end);
+    const availableDays = getAvailableDaysInRange(start, end).length;
+    
+    if (availableDays < MIN_BOOKING_DAYS) {
+        return {
+            valid: false,
+            days: days,
+            availableDays: availableDays,
+            message: `Minimum ${MIN_BOOKING_DAYS} available days required. Selected range has ${days} calendar days with only ${availableDays} available days.`
+        };
+    }
+    
+    // Check for conflict blocks
+    const conflictBlocks = getConflictBlocks(start, end);
+    const bookedCount = conflictBlocks.reduce((total, block) => total + block.days, 0);
+    
+    return {
+        valid: true,
+        days: days,
+        availableDays: availableDays,
+        bookedCount: bookedCount,
+        conflictBlocks: conflictBlocks.length,
+        message: `✅ ${days} days selected with ${availableDays} available days${bookedCount > 0 ? ` (${bookedCount} booked days excluded)` : ''}.`
+    };
+};
+
+    // const handleDateClick = async (date) => {
+    //     if (!date || isNaN(date.getTime())) {
+    //         console.warn("Invalid date clicked:", date);
+    //         return;
+    //     }
+
+    //     try {
+    //         const normalizedDate = new Date(Date.UTC(
+    //             date.getFullYear(),
+    //             date.getMonth(),
+    //             date.getDate()
+    //         ));
+
+    //         // Check if date is in the past
+    //         if (isPastDate(normalizedDate)) {
+    //             setCalendarErrorMessage("Cannot select past dates.");
+    //             return;
+    //         }
+
+    //         // Check if date is within current window
+    //         if (!isDateWithinCurrentWindow(normalizedDate)) {
+    //             const today = new Date();
+    //             today.setUTCHours(0, 0, 0, 0);
+                
+    //             if (!isWindowExpanded) {
+    //                 const windowEnd = new Date(today);
+    //                 windowEnd.setDate(today.getDate() + INITIAL_SELECTION_DAYS - 1);
+                    
+    //                 setCalendarErrorMessage(
+    //                     `Please select a date within the initial window: ${today.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${windowEnd.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`
+    //                 );
+    //             } else {
+    //                 const windowEnd = new Date(today);
+    //                 windowEnd.setDate(today.getDate() + AVAILABLE_WINDOW_DAYS - 1);
+                    
+    //                 setCalendarErrorMessage(
+    //                     `Please select a date within the available window (${AVAILABLE_WINDOW_DAYS} days from today): ${today.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${windowEnd.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`
+    //                 );
+    //             }
+    //             return;
+    //         }
+
+    //         // Check if date is confirmed booked (red - blocked)
+    //         if (isDateBooked(normalizedDate)) {
+    //             const suggestions = await fetchDateSuggestions(normalizedDate);
+    //             let message = `❌ This date is already confirmed booked (red).\n`;
+                
+    //             if (suggestions.length > 0) {
+    //                 message += `\nSuggested alternative available periods:\n`;
+    //                 suggestions.forEach((suggestion, index) => {
+    //                     const start = new Date(suggestion.startDate);
+    //                     const end = new Date(suggestion.endDate);
+    //                     message += `${index + 1}. ${start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}\n`;
+    //                 });
+    //             }
+                
+    //             setCalendarErrorMessage(message);
+    //             return;
+    //         }
+
+    //         // Check if date is pending (orange - can be booked but in queue)
+    //         if (isDatePending(normalizedDate)) {
+    //             setShowQueueInfo(true);
+    //             const queueMessage = "⏳ This date is in queue (pending confirmation).\n" +
+    //                                "You can still book it, but you'll be added to the queue.\n" +
+    //                                "If pending orders ahead of you get cancelled or expire, your booking will move up.";
+    //             setCalendarErrorMessage(queueMessage);
+    //         } else {
+    //             setShowQueueInfo(false);
+    //         }
+
+    //         // Handle date selection
+    //         if (!selectedDates.start) {
+    //             // First click - set start date, expand window, and auto-select minimum days
+    //             setSelectedDates({ start: normalizedDate, end: null });
+    //             expandDateWindow(normalizedDate);
+    //             autoSelectMinimumDays(normalizedDate);
+    //             return;
+    //         }
+
+    //         if (selectedDates.start && !selectedDates.end) {
+    //             // This shouldn't happen as we auto-select end date, but handle just in case
+    //             const newEndDate = new Date(selectedDates.start);
+    //             newEndDate.setDate(selectedDates.start.getDate() + MIN_BOOKING_DAYS - 1);
+                
+    //             if (normalizedDate > selectedDates.start) {
+    //                 setSelectedDates({ start: selectedDates.start, end: normalizedDate });
+    //             } else {
+    //                 setSelectedDates({ start: normalizedDate, end: selectedDates.start });
+    //             }
+    //             return;
+    //         }
+
+    //         if (selectedDates.start && selectedDates.end) {
+    //             // Adjusting existing selection
+    //             if (normalizedDate < selectedDates.start) {
+    //                 // Clicked date is before start - set as new start and auto-select
+    //                 setSelectedDates({ start: normalizedDate, end: null });
+    //                 expandDateWindow(normalizedDate);
+    //                 autoSelectMinimumDays(normalizedDate);
+    //             } else {
+    //                 // Clicked date is after start - adjust end date
+    //                 const daysSelected = calculateDaysDifference(selectedDates.start, normalizedDate);
+                    
+    //                 if (daysSelected < MIN_BOOKING_DAYS) {
+    //                     // Auto-extend to minimum days
+    //                     const newEndDate = new Date(selectedDates.start);
+    //                     newEndDate.setDate(selectedDates.start.getDate() + MIN_BOOKING_DAYS - 1);
+                        
+    //                     if (isDateWithinCurrentWindow(newEndDate)) {
+    //                         setSelectedDates({ start: selectedDates.start, end: newEndDate });
+    //                         setCalendarErrorMessage(`Minimum ${MIN_BOOKING_DAYS} days required. Auto-extended to ${newEndDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`);
+    //                     } else {
+    //                         setCalendarErrorMessage(`Cannot extend to ${MIN_BOOKING_DAYS} days as it exceeds available window.`);
+    //                     }
+    //                 } else {
+    //                     // Valid selection
+    //                     setSelectedDates({ start: selectedDates.start, end: normalizedDate });
+    //                 }
+    //             }
+    //             return;
+    //         }
+    //     } catch (error) {
+    //         console.error("Error in handleDateClick:", error);
+    //         setCalendarErrorMessage("An error occurred while selecting the date. Please try again.");
+    //     }
+    // };
+
+    // Helper functions
+   
+   const handleDateClick = async (date) => {
+    if (!date || isNaN(date.getTime())) {
+        console.warn("Invalid date clicked:", date);
+        return;
+    }
+
+    try {
+        const normalizedDate = new Date(Date.UTC(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate()
+        ));
+
+        // Check if date is in the past
+        if (isPastDate(normalizedDate)) {
+            setCalendarErrorMessage("Cannot select past dates.");
             return;
         }
 
-        try {
-            const normalizedDate = new Date(Date.UTC(
-                date.getFullYear(),
-                date.getMonth(),
-                date.getDate()
-            ));
-
-            // Check if date is in the past
-            if (isPastDate(normalizedDate)) {
-                setCalendarErrorMessage("Cannot select past dates.");
-                return;
-            }
-
-            // Check if date is confirmed booked (red - blocked)
-            if (isDateBooked(normalizedDate)) {
-                const suggestions = await fetchDateSuggestions(normalizedDate);
-                let message = `❌ This date is already confirmed booked (red).\n`;
-                
-                if (suggestions.length > 0) {
-                    message += `\nSuggested alternative available periods:\n`;
-                    suggestions.forEach((suggestion, index) => {
-                        const start = new Date(suggestion.startDate);
-                        const end = new Date(suggestion.endDate);
-                        message += `${index + 1}. ${start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}\n`;
-                    });
-                }
-                
-                setCalendarErrorMessage(message);
-                return;
-            }
-
-            // Check if date is pending (orange - can be booked but in queue)
-            if (isDatePending(normalizedDate)) {
-                setShowQueueInfo(true);
-                const queueMessage = "⏳ This date is in queue (pending confirmation).\n" +
-                                   "You can still book it, but you'll be added to the queue.\n" +
-                                   "If pending orders ahead of you get cancelled or expire, your booking will move up.";
-                setCalendarErrorMessage(queueMessage);
-            } else {
-                setShowQueueInfo(false);
-                setCalendarErrorMessage("");
-            }
-
-            // Continue with intelligent date selection
-            if (!selectedDates.start && !selectedDates.end) {
-                await intelligentDateSelection(normalizedDate);
-                return;
-            }
-
-            if (selectedDates.start && selectedDates.end) {
-                await handleContinuousSelection(normalizedDate);
-                return;
-            }
-        } catch (error) {
-            console.error("Error in handleDateClick:", error);
-            setCalendarErrorMessage("An error occurred while selecting the date. Please try again.");
-        }
-    };
-
-    // UPDATED: Intelligent date selection with conflict handling
-    const intelligentDateSelection = async (startDate) => {
-        try {
-            // Find a range with 7 available days starting from the clicked date
-            const range = findRangeWith7AvailableDays(startDate);
+        // Check if date is confirmed booked (red - blocked)
+        if (isDateBooked(normalizedDate)) {
+            const suggestions = await fetchDateSuggestions(normalizedDate);
+            let message = `❌ Slots are full. Kindly wait for the next `;
             
-            if (!range) {
-                const suggestions = await fetchDateSuggestions(startDate);
-                let message = `Cannot find 7 continuous available days starting from ${startDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}.\n`;
-                
-                if (suggestions.length > 0) {
-                    message += `\nTry these available periods instead:\n`;
-                    suggestions.forEach((suggestion, index) => {
-                        const start = new Date(suggestion.startDate);
-                        const end = new Date(suggestion.endDate);
-                        message += `${index + 1}. ${start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}\n`;
-                    });
-                } else {
-                    message += "Please select a different date.";
-                }
-                
-                setCalendarErrorMessage(message);
-                return;
-            }
-
-            const { start, end } = range;
-            
-            // Get conflict blocks in the selected range
-            const conflictBlocks = getConflictBlocks(start, end);
-            
-            // Calculate pending dates in selection
-            const pendingCount = getPendingDaysInRange(start, end);
-            const totalCalendarDays = calculateDaysDifference(start, end);
-            
-            if (conflictBlocks.length === 0) {
-                // No conflicts - all good
-                setSelectedDates({ start, end });
-                setCalendarErrorMessage(
-                    `✅ ${totalCalendarDays} days selected (all available).\n` +
-                    (pendingCount > 0 ? `⏳ ${pendingCount} date(s) in queue.\n` : "") +
-                    `Click "Reserve Slot" to confirm booking.`
-                );
-                if (pendingCount > 0) setShowQueueInfo(true);
-                
-            } else if (conflictBlocks.length === 1) {
-                // Single conflict block - allow selection with warning
-                const conflictBlock = conflictBlocks[0];
-                const conflictStart = conflictBlock.start;
-                const conflictEnd = conflictBlock.end;
-                
-                let conflictText;
-                if (conflictStart.getTime() === conflictEnd.getTime()) {
-                    conflictText = conflictStart.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
-                } else {
-                    conflictText = `${conflictStart.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${conflictEnd.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`;
-                }
-                
-                const availableDaysCount = getAvailableDaysInRange(start, end).length;
-                
-                setSelectedDates({ start, end });
-                setCalendarErrorMessage(
-                    `⚠️ Selected range contains ${conflictBlock.days} booked day(s) (${conflictText}).\n` +
-                    `✅ ${availableDaysCount} days are available for booking.\n` +
-                    (pendingCount > 0 ? `⏳ ${pendingCount} date(s) in queue.\n` : "") +
-                    `Price will be calculated for ${availableDaysCount} available days only.`
-                );
-                if (pendingCount > 0) setShowQueueInfo(true);
-                
-            } else {
-                // Multiple conflict blocks - suggest alternatives
-                const suggestions = await fetchDateSuggestions(startDate);
-                let message = `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
-                             `Please select a continuous available period.\n`;
-                
-                if (suggestions.length > 0) {
-                    message += `\nSuggested alternative available periods:\n`;
-                    suggestions.forEach((suggestion, index) => {
-                        const suggestionStart = new Date(suggestion.startDate);
-                        const suggestionEnd = new Date(suggestion.endDate);
-                        message += `${index + 1}. ${suggestionStart.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${suggestionEnd.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}\n`;
-                    });
-                }
-                
-                setCalendarErrorMessage(message);
-                // Don't set selected dates for multiple conflicts
-            }
-        } catch (error) {
-            console.error("Error in intelligent date selection:", error);
-            setCalendarErrorMessage("Error checking date availability. Please try again.");
-        }
-    };
-
-    // UPDATED: Handle continuous selection with conflict handling
-    const handleContinuousSelection = async (clickedDate) => {
-        const currentStart = selectedDates.start;
-        const currentEnd = selectedDates.end;
-
-        let newStart, newEnd;
-
-        if (clickedDate < currentStart) {
-            newStart = clickedDate;
-            newEnd = currentEnd;
-        } else if (clickedDate > currentEnd) {
-            newStart = currentStart;
-            newEnd = clickedDate;
-        } else {
-            newStart = currentStart;
-            newEnd = clickedDate;
-        }
-
-        // Ensure minimum 7 calendar days
-        let calendarDays = calculateDaysDifference(newStart, newEnd);
-        if (calendarDays < 7) {
-            newEnd = new Date(newStart);
-            newEnd.setDate(newEnd.getDate() + 6);
-        }
-
-        // Get conflict blocks in the new range
-        const conflictBlocks = getConflictBlocks(newStart, newEnd);
-        
-        // Calculate pending dates in selection
-        const pendingCount = getPendingDaysInRange(newStart, newEnd);
-        const totalCalendarDays = calculateDaysDifference(newStart, newEnd);
-        const availableDaysCount = getAvailableDaysInRange(newStart, newEnd).length;
-        
-        if (conflictBlocks.length === 0) {
-            // No conflicts
-            setSelectedDates({ start: newStart, end: newEnd });
-            setCalendarErrorMessage(
-                `✅ ${totalCalendarDays} days selected (all available).\n` +
-                (pendingCount > 0 ? `⏳ ${pendingCount} date(s) in queue.\n` : "")
-            );
-            if (pendingCount > 0) setShowQueueInfo(true);
-            
-        } else if (conflictBlocks.length === 1) {
-            // Single conflict block - allow with warning
-            const conflictBlock = conflictBlocks[0];
-            const conflictStart = conflictBlock.start;
-            const conflictEnd = conflictBlock.end;
-            
-            let conflictText;
-            if (conflictStart.getTime() === conflictEnd.getTime()) {
-                conflictText = conflictStart.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
-            } else {
-                conflictText = `${conflictStart.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${conflictEnd.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`;
-            }
-            
-            setSelectedDates({ start: newStart, end: newEnd });
-            setCalendarErrorMessage(
-                `⚠️ Selected range contains ${conflictBlock.days} booked day(s) (${conflictText}).\n` +
-                `✅ ${availableDaysCount} days are available for booking.\n` +
-                (pendingCount > 0 ? `⏳ ${pendingCount} date(s) in queue.\n` : "") +
-                `Price will be calculated for ${availableDaysCount} available days only.`
-            );
-            if (pendingCount > 0) setShowQueueInfo(true);
-            
-        } else {
-            // Multiple conflict blocks - suggest alternatives
-            const suggestions = await fetchDateSuggestions(newStart);
-            let message = `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n`;
-            
-            // List the conflict blocks
-            message += "Booked periods in your selection:\n";
-            conflictBlocks.slice(0, 3).forEach((block, index) => {
-                const start = block.start;
-                const end = block.end;
-                if (start.getTime() === end.getTime()) {
-                    message += `• ${start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}\n`;
-                } else {
-                    message += `• ${start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}\n`;
-                }
-            });
-            
-            if (conflictBlocks.length > 3) {
-                message += `• ...and ${conflictBlocks.length - 3} more\n`;
-            }
-            
-            if (suggestions.length > 0) {
-                message += `\nSuggested alternative available periods:\n`;
-                suggestions.forEach((suggestion, index) => {
-                    const start = new Date(suggestion.startDate);
-                    const end = new Date(suggestion.endDate);
-                    message += `${index + 1}. ${start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}\n`;
-                });
-            }
+            // if (suggestions.length > 0) {
+            //     message += `\nSuggested alternative available periods:\n`;
+            //     suggestions.forEach((suggestion, index) => {
+            //         const start = new Date(suggestion.startDate);
+            //         const end = new Date(suggestion.endDate);
+            //         message += `${index + 1}. ${start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}\n`;
+            //     });
+            // }
             
             setCalendarErrorMessage(message);
-            // Don't update selected dates for multiple conflicts
+            return;
         }
-    };
 
-    // Helper functions
+        // // Check if date is pending (orange - can be booked but in queue)
+        // if (isDatePending(normalizedDate)) {
+        //     setShowQueueInfo(true);
+        //     const queueMessage = "⏳ This date is in queue (pending confirmation).\n" +
+        //                        "You can still book it, but you'll be added to the queue.\n" +
+        //                        "If pending orders ahead of you get cancelled or expire, your booking will move up.";
+        //     setCalendarErrorMessage(queueMessage);
+        // } else {
+        //     setShowQueueInfo(false);
+        // }
+
+        // Handle date selection
+        if (!selectedDates.start) {
+            // First click - set start date, expand window, and auto-select minimum days
+            setSelectedDates({ start: normalizedDate, end: null });
+            expandDateWindow(normalizedDate);
+            autoSelectMinimumDays(normalizedDate);
+            return;
+        }
+
+        if (selectedDates.start && !selectedDates.end) {
+            // This shouldn't happen as we auto-select end date, but handle just in case
+            autoSelectMinimumDays(selectedDates.start);
+            return;
+        }
+
+        if (selectedDates.start && selectedDates.end) {
+            // Adjusting existing selection
+            if (normalizedDate < selectedDates.start) {
+                // Clicked date is before start - set as new start and auto-select
+                setSelectedDates({ start: normalizedDate, end: null });
+                expandDateWindow(normalizedDate);
+                autoSelectMinimumDays(normalizedDate);
+            } else {
+                // Clicked date is after start - adjust end date
+                const daysSelected = calculateDaysDifference(selectedDates.start, normalizedDate);
+                
+                if (daysSelected < MIN_BOOKING_DAYS) {
+                    // Auto-extend to minimum days
+                    const newEndDate = new Date(selectedDates.start);
+                    newEndDate.setDate(selectedDates.start.getDate() + MIN_BOOKING_DAYS - 1);
+                    
+                    // Check if new end date is available
+                    if (!isDateBooked(newEndDate)) {
+                        setSelectedDates({ start: selectedDates.start, end: newEndDate });
+                        setCalendarErrorMessage(`Minimum ${MIN_BOOKING_DAYS} days required. Auto-extended to ${newEndDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`);
+                    } else {
+                        // Find next available range
+                        const range = findNextAvailableRange(selectedDates.start);
+                        if (range) {
+                            setSelectedDates({ start: range.start, end: range.end });
+                            setCalendarErrorMessage(`Minimum ${MIN_BOOKING_DAYS} days required. Found available range: ${range.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${range.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`);
+                        } else {
+                            setCalendarErrorMessage(`Cannot extend to ${MIN_BOOKING_DAYS} days as there are conflicts. Please select a different start date.`);
+                        }
+                    }
+                } else {
+                    // Valid selection - check for conflicts in new range
+                    const conflictBlocks = getConflictBlocks(selectedDates.start, normalizedDate);
+                    if (conflictBlocks.length > 0) {
+                        setCalendarErrorMessage(`⚠️ Selected range has ${conflictBlocks.length} conflict block(s).`);
+                    }
+                    setSelectedDates({ start: selectedDates.start, end: normalizedDate });
+                }
+            }
+            return;
+        }
+    } catch (error) {
+        console.error("Error in handleDateClick:", error);
+        setCalendarErrorMessage("An error occurred while selecting the date. Please try again.");
+    }
+};
+   
     const calculateDaysDifference = (start, end) => {
         if (!start || !end) return 0;
         const timeDiff = Math.abs(end.getTime() - start.getTime());
@@ -1972,102 +2397,265 @@ function BookASite1() {
         return days;
     };
 
-    // Confirm dates for booking
-    const confirmDates = () => {
-        if (!selectedDates.start || !selectedDates.end) {
-            setCalendarErrorMessage("Please select start and end dates.");
-            return;
-        }
+    // // Confirm dates for booking
+    // const confirmDates = () => {
+    //     if (!selectedDates.start || !selectedDates.end) {
+    //         setCalendarErrorMessage("Please select start and end dates.");
+    //         return;
+    //     }
 
-        const availableDays = getAvailableDaysInRange(selectedDates.start, selectedDates.end);
-        const totalCalendarDays = calculateDaysDifference(selectedDates.start, selectedDates.end);
-        const bookedCount = totalCalendarDays - availableDays.length;
-        const pendingCount = getPendingDaysInRange(selectedDates.start, selectedDates.end);
-
-        if (availableDays.length < 7) {
-            setCalendarErrorMessage(
-                `Minimum 7 available days required.\n` +
-                `Selected range has ${totalCalendarDays} days with only ${availableDays.length} available.`
-            );
-            return;
-        }
-
-        // Get conflict blocks
-        const conflictBlocks = getConflictBlocks(selectedDates.start, selectedDates.end);
+    //     const validation = validateMinimumDays(selectedDates.start, selectedDates.end);
         
-        if (conflictBlocks.length >= 2) {
-            setCalendarErrorMessage(
-                `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
-                `Please select a continuous available period.`
-            );
-            return;
+    //     if (!validation.valid) {
+    //         setCalendarErrorMessage(validation.message);
+    //         return;
+    //     }
+
+    //     // Get conflict blocks
+    //     const conflictBlocks = getConflictBlocks(selectedDates.start, selectedDates.end);
+        
+    //     if (conflictBlocks.length >= 2) {
+    //         setCalendarErrorMessage(
+    //             `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
+    //             `Please select a continuous available period.`
+    //         );
+    //         return;
+    //     }
+
+    //     const pendingCount = getPendingDaysInRange(selectedDates.start, selectedDates.end);
+    //     let message = `✅ Dates confirmed!\n`;
+    //     message += `📅 ${validation.days} calendar days selected\n`;
+    //     message += `✅ ${validation.availableDays} available days for booking\n`;
+        
+    //     if (conflictBlocks.length > 0) {
+    //         const conflictBlock = conflictBlocks[0];
+    //         message += `⚠️ ${conflictBlock.days} booked day(s) excluded from pricing.\n`;
+    //     }
+        
+    //     if (pendingCount > 0) {
+    //         message += `⏳ ${pendingCount} date${pendingCount > 1 ? 's' : ''} in queue.\n`;
+    //     }
+        
+    //     message += `💰 Price calculated for ${validation.availableDays} available days.`;
+
+    //     setCalendarErrorMessage(message);
+    //     setCampaignConfirmedDates({ start: selectedDates.start, end: selectedDates.end });
+    //     setIsSelectionConfirmed(true);
+        
+    //     // Set window to show only selected range
+    //     setCurrentWindowStart(selectedDates.start);
+    //     setCurrentWindowEnd(selectedDates.end);
+    //     setIsWindowExpanded(false);
+
+    //     setTimeout(() => {
+    //         setCalendarErrorMessage("");
+    //         setIsCalendarOpen(false);
+    //     }, 3000);
+    // };
+
+// Add a function to clear confirmed dates when changing product
+useEffect(() => {
+    // When product changes, clear any previous confirmed dates
+    if (currentProduct && currentProduct.id !== selectedSpot?.id) {
+        setCampaignConfirmedDates({ start: null, end: null });
+        setIsSelectionConfirmed(false);
+    }
+}, [currentProduct, selectedSpot]);
+
+
+    // Update the confirmDates function to properly set state
+const confirmDates = () => {
+    if (!selectedDates.start || !selectedDates.end) {
+        setCalendarErrorMessage("Please select start and end dates.");
+        return;
+    }
+
+    const validation = validateMinimumDays(selectedDates.start, selectedDates.end);
+    
+    if (!validation.valid) {
+        setCalendarErrorMessage(validation.message);
+        return;
+    }
+
+    // Get conflict blocks
+    const conflictBlocks = getConflictBlocks(selectedDates.start, selectedDates.end);
+    
+    if (conflictBlocks.length >= 2) {
+        setCalendarErrorMessage(
+            `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
+            `Please select a continuous available period.`
+        );
+        return;
+    }
+
+    const pendingCount = getPendingDaysInRange(selectedDates.start, selectedDates.end);
+    let message = `✅ Dates confirmed!\n`;
+    message += `📅 ${validation.days} calendar days selected\n`;
+    message += `✅ ${validation.availableDays} available days for booking\n`;
+    
+    if (conflictBlocks.length > 0) {
+        const conflictBlock = conflictBlocks[0];
+        message += `⚠️ ${conflictBlock.days} booked day(s) excluded from pricing.\n`;
+    }
+    
+    if (pendingCount > 0) {
+        message += `⏳ ${pendingCount} date${pendingCount > 1 ? 's' : ''} in queue.\n`;
+    }
+    
+    message += `💰 Price calculated for ${validation.availableDays} available days.`;
+
+    setCalendarErrorMessage(message);
+    
+    // IMPORTANT: Store the confirmed dates
+    setCampaignConfirmedDates({ 
+        start: new Date(selectedDates.start), 
+        end: new Date(selectedDates.end) 
+    });
+    
+    // Set selection confirmed state
+    setIsSelectionConfirmed(true);
+    
+    // Set window to show only selected range
+    setCurrentWindowStart(new Date(selectedDates.start));
+    setCurrentWindowEnd(new Date(selectedDates.end));
+    setIsWindowExpanded(false);
+
+    setTimeout(() => {
+        setCalendarErrorMessage("");
+        setIsCalendarOpen(false);
+    }, 3000);
+};
+
+
+//     // Get date selection class for styling
+//     const getDateSelectionClass = (date) => {
+//         if (!date || isNaN(date.getTime())) {
+//             return "disabled";
+//         }
+
+//         try {
+//             const normalizedDate = new Date(Date.UTC(
+//                 date.getFullYear(),
+//                 date.getMonth(),
+//                 date.getDate()
+//             ));
+
+//             // Check if date is past
+//             if (isPastDate(normalizedDate)) {
+//                 return "past";
+//             }
+
+//             // // Check if date is outside current window
+//             // if (!isDateWithinCurrentWindow(normalizedDate)) {
+//             //     return "outside-window";
+//             // }
+
+
+//             // After checking for past dates, add:
+// if (!isDateWithinCurrentWindow(normalizedDate)) {
+//     handleOutsideWindowClick(normalizedDate);
+//     return;
+// }
+
+//             // Check booking status
+//             if (isDateBooked(normalizedDate)) return "booked";
+//             if (isDatePending(normalizedDate)) return "pending";
+
+//             // Check if in selected range
+//             if (selectedDates.start && selectedDates.end) {
+//                 const utcDate = new Date(Date.UTC(
+//                     date.getFullYear(),
+//                     date.getMonth(),
+//                     date.getDate()
+//                 ));
+
+//                 const startUTC = new Date(Date.UTC(
+//                     selectedDates.start.getFullYear(),
+//                     selectedDates.start.getMonth(),
+//                     selectedDates.start.getDate()
+//                 ));
+
+//                 const endUTC = new Date(Date.UTC(
+//                     selectedDates.end.getFullYear(),
+//                     selectedDates.end.getMonth(),
+//                     selectedDates.end.getDate()
+//                 ));
+
+//                 if (utcDate.getTime() === startUTC.getTime()) return "selected-start";
+//                 if (utcDate.getTime() === endUTC.getTime()) return "selected-end";
+//                 if (utcDate > startUTC && utcDate < endUTC) {
+//                     return "selected-range";
+//                 }
+//             }
+
+//             return "";
+//         } catch (error) {
+//             console.warn("Error in getDateSelectionClass:", error);
+//             return "disabled";
+//         }
+//     };
+
+
+// In BookASite1.jsx - Update getDateSelectionClass
+const getDateSelectionClass = (date) => {
+    if (!date || isNaN(date.getTime())) {
+        return "disabled";
+    }
+
+    try {
+        const normalizedDate = new Date(Date.UTC(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate()
+        ));
+
+        // Check if date is past
+        if (isPastDate(normalizedDate)) {
+            return "past";
         }
 
-        let message = `✅ Dates confirmed!\n`;
-        if (bookedCount > 0) {
-            message += `⚠️ ${bookedCount} booked day${bookedCount > 1 ? 's' : ''} excluded from pricing.\n`;
+        // Check if date is outside current window
+        if (!isDateWithinCurrentWindow(normalizedDate)) {
+            return "outside-window";
         }
-        if (pendingCount > 0) {
-            message += `⏳ ${pendingCount} date${pendingCount > 1 ? 's' : ''} in queue.\n`;
-        }
-        message += `💰 Price calculated for ${availableDays.length} available days.`;
 
-        setCalendarErrorMessage(message);
-        setCampaignConfirmedDates({ start: selectedDates.start, end: selectedDates.end });
+        // Check booking status
+        if (isDateBooked(normalizedDate)) return "booked";
+        if (isDatePending(normalizedDate)) return "pending";
 
-        setTimeout(() => {
-            setCalendarErrorMessage("");
-            setIsCalendarOpen(false);
-        }, 3000);
-    };
-
-    // Get date selection class for styling
-    const getDateSelectionClass = (date) => {
-        if (!date || isNaN(date.getTime())) return "disabled";
-
-        try {
-            const normalizedDate = new Date(Date.UTC(
-                date.getFullYear(),
-                date.getMonth(),
-                date.getDate()
-            ));
-
-            // Check booking status
-            if (isDateBooked(normalizedDate)) return "booked";
-            if (isDatePending(normalizedDate)) return "pending";
-            if (isPastDate(normalizedDate)) return "past";
-
-            // Check if in selected range
+        // Check if in selected range
+        if (selectedDates.start && selectedDates.end) {
             const utcDate = new Date(Date.UTC(
                 date.getFullYear(),
                 date.getMonth(),
                 date.getDate()
             ));
 
-            const startUTC = selectedDates.start ? new Date(Date.UTC(
+            const startUTC = new Date(Date.UTC(
                 selectedDates.start.getFullYear(),
                 selectedDates.start.getMonth(),
                 selectedDates.start.getDate()
-            )) : null;
+            ));
 
-            const endUTC = selectedDates.end ? new Date(Date.UTC(
+            const endUTC = new Date(Date.UTC(
                 selectedDates.end.getFullYear(),
                 selectedDates.end.getMonth(),
                 selectedDates.end.getDate()
-            )) : null;
+            ));
 
-            if (startUTC && utcDate.getTime() === startUTC.getTime()) return "selected-start";
-            if (endUTC && utcDate.getTime() === endUTC.getTime()) return "selected-end";
-            if (startUTC && endUTC && utcDate > startUTC && utcDate < endUTC) {
+            if (utcDate.getTime() === startUTC.getTime()) return "selected-start";
+            if (utcDate.getTime() === endUTC.getTime()) return "selected-end";
+            if (utcDate > startUTC && utcDate < endUTC) {
                 return "selected-range";
             }
-
-            return "";
-        } catch (error) {
-            console.warn("Error in getDateSelectionClass:", error);
-            return "disabled";
         }
-    };
+
+        return "available";
+    } catch (error) {
+        console.warn("Error in getDateSelectionClass:", error);
+        return "disabled";
+    }
+};
 
     const goToNextMonth = () => {
         setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
@@ -2079,13 +2667,56 @@ function BookASite1() {
 
     const [productsOrderData, setProductsOrderData] = useState([]);
 
-    // Calendar toggle functions
-    const toggleCalendar = (errorMessage = '') => {
-        setIsCalendarOpen(!isCalendarOpen);
-        if (errorMessage) {
-            setCalendarErrorMessage(errorMessage);
-        }
-    };
+    // const toggleCalendar = (errorMessage = '') => {
+    //     const newIsCalendarOpen = !isCalendarOpen;
+    //     setIsCalendarOpen(newIsCalendarOpen);
+        
+    //     if (newIsCalendarOpen) {
+    //         if (!selectedDates.start || isSelectionConfirmed) {
+    //             initializeDateWindow();
+    //             setCalendarErrorMessage(
+    //                 `Available window: Next ${INITIAL_SELECTION_DAYS} days from today.\n` +
+    //                 `Click a date to auto-select ${MIN_BOOKING_DAYS} days minimum.`
+    //             );
+    //         } else {
+    //             setCalendarErrorMessage(
+    //                 `Currently selected: ${selectedDates.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${selectedDates.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}\n` +
+    //                 `You can adjust the end date. Minimum ${MIN_BOOKING_DAYS} days required.`
+    //             );
+    //         }
+    //     }
+        
+    //     if (errorMessage) {
+    //         setCalendarErrorMessage(errorMessage);
+    //     } else if (!newIsCalendarOpen) {
+    //         setCalendarErrorMessage('');
+    //         setShowQueueInfo(false);
+    //     }
+    // };
+
+
+    // Update the toggleCalendar function
+const toggleCalendar = (errorMessage = '') => {
+    const newIsCalendarOpen = !isCalendarOpen;
+    setIsCalendarOpen(newIsCalendarOpen);
+    
+    if (newIsCalendarOpen) {
+        // The useEffect above will handle what to show based on state
+        console.log('Opening calendar with state:', {
+            hasConfirmedDates: !!(campaignConfirmedDates.start && campaignConfirmedDates.end),
+            hasSelectedDates: !!(selectedDates.start && selectedDates.end),
+            isSelectionConfirmed
+        });
+    }
+    
+    if (errorMessage) {
+        setCalendarErrorMessage(errorMessage);
+    } else if (!newIsCalendarOpen) {
+        setCalendarErrorMessage('');
+        setShowQueueInfo(false);
+    }
+};
+
 
     const closeCalendar = () => {
         setIsCalendarOpen(false);
@@ -2118,64 +2749,195 @@ function BookASite1() {
     const totalDays = availableDaysInRange.length;
     const totalPrice = totalDays * pricePerDay;
 
-    const resetDates = () => {
-        setSelectedDates({ start: null, end: null });
-        setCampaignConfirmedDates({ start: null, end: null });
-        setCalendarErrorMessage("");
-        setShowQueueInfo(false);
-    };
+    // // Add to cart with queue system
+    // const handleAddToCart = async () => {
+    //     if (!user) {
+    //         openLogin();
+    //         return;
+    //     }
 
-    // Add to cart with queue system
-    const handleAddToCart = async () => {
-        if (!user) {
-            openLogin();
-            return;
-        }
+    //     // if (!campaignConfirmedDates.start || !campaignConfirmedDates.end) {
+    //     //     // Validate minimum days
 
-        if (!campaignConfirmedDates.start || !campaignConfirmedDates.end) {
-            // Validate minimum days
-            if (selectedDates.start && selectedDates.end) {
-                const daysSelected = calculateDaysDifference(selectedDates.start, selectedDates.end);
-                const availableDays = getAvailableDaysInRange(selectedDates.start, selectedDates.end);
+    //           // Check if we have confirmed dates from previous session
+    // if (campaignConfirmedDates.start && campaignConfirmedDates.end) {
+    //     // Use confirmed dates
+    //     const validation = validateMinimumDays(campaignConfirmedDates.start, campaignConfirmedDates.end);
+    //     if (!validation.valid) {
+    //         setCalendarErrorMessage(validation.message);
+    //         setIsCalendarOpen(true);
+    //         return;
+    //     }
+        
+    //     // Proceed with confirmed dates...
+    
+    //       else  if (selectedDates.start && selectedDates.end) {
+    //             const validation = validateMinimumDays(selectedDates.start, selectedDates.end);
 
-                if (availableDays.length < 7) {
-                    setCalendarErrorMessage(`Booking requires minimum 7 available days. You have only ${availableDays.length} available days.`);
-                } else {
-                    const pendingCount = getPendingDaysInRange(selectedDates.start, selectedDates.end);
-                    if (pendingCount > 0) {
-                        setCalendarErrorMessage(
-                            `⚠️ ${pendingCount} date${pendingCount > 1 ? 's' : ''} in queue.\n` +
-                            `Please confirm dates to join the queue.`
-                        );
-                    } else {
-                        setCalendarErrorMessage("Please confirm your selected dates to proceed.");
-                    }
-                }
-            } else {
-                setCalendarErrorMessage("Please select & confirm dates (minimum 7 available days) to proceed.");
-            }
+    //             if (!validation.valid) {
+    //                 setCalendarErrorMessage(validation.message);
+    //             } else {
+    //                 const pendingCount = getPendingDaysInRange(selectedDates.start, selectedDates.end);
+    //                 if (pendingCount > 0) {
+    //                     setCalendarErrorMessage(
+    //                         `⚠️ ${pendingCount} date${pendingCount > 1 ? 's' : ''} in queue.\n` +
+    //                         `Please confirm dates to join the queue.`
+    //                     );
+    //                 } else {
+    //                     setCalendarErrorMessage("Please confirm your selected dates to proceed.");
+    //                 }
+    //             }
+    //              setIsCalendarOpen(true);
+    //     return;
+    //         } else {
+    //             setCalendarErrorMessage(`Please select & confirm dates (minimum ${MIN_BOOKING_DAYS} available days) to proceed.`);
+    //        setIsCalendarOpen(true);
+    //         return;
+    //         }
+    //         // setIsCalendarOpen(true);
+    //         // return;
+    //     } 
+
+    //     // Final validation
+    //     const validation = validateMinimumDays(campaignConfirmedDates.start, campaignConfirmedDates.end);
+    //     if (!validation.valid) {
+    //         setCalendarErrorMessage(validation.message);
+    //         setIsCalendarOpen(true);
+    //         return;
+    //     }
+
+    //     // Check for multiple conflict blocks
+    //     const conflictBlocks = getConflictBlocks(campaignConfirmedDates.start, campaignConfirmedDates.end);
+    //     if (conflictBlocks.length >= 2) {
+    //         setCalendarErrorMessage(
+    //             `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
+    //             `Please select a continuous available period.`
+    //         );
+    //         setIsCalendarOpen(true);
+    //         return;
+    //     }
+
+    //     const actualPrice = currentProduct?.displayPrice || currentProduct?.price || 0;
+
+    //     const cartItem = {
+    //         userId: user._id,
+    //         productId: currentProduct?.id,
+    //         prodCode: currentProduct?.prodCode,
+    //         image: currentProduct?.imageUrl,
+    //         prodName: currentProduct?.prodName,
+    //         title: currentProduct?.location,
+    //         price: actualPrice,
+    //         rating: currentProduct?.rating,
+    //         district: currentProduct?.district,
+    //         state: currentProduct?.state,
+    //         dateRange: campaignConfirmedDates.start
+    //             ? `${campaignConfirmedDates.start.toLocaleString("en-IN", { month: "short" })} ${campaignConfirmedDates.start.getDate()} - ${campaignConfirmedDates.end
+    //                 ? `${campaignConfirmedDates.end.toLocaleString("en-IN", { month: "short" })} ${campaignConfirmedDates.end.getDate()}`
+    //                 : "--"
+    //             }`
+    //             : "N/A",
+    //         startDate: campaignConfirmedDates.start?.toISOString(),
+    //         endDate: campaignConfirmedDates.end?.toISOString(),
+    //         sizeWidth: currentProduct?.sizeWidth,
+    //         sizeSide: currentProduct?.sizeSide,
+    //         productsquareFeet: currentProduct?.productsquareFeet,
+    //         sizeHeight: currentProduct?.sizeHeight,
+    //         dimension: (currentProduct?.sizeHeight || 0) * (currentProduct?.sizeWidth || 0),
+    //         adType: currentProduct?.category,
+    //         totalAmount: totalPrice.toLocaleString(),
+    //         totalDays: totalDays,
+    //         SpotOutdoorType: currentProduct?.prodLighting,
+    //         PrintingCost: currentProduct?.printingCost,
+    //         MountingCost: currentProduct?.mountingCost,
+    //         FromSpot: currentProduct?.productFrom,
+    //         ToSpot: currentProduct?.productTo,
+    //         SpotPay: currentProduct?.productFixedAmount,
+    //         Offer: currentProduct?.productFixedOffer,
+    //         latitude: currentProduct?.latitude,
+    //         longitude: currentProduct?.longitude,
+    //         LocationLink: currentProduct?.LocationLink,
+    //         userEmail: user.email,
+    //         userPhone: user.phone,
+    //         userName: user.userName,
+    //         isOfferProduct: currentProduct?.isOfferProduct || false,
+    //         originalPrice: currentProduct?.originalPrice || actualPrice,
+    //         // Queue info
+    //         queueInfo: {
+    //             hasPendingDates: getPendingDaysInRange(campaignConfirmedDates.start, campaignConfirmedDates.end) > 0,
+    //             pendingCount: getPendingDaysInRange(campaignConfirmedDates.start, campaignConfirmedDates.end),
+    //             enteredQueueAt: new Date().toISOString()
+    //         }
+    //     };
+
+    //     try {
+    //         const response = await fetch(`${baseUrl}/cart`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(cartItem)
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error('Failed to add to cart');
+    //         }
+
+    //         alert("Item added to cart successfully!");
+    //         navigate("/cart");
+    //     } catch (error) {
+    //         console.error('Error adding to cart:', error);
+    //         alert("Failed to add item to cart. Please try again.");
+    //     }
+    // };
+
+
+
+// Add to cart with queue system - COMPLETE FUNCTION
+const handleAddToCart = async () => {
+    if (!user) {
+        openLogin();
+        return;
+    }
+
+    // Check if we have confirmed dates from previous session
+    if (campaignConfirmedDates.start && campaignConfirmedDates.end) {
+        console.log('Using confirmed dates:', {
+            start: campaignConfirmedDates.start.toISOString().split('T')[0],
+            end: campaignConfirmedDates.end.toISOString().split('T')[0]
+        });
+        
+        // Validate confirmed dates
+        const validation = validateMinimumDays(campaignConfirmedDates.start, campaignConfirmedDates.end);
+        
+        if (!validation.valid) {
+            setCalendarErrorMessage(validation.message);
             setIsCalendarOpen(true);
             return;
         }
 
-        // Final validation
-        const availableDays = getAvailableDaysInRange(campaignConfirmedDates.start, campaignConfirmedDates.end);
-        if (availableDays.length < 7) {
-            setCalendarErrorMessage(`Booking requires minimum 7 available days. You have only ${availableDays.length} available days. Please reselect.`);
-            setIsCalendarOpen(true);
-            return;
-        }
-
-        // Check for multiple conflict blocks
+        // Check for multiple conflict blocks in confirmed dates
         const conflictBlocks = getConflictBlocks(campaignConfirmedDates.start, campaignConfirmedDates.end);
         if (conflictBlocks.length >= 2) {
             setCalendarErrorMessage(
-                `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
-                `Please select a continuous available period.`
+                `❌ Confirmed range has ${conflictBlocks.length} separate booked periods.\n` +
+                `Please select a new date range.`
             );
             setIsCalendarOpen(true);
             return;
         }
+
+        // Calculate price for confirmed dates
+        const confirmedAvailableDays = getAvailableDaysInRange(campaignConfirmedDates.start, campaignConfirmedDates.end);
+        const confirmedTotalDays = confirmedAvailableDays.length;
+        const confirmedTotalPrice = confirmedTotalDays * pricePerDay;
+        const confirmedPendingCount = getPendingDaysInRange(campaignConfirmedDates.start, campaignConfirmedDates.end);
+
+        console.log('Cart item calculations:', {
+            confirmedAvailableDays: confirmedAvailableDays.length,
+            confirmedTotalDays,
+            confirmedTotalPrice,
+            confirmedPendingCount
+        });
 
         const actualPrice = currentProduct?.displayPrice || currentProduct?.price || 0;
 
@@ -2204,8 +2966,8 @@ function BookASite1() {
             sizeHeight: currentProduct?.sizeHeight,
             dimension: (currentProduct?.sizeHeight || 0) * (currentProduct?.sizeWidth || 0),
             adType: currentProduct?.category,
-            totalAmount: totalPrice.toLocaleString(),
-            totalDays: totalDays,
+            totalAmount: confirmedTotalPrice.toLocaleString(),
+            totalDays: confirmedTotalDays,
             SpotOutdoorType: currentProduct?.prodLighting,
             PrintingCost: currentProduct?.printingCost,
             MountingCost: currentProduct?.mountingCost,
@@ -2223,13 +2985,21 @@ function BookASite1() {
             originalPrice: currentProduct?.originalPrice || actualPrice,
             // Queue info
             queueInfo: {
-                hasPendingDates: getPendingDaysInRange(campaignConfirmedDates.start, campaignConfirmedDates.end) > 0,
-                pendingCount: getPendingDaysInRange(campaignConfirmedDates.start, campaignConfirmedDates.end),
+                hasPendingDates: confirmedPendingCount > 0,
+                pendingCount: confirmedPendingCount,
                 enteredQueueAt: new Date().toISOString()
             }
         };
 
         try {
+            console.log('Adding to cart with item:', {
+                productId: cartItem.productId,
+                prodCode: cartItem.prodCode,
+                dateRange: cartItem.dateRange,
+                totalDays: cartItem.totalDays,
+                totalAmount: cartItem.totalAmount
+            });
+
             const response = await fetch(`${baseUrl}/cart`, {
                 method: 'POST',
                 headers: {
@@ -2238,58 +3008,43 @@ function BookASite1() {
                 body: JSON.stringify(cartItem)
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to add to cart');
-            }
+            const responseData = await response.json();
 
-            alert("Item added to cart successfully!");
-            navigate("/cart");
+            if (response.ok) {
+                console.log('Cart response:', responseData);
+                alert("Item added to cart successfully!");
+                
+                // Optionally navigate to cart page
+                navigate("/cart");
+            } else {
+                console.error('Server error response:', responseData);
+                throw new Error(responseData.message || 'Failed to add to cart');
+            }
         } catch (error) {
             console.error('Error adding to cart:', error);
-            alert("Failed to add item to cart. Please try again.");
+            alert(`Failed to add item to cart: ${error.message}`);
         }
-    };
+        return;
+    }
 
-    // Reserve now with queue system
-    const handleReserveNow = async () => {
-        if (!user) {
-            openLogin();
-            return;
-        }
+    // If no confirmed dates, check if we have selected dates
+    if (selectedDates.start && selectedDates.end) {
+        console.log('Checking selected dates (not confirmed yet):', {
+            start: selectedDates.start.toISOString().split('T')[0],
+            end: selectedDates.end.toISOString().split('T')[0]
+        });
+        
+        const validation = validateMinimumDays(selectedDates.start, selectedDates.end);
 
-        if (!campaignConfirmedDates.start || !campaignConfirmedDates.end) {
-            if (selectedDates.start && selectedDates.end) {
-                const availableDays = getAvailableDaysInRange(selectedDates.start, selectedDates.end);
-                if (availableDays.length < 7) {
-                    setCalendarErrorMessage(`Booking requires minimum 7 available days. You have only ${availableDays.length} available days.`);
-                } else {
-                    const pendingCount = getPendingDaysInRange(selectedDates.start, selectedDates.end);
-                    if (pendingCount > 0) {
-                        setCalendarErrorMessage(
-                            `⚠️ ${pendingCount} date${pendingCount > 1 ? 's' : ''} in queue.\n` +
-                            `Please confirm dates to join the queue.`
-                        );
-                    } else {
-                        setCalendarErrorMessage("Please confirm your selected dates to proceed.");
-                    }
-                }
-            } else {
-                setCalendarErrorMessage("Please select & confirm dates (minimum 7 available days) to proceed.");
-            }
+        if (!validation.valid) {
+            setCalendarErrorMessage(validation.message);
             setIsCalendarOpen(true);
             return;
         }
 
-        // Final validation
-        const availableDays = getAvailableDaysInRange(campaignConfirmedDates.start, campaignConfirmedDates.end);
-        if (availableDays.length < 7) {
-            setCalendarErrorMessage(`Booking requires minimum 7 available days. You have only ${availableDays.length} available days. Please reselect.`);
-            setIsCalendarOpen(true);
-            return;
-        }
-
-        // Check for multiple conflict blocks
-        const conflictBlocks = getConflictBlocks(campaignConfirmedDates.start, campaignConfirmedDates.end);
+        const pendingCount = getPendingDaysInRange(selectedDates.start, selectedDates.end);
+        const conflictBlocks = getConflictBlocks(selectedDates.start, selectedDates.end);
+        
         if (conflictBlocks.length >= 2) {
             setCalendarErrorMessage(
                 `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
@@ -2299,8 +3054,207 @@ function BookASite1() {
             return;
         }
 
+        // Show appropriate message based on queue status
+        if (pendingCount > 0) {
+            setCalendarErrorMessage(
+                `⚠️ ${pendingCount} date${pendingCount > 1 ? 's' : ''} in queue.\n` +
+                `Please click "Reserve Slot" to confirm dates and join the queue.`
+            );
+        } else {
+            setCalendarErrorMessage(
+                `✅ ${validation.days} days selected with ${validation.availableDays} available days.\n` +
+                `Please click "Reserve Slot" to confirm dates and proceed to cart.`
+            );
+        }
+        
+        setIsCalendarOpen(true);
+        return;
+    }
+
+    // No dates selected at all
+    console.log('No dates selected, opening calendar');
+    setCalendarErrorMessage(
+        `Please select & confirm dates (minimum ${MIN_BOOKING_DAYS} available days) to proceed.\n` +
+        `Click a date to auto-select ${MIN_BOOKING_DAYS} days.`
+    );
+    setIsCalendarOpen(true);
+};
+
+
+
+
+
+
+
+
+
+
+    // // Reserve now with queue system
+    // const handleReserveNow = async () => {
+    //     if (!user) {
+    //         openLogin();
+    //         return;
+    //     }
+
+    //     if (!campaignConfirmedDates.start || !campaignConfirmedDates.end) {
+    //         if (selectedDates.start && selectedDates.end) {
+    //             const validation = validateMinimumDays(selectedDates.start, selectedDates.end);
+    //             if (!validation.valid) {
+    //                 setCalendarErrorMessage(validation.message);
+    //             } else {
+    //                 const pendingCount = getPendingDaysInRange(selectedDates.start, selectedDates.end);
+    //                 if (pendingCount > 0) {
+    //                     setCalendarErrorMessage(
+    //                         `⚠️ ${pendingCount} date${pendingCount > 1 ? 's' : ''} in queue.\n` +
+    //                         `Please confirm dates to join the queue.`
+    //                     );
+    //                 } else {
+    //                     setCalendarErrorMessage("Please confirm your selected dates to proceed.");
+    //                 }
+    //             }
+    //         } else {
+    //             setCalendarErrorMessage(`Please select & confirm dates (minimum ${MIN_BOOKING_DAYS} available days) to proceed.`);
+    //         }
+    //         setIsCalendarOpen(true);
+    //         return;
+    //     }
+
+    //     // Final validation
+    //     const validation = validateMinimumDays(campaignConfirmedDates.start, campaignConfirmedDates.end);
+    //     if (!validation.valid) {
+    //         setCalendarErrorMessage(validation.message);
+    //         setIsCalendarOpen(true);
+    //         return;
+    //     }
+
+    //     // Check for multiple conflict blocks
+    //     const conflictBlocks = getConflictBlocks(campaignConfirmedDates.start, campaignConfirmedDates.end);
+    //     if (conflictBlocks.length >= 2) {
+    //         setCalendarErrorMessage(
+    //             `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
+    //             `Please select a continuous available period.`
+    //         );
+    //         setIsCalendarOpen(true);
+    //         return;
+    //     }
+
+    //     const actualPrice = currentProduct?.displayPrice || currentProduct?.price || 0;
+    //     const pendingCount = getPendingDaysInRange(campaignConfirmedDates.start, campaignConfirmedDates.end);
+
+    //     // Show queue warning if there are pending dates
+    //     if (pendingCount > 0) {
+    //         const confirmBooking = window.confirm(
+    //             `⚠️ Warning: ${pendingCount} date${pendingCount > 1 ? 's' : ''} in your selection are in queue.\n\n` +
+    //             `You'll be added to the queue for these dates.\n` +
+    //             `If pending orders get cancelled or expire, your booking will be confirmed.\n\n` +
+    //             `Do you want to proceed?`
+    //         );
+
+    //         if (!confirmBooking) {
+    //             return;
+    //         }
+    //     }
+
+    //     const reserveItem = {
+    //         id: currentProduct?.id,
+    //         prodCode: currentProduct?.prodCode,
+    //         image: currentProduct?.imageUrl,
+    //         prodName: currentProduct?.prodName,
+    //         title: currentProduct?.location,
+    //         price: actualPrice,
+    //         rating: currentProduct?.rating,
+    //         district: currentProduct?.district,
+    //         state: currentProduct?.state,
+    //         dateRange: campaignConfirmedDates.start
+    //             ? `${campaignConfirmedDates.start.toLocaleString("en-IN", { month: "short" })} ${campaignConfirmedDates.start.getDate()} - ${campaignConfirmedDates.end
+    //                 ? `${campaignConfirmedDates.end.toLocaleString("en-IN", { month: "short" })} ${campaignConfirmedDates.end.getDate()}`
+    //                 : "--"
+    //             }`
+    //             : "N/A",
+    //         startDate: campaignConfirmedDates.start,
+    //         endDate: campaignConfirmedDates.end,
+    //         sizeWidth: currentProduct?.sizeWidth,
+    //         sizeHeight: currentProduct?.sizeHeight,
+    //         sizeSide: currentProduct?.sizeSide,
+    //         productsquareFeet: currentProduct?.productsquareFeet,
+    //         dimension: (currentProduct?.sizeHeight || 0) * (currentProduct?.sizeWidth || 0),
+    //         adType: currentProduct?.category,
+    //         totalAmount: totalPrice.toLocaleString(),
+    //         totalDays: totalDays,
+    //         SpotOutdoorType: currentProduct?.prodLighting,
+    //         PrintingCost: currentProduct?.printingCost,
+    //         MountingCost: currentProduct?.mountingCost,
+    //         FromSpot: currentProduct?.productFrom,
+    //         ToSpot: currentProduct?.productTo,
+    //         SpotPay: currentProduct?.productFixedAmount,
+    //         Offer: currentProduct?.productFixedOffer,
+    //         latitude: currentProduct?.latitude,
+    //         longitude: currentProduct?.longitude,
+    //         LocationLink: currentProduct?.LocationLink,
+    //         userId: user._id,
+    //         userEmail: user.email,
+    //         userPhone: user.phone,
+    //         userName: user.userName,
+    //         isOfferProduct: currentProduct?.isOfferProduct || false,
+    //         originalPrice: currentProduct?.originalPrice || actualPrice,
+    //         // Queue info
+    //         queueStatus: pendingCount > 0 ? 'pending' : 'direct',
+    //         pendingDatesCount: pendingCount
+    //     };
+
+    //     // Redirect to billing
+    //     navigate("/billing", {
+    //         state: {
+    //             reserveItem,
+    //             queueInfo: {
+    //                 hasQueue: pendingCount > 0,
+    //                 queueMessage: pendingCount > 0 ?
+    //                     `Your booking includes ${pendingCount} date${pendingCount > 1 ? 's' : ''} that are in queue. You'll be added to the waitlist.` :
+    //                     'All dates are available for immediate confirmation.'
+    //             }
+    //         }
+    //     });
+    // };
+
+
+    // Reserve now with queue system - COMPLETE FUNCTION
+const handleReserveNow = async () => {
+    if (!user) {
+        openLogin();
+        return;
+    }
+
+    // Check if we have confirmed dates from previous session
+    if (campaignConfirmedDates.start && campaignConfirmedDates.end) {
+        console.log('Using confirmed dates for reservation:', {
+            start: campaignConfirmedDates.start.toISOString().split('T')[0],
+            end: campaignConfirmedDates.end.toISOString().split('T')[0]
+        });
+        
+        // Validate confirmed dates
+        const validation = validateMinimumDays(campaignConfirmedDates.start, campaignConfirmedDates.end);
+        if (!validation.valid) {
+            setCalendarErrorMessage(validation.message);
+            setIsCalendarOpen(true);
+            return;
+        }
+
+        // Check for multiple conflict blocks
+        const conflictBlocks = getConflictBlocks(campaignConfirmedDates.start, campaignConfirmedDates.end);
+        if (conflictBlocks.length >= 2) {
+            setCalendarErrorMessage(
+                `❌ Confirmed range has ${conflictBlocks.length} separate booked periods.\n` +
+                `Please select a new date range.`
+            );
+            setIsCalendarOpen(true);
+            return;
+        }
+
         const actualPrice = currentProduct?.displayPrice || currentProduct?.price || 0;
         const pendingCount = getPendingDaysInRange(campaignConfirmedDates.start, campaignConfirmedDates.end);
+        const availableDaysInRange = getAvailableDaysInRange(campaignConfirmedDates.start, campaignConfirmedDates.end);
+        const totalDays = availableDaysInRange.length;
+        const totalPrice = totalDays * pricePerDay;
 
         // Show queue warning if there are pending dates
         if (pendingCount > 0) {
@@ -2308,7 +3262,7 @@ function BookASite1() {
                 `⚠️ Warning: ${pendingCount} date${pendingCount > 1 ? 's' : ''} in your selection are in queue.\n\n` +
                 `You'll be added to the queue for these dates.\n` +
                 `If pending orders get cancelled or expire, your booking will be confirmed.\n\n` +
-                `Do you want to proceed?`
+                `Do you want to proceed to billing?`
             );
 
             if (!confirmBooking) {
@@ -2363,6 +3317,14 @@ function BookASite1() {
             pendingDatesCount: pendingCount
         };
 
+        console.log('Reserving item:', {
+            productId: reserveItem.id,
+            prodCode: reserveItem.prodCode,
+            dateRange: reserveItem.dateRange,
+            totalDays: reserveItem.totalDays,
+            totalAmount: reserveItem.totalAmount
+        });
+
         // Redirect to billing
         navigate("/billing", {
             state: {
@@ -2375,7 +3337,57 @@ function BookASite1() {
                 }
             }
         });
-    };
+        return;
+    }
+
+    // If no confirmed dates, check if we have selected dates
+    if (selectedDates.start && selectedDates.end) {
+        console.log('Checking selected dates for reservation:', {
+            start: selectedDates.start.toISOString().split('T')[0],
+            end: selectedDates.end.toISOString().split('T')[0]
+        });
+        
+        const validation = validateMinimumDays(selectedDates.start, selectedDates.end);
+        if (!validation.valid) {
+            setCalendarErrorMessage(validation.message);
+            setIsCalendarOpen(true);
+            return;
+        }
+
+        const pendingCount = getPendingDaysInRange(selectedDates.start, selectedDates.end);
+        const conflictBlocks = getConflictBlocks(selectedDates.start, selectedDates.end);
+        
+        if (conflictBlocks.length >= 2) {
+            setCalendarErrorMessage(
+                `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
+                `Please select a continuous available period.`
+            );
+            setIsCalendarOpen(true);
+            return;
+        }
+
+        // Show appropriate message
+        if (pendingCount > 0) {
+            setCalendarErrorMessage(
+                `⚠️ ${pendingCount} date${pendingCount > 1 ? 's' : ''} in queue.\n` +
+                `Please confirm dates to join the queue.`
+            );
+        } else {
+            setCalendarErrorMessage("Please confirm your selected dates to proceed.");
+        }
+        
+        setIsCalendarOpen(true);
+        return;
+    }
+
+    // No dates selected at all
+    console.log('No dates selected for reservation, opening calendar');
+    setCalendarErrorMessage(
+        `Please select & confirm dates (minimum ${MIN_BOOKING_DAYS} available days) to proceed.\n` +
+        `Click a date to auto-select ${MIN_BOOKING_DAYS} days.`
+    );
+    setIsCalendarOpen(true);
+};
 
     const RatingStarsSimilar = ({ rating }) => {
         const fullStars = Math.floor(rating);
@@ -2568,11 +3580,11 @@ function BookASite1() {
                                         </div>
                                     </div>
                                     <button className="me-4 btn-pay" onClick={handleReserveNow}>Book Now</button>
-                                    <button className="btn-cart" onClick={handleAddToCart}>Add to Cart</button><br />
+                                    {/* <button className="btn-cart" onClick={handleAddToCart}>Add to Cart</button><br /> */}
                                     <button className=" mt-3 mb-2 btn-enquire" onClick={toggleOtpMainPage}>For More Details</button><br />
-                                    <a href='tel:7373785048' style={{ textDecoration: 'none' }}>
+                                    {/* <a href='tel:7373785048' style={{ textDecoration: 'none' }}>
                                         <button className=" mt-3 mb-2 btn-enquire">Call for Details</button><br />
-                                    </a>
+                                    </a> */}
                                 </div>
                             ) : (
                                 <p>No spot selected. Please go back and select a spot.</p>
@@ -2593,8 +3605,8 @@ function BookASite1() {
                                             getDateSelectionClass={getDateSelectionClass}
                                             goToNextMonth={goToNextMonth}
                                             goToPreviousMonth={goToPreviousMonth}
-                                            confirmedDates={confirmedDates} // Pass confirmed dates
-                                            pendingDates={pendingDates} // Pass pending dates
+                                            confirmedDates={confirmedDates}
+                                            pendingDates={pendingDates}
                                             currentMonth={currentMonth}
                                             setCurrentMonth={setCurrentMonth}
                                             pricePerDay={pricePerDay}
@@ -2621,6 +3633,13 @@ function BookASite1() {
                                             getAvailableDaysInRange={getAvailableDaysInRange}
                                             showQueueInfo={showQueueInfo}
                                             queuePosition={queuePosition}
+                                            isWindowExpanded={isWindowExpanded}
+                                            currentWindowStart={currentWindowStart}
+                                            currentWindowEnd={currentWindowEnd}
+                                            isSelectionConfirmed={isSelectionConfirmed}
+                                            INITIAL_SELECTION_DAYS={INITIAL_SELECTION_DAYS}
+                                            AVAILABLE_WINDOW_DAYS={AVAILABLE_WINDOW_DAYS}
+                                            MIN_BOOKING_DAYS={MIN_BOOKING_DAYS}
                                         />
                                     </div>
                                 </div>
@@ -2707,3 +3726,5 @@ function BookASite1() {
 }
 
 export default BookASite1;
+
+

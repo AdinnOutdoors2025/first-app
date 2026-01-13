@@ -3,6 +3,8 @@ import './ad1Orders.css';
 import { useNavigate } from 'react-router-dom';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from './BASE_URL';
+//FORMATTER DATE AND TIME
+import { formatIndianDateTime, formatForTable, formatBookingRange } from '../../src/DateTimeFormatter';
 
 const OrdersTable = () => {
     // Handled by the admin name
@@ -130,177 +132,25 @@ const OrdersTable = () => {
             //     });
             // }
 
-           // CHANGED: If order already has a handler, go directly to order details
-        if (order.handled_by && order.handled_by.trim() !== '') {
-            navigate('/admin#orderDetailsPg', {
-                state: {
-                    order,
-                    activeMenu: 'orders',
-                    activeSubOrder: 'Order Info'
-                }
-            });
-        } else {
-            // Only show modal if no handler exists
-            setShowHandlerModal(true);
-        }
+            // CHANGED: If order already has a handler, go directly to order details
+            if (order.handled_by && order.handled_by.trim() !== '') {
+                navigate('/admin#orderDetailsPg', {
+                    state: {
+                        order,
+                        activeMenu: 'orders',
+                        activeSubOrder: 'Order Info'
+                    }
+                });
+            } else {
+                // Only show modal if no handler exists
+                setShowHandlerModal(true);
+            }
         }
         else {
             setShowHandlerModal(true);
         }
     };
 
-    // // Handle handler name submission
-    // const handleSubmitHandler = async () => {
-    //     if (!handlerName.trim()) {
-    //         setHandlerError('Please enter your name');
-    //         return;
-    //     }
-
-    //     // Validate name (only letters and spaces allowed)
-    //     const nameRegex = /^[a-zA-Z\s]{2,50}$/;
-    //     if (!nameRegex.test(handlerName.trim())) {
-    //         setHandlerError('Please enter a valid name (2-50 characters, letters only)');
-    //         return;
-    //     }
-
-    //     setIsSubmitting(true);
-    //     setHandlerError('');
-    //     setHandlerSuccess('');
-
-    //     try {
-    //         console.log('Submitting handler for order:', selectedOrder._id);
-    //         console.log('Request URL:', `${baseUrl}/prodOrders/${selectedOrder._id}/handled-by`);
-
-    //         const response = await fetch(`${baseUrl}/prodOrders/${selectedOrder._id}/handled-by`, {
-    //             method: 'PUT',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({
-    //                 handled_by: handlerName.trim(),
-    //                 last_edited: new Date().toISOString() // Add this to update last_edited
-    //             })
-    //         });
-
-    //         try {
-    //             const data = await response.json();
-
-    //             if (!response.ok) {
-    //                 // Handle server errors (400, 500, etc.)
-    //                 throw new Error(data.message || `Server error: ${response.status}`);
-    //             }
-
-    //             // Check if order is already handled
-    //             if (data.already_handled) {
-    //                 const proceed = window.confirm(
-    //                     `This order is already handled by "${data.current_handler}". Do you want to proceed anyway?`
-    //                 );
-    //                 if (proceed) {
-    //                     // Navigate to order details
-    //                     navigate('/admin#orderDetailsPg', {
-    //                         state: {
-    //                             order: selectedOrder,
-    //                             activeMenu: 'orders',
-    //                             activeSubOrder: 'Order Info'
-    //                         }
-    //                     });
-    //                     closeHandlerModal();
-    //                 }
-    //                 return;
-    //             }
-
-    //             // Check if success is false
-    //             if (!data.success) {
-    //                 throw new Error(data.message || 'Failed to update handler');
-    //             }
-
-    //             setHandlerSuccess(data.message || 'Handler name saved successfully!');
-
-    //             // Update local state
-    //             const updatedOrders = productsOrderData.map(order =>
-    //                 order._id === selectedOrder._id
-    //                     ? {
-    //                         ...order,
-    //                         handled_by: handlerName.trim(),
-    //                         last_edited: new Date().toISOString()
-    //                     }
-    //                     : order
-    //             );
-    //             setProductsOrderData(updatedOrders);
-
-    //             // Navigate after short delay
-    //             setTimeout(() => {
-    //                 navigate('/admin#orderDetailsPg', {
-    //                     state: {
-    //                         order: {
-    //                             ...selectedOrder,
-    //                             handled_by: handlerName.trim(),
-    //                             last_edited: new Date().toISOString()
-    //                         },
-    //                         activeMenu: 'orders',
-    //                         activeSubOrder: 'Order Info'
-    //                     }
-    //                 });
-    //                 closeHandlerModal();
-    //             }, 1000);
-
-    //         } catch (jsonError) {
-    //             // If JSON parsing fails, try text
-    //             const text = await responseClone.text();
-    //             console.error('Failed to parse JSON, response text:', text.substring(0, 200));
-
-    //             // Check if it's an HTML error page
-    //             if (text.includes('<!DOCTYPE') || text.includes('<html')) {
-    //                 throw new Error('Server returned an error page. Please check server logs.');
-    //             }
-
-    //             // Check for specific success messages in text
-    //             if (text.includes('success') || text.includes('updated') || text.includes('Handler')) {
-    //                 // Assume success if we see these keywords
-    //                 setHandlerSuccess('Handler name updated successfully!');
-
-    //                 // Update local state
-    //                 const updatedOrders = productsOrderData.map(order =>
-    //                     order._id === selectedOrder._id
-    //                         ? {
-    //                             ...order,
-    //                             handled_by: handlerName.trim(),
-    //                             last_edited: new Date().toISOString()
-    //                         }
-    //                         : order
-    //                 );
-    //                 setProductsOrderData(updatedOrders);
-
-    //                 setTimeout(() => {
-    //                     navigate('/admin#orderDetailsPg', {
-    //                         state: {
-    //                             order: {
-    //                                 ...selectedOrder,
-    //                                 handled_by: handlerName.trim(),
-    //                                 last_edited: new Date().toISOString()
-    //                             },
-    //                             activeMenu: 'orders',
-    //                             activeSubOrder: 'Order Info'
-    //                         }
-    //                     });
-    //                     closeHandlerModal();
-    //                 }, 1000);
-    //             } else {
-    //                 throw new Error('Server returned unexpected response format');
-    //             }
-    //         }
-
-    //     } catch (error) {
-    //         console.error('Handler submission error:', error);
-    //         setHandlerError(error.message || 'Failed to save handler name. Please try again.');
-    //     } finally {
-    //         setIsSubmitting(false);
-    //     }
-    // };
-
-
-
-     // Handle handler name submission
     const handleSubmitHandler = async () => {
         if (!handlerName.trim()) {
             setHandlerError('Please enter your name');
@@ -450,7 +300,7 @@ const OrdersTable = () => {
 
                             <div className="handler-input-group">
                                 <label htmlFor="handlerName">
-                                Your Name *
+                                    Your Name *
                                     {/* {selectedOrder.handled_by ? 'New Handler Name *' : 'Your Name *'} */}
                                 </label>
                                 <input
@@ -500,7 +350,7 @@ const OrdersTable = () => {
                                 onClick={handleSkipHandler}
                                 disabled={isSubmitting}
                             >
-                            Skip (View Only)
+                                Skip (View Only)
                                 {/* {selectedOrder.handled_by ? 'Cancel' : 'Skip (View Only)'} */}
 
                             </button>
@@ -541,7 +391,7 @@ const OrdersTable = () => {
                         <tr>
                             <th><div className='TableOrderName'>Order ID</div></th>
                             <th><div>Product ID</div></th>
-                            <th><div>Order Date</div></th>
+                            <th><div>Order Date & Time</div></th>
                             <th><div>Reserved</div></th>
                             <th><div>Submitter</div></th>
                             <th><div>Handler</div></th>
@@ -572,7 +422,17 @@ const OrdersTable = () => {
                                         );
                                     })()}
                                 </td>
-                                <td>{new Date(order.createdAt).toLocaleDateString('en-GB')}</td>
+                                {/* <td>{new Date(order.createdAt).toLocaleDateString('en-GB')}</td> */}
+                                <td>
+                                    <div className="order-date-time">
+                                        <div className="order-date-main">
+                                            {formatIndianDateTime(order.createdAt)}
+                                        </div>
+                                        {/* <div className="order-time-small">
+                                            {formatForTable(order.createdAt)}
+                                        </div> */}
+                                    </div>
+                                </td>
                                 <td>
                                     {order.products
                                         ?.filter(product => product != null) // Remove null/undefined products
@@ -603,31 +463,31 @@ const OrdersTable = () => {
 
 
                                 <td>
-  {(() => {
-    // Display "UserSideOrder" for user orders, "Added Manually" for admin orders
-    if (order.status === "UserSideOrder") {
-      return "UserSideOrder";
-    } else if (order.status === "Added Manually") {
-      return "Added Manually";
-    } else {
-      return order.status || "-";
-    }
-  })()}
-</td>
+                                    {(() => {
+                                        // Display "UserOrder" for user orders, "Added Manually" for admin orders
+                                        if (order.status === "UserOrder") {
+                                            return "UserOrder";
+                                        } else if (order.status === "Manual Entry") {
+                                            return "Manual Entry";
+                                        } else {
+                                            return order.status || "-";
+                                        }
+                                    })()}
+                                </td>
 
-<td>{order.handled_by ? order.handled_by : "-"}</td>
-<td>
-  {(() => {
-    // Display order_status if available, otherwise show status
-    if (order.order_status && order.order_status !== "pending") {
-      return order.order_status;
-    } else if (order.status === "UserSideOrder") {
-      return "Payment Pending";
-    } else {
-      return order.status || "-";
-    }
-  })()}
-</td>
+                                <td>{order.handled_by ? order.handled_by : "-"}</td>
+                                <td>
+                                    {(() => {
+                                        // Display order_status if available, otherwise show status
+                                        if (order.order_status && order.order_status !== "pending") {
+                                            return order.order_status;
+                                        } else if (order.status === "UserOrder") {
+                                            return "Payment Pending";
+                                        } else {
+                                            return order.status || "-";
+                                        }
+                                    })()}
+                                </td>
 
 
                                 <td className="order-threeDotsTd" onClick={() => toggleMenu(order._id)}>
