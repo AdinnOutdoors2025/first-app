@@ -31,6 +31,38 @@ import { formatIndianDateTime, formatForTable, formatBookingRange, getBookingSta
 // };
 
 
+
+
+
+/* */
+const fetchOrderConflicts = async (orderId) => {
+  try {
+    const res = await axios.get(
+      `${baseUrl}/checkOrderConflict/${orderId}`
+    );
+    return res.data;
+  } catch (err) {
+    console.error("Error fetching conflicts", err);
+    return null;
+  }
+};
+
+const formatDate = (date) =>
+  new Date(date).toLocaleDateString("en-GB");
+
+const tooltipDates = (dates) => {
+  return dates.map((date, index) => (
+    <div key={index}>
+      {formatDate(date)}
+    </div>
+  ));
+};
+
+
+
+
+/* */
+
 const formatEditedDateTime = (dateString) => {
     if (!dateString) return "";
     return formatIndianDateTime(dateString);
@@ -46,6 +78,7 @@ function OrderDetails({ order, onOrderUpdate }) {
 // Add the handleConfirmOrder function
 const [confirmationNotes, setConfirmationNotes] = useState('');
 const [showConfirmDialog, setShowConfirmDialog] = useState(false); 
+
 
 
 
@@ -257,9 +290,15 @@ const handleConfirmOrder = async () => {
   const openCalender = () => setIsCalenderOpen(!isCalenderOpen);
   const closeCalender = () => setIsCalenderOpen(false);
 
+/* */
+  const [currentOrder, setCurrentOrder] = useState(null);
+  const [conflicts, setConflicts] = useState([]);
+  const [fullConflicts,setFullConflicts] = useState([]);
+/* */
   const [localOrder, setLocalOrder] = useState(null);
   
   useEffect(() => {
+    
     const newOrder = order ||
       location.state?.order || {
         products: [{}],
@@ -268,6 +307,22 @@ const handleConfirmOrder = async () => {
       };
     setLocalOrder(newOrder);
   }, [order, location.state]);
+
+  /* */
+useEffect(() => {
+  const loadConflicts = async () => {
+    const data = await fetchOrderConflicts(safeOrder.orderId);
+    if (data?.success) {
+      
+      setCurrentOrder(data.currentOrder);
+      setConflicts(data.conflicts);
+      setFullConflicts(data);
+    }
+  };
+
+  loadConflicts();
+}, []);
+  /* */
 
   const initialOrder = localOrder ||
     order ||
@@ -1754,6 +1809,77 @@ const saveCancelReason = async () => {
                     readOnly
                   ></input>
                 </div>
+
+
+                    {/* show all booked dates with users list */}
+<div className="conflict-list">
+
+  {/* 🔵 CURRENT ORDER */}
+  {currentOrder && (
+    <div className="conflict-row current-order">
+      {/* 1️⃣ Color */}
+      <div
+        className="color-box"
+        style={{ backgroundColor: currentOrder.client.colorCode }}
+      />
+
+      {/* 2️⃣ User Info */}
+      <div className="user-info">
+        <strong>{currentOrder.client.name}</strong>
+        <div>Current Order</div>
+      </div>
+
+      {/* 3️⃣ Booking with tooltip */}
+      <div className="date-info">
+        <span className="tooltip-conflict">
+          ℹ️
+          <span className="tooltip-text-conflict">
+            {tooltipDates(currentOrder.bookedDates)}
+          </span>
+        </span>
+
+        {formatDate(currentOrder.booking.startDate)} –{" "}
+        {formatDate(currentOrder.booking.endDate)}
+      </div>
+    </div>
+  )}
+
+  {/* 🔴 CONFLICT ORDERS */}
+  {conflicts.map((conflict, index) => (
+    <div className="conflict-row" key={index}>
+      
+      {/* 1️⃣ Color */}
+      <div
+        className="color-box"
+        style={{ backgroundColor: conflict.client.colorCode }}
+      />
+
+      {/* 2️⃣ User Info */}
+      <div className="user-info-conflict">
+        <strong>{conflict.client.name}</strong>
+        <div>{conflict.client.contact}</div>
+      </div>
+
+      {/* 3️⃣ Booking with tooltip */}
+      <div className="date-info">
+        <span className="tooltip-conflict">
+          ℹ️
+          <span className="tooltip-text-conflict">
+            {tooltipDates(conflict.bookedDates)}
+          </span>
+        </span>
+
+        {formatDate(conflict.booking.startDate)} –{" "}
+        {formatDate(conflict.booking.endDate)}
+      </div>
+    </div>
+  ))}
+</div>
+
+
+                    {/* show all booked dates with users list */}
+
+
               </div>
             </div>
           </div>
@@ -1946,6 +2072,7 @@ const saveCancelReason = async () => {
                   closeCalender={closeCalender}
                   isValidDate={(date) => date && !isNaN(date.getTime())}
                   isPastDate={isPastDate}
+                  conflicts={fullConflicts}
                 />
                 {error && (
                   <div className="error-messageOrderDetails">

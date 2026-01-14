@@ -154,7 +154,7 @@ function NavbarMain() {
                                 (
                                     //Before Login Content
                                     <>
-                                        <span className='nav_user_name'>Hello User</span> <br></br>
+                                        {/* <span className='nav_user_name'>Hello User</span> <br></br> */}
                                         <span className='nav_user_items' onClick={() => openLogin('signup')}>Sign Up</span> <br></br>
                                         <span className='nav_user_items' onClick={() => openLogin('login')}>Log In</span> <br></br>
                                     </>

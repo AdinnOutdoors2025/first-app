@@ -2,7 +2,122 @@ import React, { useState, useEffect } from "react";
 import "../components/B20CalenderMain.css";
 import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
 
-const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, generateMonth, handleDateClick, resetDates, getDateSelectionClass, goToNextMonth, goToPreviousMonth, bookedDates, currentMonth, confirmedDates, setConfirmedDates, pricePerDay, confirmDates, totalPrice, isPastDate }) => {
+
+const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, generateMonth, handleDateClick, resetDates, getDateSelectionClass, goToNextMonth, goToPreviousMonth, bookedDates, currentMonth, confirmedDates, setConfirmedDates, pricePerDay, confirmDates, totalPrice, isPastDate,conflicts }) => {
+  
+  ////////////////////////////////////////////////////////////////////////////////////////
+  const conflictDotMap = React.useMemo(() => {
+  const map = {};
+  if (!conflicts) return map;
+
+const pushDate = (dateStr, payload) => {
+  const d = new Date(dateStr);
+  const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  if (!map[key]) map[key] = [];
+  map[key].push(payload);
+};
+
+
+  /* ---------- CURRENT ORDER ---------- */
+  if (conflicts.currentOrder) {
+    const { client, orderId, booking, bookedDates } = conflicts.currentOrder;
+
+    bookedDates.forEach((d) =>
+      pushDate(d, {
+        type: "current",
+        name: client.name || "Current Order",
+        color: client.colorCode || "#000", // fallback color
+        orderId,
+        phone: client.contact || "--",
+        start: booking.startDate,
+        end: booking.endDate,
+      })
+    );
+  }
+
+  /* ---------- CONFLICT ORDERS ---------- */
+  if (Array.isArray(conflicts.conflicts)) {
+    conflicts.conflicts.forEach((order) => {
+      const { client, orderId, booking, bookedDates } = order;
+
+      bookedDates.forEach((d) =>
+        pushDate(d, {
+          type: "conflict",
+          name: client.name,
+          color: client.colorCode,
+          orderId,
+          phone: client.contact,
+          start: booking.startDate,
+          end: booking.endDate,
+        })
+      );
+    });
+  }
+
+  return map;
+}, [conflicts]);
+
+
+const PieRing = ({ date, conflicts }) => {
+  const size = 34;
+  const radius = 14;
+  const strokeWidth = 6;
+  const circumference = 2 * Math.PI * radius;
+  const slice = circumference / conflicts.length;
+
+  return (
+    <svg width={size} height={size} className="pie-ring">
+      {conflicts.map((c, i) => {
+        const dashOffset = i * slice;
+
+        return (
+          <circle
+            key={`${c.orderId}-${c.type}-${date.toISOString()}`}
+            r={radius}
+            cx={size / 2}
+            cy={size / 2}
+            fill="transparent"
+            stroke={c.color}
+            strokeWidth={strokeWidth}
+            strokeDasharray={`${slice} ${circumference}`}
+            strokeDashoffset={-dashOffset}
+          >
+            <title key={`${c.orderId}-${date.toISOString()}`}>
+{`${c.name}
+Order: ${c.orderId}
+Phone: ${c.phone}
+From: ${new Date(c.start).toDateString()}
+To: ${new Date(c.end).toDateString()}`}
+            </title>
+          </circle>
+        );
+      })}
+
+      {/* Center Date */}
+      <text
+        x="50%"
+        y="50%"
+        textAnchor="middle"
+        dy=".3em"
+        fontSize="10"
+        fill="#000"
+      >
+        {date.getDate()}
+      </text>
+    </svg>
+  );
+};
+
+
+const getDateKey = (date) => {
+  if (!date) return null;
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+};
+
+  ///////////////////////////////////////////////////////////////////////////////////////
   // CALENDER SECTION 
   // Inside the map function for each offset
   const isPastMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0) < new Date();
@@ -102,7 +217,20 @@ const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, gen
                       onClick={() => !isPastDate && handleDateClick(date)}
                       style={{ pointerEvents: bookedDates.some((d) => d.getTime() === date?.getTime()) ? "none" : "auto" }}
                     >
-                      {date ? date.getDate() : ""}
+{date && (
+  <>
+    {conflictDotMap[getDateKey(date)] ? (
+      <PieRing
+        date={date}
+        conflicts={conflictDotMap[getDateKey(date)]}
+      />
+    ) : (
+      <span>{date.getDate()}</span>
+    )}
+  </>
+)}
+
+
                     </div>
                   )
                 })}
@@ -228,7 +356,20 @@ const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, gen
                         style={{ pointerEvents: bookedDates.some((d) => d.getTime() === date?.getTime()) ? "none" : "auto" }}
                       >
                       
-                        {date ? date.getDate() : ""}
+{date && (
+  <>
+    {conflictDotMap[getDateKey(date)] ? (
+      <PieRing
+        date={date}
+        conflicts={conflictDotMap[getDateKey(date)]}
+      />
+    ) : (
+      <span>{date.getDate()}</span>
+    )}
+  </>
+)}
+
+
                       </div>
                     ))}
                   </div>

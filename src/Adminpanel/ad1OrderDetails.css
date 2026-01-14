@@ -1710,3 +1710,62 @@ input:disabled, button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 } 
+
+
+
+
+/* ///conflict table //// */
+.conflict-row {
+  display: grid;
+  grid-template-columns: 40px 200px 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.color-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.user-info {
+  font-size: 14px;
+}
+
+.date-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tooltip-conflict {
+  position: relative;
+  cursor: pointer;
+}
+
+.tooltip-text-conflict {
+  visibility: hidden;
+  position: absolute;
+  background: #222;
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  top: -5px;
+  left: 18px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.tooltip-conflict:hover .tooltip-text-conflict {
+  visibility: visible;
+}
+
+.current-order {
+  background: #f5f9ff;
+}
+
+
+/* ///conflict table //// */
