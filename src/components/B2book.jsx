@@ -1870,11 +1870,11 @@ const handleOutsideWindowClick = (date) => {
         }
     };
 
-    useEffect(() => {
-        if (currentProduct) {
-            fetchDates();
-        }
-    }, [currentProduct, user]);
+    // useEffect(() => {
+    //     if (currentProduct) {
+    //         fetchDates();
+    //     }
+    // }, [currentProduct, user]);
 
     const fetchQueuePosition = async (prodCode) => {
         try {
@@ -2694,9 +2694,13 @@ const getDateSelectionClass = (date) => {
     //     }
     // };
 
-
     // Update the toggleCalendar function
 const toggleCalendar = (errorMessage = '') => {
+    /* call fetch date function */
+     if (currentProduct) {
+            fetchDates();
+        }
+    /* call fetch date function */
     const newIsCalendarOpen = !isCalendarOpen;
     setIsCalendarOpen(newIsCalendarOpen);
     
