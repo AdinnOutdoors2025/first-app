@@ -2204,3 +2204,8 @@
 .date {
   position: relative;
 }
+
+.confirmed-selected {
+  background: #e8f0ff; /* lighter green */
+}
+

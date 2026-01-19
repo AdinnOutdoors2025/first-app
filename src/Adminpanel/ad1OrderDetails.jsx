@@ -84,6 +84,8 @@ const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   // Payment history state - ensure it's always an array
   const [paymentHistory, setPaymentHistory] = useState([]);
+  const [hasUserSelected, setHasUserSelected] = useState(false);
+
 
   const refreshOrderData = async () => {
     try {
@@ -475,6 +477,8 @@ useEffect(() => {
   const [bookedDates, setBookedDates] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [confirmedDates, setConfirmedDates] = useState({});
+  const [finalConfirmDate,setFinalConfirmDates] = useState(null);
+  
 
   // Fetch booked dates - UPDATED to exclude deleted products
   useEffect(() => {
@@ -492,13 +496,16 @@ useEffect(() => {
           const cleanProductCode = currentProduct.prodCode.replace(/^#/, "").trim();
           let url = `${baseUrl}/booked-dates/${encodeURIComponent(cleanProductCode)}`;
 
-          if (safeOrder._id) {
-            url += `?excludeOrderId=${safeOrder._id}`;
-          }
+          // if (safeOrder._id) {
+          //   url += `?excludeOrderId=${safeOrder._id}`;
+          // }
 
           const res = await fetch(url);
           if (res.ok) {
+            
             const dates = await res.json();
+            setFinalConfirmDates(dates)
+            
             const dateObjects = dates.map((d) => {
               const date = new Date(d);
               return new Date(
@@ -571,6 +578,7 @@ useEffect(() => {
   };
 
   const handleDateClick = (date) => {
+    setHasUserSelected(true);
     if (!date || isNaN(date.getTime())) return;
 
     const normalizedDate = new Date(
@@ -606,7 +614,82 @@ useEffect(() => {
     setConfirmedDates({ start: null, end: null });
   };
 
-  const getDateSelectionClass = (date) => {
+
+const getDateSelectionClass = (date) => {
+  if (!date || isNaN(date.getTime())) return "disabled";
+
+  const utcDate = new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+  );
+
+  /* ---------- BOOKED / PAST ---------- */
+  const isBooked = bookedDates.some((d) => {
+    const bookedDate = new Date(d);
+    return (
+      bookedDate.getUTCFullYear() === utcDate.getUTCFullYear() &&
+      bookedDate.getUTCMonth() === utcDate.getUTCMonth() &&
+      bookedDate.getUTCDate() === utcDate.getUTCDate()
+    );
+  });
+
+  const isPast = isPastDate(utcDate);
+
+  if (isBooked && isPast) return "past booked";
+  if (isBooked) return "booked";
+  if (isPast) return "past";
+
+  /* ---------- CONFIRMED ---------- */
+  const dateKey = `${utcDate.getUTCFullYear()}-${String(
+    utcDate.getUTCMonth() + 1
+  ).padStart(2, "0")}-${String(utcDate.getUTCDate()).padStart(2, "0")}`;
+
+  const isConfirmed =
+    finalConfirmDate?.confirmed?.includes(dateKey);
+
+  /* ❌ KEY RULE
+     Do NOT apply any green styles
+     until user clicks the calendar
+  */
+  if (!hasUserSelected && isConfirmed) {
+    return ""; // red text only, no background
+  }
+
+  /* ---------- USER SELECTION ---------- */
+  if (!hasUserSelected) return "";
+
+  const startUTC = selectedDates.start
+    ? new Date(Date.UTC(
+        selectedDates.start.getFullYear(),
+        selectedDates.start.getMonth(),
+        selectedDates.start.getDate()
+      ))
+    : null;
+
+  const endUTC = selectedDates.end
+    ? new Date(Date.UTC(
+        selectedDates.end.getFullYear(),
+        selectedDates.end.getMonth(),
+        selectedDates.end.getDate()
+      ))
+    : null;
+
+  if (startUTC && utcDate.getTime() === startUTC.getTime())
+    return "selected-start";
+
+  if (endUTC && utcDate.getTime() === endUTC.getTime())
+    return "selected-end";
+
+  if (startUTC && endUTC && utcDate > startUTC && utcDate < endUTC)
+    return "selected-range";
+
+  return "";
+};
+
+
+
+
+
+  const getDateSelectionClass_old = (date) => {
     if (!date || isNaN(date.getTime())) return "disabled";
 
     const normalizedDate = new Date(
@@ -2073,6 +2156,8 @@ const saveCancelReason = async () => {
                   isValidDate={(date) => date && !isNaN(date.getTime())}
                   isPastDate={isPastDate}
                   conflicts={fullConflicts}
+                  finalConfirmDate = {finalConfirmDate}
+                  hasUserSelected={hasUserSelected}
                 />
                 {error && (
                   <div className="error-messageOrderDetails">

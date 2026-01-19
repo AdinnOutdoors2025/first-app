@@ -1,9 +1,23 @@
+
 import React, { useState, useEffect } from "react";
 import "../components/B20CalenderMain.css";
 import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
 
 
-const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, generateMonth, handleDateClick, resetDates, getDateSelectionClass, goToNextMonth, goToPreviousMonth, bookedDates, currentMonth, confirmedDates, setConfirmedDates, pricePerDay, confirmDates, totalPrice, isPastDate,conflicts }) => {
+const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, generateMonth, handleDateClick, resetDates, getDateSelectionClass, goToNextMonth, goToPreviousMonth, bookedDates, currentMonth, confirmedDates, setConfirmedDates, pricePerDay, confirmDates, totalPrice, isPastDate,conflicts,finalConfirmDate }) => {
+
+
+  const confirmedSet = React.useMemo(() => {
+  return new Set(finalConfirmDate?.confirmed || []);
+}, [finalConfirmDate]);
+
+const isConfirmedDate = (date) => {
+  if (!date) return false;
+  const key = getDateKey(date);
+  return confirmedSet.has(key);
+};
+
+
   
   ////////////////////////////////////////////////////////////////////////////////////////
   const conflictDotMap = React.useMemo(() => {
@@ -100,7 +114,7 @@ To: ${new Date(c.end).toDateString()}`}
         textAnchor="middle"
         dy=".3em"
         fontSize="10"
-        fill="#000"
+        fill={isConfirmedDate(date) ? "red" : "#000"}
       >
         {date.getDate()}
       </text>
@@ -211,7 +225,9 @@ const getDateKey = (date) => {
                           d.getUTCFullYear() === date.getUTCFullYear() &&
                           d.getUTCMonth() === date.getUTCMonth() &&
                           d.getUTCDate() === date.getUTCDate()
-                        ) ? 'booked' : getDateSelectionClass(date)) : ''}
+                        ) ? 'booked' : getDateSelectionClass(date)
+
+) : ''}
         ${isPastDate ? 'past' : ''}
       `}
                       onClick={() => !isPastDate && handleDateClick(date)}
@@ -225,7 +241,17 @@ const getDateKey = (date) => {
         conflicts={conflictDotMap[getDateKey(date)]}
       />
     ) : (
-      <span>{date.getDate()}</span>
+<span
+  style={{
+    color: isConfirmedDate(date) ? "red" : undefined,
+    fontWeight: isConfirmedDate(date) ? "600" : undefined,
+  }}
+>
+  {date.getDate()}
+</span>
+
+
+
     )}
   </>
 )}
@@ -344,14 +370,12 @@ const getDateKey = (date) => {
                     {generateMonth(monthToRender).map((date, index) => (
                       <div
                         key={index}
-                        className={`date ${date
-                          ? bookedDates.some((d) => d.getTime() === date.getTime())
-                            ? "booked"
-                            : getDateSelectionClass(date)
-                          // ? "selected-date"
-                          // : "available-date"
-                          : ""
-                          }`}
+                   className={`date ${
+  bookedDates.some((d) => d.getTime() === date?.getTime())
+    ? "booked"
+    : getDateSelectionClass(date)
+}`}
+
                         onClick={() => handleDateClick(date)}
                         style={{ pointerEvents: bookedDates.some((d) => d.getTime() === date?.getTime()) ? "none" : "auto" }}
                       >
@@ -364,7 +388,16 @@ const getDateKey = (date) => {
         conflicts={conflictDotMap[getDateKey(date)]}
       />
     ) : (
-      <span>{date.getDate()}</span>
+<span
+  style={{
+    color: isConfirmedDate(date) ? "red" : undefined,
+    fontWeight: isConfirmedDate(date) ? "600" : undefined,
+  }}
+>
+  {date.getDate()}
+</span>
+
+
     )}
   </>
 )}
