@@ -149,7 +149,8 @@ export const getBookingStatus = (startDate, endDate) => {
             status: 'active', 
             days: daysRemaining,
             progress: Math.round((daysElapsed / totalDays) * 100),
-            message: `${daysElapsed}/${totalDays} days completed (${daysRemaining} days remaining)`
+            // message: `${daysElapsed}/${totalDays} days completed (${daysRemaining} days remaining)`
+            message: ``
         };
     }
 };

@@ -2,9 +2,41 @@
 import React, { useState, useEffect } from "react";
 import "../components/B20CalenderMain.css";
 import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
+import axios from "axios";
+import { baseUrl } from "./BASE_URL";
 
 
-const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, generateMonth, handleDateClick, resetDates, getDateSelectionClass, goToNextMonth, goToPreviousMonth, bookedDates, currentMonth, confirmedDates, setConfirmedDates, pricePerDay, confirmDates, totalPrice, isPastDate,conflicts,finalConfirmDate }) => {
+
+const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, generateMonth, handleDateClick, resetDates, getDateSelectionClass, goToNextMonth, goToPreviousMonth, bookedDates, currentMonth, confirmedDates, setConfirmedDates, pricePerDay, confirmDates, totalPrice, isPastDate,finalConfirmDate,orderId }) => {
+  
+const [conflicts, setConflicts] = useState(null);
+
+const fetchOrderConflicts = async (orderId) => {
+  try {
+    const res = await axios.get(
+      `${baseUrl}/checkOrderConflict/${orderId}`
+    );
+    return res.data;
+  } catch (err) {
+    console.error("Error fetching conflicts", err);
+    return null;
+  }
+};
+
+useEffect(() => {
+  if (!orderId) return;
+
+  const loadConflicts = async () => {
+    const data = await fetchOrderConflicts(orderId);
+    if (data?.success) {
+      setConflicts(data); // ✅ same name as requested
+    }
+  };
+
+  loadConflicts();
+}, [orderId]);
+
+
 
 
   const confirmedSet = React.useMemo(() => {

@@ -13,7 +13,6 @@
 // import DealScrollAnim from './H2DealScroll.jsx';
 // import { formatIndianCurrency } from './FORMATED_AMOUNT';
 
-
 // export default function BookASite() {
 //   // Navbar js
 //   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -79,13 +78,11 @@
 //         const locationsData = await locationsRes.json();
 //         // Convert to stateDistricts format
 //         const stateMap = locationsData.reduce((acc, curr) => {
-//           //NEWLY ADDED 
+//           //NEWLY ADDED
 //           // Clean district names by removing hidden characters
 //           const cleanedDistricts = curr.districts.map(district =>
 //             district.replace(/[\u200B-\u200D\uFEFF]/g, '').trim()
 //           );
-
-
 
 //           acc[curr.state] = cleanedDistricts;
 //           return acc;
@@ -94,8 +91,6 @@
 
 //         // Debug log to see cleaned data
 //         console.log("Cleaned stateDistricts for Tamil Nadu:", stateMap["Tamil Nadu"]);
-
-
 
 //       } catch (error) {
 //         console.error("Error fetching data:", error);
@@ -165,7 +160,6 @@
 //     setIsOpen2(false);
 //   };
 
-
 //   //Start rating board
 //   const RatingStars = ({ rating }) => {
 //     const fullStars = Math.floor(rating);
@@ -215,7 +209,6 @@
 //     return name ? name.toLowerCase().replace(/[\u200B-\u200D\uFEFF]/g, '').trim() : '';
 //   };
 
-
 //   // Convert to lowercase and compare to make filtering case-insensitive
 //   let filteredSpots = spots.filter((spot) => {
 //     // const spotLocation = spot.location.toLowerCase();
@@ -251,7 +244,6 @@
 //     //   selectedOutdoorMedium.some((medium) => spotCategory === medium.toLowerCase().trim());
 //     // return isStateMatch && isDistrictMatch && isCategoryMatch;
 
-
 //     // State match - use exact matching
 //     const isStateMatch =
 //       selectedStates.length === 0 ||
@@ -259,7 +251,7 @@
 //         state.toLowerCase().trim() === spotState
 //       );
 
-//     // District match - use cleaned names for comparison  
+//     // District match - use cleaned names for comparison
 //     const isDistrictMatch =
 //       cleanedSelectedDistricts.length === 0 ||
 //       cleanedSelectedDistricts.some((district) =>
@@ -625,7 +617,6 @@
 //                         ))}
 //                       </div>
 
-
 // SINGLE HOARDING OUTDOOR MEDIUM
 //                       <div className="form-group">
 //                         <div className="form-check d-flex">
@@ -642,8 +633,6 @@
 //                           </label>
 //                         </div>
 //                       </div>
-
-
 
 //                     </form>
 //                   </div> */}
@@ -745,7 +734,6 @@
 //             <div className=" col-12 col-md-9 py-3 px-0 side-right-main">
 //               <div className="row side-right-content">
 
-
 //                 {isLoading ? (
 //                   <div className="col-12 text-center loading-container">
 //                     <img src='./images/BookLoading.svg' alt="Loading..." className="Book-loading-gif" />
@@ -766,7 +754,7 @@
 //                             <div className='board-content-bottom-book'>
 //                               {/* <span className="board-price-book">₹{spot.price.toLocaleString()}<span className='board-price-bookPerDay'> / Per Day</span></span> */}
 //                               <span className="board-price-book">{formatIndianCurrency(spot.price, true)}<span className='board-price-bookPerDay'> / Per Day</span></span>
-                             
+
 //                               <img src='./images/rating_board.png' className='rate-board-book'></img>
 //                             </div>
 //                             <RatingStars rating={spot.rating} />
@@ -817,23 +805,20 @@
 //   )
 // };
 
-
-
-
-import React, { useState, createContext, useContext, useEffect } from 'react'
+import React, { useState, createContext, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import '../components/b1book.css';
-import LoginPageMain from './C1LoginMain';
+import "../components/b1book.css";
+import LoginPageMain from "./C1LoginMain";
 import { useSpot } from "./B0SpotContext";
-import MainNavbar from './A1NAVBAR.jsx';
-import MainFooter from './A1FOOTER.jsx';
-import { MainLayout } from './MainLayout';
-import slugify from 'slugify';
+import MainNavbar from "./A1NAVBAR.jsx";
+import MainFooter from "./A1FOOTER.jsx";
+import { MainLayout } from "./MainLayout";
+import slugify from "slugify";
 //BASE URL OF http://localhost:3001 FILE IMPORT
-import { baseUrl } from '../Adminpanel/BASE_URL';
+import { baseUrl } from "../Adminpanel/BASE_URL";
 //DEAL OF THE DAY PAGE SCROLL ANIMATION
-import DealScrollAnim from './H2DealScroll.jsx';
-import { formatIndianCurrency } from './FORMATED_AMOUNT';
+import DealScrollAnim from "./H2DealScroll.jsx";
+import { formatIndianCurrency } from "./FORMATED_AMOUNT";
 
 export default function BookASite() {
   // Navbar js
@@ -843,7 +828,7 @@ export default function BookASite() {
   };
   //Nav_user toggle section
   const [isOpen, setIsOpen] = useState(false);
-  
+
   //FETCHED CONTENT AND DETAILS FROM THE DATABASE
   const [spots, setSpots] = useState([]);
   const [mediaTypes, setMediaTypes] = useState([]);
@@ -851,7 +836,7 @@ export default function BookASite() {
 
   //LOADING STATES
   const [isLoading, setIsLoading] = useState(true);
-  
+
   // PAGINATION STATES - USING SERVER-SIDE PAGINATION
   const [currentPage, setCurrentPage] = useState(0); // Start from 0
   const [totalPages, setTotalPages] = useState(0);
@@ -867,7 +852,7 @@ export default function BookASite() {
   //By for the first dropdown
   const [isOpen1, setIsOpen1] = useState(false);
   const [selected1, setSelected1] = useState("By");
-  
+
   // State for the second dropdown
   const [isOpen2, setIsOpen2] = useState(false);
   const [selected2, setSelected2] = useState("State");
@@ -876,95 +861,100 @@ export default function BookASite() {
   const fetchPaginatedData = async (page = 0) => {
     try {
       setIsLoading(true);
-      
+
       // Build query parameters
       const params = new URLSearchParams({
         page: page,
         limit: limit,
-        visibleOnly: 'true' // Only fetch visible products
+        visibleOnly: "true", // Only fetch visible products
       });
 
       // Add state filters
       if (selectedStates.length > 0) {
-        selectedStates.forEach(state => params.append('states', state));
+        selectedStates.forEach((state) => params.append("states", state));
       }
 
       // Add district filters
       if (selectedDistricts.length > 0) {
-        selectedDistricts.forEach(district => params.append('districts', district));
+        selectedDistricts.forEach((district) =>
+          params.append("districts", district),
+        );
       }
 
       // Add category filters
       if (selectedOutdoorMedium.length > 0) {
-        selectedOutdoorMedium.forEach(category => params.append('categories', category));
+        selectedOutdoorMedium.forEach((category) =>
+          params.append("categories", category),
+        );
       }
 
       // Add sort parameter
-      let sortParam = '';
+      let sortParam = "";
       switch (sortOption) {
-        case 'Price: Low to High':
-          sortParam = 'price_asc';
+        case "Price: Low to High":
+          sortParam = "price_asc";
           break;
-        case 'Price: High to Low':
-          sortParam = 'price_desc';
+        case "Price: High to Low":
+          sortParam = "price_desc";
           break;
-        case 'Popularity: High to Low':
-          sortParam = 'rating_desc';
+        case "Popularity: High to Low":
+          sortParam = "rating_desc";
           break;
-        case 'Popularity: Low to High':
-          sortParam = 'rating_asc';
+        case "Popularity: Low to High":
+          sortParam = "rating_asc";
           break;
         default:
-          sortParam = '';
-      }
-      
-      if (sortParam) {
-        params.append('sortBy', sortParam);
+          sortParam = "";
       }
 
-      console.log('Fetching with params:', params.toString());
+      if (sortParam) {
+        params.append("sortBy", sortParam);
+      }
+
+      console.log("Fetching with params:", params.toString());
 
       // Fetch products with filters
-      const productsRes = await fetch(`${baseUrl}/products_paginated?${params.toString()}`);
-      
+      const productsRes = await fetch(
+        `${baseUrl}/products_paginated?${params.toString()}`,
+      );
+
       if (!productsRes.ok) {
         throw new Error(`HTTP error! status: ${productsRes.status}`);
       }
-      
+
       const productsData = await productsRes.json();
-      
-      console.log('Fetched data:', {
+
+      console.log("Fetched data:", {
         page: productsData.current_page,
         total: productsData.total_products,
         pages: productsData.total_pages,
-        items: productsData.data.length
+        items: productsData.data.length,
       });
 
       // Set spots directly from transformed data
       setSpots(productsData.data);
       setTotalPages(productsData.total_pages);
       setTotalProducts(productsData.total_products);
-      
+
       // Only fetch media types and stateDistricts once
       if (mediaTypes.length === 0) {
         const mediaRes = await fetch(`${baseUrl}/mediatype`);
         const mediaData = await mediaRes.json();
-        setMediaTypes(mediaData.map(m => m.type.trim()));
+        setMediaTypes(mediaData.map((m) => m.type.trim()));
       }
 
       if (Object.keys(stateDistricts).length === 0) {
         const locationsRes = await fetch(`${baseUrl}/category`);
         const locationsData = await locationsRes.json();
         const stateMap = locationsData.reduce((acc, curr) => {
-          const cleanedDistricts = curr.districts.map(district =>
-            district.replace(/[\u200B-\u200D\uFEFF]/g, '').trim()
+          const cleanedDistricts = curr.districts.map((district) =>
+            district.replace(/[\u200B-\u200D\uFEFF]/g, "").trim(),
           );
           acc[curr.state] = cleanedDistricts;
           return acc;
         }, {});
         setStateDistricts(stateMap);
       }
-
     } catch (error) {
       console.error("Error fetching data:", error);
       // Fallback: show empty state
@@ -979,20 +969,26 @@ export default function BookASite() {
   // Initial fetch and fetch when filters/page changes
   useEffect(() => {
     fetchPaginatedData(currentPage);
-  }, [currentPage, selectedStates, selectedDistricts, selectedOutdoorMedium, sortOption]);
+  }, [
+    currentPage,
+    selectedStates,
+    selectedDistricts,
+    selectedOutdoorMedium,
+    sortOption,
+  ]);
 
   // Functions for first dropdown
   const toggleDropdown1 = () => {
     setIsOpen1(!isOpen1);
   };
-  
+
   const selectOption1 = (option) => {
     setSelected1(option);
     setSortOption(option);
     setCurrentPage(0); // Reset to first page when sorting changes
     setIsOpen1(false);
   };
-  
+
   const resetDropdown1 = (event) => {
     event.stopPropagation();
     setSelected1("By");
@@ -1001,8 +997,8 @@ export default function BookASite() {
   };
 
   const [checkedDistricts, setCheckedDistricts] = useState([]);
-  const toggleDropdown2 = () => setIsOpen2(prev => !prev);
-  
+  const toggleDropdown2 = () => setIsOpen2((prev) => !prev);
+
   // Reset Dropdown (Clears selection)
   const resetDropdown2 = (e) => {
     e.stopPropagation();
@@ -1011,31 +1007,31 @@ export default function BookASite() {
     setSelected2("State");
     setCurrentPage(0);
   };
-  
+
   // SINGLE SELECTION DISTRICTS
   const selectOption2 = (state) => {
     setActiveLocationTab(state);
     setTempStates([state]);
     const filteredDistricts = tempDistricts.filter((district) =>
-      stateDistricts[state]?.includes(district)
+      stateDistricts[state]?.includes(district),
     );
     setTempDistricts(filteredDistricts);
-    
+
     if (!selectedStates.includes(state)) {
       setSelectedStates((prev) => [...prev, state]);
     }
-    
+
     if (selectedStates.includes(state)) {
       setSelectedStates([]);
       setSelectedDistricts([]);
     } else {
       setSelectedStates([state]);
       const updatedDistricts = selectedDistricts.filter((district) =>
-        stateDistricts[state]?.includes(district)
+        stateDistricts[state]?.includes(district),
       );
       setSelectedDistricts(updatedDistricts);
     }
-    
+
     setIsOpen2(false);
     setCurrentPage(0); // Reset to first page when location changes
   };
@@ -1045,13 +1041,15 @@ export default function BookASite() {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 !== 0;
     const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-    
+
     return (
       <div className="rate-book">
         {[...Array(fullStars)].map((_, index) => (
           <span key={index} className="fa-solid fa-star stars-book"></span>
         ))}
-        {halfStar && <span className="fa-solid fa-star-half-alt stars-book"></span>}
+        {halfStar && (
+          <span className="fa-solid fa-star-half-alt stars-book"></span>
+        )}
         {[...Array(emptyStars)].map((_, index) => (
           <span key={index} className="fa-solid fa-star empty-star-book"></span>
         ))}
@@ -1063,7 +1061,9 @@ export default function BookASite() {
   const handleOutdoorMediumChange = (event) => {
     const medium = event.target.value;
     setSelectedOutdoorMedium((prev) =>
-      prev.includes(medium) ? prev.filter((m) => m !== medium) : [...prev, medium]
+      prev.includes(medium)
+        ? prev.filter((m) => m !== medium)
+        : [...prev, medium],
     );
     setCurrentPage(0); // Reset to first page when filter changes
   };
@@ -1071,53 +1071,73 @@ export default function BookASite() {
   //Toggle district change
   const handleDistrictChange = (district) => {
     setSelectedDistricts((prev) =>
-      prev.includes(district) ? prev.filter((d) => d !== district) : [...prev, district]
+      prev.includes(district)
+        ? prev.filter((d) => d !== district)
+        : [...prev, district],
     );
     setCurrentPage(0); // Reset to first page when filter changes
   };
 
   // Update outdoor mediums to use fetched media types
   const outdoorMediums = mediaTypes;
-  
+
   // Display current spots (already filtered and sorted from server)
   const currentSpots = spots;
 
   // Helper function to generate page numbers
+
   const getPaginationGroup = () => {
     let pages = [];
     const maxPagesToShow = 3;
-    
+
     if (totalPages <= 6) {
       pages = Array.from({ length: totalPages }, (_, i) => i);
     } else {
+      // 🔹 Case 1: Near the start (NO dots here)
       if (currentPage <= maxPagesToShow) {
-        pages = [...Array(maxPagesToShow + 1).keys()].map((i) => i);
-        pages.push("...", totalPages - 2, totalPages - 1);
-      } else if (currentPage >= totalPages - maxPagesToShow - 1) {
+        pages = Array.from({ length: maxPagesToShow + 4 }, (_, i) => i);
+
+        // Only show dots if there is a real gap
+        if (pages[pages.length - 1] < totalPages - 2) {
+          pages.push("...", totalPages - 2, totalPages - 1);
+        }
+      }
+
+      // 🔹 Case 2: Near the end
+      else if (currentPage >= totalPages - maxPagesToShow - 1) {
         pages = [0, 1, "..."];
-        pages.push(...Array.from({ length: maxPagesToShow + 1 }, (_, i) => totalPages - maxPagesToShow - 1 + i));
-      } else {
-        pages = [0, 1, "..."];
+        pages.push(
+          ...Array.from(
+            { length: maxPagesToShow + 2 },
+            (_, i) => totalPages - maxPagesToShow - 2 + i,
+          ),
+        );
+      }
+
+      // 🔹 Case 3: Middle
+      else {
+        pages = [0, 1];
         pages.push(currentPage - 1, currentPage, currentPage + 1);
         pages.push("...", totalPages - 2, totalPages - 1);
       }
     }
-    return pages;
+
+    return [...new Set(pages)]; // remove duplicates safely
   };
-  
+
   // NAVIGATE
   const navigate = useNavigate();
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const { setSelectedSpot } = useSpot();
-  
+
   const handleBookNow = (spot) => {
     setSelectedSpot(spot);
     navigate(`/Product/${spot.id}-${slugify(spot.prodName)}`);
   };
-  
+
   //FILTER SMALL SCREENS
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
-  
+
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 768);
@@ -1125,20 +1145,20 @@ export default function BookASite() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  
+
   //OUTDOOR MEDIUM FILTER SECTION
   const [tempOutdoorMedium, setTempOutdoorMedium] = useState([]);
   const [isFilterOpenMedium, setIsFilterOpenMedium] = useState(false);
-  
+
   const toggleFilterSectionMedium = () => {
     setTempOutdoorMedium([...selectedOutdoorMedium]);
     setIsFilterOpenMedium(true);
   };
-  
+
   const closeFilterSectionMedium = () => {
     setIsFilterOpenMedium(false);
   };
-  
+
   const handleMediumFilterDone = () => {
     setSelectedOutdoorMedium([...tempOutdoorMedium]);
     setCurrentPage(0); // Reset to first page
@@ -1154,16 +1174,16 @@ export default function BookASite() {
   const [tempSorting, setTempSorting] = useState(sortOption);
   const [activeSortTab, setActiveSortTab] = useState("Popularity");
   const [isFilterSorting, setIsFilterSorting] = useState(false);
-  
+
   const toggleFilterSectionSorting = () => {
     setTempSorting(sortOption);
     setIsFilterSorting(true);
   };
-  
+
   const closeFilterSectionSorting = () => {
     setIsFilterSorting(false);
   };
-  
+
   const handleSortingFilterDone = () => {
     setSortOption(tempSorting);
     setCurrentPage(0); // Reset to first page
@@ -1174,25 +1194,27 @@ export default function BookASite() {
     setTempSorting(sortOption);
     setIsFilterSorting(false);
   };
-  
+
   //LOCATION FILTER SECTION
   const [tempLocation, setTempLocation] = useState(sortOption);
   const [activeLocationTab, setActiveLocationTab] = useState("Tamil Nadu");
   const [isFilterLocation, setIsFilterLocation] = useState(false);
   const [tempStates, setTempStates] = useState(["Tamil Nadu"]);
   const [tempDistricts, setTempDistricts] = useState([]);
-  
+
   const toggleFilterSectionLocation = () => {
     setTempStates(selectedStates.length > 0 ? selectedStates : ["Tamil Nadu"]);
     setTempDistricts([...selectedDistricts]);
-    setActiveLocationTab(selectedStates.length > 0 ? selectedStates[0] : "Tamil Nadu");
+    setActiveLocationTab(
+      selectedStates.length > 0 ? selectedStates[0] : "Tamil Nadu",
+    );
     setIsFilterLocation(true);
   };
-  
+
   const closeFilterSectionLocation = () => {
     setIsFilterLocation(false);
   };
-  
+
   const handleLocationFilterDone = () => {
     setSelectedStates([...tempStates]);
     setSelectedDistricts([...tempDistricts]);
@@ -1213,62 +1235,92 @@ export default function BookASite() {
 
   return (
     <MainLayout>
-      <div className='bookMainDeal'>
+      <div className="bookMainDeal">
         <DealScrollAnim />
         <MainNavbar />
-        
+
         <div className="container side-bar-main">
           <div className="row side-bar-content">
             {/* Left Sidebar */}
             <div className=" col-12 col-md-3 sidebar-section p-3 ">
               {isSmallScreen ? (
-                <div className='FilterSection-mobile d-flex'>
+                <div className="FilterSection-mobile d-flex">
                   {/* Sorting Dropdown for mobile */}
-                  <div className='sorting1 position-relative' onClick={toggleFilterSectionSorting}>
-                    <div> <img src='./images/Filter_responsive_img2.svg' className='Filter_responsive_img2'></img>Sort</div>
+                  <div
+                    className="sorting1 position-relative"
+                    onClick={toggleFilterSectionSorting}
+                  >
+                    <div>
+                      {" "}
+                      <img
+                        src="./images/Filter_responsive_img2.svg"
+                        className="Filter_responsive_img2"
+                      ></img>
+                      Sort
+                    </div>
                   </div>
-                  
+
                   {isFilterSorting && (
                     <div className="filter-Sortingdropdown">
                       <div className="filter-ResponsiveHeading">
                         Sort
-                        <button className="close-xmarkFilter" onClick={closeFilterSectionSorting}>
+                        <button
+                          className="close-xmarkFilter"
+                          onClick={closeFilterSectionSorting}
+                        >
                           <i className="fa-regular fa-circle-xmark"></i>
                         </button>
                       </div>
 
                       <div className="filter-SortingDropdownContent">
-                        <div className='filter-SortingDropdownContentLeft sortSideFilter'>
+                        <div className="filter-SortingDropdownContentLeft sortSideFilter">
                           <div
                             className={`${activeSortTab === "Popularity" ? "active" : ""} filterSortingLeftTabs`}
-                            onClick={() => setActiveSortTab("Popularity")}>
+                            onClick={() => setActiveSortTab("Popularity")}
+                          >
                             Popularity
                           </div>
                           <div
                             className={`${activeSortTab === "Price" ? "active" : ""} filterSortingLeftTabs`}
-                            onClick={() => setActiveSortTab("Price")}>
+                            onClick={() => setActiveSortTab("Price")}
+                          >
                             Price
                           </div>
                         </div>
-                        
-                        <div className='filter-SortingDropdownContentRight'>
-                          <div className='sortLocationRightHeading'>{activeSortTab}</div>
+
+                        <div className="filter-SortingDropdownContentRight">
+                          <div className="sortLocationRightHeading">
+                            {activeSortTab}
+                          </div>
                           {(activeSortTab === "Popularity"
-                            ? ["Popularity: High to Low", "Popularity: Low to High"]
+                            ? [
+                                "Popularity: High to Low",
+                                "Popularity: Low to High",
+                              ]
                             : ["Price: High to Low", "Price: Low to High"]
                           ).map((filter) => (
-                            <div key={filter} className="filter-Sortoption-section d-flex">
-                              <form className='d-flex'>
+                            <div
+                              key={filter}
+                              className="filter-Sortoption-section d-flex"
+                            >
+                              <form className="d-flex">
                                 <input
                                   type="radio"
                                   id={filter}
-                                  name={activeSortTab === "Popularity" ? "popularitySort" : "priceSort"}
+                                  name={
+                                    activeSortTab === "Popularity"
+                                      ? "popularitySort"
+                                      : "priceSort"
+                                  }
                                   value={filter}
                                   className="Sortorder-radio-btn"
                                   checked={tempSorting === filter}
                                   onChange={() => setTempSorting(filter)}
                                 />
-                                <label className="filter-SortOptionName" htmlFor={filter}>
+                                <label
+                                  className="filter-SortOptionName"
+                                  htmlFor={filter}
+                                >
                                   {filter.split(": ")[1]}
                                 </label>
                               </form>
@@ -1276,57 +1328,94 @@ export default function BookASite() {
                           ))}
                         </div>
                       </div>
-                      
+
                       <div className="filterMediumButtons">
-                        <button className='filterCancelButton' onClick={handleSortingFilterCancel}>Cancel</button>
-                        <button className='filterDoneButton' onClick={handleSortingFilterDone}>Done</button>
+                        <button
+                          className="filterCancelButton"
+                          onClick={handleSortingFilterCancel}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="filterDoneButton"
+                          onClick={handleSortingFilterDone}
+                        >
+                          Done
+                        </button>
                       </div>
                     </div>
                   )}
-                  
+
                   {/* Location Filters for mobile */}
-                  <div className='location1' onClick={toggleFilterSectionLocation}>
-                    <div> <img src='./images/Filter_responsive_img3.svg' className='Filter_responsive_img3'></img>Location</div>
+                  <div
+                    className="location1"
+                    onClick={toggleFilterSectionLocation}
+                  >
+                    <div>
+                      {" "}
+                      <img
+                        src="./images/Filter_responsive_img3.svg"
+                        className="Filter_responsive_img3"
+                      ></img>
+                      Location
+                    </div>
                   </div>
-                  
+
                   {isFilterLocation && (
                     <div className="filter-Locationdropdown">
                       <div className="filter-ResponsiveHeading">
-                        Location<button className="close-xmarkFilter" onClick={closeFilterSectionLocation} >
+                        Location
+                        <button
+                          className="close-xmarkFilter"
+                          onClick={closeFilterSectionLocation}
+                        >
                           <i className="fa-regular fa-circle-xmark"></i>
                         </button>
                       </div>
-                      
-                      <div className='filter-LocationDropdownContent'>
-                        <div className='filter-LocationDropdownContentLeft'>
+
+                      <div className="filter-LocationDropdownContent">
+                        <div className="filter-LocationDropdownContentLeft">
                           {Object.keys(stateDistricts).map((state) => (
-                            <div className='stateSideFilter'>
+                            <div className="stateSideFilter">
                               <div
                                 className={`${selectedStates.includes(state) ? "selected" : ""} ${activeLocationTab === state ? "active" : ""} filterOutdoorSortLeftTabs`}
                                 onClick={() => selectOption2(state)}
-                                key={state}>
+                                key={state}
+                              >
                                 {state}
                               </div>
                             </div>
                           ))}
                         </div>
-                        
-                        <div className='filter-LocationDropdownContentRight' >
+
+                        <div className="filter-LocationDropdownContentRight">
                           {tempStates.map((state) => (
                             <div key={state} className="mb-2">
-                              <div className='sortLocationRightHeading LocationRightHeading'>{state}</div>
+                              <div className="sortLocationRightHeading LocationRightHeading">
+                                {state}
+                              </div>
                               {stateDistricts[state]?.map((district) => (
                                 <div
                                   key={district}
-                                  className={`form-check d-flex ${tempDistricts.includes(district) ? "checked" : ""
-                                    }`}>
+                                  className={`form-check d-flex ${
+                                    tempDistricts.includes(district)
+                                      ? "checked"
+                                      : ""
+                                  }`}
+                                >
                                   <input
                                     type="checkbox"
                                     className="form-check-input"
                                     id={district}
-                                    onChange={() => handleDistrictChange(district)}
-                                    checked={tempDistricts.includes(district)} />
-                                  <label className="form-check-label" htmlFor={district}>
+                                    onChange={() =>
+                                      handleDistrictChange(district)
+                                    }
+                                    checked={tempDistricts.includes(district)}
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor={district}
+                                  >
                                     {district}
                                   </label>
                                 </div>
@@ -1335,10 +1424,20 @@ export default function BookASite() {
                           ))}
                         </div>
                       </div>
-                      
+
                       <div className="filterMediumButtons">
-                        <button className='filterCancelButton' onClick={handleLocationFilterCancel}>Cancel</button>
-                        <button className='filterDoneButton' onClick={handleLocationFilterDone}>Done</button>
+                        <button
+                          className="filterCancelButton"
+                          onClick={handleLocationFilterCancel}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="filterDoneButton"
+                          onClick={handleLocationFilterDone}
+                        >
+                          Done
+                        </button>
                       </div>
                     </div>
                   )}
@@ -1346,71 +1445,127 @@ export default function BookASite() {
               ) : (
                 <>
                   {/* Sorting Dropdown for desktop */}
-                  <div className='sorting mb-4'>
-                    <h5 className='sidebar-heading'>Sort</h5>
+                  <div className="sorting mb-4">
+                    <h5 className="sidebar-heading">Sort</h5>
                     <div className="dropdown">
-                      <div className={`select ${isOpen1 ? "select-clicked" : ""} ${selected1 !== "By" ? "selected-active-bg" : ""}`}
-                        onClick={toggleDropdown1}>
-                        <span className={`selected ${selected1 !== "By" ? "selected-active" : ""}`}>
+                      <div
+                        className={`select ${isOpen1 ? "select-clicked" : ""} ${selected1 !== "By" ? "selected-active-bg" : ""}`}
+                        onClick={toggleDropdown1}
+                      >
+                        <span
+                          className={`selected ${selected1 !== "By" ? "selected-active" : ""}`}
+                        >
                           {selected1}
                         </span>
                         {selected1 === "By" ? (
-                          <i className={`fa-solid fa-caret-down ${isOpen1 ? "caret-rotate" : ""}`}></i>
+                          <i
+                            className={`fa-solid fa-caret-down ${isOpen1 ? "caret-rotate" : ""}`}
+                          ></i>
                         ) : (
-                          <i className="fa-solid fa-circle-xmark" onClick={resetDropdown1} style={{ color: "black" }}></i>
+                          <i
+                            className="fa-solid fa-circle-xmark"
+                            onClick={resetDropdown1}
+                            style={{ color: "black" }}
+                          ></i>
                         )}
                       </div>
-                      
+
                       <ul className={`menu ${isOpen1 ? "menu-open" : ""}`}>
-                        <li className={selected1 === "Price: Low to High" ? "active" : ""} onClick={() => selectOption1("Price: Low to High")}>
+                        <li
+                          className={
+                            selected1 === "Price: Low to High" ? "active" : ""
+                          }
+                          onClick={() => selectOption1("Price: Low to High")}
+                        >
                           Price: Low to High
                         </li>
-                        <li className={selected1 === "Price: High to Low" ? "active" : ""} onClick={() => selectOption1("Price: High to Low")}>
+                        <li
+                          className={
+                            selected1 === "Price: High to Low" ? "active" : ""
+                          }
+                          onClick={() => selectOption1("Price: High to Low")}
+                        >
                           Price: High to Low
                         </li>
-                        <li className={selected1 === "Popularity: High to Low" ? "active" : ""} onClick={() => selectOption1("Popularity: High to Low")}>
+                        <li
+                          className={
+                            selected1 === "Popularity: High to Low"
+                              ? "active"
+                              : ""
+                          }
+                          onClick={() =>
+                            selectOption1("Popularity: High to Low")
+                          }
+                        >
                           Popularity: High to Low
                         </li>
-                        <li className={selected1 === "Popularity: Low to High" ? "active" : ""} onClick={() => selectOption1("Popularity: Low to High")}>
+                        <li
+                          className={
+                            selected1 === "Popularity: Low to High"
+                              ? "active"
+                              : ""
+                          }
+                          onClick={() =>
+                            selectOption1("Popularity: Low to High")
+                          }
+                        >
                           Popularity: Low to High
                         </li>
                       </ul>
                     </div>
                   </div>
-                  
+
                   {/* Location Filters for desktop */}
-                  <div className='location'>
-                    <h5 className='sidebar-heading'>Location</h5>
+                  <div className="location">
+                    <h5 className="sidebar-heading">Location</h5>
                     <form>
                       <div className="form-group">
                         <div className="dropdown">
                           <div
                             className={` form-control select ${isOpen2 ? "select-clicked" : ""} ${selectedStates.length > 0 ? "selected2-active-bg" : ""}`}
-                            onClick={toggleDropdown2}>
-                            <span className={`selected ${selectedStates.length > 0 ? "selected2-active" : ""}`}>
-                              {selectedStates.length > 0 ? selectedStates.join(", ") : "Select State"}
+                            onClick={toggleDropdown2}
+                          >
+                            <span
+                              className={`selected ${selectedStates.length > 0 ? "selected2-active" : ""}`}
+                            >
+                              {selectedStates.length > 0
+                                ? selectedStates.join(", ")
+                                : "Select State"}
                             </span>
                             {selectedStates.length === 0 ? (
-                              <i className={`fa-solid fa-caret-down ${isOpen2 ? "caret-rotate" : ""}`}></i>
+                              <i
+                                className={`fa-solid fa-caret-down ${isOpen2 ? "caret-rotate" : ""}`}
+                              ></i>
                             ) : (
-                              <i className="fa-solid fa-circle-xmark" onClick={resetDropdown2} style={{ color: "white" }}></i>
+                              <i
+                                className="fa-solid fa-circle-xmark"
+                                onClick={resetDropdown2}
+                                style={{ color: "white" }}
+                              ></i>
                             )}
                           </div>
-                          
+
                           {isOpen2 && (
-                            <ul className={`menu ${isOpen2 ? "menu-open" : ""}`}>
+                            <ul
+                              className={`menu ${isOpen2 ? "menu-open" : ""}`}
+                            >
                               {Object.keys(stateDistricts).map((state) => (
                                 <li
-                                  className={selectedStates.includes(state) ? "active" : ""}
+                                  className={
+                                    selectedStates.includes(state)
+                                      ? "active"
+                                      : ""
+                                  }
                                   onClick={() => selectOption2(state)}
-                                  key={state}>
+                                  key={state}
+                                >
                                   {state}
                                 </li>
                               ))}
                             </ul>
                           )}
                         </div>
-                        
+
                         {/* District selection */}
                         {selectedStates.map((state) => (
                           <div key={state} className="mb-2">
@@ -1423,10 +1578,15 @@ export default function BookASite() {
                                   type="checkbox"
                                   className="form-check-input"
                                   id={district}
-                                  onChange={() => handleDistrictChange(district)}
+                                  onChange={() =>
+                                    handleDistrictChange(district)
+                                  }
                                   checked={selectedDistricts.includes(district)}
                                 />
-                                <label className="form-check-label" htmlFor={district}>
+                                <label
+                                  className="form-check-label"
+                                  htmlFor={district}
+                                >
                                   {district}
                                 </label>
                               </div>
@@ -1445,69 +1605,111 @@ export default function BookASite() {
               <div className="row side-right-content">
                 {isLoading ? (
                   <div className="col-12 text-center loading-container">
-                    <img src='./images/BookLoading.svg' alt="Loading..." className="Book-loading-gif" />
+                    <img
+                      src="./images/BookLoading.svg"
+                      alt="Loading..."
+                      className="Book-loading-gif"
+                    />
                   </div>
                 ) : currentSpots.length > 0 ? (
                   currentSpots.map((spot) => (
-                    <div className="col-lg-4 col-md-6 col-sm-12 mb-4 card-board-contents" key={spot.id} >
-                      <div className="card board-book" onClick={() => handleBookNow(spot)} >
-                        <img src={spot.imageUrl} alt={spot.location} className="card-img-top-book" />
-                        <span className='board-category-book'>{spot.category}</span>
-                        <span className='board-location-book'>{spot.location}</span>
+                    <div
+                      className="col-lg-4 col-md-6 col-sm-12 mb-4 card-board-contents"
+                      key={spot.id}
+                    >
+                      <div
+                        className="card board-book"
+                        onClick={() => handleBookNow(spot)}
+                      >
+                        <img
+                          src={spot.imageUrl}
+                          alt={spot.location}
+                          className="card-img-top-book"
+                        />
+                        <span className="board-category-book">
+                          {spot.category}
+                        </span>
+                        <span className="board-location-book">
+                          {spot.location}
+                        </span>
                         <div className="board-content-book ">
-                          <div className='board-content-top-book'>
-                            <span className="board-loc-book">{spot.prodName}</span>
-                            <span className="board-dim-book"> {spot.sizeWidth} x {spot.sizeHeight} </span>
+                          <div className="board-content-top-book">
+                            <span className="board-loc-book">
+                              {spot.prodName}
+                            </span>
+                            <span className="board-dim-book">
+                              {" "}
+                              {spot.sizeWidth} x {spot.sizeHeight}{" "}
+                            </span>
                           </div>
-                          <div className='board-content-bottom-book'>
-                            <span className="board-price-book">{formatIndianCurrency(spot.price, true)}<span className='board-price-bookPerDay'> / Per Day</span></span>
-                            <img src='./images/rating_board.png' className='rate-board-book'></img>
+                          <div className="board-content-bottom-book">
+                            <span className="board-price-book">
+                              {formatIndianCurrency(spot.price, true)}
+                              <span className="board-price-bookPerDay">
+                                {" "}
+                                / Per Day
+                              </span>
+                            </span>
+                            <img
+                              src="./images/rating_board.png"
+                              className="rate-board-book"
+                            ></img>
                           </div>
                           <RatingStars rating={spot.rating} />
-                          <button className="board-btn-book" onClick={() => handleBookNow(spot)} >Book Now</button>
+                          <button
+                            className="board-btn-book"
+                            onClick={() => handleBookNow(spot)}
+                          >
+                            Book Now
+                          </button>
                         </div>
                       </div>
                     </div>
                   ))
                 ) : (
                   <div className="col-12 text-center">
-                    <h5 className='NoItems'>No results found</h5>
+                    <h5 className="NoItems">No results found</h5>
                   </div>
                 )}
-                
+
                 {/* Pagination Component */}
                 {!isLoading && totalPages > 1 && (
                   <div className="col-12 text-center">
                     <div className="pagination d-flex justify-content-center">
-                      <button 
-                        className="prev-button" 
-                        onClick={() => handlePageChange(currentPage - 1)} 
-                        disabled={currentPage === 0}>
+                      <button
+                        className="prev-button"
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 0}
+                      >
                         <i className="fa-solid fa-arrow-left"></i>
                       </button>
-                      
+
                       {getPaginationGroup().map((page, index) =>
                         page === "..." ? (
-                          <span key={index} className="dots">...</span>
+                          <span key={index} className="dots">
+                            ...
+                          </span>
                         ) : (
                           <button
                             key={index}
-                            className={`page-number ${currentPage === page ? 'active' : ''}`}
+                            className={`page-number ${currentPage === page ? "active" : ""}`}
                             onClick={() => handlePageChange(page)}
                           >
-                            {page + 1} {/* Display page numbers as 1-based for user */}
+                            {page + 1}{" "}
+                            {/* Display page numbers as 1-based for user */}
                           </button>
-                        )
+                        ),
                       )}
-                      
-                      <button 
-                        className="next-button" 
-                        onClick={() => handlePageChange(currentPage + 1)} 
-                        disabled={currentPage === totalPages - 1}>
+
+                      <button
+                        className="next-button"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages - 1}
+                      >
                         <i className="fa-solid fa-arrow-right"></i>
                       </button>
                     </div>
-                    
+
                     {/* Optional: Show page info */}
                     {/* <div className="pagination-info mt-2">
                       Page {currentPage + 1} of {totalPages} • Total {totalProducts} products
@@ -1518,9 +1720,9 @@ export default function BookASite() {
             </div>
           </div>
         </div>
-        
+
         <MainFooter />
       </div>
     </MainLayout>
-  )
-};
+  );
+}

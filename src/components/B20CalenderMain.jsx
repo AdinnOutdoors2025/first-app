@@ -840,9 +840,9 @@ const getMinimumDaysInfo = () => {
               </div>
 
               <div className="calendarPendingNoteMain">
-                <div className="calendarPendingAsh">
+                {/* <div className="calendarPendingAsh">
                   <img src='/images/CalenderPendingAsh.svg' className="calendarPendingAsh" alt="pending"></img>
-                </div>
+                </div> */}
                 <div className="calendarPendingContents">
                   <i className="fa-solid fa-circle" style={{color: 'orange', fontSize: '10px'}}></i>
                 </div>
