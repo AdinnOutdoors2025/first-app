@@ -329,6 +329,55 @@ const Calendar = ({
 
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 991);
 
+//////////////////////////////////Show Slot Booked Message////////////////////////////////////////////////////
+     const normalizeUTC = (date) =>
+        new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+
+      const formatDate = (date) =>
+        date.toLocaleDateString("en-US", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          timeZone: "UTC",
+        });
+          const sortedDates = [...confirmedDates]
+        .map((d) => normalizeUTC(new Date(d)))
+        .sort((a, b) => a - b);
+
+      const lastBookedDate = sortedDates[sortedDates.length - 1];
+      
+
+       const todayUTC = normalizeUTC(new Date());
+
+      /* --------- Check if ANY green date exists --------- */
+      /*
+    If today + (selectionDays - 1) > lastBookedDate
+    → at least one date becomes selectable (green)
+    */
+      const lastBlockedByToday = new Date(todayUTC);
+      lastBlockedByToday.setUTCDate(
+        lastBlockedByToday.getUTCDate() + (INITIAL_SELECTION_DAYS - 1),
+      );
+
+      let nextBookingOpenDate = null;
+
+      if (lastBlockedByToday <= lastBookedDate) {
+        const effectiveLastDate = new Date(lastBookedDate);
+        effectiveLastDate.setUTCDate(effectiveLastDate.getUTCDate() + 1);
+
+        nextBookingOpenDate = new Date(effectiveLastDate);
+        nextBookingOpenDate.setUTCDate(
+          nextBookingOpenDate.getUTCDate() - (INITIAL_SELECTION_DAYS - 1),
+        );
+      }
+
+      const bookingMessage = nextBookingOpenDate
+        ? `Slots are booked. Booking opens from ${formatDate(nextBookingOpenDate)}`
+        : null;
+        
+setCalendarErrorMessage(bookingMessage)
+        
+///////////////////////////////////Show Slot Booked Message////////////////////////////////////////////////////
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth <= 991);
