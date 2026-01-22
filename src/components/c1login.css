@@ -206,6 +206,23 @@
 }
 
 
+
+/* //ADD LOADING STATES WHEN LOGIN / SIGNUP */
+/* Add to your login CSS file */
+.continue-btn:disabled,
+.Submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.fa-spinner {
+    margin-right: 8px;
+}
+
+
+/* //ADD LOADING STATES WHEN LOGIN / SIGNUP */
+
+
 /* Responsive Media Queries */
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
 @media (min-width: 2560px) {

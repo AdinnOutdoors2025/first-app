@@ -114,7 +114,31 @@ function App() {
                   </AdminAuthWrapper>
 
                 </ProtectedRoute>
-              } />
+              } /> 
+
+              
+{/* //ADD LOADING STATES WHEN LOGIN / SIGNUP */}
+<Route 
+    path="/billing" 
+    element={
+        <ProtectedRoute requireLogin={true}>
+            <Billing />
+        </ProtectedRoute>
+    } 
+/>
+
+<Route 
+    path="/thankyou1" 
+    element={
+        <ProtectedRoute requireLogin={true}>
+            <ThankyouPage1 />
+        </ProtectedRoute>
+    } 
+/>
+{/* //ADD LOADING STATES WHEN LOGIN / SIGNUP */}
+
+
+
 
 
               <Route path="/splash" element={<Splash />} />

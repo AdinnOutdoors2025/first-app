@@ -2209,3 +2209,43 @@
   background: #e8f0ff; /* lighter green */
 }
 
+
+
+
+
+
+
+
+
+/* //ERROR MESSAGE SHOWN  */
+/* Hidden dates styling - make them invisible */
+.date.hidden-date {
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+}
+
+/* Alternatively, you can show them as very light gray */
+.date.hidden-date {
+    background-color: #fafafa !important;
+    color: #ddd !important;
+    border: 1px solid #f0f0f0 !important;
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+}
+
+.date.hidden-date:hover {
+    background-color: #fafafa !important;
+}
+
+/* Make sure the date number is also hidden or light */
+.date.hidden-date > span {
+    color: #ddd !important;
+}
+
+
+/* //ERROR MESSAGE SHOWN  */
+
+
+
