@@ -514,9 +514,11 @@
 // export default Calendar;
 
 
-//B20CALENDAR_MAIN.JSX
-//PERFECT CODE FOR LOGIN AND ERROR MESSAGE PROPERLY SHOWN WITH AVAILABLE FUTURE DATES SUGGESTIONS
 
+
+
+// //B20CALENDAR_MAIN.JSX
+// //PERFECT CODE FOR LOGIN AND ERROR MESSAGE PROPERLY SHOWN WITH AVAILABLE FUTURE DATES SUGGESTIONS AND HIDE RESERVE & RESET BTN BASED ON BOOKED DATES 
 import React, { useState, useEffect } from "react";
 import "./B20CalenderMain.css";
 import { formatIndianCurrency } from './FORMATED_AMOUNT';
@@ -569,69 +571,47 @@ const Calendar = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // // Get custom class for date based on status
-  // const getDateCustomClass = (date) => {
-  //   if (!date || isNaN(date.getTime())) return "";
+  // Calculate if we should hide the reset button
+  const shouldHideResetButton = () => {
+    // Hide reset button when all initial days are booked AND no dates are selected
+    // Also hide when there are selected dates but still all initial days are booked
+    if (allInitialDaysBooked) {
+      // Check if any dates in the initial window are available
+      const today = new Date();
+      today.setUTCHours(0, 0, 0, 0);
+      
+      let hasAvailableDaysInInitialWindow = false;
+      
+      // Check each day in the initial window
+      for (let i = 0; i < INITIAL_SELECTION_DAYS; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+        
+        if (!isDateBooked(date) && !isPastDate(date)) {
+          hasAvailableDaysInInitialWindow = true;
+          break;
+        }
+      }
+      
+      // If no available days in initial window and no dates selected, hide reset
+      return !hasAvailableDaysInInitialWindow && !selectedDates.start && !selectedDates.end;
+    }
+    
+    return false;
+  };
 
-  //   try {
-  //     const baseClass = getDateSelectionClass(date);
+  // Helper function to check if date is past
+  const isPastDate = (date) => {
+    if (!date || isNaN(date.getTime())) return false;
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    const normalizedDate = new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+    );
+    return normalizedDate < today;
+  };
 
-  //     // For booked dates, always return "booked" (red)
-  //     if (baseClass === "booked") return "booked";
-
-  //     // For outside window dates
-  //     if (baseClass === "outside-window") {
-  //       return "outside-window";
-  //     }
-
-  //     // For past dates
-  //     if (baseClass === "past") return "past";
-
-  //     // Check if date is in selected range
-  //     if (selectedDates.start && selectedDates.end && date) {
-  //       const normalizedDate = new Date(Date.UTC(
-  //         date.getFullYear(),
-  //         date.getMonth(),
-  //         date.getDate()
-  //       ));
-
-  //       const startUTC = selectedDates.start ? new Date(Date.UTC(
-  //         selectedDates.start.getFullYear(),
-  //         selectedDates.start.getMonth(),
-  //         selectedDates.start.getDate()
-  //       )) : null;
-
-  //       const endUTC = selectedDates.end ? new Date(Date.UTC(
-  //         selectedDates.end.getFullYear(),
-  //         selectedDates.end.getMonth(),
-  //         selectedDates.end.getDate()
-  //       )) : null;
-
-  //       // Only apply selection styling if date is available
-  //       if (baseClass !== "booked" && baseClass !== "outside-window" && baseClass !== "past") {
-  //         if (startUTC && normalizedDate.getTime() === startUTC.getTime()) {
-  //           return "selected-start";
-  //         }
-  //         if (endUTC && normalizedDate.getTime() === endUTC.getTime()) {
-  //           return "selected-end";
-  //         }
-  //         if (startUTC && endUTC && normalizedDate > startUTC && normalizedDate < endUTC) {
-  //           return "selected-range";
-  //         }
-  //       }
-  //     }
-
-  //     return baseClass;
-  //   } catch (error) {
-  //     console.warn("Error in getDateCustomClass:", error);
-  //     return "";
-  //   }
-  // };
-
-
-
-  // Update getDateCustomClass function
-const getDateCustomClass = (date) => {
+  const getDateCustomClass = (date) => {
     if (!date || isNaN(date.getTime())) return "";
 
     try {
@@ -692,9 +672,7 @@ const getDateCustomClass = (date) => {
         console.warn("Error in getDateCustomClass:", error);
         return "";
     }
-};
-
-
+  };
 
   // Calculate total calendar days and available days for display
   const calculateDisplayInfo = () => {
@@ -727,6 +705,17 @@ const getDateCustomClass = (date) => {
   const shouldShowLoginMessage = showLoginMessage || 
     (calendarErrorMessage && calendarErrorMessage.includes("login") || 
      calendarErrorMessage === "Please login to proceed with booking.");
+
+  // Check if we should disable the confirm button
+  const shouldDisableConfirmButton = () => {
+    // Disable when all initial days are booked and no dates are selected
+    if (allInitialDaysBooked && !selectedDates.start && !selectedDates.end) {
+      return true;
+    }
+    
+    // Also disable if processing or showing login
+    return isProcessingBooking || showLoginMessage || showLoginRedirect;
+  };
 
   return (
     <div className={`calendar-container ${isSmallScreen ? 'scrollable' : ''}`}>
@@ -795,8 +784,12 @@ const getDateCustomClass = (date) => {
                     }
                   }}
                   style={{
-                    pointerEvents: getDateCustomClass(date) === "outside-window" || getDateCustomClass(date) === "past" ? "none" : "auto",
-                    cursor: getDateCustomClass(date) === "outside-window" || getDateCustomClass(date) === "past" ? "not-allowed" : "pointer"
+                    pointerEvents: getDateCustomClass(date) === "outside-window" || 
+                                  getDateCustomClass(date) === "past" || 
+                                  getDateCustomClass(date) === "hidden-date" ? "none" : "auto",
+                    cursor: getDateCustomClass(date) === "outside-window" || 
+                            getDateCustomClass(date) === "past" || 
+                            getDateCustomClass(date) === "hidden-date" ? "not-allowed" : "pointer"
                   }}
                 >
                   {date ? date.getDate() : ""}
@@ -857,17 +850,31 @@ const getDateCustomClass = (date) => {
                 <button
                   className="confirm-button"
                   onClick={confirmDates}
-                  disabled={isProcessingBooking || showLoginMessage || showLoginRedirect}
+                  disabled={shouldDisableConfirmButton()}
                 >
                   {isProcessingBooking ? 'Processing...' : 'Reserve & Book'}
                 </button>
-                <button
-                  className="reset-button"
-                  onClick={resetDates}
-                  disabled={isProcessingBooking || showLoginMessage || showLoginRedirect}
-                >
-                  Reset Date
-                </button>
+                 {/* {!shouldHideResetButton() && ( */}
+                  <button
+                    className="reset-button"
+                    onClick={resetDates}  
+                  disabled={shouldDisableConfirmButton()}
+
+                    // disabled={isProcessingBooking || showLoginMessage || showLoginRedirect}
+                  >
+                    Reset Date
+                  </button>
+                {/* )} */}
+                {/* Conditionally render Reset Date button */}
+                {/* {!shouldHideResetButton() && (
+                  <button
+                    className="reset-button"
+                    onClick={resetDates}
+                    disabled={isProcessingBooking || showLoginMessage || showLoginRedirect}
+                  >
+                    Reset Date
+                  </button>
+                )} */}
               </div>
             </div>
           </>
@@ -919,17 +926,32 @@ const getDateCustomClass = (date) => {
                 <button
                   className="confirm-button"
                   onClick={confirmDates}
-                  disabled={isProcessingBooking || showLoginMessage || showLoginRedirect}
+                  disabled={shouldDisableConfirmButton()}
                 >
                   {isProcessingBooking ? 'Processing...' : 'Reserve & Book'}
                 </button>
-                <button
-                  className="reset-button"
-                  onClick={resetDates}
-                  disabled={isProcessingBooking || showLoginMessage || showLoginRedirect}
-                >
-                  Reset Date
-                </button>
+                
+                {/* {!shouldHideResetButton() && ( */}
+                  <button
+                    className="reset-button"
+                    onClick={resetDates}  
+                  disabled={shouldDisableConfirmButton()}
+
+                    // disabled={isProcessingBooking || showLoginMessage || showLoginRedirect}
+                  >
+                    Reset Date
+                  </button>
+                {/* )} */}
+                {/* Conditionally render Reset Date button */}
+                {/* {!shouldHideResetButton() && (
+                  <button
+                    className="reset-button"
+                    onClick={resetDates}
+                    disabled={isProcessingBooking || showLoginMessage || showLoginRedirect}
+                  >
+                    Reset Date
+                  </button>
+                )} */}
               </div>
 
               <div className="calendarPendingNoteMain">
@@ -965,8 +987,12 @@ const getDateCustomClass = (date) => {
                         }
                       }}
                       style={{
-                        pointerEvents: getDateCustomClass(date) === "outside-window" || getDateCustomClass(date) === "past" ? "none" : "auto",
-                        cursor: getDateCustomClass(date) === "outside-window" || getDateCustomClass(date) === "past" ? "not-allowed" : "pointer"
+                        pointerEvents: getDateCustomClass(date) === "outside-window" || 
+                                      getDateCustomClass(date) === "past" || 
+                                      getDateCustomClass(date) === "hidden-date" ? "none" : "auto",
+                        cursor: getDateCustomClass(date) === "outside-window" || 
+                                getDateCustomClass(date) === "past" || 
+                                getDateCustomClass(date) === "hidden-date" ? "not-allowed" : "pointer"
                       }}
                     >
                       {date ? date.getDate() : ""}

@@ -2220,10 +2220,14 @@
 /* //ERROR MESSAGE SHOWN  */
 /* Hidden dates styling - make them invisible */
 .date.hidden-date {
-    visibility: hidden !important;
+    /* visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
-    cursor: not-allowed !important;
+    cursor: not-allowed !important;*/
+    visibility: hidden !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    cursor: default !important;
 }
 
 /* Alternatively, you can show them as very light gray */

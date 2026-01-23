@@ -712,13 +712,13 @@ const BillingDetails = () => {
 
     // {/* //ADD LOADING STATES WHEN LOGIN / SIGNUP */}
 
-    // Or use a more direct approach with LoginContext:
-    useEffect(() => {
-        if (!user || !user._id) {
-            // If user is not logged in, redirect to home
-            navigate('/', { replace: true });
-        }
-    }, [user, navigate]);
+    // // Or use a more direct approach with LoginContext:
+    // useEffect(() => {
+    //     if (!user || !user._id) {
+    //         // If user is not logged in, redirect to home
+    //         navigate('/', { replace: true });
+    //     }
+    // }, [user, navigate]);
 
     // {/* //ADD LOADING STATES WHEN LOGIN / SIGNUP */}
 

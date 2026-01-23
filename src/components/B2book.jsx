@@ -3037,10 +3037,9 @@
 
 // export default BookASite1;
 
-
 // B2BOOK.JSX
 // Correctly selects the date selects and open window correctly works - UPDATED 
-//PERFECT CODE FOR LOGIN AND ERROR MESSAGE PROPERLY SHOWN WITH AVAILABLE FUTURE DATES SUGGESTIONS
+//PERFECT CODE FOR LOGIN AND ERROR MESSAGE PROPERLY SHOWN WITH AVAILABLE FUTURE DATES SUGGESTIONS - but having reset dates when dates all are booked
 import React, { useState, useRef, useEffect } from "react";
 import "../components/b2book.css";
 import "../components/B21book.css";
@@ -3623,8 +3622,55 @@ const findLastBookedDate = (startFrom) => {
 
 
 
+   //FETCH ON FIRST TIME CLICK THE BOOKED DATES 
 
-// Update initializeDateWindow to show only booked dates initially
+// // Update initializeDateWindow to show only booked dates initially
+// const initializeDateWindow = () => {
+//     // Only initialize if we don't have confirmed dates
+//     if (campaignConfirmedDates.start && campaignConfirmedDates.end) {
+//         return;
+//     }
+
+//     const today = new Date();
+//     today.setUTCHours(0, 0, 0, 0);
+
+//     let windowStart;
+//     let windowEnd;
+
+//     if (allInitialDaysBooked && lastBookedDate) {
+//         // When all initial days are booked, show only up to last booked date
+//         windowStart = new Date(today);
+//         windowEnd = new Date(lastBookedDate);
+        
+//         console.log("Initial window (showing only booked dates):", {
+//             windowStart: windowStart.toISOString().split('T')[0],
+//             windowEnd: windowEnd.toISOString().split('T')[0],
+//             lastBooked: lastBookedDate.toISOString().split('T')[0]
+//         });
+//     } else {
+//         // Normal initial window
+//         windowStart = new Date(today);
+//         windowEnd = new Date(today);
+//         windowEnd.setDate(today.getDate() + INITIAL_SELECTION_DAYS - 1);
+//     }
+
+//     setCurrentWindowStart(windowStart);
+//     setCurrentWindowEnd(windowEnd);
+//     setIsWindowExpanded(false);
+//     setIsSelectionConfirmed(false);
+
+//     // Set current month to show the window start
+//     setCurrentMonth(new Date(windowStart));
+
+//     console.log("Window initialized:", {
+//         allInitialDaysBooked,
+//         lastBookedDate: lastBookedDate ? lastBookedDate.toISOString().split('T')[0] : null,
+//         windowStart: windowStart.toISOString().split('T')[0],
+//         windowEnd: windowEnd.toISOString().split('T')[0]
+//     });
+// };
+
+// Update initializeDateWindow
 const initializeDateWindow = () => {
     // Only initialize if we don't have confirmed dates
     if (campaignConfirmedDates.start && campaignConfirmedDates.end) {
@@ -3634,23 +3680,20 @@ const initializeDateWindow = () => {
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
 
-    let windowStart;
-    let windowEnd;
-
+    let windowStart = new Date(today);
+    let windowEnd = new Date(today);
+    
     if (allInitialDaysBooked && lastBookedDate) {
-        // When all initial days are booked, show only up to last booked date
-        windowStart = new Date(today);
+        // Show only up to last booked date
         windowEnd = new Date(lastBookedDate);
         
-        console.log("Initial window (showing only booked dates):", {
+        console.log("Initial window (showing booked dates only):", {
             windowStart: windowStart.toISOString().split('T')[0],
             windowEnd: windowEnd.toISOString().split('T')[0],
             lastBooked: lastBookedDate.toISOString().split('T')[0]
         });
     } else {
         // Normal initial window
-        windowStart = new Date(today);
-        windowEnd = new Date(today);
         windowEnd.setDate(today.getDate() + INITIAL_SELECTION_DAYS - 1);
     }
 
@@ -3661,18 +3704,59 @@ const initializeDateWindow = () => {
 
     // Set current month to show the window start
     setCurrentMonth(new Date(windowStart));
-
-    console.log("Window initialized:", {
-        allInitialDaysBooked,
-        lastBookedDate: lastBookedDate ? lastBookedDate.toISOString().split('T')[0] : null,
-        windowStart: windowStart.toISOString().split('T')[0],
-        windowEnd: windowEnd.toISOString().split('T')[0]
-    });
 };
 
+   //FETCH ON FIRST TIME CLICK THE BOOKED DATES 
 
 
 
+// const isDateWithinCurrentWindow = (date) => {
+//     if (!date || isNaN(date.getTime())) return false;
+
+//     // If no window set, allow all dates
+//     if (!currentWindowStart || !currentWindowEnd) return true;
+
+//     const normalizedDate = new Date(
+//         Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+//     );
+
+//     const normalizedStart = new Date(
+//         Date.UTC(
+//             currentWindowStart.getFullYear(),
+//             currentWindowStart.getMonth(),
+//             currentWindowStart.getDate(),
+//         ),
+//     );
+
+//     const normalizedEnd = new Date(
+//         Date.UTC(
+//             currentWindowEnd.getFullYear(),
+//             currentWindowEnd.getMonth(),
+//             currentWindowEnd.getDate(),
+//         ),
+//     );
+
+//     // When all initial days are booked, show only booked dates and hide future dates
+//     if (allInitialDaysBooked && lastBookedDate) {
+//         const lastBookedUTC = new Date(
+//             Date.UTC(
+//                 lastBookedDate.getFullYear(),
+//                 lastBookedDate.getMonth(),
+//                 lastBookedDate.getDate(),
+//             ),
+//         );
+        
+//         // Show dates from today to last booked date
+//         // Hide everything after last booked date until booking opens
+//         return normalizedDate >= normalizedStart && normalizedDate <= lastBookedUTC;
+//     }
+
+//     return normalizedDate >= normalizedStart && normalizedDate <= normalizedEnd;
+// };
+
+
+
+// Update isDateWithinCurrentWindow
 const isDateWithinCurrentWindow = (date) => {
     if (!date || isNaN(date.getTime())) return false;
 
@@ -3699,7 +3783,7 @@ const isDateWithinCurrentWindow = (date) => {
         ),
     );
 
-    // When all initial days are booked, show only booked dates and hide future dates
+    // When all initial days are booked, show only up to lastBookedDate
     if (allInitialDaysBooked && lastBookedDate) {
         const lastBookedUTC = new Date(
             Date.UTC(
@@ -3710,7 +3794,6 @@ const isDateWithinCurrentWindow = (date) => {
         );
         
         // Show dates from today to last booked date
-        // Hide everything after last booked date until booking opens
         return normalizedDate >= normalizedStart && normalizedDate <= lastBookedUTC;
     }
 
@@ -4342,8 +4425,108 @@ const expandDateWindow = (startDate) => {
     //     }
     // };
 
-    
-    // Update fetchDates to trigger the check
+   //FETCH ON FIRST TIME CLICK THE BOOKED DATES 
+//     // Update fetchDates to trigger the check
+// const fetchDates = async () => {
+//     if (currentProduct?.prodCode) {
+//         try {
+//             const res = await fetch(
+//                 `${baseUrl}/booked-dates/${currentProduct.prodCode}`,
+//             );
+//             const data = await res.json();
+
+//             if (res.ok) {
+//                 let confirmedDatesArray = [];
+//                 let pendingDatesArray = [];
+
+//                 if (data.confirmed && Array.isArray(data.confirmed)) {
+//                     if (typeof data.confirmed[0] === "string") {
+//                         confirmedDatesArray = data.confirmed;
+//                     } else {
+//                         confirmedDatesArray = data.confirmed.map(
+//                             (item) => item.date || item,
+//                         );
+//                     }
+//                 }
+
+//                 if (data.pending && Array.isArray(data.pending)) {
+//                     pendingDatesArray = data.pending.map((item) => ({
+//                         ...item,
+//                         date: item.date || item,
+//                     }));
+//                 }
+
+//                 const validConfirmedDates = confirmedDatesArray
+//                     .filter((d) => {
+//                         try {
+//                             const date = new Date(d);
+//                             return !isNaN(date.getTime());
+//                         } catch {
+//                             return false;
+//                         }
+//                     })
+//                     .map((d) => {
+//                         const date = new Date(d);
+//                         return new Date(
+//                             Date.UTC(
+//                                 date.getUTCFullYear(),
+//                                 date.getUTCMonth(),
+//                                 date.getUTCDate(),
+//                             ),
+//                         );
+//                     });
+
+//                 const validPendingDates = pendingDatesArray
+//                     .filter((p) => {
+//                         const dateStr = p.date;
+//                         try {
+//                             const date = new Date(dateStr);
+//                             return !isNaN(date.getTime());
+//                         } catch {
+//                             return false;
+//                         }
+//                     })
+//                     .map((p) => {
+//                         const date = new Date(p.date);
+//                         return {
+//                             ...p,
+//                             date: new Date(
+//                                 Date.UTC(
+//                                     date.getUTCFullYear(),
+//                                     date.getUTCMonth(),
+//                                     date.getUTCDate(),
+//                                 ),
+//                             ),
+//                         };
+//                     });
+
+//                 setConfirmedDates(validConfirmedDates);
+//                 setPendingDates(validPendingDates);
+
+//                 // Check if all initial days are booked after fetching dates
+//                 setTimeout(() => {
+//                     checkAllInitialDaysBooked();
+//                 }, 100);
+
+//                 if (user) {
+//                     fetchQueuePosition(currentProduct.prodCode);
+//                 }
+//             } else {
+//                 setConfirmedDates([]);
+//                 setPendingDates([]);
+//             }
+//         } catch (error) {
+//             console.error("Error fetching dates:", error);
+//             setConfirmedDates([]);
+//             setPendingDates([]);
+//         }
+//     }
+// };
+
+
+
+// In the component, update these functions:
+
 const fetchDates = async () => {
     if (currentProduct?.prodCode) {
         try {
@@ -4420,9 +4603,9 @@ const fetchDates = async () => {
                 setConfirmedDates(validConfirmedDates);
                 setPendingDates(validPendingDates);
 
-                // Check if all initial days are booked after fetching dates
+                // After setting dates, check initial window status
                 setTimeout(() => {
-                    checkAllInitialDaysBooked();
+                    checkInitialWindowStatus(validConfirmedDates);
                 }, 100);
 
                 if (user) {
@@ -4439,8 +4622,111 @@ const fetchDates = async () => {
         }
     }
 };
+// New function to check initial window status
+const checkInitialWindowStatus = (confirmedDatesArray) => {
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    
+    let allBooked = true;
+    let lastBookedDate = null;
+    
+    // Check initial window (next 7 days)
+    for (let i = 0; i < INITIAL_SELECTION_DAYS; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+        
+        const isBooked = isDateBookedInArray(date, confirmedDatesArray);
+        
+        if (!isBooked) {
+            allBooked = false;
+            break;
+        } else {
+            lastBookedDate = new Date(date);
+        }
+    }
+    
+    setAllInitialDaysBooked(allBooked);
+    
+    if (allBooked && lastBookedDate) {
+        findLastBookedDateInSequence(lastBookedDate, confirmedDatesArray);
+    } else {
+        setLastBookedDate(null);
+        setNextBookingOpenDate(null);
+    }
+};
 
+// Helper function to check if date is booked in array
+const isDateBookedInArray = (date, bookedArray) => {
+    if (!date || isNaN(date.getTime())) return false;
+    
+    const normalizedDate = new Date(
+        Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+    );
+    const dateString = normalizedDate.toISOString().split("T")[0];
+    
+    return bookedArray.some((d) => {
+        if (!d || isNaN(new Date(d).getTime())) return false;
+        const bookedDate = new Date(d);
+        const bookedDateString = new Date(
+            Date.UTC(
+                bookedDate.getUTCFullYear(),
+                bookedDate.getUTCMonth(),
+                bookedDate.getUTCDate(),
+            ),
+        )
+            .toISOString()
+            .split("T")[0];
+        return dateString === bookedDateString;
+    });
+};
 
+// Simplified find last booked date
+const findLastBookedDateInSequence = (startDate, bookedArray) => {
+    let currentDate = new Date(startDate);
+    let lastBooked = new Date(startDate);
+    
+    // Keep checking forward for consecutive booked dates
+    while (true) {
+        const nextDate = new Date(currentDate);
+        nextDate.setDate(currentDate.getDate() + 1);
+        
+        if (isDateBookedInArray(nextDate, bookedArray)) {
+            lastBooked = new Date(nextDate);
+            currentDate = new Date(nextDate);
+        } else {
+            break;
+        }
+        
+        // Safety break
+        const daysChecked = (nextDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+        if (daysChecked > 365) break;
+    }
+    
+    setLastBookedDate(lastBooked);
+    
+    // Calculate next booking open date
+    const nextAvailableDate = new Date(lastBooked);
+    nextAvailableDate.setDate(lastBooked.getDate() + 1);
+    
+    const bookingOpenDate = new Date(nextAvailableDate);
+    bookingOpenDate.setDate(nextAvailableDate.getDate() - (INITIAL_SELECTION_DAYS - 1));
+    
+    // Ensure not in past
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    if (bookingOpenDate < today) {
+        bookingOpenDate.setDate(today.getDate());
+    }
+    
+    setNextBookingOpenDate(bookingOpenDate);
+    
+    console.log('Booking calculation:', {
+        lastBooked: lastBooked.toISOString().split('T')[0],
+        nextAvailable: nextAvailableDate.toISOString().split('T')[0],
+        bookingOpensFrom: bookingOpenDate.toISOString().split('T')[0]
+    });
+};
+   //FETCH ON FIRST TIME CLICK THE BOOKED DATES 
 
     
     const fetchQueuePosition = async (prodCode) => {
@@ -4955,20 +5241,61 @@ if (isDateBooked(normalizedDate)) {
         const hasConfirmedDates = campaignConfirmedDates.start && campaignConfirmedDates.end;
         const hasSelectedDates = selectedDates.start && selectedDates.end;
         const hasDates = hasConfirmedDates || hasSelectedDates;
+       //FETCH ON FIRST TIME CLICK THE BOOKED DATES 
 
-        // If calendar is not open and user hasn't selected dates, open calendar first
-        if (!isCalendarOpen && !hasDates) {
-            console.log('Calendar not open and no dates selected, opening calendar');
+        // // If calendar is not open and user hasn't selected dates, open calendar first
+        // if (!isCalendarOpen && !hasDates) {
+        //     console.log('Calendar not open and no dates selected, opening calendar');
+        //     toggleCalendar("");
+        //     return;
+        // }
+         // If no dates selected and calendar not open
+    if (!isCalendarOpen && !hasDates) {
+        // Check if all initial days are booked
+        if (allInitialDaysBooked && nextBookingOpenDate) {
+            const formattedDate = nextBookingOpenDate.toLocaleDateString("en-IN", { 
+                day: "numeric", 
+                month: "short",
+                year: "numeric"
+            });
+            toggleCalendar(`Slots are booked. Booking opens from ${formattedDate}`);
+        } 
+        else {
+             console.log('Calendar not open and no dates selected, opening calendar');
             toggleCalendar("");
-            return;
         }
+        return;
+    }
 
-        // If calendar is open but no dates selected, show error without closing calendar
-        if (isCalendarOpen && !hasDates) {
-            console.log('Calendar is open but no dates selected, showing error');
+       //FETCH ON FIRST TIME CLICK THE BOOKED DATES 
+
+
+        // // If calendar is open but no dates selected, show error without closing calendar
+        // if (isCalendarOpen && !hasDates) {
+        //     console.log('Calendar is open but no dates selected, showing error');
+        //     setCalendarErrorMessage("❌ Please select start and end dates before proceeding.");
+        //     return;
+        // }
+
+
+
+         // If calendar is open but no dates selected
+    if (isCalendarOpen && !hasDates) {
+        if (allInitialDaysBooked && nextBookingOpenDate) {
+            const formattedDate = nextBookingOpenDate.toLocaleDateString("en-IN", { 
+                day: "numeric", 
+                month: "short",
+                year: "numeric"
+            });
+            setCalendarErrorMessage(`Slots are booked. Booking opens from ${formattedDate}`);
+        } else {
             setCalendarErrorMessage("❌ Please select start and end dates before proceeding.");
-            return;
         }
+        return;
+    }
+
+           //FETCH ON FIRST TIME CLICK THE BOOKED DATES 
+
 
         // Check if user is logged in
         if (!user) {
@@ -5432,9 +5759,85 @@ if (isDateBooked(normalizedDate)) {
 //     }
 // };
 
+   //FETCH ON FIRST TIME CLICK THE BOOKED DATES 
 
 
-// Update getDateSelectionClass to hide dates after lastBookedDate
+// // Update getDateSelectionClass to hide dates after lastBookedDate
+// const getDateSelectionClass = (date) => {
+//     if (!date || isNaN(date.getTime())) {
+//         return "disabled";
+//     }
+
+//     try {
+//         const normalizedDate = new Date(
+//             Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+//         );
+
+//         // Check if date is past
+//         if (isPastDate(normalizedDate)) {
+//             return "past";
+//         }
+
+//         // Check if date is outside current window
+//         if (!isDateWithinCurrentWindow(normalizedDate)) {
+//             return "outside-window";
+//         }
+
+//         // When all initial days are booked, hide dates after lastBookedDate
+//         if (allInitialDaysBooked && lastBookedDate) {
+//             const lastBookedUTC = new Date(
+//                 Date.UTC(
+//                     lastBookedDate.getFullYear(),
+//                     lastBookedDate.getMonth(),
+//                     lastBookedDate.getDate(),
+//                 ),
+//             );
+            
+//             if (normalizedDate > lastBookedUTC) {
+//                 return "hidden"; // Add this class to hide dates
+//             }
+//         }
+
+//         // Check booking status
+//         if (isDateBooked(normalizedDate)) return "booked";
+//         if (isDatePending(normalizedDate)) return "pending";
+
+//         // Check if in selected range
+//         if (selectedDates.start && selectedDates.end) {
+//             const utcDate = new Date(
+//                 Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+//             );
+
+//             const startUTC = new Date(
+//                 Date.UTC(
+//                     selectedDates.start.getFullYear(),
+//                     selectedDates.start.getMonth(),
+//                     selectedDates.start.getDate(),
+//                 ),
+//             );
+
+//             const endUTC = new Date(
+//                 Date.UTC(
+//                     selectedDates.end.getFullYear(),
+//                     selectedDates.end.getMonth(),
+//                     selectedDates.end.getDate(),
+//                 ),
+//             );
+
+//             if (utcDate.getTime() === startUTC.getTime()) return "selected-start";
+//             if (utcDate.getTime() === endUTC.getTime()) return "selected-end";
+//             if (utcDate > startUTC && utcDate < endUTC) {
+//                 return "selected-range";
+//             }
+//         }
+
+//         return "available";
+//     } catch (error) {
+//         console.warn("Error in getDateSelectionClass:", error);
+//         return "disabled";
+//     }
+// };
+// Update getDateSelectionClass to hide dates
 const getDateSelectionClass = (date) => {
     if (!date || isNaN(date.getTime())) {
         return "disabled";
@@ -5466,7 +5869,7 @@ const getDateSelectionClass = (date) => {
             );
             
             if (normalizedDate > lastBookedUTC) {
-                return "hidden"; // Add this class to hide dates
+                return "hidden"; // This will hide the date
             }
         }
 
@@ -5511,6 +5914,8 @@ const getDateSelectionClass = (date) => {
 };
 
 
+
+   //FETCH ON FIRST TIME CLICK THE BOOKED DATES 
 
 
 //ERROR MESSAGE SHOWN 
@@ -5599,42 +6004,86 @@ useEffect(() => {
 //     }
 // }; 
 
+   //FETCH ON FIRST TIME CLICK THE BOOKED DATES 
 
 
-// Update toggleCalendar function
-const toggleCalendar = (errorMessage = "") => {
-    /* call fetch date function */
+// // Update toggleCalendar function
+// const toggleCalendar = (errorMessage = "") => {
+//     /* call fetch date function */
+//     if (currentProduct) {
+//         fetchDates().then(() => {
+//             // Check initial window status after fetching dates
+//             setTimeout(() => {
+//                 if (allInitialDaysBooked && nextBookingOpenDate) {
+//                     const formattedDate = nextBookingOpenDate.toLocaleDateString("en-IN", { 
+//                         day: "numeric", 
+//                         month: "short",
+//                         year: "numeric"
+//                     });
+//                     setCalendarErrorMessage(`Slots are booked. Booking opens from ${formattedDate}`);
+//                 } 
+//                 // else if (!user) {
+//                 //     setCalendarErrorMessage("Please login to proceed with bookingssss.");
+//                 // }
+//             }, 500);
+//         });
+//     }
+    
+//     const newIsCalendarOpen = !isCalendarOpen;
+//     setIsCalendarOpen(newIsCalendarOpen);
+
+//     if (newIsCalendarOpen) {
+//         // Reset login message when opening calendar
+//         setShowLoginMessage(false);
+//     } else if (!newIsCalendarOpen) {
+//         setCalendarErrorMessage("");
+//         setShowQueueInfo(false);
+//         setShowLoginMessage(false);
+//     }
+// };
+
+
+// Update toggleCalendar
+const toggleCalendar = async (errorMessage = "") => {
     if (currentProduct) {
-        fetchDates().then(() => {
-            // Check initial window status after fetching dates
-            setTimeout(() => {
-                if (allInitialDaysBooked && nextBookingOpenDate) {
-                    const formattedDate = nextBookingOpenDate.toLocaleDateString("en-IN", { 
-                        day: "numeric", 
-                        month: "short",
-                        year: "numeric"
-                    });
-                    setCalendarErrorMessage(`Slots are booked. Booking opens from ${formattedDate}`);
-                } 
-                // else if (!user) {
-                //     setCalendarErrorMessage("Please login to proceed with bookingssss.");
-                // }
-            }, 500);
-        });
+        // Fetch dates first
+        await fetchDates();
+        
+        // Wait a bit for state updates
+        await new Promise(resolve => setTimeout(resolve, 200));
     }
     
     const newIsCalendarOpen = !isCalendarOpen;
     setIsCalendarOpen(newIsCalendarOpen);
 
     if (newIsCalendarOpen) {
-        // Reset login message when opening calendar
+        // Reset states when opening calendar
         setShowLoginMessage(false);
-    } else if (!newIsCalendarOpen) {
+        
+        // Set appropriate error message
+        if (errorMessage) {
+            setCalendarErrorMessage(errorMessage);
+        } else if (allInitialDaysBooked && nextBookingOpenDate) {
+            const formattedDate = nextBookingOpenDate.toLocaleDateString("en-IN", { 
+                day: "numeric", 
+                month: "short",
+                year: "numeric"
+            });
+            setCalendarErrorMessage(`Slots are booked. Booking opens from ${formattedDate}`);
+        } else if (!user) {
+            // Only show login message if no other error
+            setCalendarErrorMessage("");
+        }
+    } else {
+        // Reset when closing
         setCalendarErrorMessage("");
         setShowQueueInfo(false);
         setShowLoginMessage(false);
     }
 };
+
+   //FETCH ON FIRST TIME CLICK THE BOOKED DATES 
+
 
 
     const closeCalendar = () => {
