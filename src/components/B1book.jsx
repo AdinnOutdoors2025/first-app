@@ -985,8 +985,8 @@ export default function BookASite() {
   const selectOption1 = (option) => {
     setSelected1(option);
     setSortOption(option);
-    setCurrentPage(0); // Reset to first page when sorting changes
-    setIsOpen1(false);
+    setCurrentPage(0); 
+    // setIsOpen1(false);
   };
 
   const resetDropdown1 = (event) => {
@@ -1044,16 +1044,10 @@ export default function BookASite() {
 
     return (
       <div className="rate-book">
-        {[...Array(fullStars)].map((_, index) => (
-          <span key={index} className="fa-solid fa-star stars-book"></span>
-        ))}
-        {halfStar && (
-          <span className="fa-solid fa-star-half-alt stars-book"></span>
-        )}
-        {[...Array(emptyStars)].map((_, index) => (
-          <span key={index} className="fa-solid fa-star empty-star-book"></span>
-        ))}
-      </div>
+  <span className="rating-text">4.3</span>
+  <span className="fa-solid fa-star rating-star"></span>
+</div>
+
     );
   };
 
@@ -1470,7 +1464,7 @@ export default function BookASite() {
                         )}
                       </div>
 
-                      <ul className={`menu ${isOpen1 ? "menu-open" : ""}`}>
+                      {/* <ul className={`menu ${isOpen1 ? "menu-open" : ""}`}>
                         <li
                           className={
                             selected1 === "Price: Low to High" ? "active" : ""
@@ -1511,7 +1505,33 @@ export default function BookASite() {
                         >
                           Popularity: Low to High
                         </li>
-                      </ul>
+                      </ul> */}
+                      <ul className={`menu ${isOpen1 ? "menu-open" : ""}`}>
+  {[
+    "Price: Low to High",
+    "Price: High to Low",
+    "Popularity: High to Low",
+    "Popularity: Low to High",
+  ].map((option) => (
+    <li key={option}>
+      <div className="form-check d-flex align-items-center">
+        <input
+          type="checkbox"
+          className="form-check-input"
+          checked={selected1 === option}
+          onChange={() => selectOption1(option)}
+        />
+        <label
+          className="form-check-label ms-2"
+          onClick={() => selectOption1(option)}
+        >
+          {option}
+        </label>
+      </div>
+    </li>
+  ))}
+</ul>
+
                     </div>
                   </div>
 
@@ -1540,7 +1560,7 @@ export default function BookASite() {
                               <i
                                 className="fa-solid fa-circle-xmark"
                                 onClick={resetDropdown2}
-                                style={{ color: "white" }}
+                                style={{ color: "black" }}
                               ></i>
                             )}
                           </div>
@@ -1637,10 +1657,10 @@ export default function BookASite() {
                             <span className="board-loc-book">
                               {spot.prodName}
                             </span>
-                            <span className="board-dim-book">
+                            {/* <span className="board-dim-book">
                               {" "}
                               {spot.sizeWidth} x {spot.sizeHeight}{" "}
-                            </span>
+                            </span> */}
                           </div>
                           <div className="board-content-bottom-book">
                             <span className="board-price-book">
@@ -1650,11 +1670,23 @@ export default function BookASite() {
                                 / Per Day
                               </span>
                             </span>
-                            <img
+                             <span className="board-dim-book">
+                              {" "}
+                              {spot.sizeWidth} x {spot.sizeHeight}{" "}
+                            </span>
+                            {/* <img
                               src="./images/rating_board.png"
                               className="rate-board-book"
-                            ></img>
+                            ></img> */}
                           </div>
+                          {/* <RatingStars rating={spot.rating} />
+                          <button
+                            className="board-btn-book"
+                            onClick={() => handleBookNow(spot)}
+                          >
+                            Book Now
+                          </button> */}
+                        </div>
                           <RatingStars rating={spot.rating} />
                           <button
                             className="board-btn-book"
@@ -1662,7 +1694,6 @@ export default function BookASite() {
                           >
                             Book Now
                           </button>
-                        </div>
                       </div>
                     </div>
                   ))
