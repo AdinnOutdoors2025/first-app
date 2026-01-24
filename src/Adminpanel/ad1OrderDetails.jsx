@@ -73,6 +73,7 @@ function OrderDetails({ order, onOrderUpdate }) {
   // Payment history state - ensure it's always an array
   const [paymentHistory, setPaymentHistory] = useState([]);
   const [hasUserSelected, setHasUserSelected] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const refreshOrderData = async () => {
     try {
@@ -424,6 +425,7 @@ function OrderDetails({ order, onOrderUpdate }) {
   };
 
   const handleSaveAmounts = async () => {
+    
     if(safeOrder.order_status == 'Pending Client Confirmation')
     {
       toast.error("Please change the order status from 'Pending Client Confirmation' before updating the order details.");
@@ -437,7 +439,7 @@ function OrderDetails({ order, onOrderUpdate }) {
         toast.error("Enter valid amount");
         return;
       }
-
+      setIsSaving(true); 
       const payload = {
         orderId: safeOrder.orderId,
         advanceAmount: advanceAmount,
@@ -476,10 +478,13 @@ function OrderDetails({ order, onOrderUpdate }) {
 
         // Refresh data to ensure consistency
         await refreshOrderData();
+        setIsSaving(false);
       } else {
+        setIsSaving(false);
         toast.error(data.message || "Failed to save amounts");
       }
     } catch (error) {
+      setIsSaving(false);
       console.error("Error saving amounts:", error);
       toast.error("Error saving amounts");
     }
@@ -1874,15 +1879,16 @@ function OrderDetails({ order, onOrderUpdate }) {
                   <button
                     className="saveAmountButton"
                     style={{
-                      background: "green",
+                      background: isSaving ? "#999" : "green",
                       color: "#fff",
                       padding: "5px 10px",
                       borderRadius: "5px",
+                      cursor: isSaving ? "not-allowed" : "pointer",
                     }}
                     onClick={handleSaveAmounts}
-                    disabled={isOrderCancelled || isFullyPaid}
+                    disabled={isOrderCancelled || isFullyPaid || isSaving}
                   >
-                    Save
+                    {isSaving ? "Saving..." : "Save"}
                   </button>
                 )}
               </div>

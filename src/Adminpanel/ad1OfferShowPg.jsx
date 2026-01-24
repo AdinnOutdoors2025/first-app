@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ad1products.css';
 import { useNavigate } from 'react-router-dom';
 import { baseUrl } from './BASE_URL';
-
+import { getPaginationGroup } from "../utils/pagination";
 const OfferProductTable = () => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
@@ -358,27 +358,29 @@ const OfferProductTable = () => {
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
-    const getPaginationGroup = () => {
-        let pages = [];
-        const maxPagesToShow = 3;
+    // const getPaginationGroup = () => {
+    //     let pages = [];
+    //     const maxPagesToShow = 3;
 
-        if (totalPages <= 6) {
-            pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-        } else {
-            if (currentPage <= maxPagesToShow + 1) {
-                pages = [...Array(maxPagesToShow + 1).keys()].map((i) => i + 1);
-                pages.push("...", totalPages - 1, totalPages);
-            } else if (currentPage >= totalPages - maxPagesToShow) {
-                pages = [1, 2, "..."];
-                pages.push(...Array.from({ length: maxPagesToShow + 1 }, (_, i) => totalPages - maxPagesToShow + i));
-            } else {
-                pages = [1, 2, "..."];
-                pages.push(currentPage - 1, currentPage, currentPage + 1);
-                pages.push("...", totalPages - 1, totalPages);
-            }
-        }
-        return pages;
-    };
+    //     if (totalPages <= 6) {
+    //         pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    //     } else {
+    //         if (currentPage <= maxPagesToShow + 1) {
+    //             pages = [...Array(maxPagesToShow + 1).keys()].map((i) => i + 1);
+    //             pages.push("...", totalPages - 1, totalPages);
+    //         } else if (currentPage >= totalPages - maxPagesToShow) {
+    //             pages = [1, 2, "..."];
+    //             pages.push(...Array.from({ length: maxPagesToShow + 1 }, (_, i) => totalPages - maxPagesToShow + i));
+    //         } else {
+    //             pages = [1, 2, "..."];
+    //             pages.push(currentPage - 1, currentPage, currentPage + 1);
+    //             pages.push("...", totalPages - 1, totalPages);
+    //         }
+    //     }
+    //     return pages;
+    // };
+
+const pages = getPaginationGroup(currentPage, totalPages);
 
     const toggleMenu = (id) => {
         setMenuOpenId(prevId => (prevId === id ? null : id));
@@ -589,7 +591,7 @@ const OfferProductTable = () => {
                         Prev
                     </button>
 
-                    {getPaginationGroup().map((page, index) =>
+                    {pages.map((page, index) =>
                         page === "..." ? (
                             <span key={index} className="paginationDots">...</span>
                         ) : (

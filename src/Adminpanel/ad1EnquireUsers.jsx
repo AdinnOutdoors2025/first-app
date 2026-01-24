@@ -6,6 +6,7 @@ import './ad1Orders.css';
 import { useNavigate } from 'react-router-dom';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
 import {baseUrl} from './BASE_URL';
+import { getPaginationGroup } from "../utils/pagination";
 
 
 
@@ -101,32 +102,33 @@ return false;
 
     // // Pagination Function
     // Function to Generate Pagination Buttons
-    const getPaginationGroup = () => {
-        let pages = [];
-        const maxPagesToShow = 3; // Show 3 pages around the current page
+    // const getPaginationGroup = () => {
+    //     let pages = [];
+    //     const maxPagesToShow = 3; // Show 3 pages around the current page
 
-        if (totalPages <= 6) {
-            // If there are few pages, show all
-            pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-        }
-        else {
-            if (currentPage <= maxPagesToShow + 1) {
-                // If near start: Show first few + last 2
-                pages = [...Array(maxPagesToShow + 1).keys()].map((i) => i + 1);
-                pages.push("...", totalPages - 1, totalPages);
-            } else if (currentPage >= totalPages - maxPagesToShow) {
-                // If near end: Show first 2 + last few
-                pages = [1, 2, "..."];
-                pages.push(...Array.from({ length: maxPagesToShow + 1 }, (_, i) => totalPages - maxPagesToShow + i));
-            } else {
-                // Middle section: Show current, 1 before & after
-                pages = [1, 2, "..."];
-                pages.push(currentPage - 1, currentPage, currentPage + 1);
-                pages.push("...", totalPages - 1, totalPages);
-            }
-        }
-        return pages;
-    };
+    //     if (totalPages <= 6) {
+    //         // If there are few pages, show all
+    //         pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    //     }
+    //     else {
+    //         if (currentPage <= maxPagesToShow + 1) {
+    //             // If near start: Show first few + last 2
+    //             pages = [...Array(maxPagesToShow + 1).keys()].map((i) => i + 1);
+    //             pages.push("...", totalPages - 1, totalPages);
+    //         } else if (currentPage >= totalPages - maxPagesToShow) {
+    //             // If near end: Show first 2 + last few
+    //             pages = [1, 2, "..."];
+    //             pages.push(...Array.from({ length: maxPagesToShow + 1 }, (_, i) => totalPages - maxPagesToShow + i));
+    //         } else {
+    //             // Middle section: Show current, 1 before & after
+    //             pages = [1, 2, "..."];
+    //             pages.push(currentPage - 1, currentPage, currentPage + 1);
+    //             pages.push("...", totalPages - 1, totalPages);
+    //         }
+    //     }
+    //     return pages;
+    // };
+    const pages = getPaginationGroup(currentPage, totalPages);
     // 3 DOTS SECTION 
     const [menuOpenId, setMenuOpenId] = useState(null); // Use ID if multiple rows
 
@@ -254,7 +256,7 @@ return false;
                         disabled={currentPage === 1} >
                         Prev
                     </button>
-                    {getPaginationGroup().map((page, index) =>
+                    {pages.map((page, index) =>
                         page === "..." ? (
                             <span key={index} className="order-paginationDots">...</span>
                         ) : (

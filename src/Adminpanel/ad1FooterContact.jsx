@@ -530,6 +530,7 @@ import React, { useState, useEffect } from 'react';
 import './ad1Orders.css';
 import { useNavigate } from 'react-router-dom';
 import { baseUrl } from './BASE_URL';
+import { getPaginationGroup } from "../utils/pagination";
 
 const FooterContactTable = () => {
     const [footerContacts, setFooterContacts] = useState([]);
@@ -646,27 +647,28 @@ const FooterContactTable = () => {
     const indexOfFirstContact = indexOfLastContact - contactsPerPage;
     const currentContacts = filteredContacts.slice(indexOfFirstContact, indexOfLastContact);
 
-    const getPaginationGroup = () => {
-        let pages = [];
-        const maxPagesToShow = 3;
+    // const getPaginationGroup = () => {
+    //     let pages = [];
+    //     const maxPagesToShow = 3;
 
-        if (totalPages <= 6) {
-            pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-        } else {
-            if (currentPage <= maxPagesToShow + 1) {
-                pages = [...Array(maxPagesToShow + 1).keys()].map((i) => i + 1);
-                pages.push("...", totalPages - 1, totalPages);
-            } else if (currentPage >= totalPages - maxPagesToShow) {
-                pages = [1, 2, "..."];
-                pages.push(...Array.from({ length: maxPagesToShow + 1 }, (_, i) => totalPages - maxPagesToShow + i));
-            } else {
-                pages = [1, 2, "..."];
-                pages.push(currentPage - 1, currentPage, currentPage + 1);
-                pages.push("...", totalPages - 1, totalPages);
-            }
-        }
-        return pages;
-    };
+    //     if (totalPages <= 6) {
+    //         pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    //     } else {
+    //         if (currentPage <= maxPagesToShow + 1) {
+    //             pages = [...Array(maxPagesToShow + 1).keys()].map((i) => i + 1);
+    //             pages.push("...", totalPages - 1, totalPages);
+    //         } else if (currentPage >= totalPages - maxPagesToShow) {
+    //             pages = [1, 2, "..."];
+    //             pages.push(...Array.from({ length: maxPagesToShow + 1 }, (_, i) => totalPages - maxPagesToShow + i));
+    //         } else {
+    //             pages = [1, 2, "..."];
+    //             pages.push(currentPage - 1, currentPage, currentPage + 1);
+    //             pages.push("...", totalPages - 1, totalPages);
+    //         }
+    //     }
+    //     return pages;
+    // };
+    const pages = getPaginationGroup(currentPage, totalPages);
 
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this contact permanently?")) {
@@ -767,7 +769,7 @@ const FooterContactTable = () => {
                     >
                         Prev
                     </button>
-                    {getPaginationGroup().map((page, index) =>
+                    {pages.map((page, index) =>
                         page === "..." ? (
                             <span key={index} className="order-paginationDots">...</span>
                         ) : (
