@@ -2606,7 +2606,9 @@ function BookASite1() {
                                     </div>
                                     <button
                                         className=" mt-3 mb-2 btn-enquire"
-                                        onClick={toggleOtpMainPage}
+                                        // onClick={toggleOtpMainPage}
+                onClick={handleEnquireNow}
+
                                     >
                                         For More Details
                                     </button>
