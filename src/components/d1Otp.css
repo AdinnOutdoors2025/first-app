@@ -1935,3 +1935,95 @@
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* Enquire Now pop up Button Styles */
+.enquire-now-button-container {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+    padding: 0 10px;
+}
+
+.enquire-now-button {
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.enquire-now-button:hover {
+    background: #0056b3;
+}
+
+/* Admin Details Styles */
+.admin-details {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    border-left: 4px solid #007bff;
+}
+
+.admin-details-title {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.admin-contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.admin-icon {
+    color: #007bff;
+    margin-right: 10px;
+    width: 20px;
+}
+
+.admin-contact-text {
+    font-size: 14px;
+}
+
+/* Thank You Close Button */
+.thankyou-close-btn-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.thankyou-close-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.thankyou-close-btn:hover {
+    background: #0056b3;
+}
