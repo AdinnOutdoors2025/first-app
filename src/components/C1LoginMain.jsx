@@ -178,14 +178,17 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
 
         setErrorMessage('');
         setStatus('Validating...');
-        setIsSendingOtp(true); // Start loading
+        
 
         // For login
         if (!isSignUp) {
             const identifier = userPhone || email;
 
             if (!identifier) {
-                setErrorMessage('Please enter your email or phone number');
+                toast.error("Please enter your email or phone number", {
+                position: "bottom-right",
+                });
+                // setErrorMessage('Please enter your email or phone number');
                 return;
             }
 
@@ -219,6 +222,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
             //  const loginIdentifier = isPhone ? cleanedIdentifier : cleanedIdentifier;
 
             try {
+                
                 setStatus('Checking user...');
                 // Check if user exists
                 const checkEndpoint = 'check-user';
@@ -247,19 +251,29 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
         } else {
             // For signup - this part remains mostly the same
             if (!userName) {
-                setErrorMessage('Please enter your name');
+              toast.error("Please enter your name", {
+                position: "bottom-right",
+                });
+
+                // setErrorMessage('Please enter your name');
                 return;
             }
 
             // Clean and validate phone number
             const cleanedPhone = userPhone.replace(/\D/g, '');
             if (cleanedPhone.length !== 10) {
-                setErrorMessage('Please enter a valid 10-digit phone number');
+                 toast.error("Please enter a valid 10-digit phone number", {
+                position: "bottom-right",
+                });
+                // setErrorMessage('Please enter a valid 10-digit phone number');
                 return;
             }
 
             if (!email || !validateEmail(email)) {
-                setErrorMessage('Please enter a valid email address');
+                toast.error("Please enter a valid email address", {
+                position: "bottom-right",
+                });
+                // setErrorMessage('Please enter a valid email address');
                 return;
             }
 
@@ -327,7 +341,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 userName: userName,
                 isSignUp: isSignUp // Pass this flag to backend
             };
-
+            setIsSendingOtp(true); // Start loading
             const otpResponse = await fetch(`${baseUrl}/login/send-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -554,13 +568,13 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                                 {/* ✔ Allows: John, John Doe, Karthika R, ❌ Blocks: John123, @John, John_Doe */}
                                 <input
                                     type="text"
-                                    placeholder="Your Full Name"
+                                    placeholder="Enter your full name"
                                     className="login-input-phone"
                                     value={userName}
                                     onChange={(e) => {
                                         let value = e.target.value;
 
-                                        // Allow only letters and spaces
+                                        // Allow only letters and spaces.
                                         if (/^[A-Za-z\s]*$/.test(value)) {
                                             // Remove starting spaces & multiple spaces
                                             value = value.replace(/^\s+/, "").replace(/\s+/g, " ");
@@ -584,9 +598,11 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                                     value={userPhone}
                                     onChange={e => setUserPhone(e.target.value)}
                                 /> */}
+                            
+                                 
                                 <input
                                     type="tel"
-                                    placeholder="Mobile number"
+                                    placeholder="Enter your mobile number"
                                     className="login-input-phone"
                                     value={userPhone}
                                     maxLength={10}
@@ -602,7 +618,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                                 <br />
                                 <input
                                     type="email"
-                                    placeholder="Enter Your Email"
+                                    placeholder="Enter your e-mail"
                                     className='login-input-phone'
                                     value={email}
                                     onChange={e => setEmail(e.target.value.trim())}
@@ -612,14 +628,20 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                             // LOGIN FORM - Show single input field
                             <input
                                 type="text"
-                                placeholder="Enter Email ID or Phone number"
+                                placeholder="Enter your phone number"
                                 className='login-input-phone'
                                 value={usePhoneOTP ? userPhone : email}
-                                onChange={e =>
-                                    usePhoneOTP
-                                        ? setUserPhone(e.target.value)
-                                        : setEmail(e.target.value)
-                                }
+                              onChange={(e) => {
+                                    const value = e.target.value.replace(/\D/g, ""); // allow digits only
+
+                                    if (usePhoneOTP) {
+                                    if (value.length <= 10) {
+                                        setUserPhone(value);
+                                    }
+                                    } else {
+                                    setEmail(e.target.value);
+                                    }
+                                }}
                             />
                         )}
                         {errorMessage && <div className="error-message-login">{errorMessage}</div>}
@@ -651,7 +673,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                                     <i className="fa fa-spinner fa-spin"></i> Sending...
                                 </>
                             ) : (
-                                isSignUp ? "Get OTP" : "Send OTP"
+                                isSignUp ? "Send OTP" : "Send OTP"
                             )}
                         </button>
                         <div className='otp_signInUp'>
@@ -664,13 +686,13 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                     </>
                 ) : (
                     <>
-                        <div className='verifyOtp'>VERIFY WITH OTP</div>
+                        <div className='verifyOtp'>Enter OTP</div>
                         {/* <div className='verifySent'>Sent to {usePhoneOTP ? userPhone : email}</div> */}
                         {/* //LOADING ERROR HANDLING WHILE LOGOUT */}
 
                         {/* <div className='verifySent'>Sent to {usePhoneOTP ? `+91 ${userPhone}` : email}</div> */}
                         <div className='verifySent'>
-                            Sent to {usePhoneOTP ? formatPhoneNumber(userPhone) : email}
+                            OTP sent to {usePhoneOTP ? formatPhoneNumber(userPhone) : email}
                         </div>
 
                         {/* //LOADING ERROR HANDLING WHILE LOGOUT */}
@@ -693,10 +715,10 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                         {otpError && <div className="error-message-login">Enter a correct code</div>}
                         <div className='otpTime'>
                             {resendTimer > 0 ? (
-                                `Resend OTP in: ${resendTimer} sec`
+                                `Resend OTP in ${resendTimer}s`
                             ) : (
                                 <div className='otpResend'>
-                                    Didn't receive your OTP?{' '}
+                                    Didn’t receive the OTP?{' '}
                                     <span className='ResendHighlight' onClick={sendOtp}>Resend OTP</span>
                                 </div>
                             )}
@@ -712,7 +734,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                                     <i className="fa fa-spinner fa-spin"></i> Verifying...
                                 </>
                             ) : (
-                                "Submit OTP"
+                                "Continue"
                             )}
                         </button>
 

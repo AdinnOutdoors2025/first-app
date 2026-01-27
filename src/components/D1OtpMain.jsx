@@ -3,7 +3,7 @@ import './d1Otp.css';
 import { useNavigate } from 'react-router-dom';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from '../Adminpanel/BASE_URL';
-
+import { toast } from 'react-toastify';
 function OtpMain({ closeOtpMainPage, productData }) {
     const navigate = useNavigate();
     const [phone, setPhone] = useState('');
@@ -40,11 +40,19 @@ function OtpMain({ closeOtpMainPage, productData }) {
             }
 
             if (data.success) {
-                setOtpSent(true);
+                
                 setErrorMessage('');
                 startResendTimer();
-                setStatus('OTP Sent!');
-                alert("OTP Sent to your phone!");
+                // setStatus('OTP Sent!');
+                // alert("OTP Sent to your phone!");
+                   toast.success("OTP Sent to your phone!", {
+                    position: "bottom-right",
+                    });
+                setTimeout(() => {
+                setOtpSent(true);
+                }, 3000); 
+
+                
             } else {
                 setStatus('Failed');
                 setErrorMessage(data.message || "Failed to send OTP. Try again.");
@@ -166,13 +174,13 @@ function OtpMain({ closeOtpMainPage, productData }) {
                         <div>
                             <input
                                 type="text"
-                                placeholder="Enter Your Phone Number"
+                                placeholder="Enter your phone number"
                                 maxLength="10"
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value.replace(/\D/, ''))}
                                 className={`input-phone`} />
                         </div>
-                        <div className='reach-msg'>The planner will use this number to reach you</div><br></br>
+                        <div className='reach-msg'>The planner will use this number to contact you</div><br></br>
                         {errorMessage && <div className="error-messageOTP">{errorMessage}</div>}
 
                         <button className="continue-btn1" onClick={sendOtp}>Continue</button>
