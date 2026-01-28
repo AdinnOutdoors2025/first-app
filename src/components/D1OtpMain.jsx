@@ -247,6 +247,10 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
     const [otpError, setOtpError] = useState(false);
     const [enterOtp, setEnterOtp] = useState(new Array(6).fill(""));
     const [isVerifying, setIsVerifying] = useState(false);
+    const [isSending, setIsSending] = useState(false);
+    const isOtpComplete = enterOtp.every(digit => digit !== "");
+
+
 
     // Effect to handle skipPhoneVerification for logged in users
     useEffect(() => {
@@ -297,7 +301,8 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
             return;
         }
         try {
-            setStatus('Sending...');
+             setIsSending(true);
+            // setStatus('Sending...');
             const response = await fetch(`${baseUrl}/verify/send-otp`, {
                 method: 'POST',
                 headers: {
@@ -321,7 +326,7 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
                 startResendTimer();
                 // setStatus('OTP Sent!');
                 // alert("OTP Sent to your phone!");
-                   toast.success("OTP Sent to your phone!", {
+                   toast.success("OTP has been sent to your phone", {
                     position: "bottom-right",
                     });
                 setTimeout(() => {
@@ -330,12 +335,14 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
 
                 
             } else {
+                 setIsSending(false);
                 setStatus('Failed');
                 setErrorMessage(data.message || "Failed to send OTP. Try again.");
             }
         } catch (error) {
             console.error("Error:", error.message);
             setStatus('Failed');
+             setIsSending(false);
             setErrorMessage(error.message || "Error sending OTP. Try again later.");
         }
     };
@@ -483,13 +490,13 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
                         <div className='reach-msg'>The planner will use this number to contact you</div><br></br>
                         {errorMessage && <div className="error-messageOTP">{errorMessage}</div>}
 
-                        <button className="continue-btn1" onClick={sendOtp}>Continue</button>
+                        <button className="continue-btn1" disabled={isSending} onClick={sendOtp}>{isSending ? "Sending..." : "Continue"}</button>
                         <div className='OTPMain_sentStatus'>{status}</div>
                     </>
                 ) : (
                     <>
-                        <div className='OTP_msg'>Enter OTP sent</div>
-                        <div className='OTP_msg1' onClick={() => setOtpSent(false)}>CHANGE NUMBER</div>
+                        <div className='OTP_msg'>Enter the OTP sent to your phone</div>
+                        <div className='OTP_msg1' onClick={() => setOtpSent(false)}>Change number</div>
                         <div>
                             <img src='/images/OTP_check.png' className='OTP_check-img' alt="OTP" />
                         </div>
@@ -517,12 +524,12 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
                                 `Resend OTP in: ${resendTimer} sec`
                             ) : (
                                 <span className='otpResends'>
-                                    Didn't receive OTP? <span className='ResendHighlight' onClick={sendOtp}>Resend OTP</span>
+                                    Didn't receive the OTP? <span className='ResendHighlight' onClick={sendOtp}>Resend OTP</span>
                                 </span>
                             )}
                         </span> <br></br>
 
-                        <button className="Submit-btn1" onClick={verifyOtp} disabled={isVerifying}>
+                        <button className="Submit-btn1" onClick={verifyOtp} disabled={!isOtpComplete || isVerifying}>
                             {isVerifying ? 'Verifying...' : 'Submit OTP'}
                         </button><br />
                     </>
