@@ -76,17 +76,16 @@ function App() {
               {/* AboutUs Home section  */}
               {/* <Route path="/home" element={<AdinnHome />} /> */}
               <Route path="/rich" element={<RichText />} />
-
               {/* Book a site section  */}
               <Route path="/book" element={<BookASite />} />
               <Route path="/Product/:productId" element={<BookASite1 />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/order" element={<MyOrder />} />
               <Route path="/thankyou" element={<ThankyouPage />} />
-              <Route path="/thankyou1" element={<ThankyouPage1 />} />
+              <Route path="/thank_you" element={<ThankyouPage1 />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/billing" element={<Billing />} />
-              <Route path="/billing1" element={<Billing1 />} />
+              <Route path="/billing_cart" element={<Billing1 />} />
               <Route path="/nav" element={<Nav />} />
               <Route path="/foot" element={<Foot />} />
               <Route path="/HeroBanner" element={<HeroBanner />} />
@@ -128,7 +127,7 @@ function App() {
 />
 
 <Route 
-    path="/thankyou1" 
+    path="/thank_you" 
     element={
         <ProtectedRoute requireLogin={true}>
             <ThankyouPage1 />

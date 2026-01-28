@@ -88,3 +88,32 @@
         /* padding-top: 20%; */
     }
 }
+
+
+
+
+
+
+
+
+
+
+/* LOGOUT OVERLAY WHEN CLICKING NON RESTRICTED PAGE SIGN OUT  */
+/* Logout Loading Overlay Styles */
+.logout-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; 
+}
+
+.logout-overlay img {
+    width: 100px;
+    height: 100px;
+}

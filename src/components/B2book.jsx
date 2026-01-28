@@ -238,7 +238,7 @@ function BookASite1() {
                 });
 
                 setCalendarErrorMessage(
-                    // `✅ Confirmed dates: ${campaignConfirmedDates.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${campaignConfirmedDates.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`
+                    // `Confirmed dates: ${campaignConfirmedDates.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - ${campaignConfirmedDates.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`
                 );
 
                 console.log('Restoring confirmed dates:', {
@@ -467,11 +467,11 @@ function BookASite1() {
             if (range) {
                 setSelectedDates({ start: range.start, end: range.end });
                 setCalendarErrorMessage(
-                    `✅ Auto-selected ${range.days} days: ${range.start.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ${range.end.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`,
+                    `Auto-selected ${range.days} days: ${range.start.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ${range.end.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`,
                 );
             } else {
                 setCalendarErrorMessage(
-                    `❌ Cannot find ${MIN_BOOKING_DAYS} continuous available days starting from ${startDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}.`,
+                    `Cannot find ${MIN_BOOKING_DAYS} continuous available days starting from ${startDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}.`,
                 );
             }
             return;
@@ -490,11 +490,11 @@ function BookASite1() {
             if (range) {
                 setSelectedDates({ start: range.start, end: range.end });
                 setCalendarErrorMessage(
-                    `✅ Found available ${range.days} days: ${range.start.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ${range.end.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`,
+                    `Found available ${range.days} days: ${range.start.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ${range.end.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`,
                 );
             } else {
                 setCalendarErrorMessage(
-                    `❌ Cannot find ${MIN_BOOKING_DAYS} continuous available days starting from ${startDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}.`,
+                    `Cannot find ${MIN_BOOKING_DAYS} continuous available days starting from ${startDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}.`,
                 );
             }
         }
@@ -541,40 +541,40 @@ function BookASite1() {
             windowEnd.setDate(today.getDate() + INITIAL_SELECTION_DAYS - 1);
 
             setCalendarErrorMessage(
-                `🟡 Date outside initial selection window\n` +
-                `📅 Selected: ${date.toLocaleDateString("en-IN", {
+                `Date outside initial selection window\n` +
+                `Selected: ${date.toLocaleDateString("en-IN", {
                     weekday: "short",
                     day: "numeric",
                     month: "short",
                 })}\n` +
-                `✅ Available window: ${today.toLocaleDateString("en-IN", {
+                `Available window: ${today.toLocaleDateString("en-IN", {
                     day: "numeric",
                     month: "short",
                 })} - ${windowEnd.toLocaleDateString("en-IN", {
                     day: "numeric",
                     month: "short",
                 })}\n` +
-                `📝 Click a date within the green window to begin selection`,
+                `Click a date within the green window to begin selection`,
             );
         } else {
             const windowEnd = new Date(today);
             windowEnd.setDate(today.getDate() + AVAILABLE_WINDOW_DAYS - 1);
 
             setCalendarErrorMessage(
-                `🟡 Date outside available window\n` +
-                `📅 Selected: ${date.toLocaleDateString("en-IN", {
+                `Date outside available window\n` +
+                `Selected: ${date.toLocaleDateString("en-IN", {
                     weekday: "short",
                     day: "numeric",
                     month: "short",
                 })}\n` +
-                `✅ Available window: ${today.toLocaleDateString("en-IN", {
+                `Available window: ${today.toLocaleDateString("en-IN", {
                     day: "numeric",
                     month: "short",
                 })} - ${windowEnd.toLocaleDateString("en-IN", {
                     day: "numeric",
                     month: "short",
                 })}\n` +
-                `📆 ${AVAILABLE_WINDOW_DAYS} days available from today`,
+                `${AVAILABLE_WINDOW_DAYS} days available from today`,
             );
         }
 
@@ -1226,7 +1226,7 @@ function BookASite1() {
             availableDays: availableDays,
             bookedCount: bookedCount,
             conflictBlocks: conflictBlocks.length,
-            message: `✅ ${days} days selected with ${availableDays} available days${bookedCount > 0 ? ` (${bookedCount} booked days excluded)` : ""}.`,
+            message: `${days} days selected with ${availableDays} available days${bookedCount > 0 ? ` (${bookedCount} booked days excluded)` : ""}.`,
         };
     };
 
@@ -1329,7 +1329,7 @@ function BookASite1() {
                         );
                         if (conflictBlocks.length > 0) {
                             setCalendarErrorMessage(
-                                `⚠️ Selected range has ${conflictBlocks.length} conflict block(s).`,
+                                `Selected range has ${conflictBlocks.length} conflict block(s).`,
                             );
                         }
                         setSelectedDates({
@@ -1475,7 +1475,7 @@ function BookASite1() {
                 });
                 setCalendarErrorMessage(`Slots are booked. Booking opens from ${formattedDate}`);
             } else {
-                setCalendarErrorMessage("❌ Please select start and end dates before proceeding.");
+                setCalendarErrorMessage("Please select start and end dates before proceeding.");
             }
             return;
         }
@@ -1546,7 +1546,7 @@ function BookASite1() {
 
             if (conflictBlocks.length >= 2) {
                 setCalendarErrorMessage(
-                    `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
+                    `Selected range has ${conflictBlocks.length} separate booked periods.\n` +
                     `Please select a continuous available period.`
                 );
                 setIsCalendarOpen(true);
@@ -1580,7 +1580,7 @@ function BookASite1() {
         }
 
         console.log('No dates selected, showing error in calendar');
-        setCalendarErrorMessage("❌ Please select start and end dates before proceeding.");
+        setCalendarErrorMessage("Please select start and end dates before proceeding.");
         if (!isCalendarOpen) {
             toggleCalendar();
         }
@@ -1599,7 +1599,7 @@ function BookASite1() {
 
         if (finalConflictCheck.hasConflicts) {
             setCalendarErrorMessage(
-                `❌ Sorry! Selected dates are no longer available.\n` +
+                `Sorry! Selected dates are no longer available.\n` +
                 `${finalConflictCheck.confirmedConflictCount} date(s) have been booked.\n` +
                 `Please select new dates.`
             );
@@ -1621,7 +1621,7 @@ function BookASite1() {
 
         if (conflictBlocks.length >= 2) {
             setCalendarErrorMessage(
-                `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
+                `Selected range has ${conflictBlocks.length} separate booked periods.\n` +
                 `Please select a continuous available period.`
             );
             setIsCalendarOpen(true);
@@ -1638,9 +1638,9 @@ function BookASite1() {
         // Show warning for pending dates
         if (pendingCount > 0) {
             const confirmBooking = window.confirm(
-                `⚠️ Warning: ${pendingCount} date${pendingCount > 1 ? 's' : ''} in your selection are in queue.\n\n` +
+                `Warning: ${pendingCount} date${pendingCount > 1 ? 's' : ''} in your selection are in queue.\n\n` +
                 `You'll be added to the queue for these dates.\n` +
-                `If pending orders get cancelled or expire, your booking will be confirmed.\n\n` +
+                `If pending orders get cancelled, your booking will be confirmed.\n\n` +
                 `Do you want to proceed to billing?`
             );
 
@@ -1748,7 +1748,7 @@ function BookASite1() {
 
         if (conflictBlocks.length >= 2) {
             setCalendarErrorMessage(
-                `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
+                `Selected range has ${conflictBlocks.length} separate booked periods.\n` +
                 `Please select a continuous available period.`,
             );
             return;
@@ -1758,13 +1758,13 @@ function BookASite1() {
             selectedDates.start,
             selectedDates.end,
         );
-        let message = `✅ Dates confirmed!\n`;
+        let message = `Dates confirmed!\n`;
         message += `📅 ${validation.days} calendar days selected\n`;
-        message += `✅ ${validation.availableDays} available days for booking\n`;
+        message += `${validation.availableDays} available days for booking\n`;
 
         if (conflictBlocks.length > 0) {
             const conflictBlock = conflictBlocks[0];
-            message += `⚠️ ${conflictBlock.days} booked day(s) excluded from pricing.\n`;
+            message += `${conflictBlock.days} booked day(s) excluded from pricing.\n`;
         }
 
         if (pendingCount > 0) {
@@ -2010,9 +2010,9 @@ function BookASite1() {
             } else {
                 // No dates selected, show error or open calendar
                 if (!isCalendarOpen) {
-                    toggleCalendar("❌ Please select start and end dates first to add to cart.");
+                    toggleCalendar("Please select start and end dates first to add to cart.");
                 } else {
-                    setCalendarErrorMessage("❌ Please select start and end dates first to add to cart.");
+                    setCalendarErrorMessage("Please select start and end dates first to add to cart.");
                 }
             }
             return;
@@ -2035,7 +2035,7 @@ function BookASite1() {
             const conflictBlocks = getConflictBlocks(campaignConfirmedDates.start, campaignConfirmedDates.end);
             if (conflictBlocks.length >= 2) {
                 setCalendarErrorMessage(
-                    `❌ Confirmed range has ${conflictBlocks.length} separate booked periods.\n` +
+                    `Confirmed range has ${conflictBlocks.length} separate booked periods.\n` +
                     `Please select a new date range.`
                 );
                 setIsCalendarOpen(true);
@@ -2139,7 +2139,7 @@ function BookASite1() {
 
             if (conflictBlocks.length >= 2) {
                 setCalendarErrorMessage(
-                    `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
+                    `Selected range has ${conflictBlocks.length} separate booked periods.\n` +
                     `Please select a continuous available period.`
                 );
                 setIsCalendarOpen(true);
@@ -2149,12 +2149,12 @@ function BookASite1() {
             // Show appropriate message based on queue status
             if (pendingCount > 0) {
                 setCalendarErrorMessage(
-                    `⚠️ ${pendingCount} date${pendingCount > 1 ? 's' : ''} in queue.\n` +
+                    `${pendingCount} date${pendingCount > 1 ? 's' : ''} in queue.\n` +
                     `Please confirm dates first.`
                 );
             } else {
                 setCalendarErrorMessage(
-                    `✅ ${validation.days} days selected with ${validation.availableDays} available days.\n` +
+                    `${validation.days} days selected with ${validation.availableDays} available days.\n` +
                     `Please confirm dates first.`
                 );
             }
@@ -2165,9 +2165,9 @@ function BookASite1() {
 
         // No dates selected at all
         if (!isCalendarOpen) {
-            toggleCalendar("❌ Please select start and end dates first to add to cart.");
+            toggleCalendar("Please select start and end dates first to add to cart.");
         } else {
-            setCalendarErrorMessage("❌ Please select start and end dates first to add to cart.");
+            setCalendarErrorMessage("Please select start and end dates first to add to cart.");
         }
     };
 
@@ -2197,7 +2197,7 @@ function BookASite1() {
             );
             if (conflictBlocks.length >= 2) {
                 setCalendarErrorMessage(
-                    `❌ Confirmed range has ${conflictBlocks.length} separate booked periods.\n` +
+                    `Confirmed range has ${conflictBlocks.length} separate booked periods.\n` +
                     `Please select a new date range.`,
                 );
                 setIsCalendarOpen(true);
@@ -2220,9 +2220,9 @@ function BookASite1() {
             // Show queue warning if there are pending dates
             if (pendingCount > 0) {
                 const confirmBooking = window.confirm(
-                    `⚠️ Warning: ${pendingCount} date${pendingCount > 1 ? "s" : ""} in your selection are in queue.\n\n` +
+                    `Warning: ${pendingCount} date${pendingCount > 1 ? "s" : ""} in your selection are in queue.\n\n` +
                     `You'll be added to the queue for these dates.\n` +
-                    `If pending orders get cancelled or expire, your booking will be confirmed.\n\n` +
+                    `If pending orders get cancelled, your booking will be confirmed.\n\n` +
                     `Do you want to proceed to billing?`,
                 );
 
@@ -2318,7 +2318,7 @@ function BookASite1() {
 
             if (conflictBlocks.length >= 2) {
                 setCalendarErrorMessage(
-                    `❌ Selected range has ${conflictBlocks.length} separate booked periods.\n` +
+                    `Selected range has ${conflictBlocks.length} separate booked periods.\n` +
                     `Please select a continuous available period.`,
                 );
                 setIsCalendarOpen(true);
@@ -2328,7 +2328,7 @@ function BookASite1() {
             // Show appropriate message
             if (pendingCount > 0) {
                 setCalendarErrorMessage(
-                    `⚠️ ${pendingCount} date${pendingCount > 1 ? "s" : ""} in queue.\n` +
+                    `${pendingCount} date${pendingCount > 1 ? "s" : ""} in queue.\n` +
                     `Please confirm dates to join the queue.`,
                 );
             } else {
@@ -2607,10 +2607,10 @@ function BookASite1() {
                                     <button
                                         className=" mt-3 mb-2 btn-enquire"
                                         // onClick={toggleOtpMainPage}
-                onClick={handleEnquireNow}
+                                        onClick={handleEnquireNow}
 
                                     >
-                                        For More Details
+                                        Enquire Now
                                     </button>
                                     <br />
                                 </div>
@@ -2674,7 +2674,7 @@ function BookASite1() {
                                             nextBookingOpenDate={nextBookingOpenDate}
                                             showEnquireNow={showEnquireNow}
                                             handleEnquireNow={handleEnquireNow}
-                                            showLoginPrompt={showLoginPrompt && !user} 
+                                            showLoginPrompt={showLoginPrompt && !user}
                                         />
                                     </div>
                                 </div>
@@ -2693,7 +2693,7 @@ function BookASite1() {
                             {/* OTP overlay */}
                             {isOtpMainOpen && (
                                 <div className="otp-overlay">
-    
+
                                     <OtpMain
                                         toggleOtpMainPage={toggleOtpMainPage}
                                         closeOtpMainPage={closeOtpMainPage}

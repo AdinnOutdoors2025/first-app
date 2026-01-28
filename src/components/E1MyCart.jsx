@@ -202,7 +202,7 @@ const Cart = () => {
             alert("Your cart is empty");
             return;
         }
-        navigate("/billing1", {
+        navigate("/billing_cart", {
             state: {
                 cartItems: items,
                 subTotal: subTotal,

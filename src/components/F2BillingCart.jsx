@@ -1116,7 +1116,7 @@ const BillingDetailsCart = () => {
                       <div className="billing-orderTotalAmtContent1">
                         <div className="billingTotalLeft1">Total Amount</div>
                         {/* <div className="billingTotalRight1"> {subTotal.toLocaleString()}</div> */}
-                        <div className="billingTotalRight1"> {formatIndianCurrency(subTotal, true)}</div>
+                        <div className="billingTotalRight1"> ₹ {formatIndianCurrency(subTotal, true)}</div>
 
                       </div>
 

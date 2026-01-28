@@ -68,62 +68,62 @@ const Calendar = ({
     if (!date || isNaN(date.getTime())) return "";
 
     try {
-        const baseClass = getDateSelectionClass(date);
+      const baseClass = getDateSelectionClass(date);
 
-        // For hidden dates, return special class
-        if (baseClass === "hidden") {
-            return "hidden-date";
+      // For hidden dates, return special class
+      if (baseClass === "hidden") {
+        return "hidden-date";
+      }
+
+      // For booked dates, always return "booked" (red)
+      if (baseClass === "booked") return "booked";
+
+      // For outside window dates
+      if (baseClass === "outside-window") {
+        return "outside-window";
+      }
+
+      // For past dates
+      if (baseClass === "past") return "past";
+
+      // Check if date is in selected range
+      if (selectedDates.start && selectedDates.end && date) {
+        const normalizedDate = new Date(Date.UTC(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate()
+        ));
+
+        const startUTC = selectedDates.start ? new Date(Date.UTC(
+          selectedDates.start.getFullYear(),
+          selectedDates.start.getMonth(),
+          selectedDates.start.getDate()
+        )) : null;
+
+        const endUTC = selectedDates.end ? new Date(Date.UTC(
+          selectedDates.end.getFullYear(),
+          selectedDates.end.getMonth(),
+          selectedDates.end.getDate()
+        )) : null;
+
+        // Only apply selection styling if date is available
+        if (baseClass !== "booked" && baseClass !== "outside-window" && baseClass !== "past" && baseClass !== "hidden-date") {
+          if (startUTC && normalizedDate.getTime() === startUTC.getTime()) {
+            return "selected-start";
+          }
+          if (endUTC && normalizedDate.getTime() === endUTC.getTime()) {
+            return "selected-end";
+          }
+          if (startUTC && endUTC && normalizedDate > startUTC && normalizedDate < endUTC) {
+            return "selected-range";
+          }
         }
+      }
 
-        // For booked dates, always return "booked" (red)
-        if (baseClass === "booked") return "booked";
-
-        // For outside window dates
-        if (baseClass === "outside-window") {
-            return "outside-window";
-        }
-
-        // For past dates
-        if (baseClass === "past") return "past";
-
-        // Check if date is in selected range
-        if (selectedDates.start && selectedDates.end && date) {
-            const normalizedDate = new Date(Date.UTC(
-                date.getFullYear(),
-                date.getMonth(),
-                date.getDate()
-            ));
-
-            const startUTC = selectedDates.start ? new Date(Date.UTC(
-                selectedDates.start.getFullYear(),
-                selectedDates.start.getMonth(),
-                selectedDates.start.getDate()
-            )) : null;
-
-            const endUTC = selectedDates.end ? new Date(Date.UTC(
-                selectedDates.end.getFullYear(),
-                selectedDates.end.getMonth(),
-                selectedDates.end.getDate()
-            )) : null;
-
-            // Only apply selection styling if date is available
-            if (baseClass !== "booked" && baseClass !== "outside-window" && baseClass !== "past" && baseClass !== "hidden-date") {
-                if (startUTC && normalizedDate.getTime() === startUTC.getTime()) {
-                    return "selected-start";
-                }
-                if (endUTC && normalizedDate.getTime() === endUTC.getTime()) {
-                    return "selected-end";
-                }
-                if (startUTC && endUTC && normalizedDate > startUTC && normalizedDate < endUTC) {
-                    return "selected-range";
-                }
-            }
-        }
-
-        return baseClass;
+      return baseClass;
     } catch (error) {
-        console.warn("Error in getDateCustomClass:", error);
-        return "";
+      console.warn("Error in getDateCustomClass:", error);
+      return "";
     }
   };
 
@@ -153,12 +153,15 @@ const Calendar = ({
   };
 
   const { calendarDays, availableDays, pendingInRange } = calculateDisplayInfo();
+  // Check if dates are selected (start AND end)
+  const hasSelectedDates = selectedDates.start && selectedDates.end;
+
 
   const shouldDisableConfirmButton = () => {
     if (allInitialDaysBooked && !selectedDates.start && !selectedDates.end) {
       return true;
     }
-        return isProcessingBooking || showLoginPrompt;
+    return isProcessingBooking || showLoginPrompt;
   };
 
 
@@ -173,7 +176,7 @@ const Calendar = ({
     }
   }, [showLoginPrompt, calendarErrorMessage]);
 
-  
+
   return (
     <div className={`calendar-container ${isSmallScreen ? 'scrollable' : ''}`}>
       <div className="calendar-header">
@@ -241,12 +244,12 @@ const Calendar = ({
                     }
                   }}
                   style={{
-                    pointerEvents: getDateCustomClass(date) === "outside-window" || 
-                                  getDateCustomClass(date) === "past" || 
-                                  getDateCustomClass(date) === "hidden-date" ? "none" : "auto",
-                    cursor: getDateCustomClass(date) === "outside-window" || 
-                            getDateCustomClass(date) === "past" || 
-                            getDateCustomClass(date) === "hidden-date" ? "not-allowed" : "pointer"
+                    pointerEvents: getDateCustomClass(date) === "outside-window" ||
+                      getDateCustomClass(date) === "past" ||
+                      getDateCustomClass(date) === "hidden-date" ? "none" : "auto",
+                    cursor: getDateCustomClass(date) === "outside-window" ||
+                      getDateCustomClass(date) === "past" ||
+                      getDateCustomClass(date) === "hidden-date" ? "not-allowed" : "pointer"
                   }}
                 >
                   {date ? date.getDate() : ""}
@@ -286,6 +289,7 @@ const Calendar = ({
                     Amount: <span style={{ color: 'red' }}>
                       {formatIndianCurrency(totalPrice, true)}
                     </span>
+                    {hasSelectedDates && ` ( ${totalDays} × ${formatIndianCurrency(pricePerDay, true)} )`}
                   </span>
                   <br />
                 </div>
@@ -313,7 +317,7 @@ const Calendar = ({
                 </button>
                 <button
                   className="reset-button"
-                  onClick={resetDates}  
+                  onClick={resetDates}
                   disabled={shouldDisableConfirmButton()}
                 >
                   Reset Date
@@ -357,6 +361,7 @@ const Calendar = ({
               <div className="calendarAmountMain">
                 <span>
                   Amount: <span style={{ color: 'red' }}>{formatIndianCurrency(totalPrice, true)}</span>
+                  {hasSelectedDates && ` ( ${totalDays} × ${formatIndianCurrency(pricePerDay, true)} )`}
                 </span>
                 <br />
                 <br />
@@ -370,10 +375,10 @@ const Calendar = ({
                 >
                   {isProcessingBooking ? 'Processing...' : 'Reserve & Book'}
                 </button>
-                
+
                 <button
                   className="reset-button"
-                  onClick={resetDates}  
+                  onClick={resetDates}
                   disabled={shouldDisableConfirmButton()}
                 >
                   Reset Date
@@ -413,12 +418,12 @@ const Calendar = ({
                         }
                       }}
                       style={{
-                        pointerEvents: getDateCustomClass(date) === "outside-window" || 
-                                      getDateCustomClass(date) === "past" || 
-                                      getDateCustomClass(date) === "hidden-date" ? "none" : "auto",
-                        cursor: getDateCustomClass(date) === "outside-window" || 
-                                getDateCustomClass(date) === "past" || 
-                                getDateCustomClass(date) === "hidden-date" ? "not-allowed" : "pointer"
+                        pointerEvents: getDateCustomClass(date) === "outside-window" ||
+                          getDateCustomClass(date) === "past" ||
+                          getDateCustomClass(date) === "hidden-date" ? "none" : "auto",
+                        cursor: getDateCustomClass(date) === "outside-window" ||
+                          getDateCustomClass(date) === "past" ||
+                          getDateCustomClass(date) === "hidden-date" ? "not-allowed" : "pointer"
                       }}
                     >
                       {date ? date.getDate() : ""}
@@ -435,7 +440,7 @@ const Calendar = ({
 
         {/* Error Message Display with Enquire Now */}
         {/* {calendarErrorMessage && !showLoginPrompt && ( */}
-          {calendarErrorMessage && calendarErrorMessage !== "Please login to proceed with booking." && !showLoginPrompt && (
+        {calendarErrorMessage && calendarErrorMessage !== "Please login to proceed with booking." && !showLoginPrompt && (
 
           <div className="calendar-error-message">
             <div className="calendarAlertIconMain">
@@ -445,12 +450,12 @@ const Calendar = ({
               {calendarErrorMessage.split('Enquire Now')[0]}
             </div>
             {showEnquireNow && handleEnquireNow && (
-            
-               
-              <div className="enquire-now-button"  onClick={handleEnquireNow} >
+
+
+              <div className="enquire-now-button" onClick={handleEnquireNow} >
                 <div>Enquire</div>
                 <div><img src='/images/EnquirePopUpIcon.png' className="enquire-now-buttonArrow"></img></div>
-              </div>   
+              </div>
             )}
           </div>
         )}

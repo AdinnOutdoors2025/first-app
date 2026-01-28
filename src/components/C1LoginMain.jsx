@@ -48,137 +48,13 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
     }, [loginMode]);
     //ADD LOADING STATES WHEN LOGIN / SIGNUP
 
-    // const sendOtp = async () => {
-    //     setErrorMessage('');
-    //     setStatus('Validating...');
-    //     // For login
-    //     if (!isSignUp) {
-    //         const identifier = userPhone || email;
-
-    //         if (!identifier) {
-    //             setErrorMessage('Please enter your email or phone number');
-    //             return;
-    //         } 
-
-    //         // Determine if it's a phone or email and clean the input
-    //         let isPhone = /^\d{10}$/.test(identifier);
-    //         let cleanedIdentifier = identifier;
-
-    //         if (isPhone) {
-    //             cleanedIdentifier = identifier.replace(/\D/g, '');
-    //             if (cleanedIdentifier.length !== 10) {
-    //                 setErrorMessage('Please enter a valid 10-digit phone number');
-    //                 return;
-    //             }
-    //         } else if (!validateEmail(identifier)) {
-    //             setErrorMessage('Please enter a valid email address');
-    //             return;
-    //         }
-
-    //         // Update state immediately before proceeding
-    //         if (isPhone) {
-    //             setUsePhoneOTP(true);
-    //             setUserPhone(cleanedIdentifier);
-    //             setEmail('');
-    //         } else {
-    //             setUsePhoneOTP(false);
-    //             setEmail(cleanedIdentifier);
-    //             setUserPhone('');
-    //         }
-
-    //         // Use the cleaned identifier for the API call
-    //       //  const loginIdentifier = isPhone ? cleanedIdentifier : cleanedIdentifier;
-
-    //         try {
-    //             setStatus('Checking user...');
-    //             // Check if user exists
-    //             const checkEndpoint = 'check-user';
-    //             const checkResponse = await fetch(`${baseUrl}/login/${checkEndpoint}`, {
-    //                 method: 'POST',
-    //                 headers: { 'Content-Type': 'application/json' },
-    //                 // body: JSON.stringify(isPhone ? { phone: loginIdentifier } : { email: loginIdentifier })
-    //                 body: JSON.stringify(isPhone ? { phone: cleanedIdentifier } : { email: cleanedIdentifier })
-
-    //             });
-    //             const checkData = await checkResponse.json();
-
-    //             if (!checkData.exists) {
-    //                 setErrorMessage('User not found. Please sign up.');
-    //                 return;
-    //             }
-    //             // Send OTP
-    //             // await sendOtpRequest(isPhone, loginIdentifier, '')
-    //             await sendOtpRequest(isPhone, cleanedIdentifier, '');
-
-    //         } catch (error) {
-    //             console.error(error);
-    //             setStatus('Failed');
-    //             setErrorMessage("Error checking user. Try again later.");
-    //         }
-    //     } else {
-    //         // For signup - this part remains mostly the same
-    //         if (!userName) {
-    //             setErrorMessage('Please enter your name');
-    //             return;
-    //         }
-
-    //         // Clean and validate phone number
-    //         const cleanedPhone = userPhone.replace(/\D/g, '');
-    //         if (cleanedPhone.length !== 10) {
-    //             setErrorMessage('Please enter a valid 10-digit phone number');
-    //             return;
-    //         }
-
-    //         if (!email || !validateEmail(email)) {
-    //             setErrorMessage('Please enter a valid email address');
-    //             return;
-    //         }
-
-    //         // setUsePhoneOTP(false); // For signup, we'll use email by default
-    //           // For signup, use phone for OTP by default
-    //         setUsePhoneOTP(true);
-    //         setUserPhone(cleanedPhone); 
-
-    //         try {
-    //             setStatus('Checking user...');
-    //             // Check if user exists
-    //             const checkEndpoint = 'check-user-exists';
-    //             const checkResponse = await fetch(`${baseUrl}/login/${checkEndpoint}`, {
-    //                 method: 'POST',
-    //                 headers: { 'Content-Type': 'application/json' },
-    //                 body: JSON.stringify({ email, phone: cleanedPhone })
-    //             });
-
-    //             const checkData = await checkResponse.json();
-
-    //             if (checkData.emailExists) {
-    //                 setErrorMessage('Email already registered. Please login.');
-    //                 return;
-    //             }
-    //             if (checkData.phoneExists) {
-    //                 setErrorMessage('Phone already registered. Please login.');
-    //                 return;
-    //             } 
-
-    //             // // Send OTP via email for signup
-    //             // await sendOtpRequest(false, email, userName);
-    //              // Send OTP via SMS for signup (phone will be used)
-    //             await sendOtpRequest(true, cleanedPhone, userName);
-
-    //         } catch (error) {
-    //             console.error(error);
-    //             setStatus('Failed');
-    //             setErrorMessage("Error checking user. Try again later.");
-    //         }
-    //     }
-    // };
 
     const sendOtp = async () => {
         if (isSendingOtp) return; // Prevent multiple clicks
 
         setErrorMessage('');
         setStatus('Validating...');
-        
+
 
         // For login
         if (!isSignUp) {
@@ -186,43 +62,79 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
 
             if (!identifier) {
                 toast.error("Please enter your email or phone number", {
-                position: "bottom-right",
+                    position: "bottom-right",
                 });
                 // setErrorMessage('Please enter your email or phone number');
                 return;
             }
 
-            // Determine if it's a phone or email and clean the input
-            let isPhone = /^\d{10}$/.test(identifier);
-            let cleanedIdentifier = identifier;
+            // // Determine if it's a phone or email and clean the input
+            // let isPhone = /^\d{10}$/.test(identifier);
+            // let cleanedIdentifier = identifier;
 
-            if (isPhone) {
-                cleanedIdentifier = identifier.replace(/\D/g, '');
-                if (cleanedIdentifier.length !== 10) {
-                    setErrorMessage('Please enter a valid 10-digit phone number');
-                    return;
-                }
-            } else if (!validateEmail(identifier)) {
-                setErrorMessage('Please enter a valid email address');
+            // if (isPhone) {
+            //     cleanedIdentifier = identifier.replace(/\D/g, '');
+            //     if (cleanedIdentifier.length !== 10) {
+            //         setErrorMessage('Please enter a valid 10-digit phone number');
+            //         return;
+            //     }
+            // } else if (!validateEmail(identifier)) {
+            //     setErrorMessage('Please enter a valid email address');
+            //     return;
+            // }
+
+            // // Update state immediately before proceeding
+            // if (isPhone) {
+            //     setUsePhoneOTP(true);
+            //     setUserPhone(cleanedIdentifier);
+            //     setEmail('');
+            // } else {
+            //     setUsePhoneOTP(false);
+            //     setEmail(cleanedIdentifier);
+            //     setUserPhone('');
+            // }
+
+
+            // Check if identifier contains @ (email) or is all digits (phone)
+        const hasAtSymbol = identifier.includes('@');
+        
+        if (hasAtSymbol) {
+            // Treat as email
+            if (!validateEmail(identifier)) {
+                toast.error("Please enter a valid email address", {
+                    position: "bottom-right",
+                });
                 return;
             }
-
-            // Update state immediately before proceeding
-            if (isPhone) {
-                setUsePhoneOTP(true);
-                setUserPhone(cleanedIdentifier);
-                setEmail('');
-            } else {
-                setUsePhoneOTP(false);
-                setEmail(cleanedIdentifier);
-                setUserPhone('');
+            setUsePhoneOTP(false);
+            setEmail(identifier);
+            setUserPhone('');
+        } else {
+            // Treat as phone
+            const cleanedIdentifier = identifier.replace(/\D/g, '');
+            
+            if (cleanedIdentifier.length !== 10) {
+                toast.error("Please enter a valid 10-digit phone number", {
+                    position: "bottom-right",
+                });
+                return;
             }
-
-            // Use the cleaned identifier for the API call
-            //  const loginIdentifier = isPhone ? cleanedIdentifier : cleanedIdentifier;
-
+            
+            // Validate Indian phone number (starts with 6-9)
+            if (!/^[6-9]/.test(cleanedIdentifier)) {
+                toast.error("Please enter a valid Indian phone number (should start with 6-9)", {
+                    position: "bottom-right",
+                });
+                return;
+            }
+            
+            setUsePhoneOTP(true);
+            setUserPhone(cleanedIdentifier);
+            setEmail('');
+        }
+    
             try {
-                
+
                 setStatus('Checking user...');
                 // Check if user exists
                 const checkEndpoint = 'check-user';
@@ -230,29 +142,44 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     // body: JSON.stringify(isPhone ? { phone: loginIdentifier } : { email: loginIdentifier })
-                    body: JSON.stringify(isPhone ? { phone: cleanedIdentifier } : { email: cleanedIdentifier })
-
+                    // body: JSON.stringify(isPhone ? { phone: cleanedIdentifier } : { email: cleanedIdentifier })
+ body: JSON.stringify(
+                    hasAtSymbol 
+                        ? { email: identifier } 
+                        : { phone: identifier.replace(/\D/g, '') }
+                )
                 });
                 const checkData = await checkResponse.json();
 
                 if (!checkData.exists) {
-                    setErrorMessage('User not found. Please sign up.');
+                    // setErrorMessage('User not found. Please sign up.');
+                    toast.error("User not found. Please sign up.", {
+                    position: "bottom-right",
+                });
                     return;
                 }
                 // Send OTP
                 // await sendOtpRequest(isPhone, loginIdentifier, '')
-                await sendOtpRequest(isPhone, cleanedIdentifier, '');
+                // await sendOtpRequest(isPhone, cleanedIdentifier, '');
+ await sendOtpRequest(
+                !hasAtSymbol,  // isPhone: true if not email (phone)
+                hasAtSymbol ? identifier : identifier.replace(/\D/g, ''),
+                ''
+            );
 
             } catch (error) {
                 console.error(error);
                 setStatus('Failed');
-                setErrorMessage("Error checking user. Try again later.");
+                // setErrorMessage("Error checking user. Try again later.");
+toast.error("Error checking user. Try again later.", {
+                position: "bottom-right",
+            });
             }
         } else {
             // For signup - this part remains mostly the same
             if (!userName) {
-              toast.error("Please enter your name", {
-                position: "bottom-right",
+                toast.error("Please enter your name", {
+                    position: "bottom-right",
                 });
 
                 // setErrorMessage('Please enter your name');
@@ -262,16 +189,23 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
             // Clean and validate phone number
             const cleanedPhone = userPhone.replace(/\D/g, '');
             if (cleanedPhone.length !== 10) {
-                 toast.error("Please enter a valid 10-digit phone number", {
-                position: "bottom-right",
+                toast.error("Please enter a valid 10-digit phone number", {
+                    position: "bottom-right",
                 });
                 // setErrorMessage('Please enter a valid 10-digit phone number');
                 return;
             }
+ // Validate Indian phone number (starts with 6-9)
+        if (!/^[6-9]/.test(cleanedPhone)) {
+            toast.error("Please enter a valid Indian phone number (should start with 6-9)", {
+                position: "bottom-right",
+            });
+            return;
+        }
 
             if (!email || !validateEmail(email)) {
                 toast.error("Please enter a valid email address", {
-                position: "bottom-right",
+                    position: "bottom-right",
                 });
                 // setErrorMessage('Please enter a valid email address');
                 return;
@@ -282,7 +216,9 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
             setUsePhoneOTP(true);
             setUserPhone(cleanedPhone);
 
-            try {
+            try { 
+                            setIsSendingOtp(true);
+
                 setStatus('Checking user...');
                 // Check if user exists
                 const checkEndpoint = 'check-user-exists';
@@ -295,11 +231,18 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 const checkData = await checkResponse.json();
 
                 if (checkData.emailExists) {
-                    setErrorMessage('Email already registered. Please login.');
+                    // setErrorMessage('Email already registered. Please login.');
+                    toast.error("Email already registered. Please login.", {
+                    position: "bottom-right",
+                });
+
                     return;
                 }
                 if (checkData.phoneExists) {
-                    setErrorMessage('Phone already registered. Please login.');
+                    // setErrorMessage('Phone already registered. Please login.');
+                   toast.error("Phone already registered. Please login.", {
+                    position: "bottom-right",
+                });
                     return;
                 }
 
@@ -311,7 +254,10 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
             } catch (error) {
                 console.error(error);
                 setStatus('Failed');
-                setErrorMessage("Error checking user. Try again later.");
+                // setErrorMessage("Error checking user. Try again later.");
+                toast.error("Error checking user. Try again later.", {
+                position: "bottom-right",
+            });
             }
             finally {
                 setIsSendingOtp(false); // Stop loading
@@ -443,7 +389,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                     // toast.success("Account created successfully!");
                     toast.success("Account created successfully!", {
                         position: "bottom-right",
-                        autoClose: 5000,
+                        autoClose: 3000,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -467,24 +413,24 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                     }
 
                     loginUser(verifyData.user, keepSignedIn);
-                    toast.success("Logged in successfully!", {
-                        position: "bottom-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored",
-                        style: {
-                            zIndex: 999999,
-                            fontSize: '14px',
-                            borderRadius: '8px',
-                            backgroundColor: '#4caf50',
-                            color: 'white',
-                        },
-                    }
-                    );
+                    // toast.success("Logged in successfully!", {
+                    //     position: "bottom-right",
+                    //     autoClose: 3000,
+                    //     hideProgressBar: false,
+                    //     closeOnClick: true,
+                    //     pauseOnHover: true,
+                    //     draggable: true,
+                    //     progress: undefined,
+                    //     theme: "colored",
+                    //     style: {
+                    //         zIndex: 999999,
+                    //         fontSize: '14px',
+                    //         borderRadius: '8px',
+                    //         backgroundColor: '#4caf50',
+                    //         color: 'white',
+                    //     },
+                    // }
+                    // );
                 }
                 setVerified(true);
                 onClose();
@@ -589,17 +535,6 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
 
 
                                 <br />
-
-                                {/* <input
-                                    type="number"
-                                    maxLength={10}
-                                    placeholder="Mobile number"
-                                    className='login-input-phone'
-                                    value={userPhone}
-                                    onChange={e => setUserPhone(e.target.value)}
-                                /> */}
-                            
-                                 
                                 <input
                                     type="tel"
                                     placeholder="Enter your mobile number"
@@ -627,22 +562,21 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                         ) : (
                             // LOGIN FORM - Show single input field
                             <input
-                                type="text"
+                                type="tel"
                                 placeholder="Enter your phone number"
-                                className='login-input-phone'
-                                value={usePhoneOTP ? userPhone : email}
-                              onChange={(e) => {
+                                className="login-input-phone"
+                                value={userPhone}
+                                maxLength={10}
+                                onChange={(e) => {
                                     const value = e.target.value.replace(/\D/g, ""); // allow digits only
 
-                                    if (usePhoneOTP) {
-                                    if (value.length <= 10) {
+                                    // Allow only Indian numbers: start with 6–9 and max 10 digits
+                                    if (/^[6-9]?\d{0,9}$/.test(value)) {
                                         setUserPhone(value);
-                                    }
-                                    } else {
-                                    setEmail(e.target.value);
                                     }
                                 }}
                             />
+
                         )}
                         {errorMessage && <div className="error-message-login">{errorMessage}</div>}
 

@@ -39,7 +39,7 @@ const ProtectedRoute = ({ children, adminOnly = false, requireLogin = false  }) 
             
             // Show notification
             toast.info("Please login to access this page", {
-                position: "top-center",
+                position: "bottom-right",
                 autoClose: 3000,
             });
             
