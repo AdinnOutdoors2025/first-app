@@ -445,12 +445,12 @@ const Calendar = ({
               {calendarErrorMessage.split('Enquire Now')[0]}
             </div>
             {showEnquireNow && handleEnquireNow && (
-              <button 
-                className="enquire-now-button"
-                onClick={handleEnquireNow}
-              >
-                Enquire Now
-              </button>
+            
+               
+              <div className="enquire-now-button"  onClick={handleEnquireNow} >
+                <div>Enquire</div>
+                <div><img src='/images/EnquirePopUpIcon.png' className="enquire-now-buttonArrow"></img></div>
+              </div>   
             )}
           </div>
         )}

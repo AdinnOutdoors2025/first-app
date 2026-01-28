@@ -197,6 +197,7 @@
     color: rgba(76, 187, 23, 1);
     cursor: pointer;
 }
+
 /* 
 .booked {
     color: rgba(228, 30, 37, 1);
@@ -261,6 +262,8 @@
     /* Blur effect */
     padding-top: 8%;
     z-index: 201;
+    overflow-y: auto;
+
 }
 
 
@@ -293,7 +296,7 @@
     justify-content: space-between;
     gap: 20px;
     align-items: center;
-    padding: 0px 15px 0px 0px;
+    padding: 0px 2.6px 0px 0px;
     font-family: Montserrat;
     font-weight: 500;
     font-style: Medium;
@@ -303,7 +306,7 @@
     text-align: center;
     color: #FFFFFF;
     animation: slideDown 0.3s ease-out;
-    margin: 10px auto;
+    margin: 8px auto;
 
 }
 
@@ -315,7 +318,7 @@
 .calendarAlertIconMain {
     background: #E32126;
     box-shadow: 3px 8px 11px 0px #00000040 inset;
-    padding: 10px;
+    padding: 9px;
     border-radius: 50%;
 }
 
@@ -503,14 +506,15 @@
 .minimum-days-warning {
     border: 2px dashed #ff9800 !important;
     background-color: #fff3e0 !important;
-} 
+}
 
 
 
 /* Outside window dates (for frontend only, not admin) */
 .date.outside-window {
     color: #ccc !important;
-    pointer-events: auto !important; /* Allow click for error message */
+    pointer-events: auto !important;
+    /* Allow click for error message */
     cursor: not-allowed !important;
     opacity: 0.5 !important;
     background-color: #f9f9f9 !important;
@@ -542,13 +546,13 @@
 /* Responsive Media Queries */
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
 @media (min-width: 2560px) {
-    
+
     .dot-booked,
     .dot-available {
         font-size: 20px;
     }
 
-    
+
     .calendar-header {
         padding: 15px;
     }
@@ -570,7 +574,7 @@
         font-size: 37px;
     }
 
-    
+
     .date {
         font-size: 32px;
         font-weight: 500;
@@ -665,7 +669,7 @@
 
     .calendar-error-message {
         gap: 20px;
-        padding: 0px 40px 0px 0px;
+        padding: 0px 6px 0px 0px;
         font-size: 30px;
         margin: 20px auto;
         border-radius: 60px;
@@ -690,7 +694,7 @@
         padding-top: 8%;
     }
 
-    
+
 
     .nav-button {
         font-size: 20px;
@@ -709,7 +713,7 @@
         font-size: 25px;
     }
 
-    
+
     .dot-booked,
     .dot-available {
         font-size: 11px;
@@ -859,7 +863,7 @@
         padding: 5px;
     }
 
-    
+
 
     .dot-booked,
     .dot-available {
@@ -873,7 +877,7 @@
         letter-spacing: 0.05em;
     }
 
-   
+
 
     .date {
         font-size: 17.5px;
@@ -1055,7 +1059,7 @@
         margin: auto 22%;
     }
 
-  
+
     .day {
         font-size: 17px;
         font-weight: 500;
@@ -1181,7 +1185,7 @@
 
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
 @media (min-width: 480px) and (max-width: 767px) {
-   
+
     .calendar-overlay {
         padding-top: 18%;
     }
@@ -1211,7 +1215,7 @@
         letter-spacing: 0.05em;
     }
 
-   
+
     .nav-button {
         font-size: 20px;
     }
@@ -1221,7 +1225,7 @@
         font-size: 10px;
     }
 
-   
+
 
     .calendar-legend-responsive {
         display: flex;
@@ -1239,7 +1243,7 @@
         margin: 3px 21%;
     }
 
-   
+
     .day {
         font-size: 16px;
         font-weight: 500;
@@ -1248,7 +1252,7 @@
         letter-spacing: 0.05em;
     }
 
-   
+
 
     .date {
         font-size: 18px;
@@ -1353,7 +1357,7 @@
 
 /* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
 @media (min-width: 425px) and (max-width: 479px) {
-   
+
     .calendar-overlay {
         padding-top: 20%;
     }
@@ -1394,7 +1398,7 @@
         font-size: 10px;
     }
 
- 
+
 
     .calendar-legend-responsive {
         display: flex;
@@ -1412,7 +1416,7 @@
         margin: 3px 14%;
     }
 
-   
+
     .day {
         font-size: 16px;
         font-weight: 500;
@@ -1421,7 +1425,7 @@
         letter-spacing: 0.05em;
     }
 
-   
+
 
     .date {
         font-size: 18px;
@@ -1525,7 +1529,7 @@
 
 /* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
 @media (min-width: 375px) and (max-width: 424px) {
-   
+
 
     .calendar-overlay {
         padding-top: 18%;
@@ -1556,7 +1560,7 @@
         letter-spacing: 0.05em;
     }
 
-   
+
 
     .nav-button {
         font-size: 20px;
@@ -1585,7 +1589,7 @@
         margin: 3px 10%;
     }
 
-    
+
     .day {
         font-size: 15px;
         font-weight: 500;
@@ -1731,7 +1735,7 @@
         letter-spacing: 0.05em;
     }
 
-  
+
     .nav-button {
         font-size: 20px;
         /* padding: 5px; */
@@ -1742,7 +1746,7 @@
         font-size: 10px;
     }
 
-  
+
     .calendar-legend-responsive {
         display: flex;
         justify-content: space-around;
@@ -1760,7 +1764,7 @@
         margin: 3px 9%;
     }
 
-      .day {
+    .day {
         font-size: 15px;
         font-weight: 500;
         padding-bottom: 5px;
@@ -1878,7 +1882,7 @@
 }
 
 @media (min-width: 320px) and (max-width: 359px) {
-   
+
     .calendar-overlay {
         padding-top: 20%;
     }
@@ -1908,7 +1912,7 @@
         letter-spacing: 0.05em;
     }
 
-  
+
     .nav-button {
         font-size: 18px;
         /* padding: 5px; */
@@ -1919,7 +1923,7 @@
         font-size: 9px;
     }
 
-   
+
     .calendar-legend-responsive {
         display: flex;
         justify-content: space-around;
@@ -1936,7 +1940,7 @@
         margin: 3px 5%;
     }
 
-   
+
 
     .day {
         font-size: 13px;
@@ -1946,7 +1950,7 @@
         letter-spacing: 0.05em;
     }
 
-   
+
 
     .date {
         font-size: 15px;
@@ -2063,10 +2067,11 @@
     pointer-events: none;
     cursor: not-allowed;
     position: relative; */
-     background-color: #f0f0f0 !important;
+    background-color: #f0f0f0 !important;
     color: #999 !important;
     cursor: not-allowed !important;
-    pointer-events: auto !important; /* Allow click for error message */
+    pointer-events: auto !important;
+    /* Allow click for error message */
     /* text-decoration: line-through !important; */
     opacity: 0.7 !important;
 }
@@ -2074,8 +2079,9 @@
 .date.disabled {
     visibility: hidden !important;
     pointer-events: none !important;
-    
+
 }
+
 /* Booked dates */
 .date.booked {
     color: rgba(228, 30, 37, 1) !important;
@@ -2096,7 +2102,7 @@
     color: rgba(76, 187, 23, 1) !important;
     pointer-events: auto !important;
     cursor: pointer !important;
-} 
+}
 
 /* Past booked dates - more prominent style */
 .date.past.booked {
@@ -2145,16 +2151,16 @@
 ------------------------------------------------------- */
 
 .conflict-dots {
-  display: flex;
-  gap: 2px;
-  justify-content: center;
-  margin-top: 3px;
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+    margin-top: 3px;
 }
 
 .conflict-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
 }
 
 
@@ -2164,75 +2170,50 @@
 ------------------------------------------------------- */
 
 .conflict-pie {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  margin: 2px auto 0;
-  border: 1px solid #fff;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    margin: 2px auto 0;
+    border: 1px solid #fff;
 }
 
 /* Keep dots below pie */
 .conflict-dots {
-  display: flex;
-  justify-content: center;
-  gap: 2px;
-  margin-top: 2px;
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin-top: 2px;
 }
+
 /* /////////////////////////////////////////////////////////////// */
 .pie-ring {
-  display: block;
-  margin: auto;
+    display: block;
+    margin: auto;
 }
 
 .date {
-  position: relative;
+    position: relative;
 }
 
 .pie-ring circle {
-  cursor: pointer;
+    cursor: pointer;
 }
+
 /* ////////////////////new pie chart code/////////////////// */
 .pie-ring {
-  display: block;
-  margin: auto;
+    display: block;
+    margin: auto;
 }
 
 .pie-ring circle {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .date {
-  position: relative;
+    position: relative;
 }
 
 .confirmed-selected {
-  background: #e8f0ff; /* lighter green */
-}
-
-
-
-
-
-
-/* Enquire Now POP UP button styling */
-.enquire-now-button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-
-.enquire-now-button {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.enquire-now-button:hover {
-    background-color: #c82333;
+    background: #e8f0ff;
+    /* lighter green */
 }

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+
 * {
     font-family: Montserrat;
 }
@@ -7,7 +9,7 @@
     background: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 350px;
+    max-width: max-content;
     text-align: center;
     /* overflow-y: auto; */
 }
@@ -294,28 +296,43 @@
 
 /* THANKYOU PAGE CSS  */
 .thankyou-img {
-    margin-top: 30px;
-    margin-bottom: 20px;
-    height: 120px;
-    width: 120px;
+    margin: 0px 0px 30px 0px;
+    height: 100px;
+    width: 100px;
 }
 
 .thankyou-text {
-    font-weight: 600;
+    /* font-weight: 600;
     font-size: 38px;
     line-height: 46.32px;
     letter-spacing: 0%;
-    color: rgba(64, 157, 37, 1);
+    color: rgba(64, 157, 37, 1); */
+    font-family: Courgette;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 58px;
+    line-height: 100%;
+    color: #E31F25;
+    margin: 20px auto;
 
 }
 
 .getback-msg {
+    font-family: Montserrat;
     font-weight: 600;
-    font-size: 21px;
-    line-height: 26.82px;
+    font-style: SemiBold;
+    font-size: 20px;
+    leading-trim: NONE;
+    line-height: 100%;
     letter-spacing: 0%;
-    color: rgba(227, 31, 37, 1);
-    margin-bottom: 30px;
+    text-align: center;
+    color: #8C8485;
+    margin: 45px auto;
+
+}
+
+.getback-msg1 {
+    font-weight: 700;
 }
 
 
@@ -333,6 +350,79 @@
 }
 
 
+/* Enquire Now pop up Button Styles */
+
+.enquire-now-button {
+    padding: 10px 20px;
+    border-radius: 29px;
+    background: #FFFFFF;
+    font-family: Montserrat;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 5%;
+    text-align: center;
+    color: #000000;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    align-content: center;
+    cursor: pointer;
+}
+
+.enquire-now-buttonArrow {
+    height: 15px;
+    width: auto;
+}
+
+
+/*Thank you section with  Admin Details Styles */
+
+.EnquireAdminDetails {
+    display: flex;
+    gap: 10px;
+    color: #333333;
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin: 20px auto;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.EnquireAdminDetailsContents {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.EnquireContactImg {
+    height: 20px;
+    width: 20px;
+}
+
+.EnquireAdminDetailsCenterLine {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.EnquireEmailImg {
+    height: 20px;
+    width: 20px;
+}
+
+.thank {
+    padding: 0px 10px;
+}
+
 /* Responsive Media Queries */
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
 @media (min-width: 2560px) {
@@ -341,7 +431,7 @@
     .login-mainn1 {
         margin-top: 10px;
         padding: 0;
-        max-width: 25%;
+        max-width: max-content;
     }
 
     .login-upper1 {
@@ -458,28 +548,64 @@
 
 
     .thankyou-img {
-        margin-top: 30px;
-        margin-bottom: 50px;
+        margin: 0px 0px 30px 0px;
         height: 150px;
         width: 150px;
     }
 
     .thankyou-text {
-        font-weight: 600;
-        font-size: 45px;
-        line-height: 60.32px;
+        font-size: 70px;
+        margin: 10% auto;
     }
 
     .getback-msg {
-        font-weight: 600;
-        font-size: 30px;
-        line-height: 75.82px;
+        font-size: 35px;
+        margin: 10% auto;
     }
+
+
+    .EnquireAdminDetails {
+        gap: 20px;
+        font-size: 30px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        margin: 20px auto;
+        padding: 0px 20px;
+    }
+
+    .EnquireContactImg {
+        height: 35px;
+        width: 35px;
+    }
+
+    .EnquireAdminDetailsCenterLine {
+        font-size: 30px;
+    }
+
+    .EnquireEmailImg {
+        height: 35px;
+        width: 35px;
+    }
+
 
     .error-messageOTP {
         font-weight: 500;
         font-size: 26px;
         line-height: 30px;
+    }
+
+    /* Enquire Now pop up Button Styles */
+
+    .enquire-now-button {
+        padding: 20px 30px;
+        font-size: 30px;
+        gap: 20px;
+        border-radius: 50px;
+    }
+
+    .enquire-now-buttonArrow {
+        height: 30px;
+        width: auto;
     }
 }
 
@@ -498,7 +624,9 @@
         margin-top: 47px;
         padding: 0;
         border-radius: 10px;
-        max-width: 340px;
+        /* max-width: 340px; */
+        max-width: max-content;
+
     }
 
     .login-upper1 {
@@ -633,7 +761,9 @@
         /* margin-top: 12%; */
         padding: 0;
         border-radius: 10px;
-        max-width: 360px;
+        /* max-width: 360px; */
+        max-width: max-content;
+
     }
 
     .login-message1 {
@@ -646,44 +776,6 @@
     .login-upper1 {
         height: 85px;
     }
-
-    /* 
-    .verification_msg {
-        height: 80px;
-        width: 80px;
-        margin: 10px auto;
-    }
-
-    .input-phone {
-        margin-right: 25px;
-        width: 230px;
-        margin-top: 10px;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 14.63px;
-    }
-
-    .input-phone::placeholder {
-        font-size: 13px;
-    }
-
-    .reach-msg {
-        font-weight: 500;
-        font-size: 11px;
-        line-height: 14.63px;
-    }
-
-    .continue-btn1 {
-        margin: 13px auto;
-        width: 250px;
-        height: 50px;
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 32.91px;
-        border-radius: 32px;
-    } */
-
-
 
 
     .verification_msg {
@@ -829,7 +921,8 @@
         /* margin-top: 12%; */
         padding: 0;
         border-radius: 10px;
-        max-width: 320px;
+        /* max-width: 320px; */
+        max-width: max-content;
     }
 
     .login-message1 {
@@ -977,7 +1070,8 @@
         /* margin-top: 12%; */
         padding: 0;
         border-radius: 10px;
-        max-width: 310px;
+        /* max-width: 310px; */
+        max-width: max-content;
     }
 
     .login-message1 {
@@ -1039,50 +1133,6 @@
         line-height: 13px;
     }
 
-
-
-    /* .verification_msg {
-        height: 90px;
-        width: 100px;
-        margin: 5px auto;
-    }
-
-    .input-phone {
-        margin-right: 0px;
-        width: 94%;
-        margin-top: 20px;
-        font-weight: 500;
-        font-size: 18px;
-        line-height: 24.63px;
-    }
-
-    .input-phone::placeholder {
-        font-size: 13px;
-    }
-
-    .reach-msg {
-        font-weight: 500;
-        font-size: 13px;
-        line-height: 15.63px;
-    }
-
-    .continue-btn1 {
-        margin: 18px auto;
-        padding: 12px 23%;
-        width: auto;
-        height: auto;
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 100%;
-        border-radius: 32px;
-    }
-
-    .OTPMain_sentStatus {
-        font-weight: 500;
-        font-size: 15px;
-        margin-bottom: 10px;
-    }
-     */
 
     .login-lower1 {
         padding: 1px;
@@ -1160,6 +1210,14 @@
         margin-bottom: 25px;
     }
 
+    .EnquireAdminDetailsCenterLine {
+        display: none;
+    }
+
+    .EnquireAdminDetails {
+        flex: 1;
+        flex-wrap: wrap;
+    }
 }
 
 /* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
@@ -1172,7 +1230,9 @@
         /* margin-top: 12%; */
         padding: 0;
         border-radius: 10px;
-        max-width: 310px;
+        /* max-width: 310px; */
+        max-width: max-content;
+
     }
 
     .login-message1 {
@@ -1185,42 +1245,6 @@
     .login-upper1 {
         height: 85px;
     }
-
-    /* .verification_msg {
-        height: 80px;
-        width: 80px;
-        margin: 9px auto;
-    }
-
-    .input-phone {
-        margin-right: 25px;
-        width: 230px;
-        margin-top: 10px;
-        font-weight: 500;
-        font-size: 15px;
-        line-height: 14.63px;
-    }
-
-    .input-phone::placeholder {
-        font-size: 12px;
-    }
-
-    .reach-msg {
-        font-weight: 500;
-        font-size: 11px;
-        line-height: 14.63px;
-    }
-
-    .continue-btn1 {
-        margin: 15px auto;
-        width: 250px;
-        height: 45px;
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 32.91px;
-        border-radius: 32px;
-    } */
-
 
     .verification_msg {
         height: 75px;
@@ -1360,6 +1384,15 @@
         margin-bottom: 25px;
     }
 
+    .EnquireAdminDetailsCenterLine {
+        display: none;
+    }
+
+    .EnquireAdminDetails {
+        flex: 1;
+        flex-wrap: wrap;
+    }
+
 }
 
 /* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
@@ -1372,7 +1405,9 @@
         /* margin-top: 12%; */
         padding: 0;
         border-radius: 10px;
-        max-width: 310px;
+        /* max-width: 310px; */
+        max-width: max-content;
+
     }
 
     .login-message1 {
@@ -1385,42 +1420,6 @@
     .login-upper1 {
         height: 80px;
     }
-
-    /* .verification_msg {
-        height: 80px;
-        width: 80px;
-        margin: 9px auto;
-    }
-
-    .input-phone {
-        margin-right: 25px;
-        width: 230px;
-        margin-top: 10px;
-        font-weight: 500;
-        font-size: 15px;
-        line-height: 14.63px;
-    }
-
-    .input-phone::placeholder {
-        font-size: 12px;
-    }
-
-    .reach-msg {
-        font-weight: 500;
-        font-size: 11px;
-        line-height: 14.63px;
-    }
-
-    .continue-btn1 {
-        margin: 15px auto;
-        width: 250px;
-        height: 45px;
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 32.91px;
-        border-radius: 32px;
-    } */
-
 
 
     .verification_msg {
@@ -1556,6 +1555,14 @@
         margin-bottom: 25px;
     }
 
+    .EnquireAdminDetailsCenterLine {
+        display: none;
+    }
+
+    .EnquireAdminDetails {
+        flex: 1;
+        flex-wrap: wrap;
+    }
 
 }
 
@@ -1569,7 +1576,9 @@
         /* margin-top: 12%; */
         padding: 0;
         border-radius: 10px;
-        max-width: 300px;
+        /* max-width: 300px; */
+        max-width: max-content;
+
     }
 
     .login-message1 {
@@ -1582,42 +1591,6 @@
     .login-upper1 {
         height: 80px;
     }
-
-    /* 
-    .verification_msg {
-        height: 80px;
-        width: 80px;
-        margin: 9px auto;
-    }
-
-    .input-phone {
-        margin-right: 25px;
-        width: 230px;
-        margin-top: 10px;
-        font-weight: 500;
-        font-size: 15px;
-        line-height: 14.63px;
-    }
-
-    .input-phone::placeholder {
-        font-size: 12px;
-    }
-
-    .reach-msg {
-        font-weight: 500;
-        font-size: 11px;
-        line-height: 14.63px;
-    }
-
-    .continue-btn1 {
-        margin: 15px auto;
-        width: 250px;
-        height: 45px;
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 32.91px;
-        border-radius: 32px;
-    } */
 
     .verification_msg {
         height: 75px;
@@ -1744,6 +1717,15 @@
         margin-bottom: 25px;
     }
 
+    .EnquireAdminDetailsCenterLine {
+        display: none;
+    }
+
+    .EnquireAdminDetails {
+        flex: 1;
+        flex-wrap: wrap;
+    }
+
 }
 
 @media (min-width: 320px) and (max-width: 359px) {
@@ -1755,7 +1737,9 @@
         /* margin-top: 12%; */
         padding: 0;
         border-radius: 10px;
-        max-width: 300px;
+        /* max-width: 300px; */
+        max-width: max-content;
+
     }
 
     .login-message1 {
@@ -1768,43 +1752,6 @@
     .login-upper1 {
         height: 80px;
     }
-
-    /* 
-    .verification_msg {
-        height: 80px;
-        width: 80px;
-        margin: 9px auto;
-    }
-
-    .input-phone {
-        margin-right: 25px;
-        width: 230px;
-        margin-top: 10px;
-        font-weight: 500;
-        font-size: 15px;
-        line-height: 14.63px;
-    }
-
-    .input-phone::placeholder {
-        font-size: 12px;
-    }
-
-    .reach-msg {
-        font-weight: 500;
-        font-size: 11px;
-        line-height: 14.63px;
-    }
-
-    .continue-btn1 {
-        margin: 15px auto;
-        width: 250px;
-        height: 45px;
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 32.91px;
-        border-radius: 32px;
-    } */
-
 
     .verification_msg {
         height: 75px;
@@ -1934,96 +1881,12 @@
         margin-bottom: 25px;
     }
 
-}
+    .EnquireAdminDetailsCenterLine {
+        display: none;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-/* Enquire Now pop up Button Styles */
-.enquire-now-button-container {
-    display: flex;
-    justify-content: center;
-    margin: 15px 0;
-    padding: 0 10px;
-}
-
-.enquire-now-button {
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.enquire-now-button:hover {
-    background: #0056b3;
-}
-
-/* Admin Details Styles */
-.admin-details {
-    background: #f8f9fa;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px 0;
-    border-left: 4px solid #007bff;
-}
-
-.admin-details-title {
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 15px;
-    font-size: 16px;
-}
-
-.admin-contact-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    color: #555;
-}
-
-.admin-icon {
-    color: #007bff;
-    margin-right: 10px;
-    width: 20px;
-}
-
-.admin-contact-text {
-    font-size: 14px;
-}
-
-/* Thank You Close Button */
-.thankyou-close-btn-container {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.thankyou-close-btn {
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 30px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.thankyou-close-btn:hover {
-    background: #0056b3;
+    .EnquireAdminDetails {
+        flex: 1;
+        flex-wrap: wrap;
+    }
 }
