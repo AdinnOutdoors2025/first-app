@@ -36,16 +36,16 @@
 
 /* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
 @media (min-width: 992px) and (max-width: 1023px) {
-      .login-overlay {
+    .login-overlay {
         padding-top: 19%;
-    }  
+    }
 }
 
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
 @media (min-width: 768px) and (max-width: 991px) {
-        .login-overlay {
+    .login-overlay {
         padding-top: 20%;
-    }  
+    }
 }
 
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
@@ -59,7 +59,7 @@
 
 /* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
 @media (min-width: 425px) and (max-width: 479px) {
-     .login-overlay {
+    .login-overlay {
         padding-top: 33%;
 
         /* padding-top: 20%; */
@@ -68,7 +68,7 @@
 
 /* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
 @media (min-width: 375px) and (max-width: 424px) {
-      .login-overlay {
+    .login-overlay {
         padding-top: 33%;
         /* padding-top: 20%; */
     }
@@ -76,14 +76,14 @@
 
 /* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
 @media (min-width: 360px) and (max-width: 374px) {
-       .login-overlay {
+    .login-overlay {
         padding-top: 33%;
         /* padding-top: 20%; */
     }
 }
 
 @media (min-width: 320px) and (max-width: 359px) {
-         .login-overlay {
+    .login-overlay {
         padding-top: 33%;
         /* padding-top: 20%; */
     }
@@ -100,7 +100,7 @@
 
 /* LOGOUT OVERLAY WHEN CLICKING NON RESTRICTED PAGE SIGN OUT  */
 /* Logout Loading Overlay Styles */
-.logout-overlay {
+/* .logout-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -111,6 +111,23 @@
     justify-content: center;
     align-items: center;
     z-index: 10000; 
+} */
+
+
+.logout-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999999999;
+    background-image: url('/public/images/PreLoad.svg');
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .logout-overlay img {

@@ -58,7 +58,7 @@ export const MainLayout = ({ children, onClose }) => {
             {/* Simple Logout Loading Overlay */}
             {shouldShowOverlay && (
                 <div className="logout-overlay">
-                    <img src="/public/images/preload.svg" alt="Logging out..." />
+                    {/* <img src="/public/images/preload.svg" alt="Logging out..." /> */}
                 </div>
             )}
         </div>
