@@ -1963,7 +1963,7 @@ const BillingDetails = () => {
 
             // Send SMS to user only
             try {
-                // await sendOrderSMS(phone, result.orderId || result._id, name, parsedTotalAmount);
+                await sendOrderSMS(phone, result.orderId || result._id, name, parsedTotalAmount);
             } catch (smsError) {
                 console.error("SMS sending error:", smsError);
                 // Don't fail the order if SMS fails
@@ -1971,7 +1971,6 @@ const BillingDetails = () => {
 
             // Send email confirmation
             try {
-                return;
                 const emailResponse = await fetch(
                     `${baseUrl}/OrderReserve/send-order-confirmation`, {
                     method: 'POST',
