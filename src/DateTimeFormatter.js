@@ -1,5 +1,3 @@
-// src/utils/dateFormatter.js
-
 /**
  * Convert UTC date to Indian Standard Time (IST)
  * IST = UTC + 5:30 hours
@@ -11,11 +9,31 @@ export const convertUTCToIST = (dateString) => {
         const date = new Date(dateString);
         if (isNaN(date.getTime())) return null;
         
-        // Add 5 hours 30 minutes for IST (in milliseconds)
-        const istOffset = 5.5 * 60 * 60 * 1000;
-        const istDate = new Date(date.getTime() + istOffset);
+        // Check if date is already in local timezone (likely IST)
+        // If it's already in IST, we should NOT add offset
+        // This is to prevent double conversion
         
-        return istDate;
+        // Get timezone offset in minutes and convert to hours
+        const timezoneOffset = date.getTimezoneOffset();
+        const localTimezoneHours = Math.abs(timezoneOffset) / 60;
+        
+        // If the date appears to be in IST (UTC+5:30), don't add offset
+        // Otherwise, treat it as UTC and add IST offset
+        if (Math.abs(timezoneOffset) === 330) { // 5.5 hours in minutes = 330
+            // Date is already in IST, return as is
+            return date;
+        }
+        
+        // Otherwise, assume it's UTC and add IST offset
+        // But first, let's check if the date string contains timezone info
+        if (dateString.includes('Z') || dateString.includes('+') || dateString.includes('-')) {
+            // Date string has timezone info, convert from UTC to IST
+            const istOffset = 5.5 * 60 * 60 * 1000;
+            return new Date(date.getTime() + istOffset);
+        }
+        
+        // If no timezone info and not already IST, return as is
+        return date;
     } catch (error) {
         console.error("Error converting to IST:", error);
         return null;
@@ -26,132 +44,182 @@ export const convertUTCToIST = (dateString) => {
  * Format date for display in Indian format (DD-MM-YYYY)
  */
 export const formatIndianDate = (dateString, includeTime = false) => {
-    const date = convertUTCToIST(dateString);
-    if (!date) return "N/A";
+    // Handle the date string directly without conversion first
+    if (!dateString) return "N/A";
     
-    if (includeTime) {
-        return date.toLocaleString('en-IN', {
+    try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return "N/A";
+        
+        // Check if this is a date-only string (no time component)
+        const isDateOnly = !dateString.includes('T') && !dateString.includes(' ');
+        
+        if (includeTime || !isDateOnly) {
+            return date.toLocaleString('en-IN', {
+                timeZone: 'Asia/Kolkata',
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+        }
+        
+        return date.toLocaleDateString('en-IN', {
+            timeZone: 'Asia/Kolkata',
             day: '2-digit',
             month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
+            year: 'numeric'
         });
+    } catch (error) {
+        console.error("Error formatting date:", error);
+        return "N/A";
     }
-    
-    return date.toLocaleDateString('en-IN', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-    });
 };
 
 /**
  * Format date for display with month names (13 Jan 2026, 1:39 PM)
  */
 export const formatIndianDateTime = (dateString, showSeconds = false) => {
-    const date = convertUTCToIST(dateString);
-    if (!date) return "N/A";
+    if (!dateString) return "N/A";
     
-    const options = {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-    };
-    
-    if (showSeconds) {
-        options.second = '2-digit';
+    try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return "N/A";
+        
+        const options = {
+            timeZone: 'Asia/Kolkata',
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        };
+        
+        if (showSeconds) {
+            options.second = '2-digit';
+        }
+        
+        return date.toLocaleString('en-IN', options);
+    } catch (error) {
+        console.error("Error formatting date time:", error);
+        return "N/A";
     }
-    
-    return date.toLocaleString('en-IN', options);
 };
 
 /**
  * Format booking dates range (27 Jan - 10 Feb 2026)
  */
 export const formatBookingRange = (startDate, endDate) => {
-    const start = convertUTCToIST(startDate);
-    const end = convertUTCToIST(endDate);
+    if (!startDate || !endDate) return "N/A";
     
-    if (!start || !end) return "N/A";
-    
-    const startFormatted = start.toLocaleDateString('en-IN', {
-        day: '2-digit',
-        month: 'short'
-    });
-    
-    const endFormatted = end.toLocaleDateString('en-IN', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric'
-    });
-    
-    return `${startFormatted} - ${endFormatted}`;
+    try {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        
+        if (isNaN(start.getTime()) || isNaN(end.getTime())) return "N/A";
+        
+        const startFormatted = start.toLocaleDateString('en-IN', {
+            timeZone: 'Asia/Kolkata',
+            day: '2-digit',
+            month: 'short'
+        });
+        
+        const endFormatted = end.toLocaleDateString('en-IN', {
+            timeZone: 'Asia/Kolkata',
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
+        
+        return `${startFormatted} - ${endFormatted}`;
+    } catch (error) {
+        console.error("Error formatting booking range:", error);
+        return "N/A";
+    }
 };
 
 /**
  * Format time only (1:39 PM)
  */
 export const formatIndianTime = (dateString, showSeconds = false) => {
-    const date = convertUTCToIST(dateString);
-    if (!date) return "N/A";
+    if (!dateString) return "N/A";
     
-    const options = {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-    };
-    
-    if (showSeconds) {
-        options.second = '2-digit';
+    try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return "N/A";
+        
+        const options = {
+            timeZone: 'Asia/Kolkata',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        };
+        
+        if (showSeconds) {
+            options.second = '2-digit';
+        }
+        
+        return date.toLocaleTimeString('en-IN', options);
+    } catch (error) {
+        console.error("Error formatting time:", error);
+        return "N/A";
     }
-    
-    return date.toLocaleTimeString('en-IN', options);
 };
 
 /**
  * Calculate booking status and remaining days
  */
 export const getBookingStatus = (startDate, endDate) => {
-    const start = convertUTCToIST(startDate);
-    const end = convertUTCToIST(endDate);
-    const now = new Date();
+    if (!startDate || !endDate) return { status: 'unknown', days: 0 };
     
-    if (!start || !end) return { status: 'unknown', days: 0 };
-    
-    if (now < start) {
-        // Upcoming
-        const daysUntil = Math.ceil((start - now) / (1000 * 60 * 60 * 24));
-        return { 
-            status: 'upcoming', 
-            days: daysUntil,
-            message: `Starts in ${daysUntil} day${daysUntil !== 1 ? 's' : ''}`
-        };
-    } else if (now > end) {
-        // Past
-        const daysAgo = Math.floor((now - end) / (1000 * 60 * 60 * 24));
-        return { 
-            status: 'past', 
-            days: daysAgo,
-            message: `Ended ${daysAgo} day${daysAgo !== 1 ? 's' : ''} ago`
-        };
-    } else {
-        // Active
-        const daysRemaining = Math.ceil((end - now) / (1000 * 60 * 60 * 24));
-        const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-        const daysElapsed = totalDays - daysRemaining;
+    try {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const now = new Date();
         
-        return { 
-            status: 'active', 
-            days: daysRemaining,
-            progress: Math.round((daysElapsed / totalDays) * 100),
-            // message: `${daysElapsed}/${totalDays} days completed (${daysRemaining} days remaining)`
-            message: ``
-        };
+        if (isNaN(start.getTime()) || isNaN(end.getTime())) return { status: 'unknown', days: 0 };
+        
+        // Adjust dates to IST timezone for comparison
+        const istOptions = { timeZone: 'Asia/Kolkata' };
+        const nowIST = new Date(now.toLocaleString('en-US', istOptions));
+        const startIST = new Date(start.toLocaleString('en-US', istOptions));
+        const endIST = new Date(end.toLocaleString('en-US', istOptions));
+        
+        if (nowIST < startIST) {
+            // Upcoming
+            const daysUntil = Math.ceil((startIST - nowIST) / (1000 * 60 * 60 * 24));
+            return { 
+                status: 'upcoming', 
+                days: daysUntil,
+                message: `Starts in ${daysUntil} day${daysUntil !== 1 ? 's' : ''}`
+            };
+        } else if (nowIST > endIST) {
+            // Past
+            const daysAgo = Math.floor((nowIST - endIST) / (1000 * 60 * 60 * 24));
+            return { 
+                status: 'past', 
+                days: daysAgo,
+                message: `Ended ${daysAgo} day${daysAgo !== 1 ? 's' : ''} ago`
+            };
+        } else {
+            // Active
+            const daysRemaining = Math.ceil((endIST - nowIST) / (1000 * 60 * 60 * 24));
+            const totalDays = Math.ceil((endIST - startIST) / (1000 * 60 * 60 * 24));
+            const daysElapsed = totalDays - daysRemaining;
+            
+            return { 
+                status: 'active', 
+                days: daysRemaining,
+                progress: Math.round((daysElapsed / totalDays) * 100),
+                message: ``
+            };
+        }
+    } catch (error) {
+        console.error("Error getting booking status:", error);
+        return { status: 'unknown', days: 0 };
     }
 };
 
@@ -159,31 +227,62 @@ export const getBookingStatus = (startDate, endDate) => {
  * Format for table display (13-01-2026, 1:39 PM)
  */
 export const formatForTable = (dateString) => {
-    return formatIndianDate(dateString, true);
+    if (!dateString) return "N/A";
+    
+    try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return "N/A";
+        
+        const datePart = date.toLocaleDateString('en-IN', {
+            timeZone: 'Asia/Kolkata',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+        
+        const timePart = date.toLocaleTimeString('en-IN', {
+            timeZone: 'Asia/Kolkata',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+        
+        return `${datePart}, ${timePart}`;
+    } catch (error) {
+        console.error("Error formatting for table:", error);
+        return "N/A";
+    }
 };
 
 /**
  * Get relative time (2 days ago, 1 hour ago, etc.)
  */
 export const getRelativeTime = (dateString) => {
-    const date = convertUTCToIST(dateString);
-    if (!date) return "N/A";
+    if (!dateString) return "N/A";
     
-    const now = new Date();
-    const diffMs = now - date;
-    const diffSeconds = Math.floor(diffMs / 1000);
-    const diffMinutes = Math.floor(diffSeconds / 60);
-    const diffHours = Math.floor(diffMinutes / 60);
-    const diffDays = Math.floor(diffHours / 24);
-    
-    if (diffDays > 0) {
-        return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
-    } else if (diffHours > 0) {
-        return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
-    } else if (diffMinutes > 0) {
-        return `${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''} ago`;
-    } else {
-        return 'Just now';
+    try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return "N/A";
+        
+        const now = new Date();
+        const diffMs = now - date;
+        const diffSeconds = Math.floor(diffMs / 1000);
+        const diffMinutes = Math.floor(diffSeconds / 60);
+        const diffHours = Math.floor(diffMinutes / 60);
+        const diffDays = Math.floor(diffHours / 24);
+        
+        if (diffDays > 0) {
+            return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+        } else if (diffHours > 0) {
+            return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+        } else if (diffMinutes > 0) {
+            return `${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''} ago`;
+        } else {
+            return 'Just now';
+        }
+    } catch (error) {
+        console.error("Error getting relative time:", error);
+        return "N/A";
     }
 };
 
