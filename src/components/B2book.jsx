@@ -2634,6 +2634,16 @@ const getDateSelectionClass = (date) => {
                                                     onClick={handleMainImageClick}
                                                 />
                                             )}
+                                             <button
+                    className=" mt-3 mb-2 btn-enquire"
+                    onClick={toggleOtpMainPage}
+                  >
+                   <img
+                        src="/images/add-to-cart-icon 1.svg"
+                        className="location-arrow"
+                        alt="arrow"
+                      ></img>Add to cart
+                  </button>
                                         </div>
                                     </div>
                                 </div>
@@ -2641,7 +2651,80 @@ const getDateSelectionClass = (date) => {
                             {currentProduct ? (
                                 <div className="col-md-6 col-lg-6 Book-content2">
                                     <p className="book-sideHeading">{currentProduct.prodName}</p>
-                                    <p className="book-size">
+                                 <div className="book-rateContent1">
+                    {currentProduct.isOfferProduct ? (
+                      <>
+                        <div className="price-rating-row">
+                          <span className="rate-perDay offer-price-highlight">
+                            ₹{" "}
+                            {currentProduct.displayPrice?.toLocaleString() ||
+                              "0"}
+                            <span className="rate-perDay1"> / Per Day</span>
+                          </span>
+
+                          {/* ⭐ Rating */}
+                          <div className="rate1-book">
+                            <span className="rating1-text">4.3</span>
+                            <span className="fa-solid fa-star rating1-star"></span>
+                          </div>
+                        </div>
+
+                        <span className="original-price-strikethrough">
+                          ₹{" "}
+                          {currentProduct.originalPrice?.toLocaleString() ||
+                            "0"}
+                        </span>
+                      </>
+                    ) : (
+                      <div className="price-rating-row">
+                        <span className="rate-perDay">
+                          ₹ {currentProduct.price?.toLocaleString() || "0"}
+                          <span className="rate-perDay1"> / Per Day</span>
+                        </span>
+
+                        {/* ⭐ Rating */}
+                        <div className="rate1-book">
+                          <span className="rating1-text">4.3</span>
+                          <span className="fa-solid fa-star rating1-star"></span>
+                        </div>
+                      </div>
+                    )}
+
+                    <br />
+                    <a href="#Terms" className="book-condition anchor">
+                      Terms & Condition
+                    </a>
+                  </div>
+                   <div className="bookingdetailslocation">
+                  <div className="book-spot bookinglocation ">
+                    {currentProduct.productFrom}
+                    <span>
+                      <img
+                        src="/images/maproutebook.svg"
+                        className="location-arrow"
+                        alt="arrow"
+                      ></img>
+                    </span>
+                    {currentProduct.productTo}
+                  </div>
+                  <div className="maplocation1">
+                   <span className="productLocationImg">
+                    <a
+                      href={currentProduct.LocationLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src="/images/viewmap1.svg" 
+                        alt="location icon"
+                        className="locationImgIcon"
+                      />
+                      <span className="viewlocation">View Location</span>
+                    </a>
+                  </span>
+                 </div>
+                  </div>    
+                                    {/* <p className="book-size">
                                         Size: {currentProduct.sizeWidth} x{" "}
                                         {currentProduct.sizeHeight}
                                         {(currentProduct.category === "Signal Post" ||
@@ -2653,13 +2736,49 @@ const getDateSelectionClass = (date) => {
                                             currentProduct.category === "Pole Kiosk") && (
                                                 <span className="sided-text"> (2-Sided)</span>
                                             )}
-                                    </p>
-
+                                    </p> */}
+ {/* <div className="bookingdetialslist1">
                                     <span className="btn-type">{currentProduct.category}</span>
                                     <span className="badge book-type">
                                         {currentProduct.prodLighting}
                                     </span>
-                                    <span className="star-main">
+                                     </div> */}
+                                     <div className="bookingdetialslist1">
+                  <span className="btn-type">{currentProduct.category}</span>
+                  <img
+    src="/images/bookinglightingicon.svg"
+    alt="icon"
+    className="book-type-icon"
+  />
+                  <span className="badge book-type">
+                    {currentProduct.prodLighting}
+                  </span>
+                  </div>
+                                      <div className="bookingdetialslist1">
+                  <p className="book-size">
+  <span className="book-size-label">Size</span>
+  <span className="book-size-colon">:</span>
+
+  <span className="book-size-value">
+    {currentProduct.sizeWidth}
+    <span className="size-separator"> x </span>
+    {currentProduct.sizeHeight}
+
+    {(currentProduct.category === "Signal Post" ||
+      currentProduct.category === "Pole Kiosk") &&
+      ` x ${currentProduct.sizeSide}`}
+
+    <span className="slash-bar"> | </span>
+    {currentProduct.productsquareFeet} Sq.ft
+
+    {(currentProduct.category === "Signal Post" ||
+      currentProduct.category === "Pole Kiosk") && (
+      <span className="sided-text"> (2-Sided)</span>
+    )}
+  </span>
+</p>
+                  </div>
+                                    {/* <span className="star-main">
                                         <span>
                                             <img
                                                 src="/images/rating_board.png"
@@ -2683,9 +2802,9 @@ const getDateSelectionClass = (date) => {
                                             />
                                             <span className="viewlocation">View Location</span>
                                         </a>
-                                    </span>
+                                    </span> */}
 
-                                    <div className="book-price my-3">
+                                    {/* <div className="book-price my-3">
                                         Printing Cost
                                         <span className="cost-gap">
                                             : ₹ {currentProduct.printingCost?.toLocaleString() || "0"}
@@ -2706,8 +2825,23 @@ const getDateSelectionClass = (date) => {
                                             ></img>
                                         </span>
                                         {currentProduct.productTo}
-                                    </div>
-                                    <div className="book-rate">
+                                    </div> */}
+                                     <div className="book-price my-3">
+  <span className="price-label">Printing</span>
+  <span className="price-colon">:</span>
+  <span className="price-value">
+    ₹ {currentProduct.printingCost?.toLocaleString() || "0"}
+  </span>
+</div>
+
+<div className="book-price my-3">
+  <span className="price-label">Mounting</span>
+  <span className="price-colon1">:</span>
+  <span className="price-value">
+    ₹ {currentProduct.mountingCost?.toLocaleString() || "0"}
+  </span>
+</div>
+                                    {/* <div className="book-rate">
                                         <div className="book-rateContent1">
                                             {currentProduct.isOfferProduct ? (
                                                 <>
@@ -2751,15 +2885,54 @@ const getDateSelectionClass = (date) => {
                                                 </span>
                                             </button>
                                         </div>
-                                    </div>
-                                    <button
+                                    </div> */}
+                                      <div className="book-rateContent2">
+  <button
+    className="book-date-range"
+    onClick={handleMainBookButton}
+    disabled={isProcessingBooking}
+  >
+    <div className="date-box">
+      <span className="date-number">12</span>
+      <span className="date-text">Jan - 2026</span>
+    </div>
+
+    <span className="date-separator">–</span>
+
+    <div className="date-box">
+      <span className="date-number">30</span>
+      <span className="date-text">Jan - 2026</span>
+    </div>
+     </button>
+     </div>
+                                    {/* <button
                                         className=" mt-3 mb-2 btn-enquire"
                                         // onClick={toggleOtpMainPage}
                                         onClick={handleEnquireNow}
 
                                     >
                                         Enquire Now
-                                    </button>
+                                    </button> */}
+                                     <button
+                    className=" mt-3 mb-2 btn-enquire1"
+                    onClick={handleMainBookButton}
+                        disabled={isProcessingBooking}
+                  >
+                    {isProcessingBooking ? "Processing..." : "Book Now"}
+                        {/* <span>
+                          <img
+                            src="/images/calender_icon.png"
+                            className="calender"
+                            alt="calendar"
+                          ></img>
+                        </span> */}
+                      </button>
+                      <button
+                    className=" mt-3 mb-2 btn-enquire2"
+                    onClick={toggleOtpMainPage}
+                  >
+                    Request Call
+                  </button>
                                     <br />
                                 </div>
                             ) : (
