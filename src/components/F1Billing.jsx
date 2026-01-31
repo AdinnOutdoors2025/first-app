@@ -1802,6 +1802,13 @@ const BillingDetails = () => {
     const parsedPrice = parseAmount(reserveItem?.price || 0);
     const parsedTotalAmount = parseAmount(reserveItem?.totalAmount || 0);
     const parsedSpotPay = parseAmount(reserveItem?.SpotPay || 0);
+    const parsedPrintingCost = parseAmount(reserveItem?.PrintingCost || 0);
+    const parsedMountingCost = parseAmount(reserveItem?.MountingCost || 0);
+
+
+    const overAllTotalAmount = parsedTotalAmount + parsedPrintingCost + parsedMountingCost
+    console.log("OVERALL_TOTAL_AMOUNT:", overAllTotalAmount);
+
 
     // Handle cancel button click
     const handleCancel = () => {
@@ -2031,6 +2038,7 @@ const BillingDetails = () => {
                         company,
                     },
                     reserveItem,
+                    overAllTotalAmount,
                     orderId: result.orderId || result._id,
                     orderStatus: result.order_status || "Pending Client Confirmation"
                 }
@@ -2138,7 +2146,7 @@ const BillingDetails = () => {
                                         onChange={(e) => {
                                             setEmail(e.target.value);
                                             setErrors(prev => ({ ...prev, email: false }));
-                                        }}  readOnly
+                                        }} readOnly
                                         className={`input-field ${errors.email ? 'AdminProdinput-errorBilling' : ''}`}
                                     />
                                     {errors.email && <div className="AdminProderror-messageBilling">
@@ -2281,43 +2289,49 @@ const BillingDetails = () => {
                                             <div>{formatIndianCurrency(safePrice, true)} Per Day</div>
                                             <div>Booked date : {reserveItem?.dateRange} ({reserveItem?.totalDays} Days)</div>
                                             <div>Booked Amount : ₹ {formatIndianCurrency(parsedTotalAmount)}</div>
+                                            <div>Printing Cost : ₹ {formatIndianCurrency(parsedPrintingCost)}</div>
+                                            <div>Mounting Cost : ₹ {formatIndianCurrency(parsedMountingCost)}</div>
+                                            {/* <div>Printing Cost : ₹ {reserveItem?.PrintingCost}</div>
+                                            <div>Mounting Cost : ₹ {reserveItem?.MountingCost}</div> */}
                                         </div>
                                     </div>
 
                                     <div className="billing-order-pricing">
-                                        <div className="billing-orderContent">
+                                        {/* <div className="billing-orderContent">
                                             <div className="billing-orderContentLeft">Price</div>
                                             <div className="billing-orderContentRight"> ₹ {formatIndianCurrency(parsedTotalAmount)}</div>
-                                        </div>
+                                        </div> */}
 
                                         <div className="billing-orderContent">
                                             <div className="billing-orderContentLeft BillingTotalAmt">Total Amount</div>
-                                            <div className="billing-orderContentRight BillingTotalAmt">₹ {formatIndianCurrency(parsedTotalAmount)}</div>
+                                            <div className="billing-orderContentRight BillingTotalAmt">₹ {formatIndianCurrency(overAllTotalAmount)}</div>
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Billing button section - UPDATED with Cancel button */}
                                 <div className="billingButton">
-                                    <div className="billingTotalAmount"> ₹ {formatIndianCurrency(parsedTotalAmount)}</div>
-                                    <div className="billing-button-group" style={{display:'flex', gap:'10px'}}>
-                                       <div>
-                                        <button
-                                            className="billingContinueBtn"
-                                            type="button"
-                                            onClick={handleCancel}
-                                            style={{color:'red', fontWeight:'600', border:"none", backgroundColor:"white"}}
-                                             >
-                                            Cancel
-                                        </button></div>
-                                       <div>
-                                        <button
-                                            className="billingContinueBtn"
-                                            type='submit'
-                                            disabled={isLoading}
-                                        >
-                                            {isLoading ? "Processing..." : "Confirm"}
-                                        </button>
+                                    {/* <div className="billingTotalAmount"> ₹ {formatIndianCurrency(parsedTotalAmount)}</div> */}
+                                    <div className="billing-button-group" style={{ display: 'flex', gap: '10px' }}>
+                                        <div>
+                                            <button
+                                                className="billingContinueBtn"
+                                                type="button"
+                                                disabled={isLoading}
+                                                onClick={handleCancel}
+                                                style={{ color: 'red', fontWeight: '600', border: "none", backgroundColor: "white" }}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <button
+                                                className="billingContinueBtn"
+                                                type='submit'
+                                                disabled={isLoading}
+                                            >
+                                                {isLoading ? "Processing..." : "Confirm"}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

@@ -54,7 +54,7 @@ function ThankyouPageReserve() {
 
 
     const location = useLocation();
-    const { billingInfo, reserveItem, orderId } = location.state || {};
+    const { billingInfo, reserveItem, orderId, overAllTotalAmount } = location.state || {};
     console.log("BILLING INFO", billingInfo);
 
     if (!billingInfo || !reserveItem) {
@@ -65,6 +65,7 @@ function ThankyouPageReserve() {
     const parsedTotalAmount = parseAmount(reserveItem?.totalAmount || 0);
     const displayTotalAmount = formatIndianCurrency(parsedTotalAmount, true);
 
+    const displayOverAllTotalAmount = formatIndianCurrency(overAllTotalAmount, true);
     return (
         <MainLayout>
 
@@ -107,7 +108,7 @@ function ThankyouPageReserve() {
                                     <div className='thank_item-contentDetails2' >
                                         <span className='thank-item-heading'>{reserveItem.prodName}</span><br></br>
                                         {/* <span>₹ {reserveItem.totalAmount}</span><br></br> */}
-                                        <span>{displayTotalAmount}</span><br />
+                                        <span>{displayOverAllTotalAmount}</span><br />
 
                                         {/* <span>{reserveItem.totalDays} days</span><br></br> */}
                                         <span>{reserveItem.dateRange} ({reserveItem.totalDays} days)</span>
