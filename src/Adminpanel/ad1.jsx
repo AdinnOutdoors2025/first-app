@@ -404,7 +404,7 @@ function AdminpanelHome() {
 
             <div className="Admin-profile" onClick={toggleAdminDropdown}>
               <img src="./images/admin-proficPic.svg" alt="User" className="Admin-profile-img" />
-              <span className="Admin-profile-name">Arjun Prakash</span>
+              <span className="Admin-profile-name">Admin</span>
               <i className={`fas fa-chevron-${isAdminDropdownOpen ? "up" : "down"} Admin-profile-downUp`}></i>
             </div>
             {isAdminDropdownOpen && (
