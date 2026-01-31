@@ -1971,6 +1971,7 @@ const BillingDetails = () => {
 
             // Send email confirmation
             try {
+                return;
                 const emailResponse = await fetch(
                     `${baseUrl}/OrderReserve/send-order-confirmation`, {
                     method: 'POST',
