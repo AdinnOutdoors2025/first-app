@@ -6,14 +6,54 @@
 
 .order-manageClientSection {
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.order-15);
-    width: 650px;
+    /* box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.order-15); */
+    width: 950px;
     height: auto;
     border-radius: 20px;
     background: rgba(255, 255, 255, 1);
     padding: 15px;
     margin-bottom: 15px;
 }
+/* ===============================
+   Responsive width adjustments
+   =============================== */
 
+/* Large tablets / small laptops */
+@media (max-width: 1200px) {
+  .order-manageClientSection {
+    width: 900px;
+  }
+}
+
+/* Tablets landscape (≤1024px) */
+@media (max-width: 1024px) {
+  .order-manageClientSection {
+    width: 95%;
+  }
+}
+
+/* Tablets portrait (≤768px) */
+@media (max-width: 768px) {
+  .order-manageClientSection {
+    width: 96%;
+  }
+}
+
+/* Mobile devices (≤576px) */
+@media (max-width: 576px) {
+  .order-manageClientSection {
+    width: 100%;
+  }
+}
+/* Click toggle (mobile + desktop) */
+.tooltip-content.show-tooltip {
+  display: block;
+}
+
+/* Improve touch behavior */
+.tooltip-icon-wrapper {
+  cursor: pointer;
+}
 
 .order-manageRightSideHeading {
     color: rgba(227, 31, 37, 1);
@@ -722,11 +762,13 @@
   position: absolute;
   top: 22px;
   left: 0;
-  width: 300px;
+  width: 400px;
   background: #fff;
   border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 10px;
+  /* border-radius: 6px;
+  padding: 10px; */
+  padding: 12px;
+  border-radius: 10px;
   font-size: 13px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   display: none;
@@ -738,13 +780,22 @@
   display: block;
 }
 
-.tooltip-title {
+/* .tooltip-title {
   font-weight: 600;
   margin-bottom: 6px;
+} */
+.tooltip-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #222;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #eaeaea;
+  margin-bottom: 8px;
 }
 
 .tooltip-row {
-  margin-bottom: 4px;
+  /* margin-bottom: 4px; */
+  margin-bottom: 6px;
 }
 
 .tooltip-row.bold {
@@ -754,7 +805,8 @@
 /* Table */
 .payment-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 12px;
   margin-top: 6px;
 }
@@ -769,6 +821,9 @@
 .payment-table th {
   font-weight: 600;
   background: #f7f7f7;
+  color: #333;
+  padding: 6px 8px;
+  border-bottom: 1px solid #ddd;
 }
 
 .tooltip-summary {
@@ -1332,6 +1387,12 @@ input:disabled, button:disabled {
   border-bottom: 1px solid #eee;
   text-align: left;
 }
+/* Cell spacing */
+.payment-table td {
+  padding: 6px 8px;
+  color: #444;
+  white-space: nowrap;
+}
 
 .payment-table th {
   background: #f8f9fa;
@@ -1718,18 +1779,30 @@ input:disabled, button:disabled {
 
 
 /* ///conflict table //// */
-.conflict-row {
+/* .conflict-row {
   display: grid;
   grid-template-columns: 40px 200px 1fr;
   align-items: center;
   gap: 12px;
   padding: 10px;
   border-bottom: 1px solid #eee;
+} */
+.conflict-row {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #f8f8f8;
+  margin-bottom: 10px;
 }
 
 .color-box {
-  width: 20px;
-  height: 20px;
+  /* width: 20px;
+  height: 20px; */
+   width: 12px;
+  height: 12px;
   border-radius: 4px;
 }
 
@@ -1737,10 +1810,18 @@ input:disabled, button:disabled {
   font-size: 14px;
 }
 
+/* .date-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+} */
 .date-info {
   display: flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
+  justify-content: flex-end;
+  font-size: 15px;
 }
 
 .tooltip-conflict {
@@ -1748,7 +1829,7 @@ input:disabled, button:disabled {
   cursor: pointer;
 }
 
-.tooltip-text-conflict {
+/* .tooltip-text-conflict {
   visibility: hidden;
   position: absolute;
   background: #222;
@@ -1760,8 +1841,33 @@ input:disabled, button:disabled {
   left: 18px;
   white-space: nowrap;
   z-index: 10;
+} */
+.tooltip-text-conflict {
+  visibility: hidden;
+  position: absolute;
+  top: 22px;
+  left: 0;
+  min-width: 140px;
+  background: #ffffff;
+  color: #333;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  border: 1px solid #e5e5e5;
+  z-index: 999;
+}
+.tooltip-text-conflict div {
+  padding: 4px 0;
+  border-bottom: 1px solid #f0f0f0;
 }
 
+/* Remove border from last item */
+.tooltip-text-conflict div:last-child {
+  border-bottom: none;
+}
 .tooltip-conflict:hover .tooltip-text-conflict {
   visibility: visible;
 }
