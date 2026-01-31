@@ -13,7 +13,6 @@ import {
   formatBookingRange,
   getBookingStatus,
 } from "../../src/DateTimeFormatter";
-// dummy commit
 // const formatEditedDateTime = (dateString) => {
 //   if (!dateString) return "";
 
@@ -1824,7 +1823,7 @@ function OrderDetails({ order, onOrderUpdate }) {
                           <table className="payment-table">
                             <thead>
                               <tr>
-                                <th>#</th>
+                                <th>No:</th>
                                 <th>Amount</th>
                                 <th>Date & Time</th>
                               </tr>
