@@ -497,7 +497,7 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
 
                         <span className='otpTimes'>
                             {resendTimer > 0 ? (
-                                `Resend OTP in: ${resendTimer} sec`
+                                `Resend OTP in ${resendTimer}s`
                             ) : (
                                 <span className='otpResends'>
                                     Didn't receive the OTP?{' '}
