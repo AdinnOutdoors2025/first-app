@@ -286,10 +286,9 @@ const Calendar = ({
                     </span>
                   </span> <br />
                   <span>
-                    Amount: <span style={{ color: 'red' }}>
-                      {formatIndianCurrency(totalPrice, true)}
+                    Amount: <span style={{ color: 'red' }}> {formatIndianCurrency(totalPrice, true)}
                     </span>
-                    {hasSelectedDates && ` ( ${totalDays} × ${formatIndianCurrency(pricePerDay, true)} )`}
+                  {hasSelectedDates && ` ( ${totalDays} Days × ${formatIndianCurrency(pricePerDay, true)} /Per Day )`}
                   </span>
                   <br />
                 </div>
@@ -361,7 +360,7 @@ const Calendar = ({
               <div className="calendarAmountMain">
                 <span>
                   Amount: <span style={{ color: 'red' }}>{formatIndianCurrency(totalPrice, true)}</span>
-                  {hasSelectedDates && ` ( ${totalDays} × ${formatIndianCurrency(pricePerDay, true)} )`}
+                  {hasSelectedDates && ` ( ${totalDays} Days × ${formatIndianCurrency(pricePerDay, true)} /Per Day )`}
                 </span>
                 <br />
                 <br />
