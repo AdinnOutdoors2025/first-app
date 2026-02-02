@@ -17,6 +17,7 @@ import { MainLayout } from "./MainLayout";
 import { useLogin } from "./LoginContext";
 import { useParams, useLocation } from "react-router-dom";
 import { baseUrl } from "../Adminpanel/BASE_URL";
+import { formatIndianCurrency } from "./FORMATED_AMOUNT";
 import slugify from "slugify";
 // DATE OPEN WINDOW
 import { DATE_CONFIG } from "../Adminpanel/BASE_URL.js";
@@ -895,26 +896,38 @@ function BookASite1() {
         return selectedFileIndex === -1;
     };
 
-    const RatingStars = ({ rating }) => {
-        const fullStars = Math.floor(rating);
-        const halfStar = rating % 1 !== 0;
-        const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-        return (
-            <span className=" rate rating-star">
-                {[...Array(fullStars)].map((_, index) => (
-                    <span key={index} className="fa-solid fa-star stars1"></span>
-                ))}
-                {halfStar && <span className="fa-solid fa-star-half-alt stars1"></span>}
-                {[...Array(emptyStars)].map((_, index) => (
-                    <span
-                        key={index}
-                        className="fa-solid fa-star empty-star1 stars1"
-                    ></span>
-                ))}
-            </span>
-        );
-    };
+    // const RatingStars = ({ rating }) => {
+    //     const fullStars = Math.floor(rating);
+    //     const halfStar = rating % 1 !== 0;
+    //     const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+    //     return (
+    //         <span className=" rate rating-star">
+    //             {[...Array(fullStars)].map((_, index) => (
+    //                 <span key={index} className="fa-solid fa-star stars1"></span>
+    //             ))}
+    //             {halfStar && <span className="fa-solid fa-star-half-alt stars1"></span>}
+    //             {[...Array(emptyStars)].map((_, index) => (
+    //                 <span
+    //                     key={index}
+    //                     className="fa-solid fa-star empty-star1 stars1"
+    //                 ></span>
+    //             ))}
+    //         </span>
+    //     );
+    // };
+ const RatingStars = ({ rating }) => {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 !== 0;
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
 
+    return (
+      <div className="rate-book">
+  <span className="rating-text">4.3</span>
+  <span className="fa-solid fa-star rating-star"></span>
+</div>
+
+    );
+  };
     const fetchDates = async () => {
         if (currentProduct?.prodCode) {
             try {
@@ -3131,27 +3144,43 @@ function BookASite1() {
                                                                 <span className="card-title board-loc-book1">
                                                                     {spot.name}
                                                                 </span>
+                                                                {/* <span className="board-dim-book1">
+                                                                    {spot.dimensions}
+                                                                </span> */}
+                                                            </div>
+                                                            <div className="board-content-bottom-book1">
+                                                                {/* <span className="board-price-book1">
+                                                                    ₹{spot.price.toLocaleString()}
+                                                                </span> */}
+                                                                <span className="board-price-book">
+                                                                                              {formatIndianCurrency(spot.price, true)}
+                                                                                              <span className="board-price-bookPerDay">
+                                                                                                {" "}
+                                                                                                / Per Day
+                                                                                              </span>
+                                                                                            </span>
                                                                 <span className="board-dim-book1">
                                                                     {spot.dimensions}
                                                                 </span>
-                                                            </div>
-                                                            <div className="board-content-bottom-book1">
-                                                                <span className="board-price-book1">
-                                                                    ₹{spot.price.toLocaleString()}
-                                                                </span>
-                                                                <img
+                                                                {/* <img
                                                                     src="/images/rating_board.png"
                                                                     className="rate-board-book1"
                                                                     alt="rating"
-                                                                ></img>
+                                                                ></img> */}
                                                             </div>
-                                                            <RatingStarsSimilar rating={spot.rating} />
-                                                            <button
+                                                            <RatingStars rating={spot.rating} />
+                                                            {/* <button
                                                                 className="board-btn-book1"
                                                                 onClick={() => handleSimilarProductClick(spot)}
                                                             >
                                                                 Book Now
-                                                            </button>
+                                                            </button> */}
+                                                            <button
+                            className="board-btn-book"
+                            onClick={() => handleSimilarProductClick(spot)}
+                          >
+                            Book Now
+                          </button>
                                                         </div>
                                                     </div>
                                                 </div>

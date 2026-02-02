@@ -245,32 +245,47 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./a2home.css";
+import "./b2book.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { baseUrl } from '../Adminpanel/BASE_URL';
 import slugify from 'slugify';
+import { formatIndianCurrency } from "./FORMATED_AMOUNT";
 
 function AdinnHome2() {
     const navigate = useNavigate();
 
     // Function to render star ratings
-    const RatingStars = ({ rating }) => {
-        const fullStars = Math.floor(rating);
-        const halfStar = rating % 1 !== 0;
-        const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-        return (
-            <div className="rates-home">
-                {[...Array(fullStars)].map((_, index) => (
-                    <span key={index} className="fa-solid fa-star stars-home"></span>
-                ))}
-                {halfStar && <span className="fa-solid fa-star-half-alt stars-home"></span>}
-                {[...Array(emptyStars)].map((_, index) => (
-                    <span key={index} className="fa-solid fa-star empty-star-home"></span>
-                ))}
-            </div>
-        );
-    };
+    // const RatingStars = ({ rating }) => {
+    //     const fullStars = Math.floor(rating);
+    //     const halfStar = rating % 1 !== 0;
+    //     const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+    //     return (
+    //         <div className="rates-home">
+    //             {[...Array(fullStars)].map((_, index) => (
+    //                 <span key={index} className="fa-solid fa-star stars-home"></span>
+    //             ))}
+    //             {halfStar && <span className="fa-solid fa-star-half-alt stars-home"></span>}
+    //             {[...Array(emptyStars)].map((_, index) => (
+    //                 <span key={index} className="fa-solid fa-star empty-star-home"></span>
+    //             ))}
+    //         </div>
+    //     );
+    // };
+ const RatingStars = ({ rating }) => {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 !== 0;
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+    return (
+      <div className="rate-book">
+  <span className="rating-text">4.3</span>
+  <span className="fa-solid fa-star rating-star"></span>
+</div>
+
+    );
+  };
 
     const [primeSpotsData, setPrimeSpotsData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -449,7 +464,56 @@ function AdinnHome2() {
             state: { selectedSpot: spotData }
         });
     };
+// const handleSimilarProductClick = (spot) => {
+//         const mappedSpot = {
+//             id: spot._id,
+//             prodName: spot.name,
+//             printingCost: spot.printingCost,
+//             mountingCost: spot.mountingCost,
+//             prodCode: spot.prodCode,
+//             prodLighting: spot.lighting,
+//             productFrom: spot.from,
+//             productTo: spot.to,
+//             productFixedAmount: spot.fixedAmount,
+//             productFixedOffer: spot.fixedOffer,
+//             location: `${spot.location.district}, ${spot.location.state}`,
+//             category: spot.mediaType,
+//             price: spot.price,
+//             displayPrice: spot.price,
+//             originalPrice: spot.price,
+//             sizeHeight: spot.height,
+//             sizeWidth: spot.width,
+//             sizeSide: spot.side,
+//             productsquareFeet: spot.productsquareFeet,
+//             rating: spot.rating,
+//             imageUrl: spot.image,
+//             district: spot.location.district,
+//             state: spot.location.state,
+//             latitude: spot.Latitude,
+//             longitude: spot.Longitude,
+//             LocationLink: spot.LocationLink,
+//             additionalFiles: spot.additionalFiles || [],
+//             isOfferProduct: false,
+//         };
+//         const productSlug = `${spot._id}-${slugify(spot.name, { lower: true, strict: true })}`;
+//         navigate(`/Product/${productSlug}`, { replace: true });
+//         setCurrentProduct(mappedSpot);
+//         setAdditionalFiles(spot.additionalFiles || []);
+//         setCurrentMainImage(spot.image);
+//         setCurrentPreviewType("image");
+//         setCurrentVideoUrl("");
+//         setSelectedFileIndex(-1);
+//         setSelectedSpot(mappedSpot);
+//         setSelectedDates({ start: null, end: null });
+//         setCampaignConfirmedDates({ start: null, end: null });
+//         setIsSelectionConfirmed(false);
+//         setBookingConfirmation(null);
+//         setPendingBookingAfterLogin(null);
+//         setShowLoginPrompt(false);
+//         localStorage.removeItem('pendingBookingAfterLogin');
 
+//         window.scrollTo({ top: 0, behavior: "smooth" });
+//     };
     // Custom Next Arrow
     const NextArrow = (props) => {
         const { onClick } = props;
@@ -480,8 +544,8 @@ function AdinnHome2() {
         prevArrow: <PrevArrow />,
         centerMode: primeSpotsData.length > 1,
         centerPadding: "0px",
-        autoplay: primeSpotsData.length > 1,
-        autoplaySpeed: 2000,
+        // autoplay: primeSpotsData.length > 1,
+        // autoplaySpeed: 2000,
         beforeChange: (current, next) => {
             const elements = document.querySelectorAll(".slick-slide");
             elements.forEach((el, index) => {
@@ -515,6 +579,28 @@ function AdinnHome2() {
             },
         ],
     };
+    
+//  const RatingStarsSimilar = ({ rating }) => {
+//         const fullStars = Math.floor(rating);
+//         const halfStar = rating % 1 !== 0;
+//         const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+//         return (
+//             <div className="rate rate1-book1">
+//                 {[...Array(fullStars)].map((_, index) => (
+//                     <span key={index} className="fa-solid fa-star stars-book1"></span>
+//                 ))}
+//                 {halfStar && (
+//                     <span className="fa-solid fa-star-half-alt stars-book1"></span>
+//                 )}
+//                 {[...Array(emptyStars)].map((_, index) => (
+//                     <span
+//                         key={index}
+//                         className="fa-solid fa-star empty-star-book1"
+//                     ></span>
+//                 ))}
+//             </div>
+//         );
+//     };
 
     if (isLoading) {
         return (
@@ -580,22 +666,73 @@ function AdinnHome2() {
                                 />
                                 <span className='board-category1-home'>{spot.category || spot.mediaType || 'Category'}</span>
                               
-                                <div className="board-content-home">
+                                {/* <div className="board-content-home">
                                     <div className="board-content-home-top">
                                         <span className="board-loc-home">{spot.prodName || spot.name}</span>
                                         <span className="board-dim-home">{spot.dimensions}</span>
+                                    </div> */}
+                                    <div className="board-content-home">
+                                    <div className="board-content-top-book">
+                                        <span className="board-loc-book">{spot.prodName || spot.name}</span>
+                                        {/* <span className="board-dim-home">{spot.dimensions}</span> */}
                                     </div>
-                                    <div className="board-content-home-bottom">
+                                
+                                    {/* <div className="board-content-home-bottom">
                                         <span className="board-price-home">₹{(spot.price || 0).toLocaleString()}</span>
                                         <img src='./images/rating_board.png' className='rate-board-home' alt="Rating" />
-                                    </div>
-                                    <div>
-                                        <RatingStars rating={spot.rating || 0} />
-                                        <button className="board-btn1-home" onClick={() => handleBookNow(spot)}>
+                                    </div> */}
+                                    <div className="board-content-bottom-book">
+                                                                <span className="board-price-book">
+                                                                  {formatIndianCurrency(spot.price, true)}
+                                                                  <span className="board-price-bookPerDay">
+                                                                    {" "}
+                                                                    / Per Day
+                                                                  </span>
+                                                                </span>
+                                                                 {/* <span className="board-dim-book">
+                                                                  {" "}
+                                                                  {spot.sizeWidth} x {spot.sizeHeight}{" "}
+                                                                </span> */}
+                                                                <span className="board-dim-home">{spot.dimensions}</span>
+                                                                {/* <img
+                                                                  src="./images/rating_board.png"
+                                                                  className="rate-board-book"
+                                                                ></img> */}
+                                                              </div>
+                                                              <RatingStars rating={spot.rating} />
+                                                                            <div>
+                                        <button className="board-btn-book" onClick={() => handleBookNow(spot)}>
                                             Book Now
                                         </button>
                                     </div>
                                 </div>
+                                {/* <div className="board-content-book1">
+                                                            <div className="board-content-top-book1">
+                                                                <span className="card-title board-loc-book1">
+                                                                    {spot.name}
+                                                                </span>
+                                                                <span className="board-dim-book1">
+                                                                    {spot.dimensions}
+                                                                </span>
+                                                            </div>
+                                                            <div className="board-content-bottom-book1">
+                                                                <span className="board-price-book1">
+                                                                    ₹{spot.price.toLocaleString()}
+                                                                </span>
+                                                                <img
+                                                                    src="/images/rating_board.png"
+                                                                    className="rate-board-book1"
+                                                                    alt="rating"
+                                                                ></img>
+                                                            </div>
+                                                            <RatingStarsSimilar rating={spot.rating} />
+                                                            <button
+                                                                className="board-btn-book1"
+                                                                onClick={() => handleSimilarProductClick(spot)}
+                                                            >
+                                                                Book Now
+                                                            </button>
+                                                        </div> */}
                             </div>
                         ))}
                     </Slider>
