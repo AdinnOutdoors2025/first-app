@@ -257,41 +257,41 @@ function BookASite1() {
     }, [isCalendarOpen, currentProduct]);
 
     const lastConfirmedDate = React.useMemo(() => {
-    if (!confirmedDates || confirmedDates.length === 0) return null;
+        if (!confirmedDates || confirmedDates.length === 0) return null;
 
-    return confirmedDates.reduce((latest, curr) => {
-        return curr > latest ? curr : latest;
-    }, confirmedDates[0]);
-}, [confirmedDates]);
+        return confirmedDates.reduce((latest, curr) => {
+            return curr > latest ? curr : latest;
+        }, confirmedDates[0]);
+    }, [confirmedDates]);
 
-const getBookingOpenDate = (rangeStartDate) => {
-    const openDate = new Date(rangeStartDate);
-    openDate.setDate(openDate.getDate() - (INITIAL_SELECTION_DAYS - 1));
+    const getBookingOpenDate = (rangeStartDate) => {
+        const openDate = new Date(rangeStartDate);
+        openDate.setDate(openDate.getDate() - (INITIAL_SELECTION_DAYS - 1));
 
-    openDate.setUTCHours(0, 0, 0, 0);
-    return openDate;
-};
+        openDate.setUTCHours(0, 0, 0, 0);
+        return openDate;
+    };
 
 
-const getDynamicFutureLimit = () => {
-    if (!lastConfirmedDate) return null;
+    const getDynamicFutureLimit = () => {
+        if (!lastConfirmedDate) return null;
 
-    const todayUTC = new Date(Date.UTC(
-        new Date().getUTCFullYear(),
-        new Date().getUTCMonth(),
-        new Date().getUTCDate()
-    ));
+        const todayUTC = new Date(Date.UTC(
+            new Date().getUTCFullYear(),
+            new Date().getUTCMonth(),
+            new Date().getUTCDate()
+        ));
 
-    const diffDays = Math.max(
-        1,
-        Math.ceil((todayUTC - lastConfirmedDate) / (1000 * 60 * 60 * 24))
-    );
+        const diffDays = Math.max(
+            1,
+            Math.ceil((todayUTC - lastConfirmedDate) / (1000 * 60 * 60 * 24))
+        );
 
-    const limit = new Date(lastConfirmedDate);
-    limit.setUTCDate(limit.getUTCDate() + diffDays);
+        const limit = new Date(lastConfirmedDate);
+        limit.setUTCDate(limit.getUTCDate() + diffDays);
 
-    return limit;
-};
+        return limit;
+    };
 
 
 
@@ -452,12 +452,12 @@ const getDynamicFutureLimit = () => {
     };
 
     const isBookingAllowedToday = (rangeStartDate) => {
-    const bookingOpenDate = getBookingOpenDate(rangeStartDate);
-    const todayUTC = new Date();
-    todayUTC.setUTCHours(0, 0, 0, 0);
+        const bookingOpenDate = getBookingOpenDate(rangeStartDate);
+        const todayUTC = new Date();
+        todayUTC.setUTCHours(0, 0, 0, 0);
 
-    return todayUTC >= bookingOpenDate;
-};
+        return todayUTC >= bookingOpenDate;
+    };
 
 
     const resetToInitialWindow = () => {
@@ -530,56 +530,61 @@ const getDynamicFutureLimit = () => {
         const conflictBlocks = getConflictBlocks(startDate, endDate);
         const availableDays = getAvailableDaysInRange(startDate, endDate).length;
 
-      if (availableDays >= MIN_BOOKING_DAYS) {
+        if (availableDays >= MIN_BOOKING_DAYS) {
 
-    if (!isBookingAllowedToday(startDate)) {
-        const bookingOpenDate = getBookingOpenDate(startDate);
+            if (!isBookingAllowedToday(startDate)) {
+                const bookingOpenDate = getBookingOpenDate(startDate);
 
-        setCalendarErrorMessage(
-            `Next available dates: ` +
-            `${startDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ` +
-            `${endDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}. ` +
-            `⏳ Booking opens on ${bookingOpenDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`
-        );
+                setCalendarErrorMessage(
+                    `Next available dates: ` +
+                    `${startDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ` +
+                    `${endDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}. ` +
+                    `⏳ Booking opens on ${bookingOpenDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}. Enquire Now`
+                );
+                setShowEnquireNow(true);
 
-        // 🚫 STOP auto-selection
-        return;
-    }
 
-    // ✅ Booking window open
-    setSelectedDates({ start: startDate, end: endDate });
-    return;
-}
- else {
+                // 🚫 STOP auto-selection
+                return;
+            }
+
+            // ✅ Booking window open
+            setSelectedDates({ start: startDate, end: endDate });
+            return;
+        }
+        else {
             // Try to find alternative range
             const range = findNextAvailableRange(startDate);
-           if (range) {
-    const bookingOpenDate = getBookingOpenDate(range.start);
-    const todayUTC = new Date();
-    todayUTC.setUTCHours(0, 0, 0, 0);
+            if (range) {
+                const bookingOpenDate = getBookingOpenDate(range.start);
+                const todayUTC = new Date();
+                todayUTC.setUTCHours(0, 0, 0, 0);
 
-    if (todayUTC < bookingOpenDate) {
-        // ⛔ Booking not open yet → message only
-        setCalendarErrorMessage(
-            `Next available dates: ` +
-            `${range.start.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ` +
-            `${range.end.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}. ` +
-            `⏳ Booking opens on ${bookingOpenDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`
-        );
+                if (todayUTC < bookingOpenDate) {
+                    // ⛔ Booking not open yet → message only
+                    setCalendarErrorMessage(
+                        `Next available dates: ` +
+                        `${range.start.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ` +
+                        `${range.end.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}. ` +
+                        `⏳ Booking opens on ${bookingOpenDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}. Enquire Now`
 
-        // 🚫 Do NOT auto select
-        return;
-    }
+                    );
+                    setShowEnquireNow(true);
 
-    // ✅ Booking window open → allow auto selection
-    setSelectedDates({ start: range.start, end: range.end });
-    setCalendarErrorMessage(
-        `✅ Found available ${range.days} days: ` +
-        `${range.start.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ` +
-        `${range.end.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`
-    );
-}
- else {
+
+                    // 🚫 Do NOT auto select
+                    return;
+                }
+
+                // ✅ Booking window open → allow auto selection
+                setSelectedDates({ start: range.start, end: range.end });
+                setCalendarErrorMessage(
+                    `✅ Found available ${range.days} days: ` +
+                    `${range.start.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ` +
+                    `${range.end.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`
+                );
+            }
+            else {
                 setCalendarErrorMessage(
                     `Cannot find ${MIN_BOOKING_DAYS} continuous available days starting from ${startDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}.`,
                 );
@@ -1530,7 +1535,7 @@ const getDynamicFutureLimit = () => {
             setShowLoginPrompt(false);
 
             // If calendar is open, clear any login-related error messages
-            if (isCalendarOpen && calendarErrorMessage === "Please login to proceed with booking.") {
+            if (isCalendarOpen && calendarErrorMessage === " Please log in to continue with your booking") {
                 setCalendarErrorMessage("");
             }
 
@@ -1597,7 +1602,7 @@ const getDynamicFutureLimit = () => {
             // Show login prompt in calendar (only if calendar is open)
             if (isCalendarOpen) {
                 setShowLoginPrompt(true);
-                setCalendarErrorMessage("Please login to proceed with booking.");
+                setCalendarErrorMessage(" Please log in to continue with your booking");
 
                 // Close calendar and open login after 2 seconds
                 setTimeout(() => {
@@ -1956,67 +1961,67 @@ const getDynamicFutureLimit = () => {
             return "disabled";
         }
     };
-    
-const getDateSelectionClass = (date) => {
-    if (!date || isNaN(date.getTime())) return "disabled";
 
-    const normalizedDate = new Date(
-        Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-    );
+    const getDateSelectionClass = (date) => {
+        if (!date || isNaN(date.getTime())) return "disabled";
 
-    // 1️⃣ Past dates
-    if (isPastDate(normalizedDate)) {
-        return "past";
-    }
+        const normalizedDate = new Date(
+            Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+        );
 
-    // 2️⃣ ADMIN APPROVED (RED) — always visible, no limits
-    if (isDateBooked(normalizedDate)) {
-        return "booked";
-    }
-
-    // 3️⃣ PENDING (ORANGE)
-    if (isDatePending(normalizedDate)) {
-        // handled later for hiding
-    }
-
-    // 4️⃣ Outside initial booking window (only affects available/pending)
-    if (!isDateWithinCurrentWindow(normalizedDate)) {
-        return "outside-window";
-    }
-
-    // 5️⃣ Dynamic hiding AFTER last confirmed date
-  
-    // 6️⃣ Selected range
-    if (selectedDates.start && selectedDates.end) {
-        const startUTC = new Date(Date.UTC(
-            selectedDates.start.getFullYear(),
-            selectedDates.start.getMonth(),
-            selectedDates.start.getDate()
-        ));
-
-        const endUTC = new Date(Date.UTC(
-            selectedDates.end.getFullYear(),
-            selectedDates.end.getMonth(),
-            selectedDates.end.getDate()
-        ));
-
-        if (+normalizedDate === +startUTC) return "selected-start";
-        if (+normalizedDate === +endUTC) return "selected-end";
-        if (normalizedDate > startUTC && normalizedDate < endUTC) {
-            return "selected-range";
+        // 1️⃣ Past dates
+        if (isPastDate(normalizedDate)) {
+            return "past";
         }
-    }
 
-    // 7️⃣ Pending (visible until hidden logic applies)
-    if (isDatePending(normalizedDate)) {
-        return "pending";
-    }
+        // 2️⃣ ADMIN APPROVED (RED) — always visible, no limits
+        if (isDateBooked(normalizedDate)) {
+            return "booked";
+        }
 
-    // 8️⃣ Default available
-    return "available";
-};
+        // 3️⃣ PENDING (ORANGE)
+        if (isDatePending(normalizedDate)) {
+            // handled later for hiding
+        }
 
-////
+        // 4️⃣ Outside initial booking window (only affects available/pending)
+        if (!isDateWithinCurrentWindow(normalizedDate)) {
+            return "outside-window";
+        }
+
+        // 5️⃣ Dynamic hiding AFTER last confirmed date
+
+        // 6️⃣ Selected range
+        if (selectedDates.start && selectedDates.end) {
+            const startUTC = new Date(Date.UTC(
+                selectedDates.start.getFullYear(),
+                selectedDates.start.getMonth(),
+                selectedDates.start.getDate()
+            ));
+
+            const endUTC = new Date(Date.UTC(
+                selectedDates.end.getFullYear(),
+                selectedDates.end.getMonth(),
+                selectedDates.end.getDate()
+            ));
+
+            if (+normalizedDate === +startUTC) return "selected-start";
+            if (+normalizedDate === +endUTC) return "selected-end";
+            if (normalizedDate > startUTC && normalizedDate < endUTC) {
+                return "selected-range";
+            }
+        }
+
+        // 7️⃣ Pending (visible until hidden logic applies)
+        if (isDatePending(normalizedDate)) {
+            return "pending";
+        }
+
+        // 8️⃣ Default available
+        return "available";
+    };
+
+    ////
 
     useEffect(() => {
         if (isCalendarOpen && allInitialDaysBooked && nextBookingOpenDate) {
@@ -2065,7 +2070,7 @@ const getDateSelectionClass = (date) => {
                 });
                 setCalendarErrorMessage(`Slots are booked. Booking opens from ${formattedDate}`);
             }
-            if (errorMessage && errorMessage !== "Please login to proceed with booking.") {
+            if (errorMessage && errorMessage !== " Please log in to continue with your booking") {
                 setCalendarErrorMessage(errorMessage);
             }
         } else {
@@ -2143,7 +2148,7 @@ const getDateSelectionClass = (date) => {
                 // Show login message if calendar is open
                 if (isCalendarOpen) {
                     setShowLoginPrompt(true);
-                    setCalendarErrorMessage("Please login to add to cart.");
+                    setCalendarErrorMessage(" Please log in to continue with your booking");
 
                     // Close calendar and open login after 2 seconds
                     setTimeout(() => {
@@ -2893,14 +2898,14 @@ const getDateSelectionClass = (date) => {
                             </div>
 
                             {/* Nearby Similar Products */}
-                            <div>
-                                <div className="container similar mt-5">
-                                    <h2 className="NearbyHeading mb-4">
-                                        Nearby Similar Products
-                                    </h2>
-                                    <div className="row similar-products">
-                                        {displayedSimilarSpots.length > 0 ? (
-                                            displayedSimilarSpots.map((spot) => (
+                            {displayedSimilarSpots.length > 0 && (
+                                <div>
+                                    <div className="container similar mt-5">
+                                        <h2 className="NearbyHeading mb-4">
+                                            Nearby Similar Products
+                                        </h2>
+                                        <div className="row similar-products">
+                                            {displayedSimilarSpots.map((spot) => (
                                                 <div
                                                     className="col-lg-3 col-md-3 col-sm-12 mb-4"
                                                     key={spot._id}
@@ -2947,13 +2952,11 @@ const getDateSelectionClass = (date) => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            ))
-                                        ) : (
-                                            <p className="text-center">No similar products found.</p>
-                                        )}
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 </div>

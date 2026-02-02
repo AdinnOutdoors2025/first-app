@@ -61,7 +61,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
             const identifier = userPhone || email;
 
             if (!identifier) {
-                toast.error("Please enter your email or phone number", {
+                toast.error("Please enter your phone number", {
                     position: "bottom-right",
                 });
                 // setErrorMessage('Please enter your email or phone number');
