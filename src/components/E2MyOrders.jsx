@@ -192,18 +192,23 @@ function MyOrder() {
                                                     <div className="order-id">
                                                         Order Number : <span className='order-idSpan'>{order.orderId}</span>
                                                     </div>
-                                                    <div className="order-id">
-                                                        Order Date : <span className='order-idSpan'> {new Date(order.createdAt).toLocaleDateString('en-GB', {
-                                                                day: '2-digit',
-                                                                month: 'numeric',
-                                                                year: 'numeric'
-                                                            })}, {new Date(order.createdAt).toLocaleTimeString('en-GB', {
-                                                                hour: '2-digit',
-                                                                minute: '2-digit',
-                                                                hour12: true
-                                                            })} 
-                                                        </span>
-                                                    </div>
+                                                <div className="order-id">
+                                                    Order Date : &nbsp;
+                                                    <span className="order-idSpan"> 
+                                                        {new Date(order.createdAt).toLocaleDateString("en-GB", {
+                                                        day: "2-digit",
+                                                        month: "short",
+                                                        year: "numeric",
+                                                        }).replace(/ /g, "-")}
+                                                        {" / "}
+                                                        {new Date(order.createdAt).toLocaleTimeString("en-GB", {
+                                                        hour: "2-digit",
+                                                        minute: "2-digit",
+                                                        hour12: true,
+                                                        }).replace(":", " : ")}
+                                                    </span>
+                                                </div>
+
                                                    
                                                 </div>
                                             </div>
@@ -265,7 +270,7 @@ function MyOrder() {
                                                                 )}
                                                                 
                                                                 <div className="order-itemSizeDimensions">
-                                                                    <div className='order-item-LeftContent'>Booked Amount</div>
+                                                                    <div className='order-item-LeftContent'>Booking Amount</div>
                                                                     <div className='order-ItemColon'> : </div>
                                                                     <div className='order-item-detailSection'>
                                                                         {formatIndianCurrency(bookedAmount, true)}
