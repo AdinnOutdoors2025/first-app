@@ -166,7 +166,7 @@ const Calendar = ({
 
 
   useEffect(() => {
-    if (showLoginPrompt && calendarErrorMessage === "Please login to proceed with booking.") {
+    if (showLoginPrompt && calendarErrorMessage === "Please log in to continue with your booking") {
       const timer = setTimeout(() => {
         if (setCalendarErrorMessage) {
           setCalendarErrorMessage("");
@@ -439,7 +439,7 @@ const Calendar = ({
 
         {/* Error Message Display with Enquire Now */}
         {/* {calendarErrorMessage && !showLoginPrompt && ( */}
-        {calendarErrorMessage && calendarErrorMessage !== "Please login to proceed with booking." && !showLoginPrompt && (
+        {calendarErrorMessage && calendarErrorMessage !== "Please log in to continue with your booking" && !showLoginPrompt && (
 
           <div className="calendar-error-message">
             <div className="calendarAlertIconMain">
@@ -466,7 +466,7 @@ const Calendar = ({
               <img src='/images/CalendarAlertImg.svg' className="calendarAlertIcon" alt="alert"></img>
             </div>
             <div className="calendar_error-text">
-              Please login to proceed with booking.
+              Please log in to continue with your booking.
             </div>
           </div>
         )}

@@ -1548,7 +1548,7 @@ function BookASite1() {
             setShowLoginPrompt(false);
 
             // If calendar is open, clear any login-related error messages
-            if (isCalendarOpen && calendarErrorMessage === " Please log in to continue with your booking") {
+            if (isCalendarOpen && calendarErrorMessage === "Please log in to continue with your booking") {
                 setCalendarErrorMessage("");
             }
 

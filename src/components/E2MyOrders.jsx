@@ -23,7 +23,13 @@ function MyOrder() {
         navigate("/");
     };
 
-    const fetchOrders = async () => {
+    const fetchOrders = async () => { 
+         // Check if user exists and has an _id
+    if (!user || !user._id) {
+        console.error("No user or user ID found");
+        setIsLoading(false);
+        return;
+    }
         try {
             const response = await fetch(`${baseUrl}/prodOrders?userId=${user._id}`);
             if (!response.ok) {
@@ -38,38 +44,85 @@ function MyOrder() {
         }
     };
 
-    useEffect(() => {
-        // Get the intended redirect path from sessionStorage or use current path
-        const redirectPath = sessionStorage.getItem('loginRedirect') || window.location.pathname;
+    // useEffect(() => {
+    //     // Get the intended redirect path from sessionStorage or use current path
+    //     const redirectPath = sessionStorage.getItem('loginRedirect') || window.location.pathname;
         
-        if (user) {
-            fetchOrders();
-            // Clear any stored redirect path after successful login
-            sessionStorage.removeItem('loginRedirect');
-        } else {
-            setIsLoading(false);
-            // Store current path for redirection after login
-            sessionStorage.setItem('loginRedirect', redirectPath);
+    //     if (user) {
+    //         fetchOrders();
+    //         // Clear any stored redirect path after successful login
+    //         sessionStorage.removeItem('loginRedirect');
+    //     } else {
+    //         setIsLoading(false);
+    //         // Store current path for redirection after login
+    //         sessionStorage.setItem('loginRedirect', redirectPath);
             
-            // Open login modal with success callback
-            openLogin(() => {
-                // After successful login, redirect to the stored path or cart page
-                const storedPath = sessionStorage.getItem('loginRedirect');
-                if (storedPath === '/order' || storedPath.includes('/order')) {
-                    // If user was trying to access order page, fetch orders
-                    fetchOrders();
-                } else if (storedPath === '/cart' || storedPath.includes('/cart')) {
-                    // If user was trying to access cart page, navigate to cart
-                    navigate('/cart');
-                } else {
-                    // Otherwise, redirect to the stored path
-                    navigate(storedPath || '/');
-                }
-                // Clear the stored path
-                sessionStorage.removeItem('loginRedirect');
-            }, redirectPath);
+    //         // Open login modal with success callback
+    //         openLogin(() => {
+    //             // After successful login, redirect to the stored path or cart page
+    //             const storedPath = sessionStorage.getItem('loginRedirect');
+    //             if (storedPath === '/order' || storedPath.includes('/order')) {
+    //                 // If user was trying to access order page, fetch orders
+    //                 fetchOrders();
+    //             } else if (storedPath === '/cart' || storedPath.includes('/cart')) {
+    //                 // If user was trying to access cart page, navigate to cart
+    //                 navigate('/cart');
+    //             } else {
+    //                 // Otherwise, redirect to the stored path
+    //                 navigate(storedPath || '/');
+    //             }
+    //             // Clear the stored path
+    //             sessionStorage.removeItem('loginRedirect');
+    //         }, redirectPath);
+    //     }
+    // }, [user]);
+
+
+//     useEffect(() => {
+//     // Get the intended redirect path from sessionStorage
+//     const redirectPath = sessionStorage.getItem('loginRedirect') || window.location.pathname;
+    
+//     if (user && user._id) {
+//         // Only fetch orders if user exists and has an _id
+//         fetchOrders();
+//         // Clear any stored redirect path after successful login
+//         sessionStorage.removeItem('loginRedirect');
+//     } else {
+//         setIsLoading(false);
+//         // Store current path for redirection after login
+//         sessionStorage.setItem('loginRedirect', redirectPath);
+        
+//         // Open login modal with success callback
+//         openLogin(() => {
+//             // After successful login, redirect to the stored path
+//             const storedPath = sessionStorage.getItem('loginRedirect');
+            
+//             // Add null check for storedPath
+//             if (storedPath && storedPath.includes('/order')) {
+//                 // If user was trying to access order page, fetch orders
+//                 fetchOrders();
+//             } else if (storedPath && storedPath.includes('/cart')) {
+//                 // If user was trying to access cart page, navigate to cart
+//                 navigate('/cart');
+//             } else {
+//                 // Otherwise, redirect to the stored path or home
+//                 navigate(storedPath || '/');
+//             }
+//             // Clear the stored path
+//             sessionStorage.removeItem('loginRedirect');
+//         }, redirectPath);
+//     }
+// }, [user, navigate, openLogin]); // Added dependencies
+
+ useEffect(() => {
+        // Only fetch orders if user is logged in
+        if (user && user._id) {
+            fetchOrders();
+        } else {
+            // If no user, just set loading to false
+            setIsLoading(false);
         }
-    }, [user]);
+    }, [user]); // Only depend on user 
 
     const toggleFilter = () => {
         setIsFilterOpen(!isFilterOpen);
@@ -133,26 +186,26 @@ function MyOrder() {
         return product.price || product.booking?.totalPrice / product.booking?.totalDays || 0;
     };
 
-    if (!user) {
-        return (
-            <MainLayout onClose={handleLoginClose}>
-                <div className="container noSelected">
-                    <div className='noSelectedSpot'>Please login to view your Orders</div>
-                    <button
-                        className='noSelectedGoBackBtn'
-                        onClick={() => openLogin(() => navigate('/order'), '/order')}>
-                        Login
-                    </button> 
-                    <br></br>
-                    <button
-                        className='noSelectedGoBackBtn mt-3'
-                        onClick={() => navigate("/")}>
-                        Go to Home
-                    </button>
-                </div>
-            </MainLayout>
-        );
-    }
+    // if (!user) {
+    //     return (
+    //         <MainLayout onClose={handleLoginClose}>
+    //             <div className="container noSelected">
+    //                 <div className='noSelectedSpot'>Please login to view your Orders</div>
+    //                 <button
+    //                     className='noSelectedGoBackBtn'
+    //                     onClick={() => openLogin(() => navigate('/order'), '/order')}>
+    //                     Login
+    //                 </button> 
+    //                 <br></br>
+    //                 <button
+    //                     className='noSelectedGoBackBtn mt-3'
+    //                     onClick={() => navigate("/")}>
+    //                     Go to Home
+    //                 </button>
+    //             </div>
+    //         </MainLayout>
+    //     );
+    // }
 
     if (isLoading) {
         return (

@@ -126,6 +126,8 @@
     align-items: center;
     z-index: 99999999999;
     background-image: url('/public/images/PreLoad.svg');
+  /* background-image: url('/public/images/PreLoadNew.gif'); */
+
     background-repeat: no-repeat;
     background-position: center;
 }

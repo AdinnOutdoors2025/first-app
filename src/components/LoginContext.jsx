@@ -39,7 +39,7 @@ export const LoginProvider = ({ children }) => {
         }
     };
 
-    const loginUser = (userData, rememberMe = false) => {
+    const loginUser = (userData, rememberMe = false, isSignUp = false) => {
         console.log("Login user called with:", userData);
         
         if (!userData || !userData._id) {
@@ -68,11 +68,24 @@ export const LoginProvider = ({ children }) => {
             localStorage.removeItem('user');
         }
         
-        // Show success message
-        toast.success(`Welcome back, ${userData.userName || 'User'}!`, {
-            position: "bottom-right",
-            autoClose: 2000,
-        });
+        // // Show success message
+        // toast.success(`Welcome back, ${userData.userName || 'User'}!`, {
+        //     position: "bottom-right",
+        //     autoClose: 2000,
+        // });
+
+         // Show different messages for login vs signup
+        if (isSignUp) {
+            toast.success(`Account created successfully, ${userData.userName || 'User'}!`, {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
+        } else {
+            toast.success(`Welcome back, ${userData.userName || 'User'}!`, {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
+        }
         
         // Handle redirect
         const redirectPath = sessionStorage.getItem('loginRedirect');
