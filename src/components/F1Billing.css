@@ -431,7 +431,12 @@
     align-content: center;
     text-align: left;
 }
-
+.billing-rightContentMain{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    height: 100%;
+}
 /* BILLING BUTTON  */
 .billingButton {
     color: rgba(27, 28, 32, 1);
@@ -444,12 +449,13 @@
     box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.1);
     width: 100%;
     margin: auto;
-    margin-top: 50%;
-    justify-content: space-evenly;
+    /* margin-top: 50%; */
+    justify-content: center;
     align-items: center;
     align-content: center;
     text-align: center;
-    padding-top: 20px;
+    /* padding-top: 20px; */
+    padding: 20px;
 }
 
 .billingContinueBtn {
