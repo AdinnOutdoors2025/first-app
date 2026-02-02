@@ -2016,6 +2016,24 @@ const getDateSelectionClass = (date) => {
     return "available";
 };
 
+const formatDate = (date) => {
+  if (!date) return null;
+
+  const d = new Date(date);
+
+  return {
+    day: d.getDate(),
+    monthYear: d.toLocaleString("en-US", {
+      month: "short",
+      year: "numeric",
+    }),
+  };
+};
+
+
+
+
+
 ////
 
     useEffect(() => {
@@ -2634,7 +2652,7 @@ const getDateSelectionClass = (date) => {
                                                     onClick={handleMainImageClick}
                                                 />
                                             )}
-                                             <button
+                                             {/* <button
                     className=" mt-3 mb-2 btn-enquire"
                     onClick={toggleOtpMainPage}
                   >
@@ -2643,7 +2661,7 @@ const getDateSelectionClass = (date) => {
                         className="location-arrow"
                         alt="arrow"
                       ></img>Add to cart
-                  </button>
+                  </button> */}
                                         </div>
                                     </div>
                                 </div>
@@ -2892,17 +2910,33 @@ const getDateSelectionClass = (date) => {
     onClick={handleMainBookButton}
     disabled={isProcessingBooking}
   >
+    
+    
+ {formatDate(selectedDates?.start) &&
+ formatDate(selectedDates?.end) && (
+  <>
     <div className="date-box">
-      <span className="date-number">12</span>
-      <span className="date-text">Jan - 2026</span>
+      <span className="date-number">
+        {formatDate(selectedDates.start).day}
+      </span>
+      <span className="date-text">
+        {formatDate(selectedDates.start).monthYear}
+      </span>
     </div>
 
     <span className="date-separator">–</span>
 
     <div className="date-box">
-      <span className="date-number">30</span>
-      <span className="date-text">Jan - 2026</span>
+      <span className="date-number">
+        {formatDate(selectedDates.end).day}
+      </span>
+      <span className="date-text">
+        {formatDate(selectedDates.end).monthYear}
+      </span>
     </div>
+  </>
+)}
+
      </button>
      </div>
                                     {/* <button
