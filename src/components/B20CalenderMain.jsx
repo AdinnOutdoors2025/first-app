@@ -466,7 +466,7 @@ const Calendar = ({
               <img src='/images/CalendarAlertImg.svg' className="calendarAlertIcon" alt="alert"></img>
             </div>
             <div className="calendar_error-text">
-              Please login to proceed with booking.
+              Please log in to continue with your booking.
             </div>
           </div>
         )}
