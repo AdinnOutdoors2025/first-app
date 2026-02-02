@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './a4home.css';
 import { baseUrl } from '../Adminpanel/BASE_URL';
+import { toast } from 'react-toastify';
+
 
 function FooterMain() {
     const [contactInfo, setContactInfo] = useState('');
@@ -73,15 +75,23 @@ function FooterMain() {
 
              // Show success message even if email didn't send
         if (result.emailSent) {
-            setMessage({
-                text: 'Thank you for contacting us! We\'ll reach out to you soon.',
-                type: 'success'
-            });
+            // setMessage({
+            //     text: 'Thank you for contacting us! We\'ll reach out to you soon.',
+            //     type: 'success'
+            // });
+             toast.success(`Thank you for contacting us! We\'ll reach out to you soon.`, {
+            position: "bottom-right",
+            autoClose: 2000,
+        });
         } else {
-            setMessage({
-                text: 'Thank you for your interest! We\'ve received your information.',
-                type: 'success'
-            });
+            // setMessage({
+            //     text: 'Thank you for your interest! We\'ve received your information.',
+            //     type: 'success'
+            // });
+             toast.success(`Thank you for your interest! We\'ve received your information.`, {
+            position: "bottom-right",
+            autoClose: 2000,
+        });
         }
 
 
@@ -95,10 +105,14 @@ function FooterMain() {
         }
         catch (err) {
             // setIsError("Failed to submit your information. Please try again later");
-            setMessage({
-                text: 'Failed to submit your information. Please try again later.',
-                type: 'error'
-            });
+            // setMessage({
+            //     text: 'Failed to submit your information. Please try again later.',
+            //     type: 'error'
+            // });
+            toast.error(`Failed to submit your information. Please try again later.`, {
+            position: "bottom-right",
+            autoClose: 2000,
+        });
             console.error("Error submitting contact information:", err);
         }
         finally {

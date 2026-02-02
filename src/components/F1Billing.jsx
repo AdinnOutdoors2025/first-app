@@ -1729,14 +1729,28 @@ const BillingDetails = () => {
         ));
     };
 
-    // Generate order ID
+    // // Generate order ID
+    // const generateUserOrderId = () => {
+    //     const now = new Date();
+    //     const year = now.getFullYear().toString().slice(-2);
+    //     const month = String(now.getMonth() + 1).padStart(2, '0');
+    //     const day = String(now.getDate()).padStart(2, '0');
+    //     const randomNum = Math.floor(1000 + Math.random() * 9000);
+    //     return `US${year}${month}${day}${randomNum}`;
+    // };
+
+    // Update this function in your React component
     const generateUserOrderId = () => {
         const now = new Date();
-        const year = now.getFullYear().toString().slice(-2);
+        const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, '0');
         const day = String(now.getDate()).padStart(2, '0');
-        const randomNum = Math.floor(1000 + Math.random() * 9000);
-        return `US${year}${month}${day}${randomNum}`;
+
+        // Generate a sequential number (you might want to store this in localStorage or get from server)
+        // For now, using a random number, but you should implement a proper counter
+        const sequentialNumber = Math.floor(1000 + Math.random() * 9000);
+
+        return `${year}${month}${day}US${sequentialNumber}`;
     };
 
     // Get date range array
@@ -1855,16 +1869,16 @@ const BillingDetails = () => {
 
         // Validate form first
         if (!validateForm()) {
-            toast.error("Please fill in all required fields correctly", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+            // toast.error("Please fill in all required fields correctly", {
+            //     position: "bottom-right",
+            //     autoClose: 5000,
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     theme: "colored",
+            // });
             return;
         }
 
@@ -1940,6 +1954,7 @@ const BillingDetails = () => {
                         totalDays: reserveItem.totalDays,
                         totalPrice: parsedTotalAmount
                     },
+
                     bookedDates: bookedDates,
                 }],
                 status: "UserSideOrder",
@@ -1997,6 +2012,8 @@ const BillingDetails = () => {
                             name: reserveItem.prodName,
                             image: reserveItem.image,
                             price: parsedPrice,
+                            printingCost: parsedPrintingCost, // Newly sending...
+                            mountingCost: parsedMountingCost, // Newly sending...
                             booking: {
                                 startDate: reserveItem.startDate,
                                 endDate: reserveItem.endDate,
@@ -2013,6 +2030,9 @@ const BillingDetails = () => {
                         }],
                         orderDate: new Date().toLocaleDateString(),
                         totalAmount: parsedTotalAmount,
+                        overAllTotalAmount: overAllTotalAmount, // Newly sending...
+                        printingCost: parsedPrintingCost,  // Newly sending...
+                        mountingCost: parsedMountingCost  // Newly sending...
                     })
                 });
 
@@ -2064,7 +2084,7 @@ const BillingDetails = () => {
                     <div className="billing-header">
                         <div></div>
                         <div>BILLING DETAILS</div>
-                        <div onClick={handleCancel} style={{ color: 'white', textAlign: 'right', alignContent: 'end' }} >
+                        <div onClick={handleCancel} style={{ color: 'white', textAlign: 'right', alignContent: 'end', cursor:'pointer' }} >
                             <i className="fa-regular fa-circle-xmark"></i>
                         </div>
                     </div>
@@ -2346,35 +2366,3 @@ const BillingDetails = () => {
 };
 
 export default BillingDetails;
-
-// Add this CSS to your F1Billing.css file:
-/*
-.billing-button-group {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.billingCancelBtn {
-    background-color: #f8f9fa;
-    color: #6c757d;
-    border: 1px solid #dee2e6;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 100px;
-}
-
-.billingCancelBtn:hover {
-    background-color: #e9ecef;
-    border-color: #ced4da;
-    color: #495057;
-}
-
-.billingCancelBtn:active {
-    background-color: #dee2e6;
-    transform: translateY(1px);
-}
-*/
