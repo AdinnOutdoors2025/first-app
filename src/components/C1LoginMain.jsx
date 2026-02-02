@@ -68,33 +68,6 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 return;
             }
 
-            // // Determine if it's a phone or email and clean the input
-            // let isPhone = /^\d{10}$/.test(identifier);
-            // let cleanedIdentifier = identifier;
-
-            // if (isPhone) {
-            //     cleanedIdentifier = identifier.replace(/\D/g, '');
-            //     if (cleanedIdentifier.length !== 10) {
-            //         setErrorMessage('Please enter a valid 10-digit phone number');
-            //         return;
-            //     }
-            // } else if (!validateEmail(identifier)) {
-            //     setErrorMessage('Please enter a valid email address');
-            //     return;
-            // }
-
-            // // Update state immediately before proceeding
-            // if (isPhone) {
-            //     setUsePhoneOTP(true);
-            //     setUserPhone(cleanedIdentifier);
-            //     setEmail('');
-            // } else {
-            //     setUsePhoneOTP(false);
-            //     setEmail(cleanedIdentifier);
-            //     setUserPhone('');
-            // }
-
-
             // Check if identifier contains @ (email) or is all digits (phone)
         const hasAtSymbol = identifier.includes('@');
         
@@ -141,9 +114,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                 const checkResponse = await fetch(`${baseUrl}/login/${checkEndpoint}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    // body: JSON.stringify(isPhone ? { phone: loginIdentifier } : { email: loginIdentifier })
-                    // body: JSON.stringify(isPhone ? { phone: cleanedIdentifier } : { email: cleanedIdentifier })
- body: JSON.stringify(
+                    body: JSON.stringify(
                     hasAtSymbol 
                         ? { email: identifier } 
                         : { phone: identifier.replace(/\D/g, '') }
@@ -159,8 +130,6 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
                     return;
                 }
                 // Send OTP
-                // await sendOtpRequest(isPhone, loginIdentifier, '')
-                // await sendOtpRequest(isPhone, cleanedIdentifier, '');
  await sendOtpRequest(
                 !hasAtSymbol,  // isPhone: true if not email (phone)
                 hasAtSymbol ? identifier : identifier.replace(/\D/g, ''),
@@ -246,8 +215,6 @@ toast.error("Error checking user. Try again later.", {
                     return;
                 }
 
-                // // Send OTP via email for signup
-                // await sendOtpRequest(false, email, userName);
                 // Send OTP via SMS for signup (phone will be used)
                 await sendOtpRequest(true, cleanedPhone, userName);
 
@@ -291,13 +258,7 @@ toast.error("Error checking user. Try again later.", {
             const otpResponse = await fetch(`${baseUrl}/login/send-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(
-                    //     {
-                    //     ...(isPhone ? { phone: identifier } : { email: identifier }),
-                    //     userName: userName
-                    // } 
-                    requestBody
-                )
+                body: JSON.stringify(requestBody)
             });
 
             const otpData = await otpResponse.json();
@@ -385,25 +346,8 @@ toast.error("Error checking user. Try again later.", {
                         throw new Error("Account created but failed to get user details. Please try logging in.");
                     }
 
-                    loginUser(userData.user, keepSignedIn);
-                    // toast.success("Account created successfully!");
-                    toast.success("Account created successfully!", {
-                        position: "bottom-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored",
-                        style: {
-                            zIndex: 999999,
-                            fontSize: '14px',
-                            borderRadius: '8px',
-                            backgroundColor: '#4caf50',
-                            color: 'white',
-                        },
-                    });
+                    // Pass true for isSignUp parameter
+                    loginUser(userData.user, keepSignedIn, true);
                 } else {
                     // For login, use verified user data
                     console.log("Login user data:", verifyData.user); // Debug log
@@ -412,25 +356,8 @@ toast.error("Error checking user. Try again later.", {
                         throw new Error("User data incomplete. Please try again.");
                     }
 
-                    loginUser(verifyData.user, keepSignedIn);
-                    // toast.success("Logged in successfully!", {
-                    //     position: "bottom-right",
-                    //     autoClose: 3000,
-                    //     hideProgressBar: false,
-                    //     closeOnClick: true,
-                    //     pauseOnHover: true,
-                    //     draggable: true,
-                    //     progress: undefined,
-                    //     theme: "colored",
-                    //     style: {
-                    //         zIndex: 999999,
-                    //         fontSize: '14px',
-                    //         borderRadius: '8px',
-                    //         backgroundColor: '#4caf50',
-                    //         color: 'white',
-                    //     },
-                    // }
-                    // );
+                    // Pass false for isSignUp parameter
+                    loginUser(verifyData.user, keepSignedIn, false);
                 }
                 setVerified(true);
                 onClose();
@@ -652,7 +579,7 @@ toast.error("Error checking user. Try again later.", {
                                 `Resend OTP in ${resendTimer}s`
                             ) : (
                                 <div className='otpResend'>
-                                    Didn’t receive the OTP?{' '}
+                                    Didn't receive the OTP?{' '}
                                     <span className='ResendHighlight' onClick={sendOtp}>Resend OTP</span>
                                 </div>
                             )}
