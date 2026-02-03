@@ -2059,36 +2059,36 @@ const BillingDetails = () => {
         //     //     console.error("Email sending error:", emailError);
         //     // }
 
-        //     // Navigate to thank you page
-        //     navigate("/thank_you", {
-        //         state: {
-        //             billingInfo: {
-        //                 name,
-        //                 email,
-        //                 phone,
-        //                 pincode,
-        //                 state,
-        //                 city,
-        //                 address,
-        //                 company,
-        //             },
-        //             reserveItem,
-        //             overAllTotalAmount,
-        //             gstPercentage,
-        //             gstAmount,
-        //             totalAmountWithGST,
-        //             orderId: result.orderId || result._id,
-        //             orderStatus: result.order_status || "Pending Client Confirmation"
-        //         }
-        //     });
+            // Navigate to thank you page
+            navigate("/thank_you", {
+                state: {
+                    billingInfo: {
+                        name,
+                        email,
+                        phone,
+                        pincode,
+                        state,
+                        city,
+                        address,
+                        company,
+                    },
+                    reserveItem,
+                    overAllTotalAmount,
+                    gstPercentage,
+                    gstAmount,
+                    totalAmountWithGST,
+                    orderId: result.orderId || result._id,
+                    orderStatus: result.order_status || "Pending Client Confirmation"
+                }
+            });
 
-        // } catch (error) {
-        //     console.error("❌ Order submission error:", error);
-        //     alert(`Error: ${error.message || "Failed to submit order"}`);
-        // } finally {
-        //     setIsLoading(false);
-        // }
-    };
+        } catch (error) {
+            console.error("❌ Order submission error:", error);
+            alert(`Error: ${error.message || "Failed to submit order"}`);
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     const safePrice = typeof reserveItem?.price === 'string'
         ? parseFloat(reserveItem.price.replace(/[^0-9.]/g, ''))
