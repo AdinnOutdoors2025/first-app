@@ -23,10 +23,10 @@ function OdometerComponent() {
       start: "top bottom",
       onEnter: () => {
         setCounters({
-          completedProjects: 6500,
+          completedProjects: 7000,
           ongoingProjects: 100,
           expertWorkers: 250,
-          satisfiedCustomers: 7000,
+          satisfiedCustomers: 6880,
         });
       },
       onLeaveBack: () => {
