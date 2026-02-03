@@ -124,6 +124,7 @@
     background: #E32228;
     width: 100%;
     margin: auto;
+    margin-bottom: 10px;
 }
 
 .order-headerMain {
@@ -334,8 +335,19 @@
     /* Blur effect */
     padding-top: 8%;
     z-index: 201;
-} 
+}
 
+/* GST CSS  */
+.order-itemGSTTotal {
+    display:flex;
+    margin: auto;
+    justify-content: center;
+    margin-right: 9%;
+}
+.order-itemGSTTotal1 {
+
+    margin-right: 8%;
+}
 
 /* Responsive Media Queries */
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens) 2560  */
@@ -861,7 +873,7 @@
 
     .order-item-title {
         font-size: 15px;
-       line-height: 100%;
+        line-height: 100%;
         margin-bottom: 10px;
     }
 
@@ -1033,7 +1045,7 @@
 
     .order-item-title {
         font-size: 15px;
-       line-height: 100%;
+        line-height: 100%;
         margin-bottom: 10px;
     }
 
@@ -1260,7 +1272,7 @@
 
     .order-item-title {
         font-size: 15px;
-       line-height: 100%;
+        line-height: 100%;
         margin-bottom: 10px;
     }
 
@@ -1296,7 +1308,7 @@
         font-weight: 600;
     }
 
-    
+
     /* FILTER SECTION  */
     .filter-section {
         margin-top: 72px;
@@ -1385,7 +1397,8 @@
         width: 12px;
         margin-right: 10px;
     }
-/* 
+
+    /* 
     .order-scroll {
         width: 340px;
         height: 200px;
@@ -1442,8 +1455,8 @@
         font-weight: 600;
     } */
 
-    
-    
+
+
     .order-header-top {
         padding: 10px 5px;
     }
@@ -1468,7 +1481,7 @@
         margin-bottom: 20px;
         border-bottom: 1px dashed white;
         padding: 10px 0px;
-    } 
+    }
 
     .order-id {
         font-size: 12px;
@@ -1487,7 +1500,7 @@
 
     .order-item-title {
         font-size: 15px;
-line-height: 100%;
+        line-height: 100%;
         margin-bottom: 10px;
     }
 
@@ -1519,8 +1532,8 @@ line-height: 100%;
         font-weight: 600;
     }
 
-  
-    
+
+
     /* FILTER SECTION  */
     .filter-section {
         margin: 0 65px;
@@ -1641,7 +1654,7 @@ line-height: 100%;
         margin-bottom: 20px;
         border-bottom: 1px dashed white;
         padding: 10px 5px;
-    } 
+    }
 
     .order-id {
         font-size: 13px;
@@ -1660,7 +1673,7 @@ line-height: 100%;
 
     .order-item-title {
         font-size: 14px;
-       line-height: 100%;
+        line-height: 100%;
         margin-bottom: 10px;
     }
 
@@ -1787,7 +1800,8 @@ line-height: 100%;
         width: 11px;
         margin-right: 10px;
     }
-/* 
+
+    /* 
     .order-scroll {
         width: 305px;
         height: 205px;
@@ -1845,7 +1859,7 @@ line-height: 100%;
         font-weight: 600;
     } */
 
-    
+
     .order-header-top {
         padding: 10px 22px;
         gap: 10px;
@@ -1871,7 +1885,7 @@ line-height: 100%;
         margin-bottom: 20px;
         border-bottom: 1px dashed white;
         padding: 10px 5px;
-    } 
+    }
 
     .order-id {
         font-size: 13px;
@@ -1890,7 +1904,7 @@ line-height: 100%;
 
     .order-item-title {
         font-size: 14px;
-       line-height: 100%;
+        line-height: 100%;
         margin-bottom: 10px;
     }
 
@@ -1921,7 +1935,7 @@ line-height: 100%;
         margin: 0 0px;
         font-weight: 600;
     }
-    
+
     /* FILTER SECTION  */
     .filter-section {
         margin: 0 40px;
@@ -2042,7 +2056,7 @@ line-height: 100%;
         margin-bottom: 20px;
         border-bottom: 1px dashed white;
         padding: 10px 5px;
-    } 
+    }
 
     .order-id {
         font-size: 12px;
@@ -2061,7 +2075,7 @@ line-height: 100%;
 
     .order-item-title {
         font-size: 13px;
-       line-height: 100%;
+        line-height: 100%;
         margin-bottom: 10px;
     }
 
