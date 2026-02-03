@@ -212,8 +212,8 @@ function AdinnHome() {
           <ScrollHero />
         </div>
 
-        {/* About us content  */}
-        <div className='about about-desktop container-fluid' style={{ padding: '100px 20px' }}>
+        {/* About us content  */} 
+        <div className='about about-desktop container-fluid'> 
           <div className='heading about-heading about-mobile-content'>About <span className='highlight'>Us</span></div>
           <div className='about-content'>
             <div className='about-content1 about-mobile-content'>

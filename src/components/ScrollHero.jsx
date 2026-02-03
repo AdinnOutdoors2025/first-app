@@ -94,145 +94,145 @@ const processImages = (imageConfig) => {
 
 const ScrollHero = () => {
   const containerRef = useRef(null);
-  const trackRef = useRef(null);
-  const [imageLoadStates, setImageLoadStates] = useState({});
+  // const trackRef = useRef(null);
+  /*const [imageLoadStates, setImageLoadStates] = useState({});*/
   const [errorStates, setErrorStates] = useState({});
 
   const videoRef = useRef(null);
 const videoContainerRef = useRef(null);
 
   // Prevent click on slider drag
-let touchStartX = 0;
-let touchStartY = 0;
-let moved = false;
+// let touchStartX = 0;
+// let touchStartY = 0;
+// let moved = false;
 
-const handleTouchStart = (e) => {
-  touchStartX = e.touches[0].clientX;
-  touchStartY = e.touches[0].clientY;
-  moved = false;
-};
+// const handleTouchStart = (e) => {
+//   touchStartX = e.touches[0].clientX;
+//   touchStartY = e.touches[0].clientY;
+//   moved = false;
+// };
 
-const handleTouchMove = (e) => {
-  const diffX = Math.abs(e.touches[0].clientX - touchStartX);
-  const diffY = Math.abs(e.touches[0].clientY - touchStartY);
+// const handleTouchMove = (e) => {
+//   const diffX = Math.abs(e.touches[0].clientX - touchStartX);
+//   const diffY = Math.abs(e.touches[0].clientY - touchStartY);
 
-  // If finger moved more than 10px, treat as scroll/swipe
-  if (diffX > 10 || diffY > 10) moved = true;
-};
+//   // If finger moved more than 10px, treat as scroll/swipe
+//   if (diffX > 10 || diffY > 10) moved = true;
+// };
 
-const handleTouchEnd = (url) => {
-  if (!moved) {
-    window.open(url, "_blank");
-  }
-};
+// const handleTouchEnd = (url) => {
+//   if (!moved) {
+//     window.open(url, "_blank");
+//   }
+// };
 
 // Desktop click
-const handleClick = (url) => {
-  window.open(url, "_blank");
-};
+// const handleClick = (url) => {
+//   window.open(url, "_blank");
+// };
 
   // Memoize processed images to prevent recreation on every render
-  const heroImages = useMemo(() => processImages(HERO_IMAGES_CONFIG), []);
+  // const heroImages = useMemo(() => processImages(HERO_IMAGES_CONFIG), []);
   
   // Preload critical images for better performance
-  useEffect(() => {
-    const preloadImages = () => {
-      heroImages.slice(0, CONFIG.PRELOAD_THRESHOLD).forEach(image => {
-        const img = new Image();
-        img.src = image.src;
+  // useEffect(() => {
+  //   const preloadImages = () => {
+  //     heroImages.slice(0, CONFIG.PRELOAD_THRESHOLD).forEach(image => {
+  //       const img = new Image();
+  //       img.src = image.src;
         
-        // Handle load and error states
-        img.onload = () => {
-          setImageLoadStates(prev => ({ ...prev, [image.id]: true }));
-        };
+  //       // Handle load and error states
+  //       img.onload = () => {
+  //         setImageLoadStates(prev => ({ ...prev, [image.id]: true }));
+  //       };
         
-        img.onerror = () => {
-          setErrorStates(prev => ({ ...prev, [image.id]: true }));
-          console.warn(`Failed to load image: ${image.src}`);
-        };
-      });
-    };
+  //       img.onerror = () => {
+  //         setErrorStates(prev => ({ ...prev, [image.id]: true }));
+  //         console.warn(`Failed to load image: ${image.src}`);
+  //       };
+  //     });
+  //   };
 
-    preloadImages();
-  }, [heroImages]);
+  //   preloadImages();
+  // }, [heroImages]);
 
   /**
    * Handles image loading errors with fallback
    * @param {Object} image - Image object
    * @param {Event} event - Error event
    */
-  const handleImageError = (image, event) => {
-    const img = event.target;
+  // const handleImageError = (image, event) => {
+  //   const img = event.target;
     
-    // Only set fallback if not already using fallback
-    if (img.src !== CONFIG.FALLBACK_IMAGE) {
-      img.src = CONFIG.FALLBACK_IMAGE;
-      setErrorStates(prev => ({ ...prev, [image.id]: true }));
-    }
-  };
+  //   // Only set fallback if not already using fallback
+  //   if (img.src !== CONFIG.FALLBACK_IMAGE) {
+  //     img.src = CONFIG.FALLBACK_IMAGE;
+  //     setErrorStates(prev => ({ ...prev, [image.id]: true }));
+  //   }
+  // };
 
   /**
    * Enhanced image rendering with responsive support and better error handling
    * @param {Object} image - Image object
    * @returns {JSX.Element} Image element
    */
-  const renderImage = (image) => {
-    const hasError = errorStates[image.id];
-    const isLoaded = imageLoadStates[image.id];
+  // const renderImage = (image) => {
+  //   const hasError = errorStates[image.id];
+  //   const isLoaded = imageLoadStates[image.id];
     
-    return (
-      <div className="hero-image-container">
-        <picture key={image.id}>
-          {/* Responsive images with proper fallbacks */}
-          <source 
-            media="(max-width: 480px)" 
-            srcSet={image.sources.mobile}
-            onError={(e) => handleImageError(image, e)}
-          />
-          <source 
-            media="(max-width: 768px)" 
-            srcSet={image.sources.mobile}
-            onError={(e) => handleImageError(image, e)}
-          />
-          <source 
-            media="(max-width: 1024px)" 
-            srcSet={image.sources.tablet}
-            onError={(e) => handleImageError(image, e)}
-          />
-          <img 
-            src={image.src} 
-            alt={image.alt}
-            className="hero-image"
-            loading="eager" // Change to eager for critical above-the-fold images
-            onLoad={() => setImageLoadStates(prev => ({ ...prev, [image.id]: true }))}
-            onError={(e) => handleImageError(image, e)}
-            style={{
-              opacity: isLoaded && !hasError ? 1 : 0.3,
-              transform: isLoaded && !hasError ? 'scale(1)' : 'scale(1.1)',
-              transition: 'opacity 0.5s ease, transform 0.5s ease'
-            }}
-          />
-        </picture>
+  //   return (
+  //     <div className="hero-image-container">
+  //       <picture key={image.id}>
+  //         {/* Responsive images with proper fallbacks */}
+  //         <source 
+  //           media="(max-width: 480px)" 
+  //           srcSet={image.sources.mobile}
+  //           onError={(e) => handleImageError(image, e)}
+  //         />
+  //         <source 
+  //           media="(max-width: 768px)" 
+  //           srcSet={image.sources.mobile}
+  //           onError={(e) => handleImageError(image, e)}
+  //         />
+  //         <source 
+  //           media="(max-width: 1024px)" 
+  //           srcSet={image.sources.tablet}
+  //           onError={(e) => handleImageError(image, e)}
+  //         />
+  //         <img 
+  //           src={image.src} 
+  //           alt={image.alt}
+  //           className="hero-image"
+  //           loading="eager" // Change to eager for critical above-the-fold images
+  //           onLoad={() => setImageLoadStates(prev => ({ ...prev, [image.id]: true }))}
+  //           onError={(e) => handleImageError(image, e)}
+  //           style={{
+  //             opacity: isLoaded && !hasError ? 1 : 0.3,
+  //             transform: isLoaded && !hasError ? 'scale(1)' : 'scale(1.1)',
+  //             transition: 'opacity 0.5s ease, transform 0.5s ease'
+  //           }}
+  //         />
+  //       </picture>
         
-        {/* Loading overlay */}
-        {!isLoaded && !hasError && (
-          <div className="image-loading-overlay">
-            <div className="loading-spinner"></div>
-          </div>
-        )}
+  //       {/* Loading overlay */}
+  //       {!isLoaded && !hasError && (
+  //         <div className="image-loading-overlay">
+  //           <div className="loading-spinner"></div>
+  //         </div>
+  //       )}
         
-        {/* Error state */}
-        {hasError && (
-          <div className="image-error-overlay">
-            <div className="error-content">
-              <span>📷</span>
-              <p>Image unavailable</p>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
+  //       {/* Error state */}
+  //       {hasError && (
+  //         <div className="image-error-overlay">
+  //           <div className="error-content">
+  //             <span>📷</span>
+  //             <p>Image unavailable</p>
+  //           </div>
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+  // };
 
   // Ultra-smooth scroll handling with advanced optimization
   // useEffect(() => {
@@ -391,19 +391,19 @@ useEffect(() => {
 }, []);
 
   // Performance monitoring and debugging (optional - remove in production)
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('ScrollHero mounted with', heroImages.length, 'images');
-      return () => {
-        console.log('ScrollHero unmounted');
-      };
-    }
-  }, [heroImages.length]);
+  // useEffect(() => {
+  //   if (process.env.NODE_ENV === 'development') {
+  //     console.log('ScrollHero mounted with', heroImages.length, 'images');
+  //     return () => {
+  //       console.log('ScrollHero unmounted');
+  //     };
+  //   }
+  // }, [heroImages.length]);
 
   return (
     <div className="scroll-container" ref={containerRef}>
       <div className="sticky-view">
-        <div className="horizontal-track" ref={trackRef}>
+        {/* <div className="horizontal-track" ref={trackRef}> */}
           {/* {heroImages.map((image) => (
             <div className="hero-panel" key={image.id}> */}
               {/* {renderImage(image)} */}
@@ -434,6 +434,7 @@ useEffect(() => {
             </div>
             </div>
           ))} */} 
+           <div className="horizontal-track">
           <div
   className="hero-panel video-hero-panel"
   ref={videoContainerRef}
@@ -451,7 +452,7 @@ useEffect(() => {
         </div>
         
         {/* Bottom Half: Context Pane (Visible ONLY on Mobile) */}
-        <div className="mobile-content-preview">
+        {/* <div className="mobile-content-preview">
             <div className="preview-inner">
                 <div className='about '>
         <div className='heading about-heading'>About <span className='highlight'>Us</span></div>
@@ -467,7 +468,7 @@ useEffect(() => {
         </div>
       </div>
             </div>
-        </div>
+        </div> */}
       </div>
       {/* Add error boundary-like fallback content */}
       {Object.keys(errorStates).length > 0 && (

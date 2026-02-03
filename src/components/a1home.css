@@ -759,15 +759,23 @@
  .about {
     position: relative !important;
     top: 0 !important;
-    z-index: 2 !important;
+    z-index: 2 !important;  
   }
   .about-content2 img{
     height: auto !important;
   }
+  .about-desktop{
+     padding: 20px 20px !important; /*thendrak added*/
+  }
+}
+@media (min-width: 1024px) and (max-width: 1240px) {
+  .about-content{
+    margin-right: 0% !important; /*thendrak added*/
+  }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
  .about-desktop{
-     display: none !important;
+     display: block !important;
  }
 }
  /* {//thendral added} */
@@ -1967,9 +1975,9 @@
     margin-bottom: 0px;
   }
    /* {//thendral added} */
-   .about-mobile-content{ 
+   /* .about-mobile-content{ 
     display: none !important;
-   }
+   } */
    .hero-image{
     width: 108% !important;
    }

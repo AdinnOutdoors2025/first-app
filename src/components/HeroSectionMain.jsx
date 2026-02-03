@@ -31,11 +31,13 @@ function HeroSectionMain() {
 
     return (
         <MainLayout>
-            <div className="hero-wrapper" ref={heroRef}>
+            {/* <div className="hero-wrapper" ref={heroRef}> */}
                 {/* Hero Banner Navbar - only visible at the top */}
-                <div className={`hero-navbar ${isScrolled ? 'hidden' : ''}`}>
+                {/* <div className={`hero-navbar ${isScrolled ? 'hidden' : ''}`}> */}
+                {/* <div className={`hero-navbar`}>
                     <MainNavbarHero />
-                </div>
+                    
+                </div> */}
 
                {/* <div className='BannerMainSection'>
                     <div className='HeroBannerLeft'></div>
@@ -55,10 +57,12 @@ function HeroSectionMain() {
                     <ScrollHero />
                 </div> */}
 
-            </div>
+            {/* </div> */}
 
             {/* Main Content with its own navbar */}
-            <div className={`main-content-navbar ${isScrolled ? 'visible' : 'hidden'}`}>
+            {/* <div className={`main-content-navbar ${isScrolled ? 'visible' : 'hidden'}`}> */}
+                            <div className={`main-content-navbar`}>
+
                 <MainNavbar />
             </div>
 

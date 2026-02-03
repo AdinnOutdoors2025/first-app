@@ -1,6 +1,6 @@
 /* Height is set to 400vh to create the "scroll distance" */
 .scroll-container {
-  height: 300vh; 
+  /* height: 300vh;  */
   position: relative;
 }
 
@@ -11,17 +11,17 @@ html {
 .sticky-view {
   position: sticky;
   top: 0; /* Adjust for both main navbar (80px) + secondary navbar (70px) */
-  height: 100vh;
+  /* height: 100vh; */
   width: 100%;
   overflow: hidden;
   z-index: 1;
 }
 
 .horizontal-track {
-  display: flex;
-  height: 100%;
+  /* display: flex; */
+  height: auto;
   width: max-content;
-  will-change: transform;
+  /* will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
@@ -29,13 +29,13 @@ html {
   -webkit-perspective: 1000px;
   -moz-perspective: 1000px;
   letter-spacing: 0;
-  font-size: 0;
+  font-size: 0; */
   transform: translateZ(0);
 }
 
 .hero-panel {
   width: 100vw;
-  height: 100%;
+  height: auto;
   position: relative;
   flex-shrink: 0;
   margin: 0;
@@ -226,15 +226,15 @@ html {
 =========================== */
 @media (max-width: 1024px) {
   /* 1. Main Wrapper */
-  .scroll-container {
-    height: 300vh; /* Reduced scroll distance for mobile */
-  }
+  /* .scroll-container {
+    height: 300vh; 
+  } */
 
   /* 2. Sticky Viewport */
   .sticky-view {
     top: 0; /* Reset top for mobile hero */
-    height: 100vh !important; /* Force full screen */
-    background: #ffffff; /* Match content background */
+    /* height: 100vh !important;  */
+    /* background: #ffffff;  */
     display: flex;
     flex-direction: column; /* Split stack */
     z-index: 20;
@@ -242,7 +242,7 @@ html {
 
   /* 3. Top Media Pane (60%) */
   .horizontal-track {
-    height: 60vh;
+    /* height: 60vh; */
     will-change: transform;
     /* Optional: can add scroll-snap here if moving to native scroll later */
   }
