@@ -98,6 +98,9 @@ const ScrollHero = () => {
   const [imageLoadStates, setImageLoadStates] = useState({});
   const [errorStates, setErrorStates] = useState({});
 
+  const videoRef = useRef(null);
+const videoContainerRef = useRef(null);
+
   // Prevent click on slider drag
 let touchStartX = 0;
 let touchStartY = 0;
@@ -232,139 +235,160 @@ const handleClick = (url) => {
   };
 
   // Ultra-smooth scroll handling with advanced optimization
-  useEffect(() => {
-    let animationFrameId;
-    let lastScrollY = 0;
-    let isComponentMounted = true;
-    let trackWidth = 0;
-    let viewportWidth = 0;
-    let containerHeight = 0;
-    let windowHeight = 0;
-    let startScroll = 0;
-    let endScroll = 0;
+  // useEffect(() => {
+  //   let animationFrameId;
+  //   let lastScrollY = 0;
+  //   let isComponentMounted = true;
+  //   let trackWidth = 0;
+  //   let viewportWidth = 0;
+  //   let containerHeight = 0;
+  //   let windowHeight = 0;
+  //   let startScroll = 0;
+  //   let endScroll = 0;
 
-    // Cache frequently used values
-    const updateDimensions = () => {
-      if (!containerRef.current || !trackRef.current) return;
+  //   // Cache frequently used values
+  //   const updateDimensions = () => {
+  //     if (!containerRef.current || !trackRef.current) return;
 
-      const container = containerRef.current;
-      const rect = container.getBoundingClientRect();
-      const track = trackRef.current;
+  //     const container = containerRef.current;
+  //     const rect = container.getBoundingClientRect();
+  //     const track = trackRef.current;
 
-      trackWidth = track.scrollWidth;
-      viewportWidth = window.innerWidth;
-      containerHeight = container.offsetHeight;
-      windowHeight = window.innerHeight;
-      startScroll = rect.top + window.scrollY;
-      endScroll = startScroll + containerHeight - windowHeight;
-    };
+  //     trackWidth = track.scrollWidth;
+  //     viewportWidth = window.innerWidth;
+  //     containerHeight = container.offsetHeight;
+  //     windowHeight = window.innerHeight;
+  //     startScroll = rect.top + window.scrollY;
+  //     endScroll = startScroll + containerHeight - windowHeight;
+  //   };
 
-    // Smooth interpolation for better performance
-    let currentTransform = 0;
-    let targetTransform = 0;
+  //   // Smooth interpolation for better performance
+  //   let currentTransform = 0;
+  //   let targetTransform = 0;
 
-    const handleScroll = () => {
-      if (!isComponentMounted || !containerRef.current || !trackRef.current) return;
+  //   const handleScroll = () => {
+  //     if (!isComponentMounted || !containerRef.current || !trackRef.current) return;
 
-      const scrollY = window.scrollY;
+  //     const scrollY = window.scrollY;
 
-      // Skip if no significant change (performance optimization)
-      if (Math.abs(scrollY - lastScrollY) < 1 && !animationFrameId) {
-        return;
-      }
-      lastScrollY = scrollY;
+  //     // Skip if no significant change (performance optimization)
+  //     if (Math.abs(scrollY - lastScrollY) < 1 && !animationFrameId) {
+  //       return;
+  //     }
+  //     lastScrollY = scrollY;
 
-      // Throttle with requestAnimationFrame for smooth 60fps
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
+  //     // Throttle with requestAnimationFrame for smooth 60fps
+  //     if (animationFrameId) {
+  //       cancelAnimationFrame(animationFrameId);
+  //     }
 
-      animationFrameId = requestAnimationFrame(() => {
-        if (!isComponentMounted || !containerRef.current || !trackRef.current) return;
+  //     animationFrameId = requestAnimationFrame(() => {
+  //       if (!isComponentMounted || !containerRef.current || !trackRef.current) return;
 
-        try {
-          // Calculate scroll progress
-          let percentage = 0;
+  //       try {
+  //         // Calculate scroll progress
+  //         let percentage = 0;
           
-          if (scrollY >= startScroll && scrollY <= endScroll) {
-            const scrollDistance = scrollY - startScroll;
-            const maxScroll = containerHeight - windowHeight;
-            percentage = Math.max(0, Math.min(1, scrollDistance / maxScroll));
-          } else if (scrollY > endScroll) {
-            percentage = 1;
-          } else {
-            percentage = 0;
-          }
+  //         if (scrollY >= startScroll && scrollY <= endScroll) {
+  //           const scrollDistance = scrollY - startScroll;
+  //           const maxScroll = containerHeight - windowHeight;
+  //           percentage = Math.max(0, Math.min(1, scrollDistance / maxScroll));
+  //         } else if (scrollY > endScroll) {
+  //           percentage = 1;
+  //         } else {
+  //           percentage = 0;
+  //         }
 
-          // Calculate target transform with smooth interpolation
-          const maxMoveAmount = Math.max(0, trackWidth - viewportWidth);
-          targetTransform = maxMoveAmount * percentage;
+  //         // Calculate target transform with smooth interpolation
+  //         const maxMoveAmount = Math.max(0, trackWidth - viewportWidth);
+  //         targetTransform = maxMoveAmount * percentage;
 
-          // Smooth easing function for more natural movement
-          const easeProgress = easeInOutCubic(percentage);
-          const smoothTarget = maxMoveAmount * easeProgress;
+  //         // Smooth easing function for more natural movement
+  //         const easeProgress = easeInOutCubic(percentage);
+  //         const smoothTarget = maxMoveAmount * easeProgress;
 
-          // Apply transform with sub-pixel precision
-          currentTransform = smoothTarget;
-          trackRef.current.style.transform = `translate3d(-${currentTransform}px, 0, 0)`;
+  //         // Apply transform with sub-pixel precision
+  //         currentTransform = smoothTarget;
+  //         trackRef.current.style.transform = `translate3d(-${currentTransform}px, 0, 0)`;
           
-        } catch (error) {
-          console.error('Error in scroll handler:', error);
-          trackRef.current.style.transform = 'translate3d(0, 0, 0)';
-        }
-      });
-    };
+  //       } catch (error) {
+  //         console.error('Error in scroll handler:', error);
+  //         trackRef.current.style.transform = 'translate3d(0, 0, 0)';
+  //       }
+  //     });
+  //   };
 
-    // Easing function for smoother animations
-    const easeInOutCubic = (t) => {
-      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-    };
+  //   // Easing function for smoother animations
+  //   const easeInOutCubic = (t) => {
+  //     return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+  //   };
 
-    // Enhanced event listeners with better performance
-    const scrollOptions = { passive: true };
-    const resizeOptions = { passive: true };
+  //   // Enhanced event listeners with better performance
+  //   const scrollOptions = { passive: true };
+  //   const resizeOptions = { passive: true };
 
-    // Initial setup
-    updateDimensions();
-    handleScroll();
+  //   // Initial setup
+  //   updateDimensions();
+  //   handleScroll();
 
-    // Event listeners
-    window.addEventListener('scroll', handleScroll, scrollOptions);
-    window.addEventListener('resize', () => {
-      updateDimensions();
-      handleScroll();
-    }, resizeOptions);
+  //   // Event listeners
+  //   window.addEventListener('scroll', handleScroll, scrollOptions);
+  //   window.addEventListener('resize', () => {
+  //     updateDimensions();
+  //     handleScroll();
+  //   }, resizeOptions);
 
-    // Optimized resize handling
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        updateDimensions();
-        handleScroll();
-      }, 100);
-    }, resizeOptions);
+  //   // Optimized resize handling
+  //   let resizeTimeout;
+  //   window.addEventListener('resize', () => {
+  //     clearTimeout(resizeTimeout);
+  //     resizeTimeout = setTimeout(() => {
+  //       updateDimensions();
+  //       handleScroll();
+  //     }, 100);
+  //   }, resizeOptions);
 
-    // Initial calculation with proper DOM ready check
-    const initScrollHandler = () => {
-      if (document.readyState === 'complete') {
-        updateDimensions();
-        handleScroll();
+  //   // Initial calculation with proper DOM ready check
+  //   const initScrollHandler = () => {
+  //     if (document.readyState === 'complete') {
+  //       updateDimensions();
+  //       handleScroll();
+  //     } else {
+  //       setTimeout(initScrollHandler, 100);
+  //     }
+  //   };
+  //   initScrollHandler();
+
+  //   return () => {
+  //     isComponentMounted = false;
+  //     if (animationFrameId) {
+  //       cancelAnimationFrame(animationFrameId);
+  //     }
+  //     window.removeEventListener('scroll', handleScroll);
+  //     window.removeEventListener('resize', handleScroll);
+  //   };
+  // }, []);
+useEffect(() => {
+  const video = videoRef.current;
+  const container = videoContainerRef.current;
+
+  if (!video || !container) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        video.play().catch(() => {});
       } else {
-        setTimeout(initScrollHandler, 100);
+        video.pause();
       }
-    };
-    initScrollHandler();
+    },
+    { threshold: 0.5 } // play when 50% visible
+  );
 
-    return () => {
-      isComponentMounted = false;
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-    };
-  }, []);
+  observer.observe(container);
+
+  return () => observer.disconnect();
+}, []);
 
   // Performance monitoring and debugging (optional - remove in production)
   useEffect(() => {
@@ -380,37 +404,50 @@ const handleClick = (url) => {
     <div className="scroll-container" ref={containerRef}>
       <div className="sticky-view">
         <div className="horizontal-track" ref={trackRef}>
-          {heroImages.map((image) => (
-            <div className="hero-panel" key={image.id}>
-              {/* Use the enhanced renderImage function for better error handling and performance */}
+          {/* {heroImages.map((image) => (
+            <div className="hero-panel" key={image.id}> */}
               {/* {renderImage(image)} */}
-             <div
+             {/* <div
   className="hero-panel"
   key={image.id}
   onClick={() => window.location.href = image.link}
   onTouchEnd={() => window.location.href = image.link}
 >
-  {renderImage(image)}
+  {renderImage(image)} */}
 
               
               {/* Centered content overlay - HIDDEN on Mobile via CSS */}
-              <div className="hero-content-centered">
+              {/* <div className="hero-content-centered">
                 <div className="hero-text-content">
-                  <p className="hero-description">{image.text}</p>
+                  <p className="hero-description">{image.text}</p> */}
                   {/* <button className="hero-action-button" onClick={() => console.log(`Clicked: ${image.buttonText}`)}>
                     <span className="button-text">{image.buttonText}</span>
                     <span className="button-icon">{image.buttonIcon}</span>
                   </button> */}
-                </div>
+                {/* </div> */}
                 
                 {/* Add accessibility improvement - visually hidden text for screen readers */}
-                <span className="sr-only">
+                {/* <span className="sr-only">
                   Image {image.id}: {image.alt}
                 </span>
               </div>
             </div>
             </div>
-          ))}
+          ))} */} 
+          <div
+  className="hero-panel video-hero-panel"
+  ref={videoContainerRef}
+>
+  <video
+    ref={videoRef}
+    className="hero-video"
+    src="/videos/adinn  outdoor.webm"   
+    muted
+    loop
+    playsInline
+    preload="metadata"
+  />
+  </div>
         </div>
         
         {/* Bottom Half: Context Pane (Visible ONLY on Mobile) */}
