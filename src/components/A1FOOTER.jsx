@@ -201,11 +201,11 @@ function FooterMain() {
                 <div className="container-fluid" style={{ padding: '0' }}>
                     <div className="copy">
                         <div className="copy1"></div>
-                        <div className="copy11">Copyright &copy; Adinn, All Rights Reserved</div>
+                        <div className="copy11">&copy; 2026 Adinn Outdoors. All rights reserved.</div>
                         <div className="copy2"></div>
-                        <div className="copy22">Terms</div>
+                        {/* <div className="copy22">Terms</div>
                         <div className="copy3"></div>
-                        <div className="copy33">Privacy & Policy</div>
+                        <div className="copy33">Privacy & Policy</div> */}
                         <div className="copy4"></div>
                     </div>
                 </div>
