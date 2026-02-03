@@ -1997,59 +1997,59 @@ const BillingDetails = () => {
                 console.error("SMS sending error:", smsError);
                 // Don't fail the order if SMS fails
             }
-
+            //Order confirmation mail disabled
             // Send email confirmation
-            try {
-                const emailResponse = await fetch(
-                    `${baseUrl}/OrderReserve/send-order-confirmation`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        orderId: result.orderId || result._id,
-                        userName: name,
-                        userEmail: email,
-                        userPhone: phone,
-                        userAddress: `${address}, ${city}, ${state} - ${pincode}`,
-                        company,
-                        products: [{
-                            id: reserveItem.id,
-                            prodCode: reserveItem.prodCode,
-                            name: reserveItem.prodName,
-                            image: reserveItem.image,
-                            price: parsedPrice,
-                            printingCost: parsedPrintingCost, // Newly sending...
-                            mountingCost: parsedMountingCost, // Newly sending...
-                            booking: {
-                                startDate: reserveItem.startDate,
-                                endDate: reserveItem.endDate,
-                                totalDays: reserveItem.totalDays,
-                                totalPrice: parsedTotalAmount
-                            },
-                            fromLocation: reserveItem.FromSpot,
-                            toLocation: reserveItem.ToSpot,
-                            size: {
-                                width: reserveItem.sizeWidth,
-                                height: reserveItem.sizeHeight,
-                                squareFeet: reserveItem.dimension
-                            }
-                        }],
-                        orderDate: new Date().toLocaleDateString(),
-                        totalAmount: parsedTotalAmount,
-                        overAllTotalAmount: overAllTotalAmount, // Newly sending...
-                        printingCost: parsedPrintingCost,  // Newly sending...
-                        mountingCost: parsedMountingCost  // Newly sending...
-                    })
-                });
+            // try {
+            //     const emailResponse = await fetch(
+            //         `${baseUrl}/OrderReserve/send-order-confirmation`, {
+            //         method: 'POST',
+            //         headers: {
+            //             'Content-Type': 'application/json',
+            //         },
+            //         body: JSON.stringify({
+            //             orderId: result.orderId || result._id,
+            //             userName: name,
+            //             userEmail: email,
+            //             userPhone: phone,
+            //             userAddress: `${address}, ${city}, ${state} - ${pincode}`,
+            //             company,
+            //             products: [{
+            //                 id: reserveItem.id,
+            //                 prodCode: reserveItem.prodCode,
+            //                 name: reserveItem.prodName,
+            //                 image: reserveItem.image,
+            //                 price: parsedPrice,
+            //                 printingCost: parsedPrintingCost, // Newly sending...
+            //                 mountingCost: parsedMountingCost, // Newly sending...
+            //                 booking: {
+            //                     startDate: reserveItem.startDate,
+            //                     endDate: reserveItem.endDate,
+            //                     totalDays: reserveItem.totalDays,
+            //                     totalPrice: parsedTotalAmount
+            //                 },
+            //                 fromLocation: reserveItem.FromSpot,
+            //                 toLocation: reserveItem.ToSpot,
+            //                 size: {
+            //                     width: reserveItem.sizeWidth,
+            //                     height: reserveItem.sizeHeight,
+            //                     squareFeet: reserveItem.dimension
+            //                 }
+            //             }],
+            //             orderDate: new Date().toLocaleDateString(),
+            //             totalAmount: parsedTotalAmount,
+            //             overAllTotalAmount: overAllTotalAmount, // Newly sending...
+            //             printingCost: parsedPrintingCost,  // Newly sending...
+            //             mountingCost: parsedMountingCost  // Newly sending...
+            //         })
+            //     });
 
-                if (!emailResponse.ok) {
-                    const errorData = await emailResponse.json();
-                    console.error("Failed to send order confirmation email:", errorData);
-                }
-            } catch (emailError) {
-                console.error("Email sending error:", emailError);
-            }
+            //     if (!emailResponse.ok) {
+            //         const errorData = await emailResponse.json();
+            //         console.error("Failed to send order confirmation email:", errorData);
+            //     }
+            // } catch (emailError) {
+            //     console.error("Email sending error:", emailError);
+            // }
 
             // Navigate to thank you page
             navigate("/thank_you", {
