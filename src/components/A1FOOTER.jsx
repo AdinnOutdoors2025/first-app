@@ -645,85 +645,61 @@ function FooterMain() {
                             <ul className="billboard-text">
                                 {modalType === "terms" ? (
                                     <>
-                                        <li>Sites are subject to availability at the time of confirmation.</li>
-                                        <li>
-                                            The campaign should commence within 7 business days from the date of
-                                            confirmation. Failure to adhere to this timeline will result in the
-                                            release of sites without further notice or billing from the
-                                            confirmation date.
-                                        </li>
-                                        <li>
-                                            Requests for campaign extensions must be communicated via email at
-                                            least 10 days before the end date of the current campaign.
-                                        </li>
-                                        <li>
-                                            We are not liable for damages to flex caused by natural calamities.
-                                            Reprinting costs are to be borne by you.
-                                        </li>
-                                        <li>100% payment is required in advance.</li>
-                                        <li>
-                                            Purchase orders must be issued in the name of Adinn Advertising
-                                            Services, Ltd.
-                                        </li>
-                                        <li>An 18% GST is applicable to all transactions.</li>
-
-
-                                        <li>Sites are subject to availability at the time of confirmation.</li>
-              <li>
-                The campaign should commence within 7 business days from the date of
-                confirmation. Failure to adhere to this timeline will result in the
-                release of sites without further notice or billing from the
-                confirmation date.
-              </li>
-              <li>
-                Requests for campaign extensions must be communicated via email at
-                least 10 days before the end date of the current campaign.
-              </li>
-              <li>
-                We are not liable for damages to flex caused by natural calamities.
-                Reprinting costs are to be borne by you.
-              </li>
-              <li>100% payment is required in advance.</li>
-              <li>
-                Purchase orders must be issued in the name of Adinn Advertising
-                Services, Ltd.
-              </li>
-              <li>An 18% GST is applicable to all transactions.</li>
-              <li>Sites are subject to availability at the time of confirmation.</li>
-              <li>
-                The campaign should commence within 7 business days from the date of
-                confirmation. Failure to adhere to this timeline will result in the
-                release of sites without further notice or billing from the
-                confirmation date.
-              </li>
-              <li>
-                Requests for campaign extensions must be communicated via email at
-                least 10 days before the end date of the current campaign.
-              </li>
-              <li>
-                We are not liable for damages to flex caused by natural calamities.
-                Reprinting costs are to be borne by you.
-              </li>
-              <li>100% payment is required in advance.</li>
-              <li>
-                Purchase orders must be issued in the name of Adinn Advertising
-                Services, Ltd.
-              </li>
-              <li>An 18% GST is applicable to all transactions.</li>
+                                     <li className="billboard-section-heading"> Conditions of use</li>
+                                        <li>By using this website, you certify that you have read and reviewed this Agreement and that you agree to comply with its terms. If you do not want to be bound by the terms of this Agreement, you are advised to stop using the website accordingly. Adinn Outdoors only grants use and access of this website, its products, and its services to those who have accepted its terms.</li>
+                                    <li className="billboard-section-heading"> Privacy policy</li>
+                                        <li>Before you continue using our website, we advise you to read our  <b>privacy policy</b> regarding our user data collection. It will help you better understand our practices.</li>
+                                    <li className="billboard-section-heading"> Age restriction</li>    
+                                        <li>You must be at least 18 (eighteen) years of age before you can use this website. By using this website, you warrant that you are at least 18 years of age and you may legally adhere to this Agreement. Adinn Outdoors assumes no responsibility for liabilities related to age misrepresentation.</li>
+                                    <li className="billboard-section-heading"> Intellectual property</li>    
+                                        <li>You agree that all materials, products, and services provided on this website are the property of <b>Adinn Outdoors</b>, its affiliates, directors, officers, employees, agents, suppliers, or licensors including all copyrights, trade secrets, trademarks, patents, and other intellectual property. You also agree that you will not reproduce or redistribute the <b>Adinn Outdoors</b> intellectual property in any way, including electronic, digital, or new trademark registrations.You grant Adinn Outdoors a royalty-free and non-exclusive license to display, use, copy, transmit, and broadcast the content you upload and publish. For issues regarding intellectual property claims, you should contact the company in order to come to an agreement.</li>
+                                    <li className="billboard-section-heading"> User accounts</li>    
+                                        <li>As a user of this website, you may be asked to register with us and provide private information. You are responsible for ensuring the accuracy of this information, and you are responsible for maintaining the safety and security of your identifying information.If you think there are any possible issues regarding the security of your account on the website, inform us immediately so we may address them accordingly.We reserve all rights to terminate accounts, edit or remove content and cancel orders at our sole discretion.</li>
+                                    <li className="billboard-section-heading"> Applicable law</li>    
+                                        <li>By using this website, you agree that the laws of the Madurai, without regard to principles of conflict laws, will govern these terms and conditions, or any dispute of any sort that might come between Adinn Outdoors and you, or its business partners and associates.</li>
+                                    <li className="billboard-section-heading"> Disputes</li>
+                                        <li>Any dispute related in any way to your use of this website or to products you purchase from us shall be arbitrated by state or federal court [your location] and you consent to exclusive jurisdiction and venue of such courts.</li>
+                                    <li className="billboard-section-heading"> Indemnification</li>
+                                        <li>You agree to indemnify Adinn Outdoors and its affiliates and hold Adinn Outdoors harmless against legal claims and demands that may arise from your use or misuse of our services. We reserve the right to select our own legal counsel.</li>
+                                    <li className="billboard-section-heading"> Limitation on liability</li>
+                                        <li>Adinn Outdoors is not liable for any damages that may occur to you as a result of your misuse of our website.Adinn Outdoors reserves the right to edit, modify, and change this Agreement at any time. We shall let our users know of these changes through electronic mail. This Agreement is an understanding between Adinn Outdoors and the user, and this supersedes and replaces all prior agreements regarding the use of this website. Adinn Outdoors reserves the right to edit, modify, and change this Agreement at any time. We shall let our users know of these changes through electronic mail. This Agreement is an understanding between Adinn Outdoors and the user, and this supersedes and replaces all prior agreements regarding the use of this website.</li>
                                     </>
                                 ) : (
                                     <>
-                                        <li>Your privacy is important to us.</li>
-                                        <li>We collect information only for service-related purposes.</li>
-                                        <li>We do not share personal data with third parties.</li>
-                                        <li>Data is stored securely and used responsibly.</li>
+                                    <li className="billboard-section-heading">Who we are</li>
+                                        <li>Our website address is: <a href="https://www.adinnoutdoors.com" target="_blank" rel="noopener noreferrer">www.adinnoutdoors.com</a></li>
+                                    <li className="billboard-section-heading">Comments</li>
+                                        <li>When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor’s IP address and browser user agent string to help spam detection.
+An anonymized string created from your email address (also called a hash) may be provided to the Gravatar service to see if you are using it. The Gravatar service privacy policy is available here: <a href="https://automattic.com/privacy" target="_blank" rel="noopener noreferrer">https://automattic.com/privacy</a>. After approval of your comment, your profile picture is visible to the public in the context of your comment.</li>
+                                    <li className="billboard-section-heading">Media</li>
+                                        <li>If you upload images to the website, you should avoid uploading images with embedded location data (EXIF GPS) included. Visitors to the website can download and extract any location data from images on the website.</li>
+                                    <li className="billboard-section-heading">Cookies</li>
+                                        <li>If you leave a comment on our site you may opt-in to saving your name, email address and website in cookies. These are for your convenience so that you do not have to fill in your details again when you leave another comment. These cookies will last for one year.
+                                        If you visit our login page, we will set a temporary cookie to determine if your browser accepts cookies. This cookie contains no personal data and is discarded when you close your browser.
+                                        When you log in, we will also set up several cookies to save your login information and your screen display choices. Login cookies last for two days, and screen options cookies last for a year. If you select “Remember Me”, your login will persist for two weeks. If you log out of your account, the login cookies will be removed.
+                                        If you edit or publish an article, an additional cookie will be saved in your browser. This cookie includes no personal data and simply indicates the post ID of the article you just edited. It expires after 1 day.
+                                        </li>
+                                    <li className="billboard-section-heading">Embedded content from other websites</li>
+                                        <li>Articles on this site may include embedded content (e.g. videos, images, articles, etc.). Embedded content from other websites behaves in the exact same way as if the visitor has visited the other website.
+                                         These websites may collect data about you, use cookies, embed additional third-party tracking, and monitor your interaction with that embedded content, including tracking your interaction with the embedded content if you have an account and are logged in to that website.
+                                        </li>
+                                     <li className="billboard-section-heading">Who we share your data with</li>
+                                        <li>If you request a password reset, your IP address will be included in the reset email.</li>
+                                    <li className="billboard-section-heading">How long we retain your data</li>
+                                        <li>If you leave a comment, the comment and its metadata are retained indefinitely. This is so we can recognize and approve any follow-up comments automatically instead of holding them in a moderation queue.
+                                            For users that register on our website (if any), we also store the personal information they provide in their user profile. All users can see, edit, or delete their personal information at any time (except they cannot change their username). Website administrators can also see and edit that information.
+                                        </li>
+                                    <li className="billboard-section-heading">What rights you have over your data</li>
+                                        <li>If you have an account on this site, or have left comments, you can request to receive an exported file of the personal data we hold about you, including any data you have provided to us. You can also request that we erase any personal data we hold about you. This does not include any data we are obliged to keep for administrative, legal, or security purposes.</li>
                                     </>
+
                                 )}
                             </ul>
                         </div>
                     </div>
                 </>
             )}
+            {/* Terms and Conditions Privacy Policy Popup */}
         </div> 
     )
 }

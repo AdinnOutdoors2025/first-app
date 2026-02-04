@@ -453,6 +453,17 @@
 
 
 /* PRIVACY AND TERMS & CONDITION CSS  */
+
+.billboard-section-heading {
+  font-weight: 800;
+  font-size: 23px;
+  margin-top: 14px;
+  margin-bottom: 6px;
+  list-style: none;
+}
+
+
+
 .billboard-overlay {
     position: fixed;
     inset: 0;
