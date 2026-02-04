@@ -480,8 +480,8 @@ function AdinnHome2() {
         prevArrow: <PrevArrow />,
         centerMode: primeSpotsData.length > 1,
         centerPadding: "0px",
-        autoplay: primeSpotsData.length > 1,
-        autoplaySpeed: 2000,
+        // autoplay: primeSpotsData.length > 1,
+        // autoplaySpeed: 2000,
         beforeChange: (current, next) => {
             const elements = document.querySelectorAll(".slick-slide");
             elements.forEach((el, index) => {
