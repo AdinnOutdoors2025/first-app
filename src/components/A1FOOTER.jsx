@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './a4home.css';
 import { baseUrl } from '../Adminpanel/BASE_URL';
 import { toast } from 'react-toastify';
-
+import billboardImg  from "../assets/images/billboard.png"
 
 function FooterMain() {
     const [contactInfo, setContactInfo] = useState('');
@@ -15,6 +15,26 @@ function FooterMain() {
         // Get current year
         setCurrentYear(new Date().getFullYear());
     }, []);
+
+    // terms and conditios privacy policy popup
+    const [showModal, setShowModal] = useState(false);
+    const [modalType, setModalType] = useState("");
+
+    const openModal = (type) => {
+    setModalType(type);
+    setShowModal(true);
+    };
+
+    const closeModal = () => {
+    setShowModal(false);
+    setModalType("");
+    };
+    // terms and conditios privacy policy popup
+
+
+    
+    
+
 
     const validateContactInfo = (input) => {
         // Simple email regex
@@ -208,13 +228,67 @@ function FooterMain() {
                         <div className="copy1"></div>
                         <div className="copy11">&copy; {currentYear} Adinn Outdoors. All rights reserved.</div>
                         <div className="copy2"></div>
-                        {/* <div className="copy22">Terms</div>
+                        <div className="copy22" onClick={() => openModal("terms")}>Terms & Conditions</div>
                         <div className="copy3"></div>
-                        <div className="copy33">Privacy & Policy</div> */}
+                        <div className="copy33" onClick={() => openModal("privacy")}>Privacy & Policy</div>
                         <div className="copy4"></div>
                     </div>
                 </div>
             </div>
+{/* // terms and conditios privacy policy popup */}
+            {showModal && (
+  <>
+    {/* Fade background */}
+    <div className="billboard-overlay" onClick={closeModal}></div>
+
+    {/* Billboard modal */}
+    <div className="billboard-modal" style={{ backgroundImage: `url(${billboardImg})` }}>
+      <span className="billboard-close" onClick={closeModal}>×</span>
+
+      <div className="billboard-content">
+        <h1 className="billboard-heading">
+          {modalType === "terms" ? "Terms and Conditions" : "Privacy Policy"}
+        </h1>
+
+        <ul className="billboard-text">
+          {modalType === "terms" ? (
+            <>
+              <li>Sites are subject to availability at the time of confirmation.</li>
+              <li>
+                The campaign should commence within 7 business days from the date of
+                confirmation. Failure to adhere to this timeline will result in the
+                release of sites without further notice or billing from the
+                confirmation date.
+              </li>
+              <li>
+                Requests for campaign extensions must be communicated via email at
+                least 10 days before the end date of the current campaign.
+              </li>
+              <li>
+                We are not liable for damages to flex caused by natural calamities.
+                Reprinting costs are to be borne by you.
+              </li>
+              <li>100% payment is required in advance.</li>
+              <li>
+                Purchase orders must be issued in the name of Adinn Advertising
+                Services, Ltd.
+              </li>
+              <li>An 18% GST is applicable to all transactions.</li>
+            </>
+          ) : (
+            <>
+              <li>Your privacy is important to us.</li>
+              <li>We collect information only for service-related purposes.</li>
+              <li>We do not share personal data with third parties.</li>
+              <li>Data is stored securely and used responsibly.</li>
+            </>
+          )}
+        </ul>
+      </div>
+    </div>
+  </>
+)}
+{/* // terms and conditios privacy policy popup */}
         </div> 
     )
 }

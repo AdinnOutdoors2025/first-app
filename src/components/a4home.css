@@ -2367,5 +2367,163 @@
     }
 }
 
+/* ================================
+   Fade Background Overlay
+================================ */
+.billboard-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 999;
+}
+
+/* ================================
+   Billboard Modal (Image Container)
+================================ */
+.billboard-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 90%;
+  max-width: 1100px;
+  height: 85vh;
+
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+
+  border-radius: 22px;
+  overflow: hidden;
+
+  z-index: 1000;
+}
+
+/* Soft light overlay on image */
+.billboard-modal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+
+/* ================================
+   Close Button
+================================ */
+.billboard-close {
+  position: absolute;
+  top: 22px;
+  right: 28px;
+  font-size: 34px;
+  cursor: pointer;
+  color: #111;
+  z-index: 10;
+}
+
+/* ================================
+   Content Area (NO WHITE BOX)
+================================ */
+.billboard-content {
+  position: relative;
+  z-index: 5;
+
+  width: 100%;
+  max-height: 62vh;
+
+  padding: 90px 70px 110px;
+  box-sizing: border-box;
+
+  overflow-y: auto;
+  background: transparent;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  /* 🔥 KEY PART */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0px,
+    black 60px,
+    black calc(100% - 120px),
+    transparent 100%
+  );
+
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0px,
+    black 60px,
+    black calc(100% - 120px),
+    transparent 100%
+  );
+}
 
 
+.billboard-content::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+/* ================================
+   Heading
+================================ */
+.billboard-heading {
+  font-size: 38px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+}
+
+/* ================================
+   Text Content
+================================ */
+.billboard-text {
+  font-size: 19px;
+  line-height: 1.7;
+  color: #2a2a2a;
+  list-style: disc;
+  padding-left: 20px;
+}
+
+.billboard-text li {
+  margin-bottom: 12px;
+}
+
+/* ================================
+   Scrollbar Styling
+================================ */
+
+
+.billboard-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+}
+
+
+
+/* ================================
+   Responsive
+================================ */
+@media (max-width: 768px) {
+  .billboard-content {
+    padding: 60px 30px;
+
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0px,
+      black 40px,
+      black calc(100% - 80px),
+      transparent 100%
+    );
+
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0px,
+      black 40px,
+      black calc(100% - 80px),
+      transparent 100%
+    );
+  }
+}
