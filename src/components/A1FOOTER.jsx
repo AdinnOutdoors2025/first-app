@@ -417,7 +417,7 @@ import React, { useState, useEffect } from 'react';
 import './a4home.css';
 import { baseUrl } from '../Adminpanel/BASE_URL';
 import { toast } from 'react-toastify';
-import billboardImg  from "../assets/images/billboard.svg"
+import billboardImg  from "../assets/images/billboard.png"
 
 function FooterMain() {
     const [contactInfo, setContactInfo] = useState('');
