@@ -187,41 +187,61 @@
 }
 /*thendral updated 27/01/26 */
 .rate1-book {
-  position: relative;
+  /* position: relative; */
   /* bottom: 51.5px; */
-  left: 10px;
+  /* left: 10px;
   top: 10px;
   width: 9%;
   display: flex;
   align-items: center;
-  gap: 6px;
-  flex-direction: row-reverse;
-  background-color:  #37D76C;
-; /* exact green style */
-  padding: 5px 7px;
+  gap: 6px; */
+  /* flex-direction: row-reverse; */
+  /* background-color:  #37D76C; */
+ /* exact green style */
+  /* padding: 5px 7px;
   border-radius: 6px;
 
   font-size: 14px;
   line-height: 1;
   white-space: nowrap;
-  margin-bottom: 10px;
+  margin-bottom: 10px; */
+   position: relative;
+  /* bottom: 51.5px; */
+  left: 10px;
+  width: 10% !important;
+  /* display: flex; */
+  align-items: center;
+  gap: 6px;
+  flex-direction: row-reverse;
+  background-color: #6dbb45; /* exact green style */
+  padding: 5px 5px;
+  border-radius: 6px;
+
+  font-size: 14px;
+  line-height: 1;
+  white-space: nowrap;
+  /* margin-bottom: 10px; */
+}
+@media (min-width: 1900px) and (max-width: 1999px) {
+    .rate1-book{
+        width:8% !important;
+    }
 }
 
 .rating1-star {
-  color: #fff; /* yellow star */
+  color: #ffd54f; /* yellow star */
   font-size: 18px;
   order: 2;
 width: 22px;
 height: 22px;
+padding-left: 3px;
 }
 .rating1-text {
   color: #ffffff;
   font-weight: 500;
   font-size: 18px;
-  padding-left: 1px;
+  padding-left: 4px;
   order: 1;
-  margin-top: -5px;
-    margin-left: -5px;
 }
 .price-rating-row {
   display: flex;
@@ -262,7 +282,7 @@ box-shadow:
    5px  5px 10px 0px #0000000D;
 opacity: 1;
 border-radius: 10px;
-padding: 12px;
+padding: 7px;
 }
 .bookingdetialslist1 .btn-type {
   background: #ffffff;
@@ -395,8 +415,8 @@ color: #000;
 
 .book-spot {
     width: fit-content;
-    padding: 12px;
-    border-radius: 7px;
+    padding: 5px !important;
+    border-radius: 10px;
     align-content: center;
     text-align: center;
     align-items: center;
@@ -408,6 +428,7 @@ leading-trim: NONE;
 line-height: 100%;
 letter-spacing: 0%;
 color: #000;
+border-radius: 10px;
 }
 
 
@@ -884,7 +905,7 @@ box-shadow: 0px 3px 4px 0px #00000026;
 }
 
 .viewlocation {
-    font-size: 16px;
+    font-size: 16px !important;
     margin-left: 6px;
     font-weight: 700;
     color: #212529 !important;
@@ -1154,7 +1175,7 @@ box-shadow: 0px 3px 4px 0px #00000026;
     }
 
     .viewlocation {
-        font-size: 28px;
+        font-size: 16px;
         margin-left: 15px;
     }
 
@@ -1287,7 +1308,7 @@ box-shadow: 0px 3px 4px 0px #00000026;
         width: fit-content;
         padding: 13px 10px;
         padding: 5px 10px;
-        border-radius: 5px;
+        border-radius: 10px;
     }
 
 
@@ -1394,20 +1415,41 @@ box-shadow: 0px 3px 4px 0px #00000026;
     }
 
     .viewlocation {
-        font-size: 20px;
+        font-size: 16px;
         margin-left: 10px;
     }
 
 }
-
+@media (min-width: 1400px) and (max-width: 1500px) {
+    .rate1-book{
+        width: 10% !important;
+    }
+    .book-spot{
+    padding: 7px !important;
+}
+}
+@media (min-width: 1311px) and (max-width: 1399px) {
+    .book-spot{
+    padding: 8px !important;
+}
+}
 @media (min-width: 1260px) and (max-width: 1310px) {
     .Book-content2 {
         padding-left: 20px;
     }
+    .rate1-book{
+    width: 11% !important;
+}
+.book-spot{
+    padding: 8px !important;
+}
 }
 @media (min-width: 992px) and (max-width: 1210px) {
 .rate1-book{
-    width: 13% !important;
+    width: 14% !important;
+}
+.book-spot{
+    padding: 10px !important;
 }
 }
 /* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
@@ -1468,8 +1510,7 @@ box-shadow: 0px 3px 4px 0px #00000026;
     }
 
 
-    .btn-type,
-    .book-spot {
+    .btn-type{
         font-size: 18px;
         font-weight: 500;
         line-height: 24.26px;
@@ -2200,7 +2241,7 @@ box-shadow: 0px 3px 4px 0px #00000026;
     }
 
     .rate1-book{
-    width: 15% !important;
+    width: 18% !important;
 }
     .Book-content1 {
         margin: 0 auto;
@@ -2261,7 +2302,7 @@ box-shadow: 0px 3px 4px 0px #00000026;
         max-width: 100%;
         padding: auto 2%;
         /* padding-left: 2%; */
-        padding-top: 25%;
+        padding-top: 10%;
         margin: auto;
     }
 
@@ -2512,7 +2553,7 @@ box-shadow: 0px 3px 4px 0px #00000026;
         gap: 5px;
     }
     .rate1-book{
-    width: 18% !important;
+    width: 20% !important;
 }
 
     .Book-content1 {
@@ -2587,7 +2628,7 @@ box-shadow: 0px 3px 4px 0px #00000026;
     margin-left: 50px !important;
 }
     .book-size {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 400;
         line-height: 9.26px;
     }
@@ -2800,7 +2841,7 @@ box-shadow: 0px 3px 4px 0px #00000026;
         flex-direction: column;
     }
     .rate1-book{
-    width: 18% !important;
+    width: 21% !important;
 }
 
     .bookContentRow2 {
@@ -3103,7 +3144,7 @@ box-shadow: 0px 3px 4px 0px #00000026;
         flex-direction: column;
     }
     .rate1-book{
-    width: 20% !important;
+    width: 23% !important;
 }
 
     .bookContentRow2 {
@@ -3193,8 +3234,7 @@ box-shadow: 0px 3px 4px 0px #00000026;
     font-size: 14px !important;
 }
 
-    .btn-type,
-    .book-spot {
+    .btn-type {
         width: auto;
         height: auto;
         font-size: 16px;

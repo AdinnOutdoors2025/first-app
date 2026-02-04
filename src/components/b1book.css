@@ -474,7 +474,7 @@
   position: relative;
   /* bottom: 51.5px; */
   left: 10px;
-  width: 25%;
+  width: 21% !important;
   /* display: flex; */
   align-items: center;
   gap: 6px;
@@ -792,7 +792,7 @@ height: 22px;
 }
 @media (min-width: 1280px) and (max-width: 1439px) {
   .side-bar-content {
-        width: 115% !important;
+        width: 110% !important;
         margin: auto -20px !important;
     }
      .board-book {
@@ -802,6 +802,9 @@ height: 22px;
     .side-bar-main {
     margin: auto 2%;
     margin-top: 7%;
+}
+.rate-book{
+    width: 23% !important;
 }
 }
 @media (min-width: 1440px) and (max-width: 1500px) {
@@ -897,6 +900,9 @@ height: 22px;
         width: 350px !important;
         height: auto;
     }
+    .rate-book{
+        width: 19% !important;
+    }
 }
 /* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
 @media (min-width: 1440px) and (max-width: 2559px) {
@@ -981,7 +987,7 @@ height: 22px;
   gap: 6px;
 
   background-color: #6dbb45; /* exact green style */
-  padding: 4px 10px;
+  padding: 5px 5px;
   border-radius: 6px;
 
   font-size: 14px;
@@ -1108,7 +1114,23 @@ height: 22px;
         font-size: 16px;
     }
 }
-
+@media (min-width: 1400px) and (max-width: 1500px) {
+    .rate-book{
+        width: 22% !important;
+    }
+}
+@media (min-width: 992px) and (max-width: 1200px) {
+    .rate-book{
+        width: 24% !important;
+    }
+}
+@media (min-width: 992px) and (max-width: 1020px) {
+        .card-board-contents {
+        flex: 0 0 50% !important;
+        max-width: 35% !important;
+        margin-left: 85px !important;
+    }
+}
 /* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
 @media (min-width: 992px) and (max-width: 1023px) {
 
@@ -1524,7 +1546,7 @@ height: 22px;
        position: relative;
   /* bottom: 51.5px; */
   left: 10px;
-  width: 25%;
+  width: 24% !important;
   /* display: flex; */
     }
 
@@ -1562,20 +1584,30 @@ height: 22px;
     }
 
 }
+@media (min-width: 768px) and (max-width: 880px) {
+     .rate-book {
+       position: relative;
+  /* bottom: 51.5px; */
+  left: 10px;
+  width: 27% !important;
+  /* display: flex; */
+    }
+}
+
 /* FORCE 2 columns between 992px and 1199px */
 @media (min-width: 992px) and (max-width: 1199px) {
-  .card-board-contents {
-    flex: 0 0 50%;
-    max-width: 35%;
-    margin-left: 50px;
-  }
    .side-bar-main {
     margin: auto 6% !important;
     margin-top: 7% !important;
 }
 }
-
-
+@media (min-width: 1024px) and (max-width: 1199px) {
+ .card-board-contents {
+    flex: 0 0 50%;
+    max-width: 35%;
+    margin-left: 50px;
+  }
+}
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
 @media (min-width: 480px) and (max-width: 767px) {
 
@@ -3014,6 +3046,10 @@ height: 22px;
         position: relative;
         z-index: 99;
     }
+     .rate-book {
+  width: 25% !important;
+    }
+
 
     .bookMainDeal .FilterSection-mobile {
         position: sticky;
@@ -3416,6 +3452,9 @@ height: 22px;
         top: 53px;
         position: relative;
         z-index: 99;
+    }
+     .rate-book {
+  width: 25% !important;
     }
 
     .bookMainDeal .FilterSection-mobile {
