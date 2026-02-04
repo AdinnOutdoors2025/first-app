@@ -442,7 +442,7 @@ useEffect(() => {
   <video
     ref={videoRef}
     className="hero-video"
-    src="/videos/adinn  outdoor.webm"   
+    src="/videos/adinn-outdoors.webm"
     muted
     loop
     playsInline
