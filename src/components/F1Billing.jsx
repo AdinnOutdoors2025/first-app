@@ -1554,14 +1554,6 @@
 
 
 
-
-
-
-
-
-
-
-// F1Billing.jsx
 import React, { useState, useEffect } from "react";
 import "./F1Billing.css";
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
@@ -1822,6 +1814,16 @@ const BillingDetails = () => {
 
     const overAllTotalAmount = parsedTotalAmount + parsedPrintingCost + parsedMountingCost
     console.log("OVERALL_TOTAL_AMOUNT:", overAllTotalAmount);
+
+    // For multiple products, you would need to loop through all products:
+    // const overAllTotalAmount = products.reduce((total, product) => {
+    //   const productTotal = parseAmount(product.totalAmount || 0);
+    //   const printing = parseAmount(product.PrintingCost || 0);
+    //   const mounting = parseAmount(product.MountingCost || 0);
+    //   return total + productTotal + printing + mounting;
+    // }, 0);
+
+
     // Calculate GST (18% of the overall total)
     const gstPercentageCount = `${gstPercentage}`
     const gstPercentageCount100 = gstPercentageCount / 100
@@ -1961,9 +1963,12 @@ const BillingDetails = () => {
                         totalDays: reserveItem.totalDays,
                         totalPrice: parsedTotalAmount
                     },
-
                     bookedDates: bookedDates,
                 }],
+                overAllTotalAmount: overAllTotalAmount, // Newly sending...
+                gstPercentage: gstPercentage, // Newly sending...
+                gstAmount: gstAmount, // Newly sending...
+                totalAmountWithGST: totalAmountWithGST, // Newly sending...
                 status: "UserSideOrder",
                 order_status: "Pending Client Confirmation",
                 orderType: "single"
@@ -1999,57 +2004,60 @@ const BillingDetails = () => {
             }
             //Order confirmation mail disabled
             // Send email confirmation
-            // try {
-            //     const emailResponse = await fetch(
-            //         `${baseUrl}/OrderReserve/send-order-confirmation`, {
-            //         method: 'POST',
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //         },
-            //         body: JSON.stringify({
-            //             orderId: result.orderId || result._id,
-            //             userName: name,
-            //             userEmail: email,
-            //             userPhone: phone,
-            //             userAddress: `${address}, ${city}, ${state} - ${pincode}`,
-            //             company,
-            //             products: [{
-            //                 id: reserveItem.id,
-            //                 prodCode: reserveItem.prodCode,
-            //                 name: reserveItem.prodName,
-            //                 image: reserveItem.image,
-            //                 price: parsedPrice,
-            //                 printingCost: parsedPrintingCost, // Newly sending...
-            //                 mountingCost: parsedMountingCost, // Newly sending...
-            //                 booking: {
-            //                     startDate: reserveItem.startDate,
-            //                     endDate: reserveItem.endDate,
-            //                     totalDays: reserveItem.totalDays,
-            //                     totalPrice: parsedTotalAmount
-            //                 },
-            //                 fromLocation: reserveItem.FromSpot,
-            //                 toLocation: reserveItem.ToSpot,
-            //                 size: {
-            //                     width: reserveItem.sizeWidth,
-            //                     height: reserveItem.sizeHeight,
-            //                     squareFeet: reserveItem.dimension
-            //                 }
-            //             }],
-            //             orderDate: new Date().toLocaleDateString(),
-            //             totalAmount: parsedTotalAmount,
-            //             overAllTotalAmount: overAllTotalAmount, // Newly sending...
-            //             printingCost: parsedPrintingCost,  // Newly sending...
-            //             mountingCost: parsedMountingCost  // Newly sending...
-            //         })
-            //     });
+        //     try {
+        //         const emailResponse = await fetch(
+        //             `${baseUrl}/OrderReserve/send-order-confirmation`, {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //             },
+        //             body: JSON.stringify({
+        //                 orderId: result.orderId || result._id,
+        //                 userName: name,
+        //                 userEmail: email,
+        //                 userPhone: phone,
+        //                 userAddress: `${address}, ${city}, ${state} - ${pincode}`,
+        //                 company,
+        //                 products: [{
+        //                     id: reserveItem.id,
+        //                     prodCode: reserveItem.prodCode,
+        //                     name: reserveItem.prodName,
+        //                     image: reserveItem.image,
+        //                     price: parsedPrice,
+        //                     printingCost: parsedPrintingCost, // Newly sending...
+        //                     mountingCost: parsedMountingCost, // Newly sending...
+        //                     booking: {
+        //                         startDate: reserveItem.startDate,
+        //                         endDate: reserveItem.endDate,
+        //                         totalDays: reserveItem.totalDays,
+        //                         totalPrice: parsedTotalAmount
+        //                     },
+        //                     fromLocation: reserveItem.FromSpot,
+        //                     toLocation: reserveItem.ToSpot,
+        //                     size: {
+        //                         width: reserveItem.sizeWidth,
+        //                         height: reserveItem.sizeHeight,
+        //                         squareFeet: reserveItem.dimension
+        //                     }
+        //                 }],
+        //                 orderDate: new Date().toLocaleDateString(),
+        //                 totalAmount: parsedTotalAmount,
+        //                 overAllTotalAmount: overAllTotalAmount, // Newly sending...
+        //                 printingCost: parsedPrintingCost,  // Newly sending...
+        //                 mountingCost: parsedMountingCost,  // Newly sending...
+        //                 gstPercentage: gstPercentage, // Newly sending...
+        //                 gstAmount: gstAmount, // Newly sending...
+        //                 totalAmountWithGST: totalAmountWithGST // Newly sending...
+        //             })
+        //         });
 
-            //     if (!emailResponse.ok) {
-            //         const errorData = await emailResponse.json();
-            //         console.error("Failed to send order confirmation email:", errorData);
-            //     }
-            // } catch (emailError) {
-            //     console.error("Email sending error:", emailError);
-            // }
+        //     //     if (!emailResponse.ok) {
+        //     //         const errorData = await emailResponse.json();
+        //     //         console.error("Failed to send order confirmation email:", errorData);
+        //     //     }
+        //     // } catch (emailError) {
+        //     //     console.error("Email sending error:", emailError);
+        //     // }
 
             // Navigate to thank you page
             navigate("/thank_you", {
@@ -2066,6 +2074,9 @@ const BillingDetails = () => {
                     },
                     reserveItem,
                     overAllTotalAmount,
+                    gstPercentage,
+                    gstAmount,
+                    totalAmountWithGST,
                     orderId: result.orderId || result._id,
                     orderStatus: result.order_status || "Pending Client Confirmation"
                 }
@@ -2077,7 +2088,7 @@ const BillingDetails = () => {
         } finally {
             setIsLoading(false);
         }
-    };
+    }
 
     const safePrice = typeof reserveItem?.price === 'string'
         ? parseFloat(reserveItem.price.replace(/[^0-9.]/g, ''))

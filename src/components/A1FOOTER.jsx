@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './a4home.css';
 import { baseUrl } from '../Adminpanel/BASE_URL';
 import { toast } from 'react-toastify';
@@ -10,6 +10,11 @@ function FooterMain() {
     const [message, setMessage] = useState({ text: '', type: '' }); // type: 'success' or 'error'
     const [isError, setIsError] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+        const [currentYear, setCurrentYear] = useState('');
+   useEffect(() => {
+        // Get current year
+        setCurrentYear(new Date().getFullYear());
+    }, []);
 
     const validateContactInfo = (input) => {
         // Simple email regex
@@ -201,11 +206,11 @@ function FooterMain() {
                 <div className="container-fluid" style={{ padding: '0' }}>
                     <div className="copy">
                         <div className="copy1"></div>
-                        <div className="copy11">Copyright &copy; Adinn, All Rights Reserved</div>
+                        <div className="copy11">&copy; {currentYear} Adinn Outdoors. All rights reserved.</div>
                         <div className="copy2"></div>
-                        <div className="copy22">Terms</div>
+                        {/* <div className="copy22">Terms</div>
                         <div className="copy3"></div>
-                        <div className="copy33">Privacy & Policy</div>
+                        <div className="copy33">Privacy & Policy</div> */}
                         <div className="copy4"></div>
                     </div>
                 </div>

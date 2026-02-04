@@ -36,7 +36,7 @@ function ThankyouPageReserve() {
         { id: 2, thankImg: './images/spot1.png', thankTitle: "Adayar L B Road towards Thiruvanmiyur", thankAmount: 10655, thankDays: 5 },
     ]
 
-// Define parseAmount function
+    // Define parseAmount function
     const parseAmount = (amount) => {
         if (amount === null || amount === undefined || amount === '') return 0;
         if (typeof amount === 'number') return amount;
@@ -54,18 +54,23 @@ function ThankyouPageReserve() {
 
 
     const location = useLocation();
-    const { billingInfo, reserveItem, orderId, overAllTotalAmount } = location.state || {};
+    const { billingInfo, reserveItem, orderId, overAllTotalAmount, gstPercentage, gstAmount, totalAmountWithGST } = location.state || {};
     console.log("BILLING INFO", billingInfo);
 
     if (!billingInfo || !reserveItem) {
         return <div>No order details found!</div>;
     }
 
-     // Calculate display amounts
+    // Calculate display amounts
     const parsedTotalAmount = parseAmount(reserveItem?.totalAmount || 0);
     const displayTotalAmount = formatIndianCurrency(parsedTotalAmount, true);
 
     const displayOverAllTotalAmount = formatIndianCurrency(overAllTotalAmount, true);
+    const displaygstPercentage = formatIndianCurrency(gstPercentage, true);
+    const displaygstAmount = formatIndianCurrency(gstAmount, true);
+    const displaytotalAmountWithGST = formatIndianCurrency(totalAmountWithGST, true);
+    console.log("GST % : ", displaygstPercentage, "GST Amt : ", displaygstAmount, "TotalAmtWithGST : ", displaytotalAmountWithGST);
+
     return (
         <MainLayout>
 
@@ -86,8 +91,8 @@ function ThankyouPageReserve() {
                                 <div className='thank_order-content' >
                                     <div className='thank_orderDetails orderDetails1'>Order Number<br></br>
                                         <span className='thank_orderDetailsCode'>{orderId} </span>
-                                    </div> 
-                                    <div  className='ThankYouRightHeadingLine'>
+                                    </div>
+                                    <div className='ThankYouRightHeadingLine'>
                                     </div>
                                     <div className='thank_orderDetails orderDetails2'>Date<br></br>
                                         {new Date().toLocaleDateString("en-US", {
@@ -108,7 +113,9 @@ function ThankyouPageReserve() {
                                     <div className='thank_item-contentDetails2' >
                                         <span className='thank-item-heading'>{reserveItem.prodName}</span><br></br>
                                         {/* <span>₹ {reserveItem.totalAmount}</span><br></br> */}
-                                        <span>{displayOverAllTotalAmount}</span><br />
+                                        {/* <span>{displayOverAllTotalAmount}</span><br />  */}
+                                        <span>{displaytotalAmountWithGST}</span><br />
+
 
                                         {/* <span>{reserveItem.totalDays} days</span><br></br> */}
                                         <span>{reserveItem.dateRange} ({reserveItem.totalDays} days)</span>
