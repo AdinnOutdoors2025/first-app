@@ -48,13 +48,19 @@ import "react-toastify/dist/ReactToastify.css";
 /* Add toast message -SK */
 function App() {
   const [load, upadateLoad] = useState(true); 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      upadateLoad(false);
-    }, 2000);
+useEffect(() => {
+  const timer = setTimeout(() => {
+    upadateLoad(false);
 
-    return () => clearTimeout(timer);
-  }, []);
+    const initialLoader = document.getElementById("initial-loader");
+    if (initialLoader) {
+      initialLoader.remove();
+    }
+  }, 2000);
+
+  return () => clearTimeout(timer);
+}, []);
+
   return (
     <div>
       <ToastContainer position="top-right" autoClose={2000} />
@@ -62,7 +68,7 @@ function App() {
         <LoginProvider>
           {/* <CartProvider> */}
           <Router>
-            <PreLoader load={load} />
+            {/* <PreLoader load={load} /> */}
             {/* Scroll to Top Component - Add this */}
             <ScrollToTop />
             {/* <Navbar/> */}
