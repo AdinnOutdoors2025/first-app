@@ -3138,7 +3138,12 @@ box-shadow: 0px 3px 4px 0px #00000026;
 
 }
 
-
+@media (min-width: 1200px) {
+    .custom-col-30 {
+    flex: 0 0 30% !important;
+    max-width: 30% !important;
+  }
+}
 @media (min-width: 320px) and (max-width: 359px) {
     .BookMain {
         flex-direction: column;

@@ -496,7 +496,7 @@
   position: relative;
   /* bottom: 51.5px; */
   left: 10px;
-  width: 27% !important;
+  width: 24% !important;
   /* display: flex; */
   align-items: center;
   gap: 6px;
@@ -826,13 +826,15 @@
     }
 
     .side-bar-main {
-        margin: auto 2%;
-        /* margin-top: 7%; */
-    }
-
-    .rate-book {
-        width: 23% !important;
-    }
+    margin: auto 2%;
+    /* margin-top: 7%; */
+}
+.rate-book{
+    width: 23% !important;
+}
+.rate2-book{
+    width: 18%!important;
+}
 }
 
 @media (min-width: 1440px) and (max-width: 1500px) {
@@ -846,9 +848,12 @@
     }
 
     .side-bar-main {
-        margin: auto 4%;
-        /* margin-top: 7%; */
-    }
+    margin: auto 4%;
+    /* margin-top: 7%; */
+}
+.rate2-book{
+    width: 18%!important;
+}
 }
 
 @media (min-width: 1501px) and (max-width: 1599px) {

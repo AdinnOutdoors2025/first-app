@@ -31,7 +31,7 @@ function AdinnHome2() {
     //         </div>
     //     );
     // };
- const RatingStars = ({ rating }) => {
+ const RatingStars1 = ({ rating }) => {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 !== 0;
     const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
@@ -457,7 +457,7 @@ function AdinnHome2() {
                                                                   className="rate-board-book"
                                                                 ></img> */}
                                                               </div>
-                                                              <RatingStars rating={spot.rating} />
+                                                              <RatingStars1 rating={spot.rating} />
                                                                             <div>
                                         <button className="board-btn-book" onClick={() => handleBookNow(spot)}>
                                             Book Now

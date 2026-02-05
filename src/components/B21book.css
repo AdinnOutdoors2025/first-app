@@ -67,7 +67,7 @@ section {
     background: linear-gradient(94.12deg, #FFE2E3 66.96%, #FFFFFF 99.86%); */
     margin-bottom: 0%;
     height: auto !important;
-    width: 280px;
+    width: 315px;
     border-radius: 16px;
     /* background: linear-gradient(94.12deg, #FFE2E3 66.96%, #FFFFFF 99.86%); */
     background: #fff;
@@ -239,7 +239,10 @@ section {
     bottom: 191.5px;
     left: 182px;
 } */
-
+ /* .similar-products{
+ width: 99%;
+ margin: auto 6px !important;
+ } */
 
 /* Responsive Media Queries */
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
@@ -395,7 +398,7 @@ section {
     .board1-book1 {
         margin-bottom: 0%;
         height: 380px;
-        width: 270px;
+        width: 315px;
         border-radius: 16px;
     }
 
@@ -456,7 +459,13 @@ section {
     }
 
 }
-
+@media (min-width: 1024px) and (max-width: 1199px){
+ .similar-products {
+        width: 125% !important;
+        gap: 0px;
+        /* margin: auto -27px; */
+    }
+}
 /* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
 @media (min-width: 992px) and (max-width: 1023px) {
     .banner-main {
@@ -496,9 +505,9 @@ section {
     }
 
     .similar-products {
-        width: 105%;
+        width: 115%;
         gap: 0px;
-        margin: auto -27px;
+        /* margin: auto -27px; */
     }
 
     .board-content-book1 {
@@ -568,7 +577,18 @@ section {
     }
 
 }
-
+@media (min-width: 1200px) {
+    .custom-col-30 {
+    flex: 0 0 30% !important;
+    max-width: 30% !important;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    .custom-col-30 {
+    flex: 0 0 30% !important;
+    max-width: 25% !important;
+  }
+}
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
 @media (min-width: 768px) and (max-width: 991px) {
 
@@ -603,12 +623,7 @@ section {
         margin: auto 24px;
     }
 
-    .similar-products {
-        width: 80%;
-        flex-wrap: wrap;
-        gap: 10px 225px;
-        margin: auto 4px;
-    }
+   
 
     .NearbyHeading {
         font-size: 28px;
@@ -619,7 +634,7 @@ section {
     .board1-book1 {
         margin-bottom: 0%;
         height: 330px;
-        width: 295px;
+        width: 315px;
         border-radius: 16px;
     }
 
@@ -683,7 +698,24 @@ section {
 
 
 }
+@media (min-width: 892px) and (max-width: 991px) {
 
+ .similar-products {
+        width: 90%;
+        flex-wrap: wrap;
+        gap: 10px 160px;
+        margin: auto 14px;
+    }
+}
+@media (min-width: 768px) and (max-width: 891px) {
+
+ .similar-products {
+        width: 70%;
+        flex-wrap: wrap;
+        gap: 10px 225px;
+        margin: auto 4px;
+    }
+}
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
 @media (min-width: 480px) and (max-width: 767px) {
 

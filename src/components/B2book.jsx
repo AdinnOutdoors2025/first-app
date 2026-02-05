@@ -3122,7 +3122,7 @@ function BookASite1() {
                                         <div className="row similar-products">
                                             {displayedSimilarSpots.map((spot) => (
                                                 <div
-                                                    className="col-lg-3 col-md-3 col-sm-12 mb-4"
+                                                    className="col-lg-3 col-md-3 col-sm-12 mb-4 custom-col-30"
                                                     key={spot._id}
                                                 >
                                                     <div

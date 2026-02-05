@@ -50,7 +50,29 @@ function BookASite11() {
             </div>
         );
     };
-
+const RatingStarsSimilar = ({ rating }) => {
+        const fullStars = Math.floor(rating);
+        const halfStar = rating % 1 !== 0;
+        const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+        return (
+            <div className="rate rate1-book1">
+                {/* {[...Array(fullStars)].map((_, index) => (
+                    <span key={index} className="fa-solid fa-star stars-book1"></span>
+                ))}
+                {halfStar && (
+                    <span className="fa-solid fa-star-half-alt stars-book1"></span>
+                )}
+                {[...Array(emptyStars)].map((_, index) => (
+                    <span
+                        key={index}
+                        className="fa-solid fa-star empty-star-book1"
+                    ></span>
+                ))} */}
+                <span className="rating-text">4.3</span>
+  <span className="fa-solid fa-star rating-star"></span>
+            </div>
+        );
+    };
     // NAVIGATE 
     const navigate = useNavigate();
     return (
@@ -81,7 +103,7 @@ function BookASite11() {
                             {similarSpots.length > 0 ? (
                             similarSpots.map(
                                 (spot) => (
-                                    <div className="col-lg-3 col-md-3 col-sm-12 mb-4 " key={spot._id} >
+                                    <div className="col-lg-3 col-md-3 col-sm-12 mb-4 custom-col-30" key={spot._id} >
                                         <div className="card board1-book1" >
                                             <img src={spot.image} alt={spot.location} className="card-img-top-book1" />
                                             <span className='board-category-book1'>{spot.category}</span>
@@ -94,9 +116,9 @@ function BookASite11() {
                                                     <span className="board-price-book1">₹{spot.price.toLocaleString()}</span>
                                                     <img src='./images/rating_board.png' className='rate-board-book1'></img>
                                                 </div>
-                                                <RatingStars rating={spot.rating} />
+                                                {/* <RatingStars rating={spot.rating} /> */}
+                                                <RatingStarsSimilar rating={spot.rating} /> 
                                                 
-                                                RatingStarsSimilar
                                                 <button className="board-btn-book1" onClick={() => navigate("/book1#similarProdDetailsShows")}>Book Now</button>
                                             </div>
                                         </div>
