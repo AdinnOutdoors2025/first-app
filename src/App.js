@@ -51,7 +51,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       upadateLoad(false);
-    }, 1200);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -69,6 +69,8 @@ function App() {
             <Routes>
               {/* IF USER GIVE ANY WRONG / NOT FOUND THEN SHOW THIS PAGE  */}
               <Route path="*" element={<NotFound />} />
+              <Route path="mainLoader" element={<PreLoader />} />
+
               {/* Hero Section  */}
               {/* <Route path="/" element={<HeroSection />} /> */}
               <Route path="/" element={<HeroBanner />} />
