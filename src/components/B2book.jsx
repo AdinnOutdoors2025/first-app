@@ -2535,7 +2535,7 @@ function BookASite1() {
         const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
         return (
             <div className="rate rate1-book1">
-                {[...Array(fullStars)].map((_, index) => (
+                {/* {[...Array(fullStars)].map((_, index) => (
                     <span key={index} className="fa-solid fa-star stars-book1"></span>
                 ))}
                 {halfStar && (
@@ -2546,7 +2546,9 @@ function BookASite1() {
                         key={index}
                         className="fa-solid fa-star empty-star-book1"
                     ></span>
-                ))}
+                ))} */}
+                <span className="rating-text">4.3</span>
+  <span className="fa-solid fa-star rating-star"></span>
             </div>
         );
     };
@@ -3168,7 +3170,8 @@ function BookASite1() {
                                                                     alt="rating"
                                                                 ></img> */}
                                                             </div>
-                                                            <RatingStars rating={spot.rating} />
+                                                            <RatingStarsSimilar rating={spot.rating} />
+                                                            
                                                             {/* <button
                                                                 className="board-btn-book1"
                                                                 onClick={() => handleSimilarProductClick(spot)}

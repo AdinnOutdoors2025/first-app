@@ -202,7 +202,24 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.rate2-book {
+  position: relative;
+  /* bottom: 51.5px; */
+  left: 10px;
+  width: 11% !important;
+  /* display: flex; */
+  align-items: center;
+  gap: 6px;
+  flex-direction: row-reverse;
+  background-color: #6dbb45; /* exact green style */
+  padding: 5px 5px;
+  border-radius: 6px;
 
+  font-size: 14px;
+  line-height: 1;
+  white-space: nowrap;
+  margin-bottom: 10px;
+}
 .rate-board-home {
   float: right;
   height: 30px;

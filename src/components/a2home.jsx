@@ -37,7 +37,7 @@ function AdinnHome2() {
     const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
 
     return (
-      <div className="rate-book">
+      <div className="rate2-book">
   <span className="rating-text">4.3</span>
   <span className="fa-solid fa-star rating-star"></span>
 </div>
@@ -302,8 +302,8 @@ function AdinnHome2() {
         prevArrow: <PrevArrow />,
         centerMode: primeSpotsData.length > 1,
         centerPadding: "0px",
-        // autoplay: primeSpotsData.length > 1,
-        // autoplaySpeed: 2000,
+        autoplay: primeSpotsData.length > 1,
+        autoplaySpeed: 2000,
         beforeChange: (current, next) => {
             const elements = document.querySelectorAll(".slick-slide");
             elements.forEach((el, index) => {

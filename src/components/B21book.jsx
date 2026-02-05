@@ -95,6 +95,8 @@ function BookASite11() {
                                                     <img src='./images/rating_board.png' className='rate-board-book1'></img>
                                                 </div>
                                                 <RatingStars rating={spot.rating} />
+                                                
+                                                RatingStarsSimilar
                                                 <button className="board-btn-book1" onClick={() => navigate("/book1#similarProdDetailsShows")}>Book Now</button>
                                             </div>
                                         </div>

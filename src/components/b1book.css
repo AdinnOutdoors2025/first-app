@@ -488,7 +488,24 @@
   white-space: nowrap;
   margin-bottom: 10px;
 }
+.rate1-book1{
+  position: relative;
+  /* bottom: 51.5px; */
+  left: 10px;
+  width: 27% !important;
+  /* display: flex; */
+  align-items: center;
+  gap: 6px;
+  flex-direction: row-reverse;
+  background-color: #6dbb45; /* exact green style */
+  padding: 5px 5px;
+  border-radius: 6px;
 
+  font-size: 14px;
+  line-height: 1;
+  white-space: nowrap;
+  margin-bottom: 10px;
+}
 .rating-star {
   color: #ffd54f; /* yellow star */
   font-size: 18px;
@@ -806,6 +823,9 @@ height: 22px;
 .rate-book{
     width: 23% !important;
 }
+.rate2-book{
+    width: 18% !important;
+}
 }
 @media (min-width: 1440px) and (max-width: 1500px) {
   .side-bar-content {
@@ -818,6 +838,9 @@ height: 22px;
     .side-bar-main {
     margin: auto 4%;
     margin-top: 7%;
+}
+.rate2-book{
+    width: 18% !important;
 }
 }
 @media (min-width: 1501px) and (max-width: 1599px) {
@@ -832,7 +855,9 @@ height: 22px;
     margin: auto 2%;
     margin-top: 7%;
 }
-       
+.rate2-book{
+    width: 17% !important;
+}      
 }
 @media (min-width: 1600px) and (max-width: 1699px) {
   .side-bar-content {
@@ -850,6 +875,9 @@ height: 22px;
         width: 300px !important;
         height: auto;
     }
+    .rate2-book{
+    width: 16% !important;
+}
 }
 @media (min-width: 1700px) and (max-width: 1799px) {
   .side-bar-content {
@@ -903,6 +931,9 @@ height: 22px;
     .rate-book{
         width: 19% !important;
     }
+    .rate2-book{
+    width: 13% !important;
+}
 }
 /* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
 @media (min-width: 1440px) and (max-width: 2559px) {
@@ -1123,6 +1154,9 @@ height: 22px;
     .rate-book{
         width: 24% !important;
     }
+    .rate2-book{
+    width: 26% !important;
+}
 }
 @media (min-width: 992px) and (max-width: 1020px) {
         .card-board-contents {
@@ -1130,6 +1164,9 @@ height: 22px;
         max-width: 35% !important;
         margin-left: 85px !important;
     }
+    .rate2-book{
+    width: 27% !important;
+}
 }
 /* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
 @media (min-width: 992px) and (max-width: 1023px) {
@@ -1357,12 +1394,18 @@ height: 22px;
     .board-book{
          width: 300px !important;
     }
+     .rate2-book{
+    width: 28% !important;
+}
 }
 @media (min-width: 800px) and (max-width: 901px) {
     .side-bar-main {
         margin: auto 20px !important;
         margin-top: 60px !important;
     }
+     .rate2-book{
+    width: 30% !important;
+}
 }
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
 @media (min-width: 768px) and (max-width: 991px) {
@@ -1592,8 +1635,38 @@ height: 22px;
   width: 27% !important;
   /* display: flex; */
     }
+    
 }
-
+@media (min-width: 700px) and (max-width: 799px) {
+    .rate2-book{
+    width: 32% !important;
+}
+}
+@media (min-width: 600px) and (max-width: 699px) {
+    .rate2-book{
+    width: 35% !important;
+}
+}
+@media (min-width: 600px) and (max-width: 699px) {
+    .rate2-book{
+    width: 31% !important;
+}
+}
+@media (min-width: 400px) and (max-width: 599px) {
+    .rate2-book{
+    width: 23% !important;
+}
+}
+@media (min-width: 340px) and (max-width: 399px) {
+    .rate2-book{
+    width: 23% !important;
+}
+}
+@media (min-width: 300px) and (max-width: 339px) {
+    .rate2-book{
+    width: 28% !important;
+}
+}
 /* FORCE 2 columns between 992px and 1199px */
 @media (min-width: 992px) and (max-width: 1199px) {
    .side-bar-main {
