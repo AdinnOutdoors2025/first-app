@@ -19,6 +19,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { baseUrl } from "../Adminpanel/BASE_URL";
 import { formatIndianCurrency } from "./FORMATED_AMOUNT";
 import slugify from "slugify";
+import PreLoader from "../components/PreLoad.jsx";
 // DATE OPEN WINDOW
 import { DATE_CONFIG } from "../Adminpanel/BASE_URL.js";
 // DATE OPEN WINDOW
@@ -2554,11 +2555,7 @@ function BookASite1() {
     if (isLoading) {
         return (
             <MainLayout>
-                <div className="container text-center py-5">
-                    <div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
-                </div>
+               <PreLoader load={isLoading} />
             </MainLayout>
         );
     }
