@@ -2325,7 +2325,7 @@ const BillingDetails = () => {
                                                 <img src={reserveItem?.image} alt="Product" className="billing-order-img" />
                                                 <div className="billing-order-title">
                                                     <div>{reserveItem?.prodName}</div>
-                                                    <div>{formatIndianCurrency(safePrice, true)} Per Day</div>
+                                                    <div>{formatIndianCurrency(safePrice, true)} / Per Day</div>
                                                     <div>Booking Period : {reserveItem?.dateRange} ({reserveItem?.totalDays} Days)</div>
                                                     <div>Booking Amount : ₹ {formatIndianCurrency(parsedTotalAmount)}</div>
                                                     <div>Printing Cost : ₹ {formatIndianCurrency(parsedPrintingCost)}</div>
