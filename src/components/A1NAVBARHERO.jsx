@@ -125,7 +125,7 @@ function MainNavbarHero() {
                     <button className="contact-btnHero">Contact us</button>
                 </a>
 
-                <button className="book-btnHero" onClick={() => navigate("/book")}>
+                <button className="book-btnHero" onClick={() => navigate("/billboard-advertising-in-india")}>
                     <span className='book-btn-textHero'>Book a site</span>
                     <img src="/images/BookBtn_logo.png" alt="Book Button" className="book-btn-imageHero" width="45" height="25" />
                 </button>

@@ -46,7 +46,7 @@ function HeroSectionMain() {
                             Capture attention where it matters
                         </div>
                         <div>
-                            <button className='HeroBannerMainButton' onClick={() => navigate('/book')}>
+                            <button className='HeroBannerMainButton' onClick={() => navigate('/billboard-advertising-in-india')}>
                                 Book Your Space
                             </button> 
                         </div>

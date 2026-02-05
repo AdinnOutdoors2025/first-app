@@ -664,12 +664,12 @@ function H1DealDay() {
                 {/* TIMER ENDED BACKGROUND IMAGE WITH CUSTOMIZED BACK BUTTON  */}
                 {/* <div className='container-fluid' >
                             <div className='DealTimerEndBanner'>
-                                <button className='DealTimerEndedBtn' onClick={() => navigate("/book")} >Back To Shop</button>
+                                <button className='DealTimerEndedBtn' onClick={() => navigate("/billboard-advertising-in-india")} >Back To Shop</button>
                             </div>
                         </div> */} 
                 {timerEnded ?
                     (
-                        <div className='container-fluid TimerEndedMain ' onClick={() => navigate("/book")}   >
+                        <div className='container-fluid TimerEndedMain ' onClick={() => navigate("/billboard-advertising-in-india")}   >
                             <img src='./images/DealTimerEndedFinal1.png' ></img>
                         </div>
                     ) : (

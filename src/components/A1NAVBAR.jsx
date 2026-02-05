@@ -117,7 +117,7 @@ function NavbarMain() {
                         document.getElementById('ContactUsFooter')?.scrollIntoView({ behavior: 'smooth' });
                     }} > <button className="contact-btn">Contact us</button>
                 </a>
-                <button className="book-btn" onClick={() => navigate("/book")}>
+                <button className="book-btn" onClick={() => navigate("/billboard-advertising-in-india")}>
                     <span className='book-btn-text' >Book a site</span>
                     <img src="/images/BookBtn_logo.png" alt="Image" className="book-btn-image" width="45" height="25" />
                 </button>
