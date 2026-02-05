@@ -166,11 +166,13 @@
 
 .what-main {
   border-radius: 20px;
-  border: 1px solid gray;
-  box-shadow: 2px 2px 2px gray, -2px -2px 2px gray;
+  /* border: 1px solid gray;
+  box-shadow: 2px 2px 2px gray, -2px -2px 2px gray; */
   /* box-shadow: 2px 2px 2px gray; */
   position: relative;
   padding-bottom: 50px;
+  padding-top: 30px;
+background: #F4F4F4;
 }
 
 .what-head {
@@ -180,8 +182,8 @@
 
 .what-heading {
   width: 400px;
-  font-size: 50px;
-  font-weight: 500px;
+  font-size: 30px;
+  font-weight: 700;
   line-height: 60px;
 }
 
@@ -195,8 +197,11 @@
 
 .what-para {
   text-align: justify;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 34px;
+font-family: 'Montserrat';
+letter-spacing: 0%;
+font-weight: 400;
 }
 
 .what-main-content1 {
@@ -562,8 +567,8 @@
 
   .what-heading {
     width: 506px;
-    font-size: 54px;
-    font-weight: 500;
+    font-size: 30px;
+    font-weight: 700;
     line-height: 60px;
   }
 
@@ -812,8 +817,8 @@
 
   .what-heading {
     width: 300px;
-    font-size: 38px;
-    font-weight: 500px;
+    font-size: 28px;
+    font-weight: 700px;
     line-height: 40px;
   }
 
@@ -945,8 +950,8 @@
   .what-heading {
     text-align: center;
     width: auto;
-    font-size: 38px;
-    font-weight: 500px;
+    font-size: 28px;
+    font-weight: 700px;
     line-height: 40px;
   }
 
@@ -1159,8 +1164,8 @@
     width: auto;
     text-align: center;
     /* width: 300px; */
-    font-size: 38px;
-    font-weight: 500px;
+    font-size: 28px;
+    font-weight: 700px;
     line-height: 40px;
   }
 
@@ -1383,8 +1388,8 @@
     width: auto;
     text-align: center;
     /* width: 300px; */
-    font-size: 35px;
-    font-weight: 500px;
+    font-size: 25px;
+    font-weight: 700px;
     line-height: 40px;
   }
 
@@ -1589,8 +1594,8 @@
     width: auto;
     text-align: center;
     /* width: 300px; */
-    font-size: 33px;
-    font-weight: 500px;
+    font-size: 24px;
+    font-weight: 700px;
     line-height: 35px;
   }
 
@@ -1795,8 +1800,8 @@
     width: auto;
     text-align: center;
     /* width: 300px; */
-    font-size: 30px;
-    font-weight: 500px;
+    font-size: 24px;
+    font-weight: 700px;
     line-height: 30px;
   }
 

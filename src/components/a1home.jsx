@@ -298,8 +298,11 @@ function AdinnHome() {
             <div className="what-main container">
               <div className="whatWeDo-main container">
                 <div className="what-main-content1">
-                  <p className="what-heading">
-                    We Ensure the best <span className="highlight whatWeDo-highlight">Support</span>
+                  {/* <p className="what-heading">
+                    We Ensure  <span className="highlight whatWeDo-highlight">Support</span>
+                  </p> */}
+                   <p className="what-heading">
+                    We Ensure Support
                   </p>
                   <p className="what-para">{currentContent}</p>
                 </div>
