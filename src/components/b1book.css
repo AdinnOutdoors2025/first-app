@@ -8,7 +8,7 @@
 
 .side-bar-main {
     margin: auto 3%;
-    margin-top: 7%;
+    /* margin-top: 7%; */
 
 }
 
@@ -17,15 +17,15 @@
 .location {
     width: 240px;
     height: auto;
-   background: #F6F6F6;
+    background: #F6F6F6;
     /* border-width: 0;
     border-width: 3px;
     border-style: solid;
     border: 3px solid; */
     /* box-shadow: */
-        /* 1px 1px 3.2px rgba(255, 44, 44, 1), */
-        /* Bottom-right shadow */
-        /* -1px -1px 3.2px rgba(255, 139, 139, 1); */
+    /* 1px 1px 3.2px rgba(255, 44, 44, 1), */
+    /* Bottom-right shadow */
+    /* -1px -1px 3.2px rgba(255, 139, 139, 1); */
     /* Top-left shadow */
     /* border: 3px solid; */
     /* border-color: rgba(255, 44, 44, 1); */
@@ -75,12 +75,14 @@
 
 /* Checked state for the checkbox */
 .form-check-input:checked {
-   /* background-color: #fff;
+    /* background-color: #fff;
     border-color: red;
   accent-color: red;  */
-  background-color: #fff;        /* white background */
-  border-color: red;             /* red border */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5 L8 14 L16 6' fill='none' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-color: #fff;
+    /* white background */
+    border-color: red;
+    /* red border */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5 L8 14 L16 6' fill='none' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
 
@@ -89,7 +91,7 @@
     border-radius: 13px;
     /* background: rgba(218, 216, 216, 1); */
     /* box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25); */
-    color:red;
+    color: red;
 }
 
 /* Label styling */
@@ -104,7 +106,7 @@
 .dropdown {
     width: 215px;
     margin: auto;
-     position: relative;
+    position: relative;
 }
 
 /* Dropdown button */
@@ -213,6 +215,7 @@
     transition: background 0.3s;
     position: relative;
 }
+
 /* Checkbox */
 /* .menu li::before {
   content: "";
@@ -377,11 +380,11 @@
     align-items: center;
     text-align: center;
     float: right;
-    height: 28px;
-    width: 80px;
-    padding: 2px;
+    /* height: 28px;
+    width: 80px; */
+    padding: 3px 5px;
     border-radius: 6px;
-    color:  #E41E25;
+    color: #E41E25;
     box-shadow: 0px 2px 4px 0px #00000026;
 }
 
@@ -397,16 +400,16 @@
     position: static !important;
     /* bottom: -25px;
     left: 23px; */
-     width: 155px;
+    width: 155px;
     height: 44px;
     border: 2px solid #E41E25;
-     background: #E41E25;
+    background: #E41E25;
     /* backdrop-filter: blur(20px); */
     color: #fff;
     cursor: pointer;
     background-clip: padding-box, border-box;
     border-radius: 10px;
-    margin-left:10px;
+    margin-left: 10px;
 }
 
 
@@ -471,22 +474,23 @@
   line-height: 1;
 } */
 .rate-book {
-  position: relative;
-  /* bottom: 51.5px; */
-  left: 10px;
-  width: 21% !important;
-  /* display: flex; */
-  align-items: center;
-  gap: 6px;
-  flex-direction: row-reverse;
-  background-color: #6dbb45; /* exact green style */
-  padding: 5px 5px;
-  border-radius: 6px;
+    position: relative;
+    /* bottom: 51.5px; */
+    left: 10px;
+    width: 21% !important;
+    /* display: flex; */
+    align-items: center;
+    gap: 6px;
+    flex-direction: row-reverse;
+    background-color: #6dbb45;
+    /* exact green style */
+    padding: 5px 5px;
+    border-radius: 6px;
 
-  font-size: 14px;
-  line-height: 1;
-  white-space: nowrap;
-  margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1;
+    white-space: nowrap;
+    margin-bottom: 10px;
 }
 .rate1-book1{
   position: relative;
@@ -507,20 +511,21 @@
   margin-bottom: 10px;
 }
 .rating-star {
-  color: #ffd54f; /* yellow star */
-  font-size: 18px;
-  order: 2;
-width: 22px;
-height: 22px;
+    color: #ffd54f;
+    /* yellow star */
+    font-size: 18px;
+    order: 2;
+    width: 22px;
+    height: 22px;
 
 }
 
 .rating-text {
-  color: #ffffff;
-  font-weight: 500;
-  font-size: 18px;
-  padding-left: 5px;
-  order: 1;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 18px;
+    padding-left: 5px;
+    order: 1;
 }
 
 /* PAGINATION CSS  */
@@ -583,19 +588,20 @@ height: 22px;
 }
 
 /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
-.bookMainDeal .navbar1 {
+/* .bookMainDeal .navbar1 {
     top: 73px;
-}
+} */
 
 .board-price-bookPerDay {
     color: rgba(51, 51, 51, 1);
     font-size: 16px;
     font-weight: 500;
 }
-.form-check-input:focus{
+
+.form-check-input:focus {
     box-shadow: none;
     border: none;
-    
+
 }
 
 /* Responsive Media Queries */
@@ -650,8 +656,8 @@ height: 22px;
     .board-dim-book {
         font-size: 16px;
         font-weight: 600;
-        height: 35px;
-        width: 95px;
+        /* height: 35px;
+        width: 95px; */
         padding: 2px;
     }
 
@@ -807,71 +813,79 @@ height: 22px;
         font-size: 16px;
     }
 }
+
 @media (min-width: 1280px) and (max-width: 1439px) {
-  .side-bar-content {
+    .side-bar-content {
         width: 110% !important;
         margin: auto -20px !important;
     }
-     .board-book {
-       margin-left: 10px;
-       width: 300px;
+
+    .board-book {
+        margin-left: 10px;
+        width: 300px;
     }
+
     .side-bar-main {
-    margin: auto 2%;
-    margin-top: 7%;
+        margin: auto 2%;
+        /* margin-top: 7%; */
+    }
+
+    .rate-book {
+        width: 23% !important;
+    }
 }
-.rate-book{
-    width: 23% !important;
-}
-.rate2-book{
-    width: 18% !important;
-}
-}
+
 @media (min-width: 1440px) and (max-width: 1500px) {
-  .side-bar-content {
+    .side-bar-content {
         width: 115% !important;
         margin: auto -10px !important;
     }
-     .board-book {
-       margin-left: 10px;
+
+    .board-book {
+        margin-left: 10px;
     }
+
     .side-bar-main {
-    margin: auto 4%;
-    margin-top: 7%;
+        margin: auto 4%;
+        /* margin-top: 7%; */
+    }
 }
-.rate2-book{
-    width: 18% !important;
-}
-}
+
 @media (min-width: 1501px) and (max-width: 1599px) {
-  .side-bar-content {
+    .side-bar-content {
         width: 125% !important;
         margin: auto 10px !important;
     }
-     .board-book {
+
+    .board-book {
         width: 340px !important;
     }
-      .side-bar-main {
-    margin: auto 2%;
-    margin-top: 7%;
+
+    .side-bar-main {
+        margin: auto 2%;
+        /* margin-top: 7%; */
+    }
+
 }
-.rate2-book{
-    width: 17% !important;
-}      
-}
+
 @media (min-width: 1600px) and (max-width: 1699px) {
-  .side-bar-content {
+    .side-bar-content {
         width: 125% !important;
         margin: auto 10px !important;
     }
-     .side-bar-main {
-    margin: auto 5%;
-    margin-top: 7%;
-}
- .board-book {
+
+    .side-bar-main {
+        margin: auto 5%;
+        /* margin-top: 7%; */
+    }
+
+    .board-book {
         width: 350px !important;
     }
-        .outdoor, .sorting, .location {
+
+    .outdoor,
+    .sorting,
+    .location {
         width: 300px !important;
         height: auto;
     }
@@ -879,69 +893,90 @@ height: 22px;
     width: 16% !important;
 }
 }
+
 @media (min-width: 1700px) and (max-width: 1799px) {
-  .side-bar-content {
+    .side-bar-content {
         width: 130% !important;
         margin: auto 10px !important;
     }
-     .side-bar-main {
-    margin: auto 5%;
-    margin-top: 7%;
-}
- .board-book {
+
+    .side-bar-main {
+        margin: auto 5%;
+        /* margin-top: 7%; */
+    }
+
+    .board-book {
         width: 360px !important;
     }
-        .outdoor, .sorting, .location {
+
+    .outdoor,
+    .sorting,
+    .location {
         width: 330px !important;
         height: auto;
     }
 }
+
 @media (min-width: 1800px) and (max-width: 1899px) {
-  .side-bar-content {
+    .side-bar-content {
         width: 135% !important;
         margin: auto 13px !important;
     }
-     .side-bar-main {
-    margin: auto 8%;
-    margin-top: 7%;
-} .board-book {
+
+    .side-bar-main {
+        margin: auto 8%;
+        /* margin-top: 7%; */
+    }
+
+    .board-book {
         width: 370px !important;
     }
-        .outdoor, .sorting, .location {
+
+    .outdoor,
+    .sorting,
+    .location {
         width: 340px !important;
         height: auto;
     }
 }
+
 @media (min-width: 1900px) and (max-width: 1999px) {
-  .side-bar-content {
+    .side-bar-content {
         width: 140% !important;
         margin: auto 10px !important;
     }
-     .side-bar-main {
-    margin: auto 8%;
-    margin-top: 7%;
-}
+
+    .side-bar-main {
+        margin: auto 8%;
+        /* margin-top: 7%; */
+    }
+
     .board-book {
         width: 380px !important;
     }
-        .outdoor, .sorting, .location {
+
+    .outdoor,
+    .sorting,
+    .location {
         width: 350px !important;
         height: auto;
     }
-    .rate-book{
+
+    .rate-book {
         width: 19% !important;
     }
     .rate2-book{
     width: 13% !important;
 }
 }
+
 /* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
 @media (min-width: 1440px) and (max-width: 2559px) {
 
-    /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
-    .bookMainDeal .navbar1 {
+    /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS ( bookMainDeal .navbar1 ) &( side-bar-main ) commented for offer page scroll hide margin-top comment in side-bar-main  and mobile view filter responsive ( .bookMainDeal .FilterSection-mobile ) margin top hide  */
+    /* .bookMainDeal .navbar1 {
         top: 75px;
-    }
+    } */
 
     .side-bar-content {
         width: 122%;
@@ -987,8 +1022,8 @@ height: 22px;
     .board-dim-book {
         font-size: 16px;
         font-weight: 600;
-        height: 30px;
-        width: 100px;
+        /* height: 30px;
+        width: 100px; */
         padding: 2px;
     }
 
@@ -1001,7 +1036,8 @@ height: 22px;
         height: 40px;
         width: 110px;
     }
-/* 
+
+    /* 
     .rate-book {
         position: absolute;
         bottom: 61px;
@@ -1009,22 +1045,23 @@ height: 22px;
     } */
 
     .rate-book {
-  position: relative;
-  bottom: 5x;
-  left: 10px;
+        position: relative;
+        bottom: 5x;
+        left: 10px;
 
-  /* display: inline-flex; */
-  align-items: center;
-  gap: 6px;
+        /* display: inline-flex; */
+        align-items: center;
+        gap: 6px;
 
-  background-color: #6dbb45; /* exact green style */
-  padding: 5px 5px;
-  border-radius: 6px;
+        background-color: #6dbb45;
+        /* exact green style */
+        padding: 5px 5px;
+        border-radius: 6px;
 
-  font-size: 14px;
-  line-height: 1;
-  white-space: nowrap;
-}
+        font-size: 14px;
+        line-height: 1;
+        white-space: nowrap;
+    }
 
     .stars-book {
         font-size: 19px;
@@ -1141,25 +1178,29 @@ height: 22px;
         margin-top: 10%;
         margin-bottom: 5%;
     }
-.board-price-bookPerDay {
+
+    .board-price-bookPerDay {
         font-size: 16px;
     }
 }
+
 @media (min-width: 1400px) and (max-width: 1500px) {
-    .rate-book{
+    .rate-book {
         width: 22% !important;
     }
 }
+
 @media (min-width: 992px) and (max-width: 1200px) {
-    .rate-book{
+    .rate-book {
         width: 24% !important;
     }
     .rate2-book{
     width: 26% !important;
 }
 }
+
 @media (min-width: 992px) and (max-width: 1020px) {
-        .card-board-contents {
+    .card-board-contents {
         flex: 0 0 50% !important;
         max-width: 35% !important;
         margin-left: 85px !important;
@@ -1168,13 +1209,14 @@ height: 22px;
     width: 27% !important;
 }
 }
+
 /* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
 @media (min-width: 992px) and (max-width: 1023px) {
 
     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
-    .bookMainDeal .navbar1 {
+    /* .bookMainDeal .navbar1 {
         top: 60px;
-    }
+    } */
 
     .side-bar-main {
         /* margin: auto -2%;*/
@@ -1313,8 +1355,8 @@ height: 22px;
     .board-dim-book {
         font-size: 16px;
         font-weight: 600;
-        height: 25px;
-        width: 70px;
+        /* height: 25px;
+        width: 70px; */
         padding: 2px;
     }
 
@@ -1350,11 +1392,11 @@ height: 22px;
     }
 
     .rate-book {
-       position: relative;
-  /* bottom: 51.5px; */
-  left: 10px;
-  width: 25%;
-  /* display: flex; */
+        position: relative;
+        /* bottom: 51.5px; */
+        left: 10px;
+        width: 25%;
+        /* display: flex; */
     }
 
     .prev-button,
@@ -1379,44 +1421,50 @@ height: 22px;
         margin-top: 10%;
         margin-bottom: 5%;
     }
+
     .board-price-bookPerDay {
         font-size: 16px;
     }
 }
+
 @media (min-width: 900px) and (max-width: 1023px) {
-     .side-bar-main {
-    margin: auto -1% !important;
-    margin-top: 7% !important;
-}
-        .container {
+    .side-bar-main {
+        margin: auto -1% !important;
+        /* margin-top: 7% !important; */
+    }
+
+    .container {
         max-width: 870px;
     }
-    .board-book{
-         width: 300px !important;
+
+    .board-book {
+        width: 300px !important;
     }
      .rate2-book{
     width: 28% !important;
 }
 }
+
 @media (min-width: 800px) and (max-width: 901px) {
     .side-bar-main {
         margin: auto 20px !important;
-        margin-top: 60px !important;
+        /* margin-top: 60px !important; */
     }
      .rate2-book{
     width: 30% !important;
 }
 }
+
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
 @media (min-width: 768px) and (max-width: 991px) {
 
     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
-    .bookMainDeal .navbar1 {
+    /* .bookMainDeal .navbar1 {
         top: 60px;
-    }
+    } */
 
     .bookMainDeal .side-bar-main {
-        margin-top: 8%;
+        /* margin-top: 8%; */
     }
 
     .side-bar-main {
@@ -1550,15 +1598,15 @@ height: 22px;
         line-height: 17.94px;
         width: 220px;
         /* border: 1px solid red; */
-       height: 30px;
+        height: 30px;
 
     }
 
     .board-dim-book {
         font-size: 16px;
         font-weight: 600;
-        height: 26px;
-        width: 73px;
+        /* height: 26px;
+        width: 73px; */
         padding: 2px;
     }
 
@@ -1586,11 +1634,11 @@ height: 22px;
     }
 
     .rate-book {
-       position: relative;
-  /* bottom: 51.5px; */
-  left: 10px;
-  width: 24% !important;
-  /* display: flex; */
+        position: relative;
+        /* bottom: 51.5px; */
+        left: 10px;
+        width: 24% !important;
+        /* display: flex; */
     }
 
     .board-btn-book {
@@ -1621,19 +1669,21 @@ height: 22px;
         /* gap: -1px;*/
         margin-top: 8%;
         margin-bottom: 5%;
-    } 
-     .board-price-bookPerDay {
+    }
+
+    .board-price-bookPerDay {
         font-size: 16px;
     }
 
 }
+
 @media (min-width: 768px) and (max-width: 880px) {
-     .rate-book {
-       position: relative;
-  /* bottom: 51.5px; */
-  left: 10px;
-  width: 27% !important;
-  /* display: flex; */
+    .rate-book {
+        position: relative;
+        /* bottom: 51.5px; */
+        left: 10px;
+        width: 27% !important;
+        /* display: flex; */
     }
     
 }
@@ -1669,33 +1719,35 @@ height: 22px;
 }
 /* FORCE 2 columns between 992px and 1199px */
 @media (min-width: 992px) and (max-width: 1199px) {
-   .side-bar-main {
-    margin: auto 6% !important;
-    margin-top: 7% !important;
+    .side-bar-main {
+        margin: auto 6% !important;
+        /* margin-top: 7% !important; */
+    }
 }
-}
+
 @media (min-width: 1024px) and (max-width: 1199px) {
- .card-board-contents {
-    flex: 0 0 50%;
-    max-width: 35%;
-    margin-left: 50px;
-  }
+    .card-board-contents {
+        flex: 0 0 50%;
+        max-width: 35%;
+        margin-left: 50px;
+    }
 }
+
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
 @media (min-width: 480px) and (max-width: 767px) {
 
     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
-    .bookMainDeal .navbar1 {
+    /* .bookMainDeal .navbar1 {
         top: 65px;
         position: relative;
         z-index: 99;
-    }
+    } */
 
     .bookMainDeal .FilterSection-mobile {
         position: sticky;
         z-index: 9;
         margin: 0 auto;
-        margin-top: 13%;
+        /* margin-top: 13%; */
     }
 
     .bookMainDeal .side-right-content {
@@ -2070,8 +2122,8 @@ height: 22px;
     .board-dim-book {
         font-size: 16px;
         font-weight: 600;
-        height: 30px;
-        width: 80px;
+        /* height: 30px;
+        width: 80px; */
         padding: 2px;
     }
 
@@ -2093,10 +2145,10 @@ height: 22px;
 
     .rate-book {
         position: relative;
-  /* bottom: 51.5px; */
-  left: 10px;
-  width: 25%;
-  /* display: flex; */
+        /* bottom: 51.5px; */
+        left: 10px;
+        width: 25%;
+        /* display: flex; */
     }
 
     .stars-book {
@@ -2139,7 +2191,8 @@ height: 22px;
         margin-top: 10%;
         margin-bottom: 5%;
     }
-      .board-price-bookPerDay {
+
+    .board-price-bookPerDay {
         font-size: 16px;
     }
 
@@ -2149,17 +2202,17 @@ height: 22px;
 @media (min-width: 425px) and (max-width: 479px) {
 
     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
-    .bookMainDeal .navbar1 {
+    /* .bookMainDeal .navbar1 {
         top: 58px;
         position: relative;
         z-index: 99;
-    }
+    } */
 
     .bookMainDeal .FilterSection-mobile {
         position: sticky;
         z-index: 9;
         margin: 0 auto;
-        margin-top: 13%;
+        /* margin-top: 13%; */
     }
 
     .bookMainDeal .side-right-content {
@@ -2544,8 +2597,8 @@ height: 22px;
     .board-dim-book {
         font-size: 16px;
         font-weight: 600;
-        height: 30px;
-        width: 80px;
+        /* height: 30px;
+        width: 80px; */
         padding: 2px;
     }
 
@@ -2572,10 +2625,10 @@ height: 22px;
 
     .rate-book {
         position: relative;
-  /* bottom: 51.5px; */
-  left: 10px;
-  width: 25%;
-  /* display: flex; */
+        /* bottom: 51.5px; */
+        left: 10px;
+        width: 25%;
+        /* display: flex; */
     }
 
     .stars-book {
@@ -2617,7 +2670,8 @@ height: 22px;
         margin-top: 10%;
         margin-bottom: 5%;
     }
-        .board-price-bookPerDay {
+
+    .board-price-bookPerDay {
         font-size: 16px;
     }
 }
@@ -2626,17 +2680,17 @@ height: 22px;
 @media (min-width: 375px) and (max-width: 424px) {
 
     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
-    .bookMainDeal .navbar1 {
+    /* .bookMainDeal .navbar1 {
         top: 53px;
         position: relative;
         z-index: 99;
-    }
+    } */
 
     .bookMainDeal .FilterSection-mobile {
         position: sticky;
         z-index: 9;
         margin: 0 auto;
-        margin-top: 13%;
+        /* margin-top: 13%; */
         width: 99%;
     }
 
@@ -3037,8 +3091,8 @@ height: 22px;
     .board-dim-book {
         font-size: 16px;
         font-weight: 600;
-        height: 30px;
-        width: 80px;
+        /* height: 30px;
+        width: 80px; */
         padding: 2px;
     }
 
@@ -3059,11 +3113,11 @@ height: 22px;
     }
 
     .rate-book {
-      position: relative;
-  /* bottom: 51.5px; */
-  left: 10px;
-  width: 25%;
-  /* display: flex; */
+        position: relative;
+        /* bottom: 51.5px; */
+        left: 10px;
+        width: 25%;
+        /* display: flex; */
     }
 
     .stars-book {
@@ -3104,8 +3158,9 @@ height: 22px;
     .pagination {
         margin-top: 10%;
         margin-bottom: 5%;
-    } 
-     .board-price-bookPerDay {
+    }
+
+    .board-price-bookPerDay {
         font-size: 16px;
     }
 }
@@ -3114,13 +3169,13 @@ height: 22px;
 @media (min-width: 360px) and (max-width: 374px) {
 
     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
-    .bookMainDeal .navbar1 {
+    /* .bookMainDeal .navbar1 {
         top: 53px;
         position: relative;
         z-index: 99;
-    }
-     .rate-book {
-  width: 25% !important;
+    } */
+    .rate-book {
+        width: 25% !important;
     }
 
 
@@ -3128,7 +3183,7 @@ height: 22px;
         position: sticky;
         z-index: 9;
         margin: 0 auto;
-        margin-top: 13%;
+        /* margin-top: 13%; */
         width: 99%;
     }
 
@@ -3513,7 +3568,8 @@ height: 22px;
         margin-top: 10%;
         margin-bottom: 5%;
     }
-     .board-price-bookPerDay {
+
+    .board-price-bookPerDay {
         font-size: 15px;
     }
 }
@@ -3521,19 +3577,20 @@ height: 22px;
 @media (min-width: 320px) and (max-width: 359px) {
 
     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
-    .bookMainDeal .navbar1 {
+    /* .bookMainDeal .navbar1 {
         top: 53px;
         position: relative;
         z-index: 99;
-    }
-     .rate-book {
-  width: 25% !important;
+    } */
+
+    .rate-book {
+        width: 25% !important;
     }
 
     .bookMainDeal .FilterSection-mobile {
         position: sticky;
         margin: 0 auto;
-        margin-top: 15%;
+        /* margin-top: 15%; */
         width: 103%;
         overflow: hidden;
         z-index: 9;
@@ -3925,7 +3982,8 @@ height: 22px;
         margin-top: 10%;
         margin-bottom: 10%;
     }
-     .board-price-bookPerDay {
+
+    .board-price-bookPerDay {
         font-size: 15px;
     }
 }

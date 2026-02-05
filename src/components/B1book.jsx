@@ -453,7 +453,7 @@ useEffect(() => {
   return (
     <MainLayout>
       <div className="bookMainDeal">
-        <DealScrollAnim />
+        {/* <DealScrollAnim /> */}
         <MainNavbar />
 
         <div className="container side-bar-main">
@@ -894,8 +894,8 @@ useEffect(() => {
                               </span>
                             </span>
                              <span className="board-dim-book">
-                              {" "}
-                              {spot.sizeWidth} x {spot.sizeHeight}{" "}
+                              
+                              {spot.sizeWidth} x {spot.sizeHeight} | Sq.ft
                             </span>
                             {/* <img
                               src="./images/rating_board.png"

@@ -13,7 +13,7 @@ const HERO_IMAGES_CONFIG = [
   {
     id: 1,
     src: "Caraousel_1.jpg",
-    link: "/book",
+    link: "/billboard-advertising-in-india",
     // text: "Own the moment, Own the attention",
     // buttonText: "Secure Spot",
     // Responsive images with graceful fallbacks
@@ -26,7 +26,7 @@ const HERO_IMAGES_CONFIG = [
   {
     id: 2,
     src: "Caraousel_2.jpg",
-    link: "/book",
+    link: "/billboard-advertising-in-india",
     // text: "Own the moment,Own the attention",
     // buttonText: "Secure Spot",
     responsive: {
@@ -38,7 +38,7 @@ const HERO_IMAGES_CONFIG = [
   {
     id: 3,
     src: "Caraousel_3.jpg",
-    link: "/book",
+    link: "/billboard-advertising-in-india",
     // text: "Own the moment, Own the attention",
     // buttonText: "Secure Spot",
     responsive: {
@@ -50,7 +50,7 @@ const HERO_IMAGES_CONFIG = [
   {
     id: 4,
     src: "Caraousel_4.jpg",
-    link: "/book",
+    link: "/billboard-advertising-in-india",
     // text: "Own the moment, Own the attention",
     // buttonText: "Secure Spot",
     responsive: {
