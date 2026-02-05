@@ -48,13 +48,13 @@ import "react-toastify/dist/ReactToastify.css";
 /* Add toast message -SK */
 function App() {
   const [load, upadateLoad] = useState(true); 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     upadateLoad(false);
-  //   }, 2000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      upadateLoad(false);
+    }, 2000);
 
-  //   return () => clearTimeout(timer);
-  // }, []);
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <div>
       <ToastContainer position="top-right" autoClose={2000} />
