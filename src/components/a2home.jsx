@@ -1,6 +1,6 @@
 
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import "./a2home.css";
 import "./b2book.css";
@@ -10,9 +10,13 @@ import "slick-carousel/slick/slick-theme.css";
 import { baseUrl } from '../Adminpanel/BASE_URL';
 import slugify from 'slugify';
 import { formatIndianCurrency } from "./FORMATED_AMOUNT";
+import '../components/PreLoad.css';
+
 
 function AdinnHome2() {
     const navigate = useNavigate();
+    const timeoutRef = useRef(false);
+    
 
     // Function to render star ratings
     // const RatingStars = ({ rating }) => {
@@ -359,22 +363,27 @@ function AdinnHome2() {
 //             </div>
 //         );
 //     };
+    
+        if (isLoading) {
+        if (!timeoutRef.current) {
+            timeoutRef.current = true;
+            setTimeout(() => {
+            setIsLoading(false);
+            }, 2000);
+        }
 
-    if (isLoading) {
         return (
             <div className="text-center py-5">
-                <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
-                <p className="mt-2">Loading Prime Advertising Spots...</p>
+            <img src="/images/outdoor-loader.svg" alt="Loading..." style={{ width: "400px", height: "400px"}}/>
+            
             </div>
         );
-    }
+        }
 
     return (
         <div>
             <h1 className="heading">
-                <span className="highlight">Prime Advertising </span> Spots
+                <span className="highlight">Prime Advertising</span> Spots
                 {/* <span className="prime-count-badge">
                     ({primeCount} {primeCount === 1 ? 'Spot' : 'Spots'})
                 </span>
@@ -397,17 +406,10 @@ function AdinnHome2() {
             )} */}
 
             {primeSpotsData.length === 0 ? (
-                <div className="col-12 text-center loading-container">
-                    <div className="alert alert-info">
-                        <i className="fa-solid fa-crown me-2"></i>
-                        No Prime Advertising Spots available yet. Check back soon!
-                    </div>
-                    {process.env.NODE_ENV === 'development' && error && (
-                        <div className="alert alert-danger mt-2">
-                            <small>Debug: {error}</small>
-                        </div>
-                    )}
-                </div>
+              <div className="text-center py-5">
+                <img src="/images/outdoor-loader.svg" alt="Loading..."  style={{ width: "400px", height: "400px"}}/>
+              
+              </div>
             ) : (
                 <div className="w-3/4 prime">
                     <Slider {...settings}>
