@@ -453,7 +453,7 @@ useEffect(() => {
   return (
     <MainLayout>
       <div className="bookMainDeal">
-        <DealScrollAnim />
+        {/* <DealScrollAnim /> */}
         <MainNavbar />
 
         <div className="container side-bar-main">
