@@ -373,12 +373,9 @@ function AdinnHome2() {
         }
 
         return (
-            <div className="text-center py-5" style={{ position: "relative" }}>
-            <img src="/images/PreLoadNew1.svg" alt="Loading..." />
-            <div
-                className="moving-lines-without-opacity"
-                style={{ position: "absolute", left: "46.2%", bottom: "50%" }}
-            ></div>
+            <div className="text-center py-5">
+            <img src="/images/outdoor-loader.svg" alt="Loading..." style={{ width: "400px", height: "400px"}}/>
+            
             </div>
         );
         }
@@ -386,7 +383,7 @@ function AdinnHome2() {
     return (
         <div>
             <h1 className="heading">
-                <span className="highlight">Prime Advertising </span> Spots
+                <span className="highlight">Prime Advertising</span> Spots
                 {/* <span className="prime-count-badge">
                     ({primeCount} {primeCount === 1 ? 'Spot' : 'Spots'})
                 </span>
@@ -409,12 +406,9 @@ function AdinnHome2() {
             )} */}
 
             {primeSpotsData.length === 0 ? (
-              <div className="text-center py-5" style={{ position: "relative" }}>
-                <img src="/images/PreLoadNew1.svg" alt="Loading..." />
-                <div
-                    className="moving-lines-without-opacity"
-                    style={{ position: "absolute", left: "46.2%", bottom: "50%" }}>
-                </div>
+              <div className="text-center py-5">
+                <img src="/images/outdoor-loader.svg" alt="Loading..."  style={{ width: "400px", height: "400px"}}/>
+              
               </div>
             ) : (
                 <div className="w-3/4 prime">
