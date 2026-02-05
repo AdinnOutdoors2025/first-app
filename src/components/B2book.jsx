@@ -3160,7 +3160,7 @@ function BookASite1() {
                                                                                               </span>
                                                                                             </span>
                                                                 <span className="board-dim-book1">
-                                                                    {spot.dimensions}
+                                                                    {spot.dimensions} Sq.ft
                                                                 </span>
                                                                 {/* <img
                                                                     src="/images/rating_board.png"
