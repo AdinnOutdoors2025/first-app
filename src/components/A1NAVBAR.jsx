@@ -131,7 +131,8 @@ function NavbarMain() {
                     }}></i> 
                 {cartCount > 0 && <p className='cart-number'>{cartCount}</p>} */}
                 <div className="nav_container">
-                    <img src="/images/nav_user.png" alt="User Icon" className='nav_user' onMouseEnter={toggleNavOpen}
+                    <img src="/images/nav_user.png" alt="User Icon" className='nav_user'
+                    //  onMouseEnter={toggleNavOpen}
                         onClick={toggleNavOpen} />
                     <div className={`nav_user-content ${isOpen || isMobile ? 'open' : ''}`} onMouseLeave={!isMobile ? toggleNavOpen : undefined}>
                         {
