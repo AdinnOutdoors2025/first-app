@@ -58,6 +58,7 @@
     /* width: 95%; */
     margin-bottom: 5%;
     transition: background-color 0.3s ease;
+    cursor: pointer;
     /* Smooth transition */
 }
 
@@ -71,10 +72,14 @@
     transition: background-color 0.3s ease, border-color 0.3s ease; */
     /* Smooth transition */
     background-color: #fff;
+    cursor: pointer;
+}
+.form-check-input[type="checkbox"] {
+    border-radius: 4px;
 }
 
 /* Checked state for the checkbox */
-.form-check-input:checked {
+.form-check-input[type="checkbox"]:checked {
     /* background-color: #fff;
     border-color: red;
   accent-color: red;  */
@@ -83,6 +88,9 @@
     border-color: red;
     /* red border */
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5 L8 14 L16 6' fill='none' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+   background-position: center;
+    background-repeat: no-repeat;
+    background-size: 12px;
 }
 
 
@@ -100,7 +108,58 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 19.5px;
+    cursor: pointer;
 }
+
+
+/* RADIO BUTTON CUSTOM RED CSS  */
+/* RADIO BUTTON STYLES - for sorting section */
+.form-check-input[type="radio"] {
+    border-radius: 50%;
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    cursor: pointer;
+
+}
+
+.form-check-input[type="radio"]:checked {
+    background-color: #fff;
+    border-color: #E41E25;
+}
+
+.form-check-input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #E41E25;
+}
+
+/* Focus states for both */
+.form-check-input[type="checkbox"]:focus,
+.form-check-input[type="radio"]:focus {
+    box-shadow: none;
+    outline: none;
+    border-color: #E41E25;
+}
+
+/* Hover effects */
+/* .form-check-input[type="checkbox"]:hover,
+.form-check-input[type="radio"]:hover {
+    border-color: #E41E25;
+} */
+
+/* Custom background for form-check when checked */
+.form-check.checked {
+    border-radius: 13px;
+    color: #E41E25;
+}
+/* RADIO BUTTON CUSTOM RED CSS  */
 
 /* Dropdown container */
 .dropdown {
@@ -303,7 +362,7 @@
     /* background: linear-gradient(94.12deg, #FFE2E3 66.96%, #FFFFFF 99.86%); */
     background: #fff;
     cursor: pointer;
-    padding-bottom: 30px;
+    padding-bottom: 13px;
     box-shadow: 0px 0px 15px 0px #0000001A;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
@@ -604,8 +663,8 @@
 
 /* PAGINATION CSS  */
 .pagination {
-    margin-top: 10%;
-    margin-bottom: 5%;
+    /* margin-top: 10%;
+    margin-bottom: 5%; */
     /* width: 50%; */
     display: flex;
     justify-content: space-evenly;
@@ -670,12 +729,6 @@
     color: rgba(51, 51, 51, 1);
     font-size: 16px;
     font-weight: 500;
-}
-
-.form-check-input:focus {
-    box-shadow: none;
-    border: none;
-
 }
 
 /* Responsive Media Queries */
@@ -879,8 +932,8 @@
 
     .pagination {
         gap: 10px;
-        margin-top: 10%;
-        margin-bottom: 5%;
+        /* margin-top: 10%;
+        margin-bottom: 5%; */
     }
 
     .board-price-bookPerDay {
@@ -1254,8 +1307,8 @@
 
     .pagination {
         gap: 10px;
-        margin-top: 10%;
-        margin-bottom: 5%;
+        /* margin-top: 10%;
+        margin-bottom: 5%; */
     }
 
     .board-price-bookPerDay {
@@ -1497,8 +1550,8 @@
 
     .pagination {
         gap: 5px;
-        margin-top: 10%;
-        margin-bottom: 5%;
+        /* margin-top: 10%;
+        margin-bottom: 5%; */
     }
 
     .board-price-bookPerDay {
@@ -1746,8 +1799,8 @@
 
     .pagination {
         /* gap: -1px;*/
-        margin-top: 8%;
-        margin-bottom: 5%;
+        /* margin-top: 8%;
+        margin-bottom: 5%; */
     }
 
     .board-price-bookPerDay {
@@ -2267,8 +2320,8 @@
 
     .pagination {
         /* gap: 5px; */
-        margin-top: 10%;
-        margin-bottom: 5%;
+        /* margin-top: 10%;
+        margin-bottom: 5%; */
     }
 
     .board-price-bookPerDay {
@@ -2746,8 +2799,8 @@
     }
 
     .pagination {
-        margin-top: 10%;
-        margin-bottom: 5%;
+        /* margin-top: 10%;
+        margin-bottom: 5%; */
     }
 
     .board-price-bookPerDay {
@@ -3235,8 +3288,8 @@
     }
 
     .pagination {
-        margin-top: 10%;
-        margin-bottom: 5%;
+        /* margin-top: 10%;
+        margin-bottom: 5%; */
     }
 
     .board-price-bookPerDay {
@@ -3644,8 +3697,8 @@
     }
 
     .pagination {
-        margin-top: 10%;
-        margin-bottom: 5%;
+        /* margin-top: 10%;
+        margin-bottom: 5%; */
     }
 
     .board-price-bookPerDay {
@@ -4058,8 +4111,8 @@
     .pagination {
         margin-left: 0px;
         margin: auto 0px;
-        margin-top: 10%;
-        margin-bottom: 10%;
+        /* margin-top: 10%;
+        margin-bottom: 10%; */
     }
 
     .board-price-bookPerDay {

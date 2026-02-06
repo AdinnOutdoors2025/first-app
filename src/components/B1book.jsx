@@ -468,7 +468,7 @@ useEffect(() => {
                   <div
                     className="sorting1 position-relative"
                     onClick={toggleFilterSectionSorting}
-                  >
+>
                     <div>
                       {" "}
                       <img
@@ -738,15 +738,17 @@ useEffect(() => {
     "Popularity: High to Low",
     "Popularity: Low to High",
   ].map((option) => (
-    <li key={option}>
+    <li key={option} style={{cursor:'pointer'}}>
       <div className="form-check d-flex align-items-center">
         <input
-          type="checkbox"
+          type="radio"
           className="form-check-input"
+          name="sorting-options" // Added name attribute for radio button grouping
           checked={selected1 === option}
           onChange={() => selectOption1(option)}
         />
         <label
+        htmlFor="sorting-options"
           className="form-check-label ms-2"
           onClick={() => selectOption1(option)}
         >

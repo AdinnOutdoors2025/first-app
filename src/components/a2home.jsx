@@ -488,7 +488,7 @@ function AdinnHome2() {
                 <div className="w-3/4 prime">
                     <Slider {...settings}>
                         {primeSpotsData.map((spot, index) => (
-                            <div className={`billboard-card ${primeSpotsData.length > 1 && index === Math.floor(primeSpotsData.length / 2) ? 'scaleZoomInLeft' : ''}`} key={spot.id}>
+                            <div className={`billboard-card ${primeSpotsData.length > 1 && index === Math.floor(primeSpotsData.length / 2) ? 'scaleZoomInLeft' : ''}`} key={spot.id} onClick={() => handleBookNow(spot)}>
                                 <img
                                     src={spot.imageUrl || spot.image}
                                     alt={spot.name || 'Prime Spot'}
@@ -516,12 +516,12 @@ function AdinnHome2() {
                                                                   </span>
                                                                 </span>
                                                           
-                                                                <span className="board-dim-home">{spot.dimensions}</span>
+                                                                <span className="board-dim-home">{spot.dimensions} Sq.ft</span>
                                                           
                                                               </div>
                                                               <RatingStars1 rating={spot.rating} />
                                                                             <div>
-                                        <button className="board-btn-book" onClick={() => handleBookNow(spot)}>
+                                        <button className="board-btn-book-home" onClick={() => handleBookNow(spot)}>
                                             Book Now
                                         </button>
                                     </div>
