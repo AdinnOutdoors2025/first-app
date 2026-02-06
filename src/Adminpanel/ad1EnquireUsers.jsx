@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 //BASE URL OF http://localhost:3001 FILE IMPORT 
 import {baseUrl} from './BASE_URL';
 import { getPaginationGroup } from "../utils/pagination";
+import { formatIndianDateTime } from '../../src/DateTimeFormatter';
 
 
 
@@ -220,10 +221,11 @@ return false;
                                 <td className='order-TableOrderName'>{enquiry.phone}</td>
                                 <td className='order-TableProdCode'>{enquiry.prodCode}</td>
                                 <td className='enquireUser_location'>{enquiry.location}</td>
-                                <td>{enquiry.enquiryDate
+                                {/* <td>{enquiry.enquiryDate
                                     ? new Date(enquiry.enquiryDate).toLocaleDateString('en-GB')
-                                    : '--'}</td>
-
+                                    : '--'}</td> */}
+  <td>                                            {formatIndianDateTime(enquiry.enquiryDate)}
+  </td>
                                 <td>{enquiry.status}</td>
 
                                 <td className="order-threeDotsTd" onClick={() => toggleMenu(enquiry._id)} style={{textAlign:'center'}}>
