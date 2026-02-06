@@ -869,6 +869,169 @@
 
 }
 
+/* skeleton css for home page */
+/* ==============================
+   Prime Skeleton Wrapper (3 Cards)
+============================== */
+.prime-skeleton-wrapper {
+  display: flex;
+  gap: 24px;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+/* ==============================
+   Prime Skeleton Card
+============================== */
+.prime-skeleton-card {
+  flex: 0 0 32%;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ==============================
+   Image Skeleton
+============================== */
+.prime-skeleton-img {
+  width: 100%;
+  height: 220px;
+  background: #e6e6e6;
+  border-radius: 18px 18px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ==============================
+   Category Skeleton
+============================== */
+.prime-skeleton-category {
+  display: inline-block;
+  width: 90px;
+  height: 16px;
+  background: #e6e6e6;
+  border-radius: 20px;
+  margin: 12px 16px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ==============================
+   Content Area
+============================== */
+.prime-skeleton-content {
+  padding: 14px 16px 18px;
+}
+
+/* ==============================
+   Skeleton Lines
+============================== */
+.prime-skeleton-line {
+  height: 14px;
+  background: #e6e6e6;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.prime-skeleton-line.title {
+  width: 75%;
+  height: 16px;
+}
+
+.prime-skeleton-line.price {
+  width: 55%;
+}
+
+.prime-skeleton-line.size {
+  width: 40%;
+}
+
+/* ==============================
+   Price & Dimension Stack
+============================== */
+.prime-skeleton-price {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ==============================
+   Rating Skeleton
+============================== */
+.prime-skeleton-rating {
+  width: 70px;
+  height: 18px;
+  background: #e6e6e6;
+  border-radius: 6px;
+  margin: 12px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ==============================
+   Button Skeleton
+============================== */
+.prime-skeleton-btn {
+  width: 120px;
+  height: 36px;
+  background: #e6e6e6;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ==============================
+   Shimmer Effect
+============================== */
+.prime-skeleton-img::after,
+.prime-skeleton-category::after,
+.prime-skeleton-line::after,
+.prime-skeleton-rating::after,
+.prime-skeleton-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: prime-shimmer 1.4s infinite;
+}
+
+@keyframes prime-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ==============================
+   Responsive
+============================== */
+@media (max-width: 992px) {
+  .prime-skeleton-card {
+    flex: 0 0 48%;
+  }
+}
+
+@media (max-width: 576px) {
+  .prime-skeleton-wrapper {
+    flex-direction: column;
+  }
+
+  .prime-skeleton-card {
+    flex: 1 0 auto;
+  }
+}
+
+/* skeleton css for home page */
+
 
 
 

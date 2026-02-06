@@ -374,7 +374,44 @@ function AdinnHome2() {
 
         return (
             <div className="text-center py-5">
-            <img src="/images/outdoor-loader.svg" alt="Loading..." style={{ width: "400px", height: "400px"}}/>
+            {/* <img src="/images/outdoor-loader.svg" alt="Loading..." style={{ width: "400px", height: "400px"}}/> */}
+                   {/* skelton loader */}
+                     {/* Prime Advertising Skeleton Loader */}
+                    <div className="prime-skeleton-wrapper">
+
+                    {[1, 2, 3].map((_, index) => (
+                        <div className="prime-skeleton-card" key={index}>
+
+                        {/* Image */}
+                        <div className="prime-skeleton-img"></div>
+
+                        {/* Category */}
+                        {/* <span className="prime-skeleton-category"></span> */}
+
+                        {/* Content */}
+                        <div className="prime-skeleton-content">
+
+                            {/* Title */}
+                            <div className="prime-skeleton-line title"></div>
+
+                            {/* Price & Dimension */}
+                            <div className="prime-skeleton-price">
+                            <div className="prime-skeleton-line price"></div>
+                            {/* <div className="prime-skeleton-line size"></div> */}
+                            </div>
+
+                            {/* Rating */}
+                            <div className="prime-skeleton-rating"></div>
+
+                            {/* Buttons */}
+                            <div className="prime-skeleton-btn"></div>
+
+                        </div>
+                        </div>
+                    ))}
+
+                    </div>
+                    {/* skelton loaders */}
             
             </div>
         );
@@ -407,7 +444,44 @@ function AdinnHome2() {
 
             {primeSpotsData.length === 0 ? (
               <div className="text-center py-5">
-                <img src="/images/outdoor-loader.svg" alt="Loading..."  style={{ width: "400px", height: "400px"}}/>
+                {/* <img src="/images/outdoor-loader.svg" alt="Loading..."  style={{ width: "400px", height: "400px"}}/> */}
+                     {/* skelton loader */}
+                     {/* Prime Advertising Skeleton Loader */}
+                    <div className="prime-skeleton-wrapper">
+
+                    {[1, 2, 3].map((_, index) => (
+                        <div className="prime-skeleton-card" key={index}>
+
+                        {/* Image */}
+                        <div className="prime-skeleton-img"></div>
+
+                        {/* Category */}
+                        {/* <span className="prime-skeleton-category"></span> */}
+
+                        {/* Content */}
+                        <div className="prime-skeleton-content">
+
+                            {/* Title */}
+                            <div className="prime-skeleton-line title"></div>
+
+                            {/* Price & Dimension */}
+                            <div className="prime-skeleton-price">
+                            <div className="prime-skeleton-line price"></div>
+                            {/* <div className="prime-skeleton-line size"></div> */}
+                            </div>
+
+                            {/* Rating */}
+                            <div className="prime-skeleton-rating"></div>
+
+                            {/* Button */}
+                            <div className="prime-skeleton-btn"></div>
+
+                        </div>
+                        </div>
+                    ))}
+
+                    </div>
+                    {/* skelton loaders */}
               
               </div>
             ) : (
@@ -426,21 +500,13 @@ function AdinnHome2() {
                                 />
                                 <span className='board-category1-home'>{spot.category || spot.mediaType || 'Category'}</span>
                               
-                                {/* <div className="board-content-home">
-                                    <div className="board-content-home-top">
-                                        <span className="board-loc-home">{spot.prodName || spot.name}</span>
-                                        <span className="board-dim-home">{spot.dimensions}</span>
-                                    </div> */}
+                               
                                     <div className="board-content-home">
                                     <div className="board-content-top-book">
-                                        <span className="board-loc-book">{spot.prodName || spot.name}</span>
-                                        {/* <span className="board-dim-home">{spot.dimensions}</span> */}
+                                        <span className="board-loc-book">{spot.prodName || spot.name}</span>  
                                     </div>
                                 
-                                    {/* <div className="board-content-home-bottom">
-                                        <span className="board-price-home">₹{(spot.price || 0).toLocaleString()}</span>
-                                        <img src='./images/rating_board.png' className='rate-board-home' alt="Rating" />
-                                    </div> */}
+                                    
                                     <div className="board-content-bottom-book">
                                                                 <span className="board-price-book">
                                                                   {formatIndianCurrency(spot.price, true)}
@@ -449,15 +515,9 @@ function AdinnHome2() {
                                                                     / Per Day
                                                                   </span>
                                                                 </span>
-                                                                 {/* <span className="board-dim-book">
-                                                                  {" "}
-                                                                  {spot.sizeWidth} x {spot.sizeHeight}{" "}
-                                                                </span> */}
+                                                          
                                                                 <span className="board-dim-home">{spot.dimensions}</span>
-                                                                {/* <img
-                                                                  src="./images/rating_board.png"
-                                                                  className="rate-board-book"
-                                                                ></img> */}
+                                                          
                                                               </div>
                                                               <RatingStars1 rating={spot.rating} />
                                                                             <div>
@@ -466,33 +526,7 @@ function AdinnHome2() {
                                         </button>
                                     </div>
                                 </div>
-                                {/* <div className="board-content-book1">
-                                                            <div className="board-content-top-book1">
-                                                                <span className="card-title board-loc-book1">
-                                                                    {spot.name}
-                                                                </span>
-                                                                <span className="board-dim-book1">
-                                                                    {spot.dimensions}
-                                                                </span>
-                                                            </div>
-                                                            <div className="board-content-bottom-book1">
-                                                                <span className="board-price-book1">
-                                                                    ₹{spot.price.toLocaleString()}
-                                                                </span>
-                                                                <img
-                                                                    src="/images/rating_board.png"
-                                                                    className="rate-board-book1"
-                                                                    alt="rating"
-                                                                ></img>
-                                                            </div>
-                                                            <RatingStarsSimilar rating={spot.rating} />
-                                                            <button
-                                                                className="board-btn-book1"
-                                                                onClick={() => handleSimilarProductClick(spot)}
-                                                            >
-                                                                Book Now
-                                                            </button>
-                                                        </div> */}
+                                
                             </div>
                         ))}
                     </Slider>
