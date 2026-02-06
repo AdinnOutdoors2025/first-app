@@ -4076,3 +4076,179 @@
     top: 0;
     left: 0;
 }
+
+
+/* /////////skleton css///////// */
+/* ===========================
+   Skeleton Card Wrapper
+=========================== */
+.skeleton-card {
+  pointer-events: none;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* ===========================
+   Image Placeholder
+=========================== */
+.skeleton-img {
+  height: 180px;
+  width: 100%;
+  background: #e5e5e5;
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===========================
+   Content Area
+=========================== */
+.skeleton-content {
+  padding: 12px;
+}
+
+/* ===========================
+   Text Lines
+=========================== */
+.skeleton-line {
+  height: 14px;
+  width: 100%;
+  background: #e5e5e5;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-line.title {
+  width: 70%;
+  height: 16px;
+}
+
+.skeleton-line.price {
+  width: 50%;
+}
+
+.skeleton-line.size {
+  width: 40%;
+}
+
+/* ===========================
+   Rating Placeholder
+=========================== */
+.skeleton-rating {
+  width: 60px;
+  height: 16px;
+  background: #e5e5e5;
+  border-radius: 6px;
+  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Skeleton Book Now Button */
+.skeleton-card .board-btn-book {
+  background: #e5e5e5 !important;
+  color: transparent !important;
+  border: none !important;
+  pointer-events: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer for button */
+.skeleton-card .board-btn-book::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: skeleton-shimmer 1.4s infinite;
+}
+
+
+/* ===========================
+   Button Placeholder
+=========================== */
+.skeleton-button {
+  height: 36px;
+  width: 100%;
+  background: #e5e5e5;
+  border-radius: 10px;
+  margin-top: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Stack price and size vertically */
+.skeleton-card .board-content-bottom-book {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Price skeleton */
+.skeleton-card .board-price-book.skeleton-line {
+  width: 55%;
+  height: 16px;
+}
+
+/* Sq.ft skeleton below price */
+.skeleton-card .board-dim-book.skeleton-line {
+  width: 40%;
+  height: 14px;
+}
+
+
+
+/* ===========================
+   Shimmer Effect (Single Layer)
+=========================== */
+.skeleton-img::after,
+.skeleton-line::after,
+.skeleton-rating::after,
+.skeleton-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: skeleton-shimmer 1.4s infinite;
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ===========================
+   Optional Grid (6 cards: 2 x 3)
+=========================== */
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 992px) {
+  .skeleton-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .skeleton-grid {
+    grid-template-columns: 1fr;
+  }
+}

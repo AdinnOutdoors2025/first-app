@@ -850,11 +850,45 @@ useEffect(() => {
               <div className="row side-right-content">
                 {isLoading ? (
                   <div className="col-12 text-center loading-container">
-                    <img
+                    {/* <img
                       src="./images/BookLoading.svg"
                       alt="Loading..."
                       className="Book-loading-gif"
-                    />
+                      sk="2"
+                    /> */}
+                    {/* skleton loader */}
+                    <div className="row side-right-content">
+                    {Array.from({ length: 6 }).map((_, index) => (
+                      <div className="col-lg-4 col-md-6 col-sm-12 mb-4 card-board-contents skeleton">
+                        <div className="card board-book skeleton-card ">
+
+                          <img className="card-img-top-book skeleton-box skeleton-img" alt="" />
+
+                          <span className="board-category-book skeleton-pill"></span>
+                          <span className="board-location-book skeleton-pill"></span>
+
+                          <div className="board-content-book">
+                            <div className="board-content-top-book">
+                              <span className="board-loc-book skeleton-line"></span>
+                            </div>
+
+                            <div className="board-content-bottom-book">
+                              <span className="board-price-book skeleton-line short"></span>
+                              <span className="board-dim-book skeleton-line xshort"></span>
+                            </div>
+                          </div>
+
+                          {/* <div className="skeleton-rating"></div> */}
+
+                          <button className="board-btn-book skeleton-btn"></button>
+
+                        </div>
+                      </div>
+
+                    ))}
+                  </div>
+
+                    {/* skleton loader */}
                   </div>
                 ) : currentSpots.length > 0 ? (
                   currentSpots.map((spot) => (
@@ -882,10 +916,6 @@ useEffect(() => {
                             <span className="board-loc-book">
                               {spot.prodName}
                             </span>
-                            {/* <span className="board-dim-book">
-                              {" "}
-                              {spot.sizeWidth} x {spot.sizeHeight}{" "}
-                            </span> */}
                           </div>
                           <div className="board-content-bottom-book">
                             <span className="board-price-book">
@@ -896,21 +926,9 @@ useEffect(() => {
                               </span>
                             </span>
                              <span className="board-dim-book">
-                              
                               {spot.sizeWidth} x {spot.sizeHeight} | Sq.ft
                             </span>
-                            {/* <img
-                              src="./images/rating_board.png"
-                              className="rate-board-book"
-                            ></img> */}
                           </div>
-                          {/* <RatingStars rating={spot.rating} />
-                          <button
-                            className="board-btn-book"
-                            onClick={() => handleBookNow(spot)}
-                          >
-                            Book Now
-                          </button> */}
                         </div>
                           <RatingStars rating={spot.rating} />
                           <button
