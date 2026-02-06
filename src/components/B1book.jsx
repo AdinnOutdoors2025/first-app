@@ -253,7 +253,9 @@ const pageFromUrl = Number(searchParams.get("page")) || 1;
     return (
       <div className="rate-book">
   <span className="rating-text">4.3</span>
+   <span className="rating-star-wrapper">
   <span className="fa-solid fa-star rating-star"></span>
+  </span>
 </div>
 
     );

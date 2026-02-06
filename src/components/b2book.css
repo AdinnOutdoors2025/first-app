@@ -185,6 +185,12 @@
     bottom: 10px;
     padding-left: 5px !important;
 }
+.rating2-star {
+    /* display: flex;
+    position: absolute; */
+    bottom: 10px;
+    padding-left: 5px !important;
+}
 /*thendral updated 27/01/26 */
 .rate1-book {
   /* position: relative; */
@@ -228,14 +234,55 @@
     }
 }
 
-.rating1-star {
-  color: #ffd54f; /* yellow star */
+/* .rating1-star {
+  color: #ffd54f; 
   font-size: 18px;
   order: 2;
 width: 22px;
 height: 22px;
 padding-left: 3px;
+} */
+.rating1-star {
+  position: relative;
+  display: inline-block;
+  font-size: 18px;
+  color: #ffd54f;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  /* overflow: hidden; */
 }
+.rating1-star::after {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -40px;
+  width: 14px;
+  height: 220%;
+  background: rgba(255, 255, 255, 1);
+  filter: blur(14px);
+  transform: skewX(-14deg);
+  animation: starShine 1.6s linear infinite;
+  pointer-events: none;
+}
+@keyframes starShine {
+  0% {
+    left: -40px;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  60% {
+    left: 130%;
+    opacity: 1;
+  }
+  100% {
+    left: 130%;
+    opacity: 0;
+  }
+}
+
 .rating1-text {
   color: #ffffff;
   font-weight: 500;
@@ -1022,7 +1069,10 @@ box-shadow: 0px 3px 4px 0px #00000026;
         bottom: 7px;
         left: 3px;
     }
-
+    .rating2-star {
+        bottom: 7px;
+        left: 3px;
+    }
 
     .book-price {
         width: max-content;
@@ -1285,7 +1335,10 @@ box-shadow: 0px 3px 4px 0px #00000026;
         bottom: 7px;
         left: 3px;
     }
-
+    .rating2-star {
+        bottom: 7px;
+        left: 3px;
+    }
 
     .book-price {
         width: max-content;
@@ -1543,7 +1596,10 @@ box-shadow: 0px 3px 4px 0px #00000026;
         bottom: 7.3px;
         left: 4px;
     }
-
+    .rating2-star {
+        bottom: 7.3px;
+        left: 4px;
+    }
 
     .slash-bar,
     .slash-bar1 {
@@ -1813,7 +1869,10 @@ box-shadow: 0px 3px 4px 0px #00000026;
         bottom: 7.3px;
         left: 4px;
     }
-
+    .rating2-star {
+        bottom: 7.3px;
+        left: 4px;
+    }
 
     .slash-bar,
     .slash-bar1 {
@@ -2097,7 +2156,10 @@ box-shadow: 0px 3px 4px 0px #00000026;
         bottom: 6.6px;
         left: 4px;
     }
-
+    .rating2-star {
+        bottom: 6.6px;
+        left: 4px;
+    }
     .book-price {
         height: auto;
         width: auto;
@@ -2356,7 +2418,10 @@ box-shadow: 0px 3px 4px 0px #00000026;
         bottom: 7px;
         left: 4px;
     }
-
+    .rating2-star {
+        bottom: 7px;
+        left: 4px;
+    }
 
     .book-price {
         width: max-content;
@@ -2674,7 +2739,10 @@ box-shadow: 0px 3px 4px 0px #00000026;
         bottom: 7px;
         left: 4px;
     }
-
+    .rating2-star {
+        bottom: 7px;
+        left: 4px;
+    }
 
     .book-price {
         height: auto;
@@ -2981,7 +3049,10 @@ box-shadow: 0px 3px 4px 0px #00000026;
         bottom: 7px;
         left: 4px;
     }
-
+    .rating2-star {
+        bottom: 7px;
+        left: 4px;
+    }
 
     .book-price {
         height: auto;
@@ -3271,7 +3342,10 @@ box-shadow: 0px 3px 4px 0px #00000026;
         bottom: 7px;
         left: 4px;
     }
-
+    .rating2-star {
+        bottom: 7px;
+        left: 4px;
+    }
     .book-price {
         height: auto;
         width: 90%;

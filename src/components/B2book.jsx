@@ -2549,7 +2549,7 @@ function BookASite1() {
                     ></span>
                 ))} */}
                 <span className="rating-text">4.3</span>
-  <span className="fa-solid fa-star rating-star"></span>
+  <span className="fa-solid fa-star rating2-star"></span>
             </div>
         );
     };
