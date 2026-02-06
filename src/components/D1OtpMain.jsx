@@ -235,6 +235,9 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
                 },
                 body: JSON.stringify({
                     phone: `+91${phone}`,
+                    // DUPLICATE USER ENTRY RESTRICT 
+                    productCode: productData?.prodCode, // Required for duplicate check
+                    // DUPLICATE USER ENTRY RESTRICT 
                     enquiryType: enquiryContext === 'booked_dates' ? 'booked_dates_enquiry' : 'normal_enquiry'
                 })
             });
@@ -242,6 +245,18 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
             const data = await response.json();
 
             if (!response.ok) {
+                // Handle duplicate enquiry error
+                if (data.duplicate) {
+                    setErrorMessage(data.message || "Duplicate enquiry detected");
+                    setStatus('');
+                    setOtpSent(false); // Don't show OTP input
+
+                    toast.info(data.message || "You have already submitted an enquiry for this product today.", {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                    });
+                    return;
+                }
                 throw new Error(data.message || "Failed to send OTP");
             }
 
@@ -332,12 +347,21 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
                 // Handle duplicate enquiry (per day limit reached)
                 if (data.duplicate) {
                     console.log('⚠️ Duplicate enquiry prevented for today - Guest');
+                    setErrorMessage(data.message || "Duplicate enquiry detected");
+                    setOtpError(true);
                     toast.info(data.message || "You've already submitted an enquiry for this product today.", {
                         position: "bottom-right",
                         autoClose: 5000,
                     });
                     return;
                 }
+                // DUPLICATE USER ENTRY RESTRICT 
+                throw new Error(data.message || "Verification failed");
+            }
+
+            if (data.success) {
+                // DUPLICATE USER ENTRY RESTRICT 
+
                 // DUPLICATE USER ENTRY RESTRICT 
                 setVerified(true);
                 setOtpError(false);
@@ -485,8 +509,8 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
                             The planner will use this number to contact you
                         </div>
                         <br />
-                        {errorMessage && <div className="error-messageOTP">{errorMessage}</div>}
-                        {status && <div className="status-messageOTP">{status}</div>}
+                        {/* {errorMessage && <div className="error-messageOTP">{errorMessage}</div>}
+                        {status && <div className="status-messageOTP">{status}</div>} */}
 
                         <button
                             className="continue-btn1"
@@ -523,7 +547,7 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
                                 />
                             ))}
                         </div>
-                        {otpError && <div className="error-messageOTP">{errorMessage}</div>}
+                        {/* {otpError && <div className="error-messageOTP">{errorMessage}</div>} */}
                         <br />
 
                         <span className='otpTimes'>

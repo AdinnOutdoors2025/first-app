@@ -55,7 +55,7 @@ export const formatIndianDate = (dateString, includeTime = false) => {
         const isDateOnly = !dateString.includes('T') && !dateString.includes(' ');
         
         if (includeTime || !isDateOnly) {
-            return date.toLocaleString('en-IN', {
+            const formatted = date.toLocaleString('en-IN', {
                 timeZone: 'Asia/Kolkata',
                 day: '2-digit',
                 month: '2-digit',
@@ -64,6 +64,8 @@ export const formatIndianDate = (dateString, includeTime = false) => {
                 minute: '2-digit',
                 hour12: true
             });
+            // Convert AM/PM to uppercase
+            return formatted.replace(/\b(am|pm)\b/g, (match) => match.toUpperCase());
         }
         
         return date.toLocaleDateString('en-IN', {
@@ -102,7 +104,9 @@ export const formatIndianDateTime = (dateString, showSeconds = false) => {
             options.second = '2-digit';
         }
         
-        return date.toLocaleString('en-IN', options);
+        const formatted = date.toLocaleString('en-IN', options);
+        // Convert AM/PM to uppercase
+        return formatted.replace(/\b(am|pm)\b/g, (match) => match.toUpperCase());
     } catch (error) {
         console.error("Error formatting date time:", error);
         return "N/A";
@@ -162,7 +166,9 @@ export const formatIndianTime = (dateString, showSeconds = false) => {
             options.second = '2-digit';
         }
         
-        return date.toLocaleTimeString('en-IN', options);
+        const formatted = date.toLocaleTimeString('en-IN', options);
+        // Convert AM/PM to uppercase
+        return formatted.replace(/\b(am|pm)\b/g, (match) => match.toUpperCase());
     } catch (error) {
         console.error("Error formatting time:", error);
         return "N/A";
@@ -247,7 +253,10 @@ export const formatForTable = (dateString) => {
             hour12: true
         });
         
-        return `${datePart}, ${timePart}`;
+        // Convert AM/PM to uppercase in time part
+        const timePartUpper = timePart.replace(/\b(am|pm)\b/g, (match) => match.toUpperCase());
+        
+        return `${datePart}, ${timePartUpper}`;
     } catch (error) {
         console.error("Error formatting for table:", error);
         return "N/A";
@@ -286,6 +295,116 @@ export const getRelativeTime = (dateString) => {
     }
 };
 
+/**
+ * Format time with uppercase AM/PM (1:39 PM)
+ */
+export const formatTimeWithUppercaseAMPM = (dateString, showSeconds = false) => {
+    if (!dateString) return "N/A";
+    
+    try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return "N/A";
+        
+        const options = {
+            timeZone: 'Asia/Kolkata',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        };
+        
+        if (showSeconds) {
+            options.second = '2-digit';
+        }
+        
+        // Use toLocaleTimeString with specific options
+        const timeStr = date.toLocaleTimeString('en-IN', options);
+        
+        // Convert am/pm to uppercase
+        return timeStr.replace(/(\s?)(am|pm)(\s?)/gi, (match, spaceBefore, ampm, spaceAfter) => {
+            return `${spaceBefore}${ampm.toUpperCase()}${spaceAfter}`;
+        });
+    } catch (error) {
+        console.error("Error formatting time with uppercase AM/PM:", error);
+        return "N/A";
+    }
+};
+
+/**
+ * Format date and time with uppercase AM/PM (13 Jan 2026, 1:39 PM)
+ */
+export const formatDateTimeUppercaseAMPM = (dateString, showSeconds = false) => {
+    if (!dateString) return "N/A";
+    
+    try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return "N/A";
+        
+        const dateOptions = {
+            timeZone: 'Asia/Kolkata',
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        };
+        
+        const timeOptions = {
+            timeZone: 'Asia/Kolkata',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        };
+        
+        if (showSeconds) {
+            timeOptions.second = '2-digit';
+        }
+        
+        const datePart = date.toLocaleDateString('en-IN', dateOptions);
+        const timePart = date.toLocaleTimeString('en-IN', timeOptions);
+        
+        // Convert AM/PM to uppercase
+        const timePartUpper = timePart.replace(/\b(am|pm)\b/g, (match) => match.toUpperCase());
+        
+        return `${datePart}, ${timePartUpper}`;
+    } catch (error) {
+        console.error("Error formatting date time with uppercase AM/PM:", error);
+        return "N/A";
+    }
+};
+
+/**
+ * Format complete timestamp with uppercase AM/PM (13-01-2026 01:39:25 PM)
+ */
+export const formatTimestampUppercaseAMPM = (dateString) => {
+    if (!dateString) return "N/A";
+    
+    try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return "N/A";
+        
+        const datePart = date.toLocaleDateString('en-IN', {
+            timeZone: 'Asia/Kolkata',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+        
+        const timePart = date.toLocaleTimeString('en-IN', {
+            timeZone: 'Asia/Kolkata',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        });
+        
+        // Convert AM/PM to uppercase
+        const timePartUpper = timePart.replace(/\b(am|pm)\b/g, (match) => match.toUpperCase());
+        
+        return `${datePart} ${timePartUpper}`;
+    } catch (error) {
+        console.error("Error formatting timestamp with uppercase AM/PM:", error);
+        return "N/A";
+    }
+};
+
 export default {
     convertUTCToIST,
     formatIndianDate,
@@ -294,5 +413,8 @@ export default {
     formatIndianTime,
     getBookingStatus,
     formatForTable,
-    getRelativeTime
+    getRelativeTime,
+    formatTimeWithUppercaseAMPM,
+    formatDateTimeUppercaseAMPM,
+    formatTimestampUppercaseAMPM
 };
