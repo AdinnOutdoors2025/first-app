@@ -43,7 +43,7 @@ function AdinnHome2() {
     return (
       <div className="rate2-book">
   <span className="rating-text">4.3</span>
-  <span className="fa-solid fa-star rating-star"></span>
+  <span className="fa-solid fa-star rating2-star"></span>
 </div>
 
     );
