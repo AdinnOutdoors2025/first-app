@@ -439,15 +439,27 @@ useEffect(() => {
   className="hero-panel video-hero-panel"
   ref={videoContainerRef}
 >
-  <video
-    ref={videoRef}
-    className="hero-video"
-    src="/videos/adinn-outdoors.webm"
-    muted
-    loop
-    playsInline
-    preload="metadata"
-  />
+<video
+  className="hero-video"
+  muted
+  loop
+  playsInline
+  preload="none"
+  ref={(el) => {
+    if (!el || el.dataset.loaded) return;
+
+    el.dataset.loaded = "true"; // ✅ prevent re-run
+
+    setTimeout(() => {
+      el.src = "/videos/adinn-outdoors.webm";
+      el.play().catch(() => {});
+    }, 1000);
+  }}
+/>
+
+
+
+
   </div>
         </div>
         
