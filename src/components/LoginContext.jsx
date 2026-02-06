@@ -81,7 +81,7 @@ export const LoginProvider = ({ children }) => {
                 autoClose: 2000,
             });
         } else {
-            toast.success(`Welcome back, ${userData.userName || 'User'}!`, {
+            toast.success(`Welcome back, ${userData.userName || 'Admin'}!`, {
                 position: "bottom-right",
                 autoClose: 2000,
             });

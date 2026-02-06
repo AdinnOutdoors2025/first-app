@@ -2976,7 +2976,8 @@ function BookASite1() {
                       </button>
                       <button
                     className=" mt-3 mb-2 btn-enquire2"
-                    onClick={toggleOtpMainPage}
+                    // onClick={toggleOtpMainPage}
+                     onClick={handleEnquireNow}
                   >
                     Request Call
                   </button>

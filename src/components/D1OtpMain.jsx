@@ -21,7 +21,7 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
     const [hasSentEnquiry, setHasSentEnquiry] = useState(false);
     const [isProcessingEnquiry, setIsProcessingEnquiry] = useState(false);
     const isOtpComplete = enterOtp.every(digit => digit !== "");
-    
+
     // Use refs to track state without triggering re-renders
     const enquirySentRef = useRef(false);
     const verificationInProgressRef = useRef(false);
@@ -31,13 +31,13 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
         if (user && user.userPhone) {
             console.log('User object in OtpMain:', user);
             console.log('User phone from user object:', user.userPhone);
-            
+
             // Extract phone number - handle different formats
             let userPhone = user.userPhone;
-            
+
             // Remove any non-numeric characters except +
             userPhone = userPhone.replace(/\s/g, '');
-            
+
             // If it starts with +91, keep it as is
             if (userPhone.startsWith('+91')) {
                 // Remove +91 for display in input
@@ -71,13 +71,13 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
 
         verificationInProgressRef.current = true;
         setIsProcessingEnquiry(true);
-        
+
         try {
             // Format phone number properly
             let formattedPhone;
             if (user.userPhone) {
                 let userPhone = user.userPhone.replace(/\s/g, '');
-                
+
                 if (userPhone.startsWith('+91')) {
                     formattedPhone = userPhone; // Already in correct format
                 } else if (userPhone.startsWith('91') && userPhone.length === 12) {
@@ -130,24 +130,44 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
             });
 
             const data = await response.json();
-            
+
             console.log('Backend Response:', data);
             console.log('Response Status:', response.status);
 
             if (response.ok && data.success) {
+                // DUPLICATE USER ENTRY RESTRICT 
+
+                // Handle duplicate enquiry (per day limit reached)
+                if (data.duplicate) {
+                    console.log('⚠️ Duplicate enquiry prevented for today');
+                    toast.info(data.message || "You've already submitted an enquiry for this product today.", {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                    });
+
+                    enquirySentRef.current = true;
+
+                    // // Close the modal after showing message
+                    // setTimeout(() => {
+                    //     if (closeOtpMainPage) closeOtpMainPage();
+                    // }, 3000);
+                    return;
+                }
+                // DUPLICATE USER ENTRY RESTRICT 
+
                 console.log('✅ Enquiry saved successfully');
                 enquirySentRef.current = true;
                 setHasSentEnquiry(true);
-                
+
                 toast.success("Thank you for your enquiry! We'll contact you soon.", {
                     position: "bottom-right",
                     autoClose: 3000,
                 });
-                
-                // Close the modal after successful submission
-                setTimeout(() => {
-                    if (closeOtpMainPage) closeOtpMainPage();
-                }, 3000);
+
+                // // Close the modal after successful submission
+                // setTimeout(() => {
+                //     if (closeOtpMainPage) closeOtpMainPage();
+                // }, 3000);
             } else {
                 console.error('❌ Failed to save enquiry:', data.message);
                 toast.error(data.message || "Failed to save enquiry. Please try again.", {
@@ -187,10 +207,10 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
                 phone: user.userPhone,
                 email: user.email
             });
-            
+
             // Mark as verified to prevent multiple calls
             setVerified(true);
-            
+
             // Send enquiry without OTP process
             sendEnquiryWithoutOtp();
         }
@@ -202,11 +222,11 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
             setErrorMessage("Enter a valid 10-digit phone number.");
             return;
         }
-        
+
         setIsSending(true);
         setErrorMessage('');
         setStatus('Sending OTP...');
-        
+
         try {
             const response = await fetch(`${baseUrl}/verify/send-otp`, {
                 method: 'POST',
@@ -232,15 +252,15 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
                     console.log('TEST OTP (Localhost only):', data.testOtp);
                     console.log('=========================================');
                 }
-                
+
                 setErrorMessage('');
                 startResendTimer();
                 setStatus('');
-                
+
                 toast.success("OTP has been sent to your phone", {
                     position: "bottom-right",
                 });
-                
+
                 setOtpSent(true);
             } else {
                 setStatus('');
@@ -267,12 +287,12 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
             setErrorMessage("Enter a valid 6-digit OTP");
             return;
         }
-        
+
         if (isVerifying) return;
-        
+
         setIsVerifying(true);
         setErrorMessage('');
-        
+
         try {
             // For guest users, we need to send user status and basic info
             const verificationData = {
@@ -308,10 +328,21 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
             }
 
             if (data.success) {
+                // DUPLICATE USER ENTRY RESTRICT 
+                // Handle duplicate enquiry (per day limit reached)
+                if (data.duplicate) {
+                    console.log('⚠️ Duplicate enquiry prevented for today - Guest');
+                    toast.info(data.message || "You've already submitted an enquiry for this product today.", {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                    });
+                    return;
+                }
+                // DUPLICATE USER ENTRY RESTRICT 
                 setVerified(true);
                 setOtpError(false);
                 setErrorMessage('');
-                
+
                 toast.success("OTP verified successfully!", {
                     position: "bottom-right",
                 });
@@ -351,11 +382,11 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
     // Handle OTP Input Fields
     function handleOtpChange(e, index) {
         if (!/^\d*$/.test(e.target.value)) return;
-        
+
         let otpArray = [...enterOtp];
         otpArray[index] = e.target.value;
         const newOtp = otpArray.join('');
-        
+
         setEnterOtp(otpArray);
         setOtp(newOtp);
         setOtpError(false);
@@ -364,7 +395,7 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
         if (e.target.value && e.target.nextSibling) {
             e.target.nextSibling.focus();
         }
-        
+
         // Auto focus previous input on backspace
         if (!e.target.value && e.target.previousSibling) {
             e.target.previousSibling.focus();
@@ -411,7 +442,7 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
                         <div className='EnquireAdminDetails'>
                             <div className='EnquireAdminDetailsContents'>
                                 <div className='EnquireContactImg'>
-                                    <img src='/images/EnquireContactImg.png' alt="Contact"  className='EnquireContactImg'/>
+                                    <img src='/images/EnquireContactImg.png' alt="Contact" className='EnquireContactImg' />
                                 </div>
                                 <div>
                                     <a href='tel:+91 7373785057' className='EnquireContactImgContent' style={{ textDecoration: 'none', color: "#333333" }}>
@@ -421,10 +452,10 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
                             </div>
 
                             <div className='EnquireAdminDetailsCenterLine'>|</div>
-                            
+
                             <div className='EnquireAdminDetailsContents'>
                                 <div className='EnquireEmailImg'>
-                                    <img src='/images/EnquireEmailImg.png' alt="Email"className='EnquireEmailImg' />
+                                    <img src='/images/EnquireEmailImg.png' alt="Email" className='EnquireEmailImg' />
                                 </div>
                                 <div>
                                     <a href='mailto:vinothkumar@adinn.co.in' className='EnquireContactImgContent' style={{ textDecoration: 'none', color: "#333333" }}>
@@ -457,9 +488,9 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
                         {errorMessage && <div className="error-messageOTP">{errorMessage}</div>}
                         {status && <div className="status-messageOTP">{status}</div>}
 
-                        <button 
-                            className="continue-btn1" 
-                            onClick={sendOtp} 
+                        <button
+                            className="continue-btn1"
+                            onClick={sendOtp}
                             disabled={isSending || phone.length !== 10}
                         >
                             {isSending ? "Sending OTP..." : "Continue"}
@@ -509,9 +540,9 @@ function OtpMain({ closeOtpMainPage, productData, user, skipPhoneVerification = 
                         </span>
                         <br />
 
-                        <button 
-                            className="Submit-btn1" 
-                            onClick={verifyOtp} 
+                        <button
+                            className="Submit-btn1"
+                            onClick={verifyOtp}
                             disabled={!isOtpComplete || isVerifying}
                         >
                             {isVerifying ? 'Verifying...' : 'Submit OTP'}
