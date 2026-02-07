@@ -196,7 +196,7 @@ function AdinnHome2() {
 
         fetchPrimeSpots();
     }, []);
-    console.log('Visibile Prime Spots: ', primeCount);
+    // console.log('Visibile Prime Spots: ', primeCount);
     const handleBookNow = (spot) => {
         const spotData = {
             id: spot._id || spot.id,

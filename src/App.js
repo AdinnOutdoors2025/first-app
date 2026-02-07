@@ -45,9 +45,19 @@ import Sizes from './Adminpanel/Police_Signal_PoleSizes.jsx';
 /* Add toast message -SK */
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { loadZohoSalesIQ } from './utils/zohoSalesIQ.js';
+import SalesIQTracker from './utils/SalesIQTracker.jsx';
+
 /* Add toast message -SK */
 function App() {
   const [load, upadateLoad] = useState(true); 
+  useEffect(() => {
+    loadZohoSalesIQ();
+  }, []);
+
+  
+
+  
 useEffect(() => {
   const timer = setTimeout(() => {
     upadateLoad(false);
@@ -67,6 +77,7 @@ useEffect(() => {
       <SpotProvider>
         <LoginProvider>
           {/* <CartProvider> */}
+           <SalesIQTracker />
           <Router>
             {/* <PreLoader load={load} /> */}
             {/* Scroll to Top Component - Add this */}
