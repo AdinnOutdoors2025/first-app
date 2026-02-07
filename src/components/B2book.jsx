@@ -22,7 +22,11 @@ import slugify from "slugify";
 import PreLoader from "../components/PreLoad.jsx";
 // DATE OPEN WINDOW
 import { DATE_CONFIG } from "../Adminpanel/BASE_URL.js";
-// DATE OPEN WINDOW
+// DATE OPEN WINDOW 
+//slick animations 
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Slider from 'react-slick';
 
 const TODAY = new Date();
 TODAY.setUTCHours(0, 0, 0, 0);
@@ -104,6 +108,21 @@ function BookASite1() {
             checkAllInitialDaysBooked();
         }
     }, [confirmedDates]);
+
+      // Add window resize detection for responsive behavior
+    const [windowWidth, setWindowWidth] = useState(0);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        // Set initial width
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
 
     // Effect to show Enquire Now button when all days are booked
@@ -916,19 +935,19 @@ function BookASite1() {
     //         </span>
     //     );
     // };
- const RatingStars = ({ rating }) => {
-    const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 !== 0;
-    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+    const RatingStars = ({ rating }) => {
+        const fullStars = Math.floor(rating);
+        const halfStar = rating % 1 !== 0;
+        const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
 
-    return (
-      <div className="rate-book">
-  <span className="rating-text">4.3</span>
-  <span className="fa-solid fa-star rating-star"></span>
-</div>
+        return (
+            <div className="rate-book">
+                <span className="rating-text">4.3</span>
+                <span className="fa-solid fa-star rating-star"></span>
+            </div>
 
-    );
-  };
+        );
+    };
     const fetchDates = async () => {
         if (currentProduct?.prodCode) {
             try {
@@ -1977,18 +1996,18 @@ function BookASite1() {
     };
 
     const formatDate = (date) => {
-  if (!date) return null;
+        if (!date) return null;
 
-  const d = new Date(date);
+        const d = new Date(date);
 
-  return {
-    day: d.getDate(),
-    monthYear: d.toLocaleString("en-US", {
-      month: "short",
-      year: "numeric",
-    }),
-  }
-  };
+        return {
+            day: d.getDate(),
+            monthYear: d.toLocaleString("en-US", {
+                month: "short",
+                year: "numeric",
+            }),
+        }
+    };
 
     const getDateSelectionClass = (date) => {
         if (!date || isNaN(date.getTime())) return "disabled";
@@ -2535,7 +2554,7 @@ function BookASite1() {
         const halfStar = rating % 1 !== 0;
         const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
         return (
-            <div className="rate rate1-book1">
+            <div className="rate rate1-book1-similar">
                 {/* {[...Array(fullStars)].map((_, index) => (
                     <span key={index} className="fa-solid fa-star stars-book1"></span>
                 ))}
@@ -2549,7 +2568,7 @@ function BookASite1() {
                     ></span>
                 ))} */}
                 <span className="rating-text">4.3</span>
-  <span className="fa-solid fa-star rating2-star"></span>
+                <span className="fa-solid fa-star rating2-star"></span>
             </div>
         );
     };
@@ -2557,7 +2576,7 @@ function BookASite1() {
     if (isLoading) {
         return (
             <MainLayout>
-               <PreLoader load={isLoading} />
+                <PreLoader load={isLoading} />
             </MainLayout>
         );
     }
@@ -2572,7 +2591,126 @@ function BookASite1() {
             </MainLayout>
         );
     }
+    //OTHER SIMILAR PRODUCT ANIMATIONS
+  
 
+    // Custom Next Arrow
+    const NextArrow = (props) => {
+        const { onClick } = props;
+        return (
+            <div className="custom-arrow1-similar next-arrow1-similar" onClick={onClick}>
+                ❯
+            </div>
+        );
+    };
+
+
+    // Custom Previous Arrow
+    const PrevArrow = (props) => {
+        const { onClick } = props;
+        return (
+            <div className="custom-arrow1-similar prev-arrow1-similar" onClick={onClick}>
+                ❮
+            </div>
+        );
+    };
+
+
+    // Carousel settings
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        centerPadding: "0px",
+        // autoplay: true,
+        autoplaySpeed: 2000,
+        beforeChange: (current, next) => {
+            const elements = document.querySelectorAll(".slick-slide1-similar");
+            elements.forEach((el, index) => {
+                if (index === next) {
+                    el.classList.add("slick-center1");
+                } else {
+                    el.classList.remove("slick-center1");
+                }
+            });
+        },
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    centerPadding: "40px",
+                }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    centerPadding: "0px", // Set to 0 to remove any center padding
+                    centerMode: false // Disable center mode if not needed
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 600,
+                // centerPadding:"10px",
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    // centerPadding:"50px",
+
+                }
+            },
+        ]
+        // responsive: [
+        //     {
+        //         breakpoint: 1200,
+        //         settings: {
+        //             slidesToShow: 3,
+        //             slidesToScroll: 1,
+        //             centerPadding: "20px",
+        //         }
+        //     },
+        //     {
+        //         breakpoint: 992,
+        //         settings: {
+        //             slidesToShow: 2,
+        //             slidesToScroll: 1,
+        //             centerPadding: "20px",
+        //         }
+        //     },
+        //     {
+        //         breakpoint: 768,
+        //         settings: {
+        //             slidesToShow: 2,
+        //             slidesToScroll: 1,
+        //             centerPadding: "15px",
+        //         }
+        //     },
+        //     {
+        //         breakpoint: 576,
+        //         settings: {
+        //             slidesToShow: 1,
+        //             slidesToScroll: 1,
+        //             centerPadding: "40px",
+        //             centerMode: true,
+        //         }
+        //     },
+        // ]
+
+    };
     return (
         <MainLayout>
             <div>
@@ -2665,7 +2803,7 @@ function BookASite1() {
                                                     onClick={handleMainImageClick}
                                                 />
                                             )}
-                                             {/* <button
+                                            {/* <button
                     className=" mt-3 mb-2 btn-enquire"
                     onClick={toggleOtpMainPage}
                   >
@@ -2682,79 +2820,79 @@ function BookASite1() {
                             {currentProduct ? (
                                 <div className="col-md-6 col-lg-6 Book-content2">
                                     <p className="book-sideHeading">{currentProduct.prodName}</p>
-                                 <div className="book-rateContent1">
-                    {currentProduct.isOfferProduct ? (
-                      <>
-                        <div className="price-rating-row">
-                          <span className="rate-perDay offer-price-highlight">
-                            ₹{" "}
-                            {currentProduct.displayPrice?.toLocaleString() ||
-                              "0"}
-                            <span className="rate-perDay1"> / Per Day</span>
-                          </span>
+                                    <div className="book-rateContent1">
+                                        {currentProduct.isOfferProduct ? (
+                                            <>
+                                                <div className="price-rating-row">
+                                                    <span className="rate-perDay offer-price-highlight">
+                                                        ₹{" "}
+                                                        {currentProduct.displayPrice?.toLocaleString() ||
+                                                            "0"}
+                                                        <span className="rate-perDay1"> / Per Day</span>
+                                                    </span>
 
-                          {/* ⭐ Rating */}
-                          <div className="rate1-book">
-                            <span className="rating1-text">4.3</span>
-                            <span className="fa-solid fa-star rating1-star"></span>
-                          </div>
-                        </div>
+                                                    {/* ⭐ Rating */}
+                                                    <div className="rate1-book">
+                                                        <span className="rating1-text">4.3</span>
+                                                        <span className="fa-solid fa-star rating1-star"></span>
+                                                    </div>
+                                                </div>
 
-                        <span className="original-price-strikethrough">
-                          ₹{" "}
-                          {currentProduct.originalPrice?.toLocaleString() ||
-                            "0"}
-                        </span>
-                      </>
-                    ) : (
-                      <div className="price-rating-row">
-                        <span className="rate-perDay">
-                          ₹ {currentProduct.price?.toLocaleString() || "0"}
-                          <span className="rate-perDay1"> / Per Day</span>
-                        </span>
+                                                <span className="original-price-strikethrough">
+                                                    ₹{" "}
+                                                    {currentProduct.originalPrice?.toLocaleString() ||
+                                                        "0"}
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <div className="price-rating-row">
+                                                <span className="rate-perDay">
+                                                    ₹ {currentProduct.price?.toLocaleString() || "0"}
+                                                    <span className="rate-perDay1"> / Per Day</span>
+                                                </span>
 
-                        {/* ⭐ Rating */}
-                        <div className="rate1-book">
-                          <span className="rating1-text">4.3</span>
-                          <span className="fa-solid fa-star rating1-star"></span>
-                        </div>
-                      </div>
-                    )}
+                                                {/* ⭐ Rating */}
+                                                <div className="rate1-book">
+                                                    <span className="rating1-text">4.3</span>
+                                                    <span className="fa-solid fa-star rating1-star"></span>
+                                                </div>
+                                            </div>
+                                        )}
 
-                    <br />
-                    <a href="#Terms" className="book-condition anchor">
-                      Terms & Condition
-                    </a>
-                  </div>
-                   <div className="bookingdetailslocation">
-                  <div className="book-spot bookinglocation ">
-                    {currentProduct.productFrom}
-                    <span>
-                      <img
-                        src="/images/maproutebook.svg"
-                        className="location-arrow"
-                        alt="arrow"
-                      ></img>
-                    </span>
-                    {currentProduct.productTo}
-                  </div>
-                  <div className="maplocation1">
-                   <span className="productLocationImg">
-                    <a
-                      href={currentProduct.LocationLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <img
-                        src="/images/viewmap1.svg" 
-                        alt="location icon"
-                        className="locationImgIcon"
-                      />
-                      <span className="viewlocation">View Location</span>
-                    </a>
-                  </span>
-                 </div>
-                  </div>    
+                                        <br />
+                                        <a href="#Terms" className="book-condition anchor">
+                                            Terms & Condition
+                                        </a>
+                                    </div>
+                                    <div className="bookingdetailslocation">
+                                        <div className="book-spot bookinglocation ">
+                                            {currentProduct.productFrom}
+                                            <span>
+                                                <img
+                                                    src="/images/maproutebook.svg"
+                                                    className="location-arrow"
+                                                    alt="arrow"
+                                                ></img>
+                                            </span>
+                                            {currentProduct.productTo}
+                                        </div>
+                                        <div className="maplocation1">
+                                            <span className="productLocationImg">
+                                                <a
+                                                    href={currentProduct.LocationLink}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <img
+                                                        src="/images/viewmap1.svg"
+                                                        alt="location icon"
+                                                        className="locationImgIcon"
+                                                    />
+                                                    <span className="viewlocation">View Location</span>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
                                     {/* <p className="book-size">
                                         Size: {currentProduct.sizeWidth} x{" "}
                                         {currentProduct.sizeHeight}
@@ -2768,47 +2906,47 @@ function BookASite1() {
                                                 <span className="sided-text"> (2-Sided)</span>
                                             )}
                                     </p> */}
- {/* <div className="bookingdetialslist1">
+                                    {/* <div className="bookingdetialslist1">
                                     <span className="btn-type">{currentProduct.category}</span>
                                     <span className="badge book-type">
                                         {currentProduct.prodLighting}
                                     </span>
                                      </div> */}
-                                     <div className="bookingdetialslist1">
-                  <span className="btn-type">{currentProduct.category}</span>
-                  <img
-    src="/images/bookinglightingicon.svg"
-    alt="icon"
-    className="book-type-icon"
-  />
-                  <span className="badge book-type">
-                    {currentProduct.prodLighting}
-                  </span>
-                  </div>
-                                      <div className="bookingdetialslist1">
-                  <p className="book-size">
-  <span className="book-size-label">Size</span>
-  <span className="book-size-colon">:</span>
+                                    <div className="bookingdetialslist1">
+                                        <span className="btn-type">{currentProduct.category}</span>
+                                        <img
+                                            src="/images/bookinglightingicon.svg"
+                                            alt="icon"
+                                            className="book-type-icon"
+                                        />
+                                        <span className="badge book-type">
+                                            {currentProduct.prodLighting}
+                                        </span>
+                                    </div>
+                                    <div className="bookingdetialslist1">
+                                        <p className="book-size">
+                                            <span className="book-size-label">Size</span>
+                                            <span className="book-size-colon">:</span>
 
-  <span className="book-size-value">
-    {currentProduct.sizeWidth}
-    <span className="size-separator"> x </span>
-    {currentProduct.sizeHeight}
+                                            <span className="book-size-value">
+                                                {currentProduct.sizeWidth}
+                                                <span className="size-separator"> x </span>
+                                                {currentProduct.sizeHeight}
 
-    {(currentProduct.category === "Signal Post" ||
-      currentProduct.category === "Pole Kiosk") &&
-      ` x ${currentProduct.sizeSide}`}
+                                                {(currentProduct.category === "Signal Post" ||
+                                                    currentProduct.category === "Pole Kiosk") &&
+                                                    ` x ${currentProduct.sizeSide}`}
 
-    <span className="slash-bar"> | </span>
-    {currentProduct.productsquareFeet} Sq.ft
+                                                <span className="slash-bar"> | </span>
+                                                {currentProduct.productsquareFeet} Sq.ft
 
-    {(currentProduct.category === "Signal Post" ||
-      currentProduct.category === "Pole Kiosk") && (
-      <span className="sided-text"> (2-Sided)</span>
-    )}
-  </span>
-</p>
-                  </div>
+                                                {(currentProduct.category === "Signal Post" ||
+                                                    currentProduct.category === "Pole Kiosk") && (
+                                                        <span className="sided-text"> (2-Sided)</span>
+                                                    )}
+                                            </span>
+                                        </p>
+                                    </div>
                                     {/* <span className="star-main">
                                         <span>
                                             <img
@@ -2857,21 +2995,21 @@ function BookASite1() {
                                         </span>
                                         {currentProduct.productTo}
                                     </div> */}
-                                     <div className="book-price my-3">
-  <span className="price-label">Printing</span>
-  <span className="price-colon">:</span>
-  <span className="price-value">
-    ₹ {currentProduct.printingCost?.toLocaleString() || "0"}
-  </span>
-</div>
+                                    <div className="book-price my-3">
+                                        <span className="price-label">Printing</span>
+                                        <span className="price-colon">:</span>
+                                        <span className="price-value">
+                                            ₹ {currentProduct.printingCost?.toLocaleString() || "0"}
+                                        </span>
+                                    </div>
 
-<div className="book-price my-3">
-  <span className="price-label">Mounting</span>
-  <span className="price-colon1">:</span>
-  <span className="price-value">
-    ₹ {currentProduct.mountingCost?.toLocaleString() || "0"}
-  </span>
-</div>
+                                    <div className="book-price my-3">
+                                        <span className="price-label">Mounting</span>
+                                        <span className="price-colon1">:</span>
+                                        <span className="price-value">
+                                            ₹ {currentProduct.mountingCost?.toLocaleString() || "0"}
+                                        </span>
+                                    </div>
                                     {/* <div className="book-rate">
                                         <div className="book-rateContent1">
                                             {currentProduct.isOfferProduct ? (
@@ -2917,41 +3055,41 @@ function BookASite1() {
                                             </button>
                                         </div>
                                     </div> */}
-                                      <div className="book-rateContent2">
-  <button
-    className="book-date-range"
-    onClick={handleMainBookButton}
-    disabled={isProcessingBooking}
-  >
-    
-    
- {formatDate(selectedDates?.start) &&
- formatDate(selectedDates?.end) && (
-  <>
-    <div className="date-box">
-      <span className="date-number">
-        {formatDate(selectedDates.start).day}
-      </span>
-      <span className="date-text">
-        {formatDate(selectedDates.start).monthYear}
-      </span>
-    </div>
+                                    <div className="book-rateContent2">
+                                        <button
+                                            className="book-date-range"
+                                            onClick={handleMainBookButton}
+                                            disabled={isProcessingBooking}
+                                        >
 
-    <span className="date-separator">–</span>
 
-    <div className="date-box">
-      <span className="date-number">
-        {formatDate(selectedDates.end).day}
-      </span>
-      <span className="date-text">
-        {formatDate(selectedDates.end).monthYear}
-      </span>
-    </div>
-  </>
-)}
+                                            {formatDate(selectedDates?.start) &&
+                                                formatDate(selectedDates?.end) && (
+                                                    <>
+                                                        <div className="date-box">
+                                                            <span className="date-number">
+                                                                {formatDate(selectedDates.start).day}
+                                                            </span>
+                                                            <span className="date-text">
+                                                                {formatDate(selectedDates.start).monthYear}
+                                                            </span>
+                                                        </div>
 
-     </button>
-     </div>
+                                                        <span className="date-separator">–</span>
+
+                                                        <div className="date-box">
+                                                            <span className="date-number">
+                                                                {formatDate(selectedDates.end).day}
+                                                            </span>
+                                                            <span className="date-text">
+                                                                {formatDate(selectedDates.end).monthYear}
+                                                            </span>
+                                                        </div>
+                                                    </>
+                                                )}
+
+                                        </button>
+                                    </div>
                                     {/* <button
                                         className=" mt-3 mb-2 btn-enquire"
                                         // onClick={toggleOtpMainPage}
@@ -2960,27 +3098,27 @@ function BookASite1() {
                                     >
                                         Enquire Now
                                     </button> */}
-                                     <button
-                    className=" mt-3 mb-2 btn-enquire1"
-                    onClick={handleMainBookButton}
-                        disabled={isProcessingBooking}
-                  >
-                    {isProcessingBooking ? "Processing..." : "Book Now"}
-                        {/* <span>
+                                    <button
+                                        className=" mt-3 mb-2 btn-enquire1"
+                                        onClick={handleMainBookButton}
+                                        disabled={isProcessingBooking}
+                                    >
+                                        {isProcessingBooking ? "Processing..." : "Book Now"}
+                                        {/* <span>
                           <img
                             src="/images/calender_icon.png"
                             className="calender"
                             alt="calendar"
                           ></img>
                         </span> */}
-                      </button>
-                      <button
-                    className=" mt-3 mb-2 btn-enquire2"
-                    // onClick={toggleOtpMainPage}
-                     onClick={handleEnquireNow}
-                  >
-                    Request Call
-                  </button>
+                                    </button>
+                                    <button
+                                        className=" mt-3 mb-2 btn-enquire2"
+                                        // onClick={toggleOtpMainPage}
+                                        onClick={handleEnquireNow}
+                                    >
+                                        Request Call
+                                    </button>
                                     <br />
                                 </div>
                             ) : (
@@ -3120,76 +3258,134 @@ function BookASite1() {
                                         <h2 className="NearbyHeading mb-4">
                                             Nearby Similar Products
                                         </h2>
-                                        <div className="row similar-products">
-                                            {displayedSimilarSpots.map((spot) => (
-                                                <div
-                                                    className="col-lg-3 col-md-3 col-sm-12 mb-4 custom-col-30"
-                                                    key={spot._id}
-                                                >
-                                                    <div
-                                                        className="card board1-book1"
-                                                        onClick={() => handleSimilarProductClick(spot)}
-                                                        style={{ cursor: "pointer" }}
-                                                    >
-                                                        <img
-                                                            src={spot.image}
-                                                            alt={spot.location}
-                                                            className="card-img-top-book1"
-                                                        />
-                                                        <span className="board-category-book1">
-                                                            {spot.category}
-                                                        </span>
-                                                        <div className="board-content-book1">
-                                                            <div className="board-content-top-book1">
-                                                                <span className="card-title board-loc-book1">
-                                                                    {spot.name}
-                                                                </span>
-                                                                {/* <span className="board-dim-book1">
-                                                                    {spot.dimensions}
-                                                                </span> */}
-                                                            </div>
-                                                            <div className="board-content-bottom-book1">
-                                                                {/* <span className="board-price-book1">
-                                                                    ₹{spot.price.toLocaleString()}
-                                                                </span> */}
-                                                                <span className="board-price-book">
-                                                                                              {formatIndianCurrency(spot.price, true)}
-                                                                                              <span className="board-price-bookPerDay">
-                                                                                                {" "}
-                                                                                                / Per Day
-                                                                                              </span>
-                                                                                            </span>
-                                                                <span className="board-dim-book1">
-                                                                    {spot.dimensions} Sq.ft
-                                                                </span>
-                                                                {/* <img
-                                                                    src="/images/rating_board.png"
-                                                                    className="rate-board-book1"
-                                                                    alt="rating"
-                                                                ></img> */}
-                                                            </div>
-                                                            <RatingStarsSimilar rating={spot.rating} />
-                                                            
-                                                            {/* <button
-                                                                className="board-btn-book1"
+
+                                        {/* Determine which layout to use based on count and screen size */}
+                                        {(displayedSimilarSpots.length > 3 || (windowWidth <= 768 && displayedSimilarSpots.length > 1)) ? (
+                                            // Show carousel when more than 3 products OR on mobile with more than 1 product
+                                            <div className="similar-products-carousel">
+                                                <Slider {...settings}>
+                                                    {displayedSimilarSpots.map((spot) => (
+                                                        <div
+                                                            className="similar-slide-wrapper"
+                                                            key={spot._id}
+                                                        >
+                                                            {/* Product Card - Fixed width to prevent shrinking */}
+                                                            <div
+                                                                className="card board1-book1"
                                                                 onClick={() => handleSimilarProductClick(spot)}
+                                                                style={{ cursor: "pointer" }}
                                                             >
-                                                                Book Now
-                                                            </button> */}
-                                                            <button
-                            className="board-btn-book"
-                            onClick={() => handleSimilarProductClick(spot)}
-                          >
-                            Book Now
-                          </button>
+                                                                <img
+                                                                    src={spot.image}
+                                                                    alt={spot.location}
+                                                                    className="card-img-top-book1"
+                                                                />
+                                                                <span className="board-category-book1">
+                                                                    {spot.category}
+                                                                </span>
+                                                                <div className="board-content-book1">
+                                                                    <div className="board-content-top-book1">
+                                                                        <span className="card-title board-loc-book1-similar">
+                                                                            {spot.name}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="board-content-bottom-book1">
+                                                                        <span className="board-price-book">
+                                                                            {formatIndianCurrency(spot.price, true)}
+                                                                            <span className="board-price-bookPerDay">
+                                                                                {" "}
+                                                                                / Per Day
+                                                                            </span>
+                                                                        </span>
+                                                                        <span className="board-dim-book1">
+                                                                            {spot.dimensions} Sq.ft
+                                                                        </span>
+                                                                    </div>
+                                                                    <RatingStarsSimilar rating={spot.rating} />
+                                                                    <button
+                                                                        className="board-btn-book-similar"
+                                                                        onClick={() => handleSimilarProductClick(spot)}
+                                                                    >
+                                                                        Book Now
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </Slider>
+                                            </div>
+                                        ) : (
+                                            // Show regular grid when 3 or fewer products on desktop
+                                            <div
+                                                className="similar-products-grid"
+                                                style={{
+                                                    display: 'flex',
+                                                    flexWrap: 'wrap',
+                                                    justifyContent: displayedSimilarSpots.length === 1 ? 'center' :
+                                                        displayedSimilarSpots.length === 2 ? 'space-around' : 'space-between',
+                                                    gap: '20px'
+                                                }}
+                                            >
+                                                {displayedSimilarSpots.map((spot) => (
+                                                    <div
+                                                        key={spot._id}
+                                                        style={{
+                                                            flex: displayedSimilarSpots.length === 1 ? '0 0 auto' :
+                                                                displayedSimilarSpots.length === 2 ? '0 0 calc(50% - 10px)' :
+                                                                    '0 0 calc(33.333% - 14px)',
+                                                            display: 'flex',
+                                                            justifyContent: 'center'
+                                                        }}
+                                                    >
+                                                        {/* Same Product Card */}
+                                                        <div
+                                                            className="card board1-book1"
+                                                            onClick={() => handleSimilarProductClick(spot)}
+                                                            style={{ cursor: "pointer" }}
+                                                        >
+                                                            <img
+                                                                src={spot.image}
+                                                                alt={spot.location}
+                                                                className="card-img-top-book1"
+                                                            />
+                                                            <span className="board-category-book1">
+                                                                {spot.category}
+                                                            </span>
+                                                            <div className="board-content-book1">
+                                                                <div className="board-content-top-book1">
+                                                                    <span className="card-title board-loc-book1-similar">
+                                                                        {spot.name}
+                                                                    </span>
+                                                                </div>
+                                                                <div className="board-content-bottom-book1">
+                                                                    <span className="board-price-book">
+                                                                        {formatIndianCurrency(spot.price, true)}
+                                                                        <span className="board-price-bookPerDay">
+                                                                            {" "}
+                                                                            / Per Day
+                                                                        </span>
+                                                                    </span>
+                                                                    <span className="board-dim-book1">
+                                                                        {spot.dimensions} Sq.ft
+                                                                    </span>
+                                                                </div>
+                                                                <RatingStarsSimilar rating={spot.rating} />
+                                                                <button
+                                                                    className="board-btn-book-similar"
+                                                                    onClick={() => handleSimilarProductClick(spot)}
+                                                                >
+                                                                    Book Now
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            ))}
-                                        </div>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             )}
+
                         </div>
                     </div>
                 </div>

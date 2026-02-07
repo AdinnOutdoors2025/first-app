@@ -1472,9 +1472,10 @@
         /* height: 60px; */
         font-size: 18px;
         font-weight: 500;
- padding: 10px 0px;
-           padding-left: 7px;
-        padding-right: 13px;    }
+        padding: 10px 0px;
+        padding-left: 7px;
+        padding-right: 13px;
+    }
 
 
     .eyeImg {
@@ -1663,7 +1664,7 @@
         font-weight: 500;
         padding: 10px 0px;
         padding-left: 0px;
-          padding-right: 12px;
+        padding-right: 12px;
     }
 
 
@@ -1853,7 +1854,7 @@
         /* padding: 8px 5px; */
         padding: auto 0px;
         padding-left: 3px;
-          padding-right: 12px;
+        padding-right: 12px;
     }
 
 
@@ -2049,7 +2050,7 @@
         font-weight: 500;
         padding: 10px 0px;
         padding-left: 0px;
-          padding-right: 12px;
+        padding-right: 12px;
     }
 
 
