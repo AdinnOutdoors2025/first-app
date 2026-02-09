@@ -1,3 +1,4 @@
+/// all issue are fixed 90%
 // B2BOOK.JSX
 // Corrected login flow and calendar behavior, Booked dates with proper message handling -CORRECTED ENQUIRE NOW 
 import React, { useState, useRef, useEffect } from "react";
@@ -255,6 +256,45 @@ function BookASite1() {
         }
     }, [isCalendarOpen, currentProduct]);
 
+    const lastConfirmedDate = React.useMemo(() => {
+    if (!confirmedDates || confirmedDates.length === 0) return null;
+
+    return confirmedDates.reduce((latest, curr) => {
+        return curr > latest ? curr : latest;
+    }, confirmedDates[0]);
+}, [confirmedDates]);
+
+const getBookingOpenDate = (rangeStartDate) => {
+    const openDate = new Date(rangeStartDate);
+    openDate.setDate(openDate.getDate() - (INITIAL_SELECTION_DAYS - 1));
+
+    openDate.setUTCHours(0, 0, 0, 0);
+    return openDate;
+};
+
+
+const getDynamicFutureLimit = () => {
+    if (!lastConfirmedDate) return null;
+
+    const todayUTC = new Date(Date.UTC(
+        new Date().getUTCFullYear(),
+        new Date().getUTCMonth(),
+        new Date().getUTCDate()
+    ));
+
+    const diffDays = Math.max(
+        1,
+        Math.ceil((todayUTC - lastConfirmedDate) / (1000 * 60 * 60 * 24))
+    );
+
+    const limit = new Date(lastConfirmedDate);
+    limit.setUTCDate(limit.getUTCDate() + diffDays);
+
+    return limit;
+};
+
+
+
     // Handle user login state changes
     useEffect(() => {
         if (user && currentProduct) {
@@ -411,6 +451,15 @@ function BookASite1() {
         setIsWindowExpanded(true);
     };
 
+    const isBookingAllowedToday = (rangeStartDate) => {
+    const bookingOpenDate = getBookingOpenDate(rangeStartDate);
+    const todayUTC = new Date();
+    todayUTC.setUTCHours(0, 0, 0, 0);
+
+    return todayUTC >= bookingOpenDate;
+};
+
+
     const resetToInitialWindow = () => {
         const today = new Date();
         today.setUTCHours(0, 0, 0, 0);
@@ -481,18 +530,56 @@ function BookASite1() {
         const conflictBlocks = getConflictBlocks(startDate, endDate);
         const availableDays = getAvailableDaysInRange(startDate, endDate).length;
 
-        if (availableDays >= MIN_BOOKING_DAYS) {
-            // Set the selection
-            setSelectedDates({ start: startDate, end: endDate });
-        } else {
+      if (availableDays >= MIN_BOOKING_DAYS) {
+
+    if (!isBookingAllowedToday(startDate)) {
+        const bookingOpenDate = getBookingOpenDate(startDate);
+
+        setCalendarErrorMessage(
+            `Next available dates: ` +
+            `${startDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ` +
+            `${endDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}. ` +
+            `⏳ Booking opens on ${bookingOpenDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`
+        );
+
+        // 🚫 STOP auto-selection
+        return;
+    }
+
+    // ✅ Booking window open
+    setSelectedDates({ start: startDate, end: endDate });
+    return;
+}
+ else {
             // Try to find alternative range
             const range = findNextAvailableRange(startDate);
-            if (range) {
-                setSelectedDates({ start: range.start, end: range.end });
-                setCalendarErrorMessage(
-                    `Found available ${range.days} days: ${range.start.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ${range.end.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`,
-                );
-            } else {
+           if (range) {
+    const bookingOpenDate = getBookingOpenDate(range.start);
+    const todayUTC = new Date();
+    todayUTC.setUTCHours(0, 0, 0, 0);
+
+    if (todayUTC < bookingOpenDate) {
+        // ⛔ Booking not open yet → message only
+        setCalendarErrorMessage(
+            `Next available dates: ` +
+            `${range.start.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ` +
+            `${range.end.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}. ` +
+            `⏳ Booking opens on ${bookingOpenDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`
+        );
+
+        // 🚫 Do NOT auto select
+        return;
+    }
+
+    // ✅ Booking window open → allow auto selection
+    setSelectedDates({ start: range.start, end: range.end });
+    setCalendarErrorMessage(
+        `✅ Found available ${range.days} days: ` +
+        `${range.start.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} - ` +
+        `${range.end.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`
+    );
+}
+ else {
                 setCalendarErrorMessage(
                     `Cannot find ${MIN_BOOKING_DAYS} continuous available days starting from ${startDate.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}.`,
                 );
@@ -1795,7 +1882,7 @@ function BookASite1() {
         }, 3000);
     };
 
-    const getDateSelectionClass = (date) => {
+    const getDateSelectionClass_old = (date) => {
         if (!date || isNaN(date.getTime())) {
             return "disabled";
         }
@@ -1869,6 +1956,67 @@ function BookASite1() {
             return "disabled";
         }
     };
+    
+const getDateSelectionClass = (date) => {
+    if (!date || isNaN(date.getTime())) return "disabled";
+
+    const normalizedDate = new Date(
+        Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    );
+
+    // 1️⃣ Past dates
+    if (isPastDate(normalizedDate)) {
+        return "past";
+    }
+
+    // 2️⃣ ADMIN APPROVED (RED) — always visible, no limits
+    if (isDateBooked(normalizedDate)) {
+        return "booked";
+    }
+
+    // 3️⃣ PENDING (ORANGE)
+    if (isDatePending(normalizedDate)) {
+        // handled later for hiding
+    }
+
+    // 4️⃣ Outside initial booking window (only affects available/pending)
+    if (!isDateWithinCurrentWindow(normalizedDate)) {
+        return "outside-window";
+    }
+
+    // 5️⃣ Dynamic hiding AFTER last confirmed date
+  
+    // 6️⃣ Selected range
+    if (selectedDates.start && selectedDates.end) {
+        const startUTC = new Date(Date.UTC(
+            selectedDates.start.getFullYear(),
+            selectedDates.start.getMonth(),
+            selectedDates.start.getDate()
+        ));
+
+        const endUTC = new Date(Date.UTC(
+            selectedDates.end.getFullYear(),
+            selectedDates.end.getMonth(),
+            selectedDates.end.getDate()
+        ));
+
+        if (+normalizedDate === +startUTC) return "selected-start";
+        if (+normalizedDate === +endUTC) return "selected-end";
+        if (normalizedDate > startUTC && normalizedDate < endUTC) {
+            return "selected-range";
+        }
+    }
+
+    // 7️⃣ Pending (visible until hidden logic applies)
+    if (isDatePending(normalizedDate)) {
+        return "pending";
+    }
+
+    // 8️⃣ Default available
+    return "available";
+};
+
+////
 
     useEffect(() => {
         if (isCalendarOpen && allInitialDaysBooked && nextBookingOpenDate) {
