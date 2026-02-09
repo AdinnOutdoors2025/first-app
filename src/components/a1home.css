@@ -704,6 +704,9 @@ font-weight: 400;
    .inside-content{
     margin-right: 10px !important;
    }
+   .about-content2 img {
+    width: 500px !important;
+  }
 }
 /* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
 @media (min-width: 992px) and (max-width: 1023px) {

@@ -537,29 +537,40 @@ function FooterMain() {
                             onChange={(e) => setContactInfo(e.target.value)} 
                             disabled={isSubmit} 
                         />
-                        <button className='f-btn' type="submit" disabled={isSubmit}>
+                        {/* <button className='f-btn' type="submit" disabled={isSubmit}>
                             {isSubmit ? 'Sending...' : 'Contact me'} 
-                        </button>
+                        </button> */}
+                        <button className="f-btn" type="submit" disabled={isSubmit}>
+  {isSubmit ? (
+    'Sending...'
+  ) : (
+    <img
+      src="/images/footer-contacticon.svg"   
+      alt="Send"
+      className="btn-arrow"
+    />
+  )}
+</button>
                     </form>
                 </div>
                 
                 {/* Building images */}
-                <img src='/images/f7-building.png' className='f-buildMain' alt="Building" />
+                {/* <img src='/images/f7-building.png' className='f-buildMain' alt="Building" /> */}
                 
                 <div className='f-info container'>
                     <div className='f-infoContent'>
                         <img src='/images/adinn_logo.png' className='f-adinnLogo' alt="Adinn Logo" />
                         <div className='f-content'>
-                            <div className='f-c1'> <img src='/images/f1-phone.png' className='f1' alt="Phone" /></div>
+                            <div className='f-c1'> <img src='/images/f11-phone.svg' className='f1' alt="Phone" /></div>
                             <div className='f-c2'>
-                                <div><a href='tel:7373785048' style={{textDecoration:'none', color: "#E41E25"}}> +91 73737 85048</a></div>
-                                <div><a href='tel:7373785056' style={{textDecoration:'none', color: "#E41E25"}}>+91 73737 85056</a></div>
+                                <div><a href='tel:7373785048' style={{textDecoration:'none', color: "#121927"}}> +91 73737 85048</a></div>
+                                <div><a href='tel:7373785056' style={{textDecoration:'none', color: "#121927"}}>+91 73737 85056</a></div>
                             </div>
                         </div>
                         <div className='f-content1'>
-                            <img src='/images/f2-mail.png' className='f2' alt="Mail" />
+                            <img src='/images/f2-mail.svg' className='f2' alt="Mail" />
                             <span className='mail'>
-                                <a href='mailto:vinothkumar@adinn.co.in' style={{textDecoration:'none', color: "#E41E25"}}>
+                                <a href='mailto:vinothkumar@adinn.co.in' style={{textDecoration:'none', color: "#121927"}}>
                                     vinothkumar@adinn.co.in
                                 </a>
                             </span>
@@ -567,32 +578,32 @@ function FooterMain() {
                         <div className='f-content2'>
                             <div className='f-c3'>
                                 <a href="https://www.linkedin.com/showcase/adinn-outdoors/" target="_blank" rel="noopener noreferrer">
-                                    <img src='/images/f3-linkedin.png' className='f3' alt="LinkedIn" />
+                                    <img src='/images/f3-linkedin.svg' className='f3' alt="LinkedIn" />
                                 </a>
                             </div>
                             <div className='f-c3'>
                                 <a href="https://www.facebook.com/adinnoutdoors/" target="_blank" rel="noopener noreferrer">
-                                    <img src='/images/f4-fb.png' className='f4' alt="Facebook" />
+                                    <img src='/images/f4-fb.svg' className='f4' alt="Facebook" />
                                 </a>
                             </div>
                             <div className='f-c3'>
                                 <a href="https://www.youtube.com/@AdinnChannel" target="_blank" rel="noopener noreferrer">
-                                    <img src='/images/f5-youtube.png' className='f5' alt="YouTube" />
+                                    <img src='/images/f5-youtube.svg' className='f5' alt="YouTube" />
                                 </a>
                             </div>
                             <div className='f-c3'>
                                 <a href="https://www.instagram.com/adinnoutdoor/" target="_blank" rel="noopener noreferrer">
-                                    <img src='/images/f6-insta.png' className='f6' alt="Instagram" />
+                                    <img src='/images/f6-insta.svg' className='f6' alt="Instagram" />
                                 </a>
                             </div>
                         </div>
                     </div>
-
+                 <img src='/images/footer_image1.svg' className='f-buildMain' alt="Building" />
                     {/* right side footer content */}
                     <div className='f-infoContent1'>
                         <div className='f-content3'>
                             <div>
-                                <img src='/images/f8-building1.png' className='f7' alt="Head Office Building" />
+                                <img src='/images/BuildingApartment1.svg' className='f7' alt="Head Office Building" />
                             </div>
                             <div className='f-c4'>
                                 <h1 className='footer-heading'>Head office</h1>
@@ -603,7 +614,7 @@ function FooterMain() {
                         </div>
                         <div className='f-content4'>
                             <div>
-                                <img src='/images/f9-building2.png' className='f8' alt="Branch Office Building" />
+                                <img src='/images/BuildingOffice1.svg' className='f8' alt="Branch Office Building" />
                             </div>
                             <div className='f-c4'>
                                 <h1 className='footer-heading'>Branch office</h1>
