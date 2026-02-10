@@ -817,3 +817,36 @@ right: 45px;
 }
 
 /* search button clear button styles */
+/* Size range filter styles */
+.size-slider-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-width: 220px;
+}
+
+.size-label {
+    font-size: 13px;
+    margin-bottom: 4px;
+    color: #555;
+}
+
+.size-slider input[type="range"] {
+    width: 100%;
+}
+
+.size-values {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.size-helper-text {
+    font-size: 11px;
+    color: #777;
+    margin-top: 6px;
+}
+
+/* Size range filter styles */
