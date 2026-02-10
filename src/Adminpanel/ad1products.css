@@ -787,3 +787,33 @@ right: 45px;
 .AdminProdinput-error {
     border-color: #dc3545 !important;
 }
+
+/* search button clear button styles */
+/* ✨ Highlight searched text */
+.highlight-search {
+    background-color: #fff3cd;
+    color: #000;
+    padding: 0 2px;
+    border-radius: 3px;
+}
+
+/* ❌ Clear search button */
+.search-wrapper {
+    position: relative;
+}
+
+.clear-search {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 14px;
+    color: #999;
+}
+
+.clear-search:hover {
+    color: #000;
+}
+
+/* search button clear button styles */

@@ -106,23 +106,45 @@ const ProductTable = () => {
     // Pagination States
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 150;
-    // Update filtered products when filter changes
-    useEffect(() => {
-        let filtered;
-        switch (selectedFilter) {
-            case "Hidden Products":
-                filtered = products.filter(p => !p.visible);
-                break;
+    // 🔍 Search input state (NEW)
+    const [searchTerm, setSearchTerm] = useState('');
 
-            case "5 Star Ratings":
-                filtered = products.filter(p => Math.floor(p.rating) === 5); // Handle decimal ratings
-                break;
-            default: // View All
-                filtered = products;
-        }
-        setFilteredProducts(filtered);
-        setCurrentPage(1); // Reset to first page when filter changes
-    }, [selectedFilter, products]);
+    // Update filtered products when filter changes
+    
+    // 🔍 Filter products based on dropdown + search (UPDATED)
+useEffect(() => {
+    let filtered = products;
+
+    // Apply dropdown filter
+    if (selectedFilter === "Hidden Products") {
+        filtered = filtered.filter(p => !p.visible);
+    } else if (selectedFilter === "5 Star Ratings") {
+        filtered = filtered.filter(p => Math.floor(p.rating) === 5);
+    }
+
+    // Apply search filter
+    if (searchTerm.trim() !== '') {
+        const search = searchTerm.toLowerCase();
+
+        filtered = filtered.filter((product) =>
+            product.name?.toLowerCase().includes(search) ||             // Name
+            product.prodCode?.toLowerCase().includes(search) ||         // SQ.ID
+            product.mediaType?.toLowerCase().includes(search) ||        // Media Type
+            product.price?.toString().includes(search) ||               // Price
+            product.rating?.toString().includes(search) ||              // Ratings
+            `${product.width} ${product.height} ${product.productsquareFeet}`
+                .toLowerCase()
+                .includes(search)                                       // Size
+        );
+    }
+
+    setFilteredProducts(filtered);      // UPDATE filtered list
+    setCurrentPage(1);                  // Reset pagination
+}, [selectedFilter, searchTerm, products]); // 👈 NEW dependency
+
+
+
+
 
     // Calculate Total Pages
     //  const totalPages = Math.ceil(products.length / productsPerPage);
@@ -214,6 +236,26 @@ const pages = getPaginationGroup(currentPage, totalPages);
             <div className='productsHeader'>
                 <div className='productsHeading'>All Products</div>
                 <div>
+                 <div className="search-wrapper"> {/* NEW */}
+    <input
+        type="text"
+        placeholder="Type to search the products..."
+        className="ProductsSearchInput"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+    />
+
+    {searchTerm && (                               // ❌ Clear button (NEW)
+        <span
+            className="clear-search"
+            onClick={() => setSearchTerm('')}
+        >
+            ✕
+        </span>
+    )}
+</div>
+
+
                     <select className='ProductsInputSelect' value={selectedFilter}
                         onChange={(e) => setSelectedFilter(e.target.value)}>
                         <option value="View All" >View All</option>
