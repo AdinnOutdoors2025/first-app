@@ -10,6 +10,21 @@ import { getPaginationGroup } from "../utils/pagination";
 const OrdersTable = () => {
     // Handled by the admin name
 
+    const [orderStatuses, setOrderStatuses] = useState([]);
+    const [selectedStatus, setSelectedStatus] = useState('');
+    const [selectedHandler, setSelectedHandler] = useState('');
+
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
+
+    const [reservedFrom, setReservedFrom] = useState('');
+    const [reservedTo, setReservedTo] = useState('');
+
+
+
+
+
+
     const [showHandlerModal, setShowHandlerModal] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [handlerName, setHandlerName] = useState('');
@@ -41,29 +56,128 @@ const OrdersTable = () => {
     useEffect(() => {
         fetchOrders();
     }, []);
+
+    useEffect(() => {
+        const fetchOrderStatuses = async () => {
+            try {
+                const res = await fetch(`${baseUrl}/getOrderStatuses`);
+                const data = await res.json();
+                setOrderStatuses(data.data || []);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchOrderStatuses();
+    }, []);
+
     // Pagination States
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 10;
-    // Add state for search date(FILTERED DATE TO SHOW THE PRODUCT)
-    const [searchDate, setSearchDate] = useState('');
-    // Update your fetchOrders and other existing code...
-    const filteredOrders = productsOrderData.filter(order => {
-        if (!searchDate) return true;
+    const [searchTerm, setSearchTerm] = useState('');
 
-        if (order.createdAt) {
-            const date = new Date(order.createdAt);
-            const day = date.getDate().toString();
-            const month = (date.getMonth() + 1).toString(); // Months are 0-indexed
-            const year = date.getFullYear().toString();
+  const filteredOrders = productsOrderData.filter(order => {
 
-            // Check if search term matches any part
-            return day.includes(searchDate) ||
-                month.includes(searchDate) ||
-                year.includes(searchDate) ||
-                `${day}/${month}/${year}`.includes(searchDate);
-        }
+    /* =========================
+       1️⃣ STATUS FILTER
+    ========================= */
+    if (selectedStatus && order.order_status !== selectedStatus) {
         return false;
-    });
+    }
+
+    /* =========================
+       2️⃣ HANDLER FILTER
+    ========================= */
+    if (selectedHandler && order.handled_by !== selectedHandler) {
+        return false;
+    }
+
+    /* =========================
+       3️⃣ ORDER CREATED DATE FILTER
+    ========================= */
+    if (fromDate || toDate) {
+        const orderDate = new Date(order.createdAt);
+
+        if (fromDate) {
+            const from = new Date(fromDate);
+            from.setHours(0, 0, 0, 0);
+            if (orderDate < from) return false;
+        }
+
+        if (toDate) {
+            const to = new Date(toDate);
+            to.setHours(23, 59, 59, 999);
+            if (orderDate > to) return false;
+        }
+    }
+
+    /* =========================
+       4️⃣ RESERVED DATE RANGE FILTER (NEW)
+       Booking overlap logic
+    ========================= */
+    if (reservedFrom || reservedTo) {
+        const from = reservedFrom ? new Date(reservedFrom) : null;
+        const to = reservedTo ? new Date(reservedTo) : null;
+
+        if (from) from.setHours(0, 0, 0, 0);
+        if (to) to.setHours(23, 59, 59, 999);
+
+        const hasValidReservation = (order.products || []).some(product => {
+            if (!product?.booking?.startDate || !product?.booking?.endDate) return false;
+
+            const bookingStart = new Date(product.booking.startDate);
+            const bookingEnd = new Date(product.booking.endDate);
+
+            // overlap condition
+            if (from && bookingEnd < from) return false;
+            if (to && bookingStart > to) return false;
+
+            return true;
+        });
+
+        if (!hasValidReservation) return false;
+    }
+
+    /* =========================
+       5️⃣ SEARCH FILTER
+    ========================= */
+    if (!searchTerm.trim()) return true;
+
+    const search = searchTerm.toLowerCase();
+
+    const orderId = order.orderId?.toLowerCase() || '';
+    const handler = order.handled_by?.toLowerCase() || '';
+    const status = order.status?.toLowerCase() || '';
+    const orderStatus = order.order_status?.toLowerCase() || '';
+    const clientName = order.client?.name?.toLowerCase() || '';
+
+    const productCodes = (order.products || [])
+        .map(p => p?.prodCode?.toLowerCase())
+        .join(' ');
+
+    const formattedDate = order.createdAt
+        ? formatIndianDateTime(order.createdAt).toLowerCase()
+        : '';
+
+    return (
+        orderId.includes(search) ||
+        handler.includes(search) ||
+        status.includes(search) ||
+        orderStatus.includes(search) ||
+        clientName.includes(search) ||
+        productCodes.includes(search) ||
+        formattedDate.includes(search)
+    );
+});
+
+
+        const handlerOptions = Array.from(
+            new Set(
+                productsOrderData
+                    .map(o => o.handled_by)
+                    .filter(Boolean)
+            )
+        );
 
     // Calculate Total Pages
     const totalPages = Math.ceil(filteredOrders.length / productsPerPage);
@@ -73,34 +187,6 @@ const OrdersTable = () => {
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = filteredOrders.slice(indexOfFirstProduct, indexOfLastProduct);
 
-    // // Pagination Function
-    // Function to Generate Pagination Buttons
-    // const getPaginationGroup = () => {
-    //     let pages = [];
-    //     const maxPagesToShow = 3; // Show 3 pages around the current page
-
-    //     if (totalPages <= 6) {
-    //         // If there are few pages, show all
-    //         pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    //     }
-    //     else {
-    //         if (currentPage <= maxPagesToShow + 1) {
-    //             // If near start: Show first few + last 2
-    //             pages = [...Array(maxPagesToShow + 1).keys()].map((i) => i + 1);
-    //             pages.push("...", totalPages - 1, totalPages);
-    //         } else if (currentPage >= totalPages - maxPagesToShow) {
-    //             // If near end: Show first 2 + last few
-    //             pages = [1, 2, "..."];
-    //             pages.push(...Array.from({ length: maxPagesToShow + 1 }, (_, i) => totalPages - maxPagesToShow + i));
-    //         } else {
-    //             // Middle section: Show current, 1 before & after
-    //             pages = [1, 2, "..."];
-    //             pages.push(currentPage - 1, currentPage, currentPage + 1);
-    //             pages.push("...", totalPages - 1, totalPages);
-    //         }
-    //     }
-    //     return pages;
-    // };
     const pages = getPaginationGroup(currentPage, totalPages);
     // 3 DOTS SECTION 
     const [menuOpenId, setMenuOpenId] = useState(null); // Use ID if multiple rows
@@ -121,18 +207,7 @@ const OrdersTable = () => {
 
         // Check if order already has a handler
         if (order.handled_by && order.handled_by.trim() !== '') {
-            // const confirmView = window.confirm(
-            //     `This order is already handled by "${order.handled_by}". Do you want to view it anyway?`
-            // );
-            // if (confirmView) {
-            //     navigate('/admin#orderDetailsPg', {
-            //         state: {
-            //             order,
-            //             activeMenu: 'orders',
-            //             activeSubOrder: 'Order Info'
-            //         }
-            //     });
-            // }
+      
 
             // CHANGED: If order already has a handler, go directly to order details
             if (order.handled_by && order.handled_by.trim() !== '') {
@@ -380,11 +455,113 @@ const OrdersTable = () => {
 
             <div className='productsHeader'>
                 <div className='productsHeading'>All Orders</div>
-                <div className="Admin-order-search">
-                    <i className="fas fa-search search-icon Admin-order-search-icon"></i>
-                    <input type="text" placeholder="Search..." className='Admin-order-search-name' value={searchDate}
-                        onChange={(e) => setSearchDate(e.target.value)} />
+
+                <select   className="Admin-order-filter"    value={selectedStatus}   onChange={(e) => {  setSelectedStatus(e.target.value);   setCurrentPage(1);  }} >
+                    <option value="">All Status</option>
+                    {orderStatuses.map(status => (
+                        <option key={status._id} value={status.name}>
+                            {status.name}
+                        </option>
+                    ))}
+                </select>
+
+                <select
+                    className="Admin-order-filter"
+                    value={selectedHandler}
+                    onChange={(e) => {
+                        setSelectedHandler(e.target.value);
+                        setCurrentPage(1);
+                    }}
+                    >
+                    <option value="">All Handlers</option>
+                    {handlerOptions.map((handler, idx) => (
+                        <option key={idx} value={handler}>
+                            {handler}
+                        </option>
+                    ))}
+                </select>
+
+                <div className="Admin-order-date-filter">
+                    <input
+                        type="date"
+                        value={fromDate}
+                        onChange={(e) => {
+                            setFromDate(e.target.value);
+                            setCurrentPage(1);
+                        }}
+                    />
+
+                    <span className="date-separator">to</span>
+
+                    <input
+                        type="date"
+                        value={toDate}
+                        onChange={(e) => {
+                            setToDate(e.target.value);
+                            setCurrentPage(1);
+                        }}
+                    />
+
+
+                      <input
+                            type="date"
+                            value={reservedFrom}
+                            onChange={(e) => {
+                                setReservedFrom(e.target.value);
+                                setCurrentPage(1);
+                            }}
+                        />
+
+                        <span className="date-separator">to</span>
+
+                        <input
+                            type="date"
+                            value={reservedTo}
+                            onChange={(e) => {
+                                setReservedTo(e.target.value);
+                                setCurrentPage(1);
+                            }}
+                        />
+
+               
                 </div>
+
+           {(searchTerm || selectedStatus || selectedHandler || fromDate || toDate || reservedTo) && (
+    <button
+        className="clear-all-filters"
+        onClick={() => {
+            setSearchTerm('');
+            setSelectedStatus('');
+            setSelectedHandler('');
+            setFromDate('');
+            setToDate('');
+            setReservedTo('');
+            reservedFrom('');
+            setCurrentPage(1);
+        }}
+    >
+        Clear all
+    </button>
+)}
+
+
+            <div className="Admin-order-search">
+                <i className="fas fa-search search-icon Admin-order-search-icon"></i>
+
+                <input
+                    type="text"
+                    placeholder="Search by Order ID, Product Code, Client, Handler, Status..."
+                    className="Admin-order-search-name"
+                    value={searchTerm}
+                    onChange={(e) => {
+                        setSearchTerm(e.target.value);
+                        setCurrentPage(1); // reset pagination
+                    }}
+                />
+
+
+            </div>
+
             </div>
 
             <div className="order-product-table">
