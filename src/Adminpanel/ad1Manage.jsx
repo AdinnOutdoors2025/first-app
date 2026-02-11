@@ -1,13 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import './ad1Manage.css';
-import AdminOrderCalendar  from './adNewCalender';
-// import { CategoryContext } from './ad1';
+import AdminOrderCalendar from './adNewCalender';
 import { useSpot } from '../components/B0SpotContext';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
-//BASE URL OF http://localhost:3001 FILE IMPORT 
-import { baseUrl } from './BASE_URL';
-
+import { baseUrl, gstPercentage } from './BASE_URL';
 import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
 
 function AdManageSection() {
@@ -28,6 +25,7 @@ function AdManageSection() {
             </div>
         );
     };
+    
     // PRODUCT RATING SECTION 
     const RatingStars1 = ({ rating }) => {
         const fullStars = Math.floor(rating);
@@ -44,11 +42,7 @@ function AdManageSection() {
                         <span key={index} className="fa-solid fa-star Product-empty-star1 Product-stars1"></span>
                     ))}
                 </div>
-                <div>
-
-                </div>
             </div>
-
         );
     };
 
@@ -97,16 +91,16 @@ function AdManageSection() {
     // Rating section 
     const [prodRating, setProdRating] = useState(0);
     const handleRatingChange = (value) => {
-        // Convert the value to a valid number, ensuring it remains within 0-5 range
         let newRating = parseFloat(value);
         if (newRating >= 0 && newRating <= 5) {
             setProdRating(newRating);
         }
     };
+    
     // Product Size calculation 
     const [prodwidth, setProdWidth] = useState('');
     const [prodheight, setProdHeight] = useState('');
-    // Calculate square feet
+    
     const ProdSquareFeet = () => {
         const width = parseFloat(prodwidth) || 0;
         const height = parseFloat(prodheight) || 0;
@@ -117,23 +111,24 @@ function AdManageSection() {
     const [selectedState, setSelectedState] = useState("");
     const [selectedDistrict, setSelectedDistrict] = useState("");
     const { initialStateDistricts, initialMediaTypes, toggleStateDropdown, handleStateClick, handleDistrictClick, stateDistricts, setStateDistricts, mediaTypes, setMediaTypes, showDistricts, setShowDistricts, showStates, setShowStates } = useSpot();
-    //FETCH PRDOCUTS FROM DATABASE USING USEEFFECT
+    
     // Add these state variables
     const [errorMessage, setErrorMessage] = useState('');
     const [showError, setShowError] = useState(false);
-    // Add this state variable at the top of your component
     const [isSaving, setIsSaving] = useState(false);
+    
     useEffect(() => {
         fetch(`${baseUrl}/products`)
             .then((response) => response.json())
             .then((data) => {
                 const productsWithVisibility = data.map((product) => ({
                     ...product,
-                    visible: product.visible !== false, // fallback to true
+                    visible: product.visible !== false,
                 }));
                 setProducts(productsWithVisibility.sort((a, b) => b.visible - a.visible));
             });
     }, []);
+    
     const fetchProductById = (code) => {
         const cleanedInput = code.replace(/^#/, '').trim().toLowerCase();
         // Reset all fields first
@@ -154,13 +149,12 @@ function AdManageSection() {
         setProdType("");
         setSelectedState("");
         setSelectedDistrict("");
+        
         const product = products.find(p => {
-            // Handle missing prodCode and normalize
             const prodCode = p.prodCode || '';
             const cleanedProdCode = prodCode.replace(/^#/, '').trim().toLowerCase();
             return cleanedProdCode === cleanedInput;
         });
-
 
         if (product) {
             setProductImage(product.image || "");
@@ -179,11 +173,10 @@ function AdManageSection() {
             setProdType(product.mediaType || "");
             setSelectedState(product.location?.state || "");
             setSelectedDistrict(product.location?.district || "");
-            setShowError(false); // Hide any existing errors
+            setShowError(false);
         } else {
             setErrorMessage('Product not found!');
             setShowError(true);
-            // Auto-hide after 2 seconds
             setTimeout(() => setShowError(false), 2000);
         }
     };
@@ -206,53 +199,38 @@ function AdManageSection() {
         if (id.length > 0) fetchProductById(id);
     };
 
-
     // Replace hardcoded bookedDates with fetched data
     const [bookedDates, setBookedDates] = useState([]);
-    const [isCalendarOpen, setIsCalendarOpen] = useState(false); // State to toggle calendar
-    // const [currentMonth, setCurrentMonth] = useState(new Date(2025, 2)); // Start with March 2025
+    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
     const today = new Date();
-    const [currentMonth, setCurrentMonth] = useState(new Date()); // Start with March 2025
+    const [currentMonth, setCurrentMonth] = useState(new Date());
 
-    // // Add date validation for past dates
-    // const isPastDate = (date) => {
-    //     const today = new Date();
-    //     today.setUTCHours(0, 0, 0, 0);
-    //     const normalizedDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    //     return normalizedDate < today;
-    // };
+    const isPastDate = (date) => {
+        if (!date || isNaN(date.getTime())) return true;
 
+        const today = new Date();
+        today.setUTCHours(0, 0, 0, 0);
 
-    // In ad1Manage.jsx, update the isPastDate function:
-const isPastDate = (date) => {
-  if (!date || isNaN(date.getTime())) return true; // Treat invalid dates as past
-  
-  const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
-  
-  try {
-    const normalizedDate = new Date(Date.UTC(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate()
-    ));
-    return normalizedDate < today;
-  } catch (error) {
-    console.warn("Error checking if date is past:", error);
-    return true; // Default to treating as past on error
-  }
-};
+        try {
+            const normalizedDate = new Date(Date.UTC(
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate()
+            ));
+            return normalizedDate < today;
+        } catch (error) {
+            console.warn("Error checking if date is past:", error);
+            return true;
+        }
+    };
 
     // Campaign Date Selection
     const [selectedDates, setSelectedDates] = useState({ start: null, end: null });
-    const [confirmedDates, setConfirmedDates] = useState({}); // To store confirmed dates
-    console.log(selectedDates);
-    console.log("NEW SELECTED START DATE", selectedDates.start);
-    // console.log(" SELECTED START DATE" , selectedDates.start.toISOString());
-    const formattedStartDate = selectedDates.start; // Stores full date in ISO format
+    const [confirmedDates, setConfirmedDates] = useState({});
+    
+    const formattedStartDate = selectedDates.start;
     const formattedEndDate = selectedDates.end;
-    console.log("NEW START DATE", formattedStartDate);
-    console.log("NEW  END DATE", formattedEndDate);
+    
     const generateMonth = (monthDate) => {
         const year = monthDate.getFullYear();
         const month = monthDate.getMonth();
@@ -261,6 +239,7 @@ const isPastDate = (date) => {
         const daysInMonth = lastDay.getDate();
         const startDay = firstDay.getDay();
         const days = [];
+        
         // Fill empty days
         for (let i = 0; i < startDay; i++) {
             days.push(null);
@@ -271,15 +250,18 @@ const isPastDate = (date) => {
             const date = new Date(year, month, day);
             days.push(date);
         }
+        
         // Fill remaining days
         while (days.length < 42) days.push(null);
         return days;
     };
+    
     const handleDateClick = (date) => {
         if (!date || isNaN(date.getTime())) return;
 
         // Create date without time component
         const normalizedDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+        
         // Check if date is booked or in the past
         const isBooked = bookedDates.some(d =>
             d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
@@ -306,10 +288,10 @@ const isPastDate = (date) => {
             }
         }
     };
+    
     const resetDates = () => {
         setSelectedDates({ start: null, end: null });
-        setConfirmedDates({ start: null, end: null }); // Reset confirmed dates
-
+        setConfirmedDates({ start: null, end: null });
     };
 
     const getDateSelectionClass = (date) => {
@@ -321,15 +303,6 @@ const isPastDate = (date) => {
             date.getDate()
         ));
 
-        // // Check if date is booked for this specific product
-        // const isBooked = bookedDates.some(d => {
-        //     const bookedDate = new Date(d);
-        //     return (
-        //         bookedDate.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
-        //         bookedDate.getUTCMonth() === normalizedDate.getUTCMonth() &&
-        //         bookedDate.getUTCDate() === normalizedDate.getUTCDate()
-        //     );
-        // });
         // Check if date is booked for THIS SPECIFIC PRODUCT only
         const isBooked = bookedDates.some(bookedDate => {
             const normalizedBooked = new Date(Date.UTC(
@@ -339,9 +312,6 @@ const isPastDate = (date) => {
             ));
             return normalizedDate.getTime() === normalizedBooked.getTime();
         });
-
-        console.log(`📅 Date: ${normalizedDate.toISOString()}, Booked: ${isBooked}`);
-
 
         if (isBooked) return "booked";
         if (isPastDate(normalizedDate)) return "past";
@@ -371,19 +341,21 @@ const isPastDate = (date) => {
     const goToNextMonth = () => {
         setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
     };
+    
     const goToPreviousMonth = () => {
         setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
     };
 
     // Calculate total price dynamically when start and end dates are selected
-    const pricePerDay = productAmount || 0; // Ensure pricePerDay is defined
+    const pricePerDay = productAmount || 0;
+    
     const getAvailableDaysInRange = (start, end) => {
         if (!start || !end || isNaN(start.getTime()) || isNaN(end.getTime())) {
             return [];
         }
         const days = [];
         const current = new Date(start);
-        // Normalize to UTC midnight for accurate comparison
+        
         const normalizeDate = (date) => {
             return Date.UTC(
                 date.getFullYear(),
@@ -392,12 +364,11 @@ const isPastDate = (date) => {
             );
         };
 
-        // Create Set of booked dates in UTC
         const bookedUTCDates = new Set(
             bookedDates.map(d => normalizeDate(d))
         );
+        
         while (current <= end) {
-            // Check if current date is not booked
             const currentUTC = normalizeDate(current);
             if (!bookedUTCDates.has(currentUTC)) {
                 days.push(new Date(current));
@@ -407,19 +378,18 @@ const isPastDate = (date) => {
 
         return days;
     };
+    
     const availableDays =
         selectedDates.start && selectedDates.end
             ? getAvailableDaysInRange(selectedDates.start, selectedDates.end)
             : [];
+    
     const totalDays = availableDays.length;
     const totalPrice = totalDays * pricePerDay;
-    console.log(totalPrice);
-    console.log(totalDays);
-    //CALENDER SMALL SCREENS
+
     // UPDATED DATE CONFIRMATION
     const confirmDates = () => {
         if (selectedDates.start && selectedDates.end) {
-            // Normalize dates to UTC midnight
             const startUTC = new Date(Date.UTC(
                 selectedDates.start.getFullYear(),
                 selectedDates.start.getMonth(),
@@ -450,17 +420,12 @@ const isPastDate = (date) => {
         const fetchBookedDates = async () => {
             if (productID && productID.trim() !== '') {
                 try {
-                    // Clean the product ID
                     const cleanProductId = productID.replace(/^#/, '').trim();
-
-                    // Build URL with proper exclusion
                     let url = `${baseUrl}/booked-dates/${encodeURIComponent(cleanProductId)}`;
 
                     if (editOrder && editOrder._id) {
                         url += `?excludeOrderId=${editOrder._id}`;
                     }
-
-                    console.log(`🔄 Fetching booked dates from: ${url}`);
 
                     const res = await fetch(url);
                     if (!res.ok) {
@@ -468,9 +433,6 @@ const isPastDate = (date) => {
                     }
 
                     const dates = await res.json();
-                    console.log(`📅 Received ${dates.length} booked dates for product ${cleanProductId}`);
-
-                    // Convert to Date objects properly
                     const dateObjects = dates.map(d => {
                         const date = new Date(d);
                         return new Date(Date.UTC(
@@ -495,10 +457,8 @@ const isPastDate = (date) => {
 
     useEffect(() => {
         if (editOrder) {
-            // UPDATED DATE PARSING FUNCTION
             const parseDate = (dateString) => {
                 if (!dateString) return null;
-                // Handle UTC dates consistently
                 if (dateString.includes('T')) {
                     const dt = new Date(dateString);
                     return new Date(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth(), dt.getUTCDate()));
@@ -511,20 +471,21 @@ const isPastDate = (date) => {
                         parseInt(parts[2])
                     ));
                 }
-
                 return null;
             };
+            
             const startDate = parseDate(editOrder.booking?.startDate);
             const endDate = parseDate(editOrder.booking?.endDate);
+            
             if (startDate && endDate && !isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
-                // Ensure dates are ordered correctly
                 const orderedDates = startDate > endDate ?
                     { start: endDate, end: startDate } :
                     { start: startDate, end: endDate };
                 setSelectedDates(orderedDates);
                 setConfirmedDates(orderedDates);
             }
-            // Populate all form fields with the editOrder data
+            
+            // Populate all form fields
             setClientName(editOrder.client.name || "");
             setClientEmail(editOrder.client.email || "");
             setClientContact(editOrder.client.contact || "");
@@ -548,16 +509,13 @@ const isPastDate = (date) => {
             setSelectedState(editOrder.product.location.state || "");
             setSelectedDistrict(editOrder.product.location.district || "");
 
-            // Handle dates - parse from ISO string or formatted string
+            // Handle dates
             if (editOrder.booking.startDate && editOrder.booking.endDate) {
                 try {
-                    // Try parsing as ISO string first
                     let startDate = new Date(editOrder.booking.startDate);
                     let endDate = new Date(editOrder.booking.endDate);
 
-                    // If parsing failed (invalid date), try alternative formats
                     if (isNaN(startDate.getTime())) {
-                        // Handle other date formats if needed
                         const dateParts = editOrder.booking.startDate.split(' ');
                         if (dateParts.length === 2) {
                             const month = new Date(Date.parse(dateParts[0] + " 1, 2025")).getMonth();
@@ -598,10 +556,10 @@ const isPastDate = (date) => {
 
     useEffect(() => {
         if (location.state?.editOrder) {
-            console.log("Received edit order:", location.state.editOrder);
             setEditOrder(location.state.editOrder);
         }
     }, [location.state]);
+    
     const resetForm = () => {
         setProductName('');
         setProductImage('');
@@ -629,10 +587,11 @@ const isPastDate = (date) => {
         setEditOrder(null);
     };
 
-    // Add this function to your component
     const sendOrderNotifications = async (orderData, orderId) => {
         try {
-            const response = await fetch(`${baseUrl}/AdminOrder/send-order-notificationsAdmin`, {
+            // const response = await fetch(`${baseUrl}/send-order-notificationsAdmin`, { 
+                        const response = await fetch(`${baseUrl}/AdminOrder/send-order-notificationsAdmin`, {
+
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -642,515 +601,283 @@ const isPastDate = (date) => {
                     orderId
                 })
             });
+            
             if (!response.ok) {
                 const errorData = await response.json();
-
-                console.error("Failed to send notifications", errorData);
-                throw new Error('Failed to send notifications');
-
+                console.error("Failed to send email notifications", errorData);
+                // Don't throw error - continue even if email fails
+                return { success: false, error: errorData.message };
             }
+            
+            return { success: true };
         } catch (error) {
-            console.error("Notification sending error:", error);
+            console.error("Email notification sending error:", error);
+            // Don't throw - continue anyway
             return { success: false, error: error.message };
         }
     };
 
-    // // Add this SMS function to your component
-    // const sendOrderSMS = async (phone, orderId, isAdmin = false) => {
+    // const sendOrderSMS = async (phone, orderId, isAdmin = false, isAdminCreated = false) => {
     //     try {
-    //         const response = await fetch(`${baseUrl}/AdminOrder/send-admin-sms`, {
+    //         if (!phone || !orderId) {
+    //             console.error("Phone and Order ID are required");
+    //             return;
+    //         }
+
+    //         const endpoint = isAdmin ?
+    //             `${baseUrl}/OrderReserve/send-admin-sms` :
+    //             `${baseUrl}/OrderReserve/send-sms`;
+
+    //         console.log(`Sending ${isAdmin ? 'Admin' : 'User'} SMS:`);
+    //         console.log(`Phone: ${phone}`);
+    //         console.log(`Order ID: ${orderId}`);
+    //         console.log(`Endpoint: ${endpoint}`);
+
+    //         const response = await fetch(endpoint, {
     //             method: 'POST',
     //             headers: {
     //                 'Content-Type': 'application/json',
     //             },
     //             body: JSON.stringify({
     //                 phone,
-    //                 templateId: isAdmin ? "1007478982147905431" : "1007197121174928712",
-    //                 variables: {
-    //                     orderId,
-    //                     customerName: clientName,
-    //                     amount: clientPaidAmount
-    //                 }
+    //                 orderId,
+    //                 customerName: clientName,
+    //                 amount: clientPaidAmount,
+    //                 isAdminCreated: isAdminCreated
+
     //             })
     //         });
 
-    //         if (!response.ok) {
-    //             console.error("Failed to send SMS");
+    //         const result = await response.json();
+    //         console.log("ORDER SAVED WITH  ID:", result.orderId || result._id);
+
+    //         if (!response.ok || !result.success) {
+    //             console.error("Failed to send SMS:", result.error);
+    //             return { success: false, error: result.error };
+    //         } else {
+    //             console.log("SMS sent successfully");
+    //             return { success: true, message: "SMS sent successfully" };
     //         }
     //     } catch (error) {
     //         console.error("SMS sending error:", error);
+    //         return { success: false, error: error.message };
     //     }
     // };
-
-
-
-
-    // Update the sendOrderSMS function in your ad1Manage.jsx component:
-    const sendOrderSMS = async (phone, orderId) => {
-        try {
-            const response = await fetch(`${baseUrl}/AdminOrder/send-admin-sms`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    phone,
-                    templateId: "1007478982147905431", // User template only
-                    variables: {
-                        orderId,
-                        // Only send orderId for user SMS
-                    }
-                })
-            });
-
-            if (!response.ok) {
-                console.error("Failed to send SMS");
-            }
-        } catch (error) {
-            console.error("SMS sending error:", error);
-        }
-    };
-
-    // const handleSaveProductOrder = async (e) => {
-    //     e.preventDefault();
-    //     // Validate form first
-    //     if (!validateForm()) {
-    //         toast.error("Please fill all required fields correctly");
-    //         return;
-    //     }
-    //     // Set loading state
-    //     setIsSaving(true);
-
-    //     try {
-    //         // Validate required fields
-    //         const requiredFields = {
-    //             clientName: "Client name is required",
-    //             clientContact: "Client contact is required",
-    //             productID: "Product ID is required",
-    //         };
-
-    //         for (const [field, message] of Object.entries(requiredFields)) {
-    //             if (!eval(field)) {
-    //                 throw new Error(message);
-    //             }
-    //         }
-
-    //         // Validate dates
-    //         if (!selectedDates.start || !selectedDates.end) {
-    //             throw new Error("Please select both start and end dates");
-    //         }
-
-    //         if (isNaN(selectedDates.start.getTime()) || isNaN(selectedDates.end.getTime())) {
-    //             throw new Error("Invalid dates selected");
-    //         }
-
-    //         if (selectedDates.start > selectedDates.end) {
-    //             throw new Error("End date must be after start date");
-    //         }
-
-    //         // Calculate available days
-    //         const availableDays = getAvailableDaysInRange(selectedDates.start, selectedDates.end);
-    //         const totalDays = availableDays.length;
-    //         if (totalDays === 0) {
-    //             throw new Error("No available days in selected range");
-    //         }
-    //         const totalPrice = totalDays * (parseFloat(productAmount) || 0);
-
-    //         // Format dates properly for storage
-    //         const formatDateForStorage = (date) => {
-    //             if (!date || isNaN(date.getTime())) return null;
-    //             // Return as Date object
-    //             return new Date(Date.UTC(
-    //                 date.getFullYear(),
-    //                 date.getMonth(),
-    //                 date.getDate()
-    //             ));
-    //         };
-
-    //         // Create booked dates array
-    //         const bookedDatesArray = availableDays.map(date => formatDateForStorage(date));
-
-    //         // Construct product object properly
-    //         const productData = {
-    //             id: productID,
-    //             prodCode: productID,
-    //             name: productName,
-    //             image: productImage,
-    //             price: Number(productAmount) || 0,
-    //             printingCost: Number(productPrintingCost) || 0,
-    //             mountingCost: Number(productMountingCost) || 0,
-    //             lighting: prodLighting || "",
-    //             fixedAmount: Number(productFixedAmount) || 0,
-    //             fixedAmountOffer: Number(productFixedAmountOffer) || 0,
-    //             size: {
-    //                 width: Number(prodwidth) || 0,
-    //                 height: Number(prodheight) || 0,
-    //                 squareFeet: Number(ProdSquareFeet()) || 0
-    //             },
-    //             fromLocation: productFrom || "",
-    //             toLocation: productTo || "",
-    //             rating: Number(prodRating) || 0,
-    //             mediaType: prodType || "",
-    //             location: {
-    //                 state: selectedState || "",
-    //                 district: selectedDistrict || ""
-    //             },
-    //             booking: {
-    //                 startDate: formatDateForStorage(selectedDates.start),
-    //                 endDate: formatDateForStorage(selectedDates.end),
-    //                 totalDays: totalDays,
-    //                 totalPrice: totalPrice
-    //             },
-    //             bookedDates: bookedDatesArray,
-    //             deleted: false,
-    //             deletedAt: null,
-    //             deletedBy: null
-    //         };
-
-    //         // // Prepare order data - FIXED: Set both status and order_status
-    //         // const orderData = {
-    //         //     client: {
-    //         //         userId: productID,
-    //         //         name: clientName,
-    //         //         email: clientEmail || "",
-    //         //         contact: clientContact,
-    //         //         company: clientCompany || "",
-    //         //         totalAmount: totalPrice,
-    //         //         // FIX: paidAmount should be array of objects
-    //         //         paidAmount: [{
-    //         //             amount: Number(clientPaidAmount) || 0,
-    //         //             paidAt: new Date()
-    //         //         }],
-    //         //         balanceAmount: balanceAmount
-    //         //     },
-    //         //     products: [productData],
-    //         //     status: "Added Manually", // This is always "Added Manually" for admin orders
-    //         //     order_status: "Pending Client Confirmation", // This will show in the table
-    //         //     orderType: "single",
-    //         //     last_edited: new Date()
-    //         // };
-
-    //         // console.log("Sending order data:", JSON.stringify(orderData, null, 2));
-
-    //         // // Submit to backend
-    //         // const response = await fetch(
-    //         //     editOrder
-    //         //         ? `${baseUrl}/prodOrders/${editOrder._id}`
-    //         //         : `${baseUrl}/prodOrders`,
-    //         //     {
-    //         //         method: editOrder ? 'PUT' : 'POST',
-    //         //         headers: {
-    //         //             'Content-Type': 'application/json',
-    //         //         },
-    //         //         body: JSON.stringify(orderData)
-    //         //     }
-    //         // );
-
-
-    //          // Create order data with proper status structure
-    // const orderData = {
-    //   client: {
-    //     userId: productID, // Use productID as userId for admin-created orders
-    //     name: clientName,
-    //     email: clientEmail,
-    //     contact: clientContact,
-    //     company: clientCompany,
-    //     // address: address,
-    //     // pincode: pincode,
-    //     // state: state,
-    //     // city: city,
-    //   },
-    //   products: [productData],
-    //   status: "Added Manually", // Fixed status for admin-created orders
-    //   order_status: "Pending Client Confirmation", // Initial workflow status
-    //   orderType: "single",
-    //   last_edited: new Date()
-    // };
-
-    // console.log("Sending order data:", JSON.stringify(orderData, null, 2));
-
-    // // Submit to backend
-    // const response = await fetch(
-    //   editOrder
-    //     ? `${baseUrl}/prodOrders/${editOrder._id}`
-    //     : `${baseUrl}/prodOrders`,
-    //   {
-    //     method: editOrder ? 'PUT' : 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(orderData)
-    //   }
-    // );
-
-    //         if (!response.ok) {
-    //             const errorData = await response.json();
-    //             throw new Error(errorData.message || 'Failed to save order');
-    //         }
-
-    //         const result = await response.json();
-    //         console.log("Order saved with ID:", result.orderId || result._id);
-
-    //         // Send SMS notifications
-    //         try {
-    //             // Send SMS to user
-    //             if (clientContact) {
-    //                 await sendOrderSMS(clientContact, result.orderId || result._id);
-    //             }
-
-    //             // Send SMS to admin
-    //             await sendOrderSMS('reactdeveloper@adinn.co.in', result.orderId || result._id, true);
-    //         } catch (smsError) {
-    //             console.error("SMS sending error:", smsError);
-    //             // Don't fail the order if SMS fails
-    //         }
-
-    //         // AFTER SUCCESSFUL ORDER CREATION - SEND NOTIFICATIONS
-    //         try {
-    //             // Prepare order data for notifications
-    //             const notificationData = {
-    //                 client: {
-    //                     name: clientName,
-    //                     email: clientEmail,
-    //                     contact: clientContact,
-    //                     company: clientCompany,
-    //                     paidAmount: clientPaidAmount
-    //                 },
-    //                 products: [{
-    //                     name: productName,
-    //                     prodCode: productID,
-    //                     price: Number(productAmount),
-    //                     image: productImage,
-    //                     booking: {
-    //                         startDate: selectedDates.start,
-    //                         endDate: selectedDates.end,
-    //                         totalDays: totalDays,
-    //                         totalPrice: totalPrice
-    //                     }
-    //                 }]
-    //             };
-
-    //             // Send notifications
-    //             await sendOrderNotifications(notificationData, result.orderId || result._id);
-    //         } catch (notificationError) {
-    //             console.error("Notification error:", notificationError);
-    //             // Don't fail the order if notifications fail
-    //         }
-
-    //         alert(`Order ${editOrder ? 'updated' : 'created'} successfully! with ID: ${result.orderId || result._id}`);
-    //         resetForm();
-
-    //     } catch (error) {
-    //         console.error("Save error:", error);
-    //         alert(`Error: ${error.message}`);
-    //     }
-    //     finally {
-    //         // Reset loading state
-    //         setIsSaving(false);
-    //     }
-    // };
-
-
-
+    
+    
+    // NEW ORDER ID CREATION FOR ADMIN ORDER
+   
 
     const handleSaveProductOrder = async (e) => {
-  e.preventDefault();
-  // Validate form first
-  if (!validateForm()) {
-    toast.error("Please fill all required fields correctly");
-    return;
-  }
-  // Set loading state
-  setIsSaving(true);
+        e.preventDefault();
+        
+        // Validate form first
+        if (!validateForm()) {
+            toast.error("Please fill all required fields correctly");
+            return;
+        }
+        
+        // Set loading state
+        setIsSaving(true);
 
-  try {
-    // Validate required fields
-    const requiredFields = {
-      clientName: "Client name is required",
-      clientContact: "Client contact is required",
-      productID: "Product ID is required",
+        try {
+            // Validate required fields
+            const requiredFields = {
+                clientName: "Client name is required",
+                clientContact: "Client contact is required",
+                productID: "Product ID is required",
+            };
+
+            for (const [field, message] of Object.entries(requiredFields)) {
+                if (!eval(field)) {
+                    throw new Error(message);
+                }
+            }
+
+            // Validate dates
+            if (!selectedDates.start || !selectedDates.end) {
+                throw new Error("Please select both start and end dates");
+            }
+
+            if (isNaN(selectedDates.start.getTime()) || isNaN(selectedDates.end.getTime())) {
+                throw new Error("Invalid dates selected");
+            }
+
+            if (selectedDates.start > selectedDates.end) {
+                throw new Error("End date must be after start date");
+            }
+
+            // Calculate available days
+            const availableDays = getAvailableDaysInRange(selectedDates.start, selectedDates.end);
+            const totalDays = availableDays.length;
+            if (totalDays === 0) {
+                throw new Error("No available days in selected range");
+            }
+            const totalPrice = totalDays * (parseFloat(productAmount) || 0);
+
+            // Format dates properly for storage
+            const formatDateForStorage = (date) => {
+                if (!date || isNaN(date.getTime())) return null;
+                return new Date(Date.UTC(
+                    date.getFullYear(),
+                    date.getMonth(),
+                    date.getDate()
+                ));
+            };
+
+            // Create booked dates array
+            const bookedDatesArray = availableDays.map(date => formatDateForStorage(date));
+
+            // Calculate GST
+            const printingCost = Number(productPrintingCost) || 0;
+            const mountingCost = Number(productMountingCost) || 0;
+            const overallTotal = totalPrice + printingCost + mountingCost;
+            const gstAmount = overallTotal * (gstPercentage / 100);
+            const totalWithGST = overallTotal + gstAmount;
+
+            // Construct product object properly
+            const productData = {
+                id: productID,
+                prodCode: productID,
+                name: productName,
+                image: productImage,
+                price: Number(productAmount) || 0,
+                printingCost: printingCost,
+                mountingCost: mountingCost,
+                gstPercentage: gstPercentage,
+                lighting: prodLighting || "",
+                fixedAmount: Number(productFixedAmount) || 0,
+                fixedAmountOffer: Number(productFixedAmountOffer) || 0,
+                size: {
+                    width: Number(prodwidth) || 0,
+                    height: Number(prodheight) || 0,
+                    squareFeet: Number(ProdSquareFeet()) || 0
+                },
+                fromLocation: productFrom || "",
+                toLocation: productTo || "",
+                rating: Number(prodRating) || 0,
+                mediaType: prodType || "",
+                location: {
+                    state: selectedState || "",
+                    district: selectedDistrict || ""
+                },
+                booking: {
+                    startDate: formatDateForStorage(selectedDates.start),
+                    endDate: formatDateForStorage(selectedDates.end),
+                    totalDays: totalDays,
+                    totalPrice: totalPrice
+                },
+                bookedDates: bookedDatesArray,
+                deleted: false,
+                deletedAt: null,
+                deletedBy: null
+            };
+
+            // Create order data with proper status structure
+            const orderData = {
+                client: {
+                    userId: productID,
+                    name: clientName,
+                    email: clientEmail,
+                    contact: clientContact,
+                    company: clientCompany,
+                    gstPercentage: gstPercentage,
+                    paidAmount: clientPaidAmount || 0
+                },
+                products: [productData],
+                status: "Added Manually",
+                order_status: "Pending Client Confirmation",
+                orderType: "single",
+                last_edited: new Date(),
+                overAllTotalAmount: overallTotal,
+                gstPercentage: gstPercentage,
+                gstAmount: gstAmount,
+                totalAmountWithGST: totalWithGST
+            };
+
+            // Submit to backend
+            const response = await fetch(
+                editOrder
+                    ? `${baseUrl}/prodOrders/${editOrder._id}`
+                    : `${baseUrl}/prodOrders`,
+                {
+                    method: editOrder ? 'PUT' : 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderData)
+                }
+            );
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to save order');
+            }
+
+            const result = await response.json();
+            console.log("Order saved with ID:", result.orderId || result._id);
+
+            //   // Send SMS notifications
+            // try {
+            //     // Send SMS to user
+            //     if (clientContact) {
+            //         await sendOrderSMS(clientContact, result.orderId);
+            //     }
+            // } catch (smsError) {
+            //     console.error("SMS sending error:", smsError);
+            // }
+
+            // Send email notifications only (SMS commented out)
+            try {
+                // Prepare order data for notifications
+                const notificationData = {
+                    client: {
+                        name: clientName,
+                        email: clientEmail,
+                        contact: clientContact,
+                        company: clientCompany,
+                        paidAmount: clientPaidAmount || 0,
+                        gstPercentage: gstPercentage
+                    },
+                    products: [{
+                        name: productName,
+                        prodCode: productID,
+                        price: Number(productAmount),
+                        printingCost: printingCost,
+                        mountingCost: mountingCost,
+                        image: productImage,
+                        booking: {
+                            startDate: selectedDates.start,
+                            endDate: selectedDates.end,
+                            totalDays: totalDays,
+                            totalPrice: totalPrice
+                        }
+                    }]
+                };
+
+                // Send email notifications
+                await sendOrderNotifications(notificationData, result.orderId || result._id);
+            } catch (notificationError) {
+                console.error("Email notification error:", notificationError);
+                // Continue even if notification fails
+            }
+
+            toast.success(`Order ${editOrder ? 'updated' : 'created'} successfully! with ID: ${result.orderId || result._id}`);
+            resetForm();
+
+        } catch (error) {
+            console.error("Save error:", error);
+            toast.error(`Error: ${error.message}`);
+        } finally {
+            // Reset loading state
+            setIsSaving(false);
+        }
     };
-
-    for (const [field, message] of Object.entries(requiredFields)) {
-      if (!eval(field)) {
-        throw new Error(message);
-      }
-    }
-
-    // Validate dates
-    if (!selectedDates.start || !selectedDates.end) {
-      throw new Error("Please select both start and end dates");
-    }
-
-    if (isNaN(selectedDates.start.getTime()) || isNaN(selectedDates.end.getTime())) {
-      throw new Error("Invalid dates selected");
-    }
-
-    if (selectedDates.start > selectedDates.end) {
-      throw new Error("End date must be after start date");
-    }
-
-    // Calculate available days
-    const availableDays = getAvailableDaysInRange(selectedDates.start, selectedDates.end);
-    const totalDays = availableDays.length;
-    if (totalDays === 0) {
-      throw new Error("No available days in selected range");
-    }
-    const totalPrice = totalDays * (parseFloat(productAmount) || 0);
-
-    // Format dates properly for storage
-    const formatDateForStorage = (date) => {
-      if (!date || isNaN(date.getTime())) return null;
-      // Return as Date object
-      return new Date(Date.UTC(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate()
-      ));
-    };
-
-    // Create booked dates array
-    const bookedDatesArray = availableDays.map(date => formatDateForStorage(date));
-
-    // Construct product object properly
-    const productData = {
-      id: productID,
-      prodCode: productID,
-      name: productName,
-      image: productImage,
-      price: Number(productAmount) || 0,
-      printingCost: Number(productPrintingCost) || 0,
-      mountingCost: Number(productMountingCost) || 0,
-      lighting: prodLighting || "",
-      fixedAmount: Number(productFixedAmount) || 0,
-      fixedAmountOffer: Number(productFixedAmountOffer) || 0,
-      size: {
-        width: Number(prodwidth) || 0,
-        height: Number(prodheight) || 0,
-        squareFeet: Number(ProdSquareFeet()) || 0
-      },
-      fromLocation: productFrom || "",
-      toLocation: productTo || "",
-      rating: Number(prodRating) || 0,
-      mediaType: prodType || "",
-      location: {
-        state: selectedState || "",
-        district: selectedDistrict || ""
-      },
-      booking: {
-        startDate: formatDateForStorage(selectedDates.start),
-        endDate: formatDateForStorage(selectedDates.end),
-        totalDays: totalDays,
-        totalPrice: totalPrice
-      },
-      bookedDates: bookedDatesArray,
-      deleted: false,
-      deletedAt: null,
-      deletedBy: null
-    };
-
-    // Create order data with proper status structure
-    const orderData = {
-      client: {
-        userId: productID,
-        name: clientName,
-        email: clientEmail,
-        contact: clientContact,
-        company: clientCompany,
-      },
-      products: [productData],
-      status: "Added Manually", // Fixed for admin orders
-      order_status: "Pending Client Confirmation", // Initial workflow status
-      orderType: "single",
-      last_edited: new Date()
-    };
-
-    console.log("Sending order data:", JSON.stringify(orderData, null, 2));
-
-    // Submit to backend
-    const response = await fetch(
-      editOrder
-        ? `${baseUrl}/prodOrders/${editOrder._id}`
-        : `${baseUrl}/prodOrders`,
-      {
-        method: editOrder ? 'PUT' : 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData)
-      }
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to save order');
-    }
-
-    const result = await response.json();
-    console.log("Order saved with ID:", result.orderId || result._id);
-
-    // Send SMS notifications
-    try {
-      // Send SMS to user
-      if (clientContact) {
-        await sendOrderSMS(clientContact, result.orderId || result._id);
-      }
-    } catch (smsError) {
-      console.error("SMS sending error:", smsError);
-    }
-
-    // AFTER SUCCESSFUL ORDER CREATION - SEND NOTIFICATIONS
-    try {
-      // Prepare order data for notifications
-      const notificationData = {
-        client: {
-          name: clientName,
-          email: clientEmail,
-          contact: clientContact,
-          company: clientCompany,
-          paidAmount: clientPaidAmount
-        },
-        products: [{
-          name: productName,
-          prodCode: productID,
-          price: Number(productAmount),
-          image: productImage,
-          booking: {
-            startDate: selectedDates.start,
-            endDate: selectedDates.end,
-            totalDays: totalDays,
-            totalPrice: totalPrice
-          }
-        }]
-      };
-
-      // Send notifications
-      await sendOrderNotifications(notificationData, result.orderId || result._id);
-    } catch (notificationError) {
-      console.error("Notification error:", notificationError);
-    }
-
-    alert(`Order ${editOrder ? 'updated' : 'created'} successfully! with ID: ${result.orderId || result._id}`);
-    resetForm();
-
-  } catch (error) {
-    console.error("Save error:", error);
-    alert(`Error: ${error.message}`);
-  }
-  finally {
-    // Reset loading state
-    setIsSaving(false);
-  }
-}; 
-
-
 
     // Fix for paidAmount display issue
     const handlePaidAmountChange = (e) => {
         const value = e.target.value;
-        // Remove non-numeric characters except decimal point
         const numericValue = value.replace(/[^0-9.]/g, '');
-        // Parse to number
         const parsedValue = parseFloat(numericValue) || '';
         setClientPaidAmount(parsedValue);
         setErrors(prev => ({ ...prev, clientPaidAmount: false }));
@@ -1174,7 +901,7 @@ const isPastDate = (date) => {
                 <div className='adManageMain'>
                     {/* Left side section  */}
                     <div className='adManageContentLeft'>
-                        <div className='ManageLeftImg1'><img src={productImage} className='ManageLeftImg1'></img></div>
+                        <div className='ManageLeftImg1'><img src={productImage} className='ManageLeftImg1' alt="Product"></img></div>
                         {/* Product details section  */}
                         <div className='manageprodMain'>
                             <div className="ManageProdDetails">
@@ -1221,7 +948,7 @@ const isPastDate = (date) => {
                                 <div className='ManageProdLeftHeading'>Rating</div>
                                 <div className='ManageProdRightContent'>
                                     <span className='Product-star-main'>
-                                        <span><img src='./images/rating_board.png' className='Product-rate-board1'></img></span>
+                                        <span><img src='./images/rating_board.png' className='Product-rate-board1' alt="Rating Board"></img></span>
                                         <span><RatingStars rating={prodRating} /> </span>
                                     </span>
                                 </div>
@@ -1269,13 +996,11 @@ const isPastDate = (date) => {
 
                     {/* Right section  */}
                     <div>
-
                         {/* Product Section  */}
                         <div className='manageClientSection'>
                             <div className='manageRightSideHeading'>Product Management</div>
                             <div className='text-center clientDetailHeading' style={{ color: "blue", marginTop: "5px" }}>Enter the Product ID to place the order</div>
                             <div className='d-flex manageClientInformation'>
-
                                 <div className='manageClientInfoLeft'>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Product Name</div>
@@ -1285,8 +1010,6 @@ const isPastDate = (date) => {
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Price</div>
                                         <input type='text' placeholder='Enter Price' value={formattedProductAmount} readOnly
-                                            // onChange={(e) => { setProductAmount(e.target.value) }}
-
                                             className='clientDetailsInput'></input>
                                     </div>
                                     <div className='clientDetailSection'>
@@ -1310,7 +1033,6 @@ const isPastDate = (date) => {
                                             onChange={handleProductIdChange}
                                             className='clientDetailsInput'></input>
 
-                                        {/* Add error message here */}
                                         {showError && (
                                             <div className="error-message">
                                                 {errorMessage}
@@ -1340,8 +1062,7 @@ const isPastDate = (date) => {
                                         <div className='sizeWidthValues'>
                                             W : <input type='number' value={prodwidth} readOnly
                                                 onChange={(e) => setProdWidth(e.target.value)} className='sizeWidthInput'></input><span className='sizeMultiply'> X </span>H : <input type='number' value={prodheight} readOnly
-                                                    onChange={(e) => setProdHeight(e.target.value)} className='sizeWidthInput'></input> <span className='sizeWidthSlash'> | </span> <lable> {ProdSquareFeet()} </lable>Sq.ft
-
+                                                    onChange={(e) => setProdHeight(e.target.value)} className='sizeWidthInput'></input> <span className='sizeWidthSlash'> | </span> <label> {ProdSquareFeet()} </label>Sq.ft
                                         </div>
                                     </div>
                                     <div className='clientDetailSection'>
@@ -1360,11 +1081,8 @@ const isPastDate = (date) => {
                                             className='clientDetailsInput'></input>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
-
 
                         {/* Client Section  */}
                         <div className='manageClientSection'>
@@ -1403,7 +1121,6 @@ const isPastDate = (date) => {
                                             className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}
                                         />
                                     </div>
-
                                 </div>
                                 <div className='manageClientInfoRight'>
                                     <div className='clientDetailSection'>
@@ -1425,32 +1142,23 @@ const isPastDate = (date) => {
                                             }} className={errors.clientCompany ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
                                         {errors.clientCompany && <div className="AdminClienterror-message">Client Company is required</div>}
                                     </div>
-
-
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Paid Amount</div>
                                         <input type='text' placeholder='Enter Paid Amount' value={formattedPaidAmount}
-                                            // onChange={(e) => {
-                                            //     setClientPaidAmount(e.target.value);
-                                            //     setErrors(prev => ({ ...prev, clientPaidAmount: false }));
-                                            // }} 
                                             onChange={handlePaidAmountChange}
                                             className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}></input>
                                         {errors.clientPaidAmount && <div className="AdminClienterror-message">Paid Amount is required</div>}
                                     </div>
-
                                 </div>
                             </div>
                         </div>
 
-
-
-                        {/* Rating section  with OFFER */}
+                        {/* Rating section with OFFER */}
                         <div style={{ display: 'flex', gap: '10px' }}>
                             <div className='manageClientSection' style={{ width: '40%' }}>
                                 <div className='clientDetailHeading'>Ratings</div>
                                 <div className='ProductRatingMain'>
-                                    <div >
+                                    <div>
                                         <div>
                                             <span className='Product-star-main' >
                                                 <RatingStars1 rating={parseFloat(prodRating) || 0} />
@@ -1464,28 +1172,16 @@ const isPastDate = (date) => {
                                     </div>
                                 </div>
                             </div>
-                            {/* Offers and Fixed Amount section  */}
-                            {/* <div className='manageClientSection' style={{ width: '60%' }}>
-                                <div className='clientDetailHeading'>Offers</div>
-                                <div className='ProductRatingMain'>
-                                    <div className='AdminOfferDetails' >Pay ₹<input type='number' value={productFixedAmount} onChange={(e) => setProductFixedAmount(e.target.value)} className='sizeWidthInput adminOfferAmountInput' readOnly></input> and Get <input type='number' value={productFixedAmountOffer} onChange={(e) => setProductFixedAmountOffer(e.target.value)} className='sizeWidthInput adminOfferAmountPercentage' readOnly></input>% Off <span className='adminOfferRefundDetails'> 100% Refundable </span>
-                                    </div>
-
-                                </div>
-                            </div> */}
                         </div>
 
-                        {/* Select Category section   */}
+                        {/* Select Category section */}
                         <div className='manageClientSection'>
                             <div className='clientDetailHeading'>Select Category</div>
                             <div className='d-flex manageClientInformation'>
                                 <div className='manageClientInfoLeft'>
                                     <div className='clientDetailHeading'>Location</div>
                                     <div className="location-container11">
-                                        {/* Input field to display selected state & district */}
-                                        <div className="input-wrapper"
-                                        // onClick={toggleStateDropdown}
-                                        >
+                                        <div className="input-wrapper">
                                             <input
                                                 type="text"
                                                 className="clientDetailsInput locationSelectInput"
@@ -1493,9 +1189,7 @@ const isPastDate = (date) => {
                                                 placeholder="Select Location"
                                                 readOnly
                                             />
-
                                         </div>
-
                                     </div>
                                 </div>
                                 <div className='manageClientInfoRight'>
@@ -1507,33 +1201,24 @@ const isPastDate = (date) => {
                         </div>
                     </div>
                 </div>
-                {/* <AdminOrderCalendar productAmount={productAmount}
-                    selectedDates={selectedDates} setSelectedDates={setSelectedDates} generateMonth={generateMonth} handleDateClick={handleDateClick} resetDates={resetDates} getDateSelectionClass={getDateSelectionClass} goToNextMonth={goToNextMonth} goToPreviousMonth={goToPreviousMonth} bookedDates={bookedDates} currentMonth={currentMonth} setCurrentMonth={setCurrentMonth} confirmedDates={confirmedDates} setConfirmedDates={setConfirmedDates} pricePerDay={pricePerDay} confirmDates={confirmDates} totalDays={totalDays} totalPrice={totalPrice} isSmallScreen={isSmallScreen}
-                    isValidDate={(date) => date && !isNaN(date.getTime())} isPastDate={isPastDate}
-                      productID={productID} // Pass productID for fetching categorized dates
 
-                /> */}
-
-
-<AdminOrderCalendar
-  productAmount={parseFloat(productAmount) || 0}
-  selectedDates={selectedDates}
-  setSelectedDates={setSelectedDates}
-  generateMonth={generateMonth}
-  resetDates={resetDates}
-  goToNextMonth={goToNextMonth}
-  goToPreviousMonth={goToPreviousMonth}
-  currentMonth={currentMonth}
-  setCurrentMonth={setCurrentMonth}
-  confirmDates={confirmDates}
-  isSmallScreen={isSmallScreen}
-  isPastDate={isPastDate}
-  productID={productID}
-/> 
-
+                <AdminOrderCalendar
+                    productAmount={parseFloat(productAmount) || 0}
+                    selectedDates={selectedDates}
+                    setSelectedDates={setSelectedDates}
+                    generateMonth={generateMonth}
+                    resetDates={resetDates}
+                    goToNextMonth={goToNextMonth}
+                    goToPreviousMonth={goToPreviousMonth}
+                    currentMonth={currentMonth}
+                    setCurrentMonth={setCurrentMonth}
+                    confirmDates={confirmDates}
+                    isSmallScreen={isSmallScreen}
+                    isPastDate={isPastDate}
+                    productID={productID}
+                />
 
                 <button className="calendarSaveBtn" type='submit' disabled={isSaving}>
-                    {/* {editOrder ? "Update" : "Save"} */}
                     {isSaving ? (
                         <span>
                             <i className="fa fa-spinner fa-spin"></i>

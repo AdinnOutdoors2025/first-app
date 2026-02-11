@@ -1,9 +1,10 @@
-// src/components/FooterContactTable.js
 import React, { useState, useEffect } from 'react';
 import './ad1Orders.css';
 import { useNavigate } from 'react-router-dom';
 import { baseUrl } from './BASE_URL';
 import { getPaginationGroup } from "../utils/pagination";
+import { formatIndianDateTime} from '../../src/DateTimeFormatter';
+
 
 const FooterContactTable = () => {
     const [footerContacts, setFooterContacts] = useState([]);
@@ -100,6 +101,7 @@ const FooterContactTable = () => {
     const indexOfLastContact = currentPage * contactsPerPage;
     const indexOfFirstContact = indexOfLastContact - contactsPerPage;
     const currentContacts = filteredContacts.slice(indexOfFirstContact, indexOfLastContact);
+
     const pages = getPaginationGroup(currentPage, totalPages);
 
     const handleDelete = async (id) => {
@@ -197,13 +199,15 @@ const FooterContactTable = () => {
                                     )}
                                 </td>
                                 <td>
-                                    {contact.createdAt
+                                    {/* {contact.createdAt
                                         ? new Date(contact.createdAt).toLocaleDateString('en-GB', {
                                             day: '2-digit',
                                             month: '2-digit',
                                             year: 'numeric'
                                         })
-                                        : '--'}
+                                        : '--'} */}
+                                            {formatIndianDateTime(contact.createdAt)}
+
                                 </td>
                                 <td className="order-threeDotsTd">
                                     <i 
