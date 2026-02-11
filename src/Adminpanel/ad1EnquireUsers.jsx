@@ -16,6 +16,9 @@ const EnquireUsersTable = () => {
     const [enquiriesData, setEnquiriesData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
+
 
     // In your fetchOrders function, normalize the data
     const fetchEnquiries = async () => {
@@ -60,38 +63,68 @@ const EnquireUsersTable = () => {
     const [searchDate, setSearchDate] = useState('');
 
 
-    const filteredEnquiries = enquiriesData.filter(enquiry => {
-        if (!searchDate) return true;
-        const searchLower = searchDate.toLowerCase();
-       // Check text fields first
-    const textMatch = (
-            (enquiry.phone && enquiry.phone.toLowerCase().includes(searchLower)) ||
-            (enquiry.prodCode && enquiry.prodCode.toLowerCase().includes(searchLower)) ||
-            (enquiry.prodName && enquiry.prodName.toLowerCase().includes(searchLower)) ||
-            (enquiry.location && enquiry.location.toLowerCase().includes(searchLower))
-        )
-        // If text matches, return true immediately
-    if (textMatch) return true;
-    
+ const filteredEnquiries = enquiriesData.filter(enquiry => {
 
-        if (enquiry.enquiryDate) {
+    /* =========================
+       1️⃣ ENQUIRE DATE RANGE FILTER
+    ========================= */
+    if (fromDate || toDate) {
+        if (!enquiry.enquiryDate) return false;
+
+        const enquiryDate = new Date(enquiry.enquiryDate);
+
+        if (fromDate) {
+            const from = new Date(fromDate);
+            from.setHours(0, 0, 0, 0);
+            if (enquiryDate < from) return false;
+        }
+
+        if (toDate) {
+            const to = new Date(toDate);
+            to.setHours(23, 59, 59, 999);
+            if (enquiryDate > to) return false;
+        }
+    }
+
+    /* =========================
+       2️⃣ TEXT SEARCH FILTER
+    ========================= */
+    if (!searchDate.trim()) return true;
+
+    const searchLower = searchDate.toLowerCase();
+
+    // 🔹 Text fields
+    const textMatch = (
+        enquiry.phone?.toLowerCase().includes(searchLower) ||
+        enquiry.prodCode?.toLowerCase().includes(searchLower) ||
+        enquiry.prodName?.toLowerCase().includes(searchLower) ||
+        enquiry.location?.toLowerCase().includes(searchLower)
+    );
+
+    if (textMatch) return true;
+
+    /* =========================
+       3️⃣ DATE TEXT SEARCH (dd/mm/yyyy etc)
+    ========================= */
+    if (enquiry.enquiryDate) {
         const date = new Date(enquiry.enquiryDate);
         const day = date.getDate().toString();
-        const month = (date.getMonth() + 1).toString(); // Months are 0-indexed
+        const month = (date.getMonth() + 1).toString();
         const year = date.getFullYear().toString();
-        
-        // Check if search term matches any part
-        return( day.includes(searchDate) || 
-               month.includes(searchDate) || 
-               year.includes(searchDate) ||
-            //    `${day}/${month}/${year}`.includes(searchDate);
-        `${day}/${month}/${year}`.includes(searchDate) ||
+
+        return (
+            day.includes(searchDate) ||
+            month.includes(searchDate) ||
+            year.includes(searchDate) ||
+            `${day}/${month}/${year}`.includes(searchDate) ||
             `${month}/${day}/${year}`.includes(searchDate) ||
             `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`.includes(searchDate)
         );
     }
-return false;
-    });
+
+    return false;
+});
+
 
 
     // Calculate Total Pages
@@ -101,34 +134,7 @@ return false;
     const indexOfFirstEnquiry = indexOfLastEnquiry - enquiriesPerPage;
     const currentEnquiries = filteredEnquiries.slice(indexOfFirstEnquiry, indexOfLastEnquiry);
 
-    // // Pagination Function
-    // Function to Generate Pagination Buttons
-    // const getPaginationGroup = () => {
-    //     let pages = [];
-    //     const maxPagesToShow = 3; // Show 3 pages around the current page
-
-    //     if (totalPages <= 6) {
-    //         // If there are few pages, show all
-    //         pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    //     }
-    //     else {
-    //         if (currentPage <= maxPagesToShow + 1) {
-    //             // If near start: Show first few + last 2
-    //             pages = [...Array(maxPagesToShow + 1).keys()].map((i) => i + 1);
-    //             pages.push("...", totalPages - 1, totalPages);
-    //         } else if (currentPage >= totalPages - maxPagesToShow) {
-    //             // If near end: Show first 2 + last few
-    //             pages = [1, 2, "..."];
-    //             pages.push(...Array.from({ length: maxPagesToShow + 1 }, (_, i) => totalPages - maxPagesToShow + i));
-    //         } else {
-    //             // Middle section: Show current, 1 before & after
-    //             pages = [1, 2, "..."];
-    //             pages.push(currentPage - 1, currentPage, currentPage + 1);
-    //             pages.push("...", totalPages - 1, totalPages);
-    //         }
-    //     }
-    //     return pages;
-    // };
+ 
     const pages = getPaginationGroup(currentPage, totalPages);
     // 3 DOTS SECTION 
     const [menuOpenId, setMenuOpenId] = useState(null); // Use ID if multiple rows
@@ -196,12 +202,52 @@ return false;
         <div>
             <div className='productsHeader'>
                 <div className='productsHeading'>All Enquiries</div>
+                <div className="Admin-order-date-filter">
+                    <input
+                        type="date"
+                        value={fromDate}
+                        onChange={(e) => {
+                            setFromDate(e.target.value);
+                            setCurrentPage(1);
+                        }}
+                    />
+
+                    <span className="date-separator">to</span>
+
+                    <input
+                        type="date"
+                        value={toDate}
+                        onChange={(e) => {
+                            setToDate(e.target.value);
+                            setCurrentPage(1);
+                        }}
+                    />
+                </div>
+                {(searchDate || fromDate || toDate) && (
+                        <button
+                            className="clear-all-filters"
+                            onClick={() => {
+                                setSearchDate('');
+                                setFromDate('');
+                                setToDate('');
+                                setCurrentPage(1);
+                            }}
+                        >
+                            Clear all
+                        </button>
+                    )}
+
+
                 <div className="Admin-order-search-enquire">
                     <i className="fas fa-search search-icon Admin-order-search-icon"></i>
                     <input type="text" placeholder="Search by phone, code / location" className='Admin-order-search-name' value={searchDate}
                         onChange={(e) => setSearchDate(e.target.value)} />
                 </div>
+
+                
             </div>
+
+            
 
             <div className="order-product-table">
                 <table>
