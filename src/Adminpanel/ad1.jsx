@@ -15,6 +15,8 @@ import FooterContact from './ad1FooterContact';
 //Blog page
 import AllBlogPg from './ad2BlogsPg';
 import BlogAddPg from './ad2BlogAddPg';
+import axios from "axios";
+import { baseUrl } from "./BASE_URL";
 
 
 //Offer Product Page
@@ -187,21 +189,58 @@ function AdminpanelHome() {
   ];
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
-  const dashboardSummary = [
-    { id: 1, icons: './images/dashboard-icon1.svg', summaryHeading: 'Total Sites Added', summaryCount: 13000 },
-    { id: 2, icons: './images/dashboard-icon2.svg', summaryHeading: 'Total Reservations', summaryCount: 8000 },
 
-    { id: 3, icons: './images/dashboard-icon5.svg', summaryHeading: 'Total Users', summaryCount: 8000 },
-
-    { id: 4, icons: './images/dashboard-icon3.svg', summaryHeading: 'Total Revenue', summaryCount: 800105 },
-
-    { id: 5, icons: './images/dashboard-icon4.svg', summaryHeading: 'Total Enquiries', summaryCount: 500 },
-
-    { id: 6, icons: './images/dashboard-icon6.svg', summaryHeading: 'Booked Sites', summaryCount: 5000 }
-  ]
   //edit product page automatically opens
   const location = useLocation();
   const [editProduct, setEditProduct] = useState(null);
+
+  /* Get dashboard count details */
+  const [totalSites, setTotalSites] = useState(0);
+  const [totalReservations, setTotalReservations] = useState(0);
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [totalEnquiries, setTotalEnquiries] = useState(0);
+  const [bookedSites, setBookedSites] = useState(0);
+  const [usersCount, setUsersCount] = useState(0);
+
+useEffect(() => {
+  const fetchDashboardCount = async () => {
+    try {
+      const res = await fetch(`${baseUrl}/getDashboardCount/`);
+      const result = await res.json();
+
+      if (result.success) {
+        const data = result.data;
+
+        setTotalSites(data.visibleProducts);
+        setTotalReservations(data.orders.active);
+        setTotalRevenue(data.revenue);
+        setTotalEnquiries(data.contactEnquiries);
+        setBookedSites(data.bookedProducts);
+        setUsersCount(data.users);
+      }
+      
+    } catch (error) {
+      console.error("Dashboard API error:", error);
+    }
+  };
+
+  fetchDashboardCount();
+}, []);
+
+    const dashboardSummary = [
+    { id: 1, icons: './images/dashboard-icon1.svg', summaryHeading: 'Total Sites Added', summaryCount: totalSites },
+   
+    { id: 2, icons: './images/dashboard-icon2.svg', summaryHeading: 'Total Reservations', summaryCount: totalReservations },
+
+    { id: 3, icons: './images/dashboard-icon5.svg', summaryHeading: 'Total Users', summaryCount: usersCount },
+
+    { id: 4, icons: './images/dashboard-icon3.svg', summaryHeading: 'Total Revenue', summaryCount: `₹ ${totalRevenue.toLocaleString("en-IN")}` },
+
+    { id: 5, icons: './images/dashboard-icon4.svg', summaryHeading: 'Total Enquiries', summaryCount: totalEnquiries },
+
+    { id: 6, icons: './images/dashboard-icon6.svg', summaryHeading: 'Booked Sites', summaryCount: bookedSites }
+  ]
+  /* Get dashboard count details */
 
   useEffect(() => {
     if (location.hash) {

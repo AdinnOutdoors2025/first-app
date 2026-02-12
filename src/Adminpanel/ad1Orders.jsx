@@ -536,7 +536,7 @@ const OrdersTable = () => {
             setFromDate('');
             setToDate('');
             setReservedTo('');
-            reservedFrom('');
+            setReservedFrom('');
             setCurrentPage(1);
         }}
     >
