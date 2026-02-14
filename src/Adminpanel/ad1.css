@@ -186,6 +186,12 @@
   margin-right: 10px;
 }
 
+.adminHeading-imgsNew {
+  font-size: 23px;
+  margin-right: 15px;
+
+}
+
 .adminHeadings.active {
   background: url('/public/images/admin-sideBackground.svg');
   background-position: center;
@@ -243,8 +249,8 @@
 
 .cards {
   display: flex;
-  flex-wrap: wrap;
   gap: 40px;
+  /* justify-content: space-between; */
   width: 315px;
   /* width: 315; */
   /* height: 82.787109375; */
@@ -291,6 +297,7 @@
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
+  margin-bottom: 5px;
 }
 
 .summaryCount {
@@ -443,19 +450,6 @@
 
 }
 
-.ProductsInputSelect {
-  width: 232px;
-  height: 40px;
-  border-radius: 10px;
-  box-shadow: 0px -0px -4px 0px rgba(0, 0, 0, 0.15);
-  color: rgba(51, 51, 51, 1);
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 100%;
-  letter-spacing: 0%;
-}
-
-
 /* Responsive */
 @media (max-width: 768px) {
   .Admin-navbar-search {
@@ -564,8 +558,9 @@
   width: 100%;
   padding: 5px 0;
 }
-.Admin-order-search-enquire input{
-   border: none;
+
+.Admin-order-search-enquire input {
+  border: none;
   outline: none;
   width: 100%;
   padding: 5px 0;
@@ -594,4 +589,77 @@
 
 .enquireUserHead th {
   text-align: center;
+}
+
+
+
+@media (min-width: 1440px) and (max-width: 2559px) {
+
+
+  .sideImageHeading {
+    width: 250px;
+  }
+
+  .adminHeading-imgs {
+    height: 40px;
+    width: 40px;
+    margin-right: 15px;
+  }
+
+  .adminHeading-imgsNew {
+    font-size: 33px;
+    margin-right: 23px;
+
+  }
+
+  .adminHeading-imgsNew1 {
+    margin-right: 18px;
+
+  }
+
+  .adminHeadings {
+    font-size: 25px;
+  }
+
+  .subcategory-item {
+    font-size: 25px;
+  }
+
+  .adminHeadings.active {
+    height: 92px;
+  }
+
+  .AdminPanelHome-contentLeft {
+    padding: 30px;
+  }
+
+  .cards {
+    width: 400px;
+
+  }
+
+  .summaryHeading {
+    font-size: 22px;
+    margin-bottom: 5px;
+
+  }
+
+  .summaryIcon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .revenueHeader {
+    font-size: 20px;
+  }
+
+  .RevenueInputSelect {
+    width: auto;
+    height: auto;
+    padding: 3px 5px;
+    font-size: 18px;
+  }
+  .productsHeading{
+    font-size: 27px;
+  }
 }

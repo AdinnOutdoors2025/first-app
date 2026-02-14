@@ -76,108 +76,108 @@ const OrdersTable = () => {
     const productsPerPage = 10;
     const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredOrders = productsOrderData.filter(order => {
+    const filteredOrders = productsOrderData.filter(order => {
 
-    /* =========================
-       1️⃣ STATUS FILTER
-    ========================= */
-    if (selectedStatus && order.order_status !== selectedStatus) {
-        return false;
-    }
-
-    /* =========================
-       2️⃣ HANDLER FILTER
-    ========================= */
-    if (selectedHandler && order.handled_by !== selectedHandler) {
-        return false;
-    }
-
-    /* =========================
-       3️⃣ ORDER CREATED DATE FILTER
-    ========================= */
-    if (fromDate || toDate) {
-        const orderDate = new Date(order.createdAt);
-
-        if (fromDate) {
-            const from = new Date(fromDate);
-            from.setHours(0, 0, 0, 0);
-            if (orderDate < from) return false;
+        /* =========================
+           1️⃣ STATUS FILTER
+        ========================= */
+        if (selectedStatus && order.order_status !== selectedStatus) {
+            return false;
         }
 
-        if (toDate) {
-            const to = new Date(toDate);
-            to.setHours(23, 59, 59, 999);
-            if (orderDate > to) return false;
+        /* =========================
+           2️⃣ HANDLER FILTER
+        ========================= */
+        if (selectedHandler && order.handled_by !== selectedHandler) {
+            return false;
         }
-    }
 
-    /* =========================
-       4️⃣ RESERVED DATE RANGE FILTER (NEW)
-       Booking overlap logic
-    ========================= */
-    if (reservedFrom || reservedTo) {
-        const from = reservedFrom ? new Date(reservedFrom) : null;
-        const to = reservedTo ? new Date(reservedTo) : null;
+        /* =========================
+           3️⃣ ORDER CREATED DATE FILTER
+        ========================= */
+        if (fromDate || toDate) {
+            const orderDate = new Date(order.createdAt);
 
-        if (from) from.setHours(0, 0, 0, 0);
-        if (to) to.setHours(23, 59, 59, 999);
+            if (fromDate) {
+                const from = new Date(fromDate);
+                from.setHours(0, 0, 0, 0);
+                if (orderDate < from) return false;
+            }
 
-        const hasValidReservation = (order.products || []).some(product => {
-            if (!product?.booking?.startDate || !product?.booking?.endDate) return false;
+            if (toDate) {
+                const to = new Date(toDate);
+                to.setHours(23, 59, 59, 999);
+                if (orderDate > to) return false;
+            }
+        }
 
-            const bookingStart = new Date(product.booking.startDate);
-            const bookingEnd = new Date(product.booking.endDate);
+        /* =========================
+           4️⃣ RESERVED DATE RANGE FILTER (NEW)
+           Booking overlap logic
+        ========================= */
+        if (reservedFrom || reservedTo) {
+            const from = reservedFrom ? new Date(reservedFrom) : null;
+            const to = reservedTo ? new Date(reservedTo) : null;
 
-            // overlap condition
-            if (from && bookingEnd < from) return false;
-            if (to && bookingStart > to) return false;
+            if (from) from.setHours(0, 0, 0, 0);
+            if (to) to.setHours(23, 59, 59, 999);
 
-            return true;
-        });
+            const hasValidReservation = (order.products || []).some(product => {
+                if (!product?.booking?.startDate || !product?.booking?.endDate) return false;
 
-        if (!hasValidReservation) return false;
-    }
+                const bookingStart = new Date(product.booking.startDate);
+                const bookingEnd = new Date(product.booking.endDate);
 
-    /* =========================
-       5️⃣ SEARCH FILTER
-    ========================= */
-    if (!searchTerm.trim()) return true;
+                // overlap condition
+                if (from && bookingEnd < from) return false;
+                if (to && bookingStart > to) return false;
 
-    const search = searchTerm.toLowerCase();
+                return true;
+            });
 
-    const orderId = order.orderId?.toLowerCase() || '';
-    const handler = order.handled_by?.toLowerCase() || '';
-    const status = order.status?.toLowerCase() || '';
-    const orderStatus = order.order_status?.toLowerCase() || '';
-    const clientName = order.client?.name?.toLowerCase() || '';
+            if (!hasValidReservation) return false;
+        }
 
-    const productCodes = (order.products || [])
-        .map(p => p?.prodCode?.toLowerCase())
-        .join(' ');
+        /* =========================
+           5️⃣ SEARCH FILTER
+        ========================= */
+        if (!searchTerm.trim()) return true;
 
-    const formattedDate = order.createdAt
-        ? formatIndianDateTime(order.createdAt).toLowerCase()
-        : '';
+        const search = searchTerm.toLowerCase();
 
-    return (
-        orderId.includes(search) ||
-        handler.includes(search) ||
-        status.includes(search) ||
-        orderStatus.includes(search) ||
-        clientName.includes(search) ||
-        productCodes.includes(search) ||
-        formattedDate.includes(search)
-    );
-});
+        const orderId = order.orderId?.toLowerCase() || '';
+        const handler = order.handled_by?.toLowerCase() || '';
+        const status = order.status?.toLowerCase() || '';
+        const orderStatus = order.order_status?.toLowerCase() || '';
+        const clientName = order.client?.name?.toLowerCase() || '';
 
+        const productCodes = (order.products || [])
+            .map(p => p?.prodCode?.toLowerCase())
+            .join(' ');
 
-        const handlerOptions = Array.from(
-            new Set(
-                productsOrderData
-                    .map(o => o.handled_by)
-                    .filter(Boolean)
-            )
+        const formattedDate = order.createdAt
+            ? formatIndianDateTime(order.createdAt).toLowerCase()
+            : '';
+
+        return (
+            orderId.includes(search) ||
+            handler.includes(search) ||
+            status.includes(search) ||
+            orderStatus.includes(search) ||
+            clientName.includes(search) ||
+            productCodes.includes(search) ||
+            formattedDate.includes(search)
         );
+    });
+
+
+    const handlerOptions = Array.from(
+        new Set(
+            productsOrderData
+                .map(o => o.handled_by)
+                .filter(Boolean)
+        )
+    );
 
     // Calculate Total Pages
     const totalPages = Math.ceil(filteredOrders.length / productsPerPage);
@@ -207,7 +207,7 @@ const OrdersTable = () => {
 
         // Check if order already has a handler
         if (order.handled_by && order.handled_by.trim() !== '') {
-      
+
 
             // CHANGED: If order already has a handler, go directly to order details
             if (order.handled_by && order.handled_by.trim() !== '') {
@@ -350,7 +350,8 @@ const OrdersTable = () => {
     };
 
     return (
-        <div>
+
+        <div className='adminOrderTableMain'>
 
             {/* NEWLY ADDED Handled by admin  */}
             {/* Handler Name Modal */}
@@ -452,117 +453,147 @@ const OrdersTable = () => {
             )}
             {/* NEWLY ADDED Handled by admin  */}
 
+            {/* <div className='productsHeading'>All Orders</div> */}
 
             <div className='productsHeader'>
-                <div className='productsHeading'>All Orders</div>
-
-                <select   className="Admin-order-filter"    value={selectedStatus}   onChange={(e) => {  setSelectedStatus(e.target.value);   setCurrentPage(1);  }} >
-                    <option value="">All Status</option>
-                    {orderStatuses.map(status => (
-                        <option key={status._id} value={status.name}>
-                            {status.name}
-                        </option>
-                    ))}
-                </select>
-
-                <select
-                    className="Admin-order-filter"
-                    value={selectedHandler}
-                    onChange={(e) => {
-                        setSelectedHandler(e.target.value);
-                        setCurrentPage(1);
-                    }}
-                    >
-                    <option value="">All Handlers</option>
-                    {handlerOptions.map((handler, idx) => (
-                        <option key={idx} value={handler}>
-                            {handler}
-                        </option>
-                    ))}
-                </select>
-
-                <div className="Admin-order-date-filter">
-                    <input
-                        type="date"
-                        value={fromDate}
-                        onChange={(e) => {
-                            setFromDate(e.target.value);
-                            setCurrentPage(1);
-                        }}
-                    />
-
-                    <span className="date-separator">to</span>
-
-                    <input
-                        type="date"
-                        value={toDate}
-                        onChange={(e) => {
-                            setToDate(e.target.value);
-                            setCurrentPage(1);
-                        }}
-                    />
-
-
-                      <input
-                            type="date"
-                            value={reservedFrom}
-                            onChange={(e) => {
-                                setReservedFrom(e.target.value);
-                                setCurrentPage(1);
-                            }}
-                        />
-
-                        <span className="date-separator">to</span>
-
-                        <input
-                            type="date"
-                            value={reservedTo}
-                            onChange={(e) => {
-                                setReservedTo(e.target.value);
-                                setCurrentPage(1);
-                            }}
-                        />
-
-               
+                <div>
+                    <select className="Admin-order-filter" value={selectedStatus} onChange={(e) => { setSelectedStatus(e.target.value); setCurrentPage(1); }} >
+                        <option value="">All Status</option>
+                        {orderStatuses.map(status => (
+                            <option key={status._id} value={status.name}>
+                                {status.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
-           {(searchTerm || selectedStatus || selectedHandler || fromDate || toDate || reservedTo) && (
-    <button
-        className="clear-all-filters"
-        onClick={() => {
-            setSearchTerm('');
-            setSelectedStatus('');
-            setSelectedHandler('');
-            setFromDate('');
-            setToDate('');
-            setReservedTo('');
-            setReservedFrom('');
-            setCurrentPage(1);
-        }}
-    >
-        Clear all
-    </button>
-)}
+
+                <div>
+                    <select
+                        className="Admin-order-filter"
+                        value={selectedHandler}
+                        onChange={(e) => {
+                            setSelectedHandler(e.target.value);
+                            setCurrentPage(1);
+                        }}
+                    >
+                        <option value="">All Handlers</option>
+                        {handlerOptions.map((handler, idx) => (
+                            <option key={idx} value={handler}>
+                                {handler}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
 
-            <div className="Admin-order-search">
-                <i className="fas fa-search search-icon Admin-order-search-icon"></i>
+                <div>
 
-                <input
-                    type="text"
-                    placeholder="Search by Order ID, Product Code, Client, Handler, Status..."
-                    className="Admin-order-search-name"
-                    value={searchTerm}
-                    onChange={(e) => {
-                        setSearchTerm(e.target.value);
-                        setCurrentPage(1); // reset pagination
-                    }}
-                />
+                    <div className="Admin-order-search">
+                        <i className="fas fa-search search-icon Admin-order-search-icon"></i>
+
+                        <input
+                            type="text"
+                            placeholder="Search by Order ID, Product Code, etc.."
+                            className="Admin-order-search-name"
+                            value={searchTerm}
+                            onChange={(e) => {
+                                setSearchTerm(e.target.value);
+                                setCurrentPage(1); // reset pagination
+                            }}
+                        />
+                    </div>
+                </div>
 
 
+
+                {(searchTerm || selectedStatus || selectedHandler || fromDate || toDate || reservedTo) && (
+                    <button
+                        className="clear-all-filters"
+                        onClick={() => {
+                            setSearchTerm('');
+                            setSelectedStatus('');
+                            setSelectedHandler('');
+                            setFromDate('');
+                            setToDate('');
+                            setReservedTo('');
+                            setReservedFrom('');
+                            setCurrentPage(1);
+                        }}
+                    >
+                        Clear all
+                    </button>
+                )}
             </div>
 
+            <div className="Admin-order-date-filter">
+                {/* Order date filter  */}
+                <div>
+                    <div className="admin-orderFilterHeading">Order Date Filter</div>
+                    <div className='admin-orderDateFilterMain'>
+                        <div>
+                            <span className="adminDate-separator">From Date</span><br></br>
+
+                            <input
+                                type="date"
+                                value={fromDate}
+                                onChange={(e) => {
+                                    setFromDate(e.target.value);
+                                    setCurrentPage(1);
+                                }}
+                            />
+                        </div>
+
+                        <div>
+                            <span className="adminDate-separator">To Date</span> <br></br>
+
+                            <input
+                                type="date"
+                                value={toDate}
+                                onChange={(e) => {
+                                    setToDate(e.target.value);
+                                    setCurrentPage(1);
+                                }}
+                            />
+                        </div>
+
+                    </div>
+                </div>
+
+                <div className='productsHeading'>All Orders</div>
+                {/* Reserved date filter  */}
+                <div>
+                    <div className="admin-orderFilterHeading" >Reserved Date Filter</div>
+                    <div className='admin-orderDateFilterMain' >
+                        <div>
+                            <span className="adminDate-separator">From Date</span><br></br>
+
+                            <input
+                                type="date"
+                                value={reservedFrom}
+                                onChange={(e) => {
+                                    setReservedFrom(e.target.value);
+                                    setCurrentPage(1);
+                                }}
+                            />
+                        </div>
+
+                        <div>
+                            <span className="adminDate-separator">To Date</span> <br></br>
+
+                            <input
+                                type="date"
+                                value={reservedTo}
+                                onChange={(e) => {
+                                    setReservedTo(e.target.value);
+                                    setCurrentPage(1);
+                                }}
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
+
 
             <div className="order-product-table">
                 <table>

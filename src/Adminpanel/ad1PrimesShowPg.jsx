@@ -3,6 +3,8 @@ import './ad1products.css';
 import { useNavigate } from 'react-router-dom';
 import { baseUrl } from './BASE_URL';
 import { getPaginationGroup } from "../utils/pagination";
+import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
+
 const PrimeSpotsTable = () => {
     const [searchTerm, setSearchTerm] = useState('');
     // 🟢 SIZE RANGE FILTER (NEW)
@@ -91,52 +93,52 @@ const PrimeSpotsTable = () => {
     }, []);
 
     // Filter products when selectedFilter changes
-       useEffect(() => {
-    let filtered;
-    const normalize = (str) => str.replace(/\s+/g, '').toLowerCase();
+    useEffect(() => {
+        let filtered;
+        const normalize = (str) => str.replace(/\s+/g, '').toLowerCase();
 
-    // 1️⃣ DROPDOWN FILTER
-    switch (selectedFilter) {
-        case "Hidden Products":
-            filtered = products.filter(p => !p.visible);
-            break;
-        case "Prime Spots":
-            filtered = products.filter(p => p.isPrime === 1);
-            break;
-        case "Regular Spots":
-            filtered = products.filter(p => p.isPrime === 0);
-            break;
-        case "View All":
-            filtered = products;
-            break;
-        default:
-            filtered = products.filter(p => p.isPrime === 1);
-    }
+        // 1️⃣ DROPDOWN FILTER
+        switch (selectedFilter) {
+            case "Hidden Products":
+                filtered = products.filter(p => !p.visible);
+                break;
+            case "Prime Spots":
+                filtered = products.filter(p => p.isPrime === 1);
+                break;
+            case "Regular Spots":
+                filtered = products.filter(p => p.isPrime === 0);
+                break;
+            case "View All":
+                filtered = products;
+                break;
+            default:
+                filtered = products.filter(p => p.isPrime === 1);
+        }
 
-    // 2️⃣ SEARCH FILTER
-    if (searchTerm.trim()) {
-        const search = searchTerm.toLowerCase();
+        // 2️⃣ SEARCH FILTER
+        if (searchTerm.trim()) {
+            const search = searchTerm.toLowerCase();
 
-        filtered = filtered.filter(p =>
-            p.name?.toLowerCase().includes(search) ||
-            p.prodCode?.toLowerCase().includes(search) ||
-            p.price?.toString().includes(search) ||
-            p.rating?.toString().includes(search) ||
-            normalize(`${p.width}x${p.height} ${p.width * p.height} sqft`).includes(search)
-        );
-    }
+            filtered = filtered.filter(p =>
+                p.name?.toLowerCase().includes(search) ||
+                p.prodCode?.toLowerCase().includes(search) ||
+                p.price?.toString().includes(search) ||
+                p.rating?.toString().includes(search) ||
+                normalize(`${p.width}x${p.height} ${p.width * p.height} sqft`).includes(search)
+            );
+        }
 
-    // 3️⃣ SIZE RANGE FILTER ✅ (FIXED POSITION)
-    filtered = filtered.filter(p => {
-        const size = (p.width || 0) * (p.height || 0);
-        return size >= sizeRange[0] && size <= sizeRange[1];
-    });
+        // 3️⃣ SIZE RANGE FILTER ✅ (FIXED POSITION)
+        filtered = filtered.filter(p => {
+            const size = (p.width || 0) * (p.height || 0);
+            return size >= sizeRange[0] && size <= sizeRange[1];
+        });
 
-    // ✅ UPDATE STATE ONCE (IMPORTANT)
-    setFilteredProducts(filtered);
-    setCurrentPage(1);
+        // ✅ UPDATE STATE ONCE (IMPORTANT)
+        setFilteredProducts(filtered);
+        setCurrentPage(1);
 
-}, [selectedFilter, products, searchTerm, sizeRange]);
+    }, [selectedFilter, products, searchTerm, sizeRange]);
 
 
 
@@ -288,8 +290,8 @@ const PrimeSpotsTable = () => {
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
-    
-const pages = getPaginationGroup(currentPage, totalPages);
+
+    const pages = getPaginationGroup(currentPage, totalPages);
     const toggleMenu = (id) => {
         setMenuOpenId(prevId => (prevId === id ? null : id));
     };
@@ -374,11 +376,11 @@ const pages = getPaginationGroup(currentPage, totalPages);
     }
 
     return (
-        <div>
-            <div className='productsHeader'>
-                <div className='productsHeading'>Prime Advertising Spots</div>
+        <div className="prime-spots-tableMain">
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <div>
+                <div className='productsHeader'>
+                    <div className='productsHeading'>Prime Advertising Spots</div>
                     <div className="prime-stats">
                         <span className="prime-stat-item" style={{ color: '#ffc107', marginRight: '15px' }}>
                             <i className="fa-solid fa-crown"></i> Prime: {totalPrimeCount}
@@ -391,236 +393,244 @@ const pages = getPaginationGroup(currentPage, totalPages);
                         </span>
                     </div>
 
-                    <div className="size-slider-wrapper">
-                        <label className="size-label">
-                            Size (Sq.ft)
-                        </label>
 
-                        {/* LIVE VALUES */}
-                        <div className="size-values">
-                            <span>{sizeRange[0]} Sq.ft</span>
-                            <span>{sizeRange[1]} Sq.ft</span>
+                  
+                </div>
+
+                  <div className='adminPrimeProdFilterMain'>
+
+
+                        <div className="size-slider-wrapper">
+                            {/* <label className="size-label">
+                                Size (Sq.ft)
+                            </label> */}
+
+                            {/* LIVE VALUES */}
+                            <div className="size-values">
+                                <span>{sizeRange[0]} Sq.ft</span>
+                                <span>{sizeRange[1]} Sq.ft</span>
+                            </div>
+
+                            <div className="size-slider">
+                                <input
+                                    type="range"
+                                    min={minSize}
+                                    max={maxSize}
+                                    value={sizeRange[0]}
+                                    onChange={(e) =>
+                                        setSizeRange([Number(e.target.value), sizeRange[1]])
+                                    }
+                                />
+
+                                <input
+                                    type="range"
+                                    min={minSize}
+                                    max={maxSize}
+                                    value={sizeRange[1]}
+                                    onChange={(e) =>
+                                        setSizeRange([sizeRange[0], Number(e.target.value)])
+                                    }
+                                />
+                            </div>
+
+                            {/* HELPER TEXT */}
+                            <div className="size-helper-text">
+                                Drag the sliders to select the minimum and maximum size (in Sq.ft).
+                            </div>
                         </div>
 
-                        <div className="size-slider">
+
+
+                        <div className="search-wrapper">
                             <input
-                                type="range"
-                                min={minSize}
-                                max={maxSize}
-                                value={sizeRange[0]}
-                                onChange={(e) =>
-                                    setSizeRange([Number(e.target.value), sizeRange[1]])
-                                }
+                                type="text"
+                                placeholder="Type to search the Prime Spots..."
+                                className="ProductsSearchInput"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
                             />
 
-                            <input
-                                type="range"
-                                min={minSize}
-                                max={maxSize}
-                                value={sizeRange[1]}
-                                onChange={(e) =>
-                                    setSizeRange([sizeRange[0], Number(e.target.value)])
-                                }
-                            />
+                            {searchTerm && (
+                                <span
+                                    className="clear-search"
+                                    onClick={() => setSearchTerm('')}
+                                    title="Clear search"
+                                >
+                                    ✕
+                                </span>
+                            )}
                         </div>
 
-                        {/* HELPER TEXT */}
-                        <div className="size-helper-text">
-                            Drag the sliders to select the minimum and maximum size (in Sq.ft).
-                        </div>
-                    </div>
 
-
-
-                    <div className="search-wrapper">
-                        <input
-                            type="text"
-                            placeholder="Type to search the Prime Spots..."
-                            className="ProductsSearchInput"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-
-                        {searchTerm && (
-                            <span
-                                className="clear-search"
-                                onClick={() => setSearchTerm('')}
-                                title="Clear search"
+                        <div>
+                            <select
+                                className='ProductsInputSelect'
+                                value={selectedFilter}
+                                onChange={(e) => setSelectedFilter(e.target.value)}
                             >
-                                ✕
-                            </span>
-                        )}
+                                <option value="Prime Spots">Prime Spots</option>
+                                <option value="Regular Spots">Regular Spots </option>
+                                <option value="View All">View All </option>
+                                <option value='Hidden Products'>Hidden Spots</option>
+                            </select>
+                        </div>
                     </div>
 
-
-
-                    <select
-                        className='ProductsInputSelect'
-                        value={selectedFilter}
-                        onChange={(e) => setSelectedFilter(e.target.value)}
-                    >
-                        <option value="Prime Spots">Prime Spots</option>
-                        <option value="Regular Spots">Regular Spots </option>
-                        <option value="View All">View All </option>
-                        <option value='Hidden Products'>Hidden Spots</option>
-                    </select>
-                </div>
-            </div>
-
-            {filteredProducts.length === 0 && selectedFilter === "Prime Spots" ? (
-                <div className="admin-no-products">
-                    <div className="alert alert-info" role="alert">
-                        <i className="fa-solid fa-crown me-2"></i>
-                        No Prime Spots found. Click below to add your first Prime Spot.
+                {filteredProducts.length === 0 && selectedFilter === "Prime Spots" ? (
+                    <div className="admin-no-products">
+                        <div className="alert alert-info" role="alert">
+                            <i className="fa-solid fa-crown me-2"></i>
+                            No Prime Spots found. Click below to add your first Prime Spot.
+                        </div>
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => navigate('/admin#AddPrimeSpots')}
+                        >
+                            <i className="fa-solid fa-plus"></i> Add Prime Spot
+                        </button>
                     </div>
-                    <button
-                        className="btn btn-primary"
-                        onClick={() => navigate('/admin#AddPrimeSpots')}
-                    >
-                        <i className="fa-solid fa-plus"></i> Add Prime Spot
-                    </button>
-                </div>
-            ) : (
-                <>
-                    <div className="product-table">
-                        <table>
-                            <thead>
-                                <tr className='adminProdHeadContent'>
-                                    <th>Products</th>
-                                    <th className='TableProductName'>Name</th>
-                                    <th>Product Code</th>
-                                    <th>Price</th>
-                                    <th>Prime Status</th>
-                                    <th>Size</th>
-                                    <th>Ratings</th>
-                                    <th>Last Updated</th>
-                                    <th> </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {currentProducts.length > 0 ? (
-                                    currentProducts.map((product) => (
+                ) : (
+                    <>
+                        <div className="product-table">
+                            <table>
+                                <thead>
+                                    <tr className='adminProdHeadContent'>
+                                        <th>Products</th>
+                                        <th className='TableProductName'>Name</th>
+                                        <th>Product Code</th>
+                                        <th>Price</th>
+                                        <th>Prime Status</th>
+                                        <th>Size</th>
+                                        <th>Ratings</th>
+                                        <th>Last Updated</th>
+                                        <th> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {currentProducts.length > 0 ? (
+                                        currentProducts.map((product) => (
 
-                                        <tr
-                                            key={product._id}
-                                            className={`product-row adminProdRowContent ${!product.visible ? 'disabled' : ''} ${product.isPrime === 1 ? 'prime-spot-row' : ''}`}>
-                                            <td>
-                                                <img src={product.image} alt="Product" className='productImg' />
-                                            </td>
-                                            <td className='TableProductName'>{product.name}</td>
-                                            <td>
-                                                <div className="product-code-cell">
-                                                    {product.prodCode}
-                                                    {product.isPrime === 1 && (
-                                                        <span className="product-code-prime-badge">
-                                                            <i className="fa-solid fa-crown"></i>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td className='TableProductPrice'>₹{product.price}</td>
-                                            <td>
-                                                {renderPrimeStatus(product.isPrime, product.primeUpdatedAt)}
-                                            </td>
-                                            <td>
-                                                {product.width} X {product.height} | {(product.width * product.height).toFixed(2)} Sq.ft
-                                            </td>
-                                            <td>
-                                                <div className='d-flex productRate'>
-                                                    <div>
-                                                        <span className="fa-solid fa-star stars-book-admin"></span>
+                                            <tr
+                                                key={product._id}
+                                                className={`product-row adminProdRowContent ${!product.visible ? 'disabled' : ''} ${product.isPrime === 1 ? 'prime-spot-row' : ''}`}>
+                                                <td>
+                                                    <img src={product.image} alt="Product" className='productImg' />
+                                                </td>
+                                                <td className='TableProductName'>{product.name}</td>
+                                                <td>
+                                                    <div className="product-code-cell">
+                                                        {product.prodCode}
+                                                        {product.isPrime === 1 && (
+                                                            <span className="product-code-prime-badge">
+                                                                <i className="fa-solid fa-crown"></i>
+                                                            </span>
+                                                        )}
                                                     </div>
-                                                    <div>
-                                                        {product.rating || 0}
+                                                </td>
+                                                <td className='TableProductPrice'>{formatIndianCurrency(product.price, true)}</td>
+                                                <td>
+                                                    {renderPrimeStatus(product.isPrime, product.primeUpdatedAt)}
+                                                </td>
+                                                <td>
+                                                    {product.width} X {product.height} | {(product.width * product.height).toFixed(2)} Sq.ft
+                                                </td>
+                                                <td>
+                                                    <div className='d-flex productRate'>
+                                                        <div>
+                                                            <span className="fa-solid fa-star stars-book-admin"></span>
+                                                        </div>
+                                                        <div>
+                                                            {product.rating || 0}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                {formatDate(product.primeUpdatedAt || product.updatedAt)}
-                                            </td>
-                                            <td className="threeDotsTd offProdThreeDotsTd" onClick={() => toggleMenu(product._id)}>
-                                                <div className="actionMenuRow">
-                                                    <div>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="34" viewBox="0 0 10 34" fill="none" className='ThreeDotsIcon'>
-                                                            <path fillRule="evenodd" clipRule="evenodd"
-                                                                d="M5.02241 0.373047C7.2536 0.373047 9.06365 2.18282 9.06365 4.41428C9.06365 6.64547 7.2536 8.45471 5.02241 8.45471C2.79122 8.45444 0.981445 6.64547 0.981445 4.41428C0.981445 2.18282 2.79122 0.373047 5.02241 0.373047ZM5.02241 25.4439C7.2536 25.4439 9.06365 27.2536 9.06365 29.4851C9.06365 31.7166 7.2536 33.5255 5.02241 33.5255C2.79122 33.5253 0.981445 31.7163 0.981445 29.4848C0.981445 27.2534 2.79122 25.4439 5.02241 25.4439ZM5.02241 12.9085C7.2536 12.9085 9.06365 14.7182 9.06365 16.9497C9.06365 19.1812 7.2536 20.9907 5.02241 20.9907C2.79122 20.9904 0.981445 19.1809 0.981445 16.9494C0.981445 14.718 2.79122 12.9085 5.02241 12.9085Z"
-                                                                fill="#333333" />
-                                                        </svg>
-                                                    </div>
+                                                </td>
+                                                <td>
+                                                    {formatDate(product.primeUpdatedAt || product.updatedAt)}
+                                                </td>
+                                                <td className="threeDotsTd offProdThreeDotsTd" onClick={() => toggleMenu(product._id)}>
+                                                    <div className="actionMenuRow">
+                                                        <div>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="34" viewBox="0 0 10 34" fill="none" className='ThreeDotsIcon'>
+                                                                <path fillRule="evenodd" clipRule="evenodd"
+                                                                    d="M5.02241 0.373047C7.2536 0.373047 9.06365 2.18282 9.06365 4.41428C9.06365 6.64547 7.2536 8.45471 5.02241 8.45471C2.79122 8.45444 0.981445 6.64547 0.981445 4.41428C0.981445 2.18282 2.79122 0.373047 5.02241 0.373047ZM5.02241 25.4439C7.2536 25.4439 9.06365 27.2536 9.06365 29.4851C9.06365 31.7166 7.2536 33.5255 5.02241 33.5255C2.79122 33.5253 0.981445 31.7163 0.981445 29.4848C0.981445 27.2534 2.79122 25.4439 5.02241 25.4439ZM5.02241 12.9085C7.2536 12.9085 9.06365 14.7182 9.06365 16.9497C9.06365 19.1812 7.2536 20.9907 5.02241 20.9907C2.79122 20.9904 0.981445 19.1809 0.981445 16.9494C0.981445 14.718 2.79122 12.9085 5.02241 12.9085Z"
+                                                                    fill="#333333" />
+                                                            </svg>
+                                                        </div>
 
-                                                    {/* Action Menu */}
-                                                    <div className={`actionMenu offProdActionMenuPrime ${menuOpenId === product._id ? 'open' : ''}`}>
-                                                        <i
-                                                            className={`fa-solid ${product.visible ? 'fa-eye' : 'fa-eye-slash'}`}
-                                                            title={product.visible ? "Hide" : "Unhide"}
-                                                            onClick={() => toggleVisibility(product._id, product.visible)}
-                                                        ></i>
-                                                        <i
-                                                            className={`fa-solid ${product.isPrime === 1 ? 'fa-star' : 'fa-crown'}`}
-                                                            title={product.isPrime === 1 ? "Make Regular" : "Make Prime"}
-                                                            onClick={() => togglePrimeStatus(product._id, product.isPrime || 0)}
-                                                        ></i>
-                                                        <i
-                                                            className="fa-solid fa-pen"
-                                                            title="Edit Prime Status"
-                                                            onClick={() => handleEdit(product)}
-                                                        ></i>
-                                                        <i
-                                                            className="fa-solid fa-trash"
-                                                            title="Delete Product"
-                                                            onClick={() => handleDelete(product._id)}
-                                                        ></i>
+                                                        {/* Action Menu */}
+                                                        <div className={`actionMenu offProdActionMenuPrime ${menuOpenId === product._id ? 'open' : ''}`}>
+                                                            <i
+                                                                className={`fa-solid ${product.visible ? 'fa-eye' : 'fa-eye-slash'}`}
+                                                                title={product.visible ? "Hide" : "Unhide"}
+                                                                onClick={() => toggleVisibility(product._id, product.visible)}
+                                                            ></i>
+                                                            <i
+                                                                className={`fa-solid ${product.isPrime === 1 ? 'fa-star' : 'fa-crown'}`}
+                                                                title={product.isPrime === 1 ? "Make Regular" : "Make Prime"}
+                                                                onClick={() => togglePrimeStatus(product._id, product.isPrime || 0)}
+                                                            ></i>
+                                                            <i
+                                                                className="fa-solid fa-pen"
+                                                                title="Edit Prime Status"
+                                                                onClick={() => handleEdit(product)}
+                                                            ></i>
+                                                            <i
+                                                                className="fa-solid fa-trash"
+                                                                title="Delete Product"
+                                                                onClick={() => handleDelete(product._id)}
+                                                            ></i>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="9" className="text-center py-4">
+                                                No products match the selected filter.
                                             </td>
                                         </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="9" className="text-center py-4">
-                                            No products match the selected filter.
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    {/* Pagination Controls */}
-                    {filteredProducts.length > 0 && (
-                        <div className="Productpagination d-flex justify-content-center">
-                            <button
-                                className="Productprev-button"
-                                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                                disabled={currentPage === 1}
-                            >
-                                Prev
-                            </button>
-
-                            {pages.map((page, index) =>
-                                page === "..." ? (
-                                    <span key={index} className="paginationDots">...</span>
-                                ) : (
-                                    <button
-                                        key={index}
-                                        className={`Productpage-number ${currentPage === page ? "active" : ""}`}
-                                        onClick={() => setCurrentPage(page)}
-                                    >
-                                        {page}
-                                    </button>
-                                )
-                            )}
-                            <button
-                                className="Productnext-button"
-                                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                                disabled={currentPage === totalPages}
-                            >
-                                Next
-                            </button>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
-                    )}
-                </>
-            )}
+
+                        {/* Pagination Controls */}
+                        {filteredProducts.length > 0 && (
+                            <div className="Productpagination d-flex justify-content-center">
+                                <button
+                                    className="Productprev-button"
+                                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}
+                                >
+                                    Prev
+                                </button>
+
+                                {pages.map((page, index) =>
+                                    page === "..." ? (
+                                        <span key={index} className="paginationDots">...</span>
+                                    ) : (
+                                        <button
+                                            key={index}
+                                            className={`Productpage-number ${currentPage === page ? "active" : ""}`}
+                                            onClick={() => setCurrentPage(page)}
+                                        >
+                                            {page}
+                                        </button>
+                                    )
+                                )}
+                                <button
+                                    className="Productnext-button"
+                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                                    disabled={currentPage === totalPages}
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
         </div>
     );
 };

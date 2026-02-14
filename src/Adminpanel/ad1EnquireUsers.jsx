@@ -199,10 +199,12 @@ const EnquireUsersTable = () => {
 
 
     return (
-        <div>
-            <div className='productsHeader'>
+        <div className='EnquireUsersTableMain'>
+            <div className='productsHeader' style={{border:'1px solid red'}}>
                 <div className='productsHeading'>All Enquiries</div>
                 <div className="Admin-order-date-filter">
+                    <span className="adminDate-separator">From</span>
+
                     <input
                         type="date"
                         value={fromDate}
@@ -212,7 +214,7 @@ const EnquireUsersTable = () => {
                         }}
                     />
 
-                    <span className="date-separator">to</span>
+                    <span className="adminDate-separator">To</span>
 
                     <input
                         type="date"
@@ -223,6 +225,14 @@ const EnquireUsersTable = () => {
                         }}
                     />
                 </div>
+
+
+                <div className="Admin-order-search-enquire">
+                    <i className="fas fa-search search-icon Admin-order-search-icon"></i>
+                    <input type="text" placeholder="Search by phone, code / location" className='Admin-order-search-name' value={searchDate}
+                        onChange={(e) => setSearchDate(e.target.value)} />
+                </div>
+
                 {(searchDate || fromDate || toDate) && (
                         <button
                             className="clear-all-filters"
@@ -236,13 +246,6 @@ const EnquireUsersTable = () => {
                             Clear all
                         </button>
                     )}
-
-
-                <div className="Admin-order-search-enquire">
-                    <i className="fas fa-search search-icon Admin-order-search-icon"></i>
-                    <input type="text" placeholder="Search by phone, code / location" className='Admin-order-search-name' value={searchDate}
-                        onChange={(e) => setSearchDate(e.target.value)} />
-                </div>
 
                 
             </div>

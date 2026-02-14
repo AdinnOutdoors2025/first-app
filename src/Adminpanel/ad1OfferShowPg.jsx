@@ -3,6 +3,8 @@ import './ad1products.css';
 import { useNavigate } from 'react-router-dom';
 import { baseUrl } from './BASE_URL';
 import { getPaginationGroup } from "../utils/pagination";
+import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
+
 const OfferProductTable = () => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
@@ -18,10 +20,10 @@ const OfferProductTable = () => {
     const [isRunning, setIsRunning] = useState(false);
     const [totalSeconds, setTotalSeconds] = useState(0);
 
-     // Fetch timer from backend on component mount and set up polling
-     useEffect(() => {
+    // Fetch timer from backend on component mount and set up polling
+    useEffect(() => {
         fetchTimer();
-        
+
         // Set up polling interval to update timer every second when running
         const interval = setInterval(() => {
             if (isRunning) {
@@ -36,9 +38,9 @@ const OfferProductTable = () => {
         try {
             const response = await fetch(`${baseUrl}/DealTimerRun/timer`);
             if (!response.ok) throw new Error('Failed to fetch timer');
-            
+
             const timerData = await response.json();
-            
+
             setTimer({
                 hours: timerData.hours,
                 minutes: timerData.minutes,
@@ -135,7 +137,7 @@ const OfferProductTable = () => {
         if (!isRunning) {
             const numValue = parseInt(value) || 0;
             let newTimer = { ...timer };
-            
+
             switch (unit) {
                 case 'hours':
                     newTimer.hours = Math.min(99, Math.max(0, numValue));
@@ -149,13 +151,13 @@ const OfferProductTable = () => {
                 default:
                     break;
             }
-            
+
             setTimer(newTimer);
-            
+
             // Calculate total seconds
             const totalSecs = (newTimer.hours * 3600) + (newTimer.minutes * 60) + newTimer.seconds;
             setTotalSeconds(totalSecs);
-            
+
             // Update backend with new timer values (but don't start it)
             try {
                 await updateTimerInBackend(newTimer.hours, newTimer.minutes, newTimer.seconds, false);
@@ -213,7 +215,7 @@ const OfferProductTable = () => {
             }
 
             const result = await response.json();
-            
+
             setTimer({ hours: 0, minutes: 0, seconds: 0 });
             setTotalSeconds(0);
             setIsRunning(false);
@@ -226,7 +228,7 @@ const OfferProductTable = () => {
     // Add visual indicator for running timer
     const TimerStatusIndicator = () => {
         if (!isRunning) return null;
-        
+
         return (
             <div className="timer-running-indicator">
                 <div className="timer-pulse"></div>
@@ -254,7 +256,7 @@ const OfferProductTable = () => {
                     ...product,
                     visible: product.visible !== false,
                 }));
-                
+
                 const sortedProducts = productsWithVisibility.sort((a, b) => b.visible - a.visible);
                 setProducts(sortedProducts);
                 setFilteredProducts(sortedProducts);
@@ -292,11 +294,11 @@ const OfferProductTable = () => {
     // Edit product
     const handleAction = (action, product) => {
         if (action === 'Edit') {
-            navigate('/admin#EditOfferProduct', { 
-                state: { 
+            navigate('/admin#EditOfferProduct', {
+                state: {
                     editOffProd: product,
                     activeOfferProducts: "Add Offers"
-                } 
+                }
             });
         } else if (action === 'Delete') {
             handleDelete(product._id);
@@ -380,7 +382,7 @@ const OfferProductTable = () => {
     //     return pages;
     // };
 
-const pages = getPaginationGroup(currentPage, totalPages);
+    const pages = getPaginationGroup(currentPage, totalPages);
 
     const toggleMenu = (id) => {
         setMenuOpenId(prevId => (prevId === id ? null : id));
@@ -424,10 +426,11 @@ const pages = getPaginationGroup(currentPage, totalPages);
         );
     }
 
+
     return (
         <div>
             <div className='productsHeader'>
-                <div className='productsHeading'>Offered Products</div>                
+                <div className='productsHeading'>Offered Products</div>
                 {/* TIMER START AND RESET */}
                 <div className='OffProdTimerMain'>
                     <div className='OffProdNumberSetup'>
@@ -460,16 +463,16 @@ const pages = getPaginationGroup(currentPage, totalPages);
                             className={`timer-input ${isRunning ? 'disabled' : ''}`}
                             disabled={isRunning}
                         />
-                        
+
                         {/* Timer Status Indicator */}
                         <TimerStatusIndicator />
                     </div>
-                    
+
                     <div className='OffProdResetBtn' onClick={resetTimer}>
                         <img src='./images/RefreshIconTimer11.svg' alt="Reset" />
                         Reset
                     </div>
-                    
+
                     {!isRunning ? (
                         <div className='OffProdStartBtn' onClick={startTimer}>
                             <span className='offProdStartIcon'> ▶ </span>
@@ -485,8 +488,8 @@ const pages = getPaginationGroup(currentPage, totalPages);
 
 
                 <div>
-                    <select 
-                        className='ProductsInputSelect' 
+                    <select
+                        className='ProductsInputSelect'
                         value={selectedFilter}
                         onChange={(e) => setSelectedFilter(e.target.value)}
                     >
@@ -513,17 +516,18 @@ const pages = getPaginationGroup(currentPage, totalPages);
                     <tbody>
                         {currentProducts.length > 0 ? (
                             currentProducts.map((product) => (
-                                <tr 
-                                    key={product._id} 
-                                    className={`product-row adminProdRowContent ${!product.visible ? 'disabled' : ''}`}
-                                >
+                                <tr
+                                    key={product._id}
+                                    className={`product-row adminProdRowContent ${!product.visible ? 'disabled' : ''}`}>
                                     <td>
                                         <img src={product.image} alt="Product" className='productImg' />
                                     </td>
                                     <td className='TableProductName'>{product.name}</td>
                                     <td>{product.originalProductId}</td>
-                                    <td className='TableProductPrice'>₹{product.originalPrice}</td>
-                                    <td className='TableProductPrice'>₹{product.offerPrice}</td>
+                                    {/* <td className='TableProductPrice'>₹{product.originalPrice}</td>
+                                    <td className='TableProductPrice'>₹{product.offerPrice}</td> */}
+                                    <td className='TableProductPrice'>{formatIndianCurrency(product.originalPrice, true)}</td>
+                                    <td className='TableProductPrice'>{formatIndianCurrency(product.offerPrice, true)}</td>
                                     <td>
                                         {product.size?.width} X {product.size?.height} | {product.size?.squareFeet} Sq.ft
                                     </td>
@@ -554,14 +558,14 @@ const pages = getPaginationGroup(currentPage, totalPages);
                                                     title={product.visible ? "Hide" : "Unhide"}
                                                     onClick={() => toggleVisibility(product._id, product.visible)}
                                                 ></i>
-                                                <i 
-                                                    className="fa-solid fa-pen" 
-                                                    title="Edit" 
+                                                <i
+                                                    className="fa-solid fa-pen"
+                                                    title="Edit"
                                                     onClick={() => handleAction('Edit', product)}
                                                 ></i>
-                                                <i 
-                                                    className="fa-solid fa-trash" 
-                                                    title="Delete" 
+                                                <i
+                                                    className="fa-solid fa-trash"
+                                                    title="Delete"
                                                     onClick={() => handleAction('Delete', product)}
                                                 ></i>
                                             </div>
@@ -583,8 +587,8 @@ const pages = getPaginationGroup(currentPage, totalPages);
             {/* Pagination Controls */}
             {filteredProducts.length > 0 && (
                 <div className="Productpagination d-flex justify-content-center">
-                    <button 
-                        className="Productprev-button" 
+                    <button
+                        className="Productprev-button"
                         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                         disabled={currentPage === 1}
                     >
@@ -604,8 +608,8 @@ const pages = getPaginationGroup(currentPage, totalPages);
                             </button>
                         )
                     )}
-                    <button 
-                        className="Productnext-button" 
+                    <button
+                        className="Productnext-button"
                         onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                         disabled={currentPage === totalPages}
                     >

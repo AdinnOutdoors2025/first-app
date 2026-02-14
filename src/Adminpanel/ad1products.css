@@ -47,6 +47,7 @@ td {
 }
 
 .adminProdHeadContent th {
+    font-size: 20px;
     width: 16%;
     align-items: center;
     align-content: center;
@@ -105,18 +106,7 @@ input:checked+.Productcheckmark1 {
 
 
 
-th {
-    color: rgba(227, 31, 37, 1);
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    align-items: center;
-    align-content: center;
-    text-align: center;
 
-    /* background-color: #f4f4f4; */
-}
 
 .productImg {
     width: 65px;
@@ -359,15 +349,16 @@ th {
     background: #E31F25;
 }
 
-.offProdStartIcon{
+.offProdStartIcon {
     font-size: 15px;
 }
 
-.offProdActionMenu{
-right: 106px;
+.offProdActionMenu {
+    right: 106px;
 }
-.offProdThreeDotsTd{
-padding: 20px 30px;
+
+.offProdThreeDotsTd {
+    padding: 20px 30px;
 }
 
 
@@ -428,7 +419,9 @@ padding: 20px 30px;
     margin: 0 2px;
 }
 
-.OffProdResetBtn, .OffProdStartBtn, .OffProdPauseBtn {
+.OffProdResetBtn,
+.OffProdStartBtn,
+.OffProdPauseBtn {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -471,21 +464,153 @@ padding: 20px 30px;
     box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
 }
 
-.offProdStartIcon, .offProdPauseIcon {
+.offProdStartIcon,
+.offProdPauseIcon {
     font-size: 14px;
     font-weight: bold;
 }
 
 /* Timer Animation */
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .OffProdTimerMain.running {
     animation: pulse 2s infinite;
 }
+
+
+
+
+/* //NEWLY ADDED CSS FOR PRODUCT PAGE SEARCH AND PRIME PRODUCT DRAG AND DROP UI  */
+
+
+/* ========== SEARCH UI ========== */
+.search-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.ProductsSearchInput {
+    width: 260px;
+    height: 48px;
+    padding: 0 16px;
+    padding-right: 40px;
+    border: 1px solid #e31f25;
+    border-radius: 24px;
+    background: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    color: #e31f25;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.ProductsSearchInput:focus {
+    outline: none;
+    border-color: #e31f25;
+    box-shadow: 0 0 0 3px rgba(227, 31, 37, 0.1);
+}
+
+.ProductsSearchInput::placeholder {
+    color: #a1a8b5;
+    font-weight: 400;
+}
+
+.clear-search {
+    position: absolute;
+    right: 16px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e31f25;
+    color: #ffffff;
+    border-radius: 50%;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1;
+}
+
+/* 
+.clear-search:hover {
+  background: #e31f25;
+  color: #ffffff;
+} */
+
+
+/* ========== HEADER ALIGNMENT (Prime Spots header) ========== */
+.productsHeader>div[style*="display: flex"] {
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+
+/* ========== DROPDOWN SELECT ========== */
+.ProductsInputSelect {
+    height: 48px;
+    padding: 0 40px 0 16px;
+    border: 1px solid #e31f25;
+    border-radius: 24px;
+    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 12px center;
+    background-size: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333333;
+    cursor: pointer;
+    appearance: none;
+    transition: all 0.2s;
+}
+
+.ProductsInputSelect:hover {
+    border-color: #e31f25;
+}
+
+.ProductsInputSelect:focus {
+    outline: none;
+    border-color: #e31f25;
+    box-shadow: 0 0 0 3px rgba(227, 31, 37, 0.1);
+}
+
+/* ========== PRIME STATS BADGES (already exist – kept for harmony) ========== */
+.prime-stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.prime-stat-item i {
+    margin-right: 6px;
+}
+.adminPrimeProdFilterMain{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+}
+.prime-spots-tableMain .ProductsSearchInput{
+    width:290px;
+}
+
+
+/* //NEWLY ADDED CSS FOR PRODUCT PAGE SEARCH AND PRIME PRODUCT DRAG AND DROP UI  */
+
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -494,30 +619,32 @@ padding: 20px 30px;
         gap: 10px;
         padding: 15px;
     }
-    
+
     .timer-input {
         width: 40px;
         height: 35px;
         font-size: 16px;
     }
-    
-    .OffProdResetBtn, .OffProdStartBtn, .OffProdPauseBtn {
+
+    .OffProdResetBtn,
+    .OffProdStartBtn,
+    .OffProdPauseBtn {
         width: 100%;
         justify-content: center;
     }
 }
 
 /* Disabled state styling */
-.OffProdResetBtn:disabled, 
-.OffProdStartBtn:disabled, 
+.OffProdResetBtn:disabled,
+.OffProdStartBtn:disabled,
 .OffProdPauseBtn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
 }
 
-.OffProdResetBtn:disabled:hover, 
-.OffProdStartBtn:disabled:hover, 
+.OffProdResetBtn:disabled:hover,
+.OffProdStartBtn:disabled:hover,
 .OffProdPauseBtn:disabled:hover {
     transform: none;
     box-shadow: none;
@@ -528,9 +655,10 @@ padding: 20px 30px;
 
 /* Prime Status Styles */
 
-.offProdActionMenuPrime{
-right: 45px;
+.offProdActionMenuPrime {
+    right: 45px;
 }
+
 .prime-badge {
     padding: 4px 12px;
     border-radius: 20px;
@@ -568,30 +696,7 @@ right: 45px;
     background-color: rgba(255, 215, 0, 0.1);
 }
 
-.prime-stats {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    font-weight: 600;
-}
 
-.prime-stat-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.product-code-cell {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.product-code-prime-badge {
-    color: #ffc107;
-    font-size: 12px;
-}
 
 /* Prime Status Toggle in Add Prime */
 .prime-toggle-container {
@@ -709,7 +814,7 @@ right: 45px;
     z-index: 1000;
     width: 100%;
     margin-top: 2px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .suggestion-item {
@@ -742,7 +847,9 @@ right: 45px;
 }
 
 @keyframes spinner-border {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .admin-no-products {
@@ -788,65 +895,255 @@ right: 45px;
     border-color: #dc3545 !important;
 }
 
-/* search button clear button styles */
-/* ✨ Highlight searched text */
-.highlight-search {
-    background-color: #fff3cd;
-    color: #000;
-    padding: 0 2px;
-    border-radius: 3px;
-}
 
-/* ❌ Clear search button */
-.search-wrapper {
-    position: relative;
-}
+/* === DUAL RANGE SLIDER (Sq.ft filter) === */
 
-.clear-search {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 14px;
-    color: #999;
-}
-
-.clear-search:hover {
-    color: #000;
-}
-
-/* search button clear button styles */
-/* Size range filter styles */
 .size-slider-wrapper {
-    display: flex;
-    flex-direction: column;
-    min-width: 220px;
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 1.5rem 0;
+  padding: 0 0.5rem;
 }
 
 .size-label {
-    font-size: 13px;
-    margin-bottom: 4px;
-    color: #555;
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.3px;
 }
 
-.size-slider input[type="range"] {
-    width: 100%;
-}
-
+/* Live values display */
 .size-values {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    font-weight: 600;
-    color: #555;
-    margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  color: #34495e;
 }
 
+.size-values span {
+  background: #ecf0f1;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Slider container – both range inputs are stacked */
+.size-slider {
+  position: relative;
+  height: 6px;
+  background: #dfe6e9;   /* light gray track */
+  border-radius: 10px;
+  margin: 1.2rem 0 0.8rem;
+}
+
+/* Base styles for both range inputs */
+.size-slider input[type="range"] {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;   /* allow dragging through the overlapping area */
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: transparent;
+  top: 0;
+  left: 0;
+  margin: 0;             /* remove default margins */
+  padding: 0;
+}
+
+/* --- WebKit (Chrome, Safari, Edge) --- */
+.size-slider input[type="range"]::-webkit-slider-thumb {
+  pointer-events: auto;   /* only thumb is draggable */
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border: 2px solid #3498db;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(52,152,219,0.3);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin-top: -7px;       /* center thumb on track (6px track, 20px thumb) */
+}
+
+.size-slider input[type="range"]::-webkit-slider-thumb:hover {
+  background: #3498db;
+  border-color: #2980b9;
+  transform: scale(1.15);
+  box-shadow: 0 4px 10px rgba(52,152,219,0.4);
+}
+
+.size-slider input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  background: transparent; /* we use .size-slider background as track */
+  border: none;
+  border-radius: 10px;
+}
+
+/* --- Firefox --- */
+.size-slider input[type="range"]::-moz-range-thumb {
+  pointer-events: auto;
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  border: 2px solid #3498db;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(52,152,219,0.3);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.size-slider input[type="range"]::-moz-range-thumb:hover {
+  background: #3498db;
+  border-color: #2980b9;
+  transform: scale(1.15);
+}
+
+.size-slider input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+}
+
+/* --- Internet Explorer / Edge Legacy (optional) --- */
+.size-slider input[type="range"]::-ms-thumb {
+  pointer-events: auto;
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  border: 2px solid #3498db;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(52,152,219,0.3);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.size-slider input[type="range"]::-ms-track {
+  width: 100%;
+  height: 6px;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+/* Active range highlight (the selected interval between thumbs) */
+.size-slider::before {
+  content: '';
+  position: absolute;
+  height: 6px;
+  background: #3498db;   /* blue highlight for the selected range */
+  border-radius: 10px;
+  left: 0;
+  right: 0;
+  /* The exact left/right will be set via JavaScript if you want dynamic positioning.
+     For a pure CSS solution we can approximate it with a gradient or use JS later.
+     As a fallback, we leave it transparent. 
+     If you have control via JS, add inline styles or set width/left via React.
+  */
+  opacity: 0.3;
+}
+
+/* Helper text */
 .size-helper-text {
-    font-size: 11px;
-    color: #777;
-    margin-top: 6px;
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  margin-top: 0.5rem;
+  font-style: italic;
 }
 
-/* Size range filter styles */
+@media (min-width: 1440px) and (max-width: 2559px) {
+
+    .productsHeader {
+        padding: 30px 40px;
+    }
+
+    /* //NEWLY ADDED CSS FOR PRODUCT PAGE SEARCH AND PRIME PRODUCT DRAG AND DROP UI  */
+
+    .ProductsSearchInput {
+        width: 305px;
+        height: 50px;
+        padding: 0 16px;
+        padding-right: 40px;
+        border-radius: 24px;
+        font-size: 20px;
+    }
+
+
+    .ProductsSearchInput::placeholder {
+        font-size: 17px;
+    }
+
+    .clear-search {
+        right: 16px;
+        width: 23px;
+        height: 23px;
+        font-size: 14px;
+    }
+
+    /* ========== DROPDOWN SELECT ========== */
+    .ProductsInputSelect {
+        height: 48px;
+        padding: 0 50px 0 16px;
+        background-size: 40px;
+        font-size: 21px;
+    }
+
+    .productImg {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+    }
+
+    .adminProdHeadContent th {
+        font-size: 25px;
+        text-align: left;
+        width: 16%;
+    }
+
+    .adminProdRowContent td {
+        font-size: 18px;
+        text-align: left;
+
+    }
+
+    .stars-book-admin {
+        font-size: 20px;
+    }
+
+    .productRate {
+        width: 80px;
+    }
+
+    .threeDotsTd {
+        height: 10px;
+    }
+
+    .actionMenu {
+        right: 125px;
+    }
+
+    .actionMenu i {
+        font-size: 20px;
+    }
+
+    .no-orders-message {
+        font-size: 22px;
+    }
+
+    .no-orders-message i {
+        font-size: 25px;
+    }
+.offProdActionMenu {
+    right: 135px;
+}
+   
+}

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { getPaginationGroup } from "../utils/pagination";
 //BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from './BASE_URL';
+import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
+
 const ProductTable = () => {
     // NAVIGATE 
     const navigate = useNavigate();
@@ -110,37 +112,37 @@ const ProductTable = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     // Update filtered products when filter changes
-    
+
     // 🔍 Filter products based on dropdown + search (UPDATED)
-useEffect(() => {
-    let filtered = products;
+    useEffect(() => {
+        let filtered = products;
 
-    // Apply dropdown filter
-    if (selectedFilter === "Hidden Products") {
-        filtered = filtered.filter(p => !p.visible);
-    } else if (selectedFilter === "5 Star Ratings") {
-        filtered = filtered.filter(p => Math.floor(p.rating) === 5);
-    }
+        // Apply dropdown filter
+        if (selectedFilter === "Hidden Products") {
+            filtered = filtered.filter(p => !p.visible);
+        } else if (selectedFilter === "5 Star Ratings") {
+            filtered = filtered.filter(p => Math.floor(p.rating) === 5);
+        }
 
-    // Apply search filter
-    if (searchTerm.trim() !== '') {
-        const search = searchTerm.toLowerCase();
+        // Apply search filter
+        if (searchTerm.trim() !== '') {
+            const search = searchTerm.toLowerCase();
 
-        filtered = filtered.filter((product) =>
-            product.name?.toLowerCase().includes(search) ||             // Name
-            product.prodCode?.toLowerCase().includes(search) ||         // SQ.ID
-            product.mediaType?.toLowerCase().includes(search) ||        // Media Type
-            product.price?.toString().includes(search) ||               // Price
-            product.rating?.toString().includes(search) ||              // Ratings
-            `${product.width} ${product.height} ${product.productsquareFeet}`
-                .toLowerCase()
-                .includes(search)                                       // Size
-        );
-    }
+            filtered = filtered.filter((product) =>
+                product.name?.toLowerCase().includes(search) ||             // Name
+                product.prodCode?.toLowerCase().includes(search) ||         // SQ.ID
+                product.mediaType?.toLowerCase().includes(search) ||        // Media Type
+                product.price?.toString().includes(search) ||               // Price
+                product.rating?.toString().includes(search) ||              // Ratings
+                `${product.width} ${product.height} ${product.productsquareFeet}`
+                    .toLowerCase()
+                    .includes(search)                                       // Size
+            );
+        }
 
-    setFilteredProducts(filtered);      // UPDATE filtered list
-    setCurrentPage(1);                  // Reset pagination
-}, [selectedFilter, searchTerm, products]); // 👈 NEW dependency
+        setFilteredProducts(filtered);      // UPDATE filtered list
+        setCurrentPage(1);                  // Reset pagination
+    }, [selectedFilter, searchTerm, products]); // 👈 NEW dependency
 
 
 
@@ -182,7 +184,7 @@ useEffect(() => {
     //     return pages;
     // };
 
-const pages = getPaginationGroup(currentPage, totalPages);
+    const pages = getPaginationGroup(currentPage, totalPages);
 
 
 
@@ -235,39 +237,57 @@ const pages = getPaginationGroup(currentPage, totalPages);
         <div>
             <div className='productsHeader'>
                 <div className='productsHeading'>All Products</div>
+                {/* <div className="Admin-navbar-search">
+                        <i className="fas fa-search search-icon Admin-search-icon"></i>
+                        <input type="text" placeholder="Search..." className='Admin-search-name'
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)} />
+                    </div>
+                     {searchTerm && (                               // ❌ Clear button (NEW)
+                        <span
+                            className="clear-search"
+                            onClick={() => setSearchTerm('')}
+                        >
+                            ✕
+                        </span>
+                    )} */}
+                
+                <div className="search-wrapper"> 
+                    <input
+                        type="text"
+                        placeholder="Type to search the products..."
+                        className="ProductsSearchInput"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+
+                    {searchTerm && (                               // ❌ Clear button (NEW)
+                        <span
+                            className="clear-search"
+                            onClick={() => setSearchTerm('')}
+                        >
+                            ✕
+                        </span>
+                    )}
+                   
+
+                </div>
+
+
                 <div>
-                 <div className="search-wrapper"> {/* NEW */}
-    <input
-        type="text"
-        placeholder="Type to search the products..."
-        className="ProductsSearchInput"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-    />
-
-    {searchTerm && (                               // ❌ Clear button (NEW)
-        <span
-            className="clear-search"
-            onClick={() => setSearchTerm('')}
-        >
-            ✕
-        </span>
-    )}
-</div>
-
-
                     <select className='ProductsInputSelect' value={selectedFilter}
                         onChange={(e) => setSelectedFilter(e.target.value)}>
                         <option value="View All" >View All</option>
                         <option value='Hidden Products'>Hidden Products</option>
                         <option value='5 Star Ratings'>5 Star Ratings</option>
                     </select>
-
                 </div>
+
+
             </div>
             <div className="product-table">
                 <table>
-                    <thead>
+                    <thead className='adminProductHeading'>
                         <tr className='adminProdHeadContent'>
                             <th>Products</th>
                             <th className='TableProductName'>Name</th>
@@ -277,7 +297,7 @@ const pages = getPaginationGroup(currentPage, totalPages);
 
                             <th>Size</th>
                             <th>Ratings</th>
-                            <th> </th>
+                            <th > </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -294,7 +314,7 @@ const pages = getPaginationGroup(currentPage, totalPages);
                                             </td>
                                             <td className='TableProductName'>{product.name}</td>
                                             <td>{product.prodCode}</td>
-                                            <td className='TableProductPrice'>{product.price}</td>
+                                            <td className='TableProductPrice'>{formatIndianCurrency(product.price, true)}</td>
                                             <td className='TableProductPrice'>{product.mediaType}</td>
                                             <td>{product.width} X {product.height} | {product.productsquareFeet} Sq.ft </td>
                                             <td>
@@ -335,11 +355,13 @@ const pages = getPaginationGroup(currentPage, totalPages);
                                     ))
                             ) : (
                                 <tr>
-                                    <td colSpan="7" className="text-center py-4">
-                                        No products match the selected filter.
+                                    <td colSpan="7" className="no-orders-found">
+                                        <div className="no-orders-message">
+                                            <i className="fas fa-exclamation-circle"></i>
+                                            No Products Match
+                                        </div>
                                     </td>
                                 </tr>
-
                             )}
                     </tbody>
                 </table>
@@ -356,9 +378,9 @@ const pages = getPaginationGroup(currentPage, totalPages);
                     </button>
 
                     {pages.map((page, index) =>
-                    
+
                         page === "..." ? (
-                            
+
                             <span key={index} className="paginationDots">...</span>
                         ) : (
                             <button
@@ -368,7 +390,7 @@ const pages = getPaginationGroup(currentPage, totalPages);
                                 {page}
                             </button>
                         )
-                        
+
                     )}
                     <button className="Productnext-button" onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                         disabled={currentPage === totalPages}>
