@@ -1,5 +1,3 @@
-// src/utils/zohoSalesIQ.js
-
 let salesIQLoaded = false;
 let pendingVisitorData = null;
 

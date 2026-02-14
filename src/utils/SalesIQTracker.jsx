@@ -1,5 +1,3 @@
-// src/utils/SalesIQTracker.jsx
-
 import { useEffect, useRef } from "react";
 import { useLogin } from "../components/LoginContext.jsx";
 import { identifySalesIQUser } from "./zohoSalesIQ";

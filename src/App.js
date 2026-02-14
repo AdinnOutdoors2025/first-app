@@ -47,29 +47,27 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loadZohoSalesIQ } from './utils/zohoSalesIQ.js';
 import SalesIQTracker from './utils/SalesIQTracker.jsx';
+import WhatsApp from './utils/WhatsApp.jsx';
 
 /* Add toast message -SK */
 function App() {
-  const [load, upadateLoad] = useState(true); 
+  const [load, upadateLoad] = useState(true);
   useEffect(() => {
     loadZohoSalesIQ();
   }, []);
 
-  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      upadateLoad(false);
 
-  
-useEffect(() => {
-  const timer = setTimeout(() => {
-    upadateLoad(false);
+      const initialLoader = document.getElementById("initial-loader");
+      if (initialLoader) {
+        initialLoader.remove();
+      }
+    }, 1000);
 
-    const initialLoader = document.getElementById("initial-loader");
-    if (initialLoader) {
-      initialLoader.remove();
-    }
-  }, 1000);
-
-  return () => clearTimeout(timer);
-}, []);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div>
@@ -77,7 +75,8 @@ useEffect(() => {
       <SpotProvider>
         <LoginProvider>
           {/* <CartProvider> */}
-           <SalesIQTracker />
+          <WhatsApp />
+          <SalesIQTracker />
           <Router>
             {/* <PreLoader load={load} /> */}
             {/* Scroll to Top Component - Add this */}
@@ -132,28 +131,28 @@ useEffect(() => {
                   </AdminAuthWrapper>
 
                 </ProtectedRoute>
-              } /> 
+              } />
 
-              
-{/* //ADD LOADING STATES WHEN LOGIN / SIGNUP */}
-<Route 
-    path="/billing" 
-    element={
-        <ProtectedRoute requireLogin={true}>
-            <Billing />
-        </ProtectedRoute>
-    } 
-/>
 
-<Route 
-    path="/thank_you" 
-    element={
-        <ProtectedRoute requireLogin={true}>
-            <ThankyouPage1 />
-        </ProtectedRoute>
-    } 
-/>
-{/* //ADD LOADING STATES WHEN LOGIN / SIGNUP */}
+              {/* //ADD LOADING STATES WHEN LOGIN / SIGNUP */}
+              <Route
+                path="/billing"
+                element={
+                  <ProtectedRoute requireLogin={true}>
+                    <Billing />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/thank_you"
+                element={
+                  <ProtectedRoute requireLogin={true}>
+                    <ThankyouPage1 />
+                  </ProtectedRoute>
+                }
+              />
+              {/* //ADD LOADING STATES WHEN LOGIN / SIGNUP */}
 
 
 
@@ -182,5 +181,5 @@ useEffect(() => {
     </div>
 
   )
-} 
+}
 export default App;
