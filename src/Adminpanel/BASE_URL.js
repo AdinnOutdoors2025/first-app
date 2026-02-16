@@ -1,8 +1,12 @@
-export const baseUrl = "https://backend-bq11.onrender.com";
+// export const baseUrl = "https://backend-bq11.onrender.com";
 // export const baseUrl = "http://localhost:3001";
 // export const baseUrl = "http://192.168.0.159:3001";
 export const gstPercentage = 18 //18% gst on each order of the product
 export const whatsAppNumber = '917092558277'
+// export const baseUrl = "https://backend-git-main-adinnoutdoors-projects.vercel.app";
+export const baseUrl = "https://backend-plum-two-80.vercel.app/";
+
+
 
 
 // BASE_URL.JS
