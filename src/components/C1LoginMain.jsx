@@ -338,7 +338,8 @@ const sendOtp = async () => {
         return;
       }
 
-      setUsePhoneOTP(true); // For signup, we use phone for OTP
+    //   setUsePhoneOTP(true); // For signup, we use phone for OTP
+    setUsePhoneOTP(false);               // OTP will go to email
       setUserPhone(cleanedPhone);
 
       setStatus('Checking user...');
@@ -364,8 +365,10 @@ const sendOtp = async () => {
         return;
       }
 
-      // Send OTP via SMS (phone)
-      await sendOtpRequest(true, cleanedPhone, userName);
+    //   // Send OTP via SMS (phone)
+    //   await sendOtpRequest(true, cleanedPhone, userName);
+    // Send OTP via email
+await sendOtpRequest(false, email, userName);
     }
   } catch (error) {
     console.error(error);
