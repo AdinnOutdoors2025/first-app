@@ -611,7 +611,7 @@ const sendOtp = async () => {
                                     placeholder="Enter your e-mail"
                                     className='login-input-phone'
                                     value={email}
-                                    onChange={e => setEmail(e.target.value.trim())}
+                                    onChange={e => setEmail(e.target.value.trim().toLowerCase())}
                                 /><br />
                             </>
                         ) : (
@@ -622,7 +622,7 @@ const sendOtp = async () => {
                 placeholder="Enter email or phone number"
                 className="login-input-phone"
                 value={loginInput}
-                onChange={(e) => setLoginInput(e.target.value)}
+                onChange={(e) => setLoginInput(e.target.value.trim())}
               />
 
                         )}
