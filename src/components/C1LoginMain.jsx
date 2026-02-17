@@ -641,7 +641,8 @@ const sendOtp = async () => {
                 className="login-input-phone"
                 value={loginInput}
                 onChange={(e) => setLoginInput(e.target.value.trim())}
-              />
+disabled={isSendingOtp} // Disable when loading       
+       />
 
                         )}
 
