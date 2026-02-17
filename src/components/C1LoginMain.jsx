@@ -269,11 +269,17 @@ const sendOtp = async () => {
         // Phone validation (Indian numbers)
         const cleanedIdentifier = identifier.replace(/\D/g, '');
         if (cleanedIdentifier.length !== 10) {
-          toast.error("Please enter a valid 10-digit phone number");
+          toast.error("Please enter a valid 10-digit phone number", {
+                        position: "bottom-right",
+                    }
+    );
           return;
         }
         if (!/^[6-9]/.test(cleanedIdentifier)) {
-          toast.error("Please enter a valid Indian phone number (should start with 6-9)");
+          toast.error("Please enter a valid Indian phone number (should start with 6-9)" , {
+           position: "bottom-right",
+       }
+          );
           return;
         }
         isPhone = true;
@@ -311,16 +317,24 @@ const sendOtp = async () => {
       // Clean and validate phone number
       const cleanedPhone = userPhone.replace(/\D/g, '');
       if (cleanedPhone.length !== 10) {
-        toast.error("Please enter a valid 10-digit phone number");
+        toast.error("Please enter a valid 10-digit phone number"
+            , {
+         position: "bottom-right",
+     }
+        );
         return;
       }
       if (!/^[6-9]/.test(cleanedPhone)) {
-        toast.error("Please enter a valid Indian phone number (should start with 6-9)");
+        toast.error("Please enter a valid Indian phone number (should start with 6-9)", {
+         position: "bottom-right",
+     });
         return;
       }
 
       if (!email || !validateEmail(email)) {
-        toast.error("Please enter a valid email address");
+        toast.error("Please enter a valid email address", {
+         position: "bottom-right",
+     });
         return;
       }
 
@@ -338,11 +352,15 @@ const sendOtp = async () => {
       const checkData = await checkResponse.json();
 
       if (checkData.emailExists) {
-        toast.error("Email already registered. Please login.");
+        toast.error("Email already registered. Please login.", {
+         position: "bottom-right",
+     });
         return;
       }
       if (checkData.phoneExists) {
-        toast.error("Phone already registered. Please login.");
+        toast.error("Phone already registered. Please login.", {
+         position: "bottom-right",
+     });
         return;
       }
 
