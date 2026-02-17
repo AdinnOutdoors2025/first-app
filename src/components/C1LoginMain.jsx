@@ -37,6 +37,7 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
     const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
 
     //ADD LOADING STATES WHEN LOGIN / SIGNUP
+    const [loginInput, setLoginInput] = useState(''); // new state for login identifier
 
     // Add useEffect to update when loginMode changes
     useEffect(() => {
@@ -45,192 +46,319 @@ function LoginPageMain({ closeLoginPage, onClose, loginMode }) {
         setOtpSent(false);
         setErrorMessage('');
         setEnterOtp(new Array(4).fill(""));
+        setLoginInput(''); // clear login input on mode change
     }, [loginMode]);
     //ADD LOADING STATES WHEN LOGIN / SIGNUP
 
 
-    const sendOtp = async () => {
-        if (isSendingOtp) return; // Prevent multiple clicks
+    // const sendOtp = async () => {
+    //     if (isSendingOtp) return; // Prevent multiple clicks
+    //     setIsSendingOtp(true);
+    //     setErrorMessage('');
+    //     setStatus('Validating...');
 
-        setErrorMessage('');
-        setStatus('Validating...');
 
+    //     // For login
+    //     if (!isSignUp) {
+    //         const identifier = userPhone || email;
 
-        // For login
-        if (!isSignUp) {
-            const identifier = userPhone || email;
+    //         if (!identifier) {
+    //             toast.error("Please enter your phone number", {
+    //                 position: "bottom-right",
+    //             });
+    //             // setErrorMessage('Please enter your email or phone number');
+    //             return;
+    //         }
 
-            if (!identifier) {
-                toast.error("Please enter your phone number", {
-                    position: "bottom-right",
-                });
-                // setErrorMessage('Please enter your email or phone number');
-                return;
-            }
+    //         // Check if identifier contains @ (email) or is all digits (phone)
+    //         const hasAtSymbol = identifier.includes('@');
 
-            // Check if identifier contains @ (email) or is all digits (phone)
-        const hasAtSymbol = identifier.includes('@');
-        
-        if (hasAtSymbol) {
-            // Treat as email
-            if (!validateEmail(identifier)) {
-                toast.error("Please enter a valid email address", {
-                    position: "bottom-right",
-                });
-                return;
-            }
-            setUsePhoneOTP(false);
-            setEmail(identifier);
-            setUserPhone('');
-        } else {
-            // Treat as phone
-            const cleanedIdentifier = identifier.replace(/\D/g, '');
-            
-            if (cleanedIdentifier.length !== 10) {
-                toast.error("Please enter a valid 10-digit phone number", {
-                    position: "bottom-right",
-                });
-                return;
-            }
-            
-            // Validate Indian phone number (starts with 6-9)
-            if (!/^[6-9]/.test(cleanedIdentifier)) {
-                toast.error("Please enter a valid Indian phone number (should start with 6-9)", {
-                    position: "bottom-right",
-                });
-                return;
-            }
-            
-            setUsePhoneOTP(true);
-            setUserPhone(cleanedIdentifier);
-            setEmail('');
-        }
+    //         if (hasAtSymbol) {
+    //             // Treat as email
+    //             if (!validateEmail(identifier)) {
+    //                 toast.error("Please enter a valid email address", {
+    //                     position: "bottom-right",
+    //                 });
+    //                 return;
+    //             }
+    //             setUsePhoneOTP(false);
+    //             setEmail(identifier);
+    //             setUserPhone('');
+    //         }
+    //          else {
+    //             // Treat as phone
+    //             const cleanedIdentifier = identifier.replace(/\D/g, '');
+
+    //             if (cleanedIdentifier.length !== 10) {
+    //                 toast.error("Please enter a valid 10-digit phone number", {
+    //                     position: "bottom-right",
+    //                 });
+    //                 return;
+    //             }
+
+    //             // Validate Indian phone number (starts with 6-9)
+    //             if (!/^[6-9]/.test(cleanedIdentifier)) {
+    //                 toast.error("Please enter a valid Indian phone number (should start with 6-9)", {
+    //                     position: "bottom-right",
+    //                 });
+    //                 return;
+    //             }
+
+    //             setUsePhoneOTP(true);
+    //             setUserPhone(cleanedIdentifier);
+    //             setEmail('');
+    //         }
+
+    //         try {
+
+    //             setStatus('Checking user...');
+    //             // Check if user exists
+    //             const checkEndpoint = 'check-user';
+    //             const checkResponse = await fetch(`${baseUrl}/login/${checkEndpoint}`, {
+    //                 method: 'POST',
+    //                 headers: { 'Content-Type': 'application/json' },
+    //                 body: JSON.stringify(
+    //                     hasAtSymbol
+    //                         ? { email: identifier }
+    //                         : { phone: identifier.replace(/\D/g, '') }
+    //                 )
+    //             });
+    //             const checkData = await checkResponse.json();
+
+    //             if (!checkData.exists) {
+    //                 // setErrorMessage('User not found. Please sign up.');
+    //                 toast.error("User not found. Please sign up.", {
+    //                     position: "bottom-right",
+    //                 });
+    //                 return;
+    //             }
+    //             // Send OTP
+    //             await sendOtpRequest(
+    //                 !hasAtSymbol,  // isPhone: true if not email (phone)
+    //                 hasAtSymbol ? identifier : identifier.replace(/\D/g, ''),
+    //                 ''
+    //             );
+
+    //         } catch (error) {
+    //             console.error(error);
+    //             setStatus('Failed');
+    //             // setErrorMessage("Error checking user. Try again later.");
+    //             toast.error("Error checking user. Try again later.", {
+    //                 position: "bottom-right",
+    //             });
+    //         }
+    //     } else {
+    //         // For signup - this part remains mostly the same
+    //         if (!userName) {
+    //             toast.error("Please enter your name", {
+    //                 position: "bottom-right",
+    //             });
+
+    //             // setErrorMessage('Please enter your name');
+    //             return;
+    //         }
+
+    //         // Clean and validate phone number
+    //         const cleanedPhone = userPhone.replace(/\D/g, '');
+    //         if (cleanedPhone.length !== 10) {
+    //             toast.error("Please enter a valid 10-digit phone number", {
+    //                 position: "bottom-right",
+    //             });
+    //             // setErrorMessage('Please enter a valid 10-digit phone number');
+    //             return;
+    //         }
+    //         // Validate Indian phone number (starts with 6-9)
+    //         if (!/^[6-9]/.test(cleanedPhone)) {
+    //             toast.error("Please enter a valid Indian phone number (should start with 6-9)", {
+    //                 position: "bottom-right",
+    //             });
+    //             return;
+    //         }
+
+    //         if (!email || !validateEmail(email)) {
+    //             toast.error("Please enter a valid email address", {
+    //                 position: "bottom-right",
+    //             });
+    //             // setErrorMessage('Please enter a valid email address');
+    //             return;
+    //         }
+
+    //         // setUsePhoneOTP(false); // For signup, we'll use email by default
+    //         // For signup, use phone for OTP by default
+    //         setUsePhoneOTP(true);
+    //         setUserPhone(cleanedPhone);
+
+    //         try {
+    //             setIsSendingOtp(true);
+
+    //             setStatus('Checking user...');
+    //             // Check if user exists
+    //             const checkEndpoint = 'check-user-exists';
+    //             const checkResponse = await fetch(`${baseUrl}/login/${checkEndpoint}`, {
+    //                 method: 'POST',
+    //                 headers: { 'Content-Type': 'application/json' },
+    //                 body: JSON.stringify({ email, phone: cleanedPhone })
+    //             });
+
+    //             const checkData = await checkResponse.json();
+
+    //             if (checkData.emailExists) {
+    //                 // setErrorMessage('Email already registered. Please login.');
+    //                 toast.error("Email already registered. Please login.", {
+    //                     position: "bottom-right",
+    //                 });
+
+    //                 return;
+    //             }
+    //             if (checkData.phoneExists) {
+    //                 // setErrorMessage('Phone already registered. Please login.');
+    //                 toast.error("Phone already registered. Please login.", {
+    //                     position: "bottom-right",
+    //                 });
+    //                 return;
+    //             }
+
+    //             // Send OTP via SMS for signup (phone will be used)
+    //             await sendOtpRequest(true, cleanedPhone, userName);
+
+    //         } catch (error) {
+    //             console.error(error);
+    //             setStatus('Failed');
+    //             // setErrorMessage("Error checking user. Try again later.");
+    //             toast.error("Error checking user. Try again later.", {
+    //                 position: "bottom-right",
+    //             });
+    //         }
+    //         finally {
+    //             setIsSendingOtp(false); // Stop loading
+    //         }
+    //     }
+    // };
     
-            try {
+const sendOtp = async () => {
+  if (isSendingOtp) return; // Prevent multiple clicks
+  setIsSendingOtp(true);
+  setErrorMessage('');
+  setStatus('Validating...');
 
-                setStatus('Checking user...');
-                // Check if user exists
-                const checkEndpoint = 'check-user';
-                const checkResponse = await fetch(`${baseUrl}/login/${checkEndpoint}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(
-                    hasAtSymbol 
-                        ? { email: identifier } 
-                        : { phone: identifier.replace(/\D/g, '') }
-                )
-                });
-                const checkData = await checkResponse.json();
+  try {
+    if (!isSignUp) {
+      // -------------------- LOGIN FLOW --------------------
+      const identifier = loginInput.trim();
 
-                if (!checkData.exists) {
-                    // setErrorMessage('User not found. Please sign up.');
-                    toast.error("User not found. Please sign up.", {
-                    position: "bottom-right",
-                });
-                    return;
-                }
-                // Send OTP
- await sendOtpRequest(
-                !hasAtSymbol,  // isPhone: true if not email (phone)
-                hasAtSymbol ? identifier : identifier.replace(/\D/g, ''),
-                ''
-            );
+      if (!identifier) {
+        toast.error("Please enter your email or phone number");
+        return;
+      }
 
-            } catch (error) {
-                console.error(error);
-                setStatus('Failed');
-                // setErrorMessage("Error checking user. Try again later.");
-toast.error("Error checking user. Try again later.", {
-                position: "bottom-right",
-            });
-            }
-        } else {
-            // For signup - this part remains mostly the same
-            if (!userName) {
-                toast.error("Please enter your name", {
-                    position: "bottom-right",
-                });
+      let finalIdentifier;
+      let isPhone;
 
-                // setErrorMessage('Please enter your name');
-                return;
-            }
-
-            // Clean and validate phone number
-            const cleanedPhone = userPhone.replace(/\D/g, '');
-            if (cleanedPhone.length !== 10) {
-                toast.error("Please enter a valid 10-digit phone number", {
-                    position: "bottom-right",
-                });
-                // setErrorMessage('Please enter a valid 10-digit phone number');
-                return;
-            }
- // Validate Indian phone number (starts with 6-9)
-        if (!/^[6-9]/.test(cleanedPhone)) {
-            toast.error("Please enter a valid Indian phone number (should start with 6-9)", {
-                position: "bottom-right",
-            });
-            return;
+      // Determine if identifier is email or phone
+      if (identifier.includes('@')) {
+        // Email validation
+        if (!validateEmail(identifier)) {
+          toast.error("Please enter a valid email address");
+          return;
         }
-
-            if (!email || !validateEmail(email)) {
-                toast.error("Please enter a valid email address", {
-                    position: "bottom-right",
-                });
-                // setErrorMessage('Please enter a valid email address');
-                return;
-            }
-
-            // setUsePhoneOTP(false); // For signup, we'll use email by default
-            // For signup, use phone for OTP by default
-            setUsePhoneOTP(true);
-            setUserPhone(cleanedPhone);
-
-            try { 
-                            setIsSendingOtp(true);
-
-                setStatus('Checking user...');
-                // Check if user exists
-                const checkEndpoint = 'check-user-exists';
-                const checkResponse = await fetch(`${baseUrl}/login/${checkEndpoint}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, phone: cleanedPhone })
-                });
-
-                const checkData = await checkResponse.json();
-
-                if (checkData.emailExists) {
-                    // setErrorMessage('Email already registered. Please login.');
-                    toast.error("Email already registered. Please login.", {
-                    position: "bottom-right",
-                });
-
-                    return;
-                }
-                if (checkData.phoneExists) {
-                    // setErrorMessage('Phone already registered. Please login.');
-                   toast.error("Phone already registered. Please login.", {
-                    position: "bottom-right",
-                });
-                    return;
-                }
-
-                // Send OTP via SMS for signup (phone will be used)
-                await sendOtpRequest(true, cleanedPhone, userName);
-
-            } catch (error) {
-                console.error(error);
-                setStatus('Failed');
-                // setErrorMessage("Error checking user. Try again later.");
-                toast.error("Error checking user. Try again later.", {
-                position: "bottom-right",
-            });
-            }
-            finally {
-                setIsSendingOtp(false); // Stop loading
-            }
+        isPhone = false;
+        finalIdentifier = identifier;
+        setEmail(finalIdentifier);
+        setUserPhone('');
+      } else {
+        // Phone validation (Indian numbers)
+        const cleanedIdentifier = identifier.replace(/\D/g, '');
+        if (cleanedIdentifier.length !== 10) {
+          toast.error("Please enter a valid 10-digit phone number");
+          return;
         }
-    };
+        if (!/^[6-9]/.test(cleanedIdentifier)) {
+          toast.error("Please enter a valid Indian phone number (should start with 6-9)");
+          return;
+        }
+        isPhone = true;
+        finalIdentifier = cleanedIdentifier;
+        setUserPhone(finalIdentifier);
+        setEmail('');
+      }
+
+      setUsePhoneOTP(isPhone);
+      setStatus('Checking user...');
+
+      // Check if user exists
+      const checkResponse = await fetch(`${baseUrl}/login/check-user`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(isPhone ? { phone: finalIdentifier } : { email: finalIdentifier })
+      });
+      const checkData = await checkResponse.json();
+
+      if (!checkData.exists) {
+        toast.error("User not found. Please sign up.");
+        return;
+      }
+
+      // Send OTP
+      await sendOtpRequest(isPhone, finalIdentifier, '');
+
+    } else {
+      // -------------------- SIGNUP FLOW --------------------
+      if (!userName) {
+        toast.error("Please enter your name");
+        return;
+      }
+
+      // Clean and validate phone number
+      const cleanedPhone = userPhone.replace(/\D/g, '');
+      if (cleanedPhone.length !== 10) {
+        toast.error("Please enter a valid 10-digit phone number");
+        return;
+      }
+      if (!/^[6-9]/.test(cleanedPhone)) {
+        toast.error("Please enter a valid Indian phone number (should start with 6-9)");
+        return;
+      }
+
+      if (!email || !validateEmail(email)) {
+        toast.error("Please enter a valid email address");
+        return;
+      }
+
+      setUsePhoneOTP(true); // For signup, we use phone for OTP
+      setUserPhone(cleanedPhone);
+
+      setStatus('Checking user...');
+
+      // Check if email or phone already registered
+      const checkResponse = await fetch(`${baseUrl}/login/check-user-exists`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, phone: cleanedPhone })
+      });
+      const checkData = await checkResponse.json();
+
+      if (checkData.emailExists) {
+        toast.error("Email already registered. Please login.");
+        return;
+      }
+      if (checkData.phoneExists) {
+        toast.error("Phone already registered. Please login.");
+        return;
+      }
+
+      // Send OTP via SMS (phone)
+      await sendOtpRequest(true, cleanedPhone, userName);
+    }
+  } catch (error) {
+    console.error(error);
+    setStatus('Failed');
+    toast.error("An error occurred. Try again later.");
+  } finally {
+    setIsSendingOtp(false);
+  }
+};
+
+
 
     const formatPhoneNumber = (phone) => {
         const cleaned = phone.replace(/\D/g, '');
@@ -488,7 +616,18 @@ toast.error("Error checking user. Try again later.", {
                             </>
                         ) : (
                             // LOGIN FORM - Show single input field
-                            <input
+                            
+                             <input
+                type="text"
+                placeholder="Enter email or phone number"
+                className="login-input-phone"
+                value={loginInput}
+                onChange={(e) => setLoginInput(e.target.value)}
+              />
+
+                        )}
+
+                        {/* <input
                                 type="tel"
                                 placeholder="Enter your phone number"
                                 className="login-input-phone"
@@ -502,9 +641,7 @@ toast.error("Error checking user. Try again later.", {
                                         setUserPhone(value);
                                     }
                                 }}
-                            />
-
-                        )}
+                            /> */}
                         {errorMessage && <div className="error-message-login">{errorMessage}</div>}
 
                         {!isSignUp && (
