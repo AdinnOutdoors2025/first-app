@@ -396,7 +396,7 @@ const sendOtp = async () => {
 
             // For login, we need to pass whether it's signup or not
             const requestBody = {
-                ...(isPhone ? { phone: identifier } : { email: identifier }),
+                ...(isPhone ? { phone: identifier } : { userEmail: identifier }),
                 userName: userName,
                 isSignUp: isSignUp // Pass this flag to backend
             };
