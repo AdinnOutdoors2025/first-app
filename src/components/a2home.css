@@ -462,6 +462,7 @@
 @media (min-width: 768px) and (max-width: 991px) {
   .billboard-card {
     /* height: 350px; */
+    margin: 0px 0px;
     width: 800px;
     padding-bottom: 5px;
   }
@@ -592,6 +593,7 @@
 /* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
 @media (min-width: 425px) and (max-width: 479px) {
   .billboard-card {
+    margin: 0px 45px;
     height: 365px;
     padding-bottom: 5px;
   }
@@ -665,6 +667,7 @@
   }
 
   .billboard-card {
+    margin: 0px 23px;
     height: 358px;
     padding-bottom: 5px;
 
@@ -737,6 +740,7 @@
   }
 
   .billboard-card {
+    margin: 0px 23px;
     height: 335px;
     padding-bottom: 5px;
   }
@@ -807,6 +811,7 @@
   }
 
   .billboard-card {
+    margin: 0px 23px;
     height: 335px;
     padding-bottom: 5px;
   }

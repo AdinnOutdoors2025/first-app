@@ -1175,6 +1175,7 @@ font-weight: 400;
 
   .what-main {
     width: 98%;
+    padding-bottom: 5px;
   }
 
   .whatWeDo-main {
@@ -1398,7 +1399,7 @@ font-weight: 400;
     width: 95%;
     padding-left: 0px;
     padding-right: 0px;
-    padding-bottom: 0px;
+    padding-bottom: 5px;
   }
 
   .whatWeDo-main {
@@ -1604,7 +1605,7 @@ font-weight: 400;
     width: 95%;
     padding-left: 0px;
     padding-right: 0px;
-    padding-bottom: 0px;
+    padding-bottom: 5px;
   }
 
   .whatWeDo-main {
