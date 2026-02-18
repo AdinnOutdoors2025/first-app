@@ -290,9 +290,11 @@ const BillingDetails = () => {
     const gstPercentageCount100 = gstPercentageCount / 100
     console.log(gstPercentageCount100)
     const gstAmount = overAllTotalAmount * gstPercentageCount100;
-    console.log(gstAmount)
+    const formattedGstAmount = Math.floor(gstAmount);
+    console.log("gstAmount", gstAmount);
+    console.log("formattedGstAmount:", formattedGstAmount)
     // Calculate total including GST
-    const totalAmountWithGST = overAllTotalAmount + gstAmount;
+    const totalAmountWithGST = overAllTotalAmount + formattedGstAmount;
     console.log(totalAmountWithGST)
     // Handle cancel button click
     const handleCancel = () => {
@@ -428,7 +430,7 @@ const BillingDetails = () => {
                 }],
                 overAllTotalAmount: overAllTotalAmount, // Newly sending...
                 gstPercentage: gstPercentage, // Newly sending...
-                gstAmount: gstAmount, // Newly sending...
+                gstAmount: formattedGstAmount, // Newly sending...
                 totalAmountWithGST: totalAmountWithGST, // Newly sending...
                 status: "UserSideOrder",
                 order_status: "Pending Client Confirmation",
@@ -507,7 +509,7 @@ const BillingDetails = () => {
                         printingCost: parsedPrintingCost,  // Newly sending...
                         mountingCost: parsedMountingCost,  // Newly sending...
                         gstPercentage: gstPercentage, // Newly sending...
-                        gstAmount: gstAmount, // Newly sending...
+                        gstAmount: formattedGstAmount, // Newly sending...
                         totalAmountWithGST: totalAmountWithGST // Newly sending...
                     })
                 });
@@ -539,7 +541,7 @@ const BillingDetails = () => {
                     reserveItem,
                     overAllTotalAmount,
                     gstPercentage,
-                    gstAmount,
+                    formattedGstAmount,
                     totalAmountWithGST,
                     orderId: result.orderId || result._id,
                     orderStatus: result.order_status || "Pending Client Confirmation"
@@ -806,7 +808,7 @@ const BillingDetails = () => {
                                                 </div>
                                                 <div className="billing-orderContent">
                                                     <div className="billing-orderContentLeft">GST @ {gstPercentage}% : </div>
-                                                    <div className="billing-orderContentRight"> ₹ {formatIndianCurrency(gstAmount)}</div>
+                                                    <div className="billing-orderContentRight"> ₹ {formatIndianCurrency(formattedGstAmount)}</div>
                                                 </div>
 
                                                 <div className="billing-orderContent">

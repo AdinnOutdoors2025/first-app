@@ -25,7 +25,7 @@ function AdManageSection() {
             </div>
         );
     };
-    
+
     // PRODUCT RATING SECTION 
     const RatingStars1 = ({ rating }) => {
         const fullStars = Math.floor(rating);
@@ -96,11 +96,11 @@ function AdManageSection() {
             setProdRating(newRating);
         }
     };
-    
+
     // Product Size calculation 
     const [prodwidth, setProdWidth] = useState('');
     const [prodheight, setProdHeight] = useState('');
-    
+
     const ProdSquareFeet = () => {
         const width = parseFloat(prodwidth) || 0;
         const height = parseFloat(prodheight) || 0;
@@ -111,12 +111,12 @@ function AdManageSection() {
     const [selectedState, setSelectedState] = useState("");
     const [selectedDistrict, setSelectedDistrict] = useState("");
     const { initialStateDistricts, initialMediaTypes, toggleStateDropdown, handleStateClick, handleDistrictClick, stateDistricts, setStateDistricts, mediaTypes, setMediaTypes, showDistricts, setShowDistricts, showStates, setShowStates } = useSpot();
-    
+
     // Add these state variables
     const [errorMessage, setErrorMessage] = useState('');
     const [showError, setShowError] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
-    
+
     useEffect(() => {
         fetch(`${baseUrl}/products`)
             .then((response) => response.json())
@@ -128,7 +128,7 @@ function AdManageSection() {
                 setProducts(productsWithVisibility.sort((a, b) => b.visible - a.visible));
             });
     }, []);
-    
+
     const fetchProductById = (code) => {
         const cleanedInput = code.replace(/^#/, '').trim().toLowerCase();
         // Reset all fields first
@@ -149,7 +149,7 @@ function AdManageSection() {
         setProdType("");
         setSelectedState("");
         setSelectedDistrict("");
-        
+
         const product = products.find(p => {
             const prodCode = p.prodCode || '';
             const cleanedProdCode = prodCode.replace(/^#/, '').trim().toLowerCase();
@@ -227,10 +227,10 @@ function AdManageSection() {
     // Campaign Date Selection
     const [selectedDates, setSelectedDates] = useState({ start: null, end: null });
     const [confirmedDates, setConfirmedDates] = useState({});
-    
+
     const formattedStartDate = selectedDates.start;
     const formattedEndDate = selectedDates.end;
-    
+
     const generateMonth = (monthDate) => {
         const year = monthDate.getFullYear();
         const month = monthDate.getMonth();
@@ -239,7 +239,7 @@ function AdManageSection() {
         const daysInMonth = lastDay.getDate();
         const startDay = firstDay.getDay();
         const days = [];
-        
+
         // Fill empty days
         for (let i = 0; i < startDay; i++) {
             days.push(null);
@@ -250,18 +250,18 @@ function AdManageSection() {
             const date = new Date(year, month, day);
             days.push(date);
         }
-        
+
         // Fill remaining days
         while (days.length < 42) days.push(null);
         return days;
     };
-    
+
     const handleDateClick = (date) => {
         if (!date || isNaN(date.getTime())) return;
 
         // Create date without time component
         const normalizedDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-        
+
         // Check if date is booked or in the past
         const isBooked = bookedDates.some(d =>
             d.getUTCFullYear() === normalizedDate.getUTCFullYear() &&
@@ -288,7 +288,7 @@ function AdManageSection() {
             }
         }
     };
-    
+
     const resetDates = () => {
         setSelectedDates({ start: null, end: null });
         setConfirmedDates({ start: null, end: null });
@@ -341,21 +341,21 @@ function AdManageSection() {
     const goToNextMonth = () => {
         setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
     };
-    
+
     const goToPreviousMonth = () => {
         setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
     };
 
     // Calculate total price dynamically when start and end dates are selected
     const pricePerDay = productAmount || 0;
-    
+
     const getAvailableDaysInRange = (start, end) => {
         if (!start || !end || isNaN(start.getTime()) || isNaN(end.getTime())) {
             return [];
         }
         const days = [];
         const current = new Date(start);
-        
+
         const normalizeDate = (date) => {
             return Date.UTC(
                 date.getFullYear(),
@@ -367,7 +367,7 @@ function AdManageSection() {
         const bookedUTCDates = new Set(
             bookedDates.map(d => normalizeDate(d))
         );
-        
+
         while (current <= end) {
             const currentUTC = normalizeDate(current);
             if (!bookedUTCDates.has(currentUTC)) {
@@ -378,12 +378,12 @@ function AdManageSection() {
 
         return days;
     };
-    
+
     const availableDays =
         selectedDates.start && selectedDates.end
             ? getAvailableDaysInRange(selectedDates.start, selectedDates.end)
             : [];
-    
+    console.log('AVAILABLE DAYS', availableDays);
     const totalDays = availableDays.length;
     const totalPrice = totalDays * pricePerDay;
 
@@ -473,10 +473,10 @@ function AdManageSection() {
                 }
                 return null;
             };
-            
+
             const startDate = parseDate(editOrder.booking?.startDate);
             const endDate = parseDate(editOrder.booking?.endDate);
-            
+            console.log('START AND END DATE', startDate, endDate);
             if (startDate && endDate && !isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
                 const orderedDates = startDate > endDate ?
                     { start: endDate, end: startDate } :
@@ -484,7 +484,7 @@ function AdManageSection() {
                 setSelectedDates(orderedDates);
                 setConfirmedDates(orderedDates);
             }
-            
+
             // Populate all form fields
             setClientName(editOrder.client.name || "");
             setClientEmail(editOrder.client.email || "");
@@ -559,7 +559,7 @@ function AdManageSection() {
             setEditOrder(location.state.editOrder);
         }
     }, [location.state]);
-    
+
     const resetForm = () => {
         setProductName('');
         setProductImage('');
@@ -590,7 +590,7 @@ function AdManageSection() {
     const sendOrderNotifications = async (orderData, orderId) => {
         try {
             // const response = await fetch(`${baseUrl}/send-order-notificationsAdmin`, { 
-                        const response = await fetch(`${baseUrl}/AdminOrder/send-order-notificationsAdmin`, {
+            const response = await fetch(`${baseUrl}/AdminOrder/send-order-notificationsAdmin`, {
 
                 method: 'POST',
                 headers: {
@@ -601,14 +601,14 @@ function AdManageSection() {
                     orderId
                 })
             });
-            
+
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error("Failed to send email notifications", errorData);
                 // Don't throw error - continue even if email fails
                 return { success: false, error: errorData.message };
             }
-            
+
             return { success: true };
         } catch (error) {
             console.error("Email notification sending error:", error);
@@ -663,20 +663,37 @@ function AdManageSection() {
     //         return { success: false, error: error.message };
     //     }
     // };
-    
-    
+
+
     // NEW ORDER ID CREATION FOR ADMIN ORDER
-   
+
+
+    // Calculate overall base amount (booking + printing + mounting)
+    const overallBase = totalPrice + (parseFloat(productPrintingCost) || 0) + (parseFloat(productMountingCost) || 0);
+    console.log('overallBase', overallBase)
+    // Calculate GST (floored)
+    const gstAmount = Math.floor(overallBase * (gstPercentage / 100));
+    console.log("gstAmount", gstAmount);
+
+    // Calculate total with GST (floored)
+    const totalWithGST = overallBase + gstAmount;
+    console.log("totalWithGST", totalWithGST);
+    // Format for display
+    const formattedOverallBase = formatIndianCurrency(overallBase, true);
+    const formattedGstAmount = formatIndianCurrency(gstAmount, true);
+    const formattedTotalWithGST = formatIndianCurrency(totalWithGST, true);
+
+
 
     const handleSaveProductOrder = async (e) => {
         e.preventDefault();
-        
+
         // Validate form first
         if (!validateForm()) {
             toast.error("Please fill all required fields correctly");
             return;
         }
-        
+
         // Set loading state
         setIsSaving(true);
 
@@ -732,8 +749,19 @@ function AdManageSection() {
             const printingCost = Number(productPrintingCost) || 0;
             const mountingCost = Number(productMountingCost) || 0;
             const overallTotal = totalPrice + printingCost + mountingCost;
-            const gstAmount = overallTotal * (gstPercentage / 100);
-            const totalWithGST = overallTotal + gstAmount;
+            console.log("overallTotal", overallTotal);
+            // const gstAmount = overallTotal * (gstPercentage / 100);
+            const formattedGstAmountFloor = Math.floor(gstAmount);
+            console.log("formattedGSTAmountFloor :", formattedGstAmountFloor)
+
+            // const totalWithGST = overallTotal + formattedGstAmountFloor;
+
+
+
+
+
+
+
 
             // Construct product object properly
             const productData = {
@@ -791,7 +819,7 @@ function AdManageSection() {
                 last_edited: new Date(),
                 overAllTotalAmount: overallTotal,
                 gstPercentage: gstPercentage,
-                gstAmount: gstAmount,
+                gstAmount: formattedGstAmountFloor,
                 totalAmountWithGST: totalWithGST
             };
 
@@ -887,7 +915,9 @@ function AdManageSection() {
     const numericProductAmount = parseFloat(productAmount) || 0;
     const numericClientPaidAmount = parseFloat(clientPaidAmount) || 0;
     const numericTotalPrice = totalPrice || 0;
-    const balanceAmount = numericTotalPrice - numericClientPaidAmount;
+    // const balanceAmount = numericTotalPrice - numericClientPaidAmount;
+    const balanceAmount = totalWithGST - numericClientPaidAmount;
+
 
     // Format amount for display
     const formattedProductAmount = formatIndianCurrency(numericProductAmount, true);
@@ -1081,6 +1111,75 @@ function AdManageSection() {
                                             className='clientDetailsInput'></input>
                                     </div>
                                 </div>
+
+
+
+
+
+
+                            </div>
+                        </div>
+
+                        {/* PRODUCT BOOKING SUMMARY */}
+                        <div className='manageClientSection' style={{ marginTop: '20px', borderTop: '2px solid #ddd', paddingTop: '15px' }}>
+                            <div className='manageRightSideHeading' style={{ fontSize: '16px', marginBottom: '10px' }}>Booking Summary</div>
+                            <div className='d-flex' style={{ justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                                <div style={{ width: '100%' }}>
+                                    <div className='ManageProdDetails'>
+                                        <div className='ManageProdLeftHeading'>Amount </div>
+                                        <div> : </div>
+                                        <div className='ManageProdRightContent' style={{ fontWeight: '600' }}>{formatIndianCurrency(parseFloat(productAmount) || 0, true)} / Per Day</div>
+                                    </div>
+                                    <div className='ManageProdDetails'>
+                                        <div className='ManageProdLeftHeading'>Booking Period </div>
+                                        <div> : </div>
+                                        <div className='ManageProdRightContent' style={{ fontWeight: '600' }}>
+                                            {selectedDates.start && selectedDates.end ?
+                                                `${selectedDates.start.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })} - ${selectedDates.end.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })} (${totalDays} Days)`
+                                                : 'Select dates from calendar'}
+                                        </div>
+                                    </div>
+                                    <div className='ManageProdDetails'>
+                                        <div className='ManageProdLeftHeading'>Booking Amount </div>
+                                        <div> : </div>
+                                        <div className='ManageProdRightContent' style={{ fontWeight: '600' }}>{formatIndianCurrency(totalPrice, true)}</div>
+                                    </div>
+                                    <div className='ManageProdDetails'>
+                                        <div className='ManageProdLeftHeading'>Printing Cost </div>
+                                        <div> : </div>
+                                        <div className='ManageProdRightContent' style={{ fontWeight: '600' }}>{formatIndianCurrency(parseFloat(productPrintingCost) || 0, true)}</div>
+                                    </div>
+                                    <div className='ManageProdDetails'>
+                                        <div className='ManageProdLeftHeading'>Mounting Cost </div>
+                                        <div> : </div>
+                                        <div className='ManageProdRightContent' style={{ fontWeight: '600' }}>{formatIndianCurrency(parseFloat(productMountingCost) || 0, true)}</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Order Summary with GST */}
+                        <div className='manageClientSection' style={{ marginTop: '20px', borderTop: '2px solid #ddd', paddingTop: '15px' }}>
+                            <div className='manageRightSideHeading' style={{ fontSize: '16px', marginBottom: '10px' }}>Order Summary (incl. GST)</div>
+                            <div className='d-flex' style={{ justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                                <div style={{ width: '100%' }}>
+                                    <div className='ManageProdDetails'>
+                                        <div className='ManageProdLeftHeading'>Base Price (Excl. GST) </div>
+                                        <div> : </div>
+                                        <div className='ManageProdRightContent' style={{ fontWeight: '600' }}>{formattedOverallBase}</div>
+                                    </div>
+                                    <div className='ManageProdDetails'>
+                                        <div className='ManageProdLeftHeading'>GST @ {gstPercentage}% </div>
+                                        <div> : </div>
+                                        <div className='ManageProdRightContent' style={{ fontWeight: '600' }}>{formattedGstAmount}</div>
+                                    </div>
+                                    <div className='ManageProdDetails' style={{ borderTop: '2px solid #000', paddingTop: '5px' }}>
+                                        <div className='ManageProdLeftHeading' style={{ fontWeight: '700', color: '#E31F25' }}>Total (Incl. GST) </div>
+                                        <div> : </div>
+                                        <div className='ManageProdRightContent' style={{ fontWeight: '700', color: '#E31F25' }}>{formattedTotalWithGST}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -1111,7 +1210,7 @@ function AdManageSection() {
                                     </div>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Overall Amount</div>
-                                        <input type='text' placeholder='Enter Overall Amount' value={formattedTotalPrice} readOnly
+                                        <input type='text' placeholder='Enter Overall Amount' value={formattedTotalWithGST} readOnly
                                             className={errors.clientPaidAmount ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}
                                         />
                                     </div>
