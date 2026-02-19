@@ -327,7 +327,7 @@ padding-left: 10px;
     width: 350px;
     /* border: 2px solid black; */
     /* color: white; */
-    padding-left: 80px !important;
+    padding-left: 80px;
 }
 
 
@@ -2583,7 +2583,7 @@ html {
 
     .f-c2 {
         /* color: black; */
-        width: 125px;
+        width: 128px;
         line-height: 15px;
         font-size: 14px;
     }

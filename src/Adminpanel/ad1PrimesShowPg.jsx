@@ -376,7 +376,10 @@ const PrimeSpotsTable = () => {
     }
 
     return (
-        <div className="prime-spots-tableMain">
+        <div>
+            {/* <div className='productsHeader'> */}
+            <div id="primeSpotsSection" className='productsHeader'>
+                <div className='productsHeading'>Prime Advertising Spots</div>
 
             <div>
                 <div className='productsHeader'>
@@ -631,6 +634,7 @@ const PrimeSpotsTable = () => {
                     </>
                 )}
             </div>
+        </div>
         </div>
     );
 };

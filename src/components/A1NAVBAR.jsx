@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './a1Hero.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLogin } from './LoginContext';
 import LoginPageMain from './C1LoginMain';
 //BASE URL OF http://localhost:3001 FILE IMPORT
 import { baseUrl } from '../Adminpanel/BASE_URL';
+
 
 function NavbarMain() {
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -15,6 +16,22 @@ function NavbarMain() {
     const [cartCount, setCartCount] = useState(0);
     // Add a state to track screen size
     const [isMobile, setIsMobile] = useState(window.innerWidth < 480);
+    // const [activeAuth, setActiveAuth] = useState(null);
+    const [activeAuth, setActiveAuth] = useState("signup");
+    // const [isScrolled, setIsScrolled] = useState(false);
+// const [dynamicPadding, setDynamicPadding] = useState(70);
+const [scrollProgress, setScrollProgress] = useState(0);
+const [moveDistance, setMoveDistance] = useState(150);
+const [isMobile800, setIsMobile800] = useState(window.innerWidth <= 800);
+// const liquidRef = useRef(null);
+// const [activeIndex, setActiveIndex] = useState(0);
+// const itemRefs = useRef([]);
+
+
+
+
+
+
 
 
     useEffect(() => {
@@ -53,11 +70,16 @@ function NavbarMain() {
     }, [isOpen, isMenuOpen, isMobile]);
 
     const toggleNavOpen = () => {
+    setIsOpen(prev => !prev);
+};
+
+    // const toggleNavOpen = () => {
         //setIsOpen(!isOpen);
-        if (!isMobile) {
-            setIsOpen(!isOpen);
-        }
-    };
+    //     if (!isMobile) {
+    //         setIsOpen(!isOpen);
+    //     }
+    // };
+    
     // Close dropdown when clicking anywhere outside
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -104,73 +126,318 @@ function NavbarMain() {
         return () => clearInterval(interval);
     }, [user]);
 
+//     useEffect(() => {
+//   const handleScroll = () => {
+//     if (window.scrollY > 50) {
+//       setIsScrolled(true);
+//     } else {
+//       setIsScrolled(false);
+//     }
+//   };
+
+//   window.addEventListener("scroll", handleScroll);
+
+//   return () => window.removeEventListener("scroll", handleScroll);
+// }, []);
+// useEffect(() => {
+//   const handleScroll = () => {
+//     const maxScroll = 200;
+//     const progress = Math.min(window.scrollY / maxScroll, 1);
+//     setScrollProgress(progress);
+//   };
+
+//   window.addEventListener("scroll", handleScroll);
+//   return () => window.removeEventListener("scroll", handleScroll);
+// }, []);
+useEffect(() => {
+  const handleScroll = () => {
+    if (window.innerWidth < 992) {
+      setScrollProgress(0); // disable effect
+      return;
+    }
+
+    const maxScroll = 200;
+    const progress = Math.min(window.scrollY / maxScroll, 1);
+
+    setScrollProgress(progress);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
+useEffect(() => {
+  const updateMoveDistance = () => {
+    const width = window.innerWidth;
+
+    if (width >= 1900) {
+      setMoveDistance(400);
+    } else if (width >= 1600) {
+      setMoveDistance(340);
+    }
+    else if (width >= 1400) {
+      setMoveDistance(280);
+    }
+    else if (width >= 1200) {
+      setMoveDistance(180);
+    }
+     else if (width >= 1024) {
+      setMoveDistance(150);
+    } else {
+      setMoveDistance(80); // tablet / small
+    }
+  };
+
+  updateMoveDistance();
+  window.addEventListener("resize", updateMoveDistance);
+
+  return () => window.removeEventListener("resize", updateMoveDistance);
+}, []);
+useEffect(() => {
+  const handleResize = () => {
+    setIsMobile800(window.innerWidth <= 800);
+  };
+
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
     return (
-        <div className="container navbar1">
-            <div className="nav-content11">
-                <img src="/images/adinn_logo.png" alt="Adinn Logo" onClick={() => navigate('/')} />
-            </div>
-            <div className={`nav-content21 ${isMenuOpen ? "open" : "notOpen"}`}>
-                <img src="/images/home_icon.png" alt="Home Icon" className='home-icon' onClick={() => navigate("/")} />
-                <a href="#ContactUsFooter"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        document.getElementById('ContactUsFooter')?.scrollIntoView({ behavior: 'smooth' });
-                    }} > <button className="contact-btn">Contact us</button>
-                </a>
-                <button className="book-btn" onClick={() => navigate("/billboard-advertising-in-india")}>
-                    <span className='book-btn-text' >Book a site</span>
-                    <img src="/images/BookBtn_logo.png" alt="Image" className="book-btn-image" width="45" height="25" />
-                </button>
-                {/* <i className="fa-solid fa-cart-shopping cart"
-                    onClick={() => {
-                        if (user) {
-                            navigate("/cart");
-                        } else {
-                            openLogin('login', '/cart'); // Show login popup, redirect to cart after
-                        }
-                    }}></i> 
-                {cartCount > 0 && <p className='cart-number'>{cartCount}</p>} */}
-                <div className="nav_container">
-                    <img src="/images/nav_user.png" alt="User Icon" className='nav_user'
-                    //  onMouseEnter={toggleNavOpen}
-                        onClick={toggleNavOpen} />
-                    <div className={`nav_user-content ${isOpen || isMobile ? 'open' : ''}`} onMouseLeave={!isMobile ? toggleNavOpen : undefined}>
-                        {
-                            user ? (
-                                //Afer Login Content
-                                <>
-                                    {user?.userName && (
-                                    <>
-                                        <span className="nav_user_name">Hello {user.userName}</span>
-                                        <br />
-                                    </>
-                                    )}
-                                    {/* <span className='nav_user_name'>Hello {user.userName}</span> <br></br> */}
-                                    <span className='nav_user_phone'>{user.userPhone}</span> <br></br>
-                                    <span className='nav_user_items' onClick={() => navigate("/order")}>Orders</span> <br></br>
-                                    <span className='nav_user_items' onClick={logoutUser}>Sign Out</span> <br></br>
-                                    {/* <span className='nav_user_items'>Sign Out</span> */}
-                                </>
-                            ) :
-                                (
-                                    //Before Login Content
-                                    <>
-                                        {/* <span className='nav_user_name'>Hello User</span> <br></br> */}
-                                        <span className='nav_user_items' onClick={() => openLogin('signup')}>Sign Up</span> <br></br>
-                                        <span className='nav_user_items' onClick={() => openLogin('login')}>Log In</span> <br></br>
-                                    </>
-                                )}
-                    </div>
-                </div>
-            </div>
-            <div className="hamburger-menu" onClick={toggleMenu}>
-                {isMenuOpen ? (
-                    <i className="fa-solid fa-xmark close-btn"></i> // Close Icon
-                ) : (
-                    <i className="fa-solid fa-bars bar-btn"></i> // Hamburger Icon
-                )}
-            </div>
-        </div>
+    //    <div className="container navbar1">
+    // <div className={`container navbar1 ${isScrolled ? "navbar-scrolled" : ""}`}>
+    <div
+  className="container navbar1">
+
+  {/* LEFT – LOGO */}
+  <div className="nav-content11"  style={{
+    transform: `translateX(${scrollProgress * moveDistance}px)`
+  }}>
+    <img
+      src="/images/adinn_logo.png"
+      alt="Adinn Logo"
+      className="nav-logo"
+      onClick={() => navigate("/")}
+    />
+  </div>
+
+  {/* CENTER – MENU ITEMS */}
+  <div 
+className={`nav-content21 ${isMenuOpen ? "open" : ""}`}>
+    {/* <div className="menu-liquid-area" ref={liquidRef}> */}
+     {/* <div
+  className="liquid-indicator"
+  style={{
+    width: itemRefs.current[activeIndex]?.offsetWidth || 0,
+    transform: `translateX(${
+      itemRefs.current[activeIndex]?.offsetLeft || 0
+    }px)`
+  }}
+/> */}
+
+
+    <span className="nav-item" onClick={() => navigate("/")}>Home</span>
+
+    <span className="nav-item" onClick={() => navigate("/billboard-advertising-in-india")}>
+      All Media
+    </span>
+
+    {/* <span className="nav-item" onClick={() => navigate("/prime-spots")}>
+      Prime Spots
+    </span> */}
+{/* PRIME SPOTS — SHOW ONLY DESKTOP */}
+{!isMobile800 && (
+  <span
+    className="nav-item"
+    onClick={() => document
+          .getElementById("ContactUsFooter")
+          ?.scrollIntoView({ behavior: "smooth" })
+      }
+  >
+    Prime Spots
+  </span>
+)}
+{/* <span
+    ref={(el) => (itemRefs.current[0] = el)}
+    className={`nav-item ${activeIndex === 0 ? "active" : ""}`}
+    onClick={() => {
+      setActiveIndex(0);
+      navigate("/");
+    }}
+  >
+    Home
+  </span>
+
+  <span
+    ref={(el) => (itemRefs.current[1] = el)}
+    className={`nav-item ${activeIndex === 1 ? "active" : ""}`}
+    onClick={() => {
+      setActiveIndex(1);
+      navigate("/billboard-advertising-in-india");
+    }}
+  >
+    All Media
+  </span>
+
+  {!isMobile800 && (
+    <span
+      ref={(el) => (itemRefs.current[2] = el)}
+      className={`nav-item ${activeIndex === 2 ? "active" : ""}`}
+      onClick={() => {
+        setActiveIndex(2);
+        document
+          .getElementById("ContactUsFooter")
+          ?.scrollIntoView({ behavior: "smooth" });
+      }}
+    >
+      Prime Spots
+    </span>
+  )} */}
+{/* 👇 NOW it works only inside center menu */}
+{/* <Magnifier targetRef={liquidRef} /> */}
+{/* </div> */}
+    <button
+      className="contact-btn"
+      onClick={() =>
+        document
+          .getElementById("ContactUsFooter")
+          ?.scrollIntoView({ behavior: "smooth" })
+      }
+    >
+      Contact
+    </button>   
+    {/* {!isMobile800 && (
+  <button
+    className="contact-btn"
+    onClick={() =>
+      document
+        .getElementById("ContactUsFooter")
+        ?.scrollIntoView({ behavior: "smooth" })
+    }
+  >
+    Contact
+  </button>
+)} */}
+ 
+  </div>
+
+  {/* RIGHT – USER + HAMBURGER */}
+  <div className="nav-right"style={{
+    transform: `translateX(-${scrollProgress * moveDistance}px)`
+  }}>
+    <div className="nav_container">
+      <div className="profile-menu-wrapper" onClick={toggleNavOpen}>
+  <img
+    src="/images/profilenavbar.svg"
+    alt="User Icon"
+    className="nav_user"
+  />
+
+  <div className="menu-toggle">
+    <span className="menu-line top"></span>
+    <span className="menu-line middle"></span>
+    <span className="menu-line bottom"></span>
+  </div>
+</div>
+
+      <div
+        // className={`nav_user-content ${isOpen || isMobile ? "open" : ""}`}
+        className={`nav_user-content ${isOpen ? "open" : ""}`}
+        onMouseLeave={!isMobile ? toggleNavOpen : undefined}
+      >
+        {user ? (
+          <>
+            <span className="nav_user_name">Hello {user.userName}</span><br />
+            <span className="nav_user_phone">{user.userPhone}</span><br />
+            <span className="nav_user_items" onClick={() => navigate("/order")}>
+              Orders
+            </span><br />
+            <span className="nav_user_items" onClick={logoutUser}>
+              Sign Out
+            </span>
+            
+      
+    {/* PRIME SPOTS — MOBILE ONLY */}
+    {isMobile800 && (
+      <>
+        <br />
+        <span
+          className="nav_user_items"
+          onClick={() => {
+            navigate("/prime-spots");
+            setIsOpen(false);
+          }}
+        >
+          Prime Spots
+        </span>
+      </>
+    )}
+          </>
+        ) : (
+          <>
+            {/* <span className="nav_user_items" onClick={() => openLogin("signup")}>
+              Sign Up
+            </span><br />
+            <span className="nav_user_items" onClick={() => openLogin("login")}>
+              Log In
+            </span> */}
+         <span
+  className={`nav_user_items ${
+    activeAuth === "signup" ? "nav_user_active" : ""
+  }`}
+  onClick={() => {
+    setActiveAuth("signup");
+    openLogin("signup");
+  }}
+>
+  Sign Up
+</span>
+<br />
+
+<span
+  className={`nav_user_items ${
+    activeAuth === "login" ? "nav_user_active" : ""
+  }`}
+  onClick={() => {
+    setActiveAuth("login");
+    openLogin("login");
+  }}
+>
+  Log In
+</span>
+
+     
+    {/* PRIME SPOTS — MOBILE ONLY */}
+    {isMobile800 && (
+      <>
+        <br />
+        <span
+          className="nav_user_items"
+          onClick={() => {
+            navigate("/prime-spots");
+            setIsOpen(false);
+          }}
+        >
+          Prime Spots
+        </span>
+      </>
+    )}
+          </>
+        )}
+      </div>
+    </div>
+
+    {/* HAMBURGER */}
+    <div className="hamburger-menu" onClick={toggleMenu}>
+      {isMenuOpen ? (
+        <i className="fa-solid fa-xmark close-btn"></i>
+      ) : (
+        <i className="fa-solid fa-bars bar-btn"></i>
+      )}
+    </div>
+  </div>
+    
+</div>
+
     )
 }
 export default NavbarMain;
