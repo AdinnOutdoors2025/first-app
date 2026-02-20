@@ -201,7 +201,12 @@ useEffect(() => {
   window.addEventListener("resize", handleResize);
   return () => window.removeEventListener("resize", handleResize);
 }, []);
-
+// Add this function in your component
+const scrollToSection = (sectionId) => {
+  document.getElementById(sectionId)?.scrollIntoView({ 
+    behavior: "smooth" 
+  });
+};
     return (
     //    <div className="container navbar1">
     // <div className={`container navbar1 ${isScrolled ? "navbar-scrolled" : ""}`}>
@@ -246,16 +251,78 @@ className={`nav-content21 ${isMenuOpen ? "open" : ""}`}>
     </span> */}
 {/* PRIME SPOTS — SHOW ONLY DESKTOP */}
 {!isMobile800 && (
-  <span
-    className="nav-item"
-    onClick={() => document
-          .getElementById("ContactUsFooter")
-          ?.scrollIntoView({ behavior: "smooth" })
-      }
-  >
-    Prime Spots
-  </span>
+  // <span
+  //   className="nav-item"
+  //   onClick={() => document
+  //         .getElementById("primeSpotsSection")
+  //         ?.scrollIntoView({ behavior: "smooth" })
+  //     }
+  // >
+  //   Prime Spots
+  // </span>
+  <span 
+  className="nav-item" 
+  onClick={() => {
+    const currentPath = window.location.pathname; // Use window.location instead
+    
+    if (currentPath === "/") {
+      // Already on home page - scroll directly
+      document.getElementById("primeSpotsSection")?.scrollIntoView({ 
+        behavior: "smooth" 
+      });
+    } else {
+      // Go to home page first
+      navigate("/");
+      
+      // Then wait and scroll
+      setTimeout(() => {
+        document.getElementById("primeSpotsSection")?.scrollIntoView({ 
+          behavior: "smooth" 
+        });
+      }, 1200);
+    }
+  }}
+  style={{ cursor: 'pointer' }}
+>
+  Prime Spots
+</span>
 )}
+{/* <span 
+  className="nav-item" 
+  onClick={() => {
+    const currentPath = window.location.pathname; // Use window.location instead
+    
+    if (currentPath === "/") {
+      // Already on home page - scroll directly
+      document.getElementById("primeSpotsSection")?.scrollIntoView({ 
+        behavior: "smooth" 
+      });
+    } else {
+      // Go to home page first
+      navigate("/");
+      
+      // Then wait and scroll
+      setTimeout(() => {
+        document.getElementById("primeSpotsSection")?.scrollIntoView({ 
+          behavior: "smooth" 
+        });
+      }, 1200);
+    }
+  }}
+  style={{ cursor: 'pointer' }}
+>
+  Prime Spots
+</span> */}
+{/* <span 
+  className="nav-item" 
+  onClick={() => {
+    document.getElementById("primeSpotsSection")?.scrollIntoView({ 
+      behavior: "smooth" 
+    });
+  }}
+>
+  Prime Spots
+</span> */}
 {/* <span
     ref={(el) => (itemRefs.current[0] = el)}
     className={`nav-item ${activeIndex === 0 ? "active" : ""}`}
@@ -360,15 +427,50 @@ className={`nav-content21 ${isMenuOpen ? "open" : ""}`}>
     {isMobile800 && (
       <>
         <br />
-        <span
+        {/* <span
           className="nav_user_items"
           onClick={() => {
-            navigate("/prime-spots");
+            navigate("/primeSpotsSection");
             setIsOpen(false);
           }}
         >
           Prime Spots
-        </span>
+        </span> */}
+         <span
+    className="nav_user_items"
+   onClick={() => document
+         .getElementById("primeSpotsSection")
+          ?.scrollIntoView({ behavior: "smooth" })
+      }
+   >
+    Prime Spots
+  </span>
+         {/* <span 
+  className="nav_user_items" 
+  onClick={() => {
+    const currentPath = window.location.pathname; // Use window.location instead
+    
+    if (currentPath === "/") {
+      // Already on home page - scroll directly
+      document.getElementById("primeSpotsSection")?.scrollIntoView({ 
+        behavior: "smooth" 
+      });
+    } else {
+      // Go to home page first
+      navigate("/");
+      
+      // Then wait and scroll
+      setTimeout(() => {
+        document.getElementById("primeSpotsSection")?.scrollIntoView({ 
+          behavior: "smooth" 
+        });
+      }, 1200);
+    }
+  }}
+  style={{ cursor: 'pointer' }}
+>
+  Prime Spots
+</span> */}
       </>
     )}
           </>
@@ -410,7 +512,7 @@ className={`nav-content21 ${isMenuOpen ? "open" : ""}`}>
     {isMobile800 && (
       <>
         <br />
-        <span
+        {/* <span
           className="nav_user_items"
           onClick={() => {
             navigate("/prime-spots");
@@ -418,9 +520,53 @@ className={`nav-content21 ${isMenuOpen ? "open" : ""}`}>
           }}
         >
           Prime Spots
-        </span>
+        </span> */}
+         {/* <span 
+  className="nav_user_items" 
+  onClick={() => {
+    const currentPath = window.location.pathname; // Use window.location instead
+    
+    if (currentPath === "/") {
+      // Already on home page - scroll directly
+      document.getElementById("primeSpotsSection")?.scrollIntoView({ 
+        behavior: "smooth" 
+      });
+    } else {
+      // Go to home page first
+      navigate("/");
+      
+      // Then wait and scroll
+      setTimeout(() => {
+        document.getElementById("primeSpotsSection")?.scrollIntoView({ 
+          behavior: "smooth" 
+        });
+      }, 1200);
+    }
+  }}
+  style={{ cursor: 'pointer' }}
+>
+  Prime Spots
+</span> */}
+<span 
+  className="nav_user_items" 
+  onClick={() => {
+    if (location.pathname === "/") {
+      // Already on home page - scroll directly
+      document.getElementById("primeSpotsSection")?.scrollIntoView({ 
+        behavior: "smooth" 
+      });
+    } else {
+      // Navigate to home page with state
+      navigate("/", { state: { fromNavbar: "primeSpots" } });
+    }
+  }}
+  style={{ cursor: 'pointer' }}
+>
+  Prime Spots
+</span>
       </>
     )}
+      
           </>
         )}
       </div>

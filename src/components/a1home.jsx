@@ -7,7 +7,7 @@ import AdinnHome2 from '../components/a2home';
 import AdinnHome3 from '../components/a3home';
 import AdinnHome4 from '../components/a4home';
 import './a1home.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation} from 'react-router-dom';
 import LoginPageMain from './C1LoginMain';
 import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
@@ -180,8 +180,22 @@ function AdinnHome() {
   const closeLoginPage = () => {
     setIsLoginOpen(false);
   };
-
-
+ const location = useLocation()
+ // Add this useEffect
+  useEffect(() => {
+    // Check if we came from navbar prime spots click
+    if (location.state?.fromNavbar === "primeSpots") {
+      // Wait for all components to load
+      setTimeout(() => {
+        const element = document.getElementById("primeSpotsSection");
+        if (element) {
+          element.scrollIntoView({ 
+            behavior: "smooth" 
+          });
+        }
+      }, 800); // 800ms delay to ensure AdinnHome2 is rendered
+    }
+  }, [location.state]);
   return (
     <MainLayout>
       <div>
@@ -374,7 +388,10 @@ function AdinnHome() {
         {/* What we acheieved section in a1homeOdo.jsx file  */}
         <Odo />
         {/* Prime advertising spots in a2home.jsx file  */}
-        <AdinnHome2 />
+        {/* <AdinnHome2 /> */}
+          <div id="primeSpotsSection" style={{ scrollMarginTop: '100px' }}>
+          <AdinnHome2 />
+        </div>
         {/* Our highlights and OOH Insights in a3home.jsx file  */}
         <AdinnHome3 />
         {/*Frequently asked question and footer in a4home.jsx file  */}

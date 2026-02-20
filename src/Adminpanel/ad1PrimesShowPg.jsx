@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { baseUrl } from './BASE_URL';
 import { getPaginationGroup } from "../utils/pagination";
 import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
+import { useRef } from 'react';
 
 const PrimeSpotsTable = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -22,6 +23,7 @@ const PrimeSpotsTable = () => {
     const [totalRegularCount, setTotalRegularCount] = useState(0);
     const [totalAllCount, setTotalAllCount] = useState(0);
     const productsPerPage = 10;
+    const primeSpotsRef = useRef(null);
 
     // Fetch products with prime status
     useEffect(() => {
@@ -375,6 +377,12 @@ const PrimeSpotsTable = () => {
         );
     }
 
+    const scrollToPrimeSpots = () => {
+  primeSpotsRef.current?.scrollIntoView({ 
+    behavior: "smooth",
+    block: "start" // This will align the top of the section with the top of the viewport
+  });
+};
     return (
         <div>
             {/* <div className='productsHeader'> */}

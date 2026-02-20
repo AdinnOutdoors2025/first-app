@@ -226,6 +226,8 @@ function AdinnHome2() {
             state: { selectedSpot: spotData }
         });
     };
+    
+
 // const handleSimilarProductClick = (spot) => {
 //         const mappedSpot = {
 //             id: spot._id,
@@ -418,7 +420,7 @@ function AdinnHome2() {
         }
 
     return (
-        <div>
+        <div id="primeSpotsSection" style={{ scrollMarginTop: '100px' }}>  
             <h1 className="heading">
                 <span className="highlight">Prime Advertising</span> Spots
                 {/* <span className="prime-count-badge">
