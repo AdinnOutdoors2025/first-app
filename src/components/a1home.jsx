@@ -214,7 +214,7 @@ function AdinnHome() {
 
         {/* About us content  */} 
         <div className='about about-desktop container-fluid'> 
-          <div className='heading about-heading about-mobile-content'>About <span className='highlight'>Us Adinn</span></div>
+          <div className='heading about-heading about-mobile-content'>About <span className='highlight'>Us</span></div>
           <div className='about-content'>
             <div className='about-content1 about-mobile-content'>
               <div className='about-content1-heading'>Who <span className='highlight'>we</span> are </div>
