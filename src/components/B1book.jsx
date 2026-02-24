@@ -122,8 +122,11 @@ const pageFromUrl = Number(searchParams.get("page")) || 1;
       console.log("Fetching with params:", params.toString());
 
       // Fetch products with filters
-      const productsRes = await fetch(
-        `${baseUrl}/products_paginated?${params.toString()}`,
+      // const productsRes = await fetch(
+      //   `${baseUrl}/products_paginated?${params.toString()}`,
+      // );
+       const productsRes = await fetch(
+        `/api/products_paginated?${params.toString()}`,
       );
 
       if (!productsRes.ok) {
