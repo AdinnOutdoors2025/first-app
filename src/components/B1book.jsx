@@ -142,7 +142,7 @@ const pageFromUrl = Number(searchParams.get("page")) || 1;
         items: productsData.data.length,
       });
 
-      // Set spots directly from transformed data
+      // Set spots directly from transformed datas
       setSpots(productsData.data);
       setTotalPages(productsData.total_pages);
       setTotalProducts(productsData.total_products);
