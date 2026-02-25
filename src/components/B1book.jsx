@@ -151,13 +151,13 @@ const pageFromUrl = Number(searchParams.get("page")) || 1;
 
       // Only fetch media types and stateDistricts once
       if (mediaTypes.length === 0) {
-        const mediaRes = await fetch(`${baseUrl}/mediatype`);
+        const mediaRes = await fetch(`/api/mediatype`);
         const mediaData = await mediaRes.json();
         setMediaTypes(mediaData.map((m) => m.type.trim()));
       }
 
       if (Object.keys(stateDistricts).length === 0) {
-        const locationsRes = await fetch(`${baseUrl}/category`);
+        const locationsRes = await fetch(`/api/category`);
         const locationsData = await locationsRes.json();
         const stateMap = locationsData.reduce((acc, curr) => {
           const cleanedDistricts = curr.districts.map((district) =>
