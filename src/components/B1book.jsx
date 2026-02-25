@@ -127,7 +127,9 @@ const pageFromUrl = Number(searchParams.get("page")) || 1;
       // );
        const productsRes = await fetch(
         `/api/products_paginated?${params.toString()}`,
+         { cache: "no-store" } 
       );
+   
 
       if (!productsRes.ok) {
         throw new Error(`HTTP error! status: ${productsRes.status}`);
