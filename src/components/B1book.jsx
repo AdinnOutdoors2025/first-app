@@ -122,14 +122,9 @@ const pageFromUrl = Number(searchParams.get("page")) || 1;
       console.log("Fetching with params:", params.toString());
 
       // Fetch products with filters
-      // const productsRes = await fetch(
-      //   `${baseUrl}/products_paginated?${params.toString()}`,
-      // );
-       const productsRes = await fetch(
-        `/api/products_paginated?${params.toString()}`,
-         { cache: "no-store" } 
+      const productsRes = await fetch(
+        `${baseUrl}/products_paginated?${params.toString()}`,
       );
-   
 
       if (!productsRes.ok) {
         throw new Error(`HTTP error! status: ${productsRes.status}`);
@@ -151,13 +146,13 @@ const pageFromUrl = Number(searchParams.get("page")) || 1;
 
       // Only fetch media types and stateDistricts once
       if (mediaTypes.length === 0) {
-        const mediaRes = await fetch(`/api/mediatype`);
+        const mediaRes = await fetch(`${baseUrl}/mediatype`);
         const mediaData = await mediaRes.json();
         setMediaTypes(mediaData.map((m) => m.type.trim()));
       }
 
       if (Object.keys(stateDistricts).length === 0) {
-        const locationsRes = await fetch(`/api/category`);
+        const locationsRes = await fetch(`${baseUrl}/category`);
         const locationsData = await locationsRes.json();
         const stateMap = locationsData.reduce((acc, curr) => {
           const cleanedDistricts = curr.districts.map((district) =>
