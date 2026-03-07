@@ -21,7 +21,7 @@ export default function BookASite() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-const pageFromUrl = Number(searchParams.get("page")) || 1;
+  const pageFromUrl = Number(searchParams.get("page")) || 1;
 
 
 
@@ -125,6 +125,9 @@ const pageFromUrl = Number(searchParams.get("page")) || 1;
       const productsRes = await fetch(
         `${baseUrl}/products_paginated?${params.toString()}`,
       );
+      //  const productsRes = await fetch(
+      //   `/api/products_paginated?${params.toString()}`,
+      // );
 
       if (!productsRes.ok) {
         throw new Error(`HTTP error! status: ${productsRes.status}`);
@@ -193,7 +196,7 @@ const pageFromUrl = Number(searchParams.get("page")) || 1;
   const selectOption1 = (option) => {
     setSelected1(option);
     setSortOption(option);
-    setCurrentPage(0); 
+    setCurrentPage(0);
     // setIsOpen1(false);
   };
 
@@ -252,11 +255,11 @@ const pageFromUrl = Number(searchParams.get("page")) || 1;
 
     return (
       <div className="rate-book">
-  <span className="rating-text">4.3</span>
-   <span className="rating-star-wrapper">
-  <span className="fa-solid fa-star rating-star"></span>
-  </span>
-</div>
+        <span className="rating-text">4.3</span>
+        <span className="rating-star-wrapper">
+          <span className="fa-solid fa-star rating-star"></span>
+        </span>
+      </div>
 
     );
   };
@@ -433,22 +436,22 @@ const pageFromUrl = Number(searchParams.get("page")) || 1;
   };
 
   // Handle page change
-const handlePageChange = (pageIndex) => {
-  if (pageIndex < 0 || pageIndex >= totalPages) return;
+  const handlePageChange = (pageIndex) => {
+    if (pageIndex < 0 || pageIndex >= totalPages) return;
 
-  setCurrentPage(pageIndex);
+    setCurrentPage(pageIndex);
 
-  if (pageIndex === 0) {
-    setSearchParams({}); // keep /book clean
-  } else {
-    setSearchParams({ page: pageIndex + 1 });
-  }
-};
+    if (pageIndex === 0) {
+      setSearchParams({}); // keep /book clean
+    } else {
+      setSearchParams({ page: pageIndex + 1 });
+    }
+  };
 
-useEffect(() => {
-  const page = Number(searchParams.get("page")) || 1;
-  setCurrentPage(page - 1);
-}, [searchParams]);
+  useEffect(() => {
+    const page = Number(searchParams.get("page")) || 1;
+    setCurrentPage(page - 1);
+  }, [searchParams]);
 
 
 
@@ -468,7 +471,7 @@ useEffect(() => {
                   <div
                     className="sorting1 position-relative"
                     onClick={toggleFilterSectionSorting}
->
+                  >
                     <div>
                       {" "}
                       <img
@@ -513,9 +516,9 @@ useEffect(() => {
                           </div>
                           {(activeSortTab === "Popularity"
                             ? [
-                                "Popularity: High to Low",
-                                "Popularity: Low to High",
-                              ]
+                              "Popularity: High to Low",
+                              "Popularity: Low to High",
+                            ]
                             : ["Price: High to Low", "Price: Low to High"]
                           ).map((filter) => (
                             <div
@@ -616,11 +619,10 @@ useEffect(() => {
                               {stateDistricts[state]?.map((district) => (
                                 <div
                                   key={district}
-                                  className={`form-check d-flex ${
-                                    tempDistricts.includes(district)
+                                  className={`form-check d-flex ${tempDistricts.includes(district)
                                       ? "checked"
                                       : ""
-                                  }`}
+                                    }`}
                                 >
                                   <input
                                     type="checkbox"
@@ -732,32 +734,32 @@ useEffect(() => {
                         </li>
                       </ul> */}
                       <ul className={`menu ${isOpen1 ? "menu-open" : ""}`}>
-  {[
-    "Price: Low to High",
-    "Price: High to Low",
-    "Popularity: High to Low",
-    "Popularity: Low to High",
-  ].map((option) => (
-    <li key={option} style={{cursor:'pointer'}}>
-      <div className="form-check d-flex align-items-center">
-        <input
-          type="radio"
-          className="form-check-input"
-          name="sorting-options" // Added name attribute for radio button grouping
-          checked={selected1 === option}
-          onChange={() => selectOption1(option)}
-        />
-        <label
-        htmlFor="sorting-options"
-          className="form-check-label ms-2"
-          onClick={() => selectOption1(option)}
-        >
-          {option}
-        </label>
-      </div>
-    </li>
-  ))}
-</ul>
+                        {[
+                          "Price: Low to High",
+                          "Price: High to Low",
+                          "Popularity: High to Low",
+                          "Popularity: Low to High",
+                        ].map((option) => (
+                          <li key={option} style={{ cursor: 'pointer' }}>
+                            <div className="form-check d-flex align-items-center">
+                              <input
+                                type="radio"
+                                className="form-check-input"
+                                name="sorting-options" // Added name attribute for radio button grouping
+                                checked={selected1 === option}
+                                onChange={() => selectOption1(option)}
+                              />
+                              <label
+                                htmlFor="sorting-options"
+                                className="form-check-label ms-2"
+                                onClick={() => selectOption1(option)}
+                              >
+                                {option}
+                              </label>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
 
                     </div>
                   </div>
@@ -815,7 +817,7 @@ useEffect(() => {
 
                         {/* District selection */}
                         {selectedStates.map((state) => (
-                          <div key={state} className="mb-2">
+                          <div key={state} className="mb-2 bookDistrictsListScroll">
                             {stateDistricts[state]?.map((district) => (
                               <div
                                 className={`form-check d-flex ${selectedDistricts.includes(district) ? "checked" : ""}`}
@@ -860,35 +862,35 @@ useEffect(() => {
                     /> */}
                     {/* skleton loader */}
                     <div className="row side-right-content">
-                    {Array.from({ length: 6 }).map((_, index) => (
-                      <div className="col-lg-4 col-md-6 col-sm-12 mb-4 card-board-contents skeleton">
-                        <div className="card board-book skeleton-card ">
+                      {Array.from({ length: 6 }).map((_, index) => (
+                        <div className="col-lg-4 col-md-6 col-sm-12 mb-4 card-board-contents skeleton">
+                          <div className="card board-book skeleton-card ">
 
-                          <img className="card-img-top-book skeleton-box skeleton-img" alt="" />
+                            <img className="card-img-top-book skeleton-box skeleton-img" alt="" />
 
-                          <span className="board-category-book skeleton-pill"></span>
-                          <span className="board-location-book skeleton-pill"></span>
+                            <span className="board-category-book skeleton-pill"></span>
+                            <span className="board-location-book skeleton-pill"></span>
 
-                          <div className="board-content-book">
-                            <div className="board-content-top-book">
-                              <span className="board-loc-book skeleton-line"></span>
+                            <div className="board-content-book">
+                              <div className="board-content-top-book">
+                                <span className="board-loc-book skeleton-line"></span>
+                              </div>
+
+                              <div className="board-content-bottom-book">
+                                <span className="board-price-book skeleton-line short"></span>
+                                <span className="board-dim-book skeleton-line xshort"></span>
+                              </div>
                             </div>
 
-                            <div className="board-content-bottom-book">
-                              <span className="board-price-book skeleton-line short"></span>
-                              <span className="board-dim-book skeleton-line xshort"></span>
-                            </div>
+                            {/* <div className="skeleton-rating"></div> */}
+
+                            <button className="board-btn-book skeleton-btn"></button>
+
                           </div>
-
-                          {/* <div className="skeleton-rating"></div> */}
-
-                          <button className="board-btn-book skeleton-btn"></button>
-
                         </div>
-                      </div>
 
-                    ))}
-                  </div>
+                      ))}
+                    </div>
 
                     {/* skleton loader */}
                   </div>
@@ -927,18 +929,18 @@ useEffect(() => {
                                 / Per Day
                               </span>
                             </span>
-                             <span className="board-dim-book">
+                            <span className="board-dim-book">
                               {spot.sizeWidth} x {spot.sizeHeight} | Sq.ft
                             </span>
                           </div>
                         </div>
-                          <RatingStars rating={spot.rating} />
-                          <button
-                            className="board-btn-book"
-                            onClick={() => handleBookNow(spot)}
-                          >
-                            Book Now
-                          </button>
+                        <RatingStars rating={spot.rating} />
+                        <button
+                          className="board-btn-book"
+                          onClick={() => handleBookNow(spot)}
+                        >
+                          Book Now
+                        </button>
                       </div>
                     </div>
                   ))

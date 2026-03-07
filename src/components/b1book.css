@@ -18,17 +18,6 @@
     width: 240px;
     height: auto;
     background: #F6F6F6;
-    /* border-width: 0;
-    border-width: 3px;
-    border-style: solid;
-    border: 3px solid; */
-    /* box-shadow: */
-    /* 1px 1px 3.2px rgba(255, 44, 44, 1), */
-    /* Bottom-right shadow */
-    /* -1px -1px 3.2px rgba(255, 139, 139, 1); */
-    /* Top-left shadow */
-    /* border: 3px solid; */
-    /* border-color: rgba(255, 44, 44, 1); */
     border-radius: 20px;
     left: 60px;
     top: 733px;
@@ -46,6 +35,15 @@
     padding-left: 10px !important;
 }
 
+/* NEWLY ADDED  */
+.bookDistrictsListScroll {
+    margin-bottom: .5rem !important;
+    overflow-y: auto;
+    height: 530px;
+}
+
+/* NEWLY ADDED  */
+
 /* Form-check container */
 .form-check {
     padding: 10px 35px;
@@ -55,11 +53,9 @@
     margin: auto;
     height: 40px;
     width: 220px;
-    /* width: 95%; */
     margin-bottom: 5%;
     transition: background-color 0.3s ease;
     cursor: pointer;
-    /* Smooth transition */
 }
 
 /* Checkbox styling */
@@ -68,12 +64,10 @@
     width: 20px;
     margin: auto 10px;
     border: 0.8px solid rgba(170, 170, 170, 1);
-    /* box-shadow: 0px 1.6px 3.2px 0px rgba(0, 0, 0, 0.25) inset;
-    transition: background-color 0.3s ease, border-color 0.3s ease; */
-    /* Smooth transition */
     background-color: #fff;
     cursor: pointer;
 }
+
 .form-check-input[type="checkbox"] {
     border-radius: 4px;
 }
@@ -88,7 +82,7 @@
     border-color: red;
     /* red border */
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5 L8 14 L16 6' fill='none' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-   background-position: center;
+    background-position: center;
     background-repeat: no-repeat;
     background-size: 12px;
 }
@@ -97,8 +91,6 @@
 /* Custom background for form-check when checked */
 .form-check.checked {
     border-radius: 13px;
-    /* background: rgba(218, 216, 216, 1); */
-    /* box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25); */
     color: red;
 }
 
@@ -148,17 +140,13 @@
     border-color: #E41E25;
 }
 
-/* Hover effects */
-/* .form-check-input[type="checkbox"]:hover,
-.form-check-input[type="radio"]:hover {
-    border-color: #E41E25;
-} */
 
 /* Custom background for form-check when checked */
 .form-check.checked {
     border-radius: 13px;
     color: #E41E25;
 }
+
 /* RADIO BUTTON CUSTOM RED CSS  */
 
 /* Dropdown container */
@@ -171,7 +159,6 @@
 /* Dropdown button */
 .select {
     border: 1px solid #AAAAAA;
-    /* box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset; */
     height: 40px;
     width: 215px;
     margin: 20px auto;
@@ -202,44 +189,13 @@
     transform: rotate(180deg);
 }
 
-/* Menu styling */
-/* .menu {
-    list-style: none;
-    border: 1px solid rgba(170, 170, 170, 1);
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    background-color: white;
-    border-radius: 5px;
-    color: black;
-    position: absolute;
-    top: 3em;
-    left: 50%;
-    width: 100%;
-    transform: translateX(-50%);
-    opacity: 0;
-    display: none;
-    transition: opacity 0.3s ease-in-out;
-    z-index: 1;
-    padding: 0px;
-   
-
-} */
 .menu {
     list-style: none;
-    /* border: 1px solid rgba(170, 170, 170, 1);
-    border-top: none;
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    background-color: white;
-    border-radius: 0 0 7px 7px; */
-
     position: static;
-    /* top: 100%;
-    left: 0; */
     width: 100%;
-    /* margin-top: 5px; */
     opacity: 0;
     display: none;
     transition: opacity 0.3s ease-in-out;
-    /* z-index: 1; */
     padding: 0px;
     padding-bottom: 20px;
     display: none;
@@ -275,45 +231,6 @@
     position: relative;
 }
 
-/* Checkbox */
-/* .menu li::before {
-  content: "";
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  width: 14px;
-  height: 14px;
-  border: 1.5px solid #b5b5b5;
-  border-radius: 3px;
-  background: #fff;
-  transform: translateY(-50%);
-} */
-
-
-/* Checked state */
-/* .menu li.checked::before {
-    background: #E41E25;
-    border-color: #E41E25;
-} */
-
-/* Tick */
-/* .menu li::after {
-  content: "✓";
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  font-size: 12px;
-  color: #e41e25; 
-  transform: translateY(-55%);
-  opacity: 0;
-} */
-
-/* Hover effect for menu items */
-/* .menu li:hover {
-    background: rgba(255, 80, 86, 1);
-    color: white;
-} */
-
 /* Selected option styling when something is chosen */
 .selected-active {
     color: black !important;
@@ -327,14 +244,6 @@
     font-weight: 500;
 }
 
-/* .selected-active-bg {
-    background-color: rgb(240, 13, 13) !important;
-    border: 1px solid black;
-    background: linear-gradient(180deg, #F3F2F2 2.61%, #B9B9B9 46.11%, #F3F2F2 89.61%);
-    border: 1px solid rgba(51, 51, 51, 1);
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
-} */
-
 /* Selected option styling when something is chosen */
 .selected2-active {
     color: black !important;
@@ -347,29 +256,23 @@
     text-decoration-skip-ink: none;
 }
 
-/* .selected2-active-bg {
-    background: linear-gradient(180deg, #F3F2F2 -11.1%, #E41E25 46.87%, #F3F2F2 126.94%);
-    border: 1px solid rgba(255, 255, 255, 1);
-    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
-} */
-
 /* RIGHT SIDE CONTENT  */
 .board-book {
     margin-bottom: 10%;
     height: auto !important;
     width: 280px;
     border-radius: 16px;
-    /* background: linear-gradient(94.12deg, #FFE2E3 66.96%, #FFFFFF 99.86%); */
     background: #fff;
     cursor: pointer;
     padding-bottom: 13px;
     box-shadow: 0px 0px 15px 0px #0000001A;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
-.board-book:hover{
-  transform: scale(1.08);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-  z-index: 2;
+
+.board-book:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    z-index: 2;
 }
 
 .card-img-top-book {
@@ -432,21 +335,15 @@
     justify-content: space-between;
     height: auto;
     position: relative;
-    /* padding-bottom: 50px;
-    margin-top: -15px; */
 }
 
 .board-dim-book {
-    /* white-space: nowrap;  */
-
     font-size: 16px;
     font-weight: 600;
     align-content: center;
     align-items: center;
     text-align: center;
     float: right;
-    /* height: 28px;
-    width: 80px; */
     padding: 3px 5px;
     border-radius: 6px;
     color: #E41E25;
@@ -461,22 +358,17 @@
 }
 
 .board-btn-book {
-    /* z-index: 200; */
     position: static !important;
-    /* bottom: -25px;
-    left: 23px; */
     width: 155px;
     height: 44px;
     border: 2px solid #E41E25;
     background: #E41E25;
-    /* backdrop-filter: blur(20px); */
     color: #fff;
     cursor: pointer;
     background-clip: padding-box, border-box;
     border-radius: 10px;
     margin-left: 10px;
 }
-
 
 
 /* Rating board  */
@@ -510,34 +402,6 @@
     position: relative;
 }
 
-/* .rate-book {
-  position: relative !important;
-  bottom: 51.5px;
-  left: 182px;
-
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-
-  background-color: #6dbb45; 
-  padding: 14px 28px;
-  border-radius: 6px;
-
-  font-family: Arial, sans-serif;
-} */
-
-/* .rating-text {
-  font-size: 18px;
-  font-weight: 500;
-  color: #ffffff !important;
-  line-height: 100%;
-} */
-
-/* .rating-star {
-  font-size: 14px;
-  color: #ffd54f; 
-  line-height: 1;
-} */
 .rate-book {
     position: relative;
     /* bottom: 51.5px; */
@@ -557,71 +421,63 @@
     white-space: nowrap;
     margin-bottom: 10px;
 }
-.rate1-book1{
-  position: relative;
-  /* bottom: 51.5px; */
-  left: 10px;
-  width: 24% !important;
-  /* display: flex; */
-  align-items: center;
-  gap: 6px;
-  flex-direction: row-reverse;
-  background-color: #6dbb45; /* exact green style */
-  padding: 5px 5px;
-  border-radius: 6px;
 
-  font-size: 14px;
-  line-height: 1;
-  white-space: nowrap;
-  margin-bottom: 10px;
+.rate1-book1 {
+    position: relative;
+    /* bottom: 51.5px; */
+    left: 10px;
+    width: 24% !important;
+    /* display: flex; */
+    align-items: center;
+    gap: 6px;
+    flex-direction: row-reverse;
+    background-color: #6dbb45;
+    /* exact green style */
+    padding: 5px 5px;
+    border-radius: 6px;
+
+    font-size: 14px;
+    line-height: 1;
+    white-space: nowrap;
+    margin-bottom: 10px;
 }
+
 .rating-star {
-    /* color: #ffd54f;
+    color: #ffd54f;
     font-size: 18px;
-    order: 2;
     width: 22px;
-    height: 22px; */
-     /* position: relative; */
-  /* display: inline-block; */
-  /* font-size: 18px;
-  color: #ffd54f;
-  width: 22px;
-  height: 22px;
-  line-height: 22px; */
-  /* position: relative;         */
-  color: #ffd54f;
-  font-size: 18px;
-  width: 22px;
-  height: 22px;
-  display: inline-block;
-  z-index: 1;
+    height: 22px;
+    display: inline-block;
+    z-index: 1;
 }
+
 .rating-star-wrapper::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -30px;
-  height: 100%;
-  width: 16px;
-  background: rgba(255, 255, 255, 1);
-  filter: blur(15px);
-  transform: skewX(-14deg);
-  transition: 0.5s;
-  opacity: 0;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -30px;
+    height: 100%;
+    width: 16px;
+    background: rgba(255, 255, 255, 1);
+    filter: blur(15px);
+    transform: skewX(-14deg);
+    transition: 0.5s;
+    opacity: 0;
 }
 
 .board-book:hover .rating-star-wrapper::before {
-  opacity: 1;
-  animation: ratingShine 0.6s linear;
+    opacity: 1;
+    animation: ratingShine 0.6s linear;
 }
 
 @keyframes ratingShine {
-  0% {
-    left: -30px;
-  }
-  100% {
-    left: 120%;
-  }
+    0% {
+        left: -30px;
+    }
+
+    100% {
+        left: 120%;
+    }
 }
 
 
@@ -632,27 +488,23 @@
     order: 2;
     width: 22px;
     height: 22px;
-     /* position: relative; */
-  display: inline-block;
-  /* font-size: 18px;
-  color: #ffd54f;
-  width: 22px;
-  height: 22px;
-  line-height: 22px; */
+    display: inline-block;
 }
+
 .rating2-star::after {
-  content: "";
-  position: absolute;
-  top: -60%;
-  left: -40px;
-  width: 14px;
-  height: 120%;
-  background: rgba(255, 255, 255, 1);
-  filter: blur(14px);
-  transform: skewX(-14deg);
-  animation: starShine 1.6s linear infinite;
-  pointer-events: none;
+    content: "";
+    position: absolute;
+    top: -60%;
+    left: -40px;
+    width: 14px;
+    height: 120%;
+    background: rgba(255, 255, 255, 1);
+    filter: blur(14px);
+    transform: skewX(-14deg);
+    animation: starShine 1.6s linear infinite;
+    pointer-events: none;
 }
+
 .rating-text {
     color: #ffffff;
     font-weight: 500;
@@ -721,9 +573,6 @@
 }
 
 /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
-/* .bookMainDeal .navbar1 {
-    top: 73px;
-} */
 
 .board-price-bookPerDay {
     color: rgba(51, 51, 51, 1);
@@ -734,6 +583,10 @@
 /* Responsive Media Queries */
 /* Extra Large Screens (2560px and above) ✅ Large Screens (4K Screens)  */
 @media (min-width: 2560px) {
+    .bookDistrictsListScroll {
+        overflow-y: auto;
+        height: 501px;
+    }
 
     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
     .bookMainDeal .navbar1 {
@@ -942,6 +795,11 @@
 }
 
 @media (min-width: 1280px) and (max-width: 1439px) {
+    .bookDistrictsListScroll {
+        overflow-y: auto;
+        height: 501px;
+    }
+
     .side-bar-content {
         width: 110% !important;
         margin: auto -20px !important;
@@ -953,18 +811,25 @@
     }
 
     .side-bar-main {
-    margin: auto 2%;
-    /* margin-top: 7%; */
-}
-.rate-book{
-    width: 23% !important;
-}
-.rate2-book{
-    width: 18%!important;
-}
+        margin: auto 2%;
+        /* margin-top: 7%; */
+    }
+
+    .rate-book {
+        width: 23% !important;
+    }
+
+    .rate2-book {
+        width: 18% !important;
+    }
 }
 
 @media (min-width: 1440px) and (max-width: 1500px) {
+    .bookDistrictsListScroll {
+        overflow-y: auto;
+        height: 501px;
+    }
+
     .side-bar-content {
         width: 115% !important;
         margin: auto -10px !important;
@@ -975,15 +840,21 @@
     }
 
     .side-bar-main {
-    margin: auto 4%;
-    /* margin-top: 7%; */
-}
-.rate2-book{
-    width: 18%!important;
-}
+        margin: auto 4%;
+        /* margin-top: 7%; */
+    }
+
+    .rate2-book {
+        width: 18% !important;
+    }
 }
 
 @media (min-width: 1501px) and (max-width: 1599px) {
+    .bookDistrictsListScroll {
+        overflow-y: auto;
+        height: 500px;
+    }
+
     .side-bar-content {
         width: 125% !important;
         margin: auto 10px !important;
@@ -1001,6 +872,11 @@
 }
 
 @media (min-width: 1600px) and (max-width: 1699px) {
+    .bookDistrictsListScroll {
+        overflow-y: auto;
+        height: 500px;
+    }
+
     .side-bar-content {
         width: 125% !important;
         margin: auto 10px !important;
@@ -1021,12 +897,18 @@
         width: 300px !important;
         height: auto;
     }
-    .rate2-book{
-    width: 16% !important;
-}
+
+    .rate2-book {
+        width: 16% !important;
+    }
 }
 
 @media (min-width: 1700px) and (max-width: 1799px) {
+    .bookDistrictsListScroll {
+        overflow-y: auto;
+        height: 500px;
+    }
+
     .side-bar-content {
         width: 130% !important;
         margin: auto 10px !important;
@@ -1097,9 +979,10 @@
     .rate-book {
         width: 19% !important;
     }
-    .rate2-book{
-    width: 13% !important;
-}
+
+    .rate2-book {
+        width: 13% !important;
+    }
 }
 
 /* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
@@ -1322,13 +1205,21 @@
     }
 }
 
+@media (min-width: 1200px) and (max-width: 1280px) {
+    .bookDistrictsListScroll {
+        overflow-y: auto;
+        height: 350px;
+    }
+}
+
 @media (min-width: 992px) and (max-width: 1200px) {
     .rate-book {
         width: 24% !important;
     }
-    .rate2-book{
-    width: 26% !important;
-}
+
+    .rate2-book {
+        width: 26% !important;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1020px) {
@@ -1337,9 +1228,10 @@
         max-width: 35% !important;
         margin-left: 85px !important;
     }
-    .rate2-book{
-    width: 27% !important;
-}
+
+    .rate2-book {
+        width: 27% !important;
+    }
 }
 
 /* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
@@ -1349,6 +1241,10 @@
     /* .bookMainDeal .navbar1 {
         top: 60px;
     } */
+    .bookDistrictsListScroll {
+        overflow-y: auto;
+        height: 500px;
+    }
 
     .side-bar-main {
         /* margin: auto -2%;*/
@@ -1560,6 +1456,11 @@
 }
 
 @media (min-width: 900px) and (max-width: 1023px) {
+    .bookDistrictsListScroll {
+        overflow-y: auto;
+        height: 500px;
+    }
+
     .side-bar-main {
         margin: auto -1% !important;
         /* margin-top: 7% !important; */
@@ -1572,19 +1473,26 @@
     .board-book {
         width: 300px !important;
     }
-     .rate2-book{
-    width: 28% !important;
-}
+
+    .rate2-book {
+        width: 28% !important;
+    }
 }
 
 @media (min-width: 800px) and (max-width: 901px) {
+    .bookDistrictsListScroll {
+        overflow-y: auto;
+        height: 500px;
+    }
+
     .side-bar-main {
         margin: auto 20px !important;
         /* margin-top: 60px !important; */
     }
-     .rate2-book{
-    width: 30% !important;
-}
+
+    .rate2-book {
+        width: 30% !important;
+    }
 }
 
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
@@ -1594,6 +1502,10 @@
     /* .bookMainDeal .navbar1 {
         top: 60px;
     } */
+    .bookDistrictsListScroll {
+        overflow-y: auto;
+        height: 630px;
+    }
 
     .bookMainDeal .side-bar-main {
         /* margin-top: 8%; */
@@ -1659,6 +1571,7 @@
     }
 
     .menu li {
+        padding-left: 15px;
         font-size: 15px;
         font-weight: 400;
         line-height: 11.5px;
@@ -1817,38 +1730,45 @@
         width: 27% !important;
         /* display: flex; */
     }
-    
+
 }
+
 @media (min-width: 700px) and (max-width: 799px) {
-    .rate2-book{
-    width: 32% !important;
+    .rate2-book {
+        width: 32% !important;
+    }
 }
-}
+
 @media (min-width: 600px) and (max-width: 699px) {
-    .rate2-book{
-    width: 35% !important;
+    .rate2-book {
+        width: 35% !important;
+    }
 }
-}
+
 @media (min-width: 600px) and (max-width: 699px) {
-    .rate2-book{
-    width: 31% !important;
+    .rate2-book {
+        width: 31% !important;
+    }
 }
-}
+
 @media (min-width: 400px) and (max-width: 599px) {
-    .rate2-book{
-    width: 23% !important;
+    .rate2-book {
+        width: 23% !important;
+    }
 }
-}
+
 @media (min-width: 340px) and (max-width: 399px) {
-    .rate2-book{
-    width: 25% !important;
+    .rate2-book {
+        width: 25% !important;
+    }
 }
-}
+
 @media (min-width: 300px) and (max-width: 339px) {
-    .rate2-book{
-    width: 28% !important;
+    .rate2-book {
+        width: 28% !important;
+    }
 }
-}
+
 /* FORCE 2 columns between 992px and 1199px */
 @media (min-width: 992px) and (max-width: 1199px) {
     .side-bar-main {
@@ -1874,19 +1794,38 @@
         position: relative;
         z-index: 99;
     } */
-
+    /* OLD CODE TO REMOVE THE DEAL SCROLLER  */
+    /* 
     .bookMainDeal .FilterSection-mobile {
         position: sticky;
         z-index: 9;
         margin: 0 auto;
-        /* margin-top: 13%; */
+        margin-top: 13%;
     }
 
     .bookMainDeal .side-right-content {
         width: 100%;
         margin: auto;
         margin-top: -11px;
+    } */
+
+    /* Fix for sticky filter section to hide the deal scroll navbar */
+    .bookMainDeal .FilterSection-mobile {
+        position: fixed;
+        top: 90px;
+        left: 0;
+        right: 0;
+        z-index: 1000;
     }
+
+    .bookMainDeal .side-right-content {
+        width: 100%;
+        margin: auto;
+        margin-top: 8%;
+    }
+
+    /* Fix for sticky filter section to hide the deal scroll navbar */
+
 
     .bookMainDeal .filter-Locationdropdown,
     .bookMainDeal .filter-Mediumdropdown,
@@ -2251,12 +2190,16 @@
         height: 20px;
     }
 
+    .board-content-bottom-book {
+        flex-direction: column !important;
+    }
+
     .board-dim-book {
         font-size: 16px;
         font-weight: 600;
-        /* height: 30px;
-        width: 80px; */
-        padding: 2px;
+        width: max-content;
+        padding: 5px 8px;
+        margin: 8px 0px;
     }
 
     .board-content-book {
@@ -2334,24 +2277,36 @@
 @media (min-width: 425px) and (max-width: 479px) {
 
     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
-    /* .bookMainDeal .navbar1 {
-        top: 58px;
-        position: relative;
-        z-index: 99;
-    } */
 
-    .bookMainDeal .FilterSection-mobile {
+    /* .bookMainDeal .FilterSection-mobile {
         position: sticky;
         z-index: 9;
         margin: 0 auto;
-        /* margin-top: 13%; */
+        margin-top: 13%;
     }
 
     .bookMainDeal .side-right-content {
         width: 100%;
         margin: auto;
         margin-top: -12px;
+    } */
+
+    /* Fix for sticky filter section to hide the deal scroll navbar */
+    .bookMainDeal .FilterSection-mobile {
+        position: fixed;
+        top: 90px;
+        left: 0;
+        right: 0;
+        z-index: 1000;
     }
+
+    .bookMainDeal .side-right-content {
+        width: 100%;
+        margin: auto;
+        margin-top: 10%;
+    }
+
+    /* Fix for sticky filter section to hide the deal scroll navbar */
 
     .bookMainDeal .filter-Locationdropdown,
     .bookMainDeal .filter-Mediumdropdown,
@@ -2726,12 +2681,16 @@
         /* border: 1px solid red; */
     }
 
+    .board-content-bottom-book {
+        flex-direction: column !important;
+    }
+
     .board-dim-book {
         font-size: 16px;
         font-weight: 600;
-        /* height: 30px;
-        width: 80px; */
-        padding: 2px;
+        width: max-content;
+        padding: 5px 8px;
+        margin: 8px 0px;
     }
 
     .board-content-book {
@@ -2818,11 +2777,11 @@
         z-index: 99;
     } */
 
-    .bookMainDeal .FilterSection-mobile {
+    /* .bookMainDeal .FilterSection-mobile {
         position: sticky;
         z-index: 9;
         margin: 0 auto;
-        /* margin-top: 13%; */
+        margin-top: 13%;
         width: 99%;
     }
 
@@ -2830,7 +2789,24 @@
         width: 100%;
         margin: auto;
         margin-top: -15px;
+    } */
+
+    /* Fix for sticky filter section to hide the deal scroll navbar */
+    .bookMainDeal .FilterSection-mobile {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        z-index: 1000;
     }
+
+    .bookMainDeal .side-right-content {
+        width: 100%;
+        margin: auto;
+        margin-top: 10%;
+    }
+
+    /* Fix for sticky filter section to hide the deal scroll navbar */
 
     .bookMainDeal .filter-Locationdropdown,
     .bookMainDeal .filter-Mediumdropdown,
@@ -3220,12 +3196,16 @@
         /* border:1px solid red; */
     }
 
+    .board-content-bottom-book {
+        flex-direction: column !important;
+    }
+
     .board-dim-book {
         font-size: 16px;
         font-weight: 600;
-        /* height: 30px;
-        width: 80px; */
-        padding: 2px;
+        width: max-content;
+        padding: 5px 8px;
+        margin: 8px 0px;
     }
 
     .board-content-book {
@@ -3311,11 +3291,11 @@
     }
 
 
-    .bookMainDeal .FilterSection-mobile {
+    /* .bookMainDeal .FilterSection-mobile {
         position: sticky;
         z-index: 9;
         margin: 0 auto;
-        /* margin-top: 13%; */
+        margin-top: 13%;
         width: 99%;
     }
 
@@ -3323,7 +3303,24 @@
         width: 100%;
         margin: auto;
         margin-top: -15px;
+    } */
+
+    /* Fix for sticky filter section to hide the deal scroll navbar */
+    .bookMainDeal .FilterSection-mobile {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        z-index: 1000;
     }
+
+    .bookMainDeal .side-right-content {
+        width: 100%;
+        margin: auto;
+        margin-top: 10%;
+    }
+
+    /* Fix for sticky filter section to hide the deal scroll navbar */
 
     .bookMainDeal .filter-Locationdropdown,
     .bookMainDeal .filter-Mediumdropdown,
@@ -3704,25 +3701,32 @@
     .board-price-bookPerDay {
         font-size: 15px;
     }
+
+    .board-content-bottom-book {
+        flex-direction: column !important;
+    }
+
+    .board-dim-book {
+        font-size: 16px;
+        font-weight: 600;
+        width: max-content;
+        padding: 5px 8px;
+        margin: 9px 0px;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 359px) {
 
     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
-    /* .bookMainDeal .navbar1 {
-        top: 53px;
-        position: relative;
-        z-index: 99;
-    } */
-
     .rate-book {
         width: 25% !important;
     }
 
+    /* 
     .bookMainDeal .FilterSection-mobile {
         position: sticky;
         margin: 0 auto;
-        /* margin-top: 15%; */
+        margin-top: 15%;
         width: 103%;
         overflow: hidden;
         z-index: 9;
@@ -3733,7 +3737,23 @@
         width: 100%;
         margin: auto;
         margin-top: -15px;
+    } */
+    /* Fix for sticky filter section to hide the deal scroll navbar */
+    .bookMainDeal .FilterSection-mobile {
+        position: fixed;
+        top: 78px;
+        left: 0;
+        right: 0;
+        z-index: 1000;
     }
+
+    .bookMainDeal .side-right-content {
+        width: 100%;
+        margin: auto;
+        margin-top: 10%;
+    }
+
+    /* Fix for sticky filter section to hide the deal scroll navbar */
 
     .bookMainDeal .filter-Locationdropdown,
     .bookMainDeal .filter-Mediumdropdown,
@@ -4118,6 +4138,18 @@
     .board-price-bookPerDay {
         font-size: 15px;
     }
+
+    .board-content-bottom-book {
+        flex-direction: column !important;
+    }
+
+    .board-dim-book {
+        font-size: 16px;
+        font-weight: 600;
+        width: max-content;
+        padding: 5px 8px;
+        margin: 9px 0px;
+    }
 }
 
 .Book-loading-gif {
@@ -4130,178 +4162,146 @@
     left: 0;
 }
 
-
-/* /////////skleton css///////// */
-/* ===========================
-   Skeleton Card Wrapper
-=========================== */
 .skeleton-card {
-  pointer-events: none;
-  overflow: hidden;
-  background: #ffffff;
+    pointer-events: none;
+    overflow: hidden;
+    background: #ffffff;
 }
 
-/* ===========================
-   Image Placeholder
-=========================== */
 .skeleton-img {
-  height: 180px;
-  width: 100%;
-  background: #e5e5e5;
-  border-radius: 12px 12px 0 0;
-  position: relative;
-  overflow: hidden;
+    height: 180px;
+    width: 100%;
+    background: #e5e5e5;
+    border-radius: 12px 12px 0 0;
+    position: relative;
+    overflow: hidden;
 }
 
-/* ===========================
-   Content Area
-=========================== */
 .skeleton-content {
-  padding: 12px;
+    padding: 12px;
 }
 
-/* ===========================
-   Text Lines
-=========================== */
+
 .skeleton-line {
-  height: 14px;
-  width: 100%;
-  background: #e5e5e5;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  position: relative;
-  overflow: hidden;
+    height: 14px;
+    width: 100%;
+    background: #e5e5e5;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
 }
 
 .skeleton-line.title {
-  width: 70%;
-  height: 16px;
+    width: 70%;
+    height: 16px;
 }
 
 .skeleton-line.price {
-  width: 50%;
+    width: 50%;
 }
 
 .skeleton-line.size {
-  width: 40%;
+    width: 40%;
 }
 
-/* ===========================
-   Rating Placeholder
-=========================== */
 .skeleton-rating {
-  width: 60px;
-  height: 16px;
-  background: #e5e5e5;
-  border-radius: 6px;
-  margin-top: 10px;
-  position: relative;
-  overflow: hidden;
+    width: 60px;
+    height: 16px;
+    background: #e5e5e5;
+    border-radius: 6px;
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Skeleton Book Now Button */
 .skeleton-card .board-btn-book {
-  background: #e5e5e5 !important;
-  color: transparent !important;
-  border: none !important;
-  pointer-events: none;
-  position: relative;
-  overflow: hidden;
+    background: #e5e5e5 !important;
+    color: transparent !important;
+    border: none !important;
+    pointer-events: none;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Shimmer for button */
 .skeleton-card .board-btn-book::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.6),
-    transparent
-  );
-  transform: translateX(-100%);
-  animation: skeleton-shimmer 1.4s infinite;
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.6),
+            transparent);
+    transform: translateX(-100%);
+    animation: skeleton-shimmer 1.4s infinite;
 }
 
-
-/* ===========================
-   Button Placeholder
-=========================== */
 .skeleton-button {
-  height: 36px;
-  width: 100%;
-  background: #e5e5e5;
-  border-radius: 10px;
-  margin-top: 12px;
-  position: relative;
-  overflow: hidden;
+    height: 36px;
+    width: 100%;
+    background: #e5e5e5;
+    border-radius: 10px;
+    margin-top: 12px;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Stack price and size vertically */
 .skeleton-card .board-content-bottom-book {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 /* Price skeleton */
 .skeleton-card .board-price-book.skeleton-line {
-  width: 55%;
-  height: 16px;
+    width: 55%;
+    height: 16px;
 }
 
 /* Sq.ft skeleton below price */
 .skeleton-card .board-dim-book.skeleton-line {
-  width: 40%;
-  height: 14px;
+    width: 40%;
+    height: 14px;
 }
 
-
-
-/* ===========================
-   Shimmer Effect (Single Layer)
-=========================== */
 .skeleton-img::after,
 .skeleton-line::after,
 .skeleton-rating::after,
 .skeleton-button::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.6),
-    transparent
-  );
-  transform: translateX(-100%);
-  animation: skeleton-shimmer 1.4s infinite;
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.6),
+            transparent);
+    transform: translateX(-100%);
+    animation: skeleton-shimmer 1.4s infinite;
 }
 
 @keyframes skeleton-shimmer {
-  100% {
-    transform: translateX(100%);
-  }
+    100% {
+        transform: translateX(100%);
+    }
 }
 
-/* ===========================
-   Optional Grid (6 cards: 2 x 3)
-=========================== */
 .skeleton-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
 @media (max-width: 992px) {
-  .skeleton-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+    .skeleton-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 576px) {
-  .skeleton-grid {
-    grid-template-columns: 1fr;
-  }
+    .skeleton-grid {
+        grid-template-columns: 1fr;
+    }
 }
