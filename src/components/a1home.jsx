@@ -7,7 +7,7 @@ import AdinnHome2 from '../components/a2home';
 import AdinnHome3 from '../components/a3home';
 import AdinnHome4 from '../components/a4home';
 import './a1home.css';
-import { useNavigate, useLocation} from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import LoginPageMain from './C1LoginMain';
 import MainNavbar from './A1NAVBAR.jsx';
 import MainFooter from './A1FOOTER.jsx';
@@ -180,8 +180,8 @@ function AdinnHome() {
   const closeLoginPage = () => {
     setIsLoginOpen(false);
   };
- const location = useLocation()
- // Add this useEffect
+  const location = useLocation()
+  // Add this useEffect
   useEffect(() => {
     // Check if we came from navbar prime spots click
     if (location.state?.fromNavbar === "primeSpots") {
@@ -189,13 +189,42 @@ function AdinnHome() {
       setTimeout(() => {
         const element = document.getElementById("primeSpotsSection");
         if (element) {
-          element.scrollIntoView({ 
-            behavior: "smooth" 
+          element.scrollIntoView({
+            behavior: "smooth"
           });
         }
       }, 800); // 800ms delay to ensure AdinnHome2 is rendered
     }
   }, [location.state]);
+
+
+  useEffect(() => {
+    // Check if URL has hash
+    if (window.location.hash === '#prime-spots') {
+      // Function to scroll to element
+      const scrollToPrimeSpots = () => {
+        const element = document.getElementById("primeSpotsSection");
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+          // Clean up the hash after scrolling
+          window.history.replaceState(null, null, ' ');
+          return true;
+        }
+        return false;
+      };
+
+      // Try immediately
+      if (scrollToPrimeSpots()) return;
+
+      // If element not found, try again after delays
+      setTimeout(scrollToPrimeSpots, 500);
+      setTimeout(scrollToPrimeSpots, 1000);
+      setTimeout(scrollToPrimeSpots, 1500);
+    }
+  }, []);
   return (
     <MainLayout>
       <div>
@@ -226,8 +255,8 @@ function AdinnHome() {
           <ScrollHero />
         </div>
 
-        {/* About us content  */} 
-        <div className='about about-desktop container-fluid'> 
+        {/* About us content  */}
+        <div className='about about-desktop container-fluid'>
           <div className='heading about-heading about-mobile-content'>About <span className='highlight'>Us</span></div>
           <div className='about-content'>
             <div className='about-content1 about-mobile-content'>
@@ -315,7 +344,7 @@ function AdinnHome() {
                   {/* <p className="what-heading">
                     We Ensure  <span className="highlight whatWeDo-highlight">Support</span>
                   </p> */}
-                   <p className="what-heading">
+                  <p className="what-heading">
                     We Ensure Support
                   </p>
                   <p className="what-para">{currentContent}</p>
@@ -389,7 +418,7 @@ function AdinnHome() {
         <Odo />
         {/* Prime advertising spots in a2home.jsx file  */}
         {/* <AdinnHome2 /> */}
-          <div id="primeSpotsSection" style={{ scrollMarginTop: '100px' }}>
+        <div id="primeSpotsSection" style={{ scrollMarginTop: '100px' }}>
           <AdinnHome2 />
         </div>
         {/* Our highlights and OOH Insights in a3home.jsx file  */}

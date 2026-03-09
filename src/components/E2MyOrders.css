@@ -333,19 +333,19 @@
     /* Dark overlay */
     backdrop-filter: blur(5px);
     /* Blur effect */
-    padding-top: 8%;
+    padding-top: 9.5%;
     z-index: 201;
 }
 
 /* GST CSS  */
 .order-itemGSTTotal {
-    display:flex;
+    display: flex;
     margin: auto;
     justify-content: center;
     margin-right: 9%;
 }
-.order-itemGSTTotal1 {
 
+.order-itemGSTTotal1 {
     margin-right: 8%;
 }
 
@@ -518,15 +518,15 @@
 /* Large Screens (1400px - 2559px) ✅ Large Desktop Screens  1440px */
 @media (min-width: 1400px) and (max-width: 2559px) {
     .order-items-main {
-        background-size: 100% 550px;
+        background-size: 100% 770px;
         width: 58%;
-        height: 550px;
+        height: 770px;
     }
 
     .order-heading {
         font-size: 28px;
-        padding-top: 11px;
-        padding-left: 94px;
+        padding-top: 22px;
+        padding-left: 15%;
     }
 
     .filter-btn {
@@ -543,75 +543,14 @@
         margin-right: 12px;
     }
 
-    /* 
-    .order-scroll {
-        width: 610px;
-        height: 250px;
-    }
-
-    .order-items {
-        width: 610px;
-        height: auto;
-    } 
-
-    .order-item-content {
-        height: 190px;
-        width: 610px;
-        margin-bottom: 10px;
-    } */
-    /* 
-    .order-details {
-        gap: 30px;
-        margin: 0 auto;
-    }
-
-
-    .order-item-img {
-        width: 90px;
-        height: 85px;
-        border-radius: 10px;
-    }
-
-    .order-item-title {
-        font-size: 17px;
-        line-height: 20.07px;
-    } */
-    /* 
-    .order-item-price {
-        font-size: 17px;
-        line-height: 22.07px;
-    } */
-    /* 
-    .order-itemDateRange,
-    .order-itemSizeDimensions,
-    .order-itemAdType {
-        margin: 7px auto;
-    } */
-
-    /* .order-itemAdType {
-        margin-bottom: 0px;
-    } */
-
-    /* .order-item-dateRange,
-    .order-item-size,
-    .order-item-type {
-
-        font-size: 17px;
-        line-height: 20.07px;
-        width: 200px;
-    }
-
-    .order-item-detailSection {
-        font-size: 17px;
-        line-height: 20.07px;
-    } */
 
     .order-scroll {
         width: 100%;
-        height: 260px;
+        height: 386px;
     }
 
     .order-items {
+        margin: 42px auto;
         width: 680px;
     }
 
@@ -684,6 +623,10 @@
     }
 
     /* FILTER SECTION  */
+    .filter-overlay {
+        padding-top: 11.7%;
+    }
+
     .filter-section {
         margin-top: 20px;
         width: 400px;
@@ -1707,6 +1650,10 @@
 
 
     /* FILTER SECTION  */
+    .filter-overlay {
+        padding-top: 16.5%;
+    }
+
     .filter-section {
         margin: 0 50px;
         margin-top: 58px;
@@ -1757,9 +1704,10 @@
 
     .reset-filter-btn,
     .apply-filter-btn {
-        font-size: 17px;
-        width: 180px;
-        height: 43px;
+        font-size: 16px;
+        width: auto;
+        height: auto;
+        padding: 7px 19px;
     }
 
     .reset-filter-btn {
@@ -1800,64 +1748,6 @@
         width: 11px;
         margin-right: 10px;
     }
-
-    /* 
-    .order-scroll {
-        width: 305px;
-        height: 205px;
-
-    }
-
-    .order-items {
-        margin: 15px auto;
-        width: 305px;
-        height: auto;
-    }
-
-    .order-item-content {
-        height: 130px;
-        width: 305px;
-        margin-bottom: 10px;
-    }
-
-    .order-details {
-        gap: 6px;
-        margin: 0 -6px;
-    }
-
-    .order-item-img {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-    }
-
-    .order-item-title {
-        font-size: 11px;
-        line-height: 16.07px;
-    }
-
-    
-    .order-item-dateRange,
-    .order-item-size,
-    .order-item-type {
-
-        font-size: 11px;
-        width: 115px;
-        height: 15px;
-        line-height: 10.07px;
-    }
-
-    .order-item-detailSection {
-        font-size: 11px;
-        height: 15px;
-        line-height: 10.07px;
-
-    }
-
-    .order-item-slash {
-        margin: 0 0px;
-        font-weight: 600;
-    } */
 
 
     .order-header-top {
@@ -1937,6 +1827,10 @@
     }
 
     /* FILTER SECTION  */
+    .filter-overlay {
+        padding-top: 18%;
+    }
+
     .filter-section {
         margin: 0 40px;
         margin-top: 58px;
@@ -1987,9 +1881,10 @@
 
     .reset-filter-btn,
     .apply-filter-btn {
-        font-size: 17px;
-        width: 180px;
-        height: 43px;
+        font-size: 15px;
+        width: auto;
+        height: auto;
+        padding: 7px 19px;
     }
 
     .reset-filter-btn {
@@ -2159,9 +2054,10 @@
 
     .reset-filter-btn,
     .apply-filter-btn {
-        font-size: 16px;
-        width: 180px;
-        height: 43px;
+        font-size: 15px;
+        width: auto;
+        height: auto;
+        padding: 7px 19px;
     }
 
     .reset-filter-btn {

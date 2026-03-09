@@ -1,5 +1,3 @@
-
-
 import React, { useState, createContext, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
@@ -22,13 +20,6 @@ export default function BookASite() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const pageFromUrl = Number(searchParams.get("page")) || 1;
-
-
-
-
-
-
-  // Navbar js
   const [isMenuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
@@ -252,10 +243,12 @@ export default function BookASite() {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 !== 0;
     const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+ // Format the rating number
+  const formattedRating = Number.isInteger(rating) ? rating.toFixed(1) : rating.toString();
 
     return (
       <div className="rate-book">
-        <span className="rating-text">4.3</span>
+        <span className="rating-text">{formattedRating}</span>
         <span className="rating-star-wrapper">
           <span className="fa-solid fa-star rating-star"></span>
         </span>
@@ -422,18 +415,35 @@ export default function BookASite() {
     setIsFilterLocation(false);
   };
 
-  const handleLocationFilterDone = () => {
-    setSelectedStates([...tempStates]);
-    setSelectedDistricts([...tempDistricts]);
-    setCurrentPage(0); // Reset to first page
-    setIsFilterLocation(false);
-  };
+  // const handleLocationFilterDone = () => {
+  //   setSelectedStates([...tempStates]);
+  //   setSelectedDistricts([...tempDistricts]);
+  //   setCurrentPage(0); // Reset to first page
+  //   setIsFilterLocation(false);
+  // };
 
-  const handleLocationFilterCancel = () => {
-    setTempStates([...selectedStates]);
-    setTempDistricts([...selectedDistricts]);
-    setIsFilterLocation(false);
-  };
+  // const handleLocationFilterCancel = () => {
+  //   setTempStates([...selectedStates]);
+  //   setTempDistricts([...selectedDistricts]);
+  //   setIsFilterLocation(false);
+  // };
+
+  const handleLocationFilterDone = () => {
+  setSelectedStates([...tempStates]);
+  setSelectedDistricts([...tempDistricts]);
+  setCurrentPage(0); // Reset to first page
+  setIsFilterLocation(false);
+};
+
+const handleLocationFilterCancel = () => {
+  // Reset temp states to match selected states
+  setTempStates(selectedStates.length > 0 ? [...selectedStates] : ["Tamil Nadu"]);
+  setTempDistricts([...selectedDistricts]);
+  setActiveLocationTab(
+    selectedStates.length > 0 ? selectedStates[0] : "Tamil Nadu"
+  );
+  setIsFilterLocation(false);
+};
 
   // Handle page change
   const handlePageChange = (pageIndex) => {
@@ -568,100 +578,106 @@ export default function BookASite() {
                     </div>
                   )}
 
-                  {/* Location Filters for mobile */}
-                  <div
-                    className="location1"
-                    onClick={toggleFilterSectionLocation}
-                  >
-                    <div>
-                      {" "}
-                      <img
-                        src="./images/Filter_responsive_img3.svg"
-                        className="Filter_responsive_img3"
-                      ></img>
-                      Location
-                    </div>
-                  </div>
+                 {/* Location Filters for mobile */}
+<div className="location1" onClick={toggleFilterSectionLocation}>
+  <div>
+    <img
+      src="./images/Filter_responsive_img3.svg"
+      className="Filter_responsive_img3"
+    ></img>
+    Location
+  </div>
+</div>
 
-                  {isFilterLocation && (
-                    <div className="filter-Locationdropdown">
-                      <div className="filter-ResponsiveHeading">
-                        Location
-                        <button
-                          className="close-xmarkFilter"
-                          onClick={closeFilterSectionLocation}
-                        >
-                          <i className="fa-regular fa-circle-xmark"></i>
-                        </button>
-                      </div>
+{isFilterLocation && (
+  <div className="filter-Locationdropdown">
+    <div className="filter-ResponsiveHeading">
+      Location
+      <button
+        className="close-xmarkFilter"
+        onClick={closeFilterSectionLocation}
+      >
+        <i className="fa-regular fa-circle-xmark"></i>
+      </button>
+    </div>
 
-                      <div className="filter-LocationDropdownContent">
-                        <div className="filter-LocationDropdownContentLeft">
-                          {Object.keys(stateDistricts).map((state) => (
-                            <div className="stateSideFilter">
-                              <div
-                                className={`${selectedStates.includes(state) ? "selected" : ""} ${activeLocationTab === state ? "active" : ""} filterOutdoorSortLeftTabs`}
-                                onClick={() => selectOption2(state)}
-                                key={state}
-                              >
-                                {state}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
+    <div className="filter-LocationDropdownContent">
+      <div className="filter-LocationDropdownContentLeft">
+        {Object.keys(stateDistricts).map((state) => (
+          <div className="stateSideFilter" key={state}>
+            <div
+              className={`${tempStates.includes(state) ? "selected" : ""} ${
+                activeLocationTab === state ? "active" : ""
+              } filterOutdoorSortLeftTabs`}
+              onClick={() => {
+                setActiveLocationTab(state);
+                setTempStates([state]);
+                // Reset tempDistricts when changing state
+                setTempDistricts([]);
+              }}
+            >
+              {state}
+            </div>
+          </div>
+        ))}
+      </div>
 
-                        <div className="filter-LocationDropdownContentRight">
-                          {tempStates.map((state) => (
-                            <div key={state} className="mb-2">
-                              <div className="sortLocationRightHeading LocationRightHeading">
-                                {state}
-                              </div>
-                              {stateDistricts[state]?.map((district) => (
-                                <div
-                                  key={district}
-                                  className={`form-check d-flex ${tempDistricts.includes(district)
-                                      ? "checked"
-                                      : ""
-                                    }`}
-                                >
-                                  <input
-                                    type="checkbox"
-                                    className="form-check-input"
-                                    id={district}
-                                    onChange={() =>
-                                      handleDistrictChange(district)
-                                    }
-                                    checked={tempDistricts.includes(district)}
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor={district}
-                                  >
-                                    {district}
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+      <div className="filter-LocationDropdownContentRight">
+        {tempStates.map((state) => (
+          <div key={state} className="mb-2">
+            <div className="sortLocationRightHeading LocationRightHeading">
+              {state}
+            </div>
+            {stateDistricts[state]?.map((district) => (
+              <div
+                key={district}
+                className={`form-check d-flex ${
+                  tempDistricts.includes(district) ? "checked" : ""
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id={`mobile-${district}`} // Make ID unique
+                  onChange={() => {
+                    // Update tempDistricts instead of selectedDistricts
+                    setTempDistricts((prev) =>
+                      prev.includes(district)
+                        ? prev.filter((d) => d !== district)
+                        : [...prev, district]
+                    );
+                  }}
+                  checked={tempDistricts.includes(district)}
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor={`mobile-${district}`}
+                >
+                  {district}
+                </label>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
 
-                      <div className="filterMediumButtons">
-                        <button
-                          className="filterCancelButton"
-                          onClick={handleLocationFilterCancel}
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          className="filterDoneButton"
-                          onClick={handleLocationFilterDone}
-                        >
-                          Done
-                        </button>
-                      </div>
-                    </div>
-                  )}
+    <div className="filterMediumButtons">
+      <button
+        className="filterCancelButton"
+        onClick={handleLocationFilterCancel}
+      >
+        Cancel
+      </button>
+      <button
+        className="filterDoneButton"
+        onClick={handleLocationFilterDone}
+      >
+        Done
+      </button>
+    </div>
+  </div>
+)}
                 </div>
               ) : (
                 <>

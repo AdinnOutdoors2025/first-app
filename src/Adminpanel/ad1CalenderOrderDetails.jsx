@@ -7,161 +7,161 @@ import { baseUrl } from "./BASE_URL";
 
 
 
-const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, generateMonth, handleDateClick, resetDates, getDateSelectionClass, goToNextMonth, goToPreviousMonth, bookedDates, currentMonth, confirmedDates, setConfirmedDates, pricePerDay, confirmDates, totalPrice, isPastDate,finalConfirmDate,orderId }) => {
-  
-const [conflicts, setConflicts] = useState(null);
+const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, generateMonth, handleDateClick, resetDates, getDateSelectionClass, goToNextMonth, goToPreviousMonth, bookedDates, currentMonth, confirmedDates, setConfirmedDates, pricePerDay, confirmDates, totalPrice, isPastDate, finalConfirmDate, orderId }) => {
 
-const fetchOrderConflicts = async (orderId) => {
-  try {
-    const res = await axios.get(
-      `${baseUrl}/checkOrderConflict/${orderId}`
-    );
-    return res.data;
-  } catch (err) {
-    console.error("Error fetching conflicts", err);
-    return null;
-  }
-};
+  const [conflicts, setConflicts] = useState(null);
 
-useEffect(() => {
-  if (!orderId) return;
-
-  const loadConflicts = async () => {
-    const data = await fetchOrderConflicts(orderId);
-    if (data?.success) {
-      setConflicts(data); // ✅ same name as requested
+  const fetchOrderConflicts = async (orderId) => {
+    try {
+      const res = await axios.get(
+        `${baseUrl}/checkOrderConflict/${orderId}`
+      );
+      return res.data;
+    } catch (err) {
+      console.error("Error fetching conflicts", err);
+      return null;
     }
   };
 
-  loadConflicts();
-}, [orderId]);
+  useEffect(() => {
+    if (!orderId) return;
+
+    const loadConflicts = async () => {
+      const data = await fetchOrderConflicts(orderId);
+      if (data?.success) {
+        setConflicts(data); // ✅ same name as requested
+      }
+    };
+
+    loadConflicts();
+  }, [orderId]);
 
 
 
 
   const confirmedSet = React.useMemo(() => {
-  return new Set(finalConfirmDate?.confirmed || []);
-}, [finalConfirmDate]);
+    return new Set(finalConfirmDate?.confirmed || []);
+  }, [finalConfirmDate]);
 
-const isConfirmedDate = (date) => {
-  if (!date) return false;
-  const key = getDateKey(date);
-  return confirmedSet.has(key);
-};
+  const isConfirmedDate = (date) => {
+    if (!date) return false;
+    const key = getDateKey(date);
+    return confirmedSet.has(key);
+  };
 
 
-  
+
   ////////////////////////////////////////////////////////////////////////////////////////
   const conflictDotMap = React.useMemo(() => {
-  const map = {};
-  if (!conflicts) return map;
+    const map = {};
+    if (!conflicts) return map;
 
-const pushDate = (dateStr, payload) => {
-  const d = new Date(dateStr);
-  const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-  if (!map[key]) map[key] = [];
-  map[key].push(payload);
-};
+    const pushDate = (dateStr, payload) => {
+      const d = new Date(dateStr);
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      if (!map[key]) map[key] = [];
+      map[key].push(payload);
+    };
 
 
-  /* ---------- CURRENT ORDER ---------- */
-  if (conflicts.currentOrder) {
-    const { client, orderId, booking, bookedDates } = conflicts.currentOrder;
-
-    bookedDates.forEach((d) =>
-      pushDate(d, {
-        type: "current",
-        name: client.name || "Current Order",
-        color: client.colorCode || "#000", // fallback color
-        orderId,
-        phone: client.contact || "--",
-        start: booking.startDate,
-        end: booking.endDate,
-      })
-    );
-  }
-
-  /* ---------- CONFLICT ORDERS ---------- */
-  if (Array.isArray(conflicts.conflicts)) {
-    conflicts.conflicts.forEach((order) => {
-      const { client, orderId, booking, bookedDates } = order;
+    /* ---------- CURRENT ORDER ---------- */
+    if (conflicts.currentOrder) {
+      const { client, orderId, booking, bookedDates } = conflicts.currentOrder;
 
       bookedDates.forEach((d) =>
         pushDate(d, {
-          type: "conflict",
-          name: client.name,
-          color: client.colorCode,
+          type: "current",
+          name: client.name || "Current Order",
+          color: client.colorCode || "#000", // fallback color
           orderId,
-          phone: client.contact,
+          phone: client.contact || "--",
           start: booking.startDate,
           end: booking.endDate,
         })
       );
-    });
-  }
+    }
 
-  return map;
-}, [conflicts]);
+    /* ---------- CONFLICT ORDERS ---------- */
+    if (Array.isArray(conflicts.conflicts)) {
+      conflicts.conflicts.forEach((order) => {
+        const { client, orderId, booking, bookedDates } = order;
+
+        bookedDates.forEach((d) =>
+          pushDate(d, {
+            type: "conflict",
+            name: client.name,
+            color: client.colorCode,
+            orderId,
+            phone: client.contact,
+            start: booking.startDate,
+            end: booking.endDate,
+          })
+        );
+      });
+    }
+
+    return map;
+  }, [conflicts]);
 
 
-const PieRing = ({ date, conflicts }) => {
-  const size = 34;
-  const radius = 14;
-  const strokeWidth = 6;
-  const circumference = 2 * Math.PI * radius;
-  const slice = circumference / conflicts.length;
+  const PieRing = ({ date, conflicts }) => {
+    const size = 34;
+    const radius = 14;
+    const strokeWidth = 6;
+    const circumference = 2 * Math.PI * radius;
+    const slice = circumference / conflicts.length;
 
-  return (
-    <svg width={size} height={size} className="pie-ring">
-      {conflicts.map((c, i) => {
-        const dashOffset = i * slice;
+    return (
+      <svg width={size} height={size} className="pie-ring">
+        {conflicts.map((c, i) => {
+          const dashOffset = i * slice;
 
-        return (
-          <circle
-            key={`${c.orderId}-${c.type}-${date.toISOString()}`}
-            r={radius}
-            cx={size / 2}
-            cy={size / 2}
-            fill="transparent"
-            stroke={c.color}
-            strokeWidth={strokeWidth}
-            strokeDasharray={`${slice} ${circumference}`}
-            strokeDashoffset={-dashOffset}
-          >
-            <title key={`${c.orderId}-${date.toISOString()}`}>
-{`${c.name}
+          return (
+            <circle
+              key={`${c.orderId}-${c.type}-${date.toISOString()}`}
+              r={radius}
+              cx={size / 2}
+              cy={size / 2}
+              fill="transparent"
+              stroke={c.color}
+              strokeWidth={strokeWidth}
+              strokeDasharray={`${slice} ${circumference}`}
+              strokeDashoffset={-dashOffset}
+            >
+              <title key={`${c.orderId}-${date.toISOString()}`}>
+                {`${c.name}
 Order: ${c.orderId}
 Phone: ${c.phone}
 From: ${new Date(c.start).toDateString()}
 To: ${new Date(c.end).toDateString()}`}
-            </title>
-          </circle>
-        );
-      })}
+              </title>
+            </circle>
+          );
+        })}
 
-      {/* Center Date */}
-      <text
-        x="50%"
-        y="50%"
-        textAnchor="middle"
-        dy=".3em"
-        fontSize="10"
-        fill={isConfirmedDate(date) ? "red" : "#000"}
-      >
-        {date.getDate()}
-      </text>
-    </svg>
-  );
-};
+        {/* Center Date */}
+        <text
+          x="50%"
+          y="50%"
+          textAnchor="middle"
+          dy=".3em"
+          fontSize="10"
+          fill={isConfirmedDate(date) ? "red" : "#000"}
+        >
+          {date.getDate()}
+        </text>
+      </svg>
+    );
+  };
 
 
-const getDateKey = (date) => {
-  if (!date) return null;
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
-};
+  const getDateKey = (date) => {
+    if (!date) return null;
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  };
 
   ///////////////////////////////////////////////////////////////////////////////////////
   // CALENDER SECTION 
@@ -170,7 +170,7 @@ const getDateKey = (date) => {
 
   return (
     <div>
-      <div className="calendar-container" style={{ marginBottom: '15px', width:'100%' }}>
+      <div className="calendar-container" style={{ marginBottom: '15px', width: '100%' }}>
         <div className="calendar-header">
           {isSmallScreen ? (
             <>
@@ -212,11 +212,11 @@ const getDateKey = (date) => {
                 })()} */}
 
                 <span className="month-year">
-          {new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1).toLocaleString("default", {
-            month: "long",
-          })}{" "}
-          {new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1).getFullYear()}
-        </span>
+                  {new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1).toLocaleString("default", {
+                    month: "long",
+                  })}{" "}
+                  {new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1).getFullYear()}
+                </span>
 
 
                 <div className="nav-button" onClick={goToNextMonth}>
@@ -226,8 +226,8 @@ const getDateKey = (date) => {
             </>
           )}
           <button className="close-xmark" onClick={closeCalender}>
-          <i className="fa-regular fa-circle-xmark"></i>
-        </button>
+            <i className="fa-regular fa-circle-xmark"></i>
+          </button>
         </div>
 
         {/* CALENDER BODY  */}
@@ -259,34 +259,34 @@ const getDateKey = (date) => {
                           d.getUTCDate() === date.getUTCDate()
                         ) ? 'booked' : getDateSelectionClass(date)
 
-) : ''}
+                        ) : ''}
         ${isPastDate ? 'past' : ''}
       `}
                       onClick={() => !isPastDate && handleDateClick(date)}
                       style={{ pointerEvents: bookedDates.some((d) => d.getTime() === date?.getTime()) ? "none" : "auto" }}
                     >
-{date && (
-  <>
-    {conflictDotMap[getDateKey(date)] ? (
-      <PieRing
-        date={date}
-        conflicts={conflictDotMap[getDateKey(date)]}
-      />
-    ) : (
-<span
-  style={{
-    color: isConfirmedDate(date) ? "red" : undefined,
-    fontWeight: isConfirmedDate(date) ? "600" : undefined,
-  }}
->
-  {date.getDate()}
-</span>
+                      {date && (
+                        <>
+                          {conflictDotMap[getDateKey(date)] ? (
+                            <PieRing
+                              date={date}
+                              conflicts={conflictDotMap[getDateKey(date)]}
+                            />
+                          ) : (
+                            <span
+                              style={{
+                                color: isConfirmedDate(date) ? "red" : undefined,
+                                fontWeight: isConfirmedDate(date) ? "600" : undefined,
+                              }}
+                            >
+                              {date.getDate()}
+                            </span>
 
 
 
-    )}
-  </>
-)}
+                          )}
+                        </>
+                      )}
 
 
                     </div>
@@ -306,27 +306,27 @@ const getDateKey = (date) => {
 
                   </div>
                   <div className="calendar-legend-responsive-content2">
-                
-<span>
-    Start Date: <span style={{ color: 'red' }}>
-        {selectedDates.start?.toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric',
-            timeZone: 'UTC'
-        }) || "--"}
-    </span>
-</span>
 
-<span>
-    End Date: <span style={{ color: 'red' }}>
-        {selectedDates.end?.toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric',
-            timeZone: 'UTC'
-        }) || "--"}
-    </span>
-</span>
-<br></br>
+                    <span>
+                      Start Date: <span style={{ color: 'red' }}>
+                        {selectedDates.start?.toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          timeZone: 'UTC'
+                        }) || "--"}
+                      </span>
+                    </span>
+
+                    <span>
+                      End Date: <span style={{ color: 'red' }}>
+                        {selectedDates.end?.toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          timeZone: 'UTC'
+                        }) || "--"}
+                      </span>
+                    </span>
+                    <br></br>
                     {/* Total Amount Calculation */}
                     <span>
                       {/* Amount: <span style={{ color: 'red' }}>₹{totalPrice.toLocaleString()}</span> */}
@@ -372,7 +372,7 @@ const getDateKey = (date) => {
 
                 <span>
                   {/* Amount: <span style={{ color: 'red' }}>₹{totalPrice.toLocaleString()}</span> */}
-                      Amount: <span style={{ color: 'red' }}>{formatIndianCurrency(totalPrice, true)}</span>
+                  Amount: <span style={{ color: 'red' }}>{formatIndianCurrency(totalPrice, true)}</span>
 
                 </span>
                 <br />
@@ -402,37 +402,36 @@ const getDateKey = (date) => {
                     {generateMonth(monthToRender).map((date, index) => (
                       <div
                         key={index}
-                   className={`date ${
-  bookedDates.some((d) => d.getTime() === date?.getTime())
-    ? "booked"
-    : getDateSelectionClass(date)
-}`}
+                        className={`date ${bookedDates.some((d) => d.getTime() === date?.getTime())
+                          ? "booked"
+                          : getDateSelectionClass(date)
+                          }`}
 
                         onClick={() => handleDateClick(date)}
                         style={{ pointerEvents: bookedDates.some((d) => d.getTime() === date?.getTime()) ? "none" : "auto" }}
                       >
-                      
-{date && (
-  <>
-    {conflictDotMap[getDateKey(date)] ? (
-      <PieRing
-        date={date}
-        conflicts={conflictDotMap[getDateKey(date)]}
-      />
-    ) : (
-<span
-  style={{
-    color: isConfirmedDate(date) ? "red" : undefined,
-    fontWeight: isConfirmedDate(date) ? "600" : undefined,
-  }}
->
-  {date.getDate()}
-</span>
+
+                        {date && (
+                          <>
+                            {conflictDotMap[getDateKey(date)] ? (
+                              <PieRing
+                                date={date}
+                                conflicts={conflictDotMap[getDateKey(date)]}
+                              />
+                            ) : (
+                              <span
+                                style={{
+                                  color: isConfirmedDate(date) ? "red" : undefined,
+                                  fontWeight: isConfirmedDate(date) ? "600" : undefined,
+                                }}
+                              >
+                                {date.getDate()}
+                              </span>
 
 
-    )}
-  </>
-)}
+                            )}
+                          </>
+                        )}
 
 
                       </div>

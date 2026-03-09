@@ -204,9 +204,9 @@ function AdinnHome3() {
                         <p className='high-para'>Innovative Campaign
                             Execution</p>
                     </div>
-                    <div class="high-inside">
-                        <img src='./images/high-img2.png' className='high-img'></img>  <br></br>
-                        <p className='high-para'>Exceptional Team</p>
+                    <div class="high-inside high-inside2-home">
+                      <div>  <img src='./images/high-img2.png' className='high-img high-img2-home'></img></div>  
+                     <div>   <p className='high-para high-para2-home'>Exceptional Team</p></div>
                     </div>
                     <div class="high-inside high-inside-last">
                         <img src='./images/high-img3.png' className='high-img' ></img>  <br></br>

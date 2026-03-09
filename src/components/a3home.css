@@ -2,11 +2,8 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-
 .highlight {
     color: rgba(228, 30, 37, 1);
-
-
 }
 
 
@@ -245,7 +242,6 @@
 }
 
 
-/* Non-hover state with slide-out effect */
 .ooh-inside:not(:hover) .eye {
     animation: slideOut 0.5s ease-out forwards;
 }
@@ -593,10 +589,6 @@
 
 /* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
 @media (min-width: 1440px) and (max-width: 2559px) {
-
-
-
-
     .high-img {
         height: 100px;
         width: 100px;
@@ -715,6 +707,7 @@
         display: flex;
         gap: 10px;
         top: 20px;
+        /* left: 63%; */
         height: 60px;
         font-size: 25px;
         font-weight: 500;
@@ -751,7 +744,7 @@
 
 
         100% {
-            left: 200px;
+            left: 350px;
         }
     }
 
@@ -759,7 +752,7 @@
     /* Keyframes for sliding out (left to right) */
     @keyframes slideOut {
         0% {
-            left: 200px;
+            left: 350px;
         }
 
 
@@ -791,6 +784,43 @@
 
 }
 
+@media (min-width: 1000px) and (max-width: 1120px) {
+
+    /* Keyframes for sliding in (right to left) */
+    @keyframes slideIn {
+        0% {
+            right: -500px;
+        }
+
+
+        50% {
+            right: -100px;
+        }
+
+
+        100% {
+            left: 155px;
+        }
+    }
+
+
+    /* Keyframes for sliding out (left to right) */
+    @keyframes slideOut {
+        0% {
+            left: 155px;
+        }
+
+
+        50% {
+            right: -100px;
+        }
+
+
+        100% {
+            right: -500px;
+        }
+    }
+}
 
 /* Laptops & Small Desktops (992px - 1024px)  ✅ Tablets (Landscape Mode) */
 @media (min-width: 992px) and (max-width: 1023px) {
@@ -1176,6 +1206,165 @@
 
 }
 
+@media (min-width: 800px) and (max-width: 819px) {
+    .board-loc-book-home {
+        width: 100%;
+    }
+
+    .intro-main {
+        height: 55px;
+        width: 100%;
+        padding: 5px 4px;
+    }
+
+
+    .ooh-inside:hover .intro-main {
+        height: 115px;
+        width: 100%;
+    }
+
+    /* Keyframes for sliding in (right to left) */
+    @keyframes slideIn {
+        0% {
+            right: -500px;
+        }
+
+
+        50% {
+            right: -100px;
+        }
+
+
+        100% {
+            left: 53px;
+        }
+    }
+
+
+    /* Keyframes for sliding out (left to right) */
+    @keyframes slideOut {
+        0% {
+            left: 53px;
+        }
+
+
+        50% {
+            right: -100px;
+        }
+
+
+        100% {
+            right: -500px;
+        }
+    }
+}
+
+@media (min-width: 820px) and (max-width: 840px) {
+    .board-loc-book-home {
+        width: 100%;
+    }
+
+    .intro-main {
+        height: 55px;
+        width: 100%;
+        padding: 5px 4px;
+    }
+
+
+    .ooh-inside:hover .intro-main {
+        height: 115px;
+        width: 100%;
+    }
+
+    /* Keyframes for sliding in (right to left) */
+    @keyframes slideIn {
+        0% {
+            right: -500px;
+        }
+
+
+        50% {
+            right: -100px;
+        }
+
+
+        100% {
+            left: 53px;
+        }
+    }
+
+
+    /* Keyframes for sliding out (left to right) */
+    @keyframes slideOut {
+        0% {
+            left: 53px;
+        }
+
+
+        50% {
+            right: -100px;
+        }
+
+
+        100% {
+            right: -500px;
+        }
+    }
+}
+
+@media (min-width: 841px) and (max-width: 885px) {
+    .board-loc-book-home {
+        width: 100%;
+    }
+
+    .intro-main {
+        height: 55px;
+        width: 100%;
+        padding: 5px 4px;
+    }
+
+
+    .ooh-inside:hover .intro-main {
+        height: 115px;
+        width: 100%;
+    }
+
+    /* Keyframes for sliding in (right to left) */
+    @keyframes slideIn {
+        0% {
+            right: -500px;
+        }
+
+
+        50% {
+            right: -100px;
+        }
+
+
+        100% {
+            left: 73px;
+        }
+    }
+
+
+    /* Keyframes for sliding out (left to right) */
+    @keyframes slideOut {
+        0% {
+            left: 73px;
+        }
+
+
+        50% {
+            right: -100px;
+        }
+
+
+        100% {
+            right: -500px;
+        }
+    }
+}
+
 
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
 @media (min-width: 480px) and (max-width: 767px) {
@@ -1191,13 +1380,22 @@
         font-weight: 400;
     }
 
+    .high-inside2-home {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .high-para2-home {
+        margin-bottom: 16%;
+
+    }
 
     .high-img {
         height: 60px;
         width: 60px;
         margin-bottom: 4%;
     }
-
 
     .ooh-intro {
         padding: 0px 5px;
@@ -1384,6 +1582,16 @@
         margin-bottom: 4%;
     }
 
+    .high-inside2-home {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .high-para2-home {
+        margin-bottom: 12%;
+
+    }
 
     .ooh-intro {
         padding: 0px 5px;
@@ -1491,24 +1699,20 @@
         margin: auto 8px;
     }
 
-
     /* Keyframes for sliding in (right to left) */
     @keyframes slideIn {
         0% {
             right: -500px;
         }
 
-
         50% {
             right: -100px;
         }
-
 
         100% {
             left: 56%
         }
     }
-
 
     /* Keyframes for sliding out (left to right) */
     @keyframes slideOut {
@@ -1516,17 +1720,195 @@
             left: 56%
         }
 
-
         50% {
             right: -100px;
         }
-
 
         100% {
             right: -500px;
         }
     }
 
+    .custom-arrow1 {
+        font-size: 40px;
+    }
+
+    .next-arrow1 {
+        right: 22px;
+    }
+
+    .prev-arrow1 {
+        left: 22px;
+    }
+}
+
+@media (min-width: 412px) and (max-width: 424px) {
+    .high-inside {
+        padding: 0 2px;
+        height: 120px;
+        width: 150px;
+        margin-bottom: 6%;
+    }
+
+
+    .high-para {
+        font-size: 13.5px;
+        font-weight: 400;
+    }
+
+
+    .high-img {
+        height: 60px;
+        width: 60px;
+        margin-bottom: 4%;
+    }
+
+    .high-inside2-home {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .high-para2-home {
+        margin-bottom: 12%;
+
+    }
+
+    .ooh-intro {
+        padding: 0px 5px;
+        gap: 10px;
+    }
+
+
+    .ooh-inside {
+        height: 350px;
+        width: auto;
+    }
+
+
+    .ooh-inside-content {
+        height: 96%;
+        width: auto;
+        margin: 7px;
+    }
+
+
+    .ooh-img {
+        height: 96%;
+        width: 100%;
+        border-radius: 10px;
+        transform: scale(1);
+        transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+
+    .intro-main {
+        height: 55px;
+        width: 100%;
+        padding: 5px 4px;
+    }
+
+
+    .ooh-inside:hover .intro-main {
+        height: 120px;
+        width: 100%;
+    }
+
+
+    .ooh-para {
+        line-height: 20px;
+        font-size: 18px;
+        width: 100%;
+    }
+
+
+    .ooh-num {
+        font-size: 30px;
+    }
+
+
+    .intro-content p {
+        height: 42px;
+        overflow: hidden;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+
+    .ooh-btn {
+        height: auto;
+        width: auto;
+        font-size: 16px;
+        padding: 8px 13px;
+        margin: 0px auto;
+        border-radius: 35px;
+        margin-left: 4px;
+    }
+
+
+    .arrow {
+        align-items: right;
+        height: 12px;
+        width: 25px;
+    }
+
+
+    .eye {
+        width: max-content;
+        display: flex;
+        gap: 10px;
+        top: 10px;
+        /* height: 60px; */
+        font-size: 18px;
+        font-weight: 500;
+        padding: 10px 0px;
+        padding-left: 7px;
+        padding-right: 13px;
+    }
+
+
+    .eyeImg {
+        height: 19px;
+        width: 25px;
+        margin: auto 8px;
+    }
+
+
+    .boxImg {
+        height: 22px;
+        width: 22px;
+        margin: auto 8px;
+    }
+
+    /* Keyframes for sliding in (right to left) */
+    @keyframes slideIn {
+        0% {
+            right: -500px;
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            left: 55%
+        }
+    }
+
+    /* Keyframes for sliding out (left to right) */
+    @keyframes slideOut {
+        0% {
+            left: 55%
+        }
+
+        50% {
+            right: -100px;
+        }
+
+        100% {
+            right: -500px;
+        }
+    }
 
     .custom-arrow1 {
         font-size: 40px;
@@ -1541,15 +1923,10 @@
     .prev-arrow1 {
         left: 22px;
     }
-
-
-
-
 }
 
-
 /* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
-@media (min-width: 375px) and (max-width: 424px) {
+@media (min-width: 375px) and (max-width: 411px) {
     .high-inside {
         padding: 0 2px;
         height: 120px;
@@ -1571,8 +1948,6 @@
         width: 60px;
         margin-bottom: 4%;
     }
-
-
 
 
     .ooh-intro {
@@ -1659,6 +2034,7 @@
         display: flex;
         gap: 10px;
         top: 15px;
+        /* left: 55%; */
         /* height: 60px; */
         font-size: 17px;
         font-weight: 500;
@@ -1921,8 +2297,6 @@
     .prev-arrow1 {
         left: 22px;
     }
-
-
 }
 
 

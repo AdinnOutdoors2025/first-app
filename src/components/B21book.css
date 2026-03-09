@@ -212,15 +212,7 @@ section {
 
 }
 
-.board-content-bottom-book {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: auto;
-    position: relative;
-    /* padding-bottom: 50px;
-    margin-top: -15px; */
-}
+
 
 .board-price-book {
     font-size: 16px;

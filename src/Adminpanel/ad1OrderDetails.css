@@ -1,19 +1,20 @@
 /* ORDER RIGHT SECTION  */
 .adminOrderDetailsMain {
-    margin: 20px;
+  margin: 20px;
 }
 
 
 .order-manageClientSection {
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.order-15);
-    /* box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.order-15); */
-    width: 950px;
-    height: auto;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 1);
-    padding: 15px;
-    margin-bottom: 15px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.order-15);
+  /* box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.order-15); */
+  width: 950px;
+  height: auto;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 1);
+  padding: 15px;
+  margin-bottom: 15px;
 }
+
 /* ===============================
    Responsive width adjustments
    =============================== */
@@ -45,6 +46,7 @@
     width: 100%;
   }
 }
+
 /* Click toggle (mobile + desktop) */
 .tooltip-content.show-tooltip {
   display: block;
@@ -56,74 +58,74 @@
 }
 
 .order-manageRightSideHeading {
-    color: rgba(227, 31, 37, 1);
-    font-family: Montserrat;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    padding-bottom: 15px;
-    border-bottom: 1px solid;
-    border-image-source: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000000 56.51%, rgba(0, 0, 0, 0) 100%);
-    border-image-slice: 1;
+  color: rgba(227, 31, 37, 1);
+  font-family: Montserrat;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  padding-bottom: 15px;
+  border-bottom: 1px solid;
+  border-image-source: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000000 56.51%, rgba(0, 0, 0, 0) 100%);
+  border-image-slice: 1;
 }
 
 
 .order-manageClientInformation {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 
 .order-manageClientInfoLeft,
 .order-manageClientInfoRight {
-    width: 50%;
-    margin: 25px auto;
+  width: 50%;
+  margin: 25px auto;
 }
 
 
 .order-clientDetailHeading {
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    color: rgba(227, 31, 37, 1);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: rgba(227, 31, 37, 1);
 }
 
 
 .order-clientDetailsInput {
-    outline: none;
-    border: none;
-    border-bottom: 1px solid rgba(168, 168, 168, 1);
-    width: 288px;
-    color: rgba(51, 51, 51, 1);
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 100%;
-    letter-spacing: 0%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgba(168, 168, 168, 1);
+  width: 288px;
+  color: rgba(51, 51, 51, 1);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
 }
 
 
 .order-clientDetailsInput::-webkit-outer-spin-button,
 .order-clientDetailsInput::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 
 .order-clientDetailsInput {
-    -moz-appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 
 .order-clientDetailsInput::placeholder {
-    font-size: 14px;
-    font-weight: 0;
+  font-size: 14px;
+  font-weight: 0;
 }
 
 
 .order-clientDetailSection {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 
@@ -132,109 +134,111 @@
 
 
 .admin-order-pricing {
-    width: 100%;
-    font-family: Montserrat;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    color: rgba(27, 28, 32, 1);
-    margin-top: 10px;
+  width: 100%;
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: rgba(27, 28, 32, 1);
+  margin-top: 10px;
 
 
 }
 
 
 .admin-orderContent {
-    display: flex;
-    justify-content: space-between;
-    /* border-bottom: 1px dashed rgba(113, 117, 126, 1); */
-    padding-top: 10px;
-    /* padding-bottom: 20px; */
+  display: flex;
+  justify-content: space-between;
+  /* border-bottom: 1px dashed rgba(113, 117, 126, 1); */
+  padding-top: 10px;
+  /* padding-bottom: 20px; */
 }
 
 
 .adminOrder_productSection {
-    margin-bottom: 0px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    width: 100%;
+  margin-bottom: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  width: 100%;
 
 
 }
 
 
 .admin-totalPaidAmt {
-    font-family: Montserrat;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    color: rgba(27, 28, 32, 1);
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
-    background: rgba(255, 255, 255, 1);
-    width: 100%;
-    padding: 16px 16px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: rgba(27, 28, 32, 1);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 1);
+  width: 100%;
+  padding: 16px 16px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 
 .admin-orderContentRight {
-    width: 60px;
-    text-align: center;
-    /* border: 1px solid blue; */
+  width: 60px;
+  text-align: center;
+  /* border: 1px solid blue; */
 }
-.admin-OrderTableHeading{
-    margin-bottom: 20px;
+
+.admin-OrderTableHeading {
+  margin-bottom: 20px;
 }
 
 
-.OrderDetailsEdit{
-    cursor: pointer;
-    margin-left: 50px;
-    font-size: 24px;
-    /* color:green; */
+.OrderDetailsEdit {
+  cursor: pointer;
+  margin-left: 50px;
+  font-size: 24px;
+  /* color:green; */
 }
-.OrderDetailsEdit:hover{
-    color:green;
+
+.OrderDetailsEdit:hover {
+  color: green;
 }
 
 
 /* Product Tabs */
 .product-tabs {
-    display: flex;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #ddd;
+  display: flex;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
 }
 
 
 .product-tab {
-    padding: 8px 15px;
-    background: #f5f5f5;
-    border: 1px solid #ddd;
-    border-bottom: none;
-    margin-right: 5px;
-    cursor: pointer;
-    border-radius: 4px 4px 0 0;
+  padding: 8px 15px;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  margin-right: 5px;
+  cursor: pointer;
+  border-radius: 4px 4px 0 0;
 }
 
 
 .product-tab.active {
-    /* background: #fff; */
-    background-color: #ffe6e6;
+  /* background: #fff; */
+  background-color: #ffe6e6;
 
 
-    border-bottom: 1px solid #fff;
-    margin-bottom: -1px;
-    font-weight: bold;
+  border-bottom: 1px solid #fff;
+  margin-bottom: -1px;
+  font-weight: bold;
 }
 
 
 /* Active product row */
 .active-product {
-    /* background-color: #f9f9f9; */
-    background-color: #ffe6e6;
+  /* background-color: #f9f9f9; */
+  background-color: #ffe6e6;
 
 
 }
@@ -242,90 +246,95 @@
 
 /* Calendar Modal */
 .calendar-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    z-index: 1000;
-    max-width: 90%;
-    max-height: 90vh;
-    overflow: auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow: auto;
 }
 
 
 .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 
 .modal-header h3 {
-    margin: 0;
+  margin: 0;
 }
 
 
 .modal-header button {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 
 /* Loading and error states */
 .loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255,255,255,0.8);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;            
-    height: 100vh; 
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
 }
 
 
 .spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    margin-bottom: 10px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
 }
 
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 
 .error-messageOrderDetails {
-    color: #d9534f;
-    background: #f8d7da;
-    padding: 10px;
-    border-radius: 4px;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
+  color: #d9534f;
+  background: #f8d7da;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
 }
 
 
 .error-messageOrderDetails i {
-    margin-right: 8px;
+  margin-right: 8px;
 }
 
 
@@ -343,24 +352,24 @@
 
 /* NEWLY ADDED FOR BOOK DATE CONFLICT ERROR MESSSAGE  */
 .date.booked.conflict {
-    background-color: #ff6b6b !important;
-    color: white !important;
-    cursor: not-allowed !important;
+  background-color: #ff6b6b !important;
+  color: white !important;
+  cursor: not-allowed !important;
 }
 
 
 .date.booked.conflict:hover {
-    background-color: #ff5252 !important;
+  background-color: #ff5252 !important;
 }
 
 
 .conflict-message {
-    background-color: #fff3cd;
-    border: 1px solid #ffeaa7;
-    color: #856404;
-    padding: 10px;
-    border-radius: 4px;
-    margin: 10px 0;
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  color: #856404;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
 }
 
 
@@ -370,8 +379,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 25px;
-  max-width: 900px;   /* 👈 Keeps it close to the title */
-  margin: auto;       /* Center the block */
+  max-width: 900px;
+  /* 👈 Keeps it close to the title */
+  margin: auto;
+  /* Center the block */
 }
 
 
@@ -388,9 +399,9 @@
   font-weight: 600;
   border-radius: 8px;
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: absolute;
-  right : 345px;
+  right: 345px;
 }
 
 
@@ -418,70 +429,75 @@
 /* In your ad1OrderDetails.css */
 /* In your ad1OrderDetails.css */
 .handler-info-section {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 
 .edit-handler-btn {
-    background: #4a90e2;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 13px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s;
+  background: #4a90e2;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
 }
 
 
 .edit-handler-btn:hover:not(:disabled) {
-    background: #3a7bc8;
-    transform: translateY(-1px);
+  background: #3a7bc8;
+  transform: translateY(-1px);
 }
 
 
 .edit-handler-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 
 .edit-handler-btn i {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 
 .fa-spinner {
-    animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
 }
 
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 
 .order-taken-by {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: #f0f8ff;
-    border-radius: 6px;
-    font-size: 14px;
-    color: #2c5282;
-    border: 1px solid #bee3f8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #f0f8ff;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #2c5282;
+  border: 1px solid #bee3f8;
 }
 
 
 .order-taken-by i {
-    color: #4a90e2;
+  color: #4a90e2;
 }
 
 
@@ -608,6 +624,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -673,16 +690,16 @@
     align-items: flex-start;
     gap: 8px;
   }
-  
+
   .add-status-input-group {
     flex-direction: column;
   }
-  
+
   .new-status-input,
   .add-status-button {
     width: 100%;
   }
-  
+
   .add-status-button {
     padding: 12px;
   }
@@ -692,44 +709,44 @@
 /* ORDER EDIT DELETE BUTTON  */
 
 .order-action-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
 .status-edit-icon {
-    cursor: pointer;
-    font-size: 20px;
-    color: #4299e1;
-    padding: 6px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    background: rgba(66, 153, 225, 0.1);
+  cursor: pointer;
+  font-size: 20px;
+  color: #4299e1;
+  padding: 6px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  background: rgba(66, 153, 225, 0.1);
 }
 
 .status-edit-icon:hover {
-    color: white;
-    background: #4299e1;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(66, 153, 225, 0.3);
+  color: white;
+  background: #4299e1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(66, 153, 225, 0.3);
 }
 
 .status-delete-icon {
-    cursor: pointer;
-    font-size: 20px;
-    color: #f56565;
-    padding: 6px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    background: rgba(245, 101, 101, 0.1);
+  cursor: pointer;
+  font-size: 20px;
+  color: #f56565;
+  padding: 6px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  background: rgba(245, 101, 101, 0.1);
 }
 
 .status-delete-icon:hover {
-    color: white;
-    background: #f56565;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(245, 101, 101, 0.3);
+  color: white;
+  background: #f56565;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(245, 101, 101, 0.3);
 }
 
 /* Payment tool tip */
@@ -939,7 +956,7 @@
   width: 400px;
   max-width: 90%;
   text-align: center;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -987,12 +1004,19 @@
 
 .add-status-section {
   margin-top: 15px;
-  animation: fadeIn 0.3s ease;
+  animation: fadeInOrderDetails 0.3s ease;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes fadeInOrderDetails {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 
@@ -1148,7 +1172,8 @@
 } */
 
 /* Disabled state for cancelled orders */
-input:disabled, button:disabled {
+input:disabled,
+button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
@@ -1197,11 +1222,11 @@ input:disabled, button:disabled {
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  animation: fadeIn 0.2s ease;
+  animation: fadeInNecessary 0.2s ease;
   padding-top: 25%;
   overflow-x: hidden;
-    overflow-y: scroll;
-    scrollbar-width: none;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .delete-popup-content {
@@ -1211,7 +1236,7 @@ input:disabled, button:disabled {
   max-width: 500px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  animation: slideIn 0.3s ease;
+  animation: slideInOrderDetails 0.3s ease;
 }
 
 .delete-popup-header {
@@ -1305,7 +1330,7 @@ input:disabled, button:disabled {
 
 .restore-confirm-btn {
   background: linear-gradient(180deg, #28a745 0%, #218838 100%) !important;
-   flex: 1;
+  flex: 1;
   color: white;
   border: none;
   padding: 14px;
@@ -1359,16 +1384,22 @@ input:disabled, button:disabled {
 }
 
 /* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes fadeInNecessary {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-@keyframes slideIn {
+@keyframes slideInOrderDetails {
   from {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1387,6 +1418,7 @@ input:disabled, button:disabled {
   border-bottom: 1px solid #eee;
   text-align: left;
 }
+
 /* Cell spacing */
 .payment-table td {
   padding: 6px 8px;
@@ -1457,22 +1489,22 @@ input:disabled, button:disabled {
     width: 95%;
     margin: 10px;
   }
-  
+
   .delete-popup-buttons {
     flex-direction: column;
   }
-  
+
   .cancelled-order-banner {
     flex-direction: column;
     text-align: center;
     gap: 8px;
   }
-  
+
   .cancelled-order-banner .cancel-reason {
     margin-left: 0;
     width: 100%;
   }
-} 
+}
 
 
 /* Deleted Product Styles */
@@ -1556,7 +1588,7 @@ input:disabled, button:disabled {
 
 .status-restore-icon:hover {
   color: #218838;
-} 
+}
 
 
 
@@ -1773,7 +1805,7 @@ input:disabled, button:disabled {
 .btn-cancel:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-} 
+}
 
 
 
@@ -1801,7 +1833,7 @@ input:disabled, button:disabled {
 .color-box {
   /* width: 20px;
   height: 20px; */
-   width: 12px;
+  width: 12px;
   height: 12px;
   border-radius: 4px;
 }
@@ -1859,6 +1891,7 @@ input:disabled, button:disabled {
   border: 1px solid #e5e5e5;
   z-index: 999;
 }
+
 .tooltip-text-conflict div {
   padding: 4px 0;
   border-bottom: 1px solid #f0f0f0;
@@ -1868,6 +1901,7 @@ input:disabled, button:disabled {
 .tooltip-text-conflict div:last-child {
   border-bottom: none;
 }
+
 .tooltip-conflict:hover .tooltip-text-conflict {
   visibility: visible;
 }

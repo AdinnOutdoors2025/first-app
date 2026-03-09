@@ -1,4 +1,3 @@
-/* Calendar.css */
 .calendar-container {
     background-color: white;
     width: 100%;
@@ -528,19 +527,6 @@
     pointer-events: none !important;
     cursor: not-allowed !important;
 }
-
-/* Queue indicator dot */
-/* .queue-indicator-dot {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    width: 6px;
-    height: 6px;
-    background-color: orange;
-    border-radius: 50%;
-}  */
-/* DATE OPEN WINDOW  */
-
 
 
 /* Responsive Media Queries */
@@ -1177,10 +1163,6 @@
     .calendarAlertIconMain {
         padding: 13px;
     }
-
-
-
-
 }
 
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
@@ -1319,7 +1301,7 @@
     }
 
     .calendarBtnsResetConfirm {
-        margin: 0px 20%;
+        margin: 0px 15%;
     }
 
     .calendarStartEndMain {
@@ -1485,14 +1467,14 @@
         line-height: 15.63px;
         letter-spacing: 0.05em;
         padding: 8px 15px;
+        margin: 5px 10px;
     }
 
     .dot-pending {
         font-size: 10px;
     }
-
     .calendarBtnsResetConfirm {
-        margin: 0px 16%;
+        margin: 0px 12%;
     }
 
     .calendarStartEndMain {
@@ -1529,7 +1511,6 @@
 
 /* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
 @media (min-width: 375px) and (max-width: 424px) {
-
 
     .calendar-overlay {
         padding-top: 18%;
@@ -1658,6 +1639,7 @@
         line-height: 15.63px;
         letter-spacing: 0.05em;
         padding: 8px 15px;
+        margin: 5px 10px;
     }
 
     .dot-pending {
@@ -1665,7 +1647,7 @@
     }
 
     .calendarBtnsResetConfirm {
-        margin: 0px 11%;
+        margin: 0px 9%;
     }
 
     .calendarStartEndMain {
@@ -1838,6 +1820,7 @@
         line-height: 15.63px;
         letter-spacing: 0.05em;
         padding: 8px 15px;
+        margin: 5px 10px;
     }
 
     .dot-pending {
@@ -2010,6 +1993,7 @@
         line-height: 15.63px;
         letter-spacing: 0.05em;
         padding: 8px 12px;
+        margin: 5px 10px;
     }
 
     .dot-pending {

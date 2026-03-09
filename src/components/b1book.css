@@ -316,6 +316,21 @@
     white-space: nowrap;
 }
 
+.board-loc-book {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 17.94px;
+    height: 55px;
+    color: rgba(51, 51, 51, 1);
+    width: 250px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .board-content-book {
     padding: 10px;
     /* padding-bottom: 15px; */
@@ -664,7 +679,7 @@
     }
 
     .board-content-bottom-book {
-        height: 50px;
+        height: auto;
 
     }
 
@@ -1103,7 +1118,7 @@
 
 
     .board-content-bottom-book {
-        height: 50px;
+        height: auto;
     }
 
 
@@ -1815,7 +1830,8 @@
         top: 90px;
         left: 0;
         right: 0;
-        z-index: 1000;
+        z-index: 999;
+        /* 1000 -> 999 changed*/
     }
 
     .bookMainDeal .side-right-content {
@@ -2191,6 +2207,7 @@
     }
 
     .board-content-bottom-book {
+        height: auto;
         flex-direction: column !important;
     }
 
@@ -2297,7 +2314,8 @@
         top: 90px;
         left: 0;
         right: 0;
-        z-index: 1000;
+        z-index: 999;
+        /* 1000 -> 999 changed*/
     }
 
     .bookMainDeal .side-right-content {
@@ -2682,6 +2700,7 @@
     }
 
     .board-content-bottom-book {
+        height: auto;
         flex-direction: column !important;
     }
 
@@ -2797,7 +2816,8 @@
         top: 80px;
         left: 0;
         right: 0;
-        z-index: 1000;
+        z-index: 999;
+        /* 1000 -> 999 changed*/
     }
 
     .bookMainDeal .side-right-content {
@@ -3197,6 +3217,7 @@
     }
 
     .board-content-bottom-book {
+        height: auto;
         flex-direction: column !important;
     }
 
@@ -3311,7 +3332,8 @@
         top: 80px;
         left: 0;
         right: 0;
-        z-index: 1000;
+        z-index: 999;
+        /* 1000 -> 999 changed*/
     }
 
     .bookMainDeal .side-right-content {
@@ -3703,6 +3725,7 @@
     }
 
     .board-content-bottom-book {
+        height: auto;
         flex-direction: column !important;
     }
 
@@ -3744,7 +3767,8 @@
         top: 78px;
         left: 0;
         right: 0;
-        z-index: 1000;
+        z-index: 999;
+        /* 1000 -> 999 changed*/
     }
 
     .bookMainDeal .side-right-content {
@@ -4140,6 +4164,7 @@
     }
 
     .board-content-bottom-book {
+        height: auto;
         flex-direction: column !important;
     }
 

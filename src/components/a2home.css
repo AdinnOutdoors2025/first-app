@@ -28,15 +28,15 @@
 }
 
 .billboard-card {
-    margin-bottom: 10%;
-    height: auto !important;
-    width: 280px;
-    border-radius: 16px;
-    /* background: linear-gradient(94.12deg, #FFE2E3 66.96%, #FFFFFF 99.86%); */
-    background: #fff;
-    cursor: pointer;
-    padding-bottom: 0px;
-    box-shadow: 0px 0px 15px 0px #0000001A;
+  margin-bottom: 10%;
+  height: auto !important;
+  width: 280px;
+  border-radius: 16px;
+  /* background: linear-gradient(94.12deg, #FFE2E3 66.96%, #FFFFFF 99.86%); */
+  background: #fff;
+  cursor: pointer;
+  padding-bottom: 0px;
+  box-shadow: 0px 0px 15px 0px #0000001A;
 }
 
 .card-img-top1-home {
@@ -59,52 +59,26 @@
   color: red;
 }
 
-/* .board-loc-home {
+.board-loc-book-home {
   font-size: 18px;
-  font-weight: 400;
-  line-height: 21.94px;
-  text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
-  color: rgba(51, 51, 51, 1);
-  width: 260px;
+  font-weight: 700;
   line-height: 17.94px;
   height: 55px;
+  color: rgba(51, 51, 51, 1);
+  width: 80%;
   display: -webkit-box;
   -webkit-line-clamp: 3;
-  Limit to 3 lines
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-} */
- .board-loc-book {
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 17.94px;
-    height: 55px;
-    color: rgba(51, 51, 51, 1);
-    width: 250px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  white-space: nowrap;
 }
-.board-loc-book1 {
-    font-family: Montserrat;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 17.94px;
-    height: 55px;
-    color: rgba(51, 51, 51, 1);
-    width: 250px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+
+.board-price-book-home {
+  font-size: 16px;
+  font-weight: 500;
+  color: #2B3333;
+  font-family: Montserrat !important;
 }
 
 .board-content-home {
@@ -127,20 +101,42 @@
   margin-top: 5px;
 }
 
+.board-content-top-book-home {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 5px;
+  height: 30px;
+}
+
+.board-content-bottom-book-home {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: auto;
+  position: relative;
+}
+
+.board-price-bookPerDay-home {
+  color: rgba(51, 51, 51, 1);
+  font-size: 16px;
+  font-weight: 500;
+}
+
 .board-dim-home {
   font-family: 'Montserrat';
   font-size: 16px;
-    font-weight: 600;
-    align-content: center;
-    align-items: center;
-    text-align: center;
-    float: right;
-    /* height: 28px;
+  font-weight: 600;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  float: right;
+  /* height: 28px;
     width: 80px; */
-    padding: 2px 5px;
-    border-radius: 6px;
-    color: #E41E25;
-    box-shadow: 0px 2px 4px 0px #00000026;
+  padding: 2px 5px;
+  border-radius: 6px;
+  color: #E41E25;
+  box-shadow: 0px 2px 4px 0px #00000026;
 }
 
 .board-price-home {
@@ -182,24 +178,41 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.rate2-book {
-  position: relative;
-  /* bottom: 51.5px; */
-  /* left: 10px; */
-  width: 11% !important;
-  /* display: flex; */
-  align-items: center;
-  gap: 6px;
-  flex-direction: row-reverse;
-  background-color: #6dbb45; /* exact green style */
-  padding: 5px 5px;
-  border-radius: 6px;
 
+.rate2-book-home {
+  position: relative;
+  align-items: center;
+  gap: 8px;
+  display: flex;
+  width: max-content;
+  align-content: center;
+  justify-content: center;
+  background-color: #6dbb45;
+  padding: 7px 15px;
+  border-radius: 6px;
   font-size: 14px;
   line-height: 1;
   white-space: nowrap;
   margin-bottom: 10px;
 }
+
+
+.rating2-star-home {
+  color: #ffd54f;
+  font-size: 18px;
+  order: 2;
+  display: inline-block;
+}
+
+
+.rating-text-home {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 18px;
+  padding-left: 5px;
+  order: 1;
+}
+
 .rate-board-home {
   float: right;
   height: 30px;
@@ -261,21 +274,22 @@
 .billboard-card {
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
+
 .board-btn-book-home {
-    /* z-index: 200; */
-    position: static !important;
-    /* bottom: -25px;
+  /* z-index: 200; */
+  position: static !important;
+  /* bottom: -25px;
     left: 23px; */
-    width: 155px;
-    height: 44px;
-    border: 2px solid #E41E25;
-    background: #E41E25;
-    /* backdrop-filter: blur(20px); */
-    color: #fff;
-    cursor: pointer;
-    background-clip: padding-box, border-box;
-    border-radius: 10px;
-    /* margin-left: 10px; */
+  width: 155px;
+  height: 44px;
+  border: 2px solid #E41E25;
+  background: #E41E25;
+  /* backdrop-filter: blur(20px); */
+  color: #fff;
+  cursor: pointer;
+  background-clip: padding-box, border-box;
+  border-radius: 10px;
+  /* margin-left: 10px; */
 }
 
 
@@ -366,40 +380,56 @@
 
 /* Large Screens (1400px - 2559px) ✅ Large Desktop Screens 1440*/
 @media (min-width: 1440px) and (max-width: 2559px) {
-  .billboard-card {
-    height: 400px;
-    max-width: 100%;
+  .board-loc-book-home {
+    font-size: 18px;
+    line-height: 17.94px;
+    height: 55px;
+    width: 80%;
   }
 
-  .board-content-home {
-    padding: 15px;
+  .board-price-book-home {
+    font-size: 16px;
   }
 
-  .board-content-home-top {
-    height: 70px;
-    gap: 10px;
+  .board-dim-home {
+    font-size: 16px;
+    padding: 2px 5px;
+    border-radius: 6px;
   }
 
-  .board-loc-home {
-    font-size: 20px;
-    width: 350px;
-    /* border: 1px solid red; */
-    font-weight: 500;
-    line-height: 20.94px;
-    height: 65px;
+
+
+  .rate2-book-home {
+    width: max-content;
+    padding: 7px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 10px;
   }
 
-  .rates-home {
-    position: absolute;
-    bottom: 87px;
-    left: 513px;
+
+  .rating2-star-home {
+    font-size: 18px;
   }
 
-  .board-btn1-home {
-    margin: 4px 17%;
-    margin-top: 20px;
+
+  .rating-text-home {
+    font-size: 18px;
+    padding-left: 5px;
   }
 
+  .rate-board-home {
+    height: 30px;
+    width: 90px;
+  }
+
+
+
+  .board-btn-book-home {
+    width: 155px;
+    height: 44px;
+    border-radius: 10px;
+  }
 
 
 
@@ -461,274 +491,246 @@
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
 @media (min-width: 768px) and (max-width: 991px) {
   .billboard-card {
-    /* height: 350px; */
     margin: 0px 0px;
     width: 800px;
     padding-bottom: 5px;
   }
 
-  .card-img-top1-home {
-    height: 180px;
+  .board-loc-book-home {
+    font-size: 20px;
+    height: 55px;
+    width: 90%;
   }
 
-  .board-content-home {
-    padding: 8px;
+  .board-content-bottom-book-home {
+    flex-direction: column;
   }
 
-  .board-content-home-top {
-    height: 70px;
-    gap: 5px;
-  }
-
-  .board-loc-home {
-    font-size: 13px;
-    font-weight: 500;
-    width: 200px;
-    line-height: 13.94px;
-    width: 190px;
-    height: 43px;
+  .board-price-book-home {
+    font-size: 18px;
   }
 
   .board-dim-home {
-    font-size: 13px;
+    width: max-content;
+    padding: 5px 10px;
+    margin: 10px 0px;
+    font-size: 17px;
     font-weight: 500;
   }
 
-  .board-price-home {
-    font-size: 17px;
-    font-weight: 600;
+  .rate2-book-home {
+    gap: 8px;
+    padding: 7px 15px;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+
+  .rating2-star-home {
+    font-size: 20px;
+  }
+
+
+  .rating-text-home {
+    font-size: 22px;
+    padding-left: 5px;
   }
 
   .rate-board-home {
-    height: 28px;
-    width: 85px;
+    height: 30px;
+    width: 90px;
   }
 
-  .rates-home {
-    display: flex;
-    position: absolute;
-    bottom: 75.5px;
-    left: 146px;
-  }
-
-  .stars-home,
-  .empty-star-home {
-    font-size: 14px;
-  }
-
-  .board-btn1-home {
-    font-size: 14px;
-    margin: 4px 11%;
-    margin-top: 10px;
-    padding: 4% 20%;
-  }
-
-  .custom-arrow {
-    font-size: 40px;
+  .board-btn-book-home {
+    width: 155px;
+    height: 44px;
+    border-radius: 10px;
+    font-size: 18px;
   }
 }
 
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
 @media (min-width: 480px) and (max-width: 767px) {
-  .board-content-home {
-    padding: 10px;
+
+  .board-content-bottom-book-home {
+    flex-direction: column;
   }
 
-  .board-content-home-top {
-    height: 90px;
-    gap: 5px;
+  .billboard-card {
+    margin: 0px 40px;
   }
 
-  .card-img-top1-home {
-    height: 180px;
-  }
-
-  .board-loc-home {
-    font-size: 15px;
-    width: 260px;
-    line-height: 17.94px;
-  }
 
   .board-dim-home {
-    width: auto;
+    width: max-content;
     padding: 3px 7px;
     font-size: 15px;
     font-weight: 500;
+    margin: 10px 0px;
   }
 
-  .board-price-home {
-    font-size: 18px;
+  .next-arrow {
+    right: 20px;
   }
 
-  .rate-board-home {
-    height: 30px;
-    width: 85px;
-  }
-
-  .rates-home {
-    display: flex;
-    position: absolute;
-    bottom: 97.8px;
-    left: 288px;
-  }
-
-  .stars-home,
-  .empty-star-home {
-    font-size: 14px;
-  }
-
-  .board-btn1-home {
-    font-size: 16px;
-    margin: 4px 16%;
-    margin-top: 10px;
-    padding: 3% 21%;
-  }
-
-  .custom-arrow {
-    font-size: 40px;
+  .prev-arrow {
+    left: 20px;
   }
 
 }
 
 /* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
 @media (min-width: 425px) and (max-width: 479px) {
-  .billboard-card {
-    margin: 0px 45px;
-    height: 365px;
-    padding-bottom: 5px;
-  }
-
-
-  .board-content-home {
-    padding: 8px;
-  }
-
-  .board-content-home-top {
-    height: 80px;
-    gap: 5px;
-  }
-
   .card-img-top1-home {
     height: 180px;
   }
 
-  .board-loc-home {
-    font-size: 15px;
-    width: 210px;
+  .board-loc-book-home {
+    font-size: 18px;
     line-height: 17.94px;
+    height: 55px;
+    width: 100%;
   }
+
+  .board-content-bottom-book-home {
+    flex-direction: column;
+  }
+
+  .billboard-card {
+    margin: 0px 40px;
+  }
+
 
   .board-dim-home {
-    width: auto;
+    width: max-content;
     padding: 3px 7px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
+    margin: 10px 0px;
   }
 
-  .board-price-home {
-    font-size: 19px;
+  .board-btn-book-home {
+    height: auto;
+    width: auto;
+    font-size: 15px;
+    padding: 6px 17px;
   }
 
-  .rate-board-home {
-    height: 30px;
-    width: 85px;
+  .rate2-book-home {
+    padding: 8px 8px;
   }
 
-  .rates-home {
-    display: flex;
-    position: absolute;
-    bottom: 75px;
-    left: 235px;
+  .next-arrow {
+    right: 18px;
   }
 
-  .stars-home,
-  .empty-star-home {
-    font-size: 14px;
-  }
-
-  .board-btn1-home {
-    font-size: 16px;
-    margin: 4px 13%;
-    margin-top: 10px;
-    padding: 3.5% 21%;
-  }
-
-  .custom-arrow {
-    font-size: 40px;
+  .prev-arrow {
+    left: 18px;
   }
 
 }
 
+@media (min-width: 412px) and (max-width: 424px) {
+  .card-img-top1-home {
+    height: 180px;
+  }
+
+  .board-loc-book-home {
+    font-size: 18px;
+    line-height: 17.94px;
+    height: 55px;
+    width: 100%;
+  }
+
+  .board-content-bottom-book-home {
+    flex-direction: column;
+  }
+
+  .billboard-card {
+    margin: 0px 40px;
+  }
+
+
+  .board-dim-home {
+    width: max-content;
+    padding: 3px 7px;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 10px 0px;
+  }
+
+  .board-btn-book-home {
+    height: auto;
+    width: auto;
+    font-size: 15px;
+    padding: 6px 17px;
+  }
+
+  .rate2-book-home {
+    padding: 8px 8px;
+  }
+
+  .next-arrow {
+    right: 18px;
+  }
+
+  .prev-arrow {
+    left: 18px;
+  }
+}
+
 /* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
-@media (min-width: 375px) and (max-width: 424px) {
+@media (min-width: 375px) and (max-width: 411px) {
   .prime {
     margin-top: 40px;
     margin-bottom: 45px;
   }
 
-  .billboard-card {
-    margin: 0px 23px;
-    height: 358px;
-    padding-bottom: 5px;
-
-  }
-
-  .board-content-home {
-    padding: 8px;
-  }
-
-  .board-content-home-top {
-    height: 75px;
-    gap: 5px;
-  }
-
   .card-img-top1-home {
     height: 180px;
   }
 
-  .board-loc-home {
-    font-size: 14px;
-    width: 210px;
-    line-height: 16.94px;
+  .board-loc-book-home {
+    font-size: 18px;
+    line-height: 17.94px;
+    height: 55px;
+    width: 100%;
   }
+
+  .board-content-bottom-book-home {
+    flex-direction: column;
+  }
+
+  .billboard-card {
+    margin: 0px 20px;
+  }
+
 
   .board-dim-home {
-    width: auto;
-    padding: 3px 5px;
-    font-size: 13px;
-    font-weight: 500;
-  }
-
-  .board-price-home {
-    font-size: 18px;
-  }
-
-  .rate-board-home {
-    height: 30px;
-    width: 85px;
-  }
-
-  .rates-home {
-    display: flex;
-    position: absolute;
-    bottom: 73.1px;
-    left: 235px;
-  }
-
-  .stars-home,
-  .empty-star-home {
-    font-size: 14px;
-  }
-
-  .board-btn1-home {
+    width: max-content;
+    padding: 3px 7px;
     font-size: 15px;
-    margin: 4px 10%;
-    margin-top: 10px;
-    padding: 3.5% 21%;
+    font-weight: 500;
+    margin: 10px 0px;
   }
 
-  .custom-arrow {
-    font-size: 35px;
+  .board-btn-book-home {
+    height: auto;
+    width: auto;
+    font-size: 15px;
+    padding: 6px 17px;
+  }
+
+  .rate2-book-home {
+    padding: 8px 8px;
+  }
+
+  .next-arrow {
+    right: 10px;
+  }
+
+  .prev-arrow {
+    left: 10px;
   }
 }
 
@@ -739,68 +741,59 @@
     margin-bottom: 45px;
   }
 
-  .billboard-card {
-    margin: 0px 23px;
-    height: 335px;
-    padding-bottom: 5px;
-  }
-
   .board-content-home {
-    padding: 8px;
-  }
-
-  .board-content-home-top {
-    height: 65px;
-    gap: 5px;
+    padding: 10px 15px;
   }
 
   .card-img-top1-home {
     height: 170px;
   }
 
-  .board-loc-home {
-    font-size: 13px;
-    width: 190px;
-    line-height: 16.94px;
+  .board-loc-book-home {
+    font-size: 18px;
+    line-height: 17.94px;
+    height: 55px;
+    width: 100%;
   }
+
+  .board-content-bottom-book-home {
+    flex-direction: column;
+  }
+
+  .billboard-card {
+    margin: 0px 20px;
+  }
+
 
   .board-dim-home {
-    width: auto;
-    padding: 1px 5px;
-    font-size: 12px;
+    width: max-content;
+    padding: 3px 7px;
+    font-size: 15px;
     font-weight: 500;
+    margin: 10px 0px;
   }
 
-  .board-price-home {
+  .board-btn-book-home {
+    height: auto;
+    width: auto;
+    font-size: 14px;
+    padding: 6px 17px;
+  }
+
+  .rate2-book-home {
+    padding: 8px 8px;
+  }
+
+  .rating-text-home {
     font-size: 18px;
   }
 
-  .rate-board-home {
-    height: 30px;
-    width: 85px;
+  .next-arrow {
+    right: 10px;
   }
 
-  .rates-home {
-    display: flex;
-    position: absolute;
-    bottom: 70px;
-    left: 210px;
-  }
-
-  .stars-home,
-  .empty-star-home {
-    font-size: 14px;
-  }
-
-  .board-btn1-home {
-    font-size: 15px;
-    margin: 4px 10%;
-    margin-top: 10px;
-    padding: 3.5% 21%;
-  }
-
-  .custom-arrow {
-    font-size: 35px;
+  .prev-arrow {
+    left: 10px;
   }
 }
 
@@ -810,68 +803,59 @@
     margin-bottom: 45px;
   }
 
-  .billboard-card {
-    margin: 0px 23px;
-    height: 335px;
-    padding-bottom: 5px;
-  }
-
   .board-content-home {
-    padding: 8px;
-  }
-
-  .board-content-home-top {
-    height: 65px;
-    gap: 5px;
+    padding: 10px 15px;
   }
 
   .card-img-top1-home {
     height: 170px;
   }
 
-  .board-loc-home {
-    font-size: 13px;
-    width: 155px;
-    line-height: 16.94px;
+  .board-loc-book-home {
+    font-size: 18px;
+    line-height: 17.94px;
+    height: 55px;
+    width: 100%;
   }
+
+  .board-content-bottom-book-home {
+    flex-direction: column;
+  }
+
+  .billboard-card {
+    margin: 0px 20px;
+  }
+
 
   .board-dim-home {
-    width: auto;
-    padding: 1px 5px;
-    font-size: 12px;
+    width: max-content;
+    padding: 3px 7px;
+    font-size: 15px;
     font-weight: 500;
+    margin: 10px 0px;
   }
 
-  .board-price-home {
+  .board-btn-book-home {
+    height: auto;
+    width: auto;
+    font-size: 14px;
+    padding: 6px 17px;
+  }
+
+  .rate2-book-home {
+    padding: 8px 8px;
+  }
+
+  .rating-text-home {
     font-size: 18px;
   }
 
-  .rate-board-home {
-    height: 30px;
-    width: 85px;
+  .next-arrow {
+    right: 10px;
   }
 
-  .rates-home {
-    display: flex;
-    position: absolute;
-    bottom: 70px;
-    left: 170px;
-  }
-
-  .stars-home,
-  .empty-star-home {
-    font-size: 14px;
-  }
-
-  .board-btn1-home {
-    font-size: 15px;
-    margin: 4px 8%;
-    margin-top: 10px;
-    padding: 3.5% 21%;
-  }
-
-  .custom-arrow {
-    font-size: 35px;
+  .prev-arrow {
+    left: 10px;
   }
 
 }
@@ -1002,12 +986,10 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.6),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.6),
+      transparent);
   transform: translateX(-100%);
   animation: prime-shimmer 1.4s infinite;
 }
@@ -1038,19 +1020,3 @@
 }
 
 /* skeleton css for home page */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
