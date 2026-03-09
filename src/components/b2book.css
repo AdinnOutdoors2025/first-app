@@ -2352,7 +2352,7 @@ padding-left: 3px;
     }
 
     .bookContentRow2 {
-        flex-direction: column;
+        flex-direction: column-reverse;
         gap: 5px;
     }
 
