@@ -1033,8 +1033,22 @@
         border-radius: 25px;
     }
 
+     
+    .nav_user-content {
+        position: absolute;
+        /* important for dropdown */
+        top: 100%;
+        right: 150px;
+        margin-top: 10px;
+        overflow: hidden;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
     .nav_user-content.open {
-        padding: 10px 5px;
+        right: 0px;
+        opacity: 1;
+        visibility: visible;
     }
 
     .contact-btn {
@@ -1149,10 +1163,25 @@
         border-radius: 25px;
     }
 
-    .nav_user-content.open {
+    /* .nav_user-content.open {
         padding: 10px 5px;
+    } */
+
+      /* .nav_user-content {
+        position: absolute;
+        top: 100%;
+        right: 150px;
+        margin-top: 10px;
+        overflow: hidden;
+        visibility: hidden;
+        transition: all 0.3s ease;
     }
 
+    .nav_user-content.open {
+        right: 0px;
+        opacity: 1;
+        visibility: visible;
+    } */
     /* RESPONSIVE FIX  */
 
     .menu-line {
@@ -1230,27 +1259,21 @@
     /* border: 1px solid red; */
     /* transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease; */
     /* } */
-
-    .nav_user-content {
+  .nav_user-content {
         position: absolute;
-        /* important for dropdown */
         top: 100%;
-        right: 0;
+        right: 140px;
         margin-top: 10px;
-
-        opacity: 0;
+        overflow: hidden;
         visibility: hidden;
-        transform: translateY(10px);
-
         transition: all 0.3s ease;
     }
 
     .nav_user-content.open {
+        right: 0px;
         opacity: 1;
         visibility: visible;
-        transform: translateY(0);
     }
-
     .contact-btn {
         font-size: 12px;
         padding: 4px 15px !important;
@@ -1269,28 +1292,42 @@
         margin-right: 0;
     }
 
-    .nav_user-content {
-        position: absolute;
-        /* important for dropdown */
-        top: 100%;
-        right: 0;
-        margin-top: 10px;
-
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(10px);
-
-        transition: all 0.3s ease;
-    }
+   
 
     .nav-content21 {
         gap: 15px !important;
+    } 
+/*     
+ .nav_user-content {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 10px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
     }
-
     .nav_user-content.open {
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
+    } */
+
+     .nav_user-content {
+        position: absolute;
+        top: 100%;
+        right: 150px;
+        margin-top: 10px;
+        overflow: hidden;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .nav_user-content.open {
+        right: 0px;
+        opacity: 1;
+        visibility: visible;
     }
 
     .contact-btn {
@@ -1464,10 +1501,25 @@
         border-radius: 25px;
     }
 
-    .nav_user-content.open {
+    /* .nav_user-content.open {
         padding: 10px 5px;
+    } */
+
+      .nav_user-content {
+        position: absolute;
+        top: 100%;
+        right: 200px;
+        margin-top: 10px;
+        overflow: hidden;
+        visibility: hidden;
+        transition: all 0.3s ease;
     }
 
+    .nav_user-content.open {
+        right: 0px;
+        opacity: 1;
+        visibility: visible;
+    }
     /* RESPONSIVE FIX  */
 
     .menu-line {
@@ -1577,9 +1629,24 @@
         padding: 5px 15px;
         border-radius: 25px;
     }
-    
+/*     
     .nav_user-content.open {
         padding: 10px 2px;
+    } */
+       .nav_user-content {
+        position: absolute;
+        top: 100%;
+        right: 150px;
+        margin-top: 10px;
+        overflow: hidden;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .nav_user-content.open {
+        right: 0px;
+        opacity: 1;
+        visibility: visible;
     }
 
     /* RESPONSIVE FIX  */
@@ -1663,8 +1730,25 @@
         border-radius: 25px;
     }
 
-    .nav_user-content.open {
+    /* .nav_user-content.open {
         padding: 10px 0px;
+    } */
+
+
+     .nav_user-content {
+        position: absolute;
+        top: 100%;
+        right: 300px;
+        margin-top: 10px;
+        overflow: hidden;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .nav_user-content.open {
+        right: 0px;
+        opacity: 1;
+        visibility: visible;
     }
 
     /* RESPONSIVE FIX  */
