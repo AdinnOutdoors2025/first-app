@@ -1871,9 +1871,24 @@
         padding: 8px 20px;
         border-radius: 25px;
     }
-
+/* 
     .nav_user-content.open {
         padding: 10px 0px;
+    } */
+      .nav_user-content {
+        position: absolute;
+        top: 100%;
+        right: 300px;
+        margin-top: 10px;
+        overflow: hidden !important;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .nav_user-content.open {
+        right: 0px;
+        opacity: 1;
+        visibility: visible;
     }
 
     /* RESPONSIVE FIX  */
