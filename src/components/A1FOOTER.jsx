@@ -206,18 +206,22 @@ function FooterMain() {
                         <div className='f-content'>
                             <div className='f-c1'> <img src='/images/f11-phone.svg' className='f1' alt="Phone" /></div>
                             <div className='f-c2'>
-                                <div><a href='tel:7373785048' style={{ textDecoration: 'none', color: "#121927" }}> +91 73737 85048</a></div>
-                                <div><a href='tel:7373785056' style={{ textDecoration: 'none', color: "#121927" }}>+91 73737 85056</a></div>
-                            </div >
-                        </div >
+                                {/* <div><a href='tel:7373785048' style={{ textDecoration: 'none', color: "#121927" }}> +91 73737 85048</a></div>
+                                <div><a href='tel:7373785056' style={{ textDecoration: 'none', color: "#121927" }}>+91 73737 85056</a></div>*/}
+<div><a href='tel:7373785048' style={{ textDecoration: 'none', color: "#121927" }}> +91 73737 85048</a></div>
+                             <div><a href='tel:9787885055' style={{ textDecoration: 'none', color: "#121927" }}> +91 97878 85055</a></div>
+                            
+                            </div>
+                        </div>
                         <div className='f-content1'>
                             <img src='/images/f2-mail.svg' className='f2' alt="Mail" />
                             <span className='mail'>
-                                <a href='mailto:vinothkumar@adinn.co.in' style={{ textDecoration: 'none', color: "#121927" }}>
-                                    vinothkumar@adinn.co.in
-                                </a>
+                                {/* <a href='mailto:vinothkumar@adinn.co.in' style={{ textDecoration: 'none', color: "#121927" }}> vinothkumar@adinn.co.in </a> */}
+                                <a href='mailto:outdoorsales@adinn.co.in' style={{ textDecoration: 'none', color: "#121927" }}> outdoorsales@adinn.co.in </a>
+                           
                             </span>
-                        </div >
+                            
+                        </div>
                         <div className='f-content2'>
                             <div className='f-c3'>
                                 <a href="https://www.linkedin.com/showcase/adinn-outdoors/" target="_blank" rel="noopener noreferrer">
