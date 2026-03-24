@@ -410,7 +410,7 @@ function NavbarMain() {
           Contact
         </button>
       </div>
-
+{/* Cart added  */}
       {/* RIGHT – USER + HAMBURGER */}
       <div className="nav-right" style={{
         transform: `translateX(-${scrollProgress * moveDistance}px)`
