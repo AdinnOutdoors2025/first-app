@@ -109,7 +109,7 @@ function BookASite1() {
         }
     }, [confirmedDates]);
 
-      // Add window resize detection for responsive behavior
+    // Add window resize detection for responsive behavior
     const [windowWidth, setWindowWidth] = useState(0);
 
     useEffect(() => {
@@ -916,38 +916,6 @@ function BookASite1() {
         return selectedFileIndex === -1;
     };
 
-    // const RatingStars = ({ rating }) => {
-    //     const fullStars = Math.floor(rating);
-    //     const halfStar = rating % 1 !== 0;
-    //     const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-    //     return (
-    //         <span className=" rate rating-star">
-    //             {[...Array(fullStars)].map((_, index) => (
-    //                 <span key={index} className="fa-solid fa-star stars1"></span>
-    //             ))}
-    //             {halfStar && <span className="fa-solid fa-star-half-alt stars1"></span>}
-    //             {[...Array(emptyStars)].map((_, index) => (
-    //                 <span
-    //                     key={index}
-    //                     className="fa-solid fa-star empty-star1 stars1"
-    //                 ></span>
-    //             ))}
-    //         </span>
-    //     );
-    // };
-    const RatingStars = ({ rating }) => {
-        const fullStars = Math.floor(rating);
-        const halfStar = rating % 1 !== 0;
-        const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-
-        return (
-            <div className="rate-book">
-                <span className="rating-text">4.3</span>
-                <span className="fa-solid fa-star rating-star"></span>
-            </div>
-
-        );
-    };
     const fetchDates = async () => {
         if (currentProduct?.prodCode) {
             try {
@@ -2548,11 +2516,12 @@ function BookASite1() {
         );
         setIsCalendarOpen(true);
     };
-
     const RatingStarsSimilar = ({ rating }) => {
         const fullStars = Math.floor(rating);
         const halfStar = rating % 1 !== 0;
         const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+        const formattedRating = Number.isInteger(rating) ? rating.toFixed(1) : rating.toString();
+
         return (
             <div className="rate rate1-book1-similar">
                 {/* {[...Array(fullStars)].map((_, index) => (
@@ -2567,12 +2536,38 @@ function BookASite1() {
                         className="fa-solid fa-star empty-star-book1"
                     ></span>
                 ))} */}
-                <span className="rating-text">4.3</span>
+                <span className="rating-text">{formattedRating}</span>
                 <span className="fa-solid fa-star rating2-star"></span>
             </div>
         );
     };
+    
+   
+     const RatingStar = ({ rating }) => {
+        const fullStars = Math.floor(rating);
+        const halfStar = rating % 1 !== 0;
+        const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+        const formattedRating = Number.isInteger(rating) ? rating.toFixed(1) : rating.toString();
 
+        return (
+            <div className="rate1-book">
+                {/* {[...Array(fullStars)].map((_, index) => (
+                    <span key={index} className="fa-solid fa-star stars-book1"></span>
+                ))}
+                {halfStar && (
+                    <span className="fa-solid fa-star-half-alt stars-book1"></span>
+                )}
+                {[...Array(emptyStars)].map((_, index) => (
+                    <span
+                        key={index}
+                        className="fa-solid fa-star empty-star-book1"
+                    ></span>
+                ))} */}
+                <span className="rating-text">{formattedRating}</span>
+                <span className="fa-solid fa-star rating2-star"></span>
+            </div>
+        );
+    };
     if (isLoading) {
         return (
             <MainLayout>
@@ -2592,7 +2587,7 @@ function BookASite1() {
         );
     }
     //OTHER SIMILAR PRODUCT ANIMATIONS
-  
+
 
     // Custom Next Arrow
     const NextArrow = (props) => {
@@ -2832,10 +2827,12 @@ function BookASite1() {
                                                     </span>
 
                                                     {/* ⭐ Rating */}
-                                                    <div className="rate1-book">
-                                                        <span className="rating1-text">4.3</span>
+                                                    {/* <div className="rate1-book">
+                                                        <span className="rating1-text">{currentProduct.rating}</span>
                                                         <span className="fa-solid fa-star rating1-star"></span>
-                                                    </div>
+                                                    </div> */}
+                                                    <RatingStar rating={currentProduct.rating} />
+
                                                 </div>
 
                                                 <span className="original-price-strikethrough">
@@ -2852,10 +2849,11 @@ function BookASite1() {
                                                 </span>
 
                                                 {/* ⭐ Rating */}
-                                                <div className="rate1-book">
-                                                    <span className="rating1-text">4.3</span>
+                                                {/* <div className="rate1-book">
+                                                    <span className="rating1-text">{currentProduct.rating}</span>
                                                     <span className="fa-solid fa-star rating1-star"></span>
-                                                </div>
+                                                </div> */}
+                                                    <RatingStar rating={currentProduct.rating} />
                                             </div>
                                         )}
 

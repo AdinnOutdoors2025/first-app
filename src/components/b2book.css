@@ -108,7 +108,7 @@
 
 /* values */
 .book-size-value {
-        line-height: 100%;
+    line-height: 100%;
     font-weight: 700;
 }
 
@@ -198,46 +198,25 @@
 
 /*thendral updated 27/01/26 */
 .rate1-book {
-    /* position: relative; */
-    /* bottom: 51.5px; */
-    /* left: 10px;
-  top: 10px;
-  width: 9%;
-  display: flex;
-  align-items: center;
-  gap: 6px; */
-    /* flex-direction: row-reverse; */
-    /* background-color:  #37D76C; */
-    /* exact green style */
-    /* padding: 5px 7px;
-  border-radius: 6px;
-
-  font-size: 14px;
-  line-height: 1;
-  white-space: nowrap;
-  margin-bottom: 10px; */
     position: relative;
-    /* bottom: 51.5px; */
     left: 10px;
-    width: 10% !important;
-    /* display: flex; */
+    width: max-content !important;
     align-items: center;
     gap: 6px;
     flex-direction: row-reverse;
     background-color: #6dbb45;
-    /* exact green style */
+    width: max-content;
     padding: 5px 5px;
     border-radius: 6px;
-
     font-size: 14px;
-    line-height: 1;
     white-space: nowrap;
     /* margin-bottom: 10px; */
 }
 
 @media (min-width: 1900px) and (max-width: 1999px) {
     .rate1-book {
-        width: 8% !important;
+        padding: 3px 14px;
+        width: max-content !important;
     }
 }
 
@@ -1503,7 +1482,9 @@ padding-left: 3px;
 
 @media (min-width: 1400px) and (max-width: 1500px) {
     .rate1-book {
-        width: 10% !important;
+        /* width: 10% !important; */
+        padding: 3px 14px;
+        width: max-content !important;
     }
 
     .book-spot {
@@ -1523,7 +1504,9 @@ padding-left: 3px;
     }
 
     .rate1-book {
-        width: 11% !important;
+        /* width: 11% !important; */
+        padding: 3px 14px;
+        width: max-content !important;
     }
 
     .book-spot {
@@ -1533,7 +1516,9 @@ padding-left: 3px;
 
 @media (min-width: 992px) and (max-width: 1210px) {
     .rate1-book {
-        width: 14% !important;
+        /* width: 14% !important; */
+        padding: 3px 14px;
+        width: max-content !important;
     }
 
     .book-spot {
@@ -1826,7 +1811,9 @@ padding-left: 3px;
     }
 
     .rate1-book {
-        width: 11% !important;
+        /* width: 11% !important; */
+        width: max-content;
+        padding: 3px 10px;
     }
 
     .bookContentRow1 {
@@ -2073,7 +2060,9 @@ padding-left: 3px;
     }
 
     .rate1-book {
-        width: 13% !important;
+        /* width: 13% !important; */
+        width: max-content;
+        padding: 3px 10px;
     }
 
     .bookContentRow2 {
@@ -2357,7 +2346,9 @@ padding-left: 3px;
     }
 
     .rate1-book {
-        width: 18% !important;
+        /* width: 18% !important; */
+        width: max-content;
+        padding: 3px 10px;
     }
 
     .Book-content1 {
@@ -2579,13 +2570,13 @@ padding-left: 3px;
     }
 
     .btn-enquire1 {
-        margin:auto;
+        margin: auto;
         width: 300px !important;
         align-items: center;
     }
 
     .btn-enquire2 {
-         margin:auto;
+        margin: auto;
         width: 300px !important;
         align-items: center;
     }
@@ -2688,7 +2679,9 @@ padding-left: 3px;
     }
 
     .rate1-book {
-        width: 20% !important;
+        /* width: 20% !important; */
+         width: max-content;
+        padding: 3px 10px;
     }
 
     .Book-content1 {
@@ -2926,13 +2919,13 @@ padding-left: 3px;
     }
 
     .btn-enquire1 {
-         margin:auto;
+        margin: auto;
         width: 300px !important;
         align-items: center;
     }
 
     .btn-enquire2 {
-         margin:auto;
+        margin: auto;
         width: 300px !important;
         align-items: center;
     }
@@ -2991,7 +2984,9 @@ padding-left: 3px;
     }
 
     .rate1-book {
-        width: 21% !important;
+        /* width: 21% !important; */
+         width: max-content;
+        padding: 3px 10px;
     }
 
     .bookContentRow2 {
@@ -3251,13 +3246,13 @@ padding-left: 3px;
     }
 
     .btn-enquire1 {
-         margin:auto;
+        margin: auto;
         width: 300px !important;
         align-items: center;
     }
 
     .btn-enquire2 {
-         margin:auto;
+        margin: auto;
         width: 300px !important;
         align-items: center;
     }
@@ -3314,7 +3309,9 @@ padding-left: 3px;
     }
 
     .rate1-book {
-        width: 23% !important;
+        /* width: 23% !important; */
+         width: max-content;
+        padding: 3px 10px;
     }
 
     .bookContentRow2 {
@@ -3565,14 +3562,14 @@ padding-left: 3px;
     }
 
     .btn-enquire1 {
-         margin:auto;
+        margin: auto;
         width: 280px !important;
         align-items: center;
         top: 10px !important;
     }
 
     .btn-enquire2 {
-         margin:auto;
+        margin: auto;
         width: 280px !important;
         align-items: center;
     }

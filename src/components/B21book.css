@@ -109,18 +109,18 @@ section {
     position: relative;
     /* bottom: 51.5px; */
     /* left: 10px; */
-    width: 24% !important;
+    /* width: 24% !important; */
+    width: max-content;
     /* display: flex; */
     align-items: center;
     gap: 6px;
     flex-direction: row-reverse;
     background-color: #6dbb45;
     /* exact green style */
-    padding: 5px 5px;
+    padding: 3px 10px;
     border-radius: 6px;
-
     font-size: 14px;
-    line-height: 1;
+    /* line-height: 1; */
     white-space: nowrap;
     margin-bottom: 10px;
 }

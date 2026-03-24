@@ -409,8 +409,18 @@ function NavbarMain() {
         >
           Contact
         </button>
+        {/* <div>
+          <i className="fa-solid fa-cart-shopping cart"
+            onClick={() => {
+              if (user) {
+                navigate("/cart");
+              } else {
+                openLogin('login', '/cart'); // Show login popup, redirect to cart after
+              }
+            }}></i>
+          {cartCount > 0 && <p className='cart-number'>{cartCount}</p>}
+        </div> */}
       </div>
-{/* Cart added  */}
       {/* RIGHT – USER + HAMBURGER */}
       <div className="nav-right" style={{
         transform: `translateX(-${scrollProgress * moveDistance}px)`

@@ -421,7 +421,8 @@
     position: relative;
     /* bottom: 51.5px; */
     left: 10px;
-    width: 21% !important;
+    /* width: 21% !important; */
+    width: max-content;
     /* display: flex; */
     align-items: center;
     gap: 6px;
@@ -430,9 +431,8 @@
     /* exact green style */
     padding: 5px 5px;
     border-radius: 6px;
-
     font-size: 14px;
-    line-height: 1;
+    /* line-height: 1; */
     white-space: nowrap;
     margin-bottom: 10px;
 }
@@ -441,7 +441,7 @@
     position: relative;
     /* bottom: 51.5px; */
     left: 10px;
-    width: 24% !important;
+    width: max-content !important;
     /* display: flex; */
     align-items: center;
     gap: 6px;
@@ -524,7 +524,7 @@
     color: #ffffff;
     font-weight: 500;
     font-size: 18px;
-    padding-left: 5px;
+    /* padding-left: 5px; */
     order: 1;
 }
 
@@ -831,7 +831,8 @@
     }
 
     .rate-book {
-        width: 23% !important;
+    width: max-content;
+        /* width: 23% !important; */
     }
 
     .rate2-book {
@@ -992,7 +993,9 @@
     }
 
     .rate-book {
-        width: 19% !important;
+    padding: 3px 10px;
+    width: max-content;
+        /* width: 19% !important; */
     }
 
     .rate2-book {
@@ -1085,11 +1088,11 @@
 
         background-color: #6dbb45;
         /* exact green style */
-        padding: 5px 5px;
+        width: max-content;
+        padding: 3px 10px;
         border-radius: 6px;
-
         font-size: 14px;
-        line-height: 1;
+        /* line-height: 1; */
         white-space: nowrap;
     }
 
@@ -1216,7 +1219,9 @@
 
 @media (min-width: 1400px) and (max-width: 1500px) {
     .rate-book {
-        width: 22% !important;
+        /* width: 22% !important; */
+         width: max-content;
+        padding: 3px 10px;
     }
 }
 
@@ -1229,7 +1234,9 @@
 
 @media (min-width: 992px) and (max-width: 1200px) {
     .rate-book {
-        width: 24% !important;
+        /* width: 24% !important; */
+         width: max-content;
+        padding: 3px 10px;
     }
 
     .rate2-book {
@@ -1435,11 +1442,11 @@
     }
 
     .rate-book {
-        position: relative;
-        /* bottom: 51.5px; */
+        /* position: relative;
         left: 10px;
-        width: 25%;
-        /* display: flex; */
+        width: 25%; */
+         width: max-content;
+        padding: 3px 10px;
     }
 
     .prev-button,
@@ -1694,11 +1701,11 @@
     }
 
     .rate-book {
-        position: relative;
-        /* bottom: 51.5px; */
+        /* position: relative;
         left: 10px;
-        width: 24% !important;
-        /* display: flex; */
+        width: 24% !important; */
+         width: max-content;
+        padding: 3px 10px;
     }
 
     .board-btn-book {
@@ -1739,11 +1746,11 @@
 
 @media (min-width: 768px) and (max-width: 880px) {
     .rate-book {
-        position: relative;
-        /* bottom: 51.5px; */
+        /* position: relative;
         left: 10px;
-        width: 27% !important;
-        /* display: flex; */
+        width: 27% !important; */
+         width: max-content;
+        padding: 3px 10px;
     }
 
 }
@@ -2236,11 +2243,11 @@
     }
 
     .rate-book {
-        position: relative;
-        /* bottom: 51.5px; */
+        /* position: relative;
         left: 10px;
-        width: 25%;
-        /* display: flex; */
+        width: 25%; */
+         width: max-content;
+        padding: 3px 10px;
     }
 
     .stars-book {
@@ -2734,11 +2741,8 @@
     }
 
     .rate-book {
-        position: relative;
-        /* bottom: 51.5px; */
-        left: 10px;
-        width: 25%;
-        /* display: flex; */
+       width: max-content;
+        padding: 3px 10px;
     }
 
     .stars-book {
@@ -3246,11 +3250,8 @@
     }
 
     .rate-book {
-        position: relative;
-        /* bottom: 51.5px; */
-        left: 10px;
-        width: 25%;
-        /* display: flex; */
+      width: max-content;
+        padding: 3px 10px;
     }
 
     .stars-book {
@@ -3308,7 +3309,9 @@
         z-index: 99;
     } */
     .rate-book {
-        width: 25% !important;
+        /* width: 25% !important; */
+         width: max-content;
+        padding: 3px 10px;
     }
 
 
@@ -3742,7 +3745,9 @@
 
     /* DEAL OF THE DAY NAVBAR WITH SCROLL CSS  */
     .rate-book {
-        width: 25% !important;
+        /* width: 25% !important; */
+         width: max-content;
+        padding: 3px 10px;
     }
 
     /* 
