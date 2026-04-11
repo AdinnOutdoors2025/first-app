@@ -1,6 +1,6 @@
-export const baseUrl = "http://localhost:3001"; // Local platform Backend 
+// export const baseUrl = "http://localhost:3001"; // Local platform Backend 
 // export const baseUrl = "http://192.168.2.134:3001"; // Local platform Backend 
-// export const baseUrl = "/api"; // Digital Ocean platform Backend URL
+export const baseUrl = "/api"; // Digital Ocean platform Backend URL
 export const gstPercentage = 18 //18% gst on each order of the product
 export const whatsAppNumber = '917092558277'
 
