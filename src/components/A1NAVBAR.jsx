@@ -21,7 +21,7 @@ function NavbarMain() {
   // const [dynamicPadding, setDynamicPadding] = useState(70);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [moveDistance, setMoveDistance] = useState(150);
-  const [isMobile800, setIsMobile800] = useState(window.innerWidth <= 800);
+  const [isMobile800, setIsMobile800] = useState(window.innerWidth <= 767);
   // const liquidRef = useRef(null);
   // const [activeIndex, setActiveIndex] = useState(0);
   // const itemRefs = useRef([]);
@@ -232,7 +232,7 @@ function NavbarMain() {
       const width = window.innerWidth;
 
       if (width >= 1900) {
-        setMoveDistance(400);
+        setMoveDistance(380); // Large desktop screens
       } else if (width >= 1600) {
         setMoveDistance(340);
       }
@@ -240,7 +240,7 @@ function NavbarMain() {
         setMoveDistance(230);
       }
       else if (width >= 1200) {
-        setMoveDistance(150);
+        setMoveDistance(115); //my desktop screen 
       }
       else if (width == 1114) {
         setMoveDistance(130);
@@ -398,7 +398,7 @@ function NavbarMain() {
           </span>
         )}
 
-        <button
+        {/* <button
           className="contact-btn"
           onClick={() => {
             document
@@ -408,7 +408,25 @@ function NavbarMain() {
           }}
         >
           Contact
-        </button>
+        </button> */}
+
+
+        {/* CONTACT BUTTON — DESKTOP ONLY */}
+  {!isMobile800 && (
+    <button
+      className="contact-btn"
+      onClick={() => {
+        document
+          .getElementById("ContactUsFooter")
+          ?.scrollIntoView({ behavior: "smooth" });
+        handleMobileNavClick();
+      }}
+    >
+      Contact
+    </button>
+  )}
+
+
         {/* <div>
           <i className="fa-solid fa-cart-shopping cart"
             onClick={() => {
@@ -420,6 +438,21 @@ function NavbarMain() {
             }}></i>
           {cartCount > 0 && <p className='cart-number'>{cartCount}</p>}
         </div> */}
+ {/* CART — SHOWN ON BOTH DESKTOP AND MOBILE */}
+  <div>
+    <i className="fa-solid fa-cart-shopping cart"
+      onClick={() => {
+        if (user) {
+          navigate("/cart");
+        } else {
+          openLogin('login', '/cart');
+        }
+      }}>
+    </i>
+    {cartCount > 0 && <p className='cart-number'>{cartCount}</p>}
+  </div>
+
+        
       </div>
       {/* RIGHT – USER + HAMBURGER */}
       <div className="nav-right" style={{
@@ -479,7 +512,20 @@ function NavbarMain() {
                     >
                       Prime Spots
                     </span>
-
+<br />
+          <span
+            className="nav_user_items contact-mobile"
+            onClick={() => {
+              document
+                .getElementById("ContactUsFooter")
+                ?.scrollIntoView({ behavior: "smooth" });
+              setIsOpen(false);
+              handleMobileNavClick();
+            }}
+            style={{ cursor: 'pointer' }}
+          >
+            Contact
+          </span>
                   </>
                 )}
               </>
@@ -532,7 +578,22 @@ function NavbarMain() {
                       style={{ cursor: 'pointer' }}
                     >
                       Prime Spots
-                    </span>
+                    </span> 
+
+                     <br />
+          <span
+            className="nav_user_items contact-mobile"
+            onClick={() => {
+              document
+                .getElementById("ContactUsFooter")
+                ?.scrollIntoView({ behavior: "smooth" });
+              setIsOpen(false);
+              handleMobileNavClick();
+            }}
+            style={{ cursor: 'pointer' }} 
+          >
+            Contact
+          </span>
                   </>
                 )}
 

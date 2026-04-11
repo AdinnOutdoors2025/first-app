@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+// Updated with date conflict checking at billing time
+import React, { useState, useEffect, useRef } from "react";
 import "./F1Billing.css";
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import MainNavbar from './A1NAVBAR.jsx';
@@ -8,7 +9,7 @@ import { MainLayout } from './MainLayout';
 import { useLogin } from './LoginContext';
 import { baseUrl, gstPercentage } from '../Adminpanel/BASE_URL';
 import { formatIndianCurrency } from './FORMATED_AMOUNT';
-import slugify from 'slugify'; // Import slugify for creating product slug
+import slugify from 'slugify';
 
 const BillingDetails = () => {
     const { productId } = useParams();
@@ -19,6 +20,12 @@ const BillingDetails = () => {
     // State to track if component should render or redirect
     const [isValidUser, setIsValidUser] = useState(false);
     const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+
+    // Date conflict checking states
+    const [isCheckingConflicts, setIsCheckingConflicts] = useState(false);
+    const [dateConflicts, setDateConflicts] = useState(null);
+    const [hasDateConflicts, setHasDateConflicts] = useState(false);
+    const [conflictMessage, setConflictMessage] = useState("");
 
     // Form state and validation
     const [name, setName] = useState(user?.userName || "");
@@ -33,8 +40,11 @@ const BillingDetails = () => {
     const [isOpen1, setIsOpen1] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+  
     const statesList = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", " Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"];
-
+    const conflictToastShown = useRef(false);
+    const queueToastShown = useRef(false);
+    const initialCheckDone = useRef(false);
     const [errors, setErrors] = useState({
         name: false,
         phone: false,
@@ -76,25 +86,16 @@ const BillingDetails = () => {
     // Enhanced authentication check with loading state
     useEffect(() => {
         const checkUser = () => {
-            // If user is null or doesn't have _id
             if (!user || !user._id) {
                 console.log("User not authenticated, redirecting to login");
-
-                // Show toast notification
                 toast.info("Please login to continue with billing", {
                     position: "top-center",
                     autoClose: 3000,
                 });
-
-                // Store the current path for redirect after login
                 sessionStorage.setItem('loginRedirect', location.pathname);
-
-                // Open login modal with delay to show toast first
                 setTimeout(() => {
                     openLogin('login', location.pathname);
                 }, 1500);
-
-                // Navigate to home
                 navigate('/', { replace: true });
                 setIsValidUser(false);
             } else {
@@ -103,22 +104,149 @@ const BillingDetails = () => {
             setIsLoadingAuth(false);
         };
 
-        // Initial check
         checkUser();
 
-        // Listen for logout events
         const handleLogout = () => {
             setIsValidUser(false);
             navigate('/', { replace: true });
         };
 
         window.addEventListener('user-logged-out', handleLogout);
-
         return () => {
             window.removeEventListener('user-logged-out', handleLogout);
         };
     }, [user, navigate, openLogin, location.pathname]);
 
+    // Check date conflicts when component mounts
+    useEffect(() => {
+        if (reserveItem && user && !initialCheckDone.current) {
+            checkDateConflicts();
+        }
+    }, [reserveItem, user]);
+
+    // Function to format date range for display (Mar 21 - Mar 28 format)
+    const formatDateRangeForDisplay = (startDate, endDate) => {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const startStr = start.toLocaleDateString('en-IN', { month: 'short', day: 'numeric' });
+        const endStr = end.toLocaleDateString('en-IN', { month: 'short', day: 'numeric' });
+        return `${startStr} - ${endStr}`;
+    };
+
+    const checkDateConflicts = async (showToast = true) => {
+        if (!reserveItem?.startDate || !reserveItem?.endDate) {
+            console.log("No dates to check");
+            return;
+        }
+
+        setIsCheckingConflicts(true);
+        setDateConflicts(null);
+        setHasDateConflicts(false);
+        setConflictMessage("");
+
+        try {
+            const response = await fetch(`${baseUrl}/check-date-conflicts`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prodCode: reserveItem.prodCode,
+                    startDate: new Date(reserveItem.startDate).toISOString(),
+                    endDate: new Date(reserveItem.endDate).toISOString(),
+                    productId: reserveItem.id,
+                    productName: reserveItem.prodName
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                setDateConflicts(data);
+
+                if (data.hasConflicts) {
+                    setHasDateConflicts(true);
+                    const dateRange = formatDateRangeForDisplay(reserveItem.startDate, reserveItem.endDate);
+                    setConflictMessage(`${dateRange} no longer available`);
+
+                    // Only show toast if requested and not shown before
+                    if (showToast && !conflictToastShown.current) {
+                        toast.error(`${dateRange} - ${data.confirmedConflictCount} date(s) booked`);
+                        conflictToastShown.current = true;
+                    }
+                } else if (data.hasQueueDates) {
+                    setHasDateConflicts(false);
+                    const dateRange = formatDateRangeForDisplay(reserveItem.startDate, reserveItem.endDate);
+                    setConflictMessage(`${dateRange} - ${data.pendingConflictCount} date(s) in queue`);
+
+                    // Only show toast if requested and not shown before
+                    if (showToast && !queueToastShown.current) {
+                        toast.info(`${dateRange} - ${data.pendingConflictCount} date(s) in queue`);
+                        queueToastShown.current = true;
+                    }
+                    setHasQueueDates(true);
+                    setQueueMessage(data.message);
+                } else {
+                    setHasDateConflicts(false);
+                    setConflictMessage("");
+                    if (showToast && !initialCheckDone.current) {
+                        toast.success("Dates available!");
+                        initialCheckDone.current = true;
+                    }
+                }
+            } else {
+                console.error("Failed to check date conflicts:", data.message);
+                if (showToast) {
+                    toast.warning("Unable to verify date availability.");
+                }
+            }
+        } catch (error) {
+            console.error("Error checking date conflicts:", error);
+            if (showToast) {
+                toast.error("Failed to check date availability.");
+            }
+        } finally {
+            setIsCheckingConflicts(false);
+        }
+    };
+    const validateDatesBeforeSubmission = async () => {
+        setIsCheckingConflicts(true);
+
+        try {
+            const response = await fetch(`${baseUrl}/check-date-conflicts`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prodCode: reserveItem.prodCode,
+                    startDate: new Date(reserveItem.startDate).toISOString(),
+                    endDate: new Date(reserveItem.endDate).toISOString(),
+                    productId: reserveItem.id,
+                    productName: reserveItem.prodName
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success && data.hasConflicts) {
+                setHasDateConflicts(true);
+                const dateRange = formatDateRangeForDisplay(reserveItem.startDate, reserveItem.endDate);
+                setConflictMessage(`${dateRange} no longer available`);
+                // Always show toast on submission attempt
+                toast.error(`${dateRange} unavailable`);
+                return false;
+            }
+
+            return true;
+        } catch (error) {
+            console.error("Error validating dates:", error);
+            toast.error("Failed to verify availability");
+            return false;
+        } finally {
+            setIsCheckingConflicts(false);
+        }
+    };
     // Set queue info from location state
     useEffect(() => {
         if (location.state?.queueInfo) {
@@ -140,17 +268,16 @@ const BillingDetails = () => {
     }
 
     if (!isValidUser) {
-        return null; // Already redirected by useEffect
+        return null;
     }
 
-    // Check if reserveItem exists
-    if (location.pathname.includes('/billing') && !reserveItem) {
-        return (
-            <MainLayout>
-                <div className="ReserveError">No reserved item found!</div>
-            </MainLayout>
-        );
-    }
+    // if (location.pathname.includes('/billing') && !reserveItem) {
+    //     return (
+    //         <MainLayout>
+    //             <div className="ReserveError">No reserved item found!</div>
+    //         </MainLayout>
+    //     );
+    // }
 
     // Format date for storage
     const formatDateForStorage = (date) => {
@@ -165,23 +292,15 @@ const BillingDetails = () => {
         ));
     };
 
-
-
-    // Update this function in your React component
     const generateUserOrderId = () => {
         const now = new Date();
         const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, '0');
         const day = String(now.getDate()).padStart(2, '0');
-
-        // Generate a sequential number (you might want to store this in localStorage or get from server)
-        // For now, using a random number, but you should implement a proper counter
         const sequentialNumber = Math.floor(1000 + Math.random() * 9000);
-
         return `${year}${month}${day}US${sequentialNumber}`;
     };
 
-    // Get date range array
     const getDateRangeArray = (start, end) => {
         const dates = [];
         const current = new Date(start);
@@ -197,160 +316,76 @@ const BillingDetails = () => {
         return dates;
     };
 
-    // // Send SMS function
-    // const sendOrderSMS = async (phone, orderId, customerName, amount) => {
-    //     try {
-    //         const userResponse = await fetch(`${baseUrl}/OrderReserve/send-sms`, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({
-    //                 phone,
-    //                 orderId,
-    //                 customerName,
-    //                 amount: amount || 0
-    //             })
-    //         });
-
-    //         const result = await userResponse.json();
-    //         if (!userResponse.ok || !result.success) {
-    //             console.error("Failed to send SMS:", result.error);
-    //         } else {
-    //             console.log("SMS sent successfully");
-    //         }
-
-    //         // ADMIN SMS TEMPLATE IMPLEMENTED 
-
-    //         // Send admin SMS
-
-    //         const adminResponse = await fetch(`${baseUrl}/OrderReserve/send-admin-sms`, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({
-    //                 orderId,
-    //                 customerName,
-    //                 amount: amount || 0
-    //             })
-    //         });
-
-    //         const adminResult = await adminResponse.json();
-    //         if (!adminResponse.ok || !adminResult.success) {
-    //             console.error("Failed to send admin SMS:", adminResult.error);
-    //         } else {
-    //             console.log("Admin SMS sent successfully");
-    //         }
-    //         // ADMIN SMS TEMPLATE IMPLEMENTED 
-
-    //     } catch (error) {
-    //         console.error("SMS sending error:", error);
-    //     }
-    // };
-
-    // Parse amount function
     const parseAmount = (amount) => {
         if (amount === null || amount === undefined || amount === '') return 0;
         if (typeof amount === 'number') return amount;
-
         if (typeof amount === 'string') {
-            // Remove any commas, currency symbols, and spaces
             const cleaned = amount.replace(/[₹$,¥\s]/g, '').replace(/,/g, '');
             const parsed = parseFloat(cleaned);
             return isNaN(parsed) ? 0 : parsed;
         }
-        // Try to convert to number
         const parsed = Number(amount);
         return isNaN(parsed) ? 0 : parsed;
     };
 
-    // Parse amounts once at the beginning
     const parsedPrice = parseAmount(reserveItem?.price || 0);
     const parsedTotalAmount = parseAmount(reserveItem?.totalAmount || 0);
     const parsedSpotPay = parseAmount(reserveItem?.SpotPay || 0);
     const parsedPrintingCost = parseAmount(reserveItem?.PrintingCost || 0);
     const parsedMountingCost = parseAmount(reserveItem?.MountingCost || 0);
 
-
-    const overAllTotalAmount = parsedTotalAmount + parsedPrintingCost + parsedMountingCost
-    console.log("OVERALL_TOTAL_AMOUNT:", overAllTotalAmount);
-
-    // For multiple products, you would need to loop through all products:
-    // const overAllTotalAmount = products.reduce((total, product) => {
-    //   const productTotal = parseAmount(product.totalAmount || 0);
-    //   const printing = parseAmount(product.PrintingCost || 0);
-    //   const mounting = parseAmount(product.MountingCost || 0);
-    //   return total + productTotal + printing + mounting;
-    // }, 0);
-
-
-    // Calculate GST (18% of the overall total)
-    const gstPercentageCount = `${gstPercentage}`
-    const gstPercentageCount100 = gstPercentageCount / 100
-    console.log(gstPercentageCount100)
+    const overAllTotalAmount = parsedTotalAmount + parsedPrintingCost + parsedMountingCost;
+    const gstPercentageCount = `${gstPercentage}`;
+    const gstPercentageCount100 = gstPercentageCount / 100;
     const gstAmount = overAllTotalAmount * gstPercentageCount100;
     const formattedGstAmount = Math.floor(gstAmount);
-    console.log("gstAmount", gstAmount);
-    console.log("formattedGstAmount:", formattedGstAmount)
-    // Calculate total including GST
     const totalAmountWithGST = overAllTotalAmount + formattedGstAmount;
-    console.log(totalAmountWithGST)
-    // Handle cancel button click
+
     const handleCancel = () => {
         const confirmCancel = window.confirm("Are you sure you want to cancel the order?");
-        console.log("HI")
         if (confirmCancel) {
-            // Create product slug for redirecting back to product page
             if (reserveItem?.id && reserveItem?.prodName) {
                 const productSlug = `${reserveItem.id}-${slugify(reserveItem.prodName, {
                     lower: true,
                     strict: true,
                     trim: true
                 })}`;
-
-                console.log('Redirecting to product page with slug:', productSlug);
                 navigate(`/Product/${productSlug}`);
             } else {
-                // Fallback: if product info is missing, redirect to home
-                console.warn('Product info missing, redirecting to home');
                 navigate('/');
             }
         }
     };
 
-    // Handle form submission
+    // Updated handleSubmit with date validation
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Check user authentication
         if (!user || !user._id) {
             toast.error("Your session has expired. Please login again.", {
                 position: "top-center",
                 autoClose: 4000,
             });
-
-            // Clear invalid session
             localStorage.removeItem('user');
             sessionStorage.removeItem('user');
-
-            // Open login
             openLogin('login', location.pathname);
             return;
         }
 
-        // Validate form first
         if (!validateForm()) {
-            // toast.error("Please fill in all required fields correctly", {
-            //     position: "bottom-right",
-            //     autoClose: 5000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            //     theme: "colored",
-            // });
+            toast.error("Please fill in all required fields correctly");
+            return;
+        }
+
+        // CRITICAL: Check date conflicts before submission
+        const areDatesAvailable = await validateDatesBeforeSubmission();
+
+        if (!areDatesAvailable) {
+            // Show conflict modal or message
+            toast.error(
+                "Cannot place order! Some dates are no longer available. Please go back and select new dates.",
+                { autoClose: 8000 }
+            );
             return;
         }
 
@@ -358,13 +393,7 @@ const BillingDetails = () => {
 
         try {
             console.log("=== ORDER SUBMISSION START ===");
-            console.log("User:", user);
-            console.log("Reserve Item:", reserveItem);
-            console.log("Billing Info:", {
-                name, email, phone, pincode, state, city, address, company
-            });
 
-            // Validate dates
             if (!reserveItem?.startDate || !reserveItem?.endDate) {
                 throw new Error("Invalid date range in reservation");
             }
@@ -376,14 +405,9 @@ const BillingDetails = () => {
                 throw new Error("Invalid dates");
             }
 
-            // Generate dates array
             const bookedDates = getDateRangeArray(startDate, endDate);
-            console.log("Booked Dates Array:", bookedDates.map(d => d.toISOString()));
-
             const orderId = generateUserOrderId();
-            console.log("Generated Order ID:", orderId);
 
-            // Prepare order payload
             const orderData = {
                 client: {
                     userId: user._id,
@@ -428,19 +452,15 @@ const BillingDetails = () => {
                     },
                     bookedDates: bookedDates,
                 }],
-                overAllTotalAmount: overAllTotalAmount, // Newly sending...
-                gstPercentage: gstPercentage, // Newly sending...
-                gstAmount: formattedGstAmount, // Newly sending...
-                totalAmountWithGST: totalAmountWithGST, // Newly sending...
+                overAllTotalAmount: overAllTotalAmount,
+                gstPercentage: gstPercentage,
+                gstAmount: formattedGstAmount,
+                totalAmountWithGST: totalAmountWithGST,
                 status: "UserSideOrder",
                 order_status: "Pending Client Confirmation",
                 orderType: "single"
             };
 
-            console.log("Order Payload:", JSON.stringify(orderData, null, 2));
-            console.log("=== ORDER SUBMISSION PAYLOAD END ===");
-
-            // Send to server
             const response = await fetch(`${baseUrl}/prodOrders`, {
                 method: 'POST',
                 headers: {
@@ -449,23 +469,24 @@ const BillingDetails = () => {
                 body: JSON.stringify(orderData)
             });
 
-            console.log("Response Status:", response.status);
             const result = await response.json();
-            console.log("Server Response:", result);
 
             if (!response.ok) {
+                // Check if the error is due to date conflict
+                if (result.message && result.message.includes("already booked")) {
+                    setHasDateConflicts(true);
+                    setConflictMessage(
+                        "❌ Cannot place order! Some dates are no longer available.\n\n" +
+                        "The dates you selected have been booked by another user.\n" +
+                        "Please go back and select new dates."
+                    );
+                    toast.error("Dates are no longer available. Please select new dates.");
+                    setIsLoading(false);
+                    return;
+                }
                 throw new Error(result.message || 'Failed to save order');
             }
-            console.log("✅ Order created successfully:", result);
 
-            // Send SMS to user only
-            // try {
-            //     await sendOrderSMS(phone, result.orderId || result._id, name, parsedTotalAmount);
-            // } catch (smsError) {
-            //     console.error("SMS sending error:", smsError);
-            //     // Don't fail the order if SMS fails
-            // }
-            //Order confirmation mail disabled
             // Send email confirmation
             try {
                 const emailResponse = await fetch(
@@ -487,8 +508,8 @@ const BillingDetails = () => {
                             name: reserveItem.prodName,
                             image: reserveItem.image,
                             price: parsedPrice,
-                            printingCost: parsedPrintingCost, // Newly sending...
-                            mountingCost: parsedMountingCost, // Newly sending...
+                            printingCost: parsedPrintingCost,
+                            mountingCost: parsedMountingCost,
                             booking: {
                                 startDate: reserveItem.startDate,
                                 endDate: reserveItem.endDate,
@@ -505,27 +526,22 @@ const BillingDetails = () => {
                         }],
                         orderDate: new Date().toLocaleDateString(),
                         totalAmount: parsedTotalAmount,
-                        overAllTotalAmount: overAllTotalAmount, // Newly sending...
-                        printingCost: parsedPrintingCost,  // Newly sending...
-                        mountingCost: parsedMountingCost,  // Newly sending...
-                        gstPercentage: gstPercentage, // Newly sending...
-                        gstAmount: formattedGstAmount, // Newly sending...
-                        totalAmountWithGST: totalAmountWithGST // Newly sending...
+                        overAllTotalAmount: overAllTotalAmount,
+                        printingCost: parsedPrintingCost,
+                        mountingCost: parsedMountingCost,
+                        gstPercentage: gstPercentage,
+                        gstAmount: formattedGstAmount,
+                        totalAmountWithGST: totalAmountWithGST
                     })
                 });
 
                 if (!emailResponse.ok) {
-                    const errorData = await emailResponse.json();
-                    console.error("Failed to send order confirmation email:", errorData);
-                }
-                else {
-                    console.log("✅ Order confirmation sent successfully");
+                    console.error("Failed to send order confirmation email");
                 }
             } catch (emailError) {
                 console.error("Email sending error:", emailError);
             }
 
-            // Navigate to thank you page
             navigate("/thank_you", {
                 state: {
                     billingInfo: {
@@ -550,11 +566,11 @@ const BillingDetails = () => {
 
         } catch (error) {
             console.error("❌ Order submission error:", error);
-            alert(`Error: ${error.message || "Failed to submit order"}`);
+            toast.error(`Error: ${error.message || "Failed to submit order"}`);
         } finally {
             setIsLoading(false);
         }
-    }
+    };
 
     const safePrice = typeof reserveItem?.price === 'string'
         ? parseFloat(reserveItem.price.replace(/[^0-9.]/g, ''))
@@ -568,19 +584,73 @@ const BillingDetails = () => {
                     <div className="billing-header">
                         <div></div>
                         <div>BILLING DETAILS</div>
-                        <div onClick={handleCancel} style={{ color: 'white', textAlign: 'right', alignContent: 'end', cursor: 'pointer' }} >
+                        <div onClick={handleCancel} style={{ color: 'rgba(227, 34, 40, 1)', textAlign: 'right', alignContent: 'end', cursor: 'pointer' }} >
                             <i className="fa-regular fa-circle-xmark"></i>
                         </div>
                     </div>
+
+                    {/* Date Conflict Warning Banner */}
+                    {hasDateConflicts && (
+                        <div className="date-conflict-banner">
+                            <div className="billingConflictMain">
+                                <i className="fa-solid fa-circle-exclamation billingExclamation" ></i>
+                                <span className="billingConflictMessage">
+                                    {conflictMessage}
+                                </span>
+                            </div>
+                            <button className="billingConflictBackBtn"
+                                onClick={handleCancel} >
+                                ← Select New Dates
+                            </button>
+                        </div>
+                    )}
+
+                    {/* Queue Notice Banner */}
+                    {!hasDateConflicts && hasQueueDates && (
+                        <div className="queue-notice-banner_billing" >
+                            <i className="fa-solid fa-clock conflict_clockBilling" ></i>
+                            <span className="conflict_messageBilling">
+                                {queueMessage || "Some dates are in queue. You'll be added to the waitlist."}
+                            </span>
+                        </div>
+                    )}
+
+                    {/* Conflict Checking Loading */}
+                    {/* {isCheckingConflicts && (
+                        <div className="conflict-checking-loader" style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: 'rgba(0,0,0,0.7)',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            zIndex: 9999
+                        }}>
+                            <div style={{
+                                backgroundColor: 'white',
+                                padding: '30px',
+                                borderRadius: '10px',
+                                textAlign: 'center'
+                            }}>
+                                <div className="spinner-border text-primary" role="status" style={{ width: '50px', height: '50px' }}>
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                                <p style={{ marginTop: '15px', fontSize: '16px' }}>Checking date availability...</p>
+                            </div>
+                        </div>
+                    )} */}
+
                     <div>
-                        {/* Left Section: Delivery Address */}
                         <form onSubmit={handleSubmit} className="billing-content">
                             <div className="billing-left">
                                 <div className="billing-flow">
-                                    <div className="billingFlowLeftArr" onClick={handleCancel} > <i className="fa-solid fa-arrow-left"></i></div>
+                                    <div className="billingFlowLeftArr" onClick={handleCancel}>
+                                        <i className="fa-solid fa-arrow-left"></i>
+                                    </div>
                                     <div className="billing-Flowcontent"> Billing Details</div>
-                                    {/* <div className="billing-Flowcontent FlowContent">-------</div>
-                                    <div className="billing-Flowcontent FlowContent1">Payments</div> */}
                                 </div>
 
                                 <div className="section-title">
@@ -589,11 +659,10 @@ const BillingDetails = () => {
                                     </div>
                                     <div> Delivery Address</div>
                                 </div>
-                                {/* Name */}
+
                                 <div className="billingSpan ">
                                     <input
                                         type="text"
-                                        placeholder=""
                                         value={name}
                                         onChange={(e) => {
                                             let value = e.target.value;
@@ -603,9 +672,7 @@ const BillingDetails = () => {
                                                 setErrors(prev => ({ ...prev, name: false }));
                                             }
                                         }}
-                                        onBlur={() => {
-                                            setName(name.trim());
-                                        }}
+                                        onBlur={() => setName(name.trim())}
                                         className={`input-field ${errors.name ? 'AdminProdinput-errorBilling' : ''}`}
                                     />
                                     {errors.name && (
@@ -616,7 +683,6 @@ const BillingDetails = () => {
                                     </span>
                                 </div>
 
-                                {/* Phone */}
                                 <div className="phone-input">
                                     <div>
                                         <div className={`country-code ${errors.phone ? 'AdminProdinput-errorBilling' : ''}`}>
@@ -631,17 +697,17 @@ const BillingDetails = () => {
                                             onChange={(e) => {
                                                 setPhone(e.target.value);
                                                 setErrors(prev => ({ ...prev, phone: false }));
-                                            }} readOnly
+                                            }}
+                                            readOnly
                                             className={`input-field phoneInputField ${errors.phone ? 'AdminProdinput-errorBilling' : ''} `}
                                         />
                                         {errors.phone && <div className="AdminProderror-messageBillingPhone">
                                             {!phone ? "Contact is required" : "Contact must be 10 digits"}
                                         </div>}
-                                        <span className={`billingInputSpan billingPhoneInputSpan  ${phone.length === 0 ? "" : "inputPhoneSpanFill"}`}>Phone Number*</span>
+                                        <span className={`billingInputSpan billingPhoneInputSpan ${phone.length === 0 ? "" : "inputPhoneSpanFill"}`}>Phone Number*</span>
                                     </div>
                                 </div>
 
-                                {/* Email */}
                                 <div className="billingSpan">
                                     <input
                                         type="email"
@@ -649,20 +715,19 @@ const BillingDetails = () => {
                                         onChange={(e) => {
                                             setEmail(e.target.value);
                                             setErrors(prev => ({ ...prev, email: false }));
-                                        }} readOnly
+                                        }}
+                                        readOnly
                                         className={`input-field ${errors.email ? 'AdminProdinput-errorBilling' : ''}`}
                                     />
                                     {errors.email && <div className="AdminProderror-messageBilling">
                                         {!email ? "Email is required" : "Invalid email format"}
                                     </div>}
-                                    <span className={`billingInputSpan  ${email.length === 0 ? "" : "inputSpanFill"}`}>Your Email*</span>
+                                    <span className={`billingInputSpan ${email.length === 0 ? "" : "inputSpanFill"}`}>Your Email*</span>
                                 </div>
 
-                                {/* Pincode */}
                                 <div className="billingSpan">
                                     <input
                                         type="tel"
-                                        placeholder=""
                                         value={pincode}
                                         maxLength={6}
                                         onChange={(e) => {
@@ -682,7 +747,6 @@ const BillingDetails = () => {
                                     </span>
                                 </div>
 
-                                {/* State and City */}
                                 <div className="billingStateCity">
                                     <div className="billingSpan">
                                         <input
@@ -734,7 +798,6 @@ const BillingDetails = () => {
                                         {errors.state && <div className="AdminProderror-messageBillingState">State is required</div>}
                                     </div>
 
-                                    {/* City */}
                                     <div className="billingSpan">
                                         <input
                                             type="text"
@@ -745,12 +808,11 @@ const BillingDetails = () => {
                                             }}
                                             className={`input-field cityInputField ${errors.city ? 'AdminProdinput-errorBilling' : ''} `}
                                         />
-                                        {errors.city && <div className="AdminProderror-messageBilling ">City is required</div>}
-                                        <span className={`billingInputSpan  ${city.length === 0 ? "" : "inputSpanFill"}`}>City*</span>
+                                        {errors.city && <div className="AdminProderror-messageBilling">City is required</div>}
+                                        <span className={`billingInputSpan ${city.length === 0 ? "" : "inputSpanFill"}`}>City*</span>
                                     </div>
                                 </div>
 
-                                {/* Company */}
                                 <div className="billingSpan">
                                     <input
                                         type="text"
@@ -761,11 +823,10 @@ const BillingDetails = () => {
                                         }}
                                         className={`input-field ${errors.company ? 'AdminProdinput-errorBilling' : ''} `}
                                     />
-                                    {errors.company && <div className="AdminProderror-messageBilling ">Company is required</div>}
-                                    <span className={`billingInputSpan  ${company.length === 0 ? "" : "inputSpanFill"}`}>Your Company*</span>
+                                    {errors.company && <div className="AdminProderror-messageBilling">Company is required</div>}
+                                    <span className={`billingInputSpan ${company.length === 0 ? "" : "inputSpanFill"}`}>Your Company*</span>
                                 </div>
 
-                                {/* Address */}
                                 <div className="billingSpan">
                                     <input
                                         type="text"
@@ -776,18 +837,17 @@ const BillingDetails = () => {
                                         }}
                                         className={`input-field ${errors.address ? 'AdminProdinput-errorBilling' : ''} `}
                                     />
-                                    {errors.address && <div className="AdminProderror-messageBilling ">Address is required</div>}
-                                    <span className={`billingInputSpan  ${address.length === 0 ? "" : "inputSpanFill"}`}>Address*</span>
+                                    {errors.address && <div className="AdminProderror-messageBilling">Address is required</div>}
+                                    <span className={`billingInputSpan ${address.length === 0 ? "" : "inputSpanFill"}`}>Address*</span>
                                 </div>
                             </div>
 
-                            {/* Right Section: Order Summary */}
-                            <div className="billing-right" >
-                                <div className="billing-rightContentMain" >
+                            <div className="billing-right">
+                                <div className="billing-rightContentMain">
                                     <div>
                                         <div className="billing-section-title">Order Summary</div>
-                                        <div className="billing_contents_right" >
-                                            <div className="billing-order-item" >
+                                        <div className="billing_contents_right">
+                                            <div className="billing-order-item">
                                                 <img src={reserveItem?.image} alt="Product" className="billing-order-img" />
                                                 <div className="billing-order-title">
                                                     <div>{reserveItem?.prodName}</div>
@@ -796,38 +856,35 @@ const BillingDetails = () => {
                                                     <div>Booking Amount : ₹ {formatIndianCurrency(parsedTotalAmount)}</div>
                                                     <div>Printing Cost : ₹ {formatIndianCurrency(parsedPrintingCost)}</div>
                                                     <div>Mounting Cost : ₹ {formatIndianCurrency(parsedMountingCost)}</div>
-                                                    {/* <div>Printing Cost : ₹ {reserveItem?.PrintingCost}</div>
-                                            <div>Mounting Cost : ₹ {reserveItem?.MountingCost}</div> */}
                                                 </div>
                                             </div>
 
                                             <div className="billing-order-pricing">
                                                 <div className="billing-orderContent">
-                                                    <div className="billing-orderContentLeft">Base Price (Excl. GST):</div>
+                                                    <div className="billing-orderContentLeft">Base Price (Excl. GST)</div>
                                                     <div className="billing-orderContentRight">₹ {formatIndianCurrency(overAllTotalAmount)}</div>
                                                 </div>
                                                 <div className="billing-orderContent">
-                                                    <div className="billing-orderContentLeft">GST @ {gstPercentage}% : </div>
+                                                    <div className="billing-orderContentLeft">GST @ {gstPercentage}%  </div>
                                                     <div className="billing-orderContentRight"> ₹ {formatIndianCurrency(formattedGstAmount)}</div>
                                                 </div>
 
                                                 <div className="billing-orderContent">
-                                                    <div className="billing-orderContentLeft BillingTotalAmt">Total (Incl. GST):</div>
+                                                    <div className="billing-orderContentLeft BillingTotalAmt">Total (Incl. GST)</div>
                                                     <div className="billing-orderContentRight BillingTotalAmt">₹ {formatIndianCurrency(totalAmountWithGST)}</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    {/* Billing button section - UPDATED with Cancel button */}
-                                    <div >
-                                        <div className="billingButton" >
-                                            {/* <div className="billingTotalAmount"> ₹ {formatIndianCurrency(parsedTotalAmount)}</div> */}
+
+                                    <div>
+                                        <div className="billingButton">
                                             <div className="billing-button-group" style={{ display: 'flex', gap: '10px' }}>
                                                 <div>
                                                     <button
                                                         className="billingContinueBtn"
                                                         type="button"
-                                                        disabled={isLoading}
+                                                        disabled={isLoading || isCheckingConflicts}
                                                         onClick={handleCancel}
                                                         style={{ color: 'red', fontWeight: '600', border: "none", backgroundColor: "white" }}
                                                     >
@@ -838,9 +895,13 @@ const BillingDetails = () => {
                                                     <button
                                                         className="billingContinueBtn"
                                                         type='submit'
-                                                        disabled={isLoading}
+                                                        disabled={isLoading || isCheckingConflicts || hasDateConflicts}
+                                                        style={{
+                                                            backgroundColor: hasDateConflicts ? '#ccc' : '',
+                                                            cursor: hasDateConflicts ? 'not-allowed' : 'pointer'
+                                                        }}
                                                     >
-                                                        {isLoading ? "Processing..." : "Confirm"}
+                                                        {isLoading ? "Processing..." : isCheckingConflicts ? "Checking..." : "Confirm"}
                                                     </button>
                                                 </div>
                                             </div>

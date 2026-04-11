@@ -97,7 +97,7 @@ function App() {
               {/* Book a site section  */}
               <Route path="/billboard-advertising-in-india" element={<BookASite />} />
               <Route path="/Product/:productId" element={<BookASite1 />} />
-              {/* <Route path="/cart" element={<Cart />} /> */}
+              <Route path="/cart" element={<Cart />} />
               <Route path="/order" element={<MyOrder />} />
               <Route path="/thankyou" element={<ThankyouPage />} />
               <Route path="/thank_you" element={<ThankyouPage1 />} />
