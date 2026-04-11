@@ -707,22 +707,14 @@ padding-left: 3px;
     animation: animate1 .3s linear;
 }
 
-
 .btn-enquire {
     color: #fff;
     font-size: 18px;
     font-weight: 700;
     line-height: 100%;
-    /* width: Fixed (638px)px !important;
-    height: Fixed (18px)px; */
-    width: 480px !important;
-    height: 58px;
-    padding: 10px 100px 10px 80px;
+    padding: 10px 100px;
     gap: 10px;
     border-radius: 10px;
-    /* background: linear-gradient(274.32deg, #FFE2E3 66.94%, #FFFFFF 99.85%),
-        linear-gradient(149.17deg, rgba(255, 255, 255, 0.6) -1.63%, rgba(255, 255, 255, 0.42) 97.56%);
-    backdrop-filter: blur(20px); */
     border-image-slice: 1;
     cursor: pointer;
     border: 1px solid rgb(227 31 37);
@@ -732,30 +724,11 @@ padding-left: 3px;
     transition: background 0.3s, color 0.3s;
     background: #E31F25;
     font-family: Montserrat;
-    font-style: Bold;
+    font-weight: Bold;
     letter-spacing: 5%;
+    margin: 5px 0px 0px 21px;
 }
 
-/* 1440px – 1599px */
-@media (min-width: 1440px) {
-    .btn-enquire {
-        width: 540px !important;
-    }
-}
-
-/* 1600px – 1919px */
-@media (min-width: 1600px) {
-    .btn-enquire {
-        width: 600px !important;
-    }
-}
-
-/* 1920px and above */
-@media (min-width: 1920px) {
-    .btn-enquire {
-        width: 720px !important;
-    }
-}
 
 .btn-enquire1 {
     color: #fff;
@@ -1436,7 +1409,8 @@ padding-left: 3px;
         font-size: 20px;
         font-weight: 600;
         line-height: 29.26px;
-        padding: 10px 120px 10px 120px;
+        padding: 10px 32%;
+        margin: 10px 0px 0px 5%;
     }
 
 
@@ -1804,6 +1778,16 @@ padding-left: 3px;
     }
 }
 
+@media (min-width: 768px) and (max-width: 890px) {
+    .book-size-label {
+        margin-left: 10px;
+    }
+
+    .price-label {
+        margin-left: 0px;
+    }
+}
+
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
 @media (min-width: 768px) and (max-width: 991px) {
     .BookMain {
@@ -1847,10 +1831,8 @@ padding-left: 3px;
         max-width: 100%;
         padding: auto 10%;
         padding-left: 3.5%;
-        padding-top: 13%;
-        /* margin: auto; */
+        padding-top: 20%;
     }
-
 
     .book-sideHeading {
         font-size: 25px;
@@ -1982,10 +1964,9 @@ padding-left: 3px;
         font-size: 24px;
         font-weight: 600;
         line-height: 29.26px;
-        padding: 17px 120px;
-        border-radius: 32px;
+        padding: 17px 110px;
+        border-radius: 15px;
     }
-
 
     .noSelected {
         margin: 22% auto;
@@ -2026,31 +2007,6 @@ padding-left: 3px;
         margin-left: 8px;
     }
 
-}
-
-@media (min-width: 700px) and (max-width: 767px) {
-    .btn-enquire {
-        width: 685px !important;
-        margin-left: 10px;
-    }
-}
-
-@media (min-width: 600px) and (max-width: 699px) {
-    .btn-enquire {
-        width: 595px !important;
-    }
-}
-
-@media (min-width: 500px) and (max-width: 599px) {
-    .btn-enquire {
-        width: 485px !important;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 499px) {
-    .btn-enquire {
-        width: 465px !important;
-    }
 }
 
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
@@ -2227,9 +2183,8 @@ padding-left: 3px;
     }
 
     .location-arrow {
-        width: 92px;
-        height: 25px;
-        padding-bottom: 3px;
+        width: 96px;
+        height: 30px;
     }
 
     .rate-perDay {
@@ -2288,11 +2243,8 @@ padding-left: 3px;
 
     .btn-enquire {
         font-size: 20px;
-        font-weight: 600;
-        line-height: 29.26px;
-        padding: 12px 95px;
-        border-radius: 32px;
-        top: 100px;
+        padding: 12px 90px;
+        margin: 5px 0px 0px 7px;
     }
 
 
@@ -2330,6 +2282,14 @@ padding-left: 3px;
     .viewlocation {
         font-size: 15px;
         margin-left: 8px;
+    }
+
+    .date-box {
+        padding: 10px 40px;
+        border-radius: 10px;
+        width: auto !important;
+        height: auto !important;
+        margin: auto;
     }
 }
 
@@ -2409,8 +2369,7 @@ padding-left: 3px;
     .Book-content2 {
         max-width: 100%;
         padding: auto 2%;
-        /* padding-left: 2%; */
-        padding-top: 10%;
+        padding-top: 20%;
         margin: auto;
     }
 
@@ -2561,13 +2520,12 @@ padding-left: 3px;
 
 
     .btn-enquire {
-        font-size: 18px;
-        font-weight: 600;
-        line-height: 29.26px;
-        padding: 11px 90px;
-        border-radius: 32px;
-        width: 400px !important;
+        font-size: 20px;
+        padding: 12px 80px;
+        margin: 5px 0px 0px 7px;
+        border-radius: 10px !important;
     }
+
 
     .btn-enquire1 {
         margin: auto;
@@ -2637,9 +2595,9 @@ padding-left: 3px;
         /* justify-content: center; */
     }
 
-    .btn-enquire {
+    /* .btn-enquire {
         top: 120px !important;
-    }
+    } */
 
     .price-label {
         text-align: left;
@@ -2663,8 +2621,20 @@ padding-left: 3px;
     .book-type-icon {
         margin-left: 60px !important;
     }
-}
 
+    .book-date-range {
+        gap: 14px;
+        padding: 14px 9px;
+    }
+
+    .date-box {
+        padding: 10px 35px;
+        border-radius: 10px;
+        width: auto !important;
+        height: auto !important;
+        margin: auto;
+    }
+}
 
 /* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
 @media (min-width: 375px) and (max-width: 424px) {
@@ -2680,7 +2650,7 @@ padding-left: 3px;
 
     .rate1-book {
         /* width: 20% !important; */
-         width: max-content;
+        width: max-content;
         padding: 3px 10px;
     }
 
@@ -2742,7 +2712,7 @@ padding-left: 3px;
         max-width: 100%;
         padding: auto 10%;
         padding-left: 2%;
-        padding-top: 6%;
+        padding-top: 30%;
         margin: auto;
     }
 
@@ -2841,8 +2811,7 @@ padding-left: 3px;
 
     .location-arrow {
         width: 82px;
-        height: 25px;
-        padding-bottom: 5px;
+        height: 30px;
     }
 
 
@@ -2909,13 +2878,10 @@ padding-left: 3px;
 
 
     .btn-enquire {
-        font-size: 18px;
-        font-weight: 600;
-        line-height: 29.26px;
-        padding: 11px 60px;
-        border-radius: 32px;
-        width: 360px !important;
-        top: 10px !important;
+        font-size: 20px;
+        padding: 12px 57px;
+        margin: 5px 0px 0px 7px;
+        border-radius: 10px !important;
     }
 
     .btn-enquire1 {
@@ -2974,6 +2940,36 @@ padding-left: 3px;
     .book-type-icon {
         margin-left: 50px !important;
     }
+     .book-date-range {
+        gap: 14px;
+        padding: 14px 5px;
+    }
+
+    .date-box {
+        padding: 10px 25px;
+        border-radius: 10px;
+        width: auto !important;
+        height: auto !important;
+        margin: auto;
+    }
+}
+
+@media (min-width: 411px) and (max-width: 414px) {
+    .btn-enquire {
+        font-size: 18px;
+        padding: 10px 83px;
+        margin: 5px 0px 0px 7px;
+        border-radius: 10px !important;
+    }
+}
+
+@media (min-width: 393px) and (max-width: 410px) {
+    .btn-enquire {
+        font-size: 18px;
+        padding: 10px 74px;
+        margin: 5px 0px 0px 7px;
+        border-radius: 10px !important;
+    }
 }
 
 
@@ -2985,7 +2981,7 @@ padding-left: 3px;
 
     .rate1-book {
         /* width: 21% !important; */
-         width: max-content;
+        width: max-content;
         padding: 3px 10px;
     }
 
@@ -3059,7 +3055,7 @@ padding-left: 3px;
     .Book-content2 {
         max-width: 100%;
         /* padding-left: 1%; */
-        padding-top: 6%;
+        padding-top: 25%;
         margin: auto;
     }
 
@@ -3068,10 +3064,6 @@ padding-left: 3px;
         margin-left: 10px !important;
         text-align: left !important;
     }
-
-
-
-
 
     .book-sideHeading {
         font-size: 21px;
@@ -3168,11 +3160,9 @@ padding-left: 3px;
 
 
     .location-arrow {
-        width: 72px;
-        height: 24px;
-        padding-bottom: 5px;
+        width: 82px;
+        height: 30px;
     }
-
 
     .rate-perDay {
         font-size: 21px;
@@ -3236,13 +3226,12 @@ padding-left: 3px;
     }
 
 
+
     .btn-enquire {
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 29.26px;
-        padding: 10px 60px;
-        border-radius: 32px;
-        width: 320px !important;
+        font-size: 18px;
+        padding: 10px 55px;
+        margin: 5px 0px 0px 7px;
+        border-radius: 10px !important;
     }
 
     .btn-enquire1 {
@@ -3294,6 +3283,23 @@ padding-left: 3px;
         margin-left: 4px;
     }
 
+     .book-date-range {
+        gap: 14px;
+        padding: 14px 5px;
+    }
+
+    .date-box {
+        padding: 10px 20px;
+        border-radius: 10px;
+        width: auto !important;
+        height: auto !important;
+        margin: auto;
+    }
+    
+.date-number {
+    font-size: 22px;
+}
+
 }
 
 @media (min-width: 1200px) {
@@ -3310,7 +3316,7 @@ padding-left: 3px;
 
     .rate1-book {
         /* width: 23% !important; */
-         width: max-content;
+        width: max-content;
         padding: 3px 10px;
     }
 
@@ -3373,9 +3379,8 @@ padding-left: 3px;
 
     .Book-content2 {
         max-width: 100%;
-        padding-left: 0%;
-        padding-right: 0%;
-        padding-top: 6%;
+        /* padding-left: 1%; */
+        padding-top: 28%;
         margin: auto;
     }
 
@@ -3464,8 +3469,6 @@ padding-left: 3px;
 
     .slash-bar {
         margin: 0px 10px;
-
-
     }
 
 
@@ -3474,13 +3477,10 @@ padding-left: 3px;
         margin: 0px 3px;
     }
 
-
     .location-arrow {
-        width: 72px;
-        height: 24px;
-        padding-bottom: 5px;
+        width: 82px;
+        height: 30px;
     }
-
 
     .book-rate {
         display: flex;
@@ -3521,8 +3521,6 @@ padding-left: 3px;
         font-size: 14px;
         padding: 7px 10px;
         border-radius: 35px;
-
-
     }
 
 
@@ -3554,11 +3552,9 @@ padding-left: 3px;
 
     .btn-enquire {
         font-size: 16px;
-        font-weight: 600;
-        line-height: 29.26px;
-        padding: 9px 55px;
-        border-radius: 32px;
-        width: 300px !important;
+        padding: 8px 50px;
+        margin: 5px 0px 0px 7px;
+        border-radius: 10px !important;
     }
 
     .btn-enquire1 {
@@ -3616,4 +3612,20 @@ padding-left: 3px;
         margin-left: 4px;
     }
 
+     .book-date-range {
+        gap: 14px;
+        padding: 14px 5px;
+    }
+
+    .date-box {
+        padding: 10px 13px;
+        border-radius: 10px;
+        width: auto !important;
+        height: auto !important;
+        margin: auto;
+    }
+    
+.date-number {
+    font-size: 22px;
+}
 }

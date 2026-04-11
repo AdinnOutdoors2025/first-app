@@ -1,8 +1,9 @@
-// // Corrected login flow and calendar behavior, Booked dates with proper message handling -CORRECTED ENQUIRE NOW 
-// Updated with past dates styling and loading states
+// Updated with Enquire Now button when all dates are booked
+// Corrected login flow and calendar behavior, Booked dates with proper message handling -CORRECTED ENQUIRE NOW 
 import React, { useState, useEffect } from "react";
 import "./B20CalenderMain.css";
 import { formatIndianCurrency } from './FORMATED_AMOUNT';
+
 
 const Calendar = ({
   closeCalendar,
@@ -64,180 +65,70 @@ const Calendar = ({
     return normalizedDate < today;
   };
 
-  // const getDateCustomClass = (date) => {
-  //   if (!date || isNaN(date.getTime())) return "";
+  const getDateCustomClass = (date) => {
+    if (!date || isNaN(date.getTime())) return "";
 
-  //   try {
-  //     // PAST DATES - Always return "past" class first (highest priority)
-  //     if (isPastDate(date)) {
-  //       return "past";
-  //     }
+    try {
+      const baseClass = getDateSelectionClass(date);
 
-  //     const baseClass = getDateSelectionClass(date);
+      // For hidden dates, return special class
+      if (baseClass === "hidden") {
+        return "hidden-date";
+      }
 
-  //     // For hidden dates, return special class
-  //     if (baseClass === "hidden") {
-  //       return "hidden-date";
-  //     }
+      // For booked dates, always return "booked" (red)
+      if (baseClass === "booked") return "booked";
 
-  //     // For booked dates, always return "booked" (red)
-  //     if (baseClass === "booked") return "booked";
+      // For outside window dates
+      if (baseClass === "outside-window") {
+        return "outside-window";
+      }
 
-  //     // For outside window dates
-  //     if (baseClass === "outside-window") {
-  //       return "outside-window";
-  //     }
+      // For past dates
+      if (baseClass === "past") return "past";
 
-  //     // // For past dates
-  //     // if (baseClass === "past") return "past";
+      // Check if date is in selected range
+      if (selectedDates.start && selectedDates.end && date) {
+        const normalizedDate = new Date(Date.UTC(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate()
+        ));
 
-  //     // Check if date is in selected range
-  //     if (selectedDates.start && selectedDates.end && date) {
-  //       const normalizedDate = new Date(Date.UTC(
-  //         date.getFullYear(),
-  //         date.getMonth(),
-  //         date.getDate()
-  //       ));
+        const startUTC = selectedDates.start ? new Date(Date.UTC(
+          selectedDates.start.getFullYear(),
+          selectedDates.start.getMonth(),
+          selectedDates.start.getDate()
+        )) : null;
 
-  //       const startUTC = selectedDates.start ? new Date(Date.UTC(
-  //         selectedDates.start.getFullYear(),
-  //         selectedDates.start.getMonth(),
-  //         selectedDates.start.getDate()
-  //       )) : null;
+        const endUTC = selectedDates.end ? new Date(Date.UTC(
+          selectedDates.end.getFullYear(),
+          selectedDates.end.getMonth(),
+          selectedDates.end.getDate()
+        )) : null;
 
-  //       const endUTC = selectedDates.end ? new Date(Date.UTC(
-  //         selectedDates.end.getFullYear(),
-  //         selectedDates.end.getMonth(),
-  //         selectedDates.end.getDate()
-  //       )) : null;
+        // Only apply selection styling if date is available
+        if (baseClass !== "booked" && baseClass !== "outside-window" && baseClass !== "past" && baseClass !== "hidden-date") {
+          if (startUTC && normalizedDate.getTime() === startUTC.getTime()) {
+            return "selected-start";
+          }
+          if (endUTC && normalizedDate.getTime() === endUTC.getTime()) {
+            return "selected-end";
+          }
+          if (startUTC && endUTC && normalizedDate > startUTC && normalizedDate < endUTC) {
+            return "selected-range";
+          }
+        }
+      }
 
-  //       // Only apply selection styling if date is available
-  //       if (baseClass !== "booked" && baseClass !== "outside-window" && baseClass !== "past" && baseClass !== "hidden-date") {
-  //         if (startUTC && normalizedDate.getTime() === startUTC.getTime()) {
-  //           return "selected-start";
-  //         }
-  //         if (endUTC && normalizedDate.getTime() === endUTC.getTime()) {
-  //           return "selected-end";
-  //         }
-  //         if (startUTC && endUTC && normalizedDate > startUTC && normalizedDate < endUTC) {
-  //           return "selected-range";
-  //         }
-  //       }
-  //     }
-
-  //     return baseClass;
-  //   } catch (error) {
-  //     console.warn("Error in getDateCustomClass:", error);
-  //     return "";
-  //   }
-  // };
+      return baseClass;
+    } catch (error) {
+      console.warn("Error in getDateCustomClass:", error);
+      return "";
+    }
+  };
 
   // Calculate total calendar days and available days for display
- 
- 
-
-  // In B20CalenderMain.css - Ensure the CSS classes are properly defined
-// Update getDateCustomClass function in Calendar component
-// Updated getDateCustomClass - Shows selected border for pending/confirmed dates
-const getDateCustomClass = (date) => {
-  if (!date || isNaN(date.getTime())) return "";
-
-  try {
-    // PAST DATES - Highest priority
-    if (isPastDate(date)) {
-      return "past";
-    }
-
-    const normalizedDate = new Date(Date.UTC(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate()
-    ));
-
-    // FIRST: Check if date is in SELECTED range (from selectedDates state)
-    // This gives green border to selected dates even if they are pending
-    if (selectedDates.start && selectedDates.end) {
-      const startUTC = selectedDates.start ? new Date(Date.UTC(
-        selectedDates.start.getFullYear(),
-        selectedDates.start.getMonth(),
-        selectedDates.start.getDate()
-      )) : null;
-
-      const endUTC = selectedDates.end ? new Date(Date.UTC(
-        selectedDates.end.getFullYear(),
-        selectedDates.end.getMonth(),
-        selectedDates.end.getDate()
-      )) : null;
-
-      if (startUTC && normalizedDate.getTime() === startUTC.getTime()) {
-        return "selected-start";
-      }
-      if (endUTC && normalizedDate.getTime() === endUTC.getTime()) {
-        return "selected-end";
-      }
-      if (startUTC && endUTC && normalizedDate > startUTC && normalizedDate < endUTC) {
-        return "selected-range";
-      }
-    }
-
-    // // SECOND: Check if date is in CONFIRMED dates (campaignConfirmedDates)
-    // if (campaignConfirmedDates?.start && campaignConfirmedDates?.end) {
-    //   const confirmedStartUTC = new Date(Date.UTC(
-    //     campaignConfirmedDates.start.getFullYear(),
-    //     campaignConfirmedDates.start.getMonth(),
-    //     campaignConfirmedDates.start.getDate()
-    //   ));
-    //   const confirmedEndUTC = new Date(Date.UTC(
-    //     campaignConfirmedDates.end.getFullYear(),
-    //     campaignConfirmedDates.end.getMonth(),
-    //     campaignConfirmedDates.end.getDate()
-    //   ));
-
-    //   if (normalizedDate.getTime() === confirmedStartUTC.getTime()) {
-    //     return "selected-start";
-    //   }
-    //   if (normalizedDate.getTime() === confirmedEndUTC.getTime()) {
-    //     return "selected-end";
-    //   }
-    //   if (normalizedDate > confirmedStartUTC && normalizedDate < confirmedEndUTC) {
-    //     return "selected-range";
-    //   }
-    // }
-
-    // BOOKED DATES - After selection check
-    if (isDateBooked && isDateBooked(date)) {
-      return "booked";
-    }
-
-    // PENDING DATES - After selection check
-    if (isDatePending && isDatePending(date)) {
-      return "pending";
-    }
-
-    const baseClass = getDateSelectionClass(date);
-
-    // For hidden dates
-    if (baseClass === "hidden") {
-      return "hidden-date";
-    }
-
-    // For outside window dates
-    if (baseClass === "outside-window") {
-      return "outside-window";
-    }
-
-    // For locked dates when dates are confirmed
-    if (baseClass === "locked-date") {
-      return "locked-date";
-    }
-
-    return baseClass;
-  } catch (error) {
-    console.warn("Error in getDateCustomClass:", error);
-    return "";
-  }
-};
- 
   const calculateDisplayInfo = () => {
     if (!selectedDates.start || !selectedDates.end) {
       return { calendarDays: 0, availableDays: 0, pendingInRange: 0 };
@@ -420,14 +311,9 @@ const getDateCustomClass = (date) => {
                 <button
                   className="confirm-button"
                   onClick={confirmDates}
-                  disabled={shouldDisableConfirmButton() || isProcessingBooking}
+                  disabled={shouldDisableConfirmButton()}
                 >
-                {/* {isProcessingBooking ? 'Processing...' : 'Reserve & Book'} */}
-                  {isProcessingBooking ? (
-                    <span className="loading-spinner-small">Confirming...</span>
-                  ) : (
-                    'Confirm Date'
-                  )}
+                  {isProcessingBooking ? 'Processing...' : 'Reserve & Book'}
                 </button>
                 <button
                   className="reset-button"
@@ -487,12 +373,7 @@ const getDateCustomClass = (date) => {
                   onClick={confirmDates}
                   disabled={shouldDisableConfirmButton()}
                 >
-                {/* {isProcessingBooking ? 'Processing...' : 'Reserve & Book'} */}
-                  {isProcessingBooking ? (
-                    <span className="loading-spinner-small">Confirming...</span>
-                  ) : (
-                    'Confirm Date'
-                  )}
+                  {isProcessingBooking ? 'Processing...' : 'Reserve & Book'}
                 </button>
 
                 <button
@@ -611,3 +492,4 @@ const getDateCustomClass = (date) => {
 };
 
 export default Calendar;
+

@@ -5,7 +5,7 @@
 .banner-main {
     height: 1150px;
     width: 100%;
-    margin-top: 5%;
+    margin-top: 15%;
     border: 1px solid white;
     background: url(/public/images/AdinnOutdoor_banner.png);
     background-position: contain;
@@ -488,7 +488,7 @@ section {
     .banner-main {
         height: 1150px;
         width: 100%;
-        margin-top: 5%;
+        margin-top: 10%;
         background-size: 100% 1150px;
         padding: 0 30px;
 

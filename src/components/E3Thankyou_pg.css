@@ -64,13 +64,24 @@
 }
 
 .thank_order-content1 {
-    display: flex;
+    /* display: flex;
     text-align: left;
     justify-content: space-between;
     padding-top: 0;
     margin: 0 auto;
     padding-bottom: 12px;
+    border-bottom: 2px dashed gray; */
+    display: flex;
+    /* text-align: left; */
+    justify-content: space-around;
+    padding-top: 0;
+    margin: 0 auto;
+    padding-bottom: 12px;
     border-bottom: 2px dashed gray;
+}
+
+.ThankYouRightHeadingLine1 {
+    border-right: 2px dashed gray;
 }
 
 .thank_orderDetails1 {
@@ -83,17 +94,17 @@
 }
 
 .orderDetails11 {
-    width: 100px;
-    border-right: 2px dashed gray;
+    /* width: 100px;
+    border-right: 2px dashed gray; */
 }
 
 .orderDetails21 {
-    width: 112px;
-    border-right: 2px dashed gray;
+    /* width: 112px;
+    border-right: 2px dashed gray; */
 }
 
 .orderDetails31 {
-    width: 107px;
+    /* width: 107px; */
 }
 
 .thank_orderDetailsCode1 {
@@ -143,6 +154,10 @@
 }
 
 .ThankScrollContent1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     height: 200px;
     border-radius: 10px;
     /* border-bottom-left-radius: 0px;
@@ -158,6 +173,40 @@
     padding-left: 20px;
     padding-right: 20px;
     margin-top: 10px;
+}
+
+/* Order Summary Styles */
+.thank_order-summary1 {
+    margin-top: 16px;
+    padding-top: 12px;
+    /* border-top: 2px dashed rgba(128, 128, 128, 0.3); */
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-family: Montserrat;
+    font-size: 12px;
+    line-height: 16px;
+    color: rgba(51, 51, 51, 1);
+}
+
+.summary-label {
+    font-weight: 500;
+}
+
+.summary-value {
+    font-weight: 600;
+}
+
+.total-row {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(128, 128, 128, 0.2);
+    font-weight: 700;
+    font-size: 14px;
 }
 
 /* Responsive Media Queries */
@@ -206,14 +255,21 @@
     }
 
     .thank_order-content1 {
-        display: flex;
+        /* display: flex;
         text-align: left;
         justify-content: space-between;
         padding: 30px 0;
         margin: 0 auto;
-        /* padding-bottom: 12px; */
-        border-bottom: 4px dashed gray;
+        border-bottom: 4px dashed gray; */
+        display: flex;
+        /* text-align: left; */
+        justify-content: space-around;
+        padding-top: 0;
+        margin: 0 auto;
+        padding-bottom: 12px;
+        border-bottom: 2px dashed gray;
     }
+
 
     .thank_orderDetails1 {
         font-weight: 500;
@@ -282,10 +338,80 @@
         margin-top: 30px;
     }
 
+    /* Order Summary responsive */
+    .thank_order-summary1 {
+        margin-top: 24px;
+        padding-top: 20px;
+    }
+
+    .summary-row {
+        font-size: 18px;
+        line-height: 24px;
+        margin-bottom: 12px;
+    }
+
+    .total-row {
+        font-size: 20px;
+        margin-top: 12px;
+        padding-top: 12px;
+    }
 }
 
 /* Large Screens (1400px - 2559px) ✅ Large Desktop Screens */
 @media (min-width: 1440px) and (max-width: 2559px) {
+
+    /* //NEWLY ADDED  */
+    .thank_right1 {
+        /* background: url(http://localhost:3000/static/media/Thankyou_banner.5972701….png);
+    background-position: center; */
+        background-size: 107% 450px;
+        background-repeat: no-repeat;
+        height: auto;
+        width: 50%;
+    }
+
+    .thank_right-content1 {
+        margin: 0 auto;
+        width: 85%;
+        margin-top: 32%;
+        height: 500px;
+    }
+
+    .thank_order-summary1 {
+        margin-top: 2px;
+        padding-top: 6px;
+        /* border-top: 2px dashed rgba(128, 128, 128, 0.3); */
+    }
+
+    .ThankYouRightHeadingLine1 {
+        border-right: 2px dashed gray;
+    }
+
+    .thank_order-content1 {
+        display: flex;
+        /* text-align: left; */
+        justify-content: space-around;
+        padding-top: 0;
+        margin: 0 auto;
+        padding-bottom: 12px;
+        border-bottom: 2px dashed gray;
+    }
+
+    .ThankScrollContent1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 215px;
+        padding: 0px 20px;
+    }
+
+    .summary-row {
+        font-size: 14px;
+    }
+
+    /* //NEWLY ADDED  */
+
     .thankyou_pgMain1 {
         width: 80%;
     }
@@ -419,6 +545,15 @@
         margin-top: 10px;
         margin: 10px auto;
     }
+
+    /* Order Summary responsive */
+    .summary-row {
+        font-size: 11px;
+    }
+
+    .total-row {
+        font-size: 13px;
+    }
 }
 
 /* Tablets (768px - 991px) ✅ Tablets (Portrait Mode) */
@@ -542,6 +677,20 @@
         margin: 10px auto;
     }
 
+    /* Order Summary responsive */
+    .thank_order-summary1 {
+        margin-top: 14px;
+        padding-top: 10px;
+    }
+
+    .summary-row {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+
+    .total-row {
+        font-size: 15px;
+    }
 }
 
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
@@ -668,6 +817,20 @@
         margin: 10px auto;
     }
 
+    /* Order Summary responsive */
+    .thank_order-summary1 {
+        margin-top: 12px;
+        padding-top: 8px;
+    }
+
+    .summary-row {
+        font-size: 11px;
+        margin-bottom: 5px;
+    }
+
+    .total-row {
+        font-size: 13px;
+    }
 }
 
 /* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
@@ -788,6 +951,20 @@
         height: 200px;
         margin-top: 10px;
         margin: 12px auto;
+    }
+
+    /* Order Summary responsive */
+    .thank_order-summary1 {
+        margin-top: 12px;
+        padding-top: 8px;
+    }
+
+    .summary-row {
+        font-size: 11px;
+    }
+
+    .total-row {
+        font-size: 13px;
     }
 }
 
@@ -915,9 +1092,22 @@
         padding-left: 12px;
         padding-right: 0px;
     }
+
+    /* Order Summary responsive */
+    .thank_order-summary1 {
+        margin-top: 10px;
+        padding-top: 6px;
+    }
+
+    .summary-row {
+        font-size: 10px;
+        margin-bottom: 4px;
+    }
+
+    .total-row {
+        font-size: 12px;
+    }
 }
-
-
 
 /* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
 @media (min-width: 360px) and (max-width: 369px) {
@@ -1043,8 +1233,21 @@
         padding-left: 12px;
         padding-right: 0px;
     }
-}
 
+    /* Order Summary responsive */
+    .thank_order-summary1 {
+        margin-top: 10px;
+        padding-top: 6px;
+    }
+
+    .summary-row {
+        font-size: 10px;
+    }
+
+    .total-row {
+        font-size: 12px;
+    }
+}
 
 /* Extra Small Screens (320px - 374px) ✅ Extra Small Phones */
 @media (min-width: 320px) and (max-width: 359px) {
@@ -1169,5 +1372,20 @@
         margin: 10px auto;
         padding-left: 12px;
         padding-right: 0px;
+    }
+
+    /* Order Summary responsive */
+    .thank_order-summary1 {
+        margin-top: 10px;
+        padding-top: 6px;
+    }
+
+    .summary-row {
+        font-size: 9px;
+        margin-bottom: 3px;
+    }
+
+    .total-row {
+        font-size: 11px;
     }
 }

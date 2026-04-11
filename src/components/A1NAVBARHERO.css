@@ -822,7 +822,7 @@
 
 
 }
-
+/* 
 @media (min-width: 768px) and (max-width: 799px) {}
 
 @media (min-width: 800px) and (max-width: 819px) {
@@ -845,7 +845,7 @@
         font-size: 18px;
         padding: 10px 17px;
     }
-}
+} */
 
 @media (min-width:480px) and (max-width:767px) {
     /* .nav_user-contentHero {
