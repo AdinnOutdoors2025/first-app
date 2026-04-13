@@ -680,7 +680,7 @@
     border-radius: 8px;
     padding: 12px 15px;
     margin: 15px auto;
-    width:max-content;
+    width: max-content;
     display: flex;
     align-items: center;
     gap: 10px
@@ -2065,10 +2065,11 @@
         padding: 9px 18px;
         border-radius: 22px;
     }
-.conflict_messageBilling {
-    color: #e65100;
-    font-size: 11px;
-}
+
+    .conflict_messageBilling {
+        font-size: 14px;
+        width:330px;
+    }
 
 }
 
@@ -2352,9 +2353,11 @@
         padding: 9px 18px;
         border-radius: 22px;
     }
-    .conflict_messageBilling {
-    font-size: 14px;
-}
+
+     .conflict_messageBilling {
+        font-size: 13px;
+        width: 300px;
+    }
 
 }
 
@@ -2464,7 +2467,7 @@
 
     .phoneInputField {
         width: 272px;
-                padding: 10px;
+        padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
         font-weight: 400;
@@ -2640,12 +2643,15 @@
         padding: 9px 18px;
         border-radius: 22px;
     }
-.conflict_messageBilling {
-    font-size: 14px;
-}
-.queue-notice-banner_billing {
-    padding: 9px 5px;
-}
+
+        .conflict_messageBilling {
+        font-size: 14px;
+        width: 254px;
+    }
+
+    .queue-notice-banner_billing {
+        padding: 9px 5px;
+    }
 }
 
 /* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
@@ -2931,12 +2937,15 @@
         padding: 9px 18px;
         border-radius: 22px;
     }
-    .conflict_messageBilling {
-    font-size: 14px;
-}
-.queue-notice-banner_billing {
-    padding: 9px 5px;
-}
+
+       .conflict_messageBilling {
+        font-size: 13px;
+        width: 254px;
+    }
+
+    .queue-notice-banner_billing {
+        padding: 9px 5px;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 359px) {
@@ -3222,13 +3231,14 @@
         border-radius: 22px;
     }
 
+    .conflict_messageBilling {
+        font-size: 12px;
+        width: 250px;
+    }
 
-        .conflict_messageBilling {
-    font-size: 12px;
-}
-.queue-notice-banner_billing {
-    padding: 9px 5px;
-}
+    .queue-notice-banner_billing {
+        padding: 9px 5px;
+    }
 
     /* 
     .billingTotalAmount {

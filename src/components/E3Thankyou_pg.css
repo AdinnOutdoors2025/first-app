@@ -50,16 +50,16 @@
 .thank_right1 {
     background: url('/public/images/Thankyou_banner.png');
     background-position: center;
-    background-size: 103% 335px;
+    background-size: 103% 450px;
     background-repeat: no-repeat;
-    height: 320px;
-    width: 414px;
+    height: 450px;
+    width: 550px;
 }
 
 .thank_right-content1 {
     margin: 0 auto;
-    width: 330px;
-    margin-top: 10%;
+    width: 360px;
+    margin-top: 13%;
     height: 500px;
 }
 
@@ -78,6 +78,7 @@
     margin: 0 auto;
     padding-bottom: 12px;
     border-bottom: 2px dashed gray;
+    text-align: center;
 }
 
 .ThankYouRightHeadingLine1 {
@@ -117,6 +118,7 @@
 }
 
 .thank_item-content1 {
+    margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
     display: flex;
@@ -157,7 +159,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     height: 200px;
     border-radius: 10px;
     /* border-bottom-left-radius: 0px;
@@ -285,12 +287,10 @@
 
     .orderDetails11 {
         width: 167px;
-        border-right: 4px dashed gray;
     }
 
     .orderDetails21 {
         width: 183px;
-        border-right: 4px dashed gray;
     }
 
     .orderDetails31 {
@@ -298,10 +298,12 @@
     }
 
     .thank_item-content1 {
+        margin: auto;
         margin-top: 5%;
         display: flex;
         justify-content: space-around;
         gap: 20px;
+        width: 100%;
         /* border: 1px solid red; */
     }
 
@@ -401,9 +403,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        /* justify-content: center; */
         height: 215px;
-        padding: 0px 20px;
+        padding: 10px 20px;
     }
 
     .summary-row {
@@ -419,6 +421,16 @@
     .thank-content11,
     .thank-content21 {
         font-size: 25px;
+    }
+
+    .thank_item-content1 {
+        margin: auto;
+        margin-top: 5%;
+        display: flex;
+        justify-content: space-around;
+        gap: 20px;
+        width: 100%;
+        /* border: 1px solid red; */
     }
 }
 
@@ -489,14 +501,12 @@
     .orderDetails11 {
         width: 148px;
         padding-right: 2px;
-        border-right: 2px dashed gray;
     }
 
     .orderDetails21 {
         width: 166px;
         padding-right: 2px;
         padding-left: 2px;
-        border-right: 2px dashed gray;
     }
 
     .orderDetails31 {
@@ -506,10 +516,12 @@
     }
 
     .thank_item-content1 {
+        margin: auto;
         margin-top: 5%;
         display: flex;
         justify-content: space-around;
         gap: 10px;
+        width: 100%;
         /* border: 1px solid red; */
     }
 
@@ -628,14 +640,12 @@
     .orderDetails11 {
         width: 120px;
         /* padding-right: 2px; */
-        border-right: 2px dashed gray;
     }
 
     .orderDetails21 {
         width: 135px;
         /* padding-right: 2px;
         padding-left: 2px; */
-        border-right: 2px dashed gray;
     }
 
     .orderDetails31 {
@@ -644,9 +654,11 @@
     }
 
     .thank_item-content1 {
+        margin: auto;
         margin-top: 5%;
         display: flex;
         gap: 35px;
+        width: 100%;
         /* border: 1px solid red; */
     }
 
@@ -696,7 +708,7 @@
 /* Mobile Large Screens (480px - 767px) ✅ Small Tablets & Large Phones */
 @media (min-width: 480px) and (max-width: 767px) {
     .thankyou_pgMain1 {
-        width: 80%;
+        width: 95%;
         flex-direction: column;
         height: auto;
         padding: 20px;
@@ -731,13 +743,13 @@
     } */
     .thank_right1 {
         width: 126%;
-        height: 350px;
-        background-size: 107% 350px;
+        height: 450px;
+        background-size: 107% 450px;
     }
 
     .thank_right-content1 {
         /* border: 1px solid black; */
-        width: 319px;
+        width: 375px;
         margin: 0 auto;
         margin-top: 9%;
         height: 280px;
@@ -751,6 +763,7 @@
         margin: 0 auto;
         /* padding-bottom: 12px; */
         border-bottom: 2px dashed gray;
+        text-align: center;
     }
 
 
@@ -769,14 +782,12 @@
     .orderDetails11 {
         width: 133px;
         padding-right: 2px;
-        border-right: 2px dashed gray;
     }
 
     .orderDetails21 {
         width: 150px;
         padding-right: 1px;
         padding-left: 15px;
-        border-right: 2px dashed gray;
     }
 
     .orderDetails31 {
@@ -785,9 +796,11 @@
     }
 
     .thank_item-content1 {
+        margin: auto;
         margin-top: 7%;
         display: flex;
         gap: 22px;
+        width: 100%;
         /* border: 1px solid red; */
     }
 
@@ -836,7 +849,7 @@
 /* Mobile Medium Screens (425px - 479px) ✅ Medium Phones (iPhone XR, Galaxy S20) */
 @media (min-width: 425px) and (max-width: 479px) {
     .thankyou_pgMain1 {
-        width: 80%;
+        width: 95%;
         flex-direction: column;
         height: auto;
         padding: 20px;
@@ -868,15 +881,15 @@
 
     .thank_right1 {
         width: 136%;
-        height: 330px;
-        background-size: 100% 350px;
+        height: 450px;
+        background-size: 100% 450px;
     }
 
     .thank_right-content1 {
         /* border:1px solid black; */
-        width: 284px;
+        width: 340px;
         margin: 0 auto;
-        margin-top: 4%;
+        margin-top: 6%;
         /* height: 280px; */
     }
 
@@ -888,6 +901,7 @@
         margin: 0 auto;
         padding-bottom: 7px;
         border-bottom: 2px dashed gray;
+        text-align: center;
     }
 
     .thank_orderDetails1 {
@@ -905,14 +919,12 @@
     .orderDetails11 {
         width: 135px;
         /* padding-right: 1px; */
-        border-right: 2px dashed gray;
     }
 
     .orderDetails21 {
         width: 120px;
         padding-right: 1px;
         padding-left: 2px;
-        border-right: 2px dashed gray;
     }
 
     .orderDetails31 {
@@ -921,9 +933,11 @@
     }
 
     .thank_item-content1 {
+        margin: auto;
         margin-top: 8%;
         display: flex;
         gap: 22px;
+        width: 100%;
         /* border: 1px solid red; */
     }
 
@@ -971,7 +985,7 @@
 /* Mobile Small Screens (375px - 424px) ✅ Small Phones (iPhone SE, Pixel 4) */
 @media (min-width: 375px) and (max-width: 424px) {
     .thankyou_pgMain1 {
-        width: 80%;
+        width: 95%;
         flex-direction: column;
         height: auto;
         padding-top: 10px;
@@ -1004,15 +1018,15 @@
 
     .thank_right1 {
         width: 113%;
-        height: 310px;
-        background-size: 108% 310px;
+        height: 400px;
+        background-size: 108% 400px;
     }
 
     .thank_right-content1 {
         /* border:1px solid black; */
-        width: 250px;
+        width: 300px;
         margin: 0 auto;
-        margin-top: 6%;
+        margin-top: 10%;
         /* height: 280px; */
     }
 
@@ -1025,6 +1039,7 @@
         margin: 0 auto;
         padding-bottom: 4px;
         border-bottom: 2px dashed gray;
+        text-align: center;
     }
 
     .thank_orderDetails1 {
@@ -1042,14 +1057,13 @@
     .orderDetails11 {
         width: 95px;
         padding-left: 0px;
-        border-right: 2px dashed gray;
+        /* border-right: 2px dashed gray; */
     }
 
     .orderDetails21 {
         width: 85px;
         padding-right: 1px;
         padding-left: 3px;
-        border-right: 2px dashed gray;
     }
 
     .orderDetails31 {
@@ -1058,10 +1072,11 @@
     }
 
     .thank_item-content1 {
-        margin-top: 7%;
+        margin-top: 5%;
         display: flex;
         gap: 10px;
         align-items: center;
+        width: 100%;
         /* border: 1px solid red; */
     }
 
@@ -1112,7 +1127,7 @@
 /* Extra Small Screens (360px - 374px) ✅ Extra Small Phones */
 @media (min-width: 360px) and (max-width: 369px) {
     .thankyou_pgMain1 {
-        width: 90%;
+        width: 95%;
         flex-direction: column;
         height: auto;
         padding-top: 10px;
@@ -1145,15 +1160,15 @@
 
     .thank_right1 {
         width: 112%;
-        height: 310px;
-        background-size: 108% 310px;
+        height: 400px;
+        background-size: 108% 400px;
     }
 
     .thank_right-content1 {
         /* border:1px solid black; */
-        width: 270px;
+        width: 280px;
         margin: 0 auto;
-        margin-top: 6%;
+        margin-top: 10%;
         /* height: 280px; */
     }
 
@@ -1166,6 +1181,7 @@
         margin: 0 auto;
         padding-bottom: 4px;
         border-bottom: 2px dashed gray;
+        text-align: center;
     }
 
     .thank_orderDetails1 {
@@ -1183,14 +1199,12 @@
     .orderDetails11 {
         width: 95px;
         padding-left: 0px;
-        border-right: 2px dashed gray;
     }
 
     .orderDetails21 {
         width: 85px;
         padding-right: 1px;
         padding-left: 3px;
-        border-right: 2px dashed gray;
     }
 
     .orderDetails31 {
@@ -1203,6 +1217,7 @@
         display: flex;
         gap: 11px;
         align-items: center;
+        width: 100%;
         /* border: 1px solid red; */
     }
 
@@ -1252,7 +1267,7 @@
 /* Extra Small Screens (320px - 374px) ✅ Extra Small Phones */
 @media (min-width: 320px) and (max-width: 359px) {
     .thankyou_pgMain1 {
-        width: 90%;
+        width: 98%;
         flex-direction: column;
         height: auto;
         padding-top: 10px;
@@ -1283,16 +1298,16 @@
     }
 
     .thank_right1 {
-        width: 110%;
-        height: 310px;
-        background-size: 108% 310px;
+        width: 115%;
+        height: 410px;
+        background-size: 108% 410px;
     }
 
     .thank_right-content1 {
         /* border:1px solid black; */
-        width: 235px;
+        width: 270px;
         margin: 0 auto;
-        margin-top: 5%;
+        margin-top: 9%;
         /* height: 280px; */
     }
 
@@ -1323,14 +1338,13 @@
         width: 65px;
         padding-right: 7px;
         padding-left: 4px;
-        border-right: 2px dashed gray;
+        /* border-right: 2px dashed gray; */
     }
 
     .orderDetails21 {
         width: 75px;
         /* padding-right: 1px; */
         padding-left: 7px;
-        border-right: 2px dashed gray;
     }
 
     .orderDetails31 {
@@ -1339,10 +1353,11 @@
     }
 
     .thank_item-content1 {
-        margin-top: 10%;
+        margin-top: 8%;
         display: flex;
         gap: 8px;
         align-items: center;
+        width: 100%;
         /* border: 1px solid red; */
     }
 

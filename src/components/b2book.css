@@ -727,6 +727,7 @@ padding-left: 3px;
     font-weight: Bold;
     letter-spacing: 5%;
     margin: 5px 0px 0px 21px;
+    z-index:99;
 }
 
 
