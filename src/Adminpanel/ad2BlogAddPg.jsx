@@ -16,10 +16,7 @@ function AdminBlogAdd() {
     const [blogSampleContent, setBlogSampleContent] = useState('Outdoor advertising in Chennai is more effective in reaching brand awareness strategies. Many brands target Chennai City to cover a wide exposure for their brand to reach successful OOH campaigns. Adinn Outdoor Advertising has a great media planning execution to deliver your brand fame on hoarding advertising.');
     const [blogData, setBlogData] = useState([]);
     const [editBlog, setEditBlog] = useState(null);
-
-
     
-
     //HANDLING ERRORS
     const [errors, setErrors] = useState({
         image: false,

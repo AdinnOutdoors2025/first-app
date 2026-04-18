@@ -26,7 +26,6 @@ const fetchOrderConflicts = async (orderId) => {
 };
 
 const formatDate = (date) => new Date(date).toLocaleDateString("en-GB");
-
 const tooltipDates = (dates) => {
   return dates.map((date, index) => <div key={index}>{formatDate(date)}</div>);
 };

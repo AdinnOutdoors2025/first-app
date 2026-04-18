@@ -1,6 +1,3 @@
-
-
-// src/components/ProductTable.js
 import React, { useState, useEffect } from 'react';
 import './ad1Orders.css';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import {baseUrl} from './BASE_URL';
 import { getPaginationGroup } from "../utils/pagination";
 import { formatIndianDateTime } from '../../src/DateTimeFormatter';
-
 
 
 const EnquireUsersTable = () => {

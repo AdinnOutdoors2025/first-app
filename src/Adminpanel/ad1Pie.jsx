@@ -7,7 +7,6 @@ const data = [
     { name: "Week 3", value: 300 },
     { name: "Week 4", value: 340 }
 ];
-
 const GRADIENT_IDS = ["gradientA", "gradientB", "gradientC", "gradientD"];
 
 const RADIAN = Math.PI / 180;

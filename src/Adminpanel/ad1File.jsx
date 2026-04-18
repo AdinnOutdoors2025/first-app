@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { baseUrl } from './BASE_URL';
 import * as XLSX from 'xlsx';
-
 function ClientSection() {
     const { state } = useLocation();
     const { id } = useParams();

@@ -5,7 +5,6 @@ import { baseUrl } from './BASE_URL';
 import { getPaginationGroup } from "../utils/pagination";
 import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
 import { useRef } from 'react';
-
 const PrimeSpotsTable = () => {
     const [searchTerm, setSearchTerm] = useState('');
     // 🟢 SIZE RANGE FILTER (NEW)

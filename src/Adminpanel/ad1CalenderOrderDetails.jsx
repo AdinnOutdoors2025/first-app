@@ -5,8 +5,6 @@ import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
 import axios from "axios";
 import { baseUrl } from "./BASE_URL";
 
-
-
 const CalendarOrderDetails = ({ isSmallScreen, closeCalender, selectedDates, generateMonth, handleDateClick, resetDates, getDateSelectionClass, goToNextMonth, goToPreviousMonth, bookedDates, currentMonth, confirmedDates, setConfirmedDates, pricePerDay, confirmDates, totalPrice, isPastDate, finalConfirmDate, orderId }) => {
 
   const [conflicts, setConflicts] = useState(null);

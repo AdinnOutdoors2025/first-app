@@ -12,7 +12,7 @@ import OrderDetails from './ad1OrderDetails';
 import { useLogin } from '../components/LoginContext';
 import EnquireUsers from '../Adminpanel/ad1EnquireUsers';
 import FooterContact from './ad1FooterContact';
-//Blog page
+//Blog page 
 import AllBlogPg from './ad2BlogsPg';
 import BlogAddPg from './ad2BlogAddPg';
 import axios from "axios";

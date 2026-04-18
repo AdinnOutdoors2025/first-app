@@ -1,4 +1,3 @@
-//PERFECT CODE BUT PRIME LIST NOT SHOWN
 import React, { useState, useContext, useEffect } from 'react';
 import './ad1Manage.css';
 import { useSpot } from '../components/B0SpotContext';

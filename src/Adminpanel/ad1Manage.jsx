@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { baseUrl, gstPercentage } from './BASE_URL';
 import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
-
 function AdManageSection() {
     //Start rating board
     const RatingStars = ({ rating }) => {

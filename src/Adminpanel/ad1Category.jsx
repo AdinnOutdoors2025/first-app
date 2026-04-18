@@ -10,7 +10,6 @@ function CategorySection() {
   const [categoryData, setCategoryData] = useState([]);
   const [editCategory, setEditCategory] = useState(null);
   const [editDistrictIndex, setEditDistrictIndex] = useState(null);
-
   const [isDirty, setIsDirty] = useState(false);
    const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

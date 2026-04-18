@@ -6,7 +6,6 @@ export const AdminAuthWrapper = ({ children }) => {
     const { user, isAdmin } = useLogin();
     const navigate = useNavigate();
     const location = useLocation();
-
     useEffect(() => {
         if (!user || !isAdmin) {
             navigate('/adminLogin', {

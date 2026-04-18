@@ -5,7 +5,6 @@ import { baseUrl } from './BASE_URL';
 import { getPaginationGroup } from "../utils/pagination";
 import { formatIndianDateTime } from '../../src/DateTimeFormatter';
 
-
 const FooterContactTable = () => {
     const [footerContacts, setFooterContacts] = useState([]);
     const [loading, setLoading] = useState(true);

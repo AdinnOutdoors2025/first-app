@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { baseUrl } from './BASE_URL';
 import { getPaginationGroup } from "../utils/pagination";
 import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
-
 const OfferProductTable = () => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);

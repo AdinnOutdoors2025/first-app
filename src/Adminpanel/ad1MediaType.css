@@ -7,7 +7,8 @@
 
 .mediaTypeLeft,
 .mediaTypeRight {
-    width: 485px;}
+    width: 485px;
+}
 
 .mediaContent {
     margin-top: 20px;
@@ -37,7 +38,7 @@
 }
 
 
-.AdminMediaInput{
+.AdminMediaInput {
     outline: none;
     border: none;
     border-bottom: 1px solid rgba(51, 51, 51, 1);
@@ -90,14 +91,16 @@
     padding: 6px 35px;
     margin: 20px 36%;
     margin-bottom: 0px;
- align-items: center; align-content: center;
+    align-items: center;
+    align-content: center;
 }
 
-.MediaeditIcon{
+.MediaeditIcon {
     margin: auto 10px;
     color: green;
 
 }
+
 .MediaPlusXmark {
     color: rgba(229, 31, 31, 1);
     font-size: 15px;

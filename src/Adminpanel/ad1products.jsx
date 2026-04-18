@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './ad1products.css';
 import { useNavigate } from 'react-router-dom';
 import { getPaginationGroup } from "../utils/pagination";
-//BASE URL OF http://localhost:3001 FILE IMPORT 
 import { baseUrl } from './BASE_URL';
 import { formatIndianCurrency } from '../components/FORMATED_AMOUNT';
 

@@ -1,30 +1,6 @@
 import React, { useState } from 'react'
 
 function PoliceBooth_SignalPost() {
-    // const [policeWidth, setPoliceWidth] = useState('');
-    // const [policeHeight, setPoliceHeight] = useState('');
-    // const [policeQuantity, setPoliceQuantity] = useState('');
-    // const [policeWidth1, setPoliceWidth1] = useState('');
-    // const [policeHeight1, setPoliceHeight1] = useState('');
-    // const [policeQuantity1, setPoliceQuantity1] = useState('');
-    // const [poleWidth, setPoleWidth] = useState('');
-    // const [poleHeight, setPoleHeight] = useState('');
-    // const [poleQuantity, setPoleQuantity] = useState('');
-    // const [poleSides, setPoleSides] = useState('2');
-
-
-    // const policeSizeCalculation = () => {
-    //     const squareFeet = policeHeight * policeWidth * policeQuantity
-    //     const squareFeet1 = policeHeight1 * policeWidth1 * policeQuantity1
-    //     const squareFeetFinal = squareFeet + squareFeet1
-    //     return squareFeetFinal;
-    // }
-
-    // const poleSignalSizeCalculation = () => {
-    //     const poleSquareFeet = poleHeight * poleWidth * poleSides * poleQuantity
-    //     return poleSquareFeet;
-    // }
-
     const [prodWidth, setProdWidth] = useState('');
     const [prodHeight, setProdHeight] = useState('');
     const [prodSquareFeet, setProdSquareFeet] = useState('');
@@ -148,4 +124,4 @@ function PoliceBooth_SignalPost() {
     )
 }
 
-export default PoliceBooth_SignalPost
+export default PoliceBooth_SignalPost;

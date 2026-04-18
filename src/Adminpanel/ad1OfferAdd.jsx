@@ -130,7 +130,7 @@ function AddOfferProduct() {
     // Fetch product by ID and auto-fill form
     const fetchProductById = (code) => {
         const cleanedInput = code.replace(/^#/, '').trim().toLowerCase();
-        
+
         // Reset all fields first
         resetProductFields();
 
@@ -158,7 +158,7 @@ function AddOfferProduct() {
             setProdType(product.mediaType || "");
             setSelectedState(product.location?.state || "");
             setSelectedDistrict(product.location?.district || "");
-            
+
             // Fill similar products
             if (product.similarProducts && product.similarProducts.length > 0) {
                 const normalizedSimilarProducts = product.similarProducts.map(sp => ({
@@ -169,7 +169,7 @@ function AddOfferProduct() {
                 }));
                 setSelectedSimilarProducts(normalizedSimilarProducts);
             }
-            
+
             setShowError(false);
         } else {
             setErrorMessage('Product not found!');
@@ -270,7 +270,7 @@ function AddOfferProduct() {
     // Form validation
     const validateForm = () => {
         const newErrors = {};
-        
+
         if (!productID) newErrors.productID = "Product ID is required";
         if (!productOfferPrice || parseFloat(productOfferPrice) <= 0) {
             newErrors.productOfferPrice = "Valid offer price is required";
@@ -284,7 +284,7 @@ function AddOfferProduct() {
     // Save/Update offer product - CORRECTED VERSION
     const handleSaveOfferProduct = async (e) => {
         e.preventDefault();
-        
+
         if (!validateForm()) {
             toast.error("Please fill all required fields correctly");
             return;
@@ -330,7 +330,7 @@ function AddOfferProduct() {
 
             // Determine API endpoint and method
             const method = editOffProd ? "PUT" : "POST";
-            const url = editOffProd 
+            const url = editOffProd
                 ? `${baseUrl}/OfferedProduct/offerProduct/${editOffProd._id}`
                 : `${baseUrl}/OfferedProduct/offerProduct`;
 
@@ -355,7 +355,7 @@ function AddOfferProduct() {
             setUploadProgress(100);
 
             alert(`Offer product ${editOffProd ? 'updated' : 'created'} successfully!`);
-            
+
             // Reset form and refresh data
             setTimeout(() => {
                 if (editOffProd) {
@@ -370,7 +370,7 @@ function AddOfferProduct() {
                 setIsSaving(false);
                 setUploadProgress(0);
             }, 1000);
-            
+
         } catch (error) {
             console.error("Save error:", error);
             toast.error(`Error: ${error.message}`);
@@ -425,7 +425,7 @@ function AddOfferProduct() {
             setSelectedState(offer.location?.state || "");
             setSelectedDistrict(offer.location?.district || "");
             setSelectedSimilarProducts(offer.similarProducts || []);
-            
+
             // Scroll to top
             window.scrollTo(0, 0);
         }
@@ -448,7 +448,7 @@ function AddOfferProduct() {
                         <div className='ManageLeftImg1'>
                             <img src={productImage} alt={productName} className='ManageLeftImg1' />
                         </div>
-                        
+
                         {/* Product details section */}
                         <div className='manageprodMain'>
                             <div className="ManageProdDetails">
@@ -495,7 +495,7 @@ function AddOfferProduct() {
                                 <div className='ManageProdLeftHeading'>Fixed Offer</div>
                                 <div className='ManageProdRightContent'>{productFixedAmountOffer}%</div>
                             </div>
-                             <div className="ManageProdDetails">
+                            <div className="ManageProdDetails">
                                 <div className='ManageProdLeftHeading'>Rating</div>
                                 <div className='ManageProdRightContent'>
                                     <span className='Product-star-main'>
@@ -553,13 +553,13 @@ function AddOfferProduct() {
                                 <div className='manageClientInfoLeft'>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Product Code</div>
-                                        <input 
-                                            type='text' 
-                                            placeholder='Enter Product ID' 
+                                        <input
+                                            type='text'
+                                            placeholder='Enter Product ID'
                                             value={productID}
                                             onChange={handleProductIdChange}
                                             className={errors.productID ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}
-                                            // disabled={editOffProd} // Disable when editing
+                                        // disabled={editOffProd} // Disable when editing
                                         />
                                         {errors.productID && <div className="AdminClienterror-message">Product ID is required</div>}
                                         {showError && <div className="error-message">{errorMessage}</div>}
@@ -586,14 +586,14 @@ function AddOfferProduct() {
                                 <div className='manageClientInfoRight'>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Offer Price</div>
-                                        <input 
-                                            type='number' 
-                                            placeholder='Enter Offer Price' 
+                                        <input
+                                            type='number'
+                                            placeholder='Enter Offer Price'
                                             value={productOfferPrice}
                                             onChange={(e) => {
                                                 setProductOfferPrice(e.target.value);
                                                 setErrors(prev => ({ ...prev, productOfferPrice: false }));
-                                            }} 
+                                            }}
                                             className={errors.productOfferPrice ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}
                                         />
                                         {errors.productOfferPrice && <div className="AdminClienterror-message">Valid offer price is required</div>}
@@ -609,10 +609,10 @@ function AddOfferProduct() {
                                 <div className='manageClientInfoLeft'>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Product Name</div>
-                                        <input 
-                                            type='text' 
-                                            placeholder='Product Name' 
-                                            value={productName} 
+                                        <input
+                                            type='text'
+                                            placeholder='Product Name'
+                                            value={productName}
                                             readOnly
                                             className={errors.productName ? "clientDetailsInput AdminProdinput-error" : "clientDetailsInput"}
                                         />
@@ -620,20 +620,20 @@ function AddOfferProduct() {
                                     </div>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Original Price</div>
-                                        <input 
-                                            type='number' 
-                                            placeholder='Original Price' 
-                                            value={productAmount} 
+                                        <input
+                                            type='number'
+                                            placeholder='Original Price'
+                                            value={productAmount}
                                             readOnly
                                             className='clientDetailsInput'
                                         />
                                     </div>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Lighting Type</div>
-                                        <input 
+                                        <input
                                             type='text'
-                                            placeholder='Lighting Type' 
-                                            value={prodLighting} 
+                                            placeholder='Lighting Type'
+                                            value={prodLighting}
                                             readOnly
                                             className='clientDetailsInput'
                                         />
@@ -642,10 +642,10 @@ function AddOfferProduct() {
                                 <div className='manageClientInfoRight'>
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Product ID</div>
-                                        <input 
-                                            type='text' 
+                                        <input
+                                            type='text'
                                             placeholder='Product ID'
-                                            value={productID} 
+                                            value={productID}
                                             readOnly
                                             className='clientDetailsInput'
                                         />
@@ -663,18 +663,18 @@ function AddOfferProduct() {
                                     <div className='clientDetailSection'>
                                         <div className='clientDetailHeading'>Location</div>
                                         <label className='locationFromLabel'>From</label>
-                                        <input 
-                                            type='text' 
+                                        <input
+                                            type='text'
                                             placeholder='From'
-                                            value={productFrom} 
+                                            value={productFrom}
                                             readOnly
                                             className='clientDetailsInput locationInput'
                                         /><br></br>
                                         <label className='locationFromLabel'>To</label>
-                                        <input 
-                                            type='text' 
+                                        <input
+                                            type='text'
                                             placeholder='To'
-                                            value={productTo} 
+                                            value={productTo}
                                             readOnly
                                             className='clientDetailsInput locationInput'
                                         />
@@ -692,10 +692,10 @@ function AddOfferProduct() {
                                         <RatingStars1 rating={parseFloat(prodRating) || 0} />
                                     </div>
                                     <div>
-                                        <input 
-                                            type='text' 
-                                            className='clientDetailsInput ratingInput' 
-                                            value={prodRating} 
+                                        <input
+                                            type='text'
+                                            className='clientDetailsInput ratingInput'
+                                            value={prodRating}
                                             readOnly
                                         />
                                     </div>
@@ -706,16 +706,16 @@ function AddOfferProduct() {
                                 <div className='ProductRatingMain'>
                                     <div className='AdminOfferDetails'>
                                         Pay ₹
-                                        <input 
-                                            type='number' 
-                                            value={productFixedAmount} 
+                                        <input
+                                            type='number'
+                                            value={productFixedAmount}
                                             readOnly
                                             className='sizeWidthInput adminOfferAmountInput'
                                         />
                                         and Get
-                                        <input 
-                                            type='number' 
-                                            value={productFixedAmountOffer} 
+                                        <input
+                                            type='number'
+                                            value={productFixedAmountOffer}
                                             readOnly
                                             className='sizeWidthInput adminOfferAmountPercentage'
                                         />
@@ -742,10 +742,10 @@ function AddOfferProduct() {
                                 </div>
                                 <div className='manageClientInfoRight'>
                                     <div className='clientDetailHeading'>Media Type</div>
-                                    <input 
-                                        type='text' 
-                                        className='clientDetailsInput' 
-                                        value={prodType} 
+                                    <input
+                                        type='text'
+                                        className='clientDetailsInput'
+                                        value={prodType}
                                         readOnly
                                     />
                                 </div>
@@ -769,9 +769,9 @@ function AddOfferProduct() {
 
                 {/* Action Buttons */}
                 <div className='action-buttons' style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-                    <button 
-                        className="calendarSaveBtn" 
-                        type='submit' 
+                    <button
+                        className="calendarSaveBtn"
+                        type='submit'
                         disabled={isSaving}
                     >
                         {isSaving ? (
@@ -783,7 +783,7 @@ function AddOfferProduct() {
                             editOffProd ? "Update" : "Save"
                         )}
                     </button>
-                    
+
                     {/* {editOffProd && (
                         <button 
                             type='button' 

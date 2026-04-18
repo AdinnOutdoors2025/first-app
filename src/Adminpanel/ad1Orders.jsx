@@ -6,7 +6,6 @@ import { baseUrl } from './BASE_URL';
 //FORMATTER DATE AND TIME
 import { formatIndianDateTime, formatForTable, formatBookingRange } from '../../src/DateTimeFormatter';
 import { getPaginationGroup } from "../utils/pagination";
-
 const OrdersTable = () => {
     // Handled by the admin name
 

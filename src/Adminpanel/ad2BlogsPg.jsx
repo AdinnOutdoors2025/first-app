@@ -16,7 +16,6 @@ function AdminBlogPage() {
             console.log("Failed to fetch Blogs", err);
         }
     }
-
     // Fetch blogs on component mount
     useEffect(() => {
         fetchBlogs();
