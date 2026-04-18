@@ -2101,7 +2101,7 @@ padding-left: 3px;
         max-width: 100%;
         padding: auto 10%;
         padding-left: 2%;
-        padding-top: 25%;
+        padding-top: 25% !important;
         margin: auto;
     }
 
@@ -2370,7 +2370,7 @@ padding-left: 3px;
     .Book-content2 {
         max-width: 100%;
         padding: auto 2%;
-        padding-top: 20%;
+        padding-top: 20% !important;
         margin: auto;
     }
 
@@ -2713,7 +2713,7 @@ padding-left: 3px;
         max-width: 100%;
         padding: auto 10%;
         padding-left: 2%;
-        padding-top: 30%;
+        padding-top: 30% !important; 
         margin: auto;
     }
 
@@ -3056,7 +3056,7 @@ padding-left: 3px;
     .Book-content2 {
         max-width: 100%;
         /* padding-left: 1%; */
-        padding-top: 25%;
+        padding-top: 25% !important;
         margin: auto;
     }
 
@@ -3381,7 +3381,7 @@ padding-left: 3px;
     .Book-content2 {
         max-width: 100%;
         /* padding-left: 1%; */
-        padding-top: 28%;
+        padding-top: 28% !important;
         margin: auto;
     }
 
