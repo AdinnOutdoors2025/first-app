@@ -3889,5 +3889,3 @@ const getDateSelectionClass = (date) => {
 }
 
 export default BookASite1;
-
-

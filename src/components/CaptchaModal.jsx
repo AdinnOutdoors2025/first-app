@@ -1,4 +1,3 @@
-// CaptchaModal.js
 import React, { useState, useEffect } from 'react';
 import './CaptchaModal.css';
 import { FaSyncAlt, FaPaperPlane } from 'react-icons/fa';
