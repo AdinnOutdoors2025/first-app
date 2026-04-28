@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './a4home.css';
 import { baseUrl } from '../Adminpanel/BASE_URL';
 import { toast } from 'react-toastify';
-import billboardImg from "../assets/images/billboard.png"
+import billboardImg from "../assets/images/billboard.png";
+import CaptchaModal from './CaptchaModal'; // Import the captcha component
 
 function FooterMain() {
     const [contactInfo, setContactInfo] = useState('');
@@ -11,6 +12,8 @@ function FooterMain() {
     const [isError, setIsError] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [currentYear, setCurrentYear] = useState('');
+    const [showCaptcha, setShowCaptcha] = useState(false);
+    const [pendingContactInfo, setPendingContactInfo] = useState('');
 
     useEffect(() => {
         setCurrentYear(new Date().getFullYear());
@@ -37,29 +40,8 @@ function FooterMain() {
         return emailRegex.test(input) || phoneRegex.test(cleanedInput);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (!contactInfo.trim()) {
-            setMessage({
-                text: 'Please enter your email or phone number',
-                type: 'error'
-            });
-            return;
-        }
-
-        if (!validateContactInfo(contactInfo)) {
-            setMessage({
-                text: 'Please enter a valid email or 10-digit phone number',
-                type: 'error'
-            });
-            return;
-        }
-
-        setIsSubmit(true);
-        // Clear previous messages
-        setMessage({ text: '', type: '' });
-
+    // Function to submit the form after captcha verification
+    const submitForm = async () => {
         try {
             const response = await fetch(`${baseUrl}/ContactInfo/footerContactInfo`, {
                 method: 'POST',
@@ -67,38 +49,27 @@ function FooterMain() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    contactInfo: contactInfo,
+                    contactInfo: pendingContactInfo,
                 })
             });
 
             const result = await response.json();
+            
             // Handle duplicate error (409 Conflict)
             if (response.status === 409) {
                 toast.warning(result.error || "This contact information has already been submitted.", {
                     position: "bottom-right",
                     autoClose: 3000,
                 });
-                return;
+                return false;
             }
-
 
             if (!response.ok) {
                 throw new Error("Failed to submit contact information");
             }
 
-            // if (result.emailSent) {
-            //     toast.success(`Thank you for contacting us! We'll reach out to you soon.`, {
-            //         position: "bottom-right",
-            //         autoClose: 2000,
-            //     });
-            // } else {
-            //     toast.success(`Thank you for your interest! We've received your information.`, {
-            //         position: "bottom-right",
-            //         autoClose: 2000,
-            //     });
-            // }
             if (result.success) {
-                const isEmail = contactInfo.includes('@');
+                const isEmail = pendingContactInfo.includes('@');
                 let successMessage = '';
 
                 if (isEmail) {
@@ -121,22 +92,65 @@ function FooterMain() {
                 });
 
                 setContactInfo('');
+                return true;
             }
-        }
-        catch (err) {
+            
+            return false;
+        } catch (err) {
             toast.error(`Failed to submit your information. Please try again later.`, {
                 position: "bottom-right",
                 autoClose: 2000,
             });
             console.error("Error submitting contact information:", err);
+            return false;
         }
-        finally {
-            setIsSubmit(false);
+    };
+
+    // Handle captcha verification success
+    const handleCaptchaVerify = async () => {
+        await submitForm();
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!contactInfo.trim()) {
+            setMessage({
+                text: 'Please enter your email or phone number',
+                type: 'error'
+            });
+            return;
         }
-    }
+
+        if (!validateContactInfo(contactInfo)) {
+            setMessage({
+                text: 'Please enter a valid email or 10-digit phone number',
+                type: 'error'
+            });
+            return;
+        }
+
+        setIsSubmit(true);
+        setMessage({ text: '', type: '' });
+
+        // Store the contact info and show captcha
+        setPendingContactInfo(contactInfo);
+        setShowCaptcha(true);
+        setIsSubmit(false);
+    };
 
     return (
         <div>
+            {/* Captcha Modal */}
+            <CaptchaModal 
+                isOpen={showCaptcha}
+                onClose={() => {
+                    setShowCaptcha(false);
+                    setPendingContactInfo('');
+                }}
+                onVerify={handleCaptchaVerify}
+            />
+
             {/* Footer section */}
             <div className='footer container-fluid' id="ContactUsFooter">
                 {message.text && (
@@ -197,30 +211,33 @@ function FooterMain() {
                     </form>
                 </div>
 
-                {/* Building images */}
-                {/* <img src='/images/f7-building.png' className='f-buildMain' alt="Building" /> */}
-
                 <div className='f-info container'>
                     <div className='f-infoContent'>
                         <img src='/images/adinn_logo.png' className='f-adinnLogo' alt="Adinn Logo" />
                         <div className='f-content'>
-                            <div className='f-c1'> <img src='/images/f11-phone.svg' className='f1' alt="Phone" /></div>
+                            <div className='f-c1'> 
+                                <img src='/images/f11-phone.svg' className='f1' alt="Phone" />
+                            </div>
                             <div className='f-c2'>
-                                {/* <div><a href='tel:7373785048' style={{ textDecoration: 'none', color: "#121927" }}> +91 73737 85048</a></div>
-                                <div><a href='tel:7373785056' style={{ textDecoration: 'none', color: "#121927" }}>+91 73737 85056</a></div>*/}
-<div><a href='tel:7373785048' style={{ textDecoration: 'none', color: "#121927" }}> +91 73737 85048</a></div>
-                             <div><a href='tel:9787885055' style={{ textDecoration: 'none', color: "#121927" }}> +91 97878 85055</a></div>
-                            
+                                <div>
+                                    <a href='tel:7373785048' style={{ textDecoration: 'none', color: "#121927" }}> 
+                                        +91 73737 85048
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href='tel:9787885055' style={{ textDecoration: 'none', color: "#121927" }}> 
+                                        +91 97878 85055
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <div className='f-content1'>
                             <img src='/images/f2-mail.svg' className='f2' alt="Mail" />
                             <span className='mail'>
-                                {/* <a href='mailto:vinothkumar@adinn.co.in' style={{ textDecoration: 'none', color: "#121927" }}> vinothkumar@adinn.co.in </a> */}
-                                <a href='mailto:outdoorsales@adinn.co.in' style={{ textDecoration: 'none', color: "#121927" }}> outdoorsales@adinn.co.in </a>
-                           
+                                <a href='mailto:outdoorsales@adinn.co.in' style={{ textDecoration: 'none', color: "#121927" }}> 
+                                    outdoorsales@adinn.co.in 
+                                </a>
                             </span>
-                            
                         </div>
                         <div className='f-content2'>
                             <div className='f-c3'>
@@ -244,7 +261,7 @@ function FooterMain() {
                                 </a>
                             </div>
                         </div>
-                    </div >
+                    </div>
                     <img src='/images/footer_image1.svg' className='f-buildMain' alt="Building" />
                     {/* right side footer content */}
                     <div className='f-infoContent1'>
@@ -271,7 +288,7 @@ function FooterMain() {
                             </div>
                         </div>
                     </div>
-                </div >
+                </div>
 
                 <div className="container-fluid" style={{ padding: '0' }}>
                     <div className="copy">
@@ -284,7 +301,7 @@ function FooterMain() {
                         <div className="copy4"></div>
                     </div>
                 </div>
-            </div >
+            </div>
 
             {/* Terms and Conditions Privacy Policy Popup */}
             {
@@ -328,14 +345,14 @@ function FooterMain() {
                                             <li className="billboard-section-heading">Who we are</li>
                                             <li>Our website address is: <a href="https://www.adinnoutdoors.com" target="_blank" rel="noopener noreferrer">www.adinnoutdoors.com</a></li>
                                             <li className="billboard-section-heading">Comments</li>
-                                            <li>When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor’s IP address and browser user agent string to help spam detection.
+                                            <li>When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor's IP address and browser user agent string to help spam detection.
                                                 An anonymized string created from your email address (also called a hash) may be provided to the Gravatar service to see if you are using it. The Gravatar service privacy policy is available here: <a href="https://automattic.com/privacy" target="_blank" rel="noopener noreferrer">https://automattic.com/privacy</a>. After approval of your comment, your profile picture is visible to the public in the context of your comment.</li>
                                             <li className="billboard-section-heading">Media</li>
                                             <li>If you upload images to the website, you should avoid uploading images with embedded location data (EXIF GPS) included. Visitors to the website can download and extract any location data from images on the website.</li>
                                             <li className="billboard-section-heading">Cookies</li>
                                             <li>If you leave a comment on our site you may opt-in to saving your name, email address and website in cookies. These are for your convenience so that you do not have to fill in your details again when you leave another comment. These cookies will last for one year.
                                                 If you visit our login page, we will set a temporary cookie to determine if your browser accepts cookies. This cookie contains no personal data and is discarded when you close your browser.
-                                                When you log in, we will also set up several cookies to save your login information and your screen display choices. Login cookies last for two days, and screen options cookies last for a year. If you select “Remember Me”, your login will persist for two weeks. If you log out of your account, the login cookies will be removed.
+                                                When you log in, we will also set up several cookies to save your login information and your screen display choices. Login cookies last for two days, and screen options cookies last for a year. If you select "Remember Me", your login will persist for two weeks. If you log out of your account, the login cookies will be removed.
                                                 If you edit or publish an article, an additional cookie will be saved in your browser. This cookie includes no personal data and simply indicates the post ID of the article you just edited. It expires after 1 day.
                                             </li>
                                             <li className="billboard-section-heading">Embedded content from other websites</li>
@@ -351,7 +368,6 @@ function FooterMain() {
                                             <li className="billboard-section-heading">What rights you have over your data</li>
                                             <li>If you have an account on this site, or have left comments, you can request to receive an exported file of the personal data we hold about you, including any data you have provided to us. You can also request that we erase any personal data we hold about you. This does not include any data we are obliged to keep for administrative, legal, or security purposes.</li>
                                         </>
-
                                     )}
                                 </ul>
                             </div>
@@ -359,8 +375,7 @@ function FooterMain() {
                     </>
                 )
             }
-            {/* Terms and Conditions Privacy Policy Popup */}
-        </div >
+        </div>
     )
 }
 
