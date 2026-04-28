@@ -71,7 +71,7 @@ const CaptchaModal = ({ isOpen, onClose, onVerify }) => {
         <div className="captcha-overlay">
             <div className="captcha-modal">
                 <div className="captcha-header">
-                    <h3>Verify you are human</h3>
+                    <h3>Verify you're human</h3>
                     <button className="captcha-close" onClick={onClose}>×</button>
                 </div>
                 
