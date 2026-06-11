@@ -284,7 +284,7 @@ function FooterMain() {
                                 <h1 className='footer-heading'>Branch office</h1>
                                 <p className='footer-para'>
                                     {/* No 3, 1st Floor, Vijayalakshmi Street, Nungambakkam, Chennai - 600 034 , Tamil Nadu. */}
-                                    No. 19/43, MG Chakrapani Street, Sathya Garden, Saligramam, Chennai - 600092
+                                    No. 19/43, MG Chakrapani Street, Sathya Garden, Saligramam, Chennai - 600092.
                                 </p>
                             </div>
                         </div>
