@@ -14,6 +14,9 @@ import { baseUrl } from "../Adminpanel/BASE_URL";
 //DEAL OF THE DAY PAGE SCROLL ANIMATION
 import DealScrollAnim from "./H2DealScroll.jsx";
 import { formatIndianCurrency } from "./FORMATED_AMOUNT";
+// HELMET FOR TITLE DESCTIPTION IN ALL PAGE 
+import { Helmet } from "react-helmet-async";
+
 
 export default function BookASite() {
 
@@ -466,6 +469,14 @@ const handleLocationFilterCancel = () => {
 
 
   return (
+    <>
+    <Helmet>
+      <title>Book a Site | Adinn Outdoors</title>
+      <meta
+        name="description"
+        content="Book premium outdoor advertising sites with Adinn Outdoors."
+      />
+    </Helmet>
     <MainLayout>
       <div className="bookMainDeal">
         {/* <DealScrollAnim /> */}
@@ -1018,5 +1029,6 @@ const handleLocationFilterCancel = () => {
         <MainFooter />
       </div>
     </MainLayout>
+    </>
   );
 }

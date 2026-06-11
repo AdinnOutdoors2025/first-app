@@ -272,7 +272,7 @@ function FooterMain() {
                             <div className='f-c4'>
                                 <h1 className='footer-heading'>Head office</h1>
                                 <p className='footer-para'>
-                                    29, 1st Cross street, Vanamamalai nagar, Bypass road, Madurai-625016.
+                                    29, 1st Cross street, Vanamamalai nagar, Bypass road, Madurai - 625016.
                                 </p>
                             </div>
                         </div>
