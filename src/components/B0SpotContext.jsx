@@ -7,12 +7,6 @@ const SpotContext = createContext();
 // Context Provider
 export const SpotProvider = ({ children }) => {
   const [selectedSpot, setSelectedSpot] = useState(null);
-
-
-
-
-
-  
   
     //STATE DISTRICTS & MEDIA TYPE SELECTION FUNCTION
     const initialStateDistricts = {

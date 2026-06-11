@@ -58,17 +58,6 @@ function HeroSection() {
             setIsOpen(!isOpen);
         };
 
-        // const [isLoginOpen, setIsLoginOpen] = useState(false); // State to toggle Login 
-  //Toggle LoginPage
-//   const toggleLoginPage = () => {
-//     setIsLoginOpen(!isLoginOpen);
-//     };
-//     const closeLoginPage = () => {
-//         setIsLoginOpen(false);
-//         };
-
-
-
     //If i click the orders, signup or login then go the login page
     const navigate = useNavigate();
 

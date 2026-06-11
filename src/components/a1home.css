@@ -117,26 +117,21 @@
 
   to {
     transform: translateX(-1600px);
-    /* Moves the width of 8 images */
   }
 }
 
 /* client 2 row  */
 .client-content1 {
   margin-top: 30px;
-  /* border: 2px solid black; */
   display: flex;
   width: calc(200px * 8 * 2);
-  /* Ensure width can accommodate the duplicated set */
   overflow: hidden;
   position: relative;
   animation: scroll-right 10s linear infinite;
-  /* Apply animation to the entire content */
 }
 
 .client-content1 {
   flex-shrink: 0;
-  /* Prevents shrinking of individual items */
 }
 
 .client-content1 img {
@@ -145,16 +140,13 @@
   width: 200px;
 }
 
-/* Keyframes for continuous scrolling */
 @keyframes scroll-right {
   from {
     transform: translateX(-1600px);
-    /* Start with original set fully visible */
   }
 
   to {
     transform: translateX(0px);
-    /* Moves the width of 8 images */
   }
 }
 
@@ -166,9 +158,6 @@
 
 .what-main {
   border-radius: 20px;
-  /* border: 1px solid gray;
-  box-shadow: 2px 2px 2px gray, -2px -2px 2px gray; */
-  /* box-shadow: 2px 2px 2px gray; */
   position: relative;
   padding-bottom: 50px;
   padding-top: 30px;
@@ -256,15 +245,6 @@
   font-size: 15px;
   position: relative;
   transition: all 2s ease;
-  /* flex: 0 0 auto;
-  margin: 0 15px;
-  font-weight: 500;
-  font-size: 15px;
-  position: relative;
-  scroll-snap-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap; */
 }
 
 .drag-content.active {
@@ -272,24 +252,6 @@
   color: #E41E25;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -319,20 +281,14 @@
 
   50% {
     transform: translateY(-30px);
-    /* Move up smoothly */
     color: #E41E25;
-    /* Highlight in red */
     transform: scale(1.5);
-    /* Enlarges */
   }
 
   100% {
     transform: translateY(0);
-    /* Move back down */
     color: black;
-    /* Revert color */
     transform: scale(1);
-    /* Normal size */
   }
 }
 

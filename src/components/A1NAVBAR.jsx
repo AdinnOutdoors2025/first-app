@@ -13,7 +13,6 @@ function NavbarMain() {
   const [isOpen, setIsOpen] = useState(false);
   const { openLogin, closeLogin, isLoginOpen, user, logoutUser, loginUser } = useLogin();
   const [cartCount, setCartCount] = useState(0);
-  // Add a state to track screen size
   const [isMobile, setIsMobile] = useState(window.innerWidth < 480);
   // const [activeAuth, setActiveAuth] = useState(null);
   const [activeAuth, setActiveAuth] = useState("signup");
@@ -27,7 +26,6 @@ function NavbarMain() {
   // const itemRefs = useRef([]);
   const [isPrimeSpotsActive, setIsPrimeSpotsActive] = useState(false);
   const primeSpotsRef = useRef(null);
-  // Add these states in your NavbarMain component
   const [activeNavItem, setActiveNavItem] = useState(''); // 'primeSpots', etc.
   const [activeUserItem, setActiveUserItem] = useState(''); // 'orders', 'signout', etc.
 
@@ -52,7 +50,6 @@ function NavbarMain() {
     }
   }, [currentPath]);
 
-  // Check if Prime Spots section is in view
   useEffect(() => {
     const checkPrimeSpotsInView = () => {
       // Only check if we're on the home page
@@ -69,10 +66,7 @@ function NavbarMain() {
         setIsPrimeSpotsActive(isInView);
       }
     };
-
-    // Initial check after a short delay to ensure DOM is ready
     setTimeout(checkPrimeSpotsInView, 500);
-
     window.addEventListener('scroll', checkPrimeSpotsInView);
 
     return () => {

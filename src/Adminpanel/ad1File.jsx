@@ -498,12 +498,11 @@ function ClientSection() {
                     continue;
                 }
 
-                // Check if product already exists (for update)
                 const existingProduct = currentProducts.find(
                     product => product.prodCode === productData.prodCode
                 );
 
-                // Prepare complete product data matching your database structure
+               
                 const completeProductData = {
                     ...productData,
                     image: productData.image || " ",
@@ -574,7 +573,7 @@ function ClientSection() {
         setIsUploadingExcel(false);
         setShowExcelPreview(false);
         setExcelData([]);
-        setMainImageUrl(''); // Reset main image URL
+        setMainImageUrl(''); 
 
         // Show detailed results
         if (errors.length > 0) {
@@ -737,7 +736,6 @@ function ClientSection() {
         );
     };
 
-    // Rest of your existing code remains the same...
     const RatingStars = ({ rating }) => {
         const fullStars = Math.floor(rating);
         const halfStar = rating % 1 !== 0;

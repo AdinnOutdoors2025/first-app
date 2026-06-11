@@ -272,7 +272,7 @@ function FooterMain() {
                             <div className='f-c4'>
                                 <h1 className='footer-heading'>Head office</h1>
                                 <p className='footer-para'>
-                                    29, 1st Cross street, Vanamamalai nagar, Bypass road, Madurai-625016, Tamil Nadu.
+                                    29, 1st Cross street, Vanamamalai nagar, Bypass road, Madurai-625016.
                                 </p>
                             </div>
                         </div>
@@ -283,7 +283,8 @@ function FooterMain() {
                             <div className='f-c4'>
                                 <h1 className='footer-heading'>Branch office</h1>
                                 <p className='footer-para'>
-                                    No 3, 1st Floor, Vijayalakshmi Street, Nungambakkam, Chennai - 600 034 , Tamil Nadu.
+                                    {/* No 3, 1st Floor, Vijayalakshmi Street, Nungambakkam, Chennai - 600 034 , Tamil Nadu. */}
+                                    No. 19/43, MG Chakrapani Street, Sathya Garden, Saligramam, Chennai - 600092
                                 </p>
                             </div>
                         </div>
