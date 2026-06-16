@@ -1020,9 +1020,11 @@ html {
 }
 
 @media (min-width: 1200px) and (max-width: 1400px) {
+
     /* NEWLY ADDED FOR FOOTER BGLR AND CBE ADDRESS ADDED RESPONSIVE */
     .f-content4 {
         margin-top: 15px;
+        margin-bottom: 5px;
         width: 406px;
         display: flex;
     }
@@ -1036,9 +1038,15 @@ html {
         margin-left: -40px !important;
         /* width: 330px; */
     }
+
     .f-buildMain {
-    width: 700px;
+        width: 700px;
     }
+
+    .f-info {
+        margin-bottom: 5%;
+    }
+
     /* NEWLY ADDED FOR FOOTER BGLR AND CBE ADDRESS ADDED RESPONSIVE */
 
 }
