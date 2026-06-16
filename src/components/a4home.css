@@ -186,6 +186,7 @@
 .f-info {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     /* border: 1px solid white; */
 }
 
@@ -319,7 +320,7 @@
 
 .f-content4 {
     margin-top: 15px;
-    width: 400px;
+    width: 480px;
     display: flex;
 }
 
@@ -343,6 +344,7 @@
     line-height: 100%;
     letter-spacing: 0%;
     color: #121927;
+    margin: 5px auto;
 
 }
 
@@ -1018,9 +1020,27 @@ html {
 }
 
 @media (min-width: 1200px) and (max-width: 1400px) {
+    /* NEWLY ADDED FOR FOOTER BGLR AND CBE ADDRESS ADDED RESPONSIVE */
+    .f-content4 {
+        margin-top: 15px;
+        width: 406px;
+        display: flex;
+    }
+
+    .footer-para {
+        line-height: 20px;
+        margin: 10px auto;
+    }
+
     .f-infoContent {
         margin-left: -40px !important;
+        /* width: 330px; */
     }
+    .f-buildMain {
+    width: 700px;
+    }
+    /* NEWLY ADDED FOR FOOTER BGLR AND CBE ADDRESS ADDED RESPONSIVE */
+
 }
 
 @media (min-width: 1000px) and (max-width: 1120px) {
@@ -1030,6 +1050,7 @@ html {
 }
 
 @media (min-width: 1024px) and (max-width: 1199px) {
+
     .f-infoContent {
         margin-left: -20px !important;
     }

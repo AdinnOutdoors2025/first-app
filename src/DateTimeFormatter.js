@@ -1,7 +1,4 @@
-/**
- * Convert UTC date to Indian Standard Time (IST)
- * IST = UTC + 5:30 hours
- */
+/** * Convert UTC date to Indian Standard Time (IST)* IST = UTC + 5:30 hours*/
 export const convertUTCToIST = (dateString) => {
     if (!dateString) return null;
     
@@ -9,30 +6,23 @@ export const convertUTCToIST = (dateString) => {
         const date = new Date(dateString);
         if (isNaN(date.getTime())) return null;
         
-        // Check if date is already in local timezone (likely IST)
-        // If it's already in IST, we should NOT add offset
-        // This is to prevent double conversion
+     
         
         // Get timezone offset in minutes and convert to hours
         const timezoneOffset = date.getTimezoneOffset();
         const localTimezoneHours = Math.abs(timezoneOffset) / 60;
         
-        // If the date appears to be in IST (UTC+5:30), don't add offset
-        // Otherwise, treat it as UTC and add IST offset
-        if (Math.abs(timezoneOffset) === 330) { // 5.5 hours in minutes = 330
-            // Date is already in IST, return as is
+  
+        if (Math.abs(timezoneOffset) === 330) { 
             return date;
         }
         
-        // Otherwise, assume it's UTC and add IST offset
-        // But first, let's check if the date string contains timezone info
+
         if (dateString.includes('Z') || dateString.includes('+') || dateString.includes('-')) {
-            // Date string has timezone info, convert from UTC to IST
             const istOffset = 5.5 * 60 * 60 * 1000;
             return new Date(date.getTime() + istOffset);
         }
         
-        // If no timezone info and not already IST, return as is
         return date;
     } catch (error) {
         console.error("Error converting to IST:", error);
@@ -40,18 +30,13 @@ export const convertUTCToIST = (dateString) => {
     }
 };
 
-/**
- * Format date for display in Indian format (DD-MM-YYYY)
- */
 export const formatIndianDate = (dateString, includeTime = false) => {
-    // Handle the date string directly without conversion first
     if (!dateString) return "N/A";
     
     try {
         const date = new Date(dateString);
         if (isNaN(date.getTime())) return "N/A";
         
-        // Check if this is a date-only string (no time component)
         const isDateOnly = !dateString.includes('T') && !dateString.includes(' ');
         
         if (includeTime || !isDateOnly) {
@@ -64,7 +49,6 @@ export const formatIndianDate = (dateString, includeTime = false) => {
                 minute: '2-digit',
                 hour12: true
             });
-            // Convert AM/PM to uppercase
             return formatted.replace(/\b(am|pm)\b/g, (match) => match.toUpperCase());
         }
         
@@ -80,9 +64,7 @@ export const formatIndianDate = (dateString, includeTime = false) => {
     }
 };
 
-/**
- * Format date for display with month names (13 Jan 2026, 1:39 PM)
- */
+/*** Format date for display with month names (13 Jan 2026, 1:39 PM)*/
 export const formatIndianDateTime = (dateString, showSeconds = false) => {
     if (!dateString) return "N/A";
     
@@ -113,9 +95,7 @@ export const formatIndianDateTime = (dateString, showSeconds = false) => {
     }
 };
 
-/**
- * Format booking dates range (27 Jan - 10 Feb 2026)
- */
+/** * Format booking dates range (27 Jan - 10 Feb 2026) */
 export const formatBookingRange = (startDate, endDate) => {
     if (!startDate || !endDate) return "N/A";
     
@@ -145,9 +125,7 @@ export const formatBookingRange = (startDate, endDate) => {
     }
 };
 
-/**
- * Format time only (1:39 PM)
- */
+/** * Format time only (1:39 PM) */
 export const formatIndianTime = (dateString, showSeconds = false) => {
     if (!dateString) return "N/A";
     
@@ -175,9 +153,7 @@ export const formatIndianTime = (dateString, showSeconds = false) => {
     }
 };
 
-/**
- * Calculate booking status and remaining days
- */
+/** * Calculate booking status and remaining days */
 export const getBookingStatus = (startDate, endDate) => {
     if (!startDate || !endDate) return { status: 'unknown', days: 0 };
     
@@ -229,9 +205,7 @@ export const getBookingStatus = (startDate, endDate) => {
     }
 };
 
-/**
- * Format for table display (13-01-2026, 1:39 PM)
- */
+/** * Format for table display (13-01-2026, 1:39 PM)*/
 export const formatForTable = (dateString) => {
     if (!dateString) return "N/A";
     
@@ -263,9 +237,7 @@ export const formatForTable = (dateString) => {
     }
 };
 
-/**
- * Get relative time (2 days ago, 1 hour ago, etc.)
- */
+/** * Get relative time (2 days ago, 1 hour ago, etc.)*/
 export const getRelativeTime = (dateString) => {
     if (!dateString) return "N/A";
     
@@ -295,9 +267,7 @@ export const getRelativeTime = (dateString) => {
     }
 };
 
-/**
- * Format time with uppercase AM/PM (1:39 PM)
- */
+/*** Format time with uppercase AM/PM (1:39 PM)*/
 export const formatTimeWithUppercaseAMPM = (dateString, showSeconds = false) => {
     if (!dateString) return "N/A";
     
@@ -329,9 +299,7 @@ export const formatTimeWithUppercaseAMPM = (dateString, showSeconds = false) => 
     }
 };
 
-/**
- * Format date and time with uppercase AM/PM (13 Jan 2026, 1:39 PM)
- */
+/** * Format date and time with uppercase AM/PM (13 Jan 2026, 1:39 PM)*/
 export const formatDateTimeUppercaseAMPM = (dateString, showSeconds = false) => {
     if (!dateString) return "N/A";
     
@@ -370,9 +338,7 @@ export const formatDateTimeUppercaseAMPM = (dateString, showSeconds = false) => 
     }
 };
 
-/**
- * Format complete timestamp with uppercase AM/PM (13-01-2026 01:39:25 PM)
- */
+/** * Format complete timestamp with uppercase AM/PM (13-01-2026 01:39:25 PM) */
 export const formatTimestampUppercaseAMPM = (dateString) => {
     if (!dateString) return "N/A";
     

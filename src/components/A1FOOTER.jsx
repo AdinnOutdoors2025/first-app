@@ -54,7 +54,7 @@ function FooterMain() {
             });
 
             const result = await response.json();
-            
+
             // Handle duplicate error (409 Conflict)
             if (response.status === 409) {
                 toast.warning(result.error || "This contact information has already been submitted.", {
@@ -94,7 +94,7 @@ function FooterMain() {
                 setContactInfo('');
                 return true;
             }
-            
+
             return false;
         } catch (err) {
             toast.error(`Failed to submit your information. Please try again later.`, {
@@ -142,7 +142,7 @@ function FooterMain() {
     return (
         <div>
             {/* Captcha Modal */}
-            <CaptchaModal 
+            <CaptchaModal
                 isOpen={showCaptcha}
                 onClose={() => {
                     setShowCaptcha(false);
@@ -215,17 +215,17 @@ function FooterMain() {
                     <div className='f-infoContent'>
                         <img src='/images/adinn_logo.png' className='f-adinnLogo' alt="Adinn Logo" />
                         <div className='f-content'>
-                            <div className='f-c1'> 
+                            <div className='f-c1'>
                                 <img src='/images/f11-phone.svg' className='f1' alt="Phone" />
                             </div>
                             <div className='f-c2'>
                                 <div>
-                                    <a href='tel:7373785048' style={{ textDecoration: 'none', color: "#121927" }}> 
+                                    <a href='tel:7373785048' style={{ textDecoration: 'none', color: "#121927" }}>
                                         +91 73737 85048
                                     </a>
                                 </div>
                                 <div>
-                                    <a href='tel:9787885055' style={{ textDecoration: 'none', color: "#121927" }}> 
+                                    <a href='tel:9787885055' style={{ textDecoration: 'none', color: "#121927" }}>
                                         +91 97878 85055
                                     </a>
                                 </div>
@@ -234,8 +234,8 @@ function FooterMain() {
                         <div className='f-content1'>
                             <img src='/images/f2-mail.svg' className='f2' alt="Mail" />
                             <span className='mail'>
-                                <a href='mailto:outdoorsales@adinn.co.in' style={{ textDecoration: 'none', color: "#121927" }}> 
-                                    outdoorsales@adinn.co.in 
+                                <a href='mailto:outdoorsales@adinn.co.in' style={{ textDecoration: 'none', color: "#121927" }}>
+                                    outdoorsales@adinn.co.in
                                 </a>
                             </span>
                         </div>
@@ -270,10 +270,11 @@ function FooterMain() {
                                 <img src='/images/BuildingApartment1.svg' className='f7' alt="Head Office Building" />
                             </div>
                             <div className='f-c4'>
-                                <h1 className='footer-heading'>Head office</h1>
-                                <p className='footer-para'>
-                                    29, 1st Cross street, Vanamamalai nagar, Bypass road, Madurai - 625016.
-                                </p>
+                                <div className='footer-heading'>Head office</div>
+                                <div className='footer-para'>
+                                    29, 1st Cross street, Vanamamalai nagar, Bypass road, {" "}
+                                    <span style={{fontWeight:'700'}}>  Madurai - 625016. </span>
+                                </div>
                             </div>
                         </div>
                         <div className='f-content4'>
@@ -281,11 +282,21 @@ function FooterMain() {
                                 <img src='/images/BuildingOffice1.svg' className='f8' alt="Branch Office Building" />
                             </div>
                             <div className='f-c4'>
-                                <h1 className='footer-heading'>Branch office</h1>
-                                <p className='footer-para'>
+                                <div className='footer-heading'>Branch office</div>
+                                <div className='footer-para'>
                                     {/* No 3, 1st Floor, Vijayalakshmi Street, Nungambakkam, Chennai - 600 034 , Tamil Nadu. */}
-                                    No. 19/43, MG Chakrapani Street, Sathya Garden, Saligramam, Chennai - 600092.
-                                </p>
+                                    No. 19/43, MG Chakrapani Street, Sathya Garden, Saligramam, {" "}
+                                    <span style={{fontWeight:'700'}}> Chennai - 600092.</span>
+                                </div>
+                                 <div className='footer-para'>
+                                    No. 24, 2nd floor, 9th A Cross road, Park area, Wilson Garden,{" "}
+                                    <span style={{fontWeight:'700'}}>  Bangalore - 560027. </span>
+                                </div>
+                                <div className='footer-para'>
+                                    No. 13, Sivasakthi Colony, (Near coimbatore roller flour mill), Ganapathy, {" "}
+                                    <span style={{fontWeight:'700'}}> Coimbatore - 641006. </span>
+                                </div>
+                               
                             </div>
                         </div>
                     </div>
