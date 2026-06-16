@@ -273,7 +273,7 @@ function FooterMain() {
                                 <div className='footer-heading'>Head office</div>
                                 <div className='footer-para'>
                                     29, 1st Cross street, Vanamamalai nagar, Bypass road, {" "}
-                                    <span style={{fontWeight:'700'}}>  Madurai - 625016. </span>
+                                    <span style={{fontWeight:'600'}}>  Madurai - 625016. </span>
                                 </div>
                             </div>
                         </div>
@@ -286,15 +286,15 @@ function FooterMain() {
                                 <div className='footer-para'>
                                     {/* No 3, 1st Floor, Vijayalakshmi Street, Nungambakkam, Chennai - 600 034 , Tamil Nadu. */}
                                     No. 19/43, MG Chakrapani Street, Sathya Garden, Saligramam, {" "}
-                                    <span style={{fontWeight:'700'}}> Chennai - 600092.</span>
+                                    <span style={{fontWeight:'600'}}> Chennai - 600092.</span>
                                 </div>
                                  <div className='footer-para'>
                                     No. 24, 2nd floor, 9th A Cross road, Park area, Wilson Garden,{" "}
-                                    <span style={{fontWeight:'700'}}>  Bangalore - 560027. </span>
+                                    <span style={{fontWeight:'600'}}>  Bangalore - 560027. </span>
                                 </div>
                                 <div className='footer-para'>
                                     No. 13, Sivasakthi Colony, (Near coimbatore roller flour mill), Ganapathy, {" "}
-                                    <span style={{fontWeight:'700'}}> Coimbatore - 641006. </span>
+                                    <span style={{fontWeight:'600'}}> Coimbatore - 641006. </span>
                                 </div>
                                
                             </div>
