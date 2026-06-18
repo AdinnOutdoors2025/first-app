@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './a4home.css';
 import { baseUrl } from '../Adminpanel/BASE_URL';
 import { toast } from 'react-toastify';
@@ -22,11 +23,21 @@ function FooterMain() {
     // terms and conditions privacy policy popup
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState("");
+    const navigate = useNavigate();
+
+    // const openModal = (type) => {
+    //     setModalType(type);
+    //     setShowModal(true);
+    // };
 
     const openModal = (type) => {
-        setModalType(type);
-        setShowModal(true);
-    };
+    if (type === "privacy") {
+        navigate('/privacy-policy');
+    } else{
+         setModalType(type);
+          setShowModal(true);
+    }
+};
 
     const closeModal = () => {
         setShowModal(false);

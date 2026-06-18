@@ -48,6 +48,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { loadZohoSalesIQ } from './utils/zohoSalesIQ.js';
 import SalesIQTracker from './utils/SalesIQTracker.jsx';
 import WhatsApp from './utils/WhatsApp.jsx';
+import PrivacyPolicy from './components/PrivacyPolicy.jsx';
 
 /* Add toast message -SK */
 function App() {
@@ -112,6 +113,8 @@ function App() {
               <Route path="/Rich" element={<RichText />} />
               <Route path='/deal' element={<DealOfTheDay />} />
               <Route path='/DealScroll' element={<DealScrollAnimation />} />
+
+               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
               {/* Protected Admin Routes */}
               <Route path="/admin" element={
