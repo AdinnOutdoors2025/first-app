@@ -133,7 +133,7 @@
   position: relative;
 }
 
-/* Remove pseudo-element */
+
 .policy-section::before {
   display: none;
 }
@@ -167,7 +167,7 @@
   margin-bottom: 0;
 }
 
-/* Contact Section - remove special treatment */
+
 .policy-section:last-child {
   border-left-color: transparent;
   background: transparent;
@@ -184,7 +184,7 @@
   border-color: transparent;
 }
 
-/* ===== FOOTER ===== */
+
 .policy-footer {
   text-align: center;
   margin-top: 48px;
@@ -206,11 +206,9 @@
   text-decoration: underline;
 }
 
-/* ======================================== */
-/* ===== RESPONSIVE DESIGN ===== */
-/* ======================================== */
 
-/* Tablet View */
+
+
 @media (max-width: 768px) {
   .privacy-policy-container {
     padding: 28px 20px 48px;
