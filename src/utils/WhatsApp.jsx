@@ -9,7 +9,7 @@ const WhatsApp = () => {
   
 
   // Predefined message (URL encoded)
-  const message = encodeURIComponent('Can I get more info about this?');
+  const message = encodeURIComponent('We are reaching out via the ADINN Outdoors website.');
 
   const handleClick = () => {
     const url = `https://wa.me/${phoneNumber}?text=${message}`;
