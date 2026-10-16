@@ -38,7 +38,7 @@ import BlogPageAdmin from './Adminpanel/ad2BlogAddPg.jsx';
 import DealOfTheDay from './components/H1DealDay.jsx';
 //DEAL OF THE DAY SCROLL ANIMATION
 import DealScrollAnimation from './components/H2DealScroll.jsx';
-// Scroll to Top Component
+// Scroll to Top Component #1
 import ScrollToTop from './SCROLL_TO_TOP.jsx';
 //Police_Signal_PoleSizes
 import Sizes from './Adminpanel/Police_Signal_PoleSizes.jsx';
@@ -155,7 +155,7 @@ function App() {
               {/* //ADD LOADING STATES WHEN LOGIN / SIGNUP */}
 
 
-
+            
 
 
               <Route path="/splash" element={<Splash />} />
