@@ -16,7 +16,7 @@ export const DATE_CONFIG = {
 
 
 
-// ADMIN CALENDAR 
+// ADMIN CALENDARs
 export const DATE_CONFIG_ADMIN = {
   MIN_BOOKING_DAYS_ForAdmin: 1,    // Minimum days required for booking(admin)
 }; 
