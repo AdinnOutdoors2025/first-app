@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6c19e06c.css",
+    "main.js": "/static/js/main.945184a8.js",
+    "static/js/453.c45cd240.chunk.js": "/static/js/453.c45cd240.chunk.js",
+    "static/media/HeroBannerMainImg.png": "/static/media/HeroBannerMainImg.f358b7551a5472984281.png",
+    "static/media/AdinnOutdoor_banner.png": "/static/media/AdinnOutdoor_banner.e082e37f2404d64d0144.png",
+    "static/media/billboard.png": "/static/media/billboard.e082e37f2404d64d0144.png",
+    "static/media/DealBaner1.png": "/static/media/DealBaner1.291263884b1145b91fd4.png",
+    "static/media/outdoor-loader.svg": "/static/media/outdoor-loader.f0d7bd64c5f3b3d3cc78.svg",
+    "static/media/MobileDealBanner4.png": "/static/media/MobileDealBanner4.a098d37f876222885bee.png",
+    "static/media/MyCartBanner11.png": "/static/media/MyCartBanner11.864cc7b9517c471641dc.png",
+    "static/media/MyCartBanner2.png": "/static/media/MyCartBanner2.011c60a920ec32dc6692.png",
+    "static/media/Thankyou_banner.png": "/static/media/Thankyou_banner.30242a3ffb29054db305.png",
+    "static/media/PreLoadNew1.svg": "/static/media/PreLoadNew1.4ef65cc76bd01a9061f2.svg",
+    "index.html": "/index.html",
+    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
+    "static/media/dashboard-img1.svg": "/static/media/dashboard-img1.f23d1aac6f1ce51138a6.svg",
+    "static/media/admin-sideBackground.svg": "/static/media/admin-sideBackground.95972be254a814cb12ff.svg",
+    "main.6c19e06c.css.map": "/static/css/main.6c19e06c.css.map",
+    "main.945184a8.js.map": "/static/js/main.945184a8.js.map",
+    "453.c45cd240.chunk.js.map": "/static/js/453.c45cd240.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6c19e06c.css",
+    "static/js/main.945184a8.js"
+  ]
+}

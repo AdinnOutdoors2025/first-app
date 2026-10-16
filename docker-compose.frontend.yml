@@ -1,0 +1,12 @@
+name: outdoor_frontend
+
+services:
+  outdoor_frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    image: outdoor-frontend:latest
+    container_name: outdoor-frontend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3013:80"
